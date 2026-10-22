@@ -7,7 +7,7 @@ import { useSession } from "@/lib/session"
 
 export const WINDOWS: DocsDays[] = [7, 30, 90]
 
-export const SORTS: DocsPageSort[] = ["down", "up", "helpful", "activity"]
+export const SORTS: DocsPageSort[] = ["activity", "helpful", "up", "down"]
 
 export function store<T>(initial: T) {
   let value = initial
@@ -24,7 +24,7 @@ export function store<T>(initial: T) {
 }
 
 export const useDocsDays = store<DocsDays>(30)
-export const useDocsSort = store<DocsPageSort>("down")
+export const useDocsSort = store<DocsPageSort>("activity")
 export const useDocsSite = store<string>("")
 
 export function docsPageLink(inboxId: string, page: string) {

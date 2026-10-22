@@ -7,7 +7,7 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: ru\n"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 msgid "{published} of {total} entries published"
 msgstr "Опубликовано записей: {published} из {total}"
 
@@ -41,8 +41,13 @@ msgid "All"
 msgstr "Все"
 
 #: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/pages.tsx
 msgid "All labels"
 msgstr "Все метки"
+
+#: src/features/changelog/pages.tsx
+msgid "All languages"
+msgstr "Все языки"
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "Analytics property"
@@ -80,6 +85,7 @@ msgstr "Изменить время"
 msgid "Changelog"
 msgstr "Журнал изменений"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "Changelogs"
 msgstr "Журналы изменений"
@@ -88,16 +94,21 @@ msgstr "Журналы изменений"
 msgid "Choose a picture"
 msgstr "Выбрать изображение"
 
+#: src/features/changelog/pages.tsx
+msgid "Clear filters"
+msgstr "Сбросить фильтры"
+
 #: src/features/changelog/SettingsTab.tsx
 msgid "Counts page views of the changelog without cookies."
 msgstr "Считает просмотры страниц журнала изменений без файлов cookie."
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/CreateChangelogDialog.tsx
 #: src/features/changelog/pages.tsx
 msgid "Create changelog"
 msgstr "Создать журнал изменений"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "Create changelog ({createKey})"
 msgstr "Создать журнал изменений ({createKey})"
@@ -162,6 +173,11 @@ msgstr "Черновик отправлен. Опубликовать его м�
 msgid "Drafts"
 msgstr "Черновики"
 
+#: src/features/changelog/ChangelogsPage.tsx
+msgid "Each product has one changelog. Owners and admins create and publish them."
+msgstr "У каждого продукта есть журнал изменений. Владельцы и администраторы создают и публикуют его."
+
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "Entries"
 msgstr "Записи"
@@ -173,6 +189,14 @@ msgstr "Записи и переводы удаляются вместе с ни
 #: src/features/changelog/SettingsTab.tsx
 msgid "Entries can be written and published in these languages. Visitors see their own when it exists."
 msgstr "Записи можно писать и публиковать на этих языках. Посетители видят свой язык, если он есть."
+
+#: src/features/changelog/pages.tsx
+msgid "Entries show on the public page once they are published."
+msgstr "Записи появляются на публичной странице после публикации."
+
+#: src/features/changelog/pages.tsx
+msgid "Entries you have not published yet show up here."
+msgstr "Здесь появятся записи, которые вы ещё не опубликовали."
 
 #: src/features/changelog/EntryEditor.tsx
 msgid "Every translation is deleted. Broadcasts made from it stay."
@@ -208,6 +232,7 @@ msgid "Keep mine"
 msgstr "Оставить мою версию"
 
 #: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/pages.tsx
 msgid "Label"
 msgstr "Метка"
 
@@ -219,9 +244,11 @@ msgstr "Метки"
 #: src/features/changelog/EntriesTab.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/MailDialog.tsx
+#: src/features/changelog/pages.tsx
 msgid "Language"
 msgstr "Язык"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/SettingsTab.tsx
 msgid "Languages"
 msgstr "Языки"
@@ -248,6 +275,10 @@ msgid "Main language"
 msgstr "Основной язык"
 
 #: src/features/changelog/EntryEditor.tsx
+msgid "Mark up to date"
+msgstr "Отметить как актуальный"
+
+#: src/features/changelog/EntryEditor.tsx
 msgid "More"
 msgstr "Ещё"
 
@@ -272,7 +303,7 @@ msgstr "Новая запись"
 msgid "New post ({newKey})"
 msgstr "Новая запись ({newKey})"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 msgid "No changelog yet. Owners and admins create it."
 msgstr "Журнала изменений пока нет. Его создают владельцы и администраторы."
 
@@ -281,12 +312,9 @@ msgid "No entries yet. Tell your customers what changed in your latest release."
 msgstr "Записей пока нет. Расскажите клиентам, что изменилось в последней версии."
 
 #: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/pages.tsx
 msgid "No entry matches."
 msgstr "Подходящих записей нет."
-
-#: src/features/changelog/ChangelogColumn.tsx
-msgid "No inbox to show a changelog for."
-msgstr "Нет ящика, для которого можно показать журнал изменений."
 
 #: src/features/changelog/EntriesTab.tsx
 msgid "No text yet."
@@ -340,6 +368,10 @@ msgstr "Часть веб-адреса этого перевода. Если п�
 msgid "Pick a time in the next year, in your time zone, {zone}."
 msgstr "Выберите время в течение следующего года, в вашем часовом поясе, {zone}."
 
+#: src/features/changelog/pages.tsx
+msgid "Pick a time when you write an entry and it goes public by itself."
+msgstr "Выберите время при написании записи, и она опубликуется сама."
+
 #: src/features/changelog/MailDialog.tsx
 msgid "Pick up to 10 lists of this inbox."
 msgstr "Выберите до 10 списков этого ящика."
@@ -348,6 +380,7 @@ msgstr "Выберите до 10 списков этого ящика."
 msgid "Picture"
 msgstr "Изображение"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 #: src/features/changelog/PreviewDialog.tsx
@@ -370,6 +403,7 @@ msgstr "Предпросмотр записи"
 msgid "Public address"
 msgstr "Публичный адрес"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 msgid "Publish"
@@ -380,11 +414,19 @@ msgstr "Опубликовать"
 msgid "Publish ({publishKey})"
 msgstr "Опубликовать ({publishKey})"
 
+#: src/features/changelog/pages.tsx
+msgid "Publish it now or schedule it again."
+msgstr "Опубликуйте её сейчас или запланируйте заново."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Publish now"
+msgstr "Опубликовать сейчас"
+
 #: src/features/changelog/ScheduleDialog.tsx
 msgid "Publish on"
 msgstr "Опубликовать"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 #: src/features/changelog/text.tsx
@@ -393,6 +435,7 @@ msgstr "Опубликована"
 
 #: src/features/changelog/EntriesTab.tsx
 #: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
 msgid "Publishing on schedule failed."
 msgstr "Запланированная публикация не удалась."
 
@@ -403,6 +446,10 @@ msgstr "Заметки о релизах, которые показываютс�
 #: src/features/changelog/EntryEditor.tsx
 msgid "Remove"
 msgstr "Удалить"
+
+#: src/features/changelog/pages.tsx
+msgid "Review"
+msgstr "Проверить"
 
 #: src/features/changelog/EntryEditor.tsx
 msgid "Save now"
@@ -422,23 +469,33 @@ msgstr "Сохранение…"
 msgid "Schedule"
 msgstr "Запланировать"
 
+#: src/features/changelog/EntryEditor.tsx
+msgid "Schedule again"
+msgstr "Запланировать заново"
+
 #: src/features/changelog/ScheduleDialog.tsx
 msgid "Schedule this entry"
 msgstr "Запланировать эту запись"
 
 #: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
 #: src/features/changelog/text.tsx
 msgid "Scheduled"
 msgstr "Запланировано"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 msgid "Scheduled: {scheduled}"
 msgstr "Запланировано: {scheduled}"
+
+#: src/features/changelog/pages.tsx
+msgid "Search entries"
+msgstr "Искать записи"
 
 #: src/features/changelog/MailDialog.tsx
 msgid "Send through"
 msgstr "Отправить через"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "Settings"
 msgstr "Настройки"
@@ -446,6 +503,10 @@ msgstr "Настройки"
 #: src/features/changelog/EntryEditor.tsx
 msgid "Show"
 msgstr "Показать"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Show the original"
+msgstr "Показать оригинал"
 
 #: src/features/changelog/EntriesTab.tsx
 msgid "Shown in the chat bubble, the apps and on {host}."
@@ -482,6 +543,10 @@ msgstr "Отправить черновик"
 #: src/features/changelog/EntryEditor.tsx
 msgid "Submit draft ({publishKey})"
 msgstr "Отправить черновик ({publishKey})"
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Subscribed: {subscribed}"
+msgstr "Подписчиков: {subscribed}"
 
 #: src/features/changelog/CreateChangelogDialog.tsx
 msgid "Tell the customers of {inboxName} what is new, improved and fixed. It stays unpublished until you publish it."
@@ -527,6 +592,10 @@ msgstr "Для этой записи на основном языке пока �
 msgid "The member who scheduled it may no longer publish."
 msgstr "Участник, который её запланировал, возможно, больше не может публиковать."
 
+#: src/features/changelog/EntryEditor.tsx
+msgid "The original changed after this translation was saved."
+msgstr "Оригинал изменился после сохранения этого перевода."
+
 #: src/features/changelog/PreviewDialog.tsx
 msgid "The page as visitors would see it, drafts included. Only your team sees this."
 msgstr "Страница так, как её увидят посетители, вместе с черновиками. Это видит только ваша команда."
@@ -534,6 +603,11 @@ msgstr "Страница так, как её увидят посетители, 
 #: src/features/changelog/EntryEditor.tsx
 msgid "The title needs at least 3 characters"
 msgstr "Заголовок должен содержать не менее 3 символов"
+
+#. placeholder {0}: formatDateTime(entry.publish_at, i18n.locale)
+#: src/features/changelog/EntryEditor.tsx
+msgid "This entry is scheduled for {0}."
+msgstr "Эта запись запланирована на {0}."
 
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/text.tsx
@@ -569,6 +643,11 @@ msgstr "Название"
 msgid "Translation deleted"
 msgstr "Перевод удалён"
 
+#: src/features/changelog/pages.tsx
+msgid "Try another word, label or language."
+msgstr "Попробуйте другое слово, метку или язык."
+
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 msgid "Unpublish"
@@ -582,9 +661,8 @@ msgstr "Снять с публикации ({publishKey})"
 msgid "Unpublish this entry?"
 msgstr "Снять эту запись с публикации?"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
-#: src/features/changelog/pages.tsx
 msgid "Unpublished"
 msgstr "Не опубликована"
 
@@ -616,11 +694,12 @@ msgstr "Использовать их версию"
 msgid "View"
 msgstr "Просмотр"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "View changelog"
 msgstr "Открыть журнал изменений"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntriesTab.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
@@ -638,6 +717,10 @@ msgstr "Писать"
 #: src/features/changelog/text.tsx
 msgid "Write the entry in the main language before publishing."
 msgstr "Прежде чем публиковать, напишите запись на основном языке."
+
+#: src/features/changelog/pages.tsx
+msgid "Write the first entry with New post."
+msgstr "Напишите первую запись кнопкой Новая публикация."
 
 #: src/features/changelog/EntryEditor.tsx
 msgid "Write what changed in Markdown…"

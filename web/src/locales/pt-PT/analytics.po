@@ -409,6 +409,7 @@ msgid "Break down by prop"
 msgstr "Detalhar por prop"
 
 #: src/features/analytics/Goals.tsx
+#: src/features/analytics/Overview.tsx
 msgid "Breakdown"
 msgstr "Detalhamento"
 
@@ -1360,6 +1361,7 @@ msgstr "Banco de dados de localização"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
 #: src/features/analytics/Sharing.tsx
 msgid "Locations"
 msgstr "Locais"
@@ -1469,6 +1471,10 @@ msgstr "Novo {kind}: {value} com {count}, nenhum nos dias comparados."
 msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."
 msgstr "Novo {kind}: {value}. {metric}: {now}, nenhum nos dias comparados."
 
+#: src/features/analytics/Overview.tsx
+msgid "New and returning"
+msgstr "Novos e recorrentes"
+
 #: src/features/analytics/Funnels.tsx
 msgid "New funnel"
 msgstr "Novo funil"
@@ -1509,6 +1515,10 @@ msgstr "Sem comparação"
 #: src/features/analytics/Settings.tsx
 msgid "No consent features are offered."
 msgstr "Nenhum recurso de consentimento é oferecido."
+
+#: src/features/analytics/Overview.tsx
+msgid "No consented visitors in this range."
+msgstr "Nenhum visitante que consentiu neste período."
 
 #: src/features/analytics/Retention.tsx
 msgid "No consented visitors yet"
@@ -2086,6 +2096,7 @@ msgid "Requests with Do Not Track or Global Privacy Control, and events without 
 msgstr "Requisições com Do Not Track ou Global Privacy Control, e eventos sem consentimento em uma propriedade que exige, são recebidos, mas não são guardados nem contados aqui."
 
 #: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Overview.tsx
 msgid "Retention"
 msgstr "Retenção"
 

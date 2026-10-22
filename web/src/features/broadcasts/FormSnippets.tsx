@@ -6,14 +6,14 @@ import { Link } from "react-router"
 import { CodeBlock, Notice, Segmented } from "@/components/common"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Skeleton } from "@/components/ui/skeleton"
-import { useInboxChannels } from "@/features/broadcasts/queries"
+import { listLink, useInboxChannels } from "@/features/broadcasts/queries"
 import { Card, Field, Section } from "@/features/settings/ui"
 import type { MailingList } from "@/lib/api"
 import { useInboxes } from "@/lib/workspace"
 
-type Stack = "html" | "react" | "nuxt" | "shadcn"
+type Stack = "html" | "react" | "nuxt" | "shadcn" | "api"
 
-const STACKS: Stack[] = ["html", "react", "nuxt", "shadcn"]
+const STACKS: Stack[] = ["html", "react", "nuxt", "shadcn", "api"]
 
 export function subscribeLines(stack: Stack, server: string, key: string, listId: string, nameRequired: boolean) {
   const name = nameRequired ? [`  name="required"`] : []
@@ -51,6 +51,26 @@ export function subscribeLines(stack: Stack, server: string, key: string, listId
       `<YuvaSubscribe :lists="['${listId}']"${nameRequired ? ` name="required"` : ""} />`,
     ].join("\n")
   }
+  if (stack === "api") {
+    return [
+      `const base = "${server}/client/v1/channels/${key}"`,
+      ``,
+      `const { form_token } = await (await fetch(base + "/lists")).json()`,
+      ``,
+      `await fetch(base + "/subscriptions", {`,
+      `  method: "POST",`,
+      `  headers: { "Content-Type": "application/json" },`,
+      `  body: JSON.stringify({`,
+      `    email: "name@example.com",`,
+      `    list_ids: ["${listId}"],`,
+      `    page_url: location.href,`,
+      `    consent_text: "I want to get e-mails from this list.",`,
+      `    form_token,`,
+      `    website: "",`,
+      `  }),`,
+      `})`,
+    ].join("\n")
+  }
   if (stack === "shadcn") {
     return [
       `npx shadcn@latest add https://useyuva.com/r/yuva-subscribe.json`,
@@ -85,7 +105,7 @@ export function FormSnippets({ list }: { list: MailingList }) {
   const [picked, setPicked] = useState("")
   const [stack, setStack] = useState<Stack>("html")
   const channel = chats.find((c) => c.id === picked) ?? chats[0]
-  const names: Record<Stack, string> = { html: "HTML", react: "React", nuxt: "Nuxt", shadcn: "shadcn/ui" }
+  const names: Record<Stack, string> = { html: "HTML", react: "React", nuxt: "Nuxt", shadcn: "shadcn/ui", api: "API" }
   const items = Object.fromEntries(chats.map((c) => [c.id, c.name]))
   return (
     <Section
@@ -99,7 +119,12 @@ export function FormSnippets({ list }: { list: MailingList }) {
     >
       {!list.public && (
         <Notice tone="warning" icon={EyeOffIcon} data-testid="form-private">
-          <Trans>This list is private, so forms do not offer it. Make it public in the settings to use a form.</Trans>
+          <p>
+            <Trans>This list is private, so forms do not offer it. Make it public in the settings to use a form.</Trans>
+          </p>
+          <Link to={listLink(list.id, "settings")} className="w-fit text-brand underline-offset-4 hover:underline">
+            <Trans>Open the settings</Trans>
+          </Link>
         </Notice>
       )}
       {channels.isPending ? (

@@ -409,6 +409,7 @@ msgid "Break down by prop"
 msgstr "Uitsplitsen per prop"
 
 #: src/features/analytics/Goals.tsx
+#: src/features/analytics/Overview.tsx
 msgid "Breakdown"
 msgstr "Uitsplitsing"
 
@@ -1360,6 +1361,7 @@ msgstr "Locatiedatabase"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
 #: src/features/analytics/Sharing.tsx
 msgid "Locations"
 msgstr "Locaties"
@@ -1469,6 +1471,10 @@ msgstr "Nieuw {kind}: {value} met {count}, geen in de vergeleken dagen."
 msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."
 msgstr "Nieuw {kind}: {value}. {metric}: {now}, geen in de vergeleken dagen."
 
+#: src/features/analytics/Overview.tsx
+msgid "New and returning"
+msgstr "Nieuw en terugkerend"
+
 #: src/features/analytics/Funnels.tsx
 msgid "New funnel"
 msgstr "Nieuwe funnel"
@@ -1509,6 +1515,10 @@ msgstr "Geen vergelijking"
 #: src/features/analytics/Settings.tsx
 msgid "No consent features are offered."
 msgstr "Er worden geen toestemmingsfuncties aangeboden."
+
+#: src/features/analytics/Overview.tsx
+msgid "No consented visitors in this range."
+msgstr "Geen bezoekers die hebben ingestemd in dit bereik."
 
 #: src/features/analytics/Retention.tsx
 msgid "No consented visitors yet"
@@ -2086,6 +2096,7 @@ msgid "Requests with Do Not Track or Global Privacy Control, and events without 
 msgstr "Verzoeken met Do Not Track of Global Privacy Control, en gebeurtenissen zonder toestemming bij een property die die nodig heeft, worden aangenomen maar hier niet opgeslagen of geteld."
 
 #: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Overview.tsx
 msgid "Retention"
 msgstr "Retentie"
 

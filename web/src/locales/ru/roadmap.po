@@ -7,6 +7,10 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: ru\n"
 
+#: src/features/roadmap/CreateBoardDialog.tsx
+msgid "{inboxName} has no web chat channel. Add one first, because the public board embeds it."
+msgstr "У {inboxName} нет канала веб-чата. Сначала добавьте его, потому что публичная доска встраивает чат."
+
 #: src/features/roadmap/Board.tsx
 msgid "{linked, plural, one {# feedback} other {# feedback}}"
 msgstr "{linked, plural, one {# отзыв} few {# отзыва} many {# отзывов} other {# отзыва}}"
@@ -29,9 +33,25 @@ msgid "A reader's posts wait for a member until one of theirs is approved. Signe
 msgstr "Сообщения читателя ждут участника, пока не будет одобрено одно из его сообщений. Вошедшие пользователи вашего приложения публикуют сразу."
 
 #: src/features/roadmap/CreateBoardDialog.tsx
+msgid "Add a web chat channel"
+msgstr "Добавить канал веб-чата"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
 #: src/features/roadmap/Settings.tsx
 msgid "Address"
 msgstr "Адрес"
+
+#: src/features/roadmap/BoardBar.tsx
+msgid "All boards"
+msgstr "Все доски"
+
+#: src/features/roadmap/Settings.tsx
+msgid "All changes saved."
+msgstr "Все изменения сохранены."
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "All feedback from {inboxName} that fits is already linked."
+msgstr "Все подходящие отзывы из {inboxName} уже привязаны."
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Already linked"
@@ -89,13 +109,16 @@ msgstr "Считает просмотры страниц публичной до
 
 #: src/features/roadmap/CreateBoardDialog.tsx
 #: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
 msgid "Create board"
 msgstr "Создать доску"
 
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Create board ({newKey})"
 msgstr "Создать доску ({newKey})"
+
+#: src/features/roadmap/BoardBar.tsx
+msgid "Create board for {name}"
+msgstr "Создать доску для {name}"
 
 #: src/features/roadmap/NewIdeaDialog.tsx
 msgid "Create idea"
@@ -123,17 +146,21 @@ msgstr "Удаляет доску вместе с её идеями, голос�
 msgid "Description"
 msgstr "Описание"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Dismiss"
+msgstr "Скрыть"
+
 #: src/features/roadmap/Board.tsx
 msgid "Done"
 msgstr "Готово"
 
-#: src/features/roadmap/MoveDialog.tsx
-msgid "Every linked feedback that does not have it yet gets the progress {progress}. Linked feedback: {linked}"
-msgstr "Каждый привязанный отзыв, у которого ещё нет хода выполнения {progress}, получит его. Привязанных отзывов: {linked}"
-
 #: src/features/roadmap/Settings.tsx
 msgid "Everyone's posts are published at once, except those of authors you marked as spam."
 msgstr "Сообщения всех публикуются сразу, кроме сообщений авторов, которых вы пометили как спам."
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Good news: “{title}” has shipped. Thank you for asking for it."
+msgstr "Хорошие новости: «{title}» выпущено. Спасибо, что попросили."
 
 #: src/features/roadmap/Board.tsx
 msgid "Hidden"
@@ -155,21 +182,30 @@ msgstr "Идеи, за которые голосуют ваши клиенты, 
 msgid "Ideas, votes and stages for {inboxName}, with the feedback behind each idea. It stays private until you make it public."
 msgstr "Идеи, голоса и этапы для {inboxName} с отзывами, стоящими за каждой идеей. Доска остаётся закрытой, пока вы не сделаете её публичной."
 
-#: src/features/roadmap/RoadmapColumn.tsx
-msgid "Ideas: {ideas}"
-msgstr "Идеи: {ideas}"
-
 #: src/features/roadmap/NewIdeaDialog.tsx
 msgid "It goes into Ideas on the board, where customers can vote on it."
 msgstr "Она попадёт в «Идеи» на доске, где клиенты могут за неё голосовать."
 
-#: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/NewIdeaDialog.tsx
+msgid "It goes into Ideas on the board. The board is private, so only your team sees it."
+msgstr "Она попадает в «Идеи» на доске. Доска закрытая, поэтому её видит только ваша команда."
+
+#: src/features/roadmap/IdeaFeedback.tsx
 msgid "It was unlinked from the idea."
 msgstr "Привязка к идее снята."
 
 #: src/features/roadmap/Settings.tsx
 msgid "Its ideas, votes, replies and stage history are deleted with it."
 msgstr "Её идеи, голоса, ответы и история этапов удаляются вместе с ней."
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgctxt "link feedback to the idea"
+msgid "Link"
+msgstr "Привязать"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Link feedback"
+msgstr "Привязать отзывы"
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Link this feedback to an idea…"
@@ -179,13 +215,21 @@ msgstr "Привязать этот отзыв к идее…"
 msgid "Link to an idea"
 msgstr "Привязать к идее"
 
-#: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Linked"
+msgstr "Привязан"
+
+#: src/features/roadmap/IdeaFeedback.tsx
 msgid "Linked feedback"
 msgstr "Привязанные отзывы"
 
 #: src/features/roadmap/IdeaPane.tsx
 msgid "Linked feedback set to {progress}: {set}"
 msgstr "Привязанным отзывам задан статус {progress}: {set}"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Linked feedback that gets the progress {progress}: {gets} of {linked}."
+msgstr "Привязанные отзывы, которые получат статус «{progress}»: {gets} из {linked}."
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Linked to {title}"
@@ -195,19 +239,19 @@ msgstr "Привязан к инциденту {title}"
 msgid "Load more"
 msgstr "Загрузить ещё"
 
-#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Make private"
 msgstr "Сделать закрытой"
 
-#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Make private ({publicKey})"
 msgstr "Сделать закрытой ({publicKey})"
 
-#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Make public"
 msgstr "Сделать публичной"
 
-#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Make public ({publicKey})"
 msgstr "Сделать публичной ({publicKey})"
 
@@ -254,25 +298,37 @@ msgstr "Новая идея"
 msgid "New idea from this feedback"
 msgstr "Новая идея из этого отзыва"
 
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/pages.tsx
+msgid "No board is public yet. Make one public under Settings."
+msgstr "Пока ни одна доска не публична. Сделайте одну публичной в настройках."
+
+#: src/features/roadmap/pages.tsx
 msgid "No board yet. Owners and admins create it."
 msgstr "Доски пока нет. Её создают владельцы и администраторы."
 
-#: src/features/roadmap/IdeaPane.tsx
-msgid "No feedback is linked yet. Open a piece of feedback and use Link to an idea."
-msgstr "Пока нет привязанных отзывов. Откройте отзыв и выберите «Привязать к идее»."
+#: src/features/roadmap/MoveDialog.tsx
+msgid "No feedback is linked to this idea yet."
+msgstr "К этой идее пока не привязано ни одного отзыва."
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "No feedback is linked yet. Use Link feedback, or open a piece of feedback and choose Link to an idea."
+msgstr "Пока нет привязанных отзывов. Нажмите «Привязать отзывы» или откройте отзыв и выберите «Привязать к идее»."
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "No idea matches."
 msgstr "Нет подходящих идей."
 
-#: src/features/roadmap/RoadmapColumn.tsx
-msgid "No inbox to show a board for."
-msgstr "Нет почтового ящика, для которого можно показать доску."
+#: src/features/roadmap/Board.tsx
+msgid "No ideas yet. New ones land here."
+msgstr "Идей пока нет. Новые появятся здесь."
 
 #: src/features/roadmap/Settings.tsx
 msgid "None"
 msgstr "Нет"
+
+#: src/features/roadmap/Board.tsx
+msgid "Nothing here yet."
+msgstr "Здесь пока ничего нет."
 
 #: src/features/roadmap/Settings.tsx
 msgid "Off"
@@ -282,7 +338,7 @@ msgstr "Выкл."
 msgid "On: anyone with the address reads the board, and signed-in readers vote and suggest ideas. Off: only your team sees it, as a tool to sort feedback."
 msgstr "Включено: любой, кто знает адрес, читает доску, а вошедшие читатели голосуют и предлагают идеи. Выключено: её видит только ваша команда, как инструмент для сортировки отзывов."
 
-#: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/IdeaFeedback.tsx
 msgid "One reply, written once, goes to every open feedback conversation linked to this idea, as you, on each conversation’s own channel."
 msgstr "Один ответ, написанный один раз, уходит в каждый открытый разговор с отзывом, привязанный к этой идее, от вашего имени, по собственному каналу каждого разговора."
 
@@ -290,9 +346,22 @@ msgstr "Один ответ, написанный один раз, уходит 
 msgid "Open"
 msgstr "Открыто"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgctxt "open the feedback"
+msgid "Open"
+msgstr "Открыть"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Open Analytics"
+msgstr "Открыть аналитику"
+
 #: src/features/roadmap/IdeaPane.tsx
 msgid "Open on the public board"
 msgstr "Открыть на публичной доске"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Open Roadmap"
+msgstr "Открыть дорожную карту"
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Pick an idea of this inbox’s board"
@@ -302,17 +371,11 @@ msgstr "Выберите идею с доски этого ящика"
 msgid "Posted as your public reply on the idea. Markdown works."
 msgstr "Публикуется как ваш публичный ответ под идеей. Markdown поддерживается."
 
-#: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Private"
 msgstr "Закрытый"
 
-#: src/features/roadmap/pages.tsx
-msgid "Private, only your team sees it"
-msgstr "Закрытая, её видит только ваша команда"
-
-#: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/BoardBar.tsx
 #: src/features/roadmap/Settings.tsx
 msgid "Public"
 msgstr "Публичный"
@@ -329,19 +392,37 @@ msgstr "Читатели не могут предлагать идеи. Голо
 msgid "Readers suggested new ideas. Review them before they show on the public board."
 msgstr "Читатели предложили новые идеи. Проверьте их, прежде чем они появятся на публичной доске."
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Reply to everyone"
+msgstr "Ответить всем"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Reply to linked ({key})"
+msgstr "Ответить привязанным ({key})"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Resolved feedback does not get it: {closed}"
+msgstr "Решённые отзывы его не получат: {closed}"
+
 #: src/features/roadmap/Board.tsx
 msgid "Review"
 msgstr "Проверка"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Review the reply"
+msgstr "Проверить ответ"
+
 #: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
 msgid "Roadmap"
 msgstr "Дорожная карта"
 
-#: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Roadmap boards"
 msgstr "Доски дорожных карт"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Save"
+msgstr "Сохранить"
 
 #: src/features/roadmap/Settings.tsx
 msgid "Saved"
@@ -355,9 +436,13 @@ msgstr "Искать идеи"
 msgid "Settings"
 msgstr "Настройки"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Shipped. Open feedback linked to it: {open}. A reply is ready to send."
+msgstr "Выпущено. Открытых привязанных отзывов: {open}. Ответ готов к отправке."
+
 #: src/features/roadmap/pages.tsx
-msgid "Show your customers what you are building, and link the feedback behind each idea. Create a board for an inbox to sort ideas into stages."
-msgstr "Покажите клиентам, что вы создаёте, и привяжите отзывы, стоящие за каждой идеей. Создайте доску для ящика, чтобы распределять идеи по этапам."
+msgid "Show your customers what you are building, and link the feedback behind each idea. Create a board for {missingName} to sort ideas into stages."
+msgstr "Покажите клиентам, что вы создаёте, и привяжите отзывы, стоящие за каждой идеей. Создайте доску для {missingName}, чтобы разложить идеи по этапам."
 
 #: src/features/roadmap/Settings.tsx
 msgid "Shown under the name on the public board."
@@ -404,6 +489,10 @@ msgstr "Ход выполнения привязанных отзывов не �
 msgid "The public board embeds this chat, and ideas your team starts are filed on it."
 msgstr "Публичная доска встраивает этот чат, а идеи, которые начинает ваша команда, сохраняются в нём."
 
+#: src/features/roadmap/MoveDialog.tsx
+msgid "The rest already have it."
+msgstr "У остальных он уже есть."
+
 #: src/features/roadmap/pages.tsx
 msgid "This board no longer exists or you cannot see it."
 msgstr "Этой доски больше нет, или вы не можете её видеть."
@@ -412,14 +501,18 @@ msgstr "Этой доски больше нет, или вы не можете �
 msgid "This inbox has no roadmap board. Create one under Roadmap first."
 msgstr "У этого ящика нет доски дорожной карты. Сначала создайте её в разделе «Дорожная карта»."
 
-#: src/features/roadmap/CreateBoardDialog.tsx
-msgid "This inbox has no web chat channel. Add one first, because the public board embeds it."
-msgstr "У этого ящика нет канала веб-чата. Сначала добавьте его, потому что публичная доска его встраивает."
-
 #: src/features/roadmap/LinkIdeaDialog.tsx
 #: src/features/roadmap/NewIdeaDialog.tsx
 msgid "Title"
 msgstr "Название"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Unlink"
+msgstr "Отвязать"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Unlinked feedback from {inboxName}"
+msgstr "Непривязанные отзывы из {inboxName}"
 
 #: src/features/roadmap/Settings.tsx
 msgid "Use 3 to 48 letters, numbers and inner hyphens."
@@ -437,6 +530,6 @@ msgstr "Видимость"
 msgid "Waiting for approval"
 msgstr "Ждут одобрения"
 
-#: src/features/roadmap/RoadmapColumn.tsx
-msgid "Waiting for approval: {pending}"
-msgstr "Ждут одобрения: {pending}"
+#: src/features/roadmap/Settings.tsx
+msgid "You have unsaved changes."
+msgstr "У вас есть несохранённые изменения."

@@ -409,6 +409,7 @@ msgid "Break down by prop"
 msgstr "پراپ کے لحاظ سے تقسیم کریں"
 
 #: src/features/analytics/Goals.tsx
+#: src/features/analytics/Overview.tsx
 msgid "Breakdown"
 msgstr "تقسیم"
 
@@ -1360,6 +1361,7 @@ msgstr "مقام کا ڈیٹا بیس"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
 #: src/features/analytics/Sharing.tsx
 msgid "Locations"
 msgstr "مقامات"
@@ -1469,6 +1471,10 @@ msgstr "نیا {kind}: {value} کے ساتھ {count}، موازنہ کیے گئ�
 msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."
 msgstr "نیا {kind}: {value}۔ {metric}: {now}، موازنہ کیے گئے دنوں میں کوئی نہیں۔"
 
+#: src/features/analytics/Overview.tsx
+msgid "New and returning"
+msgstr "نئے اور واپس آنے والے"
+
 #: src/features/analytics/Funnels.tsx
 msgid "New funnel"
 msgstr "نیا فنل"
@@ -1509,6 +1515,10 @@ msgstr "کوئی موازنہ نہیں"
 #: src/features/analytics/Settings.tsx
 msgid "No consent features are offered."
 msgstr "رضامندی کی کوئی خصوصیت پیش نہیں کی جاتی۔"
+
+#: src/features/analytics/Overview.tsx
+msgid "No consented visitors in this range."
+msgstr "اس مدت میں کوئی رضامند وزیٹر نہیں۔"
 
 #: src/features/analytics/Retention.tsx
 msgid "No consented visitors yet"
@@ -2086,6 +2096,7 @@ msgid "Requests with Do Not Track or Global Privacy Control, and events without 
 msgstr "Do Not Track یا Global Privacy Control والی درخواستیں، اور جس پراپرٹی کو رضامندی چاہیے اس پر رضامندی کے بغیر واقعات، لیے جاتے ہیں لیکن یہاں نہ محفوظ ہوتے ہیں نہ گنے جاتے ہیں۔"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Overview.tsx
 msgid "Retention"
 msgstr "برقراری"
 

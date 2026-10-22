@@ -255,8 +255,8 @@ function Line({ m, ctx, name, me, last }: { m: Message; ctx: ThreadContext; name
         <ArticleCards items={m.cards} outgoing={out} />
         <Delivery m={m} />
         {last && <Meta m={m} side={side} ctx={ctx} name={name} />}
+        <MessageActions m={m} ctx={ctx} className={out ? "justify-end" : undefined} />
       </MessageContent>
-      <MessageActions m={m} ctx={ctx} />
     </MessageFrame>
   )
 }
@@ -368,8 +368,8 @@ function Mail({
             </a>
           )}
         </MessageFooter>
+        <MessageActions m={m} ctx={ctx} className={out ? "justify-end" : undefined} />
       </MessageContent>
-      <MessageActions m={m} ctx={ctx} />
     </MessageFrame>
   )
 }
@@ -522,8 +522,8 @@ function Note({ m, ctx, name, me }: { m: Message; ctx: ThreadContext; name: stri
             <Trans>Only the team sees this</Trans> · <Time iso={m.created_at} />
           </span>
         </MessageFooter>
+        <MessageActions m={m} ctx={ctx} className="justify-end" />
       </MessageContent>
-      <MessageActions m={m} ctx={ctx} />
     </MessageFrame>
   )
 }

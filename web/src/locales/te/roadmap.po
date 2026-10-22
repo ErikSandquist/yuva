@@ -7,6 +7,10 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: te\n"
 
+#: src/features/roadmap/CreateBoardDialog.tsx
+msgid "{inboxName} has no web chat channel. Add one first, because the public board embeds it."
+msgstr "{inboxName} కు వెబ్ చాట్ ఛానెల్ లేదు. పబ్లిక్ బోర్డ్ దానిని ఎంబెడ్ చేస్తుంది కాబట్టి ముందుగా ఒకటి జోడించండి."
+
 #: src/features/roadmap/Board.tsx
 msgid "{linked, plural, one {# feedback} other {# feedback}}"
 msgstr "{linked, plural, one {# అభిప్రాయం} other {# అభిప్రాయాలు}}"
@@ -29,9 +33,25 @@ msgid "A reader's posts wait for a member until one of theirs is approved. Signe
 msgstr "పాఠకుడి పోస్ట్‌లు వారివి ఒకటి ఆమోదం పొందే వరకు సభ్యుని కోసం వేచి ఉంటాయి. మీ యాప్‌లో సైన్ ఇన్ చేసిన వినియోగదారులు వెంటనే ప్రచురిస్తారు."
 
 #: src/features/roadmap/CreateBoardDialog.tsx
+msgid "Add a web chat channel"
+msgstr "వెబ్ చాట్ ఛానెల్ జోడించండి"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
 #: src/features/roadmap/Settings.tsx
 msgid "Address"
 msgstr "చిరునామా"
+
+#: src/features/roadmap/BoardBar.tsx
+msgid "All boards"
+msgstr "అన్ని బోర్డ్‌లు"
+
+#: src/features/roadmap/Settings.tsx
+msgid "All changes saved."
+msgstr "అన్ని మార్పులు సేవ్ అయ్యాయి."
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "All feedback from {inboxName} that fits is already linked."
+msgstr "{inboxName} లో సరిపోయే అన్ని అభిప్రాయాలు ఇప్పటికే లింక్ చేయబడ్డాయి."
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Already linked"
@@ -89,13 +109,16 @@ msgstr "కుకీలు లేకుండా పబ్లిక్ బోర
 
 #: src/features/roadmap/CreateBoardDialog.tsx
 #: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
 msgid "Create board"
 msgstr "బోర్డ్‌ను సృష్టించండి"
 
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Create board ({newKey})"
 msgstr "బోర్డ్‌ను సృష్టించండి ({newKey})"
+
+#: src/features/roadmap/BoardBar.tsx
+msgid "Create board for {name}"
+msgstr "{name} కోసం బోర్డ్‌ను సృష్టించండి"
 
 #: src/features/roadmap/NewIdeaDialog.tsx
 msgid "Create idea"
@@ -123,17 +146,21 @@ msgstr "బోర్డ్‌ను దాని ఆలోచనలు, ఓట�
 msgid "Description"
 msgstr "వివరణ"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Dismiss"
+msgstr "మూసివేయండి"
+
 #: src/features/roadmap/Board.tsx
 msgid "Done"
 msgstr "పూర్తయింది"
 
-#: src/features/roadmap/MoveDialog.tsx
-msgid "Every linked feedback that does not have it yet gets the progress {progress}. Linked feedback: {linked}"
-msgstr "ఇంకా అలా లేని ప్రతి లింక్ చేసిన అభిప్రాయం పురోగతి {progress} అవుతుంది. లింక్ చేసిన అభిప్రాయాలు: {linked}"
-
 #: src/features/roadmap/Settings.tsx
 msgid "Everyone's posts are published at once, except those of authors you marked as spam."
 msgstr "స్పామ్‌గా మీరు గుర్తించిన రచయితలవి తప్ప, అందరి పోస్ట్‌లు వెంటనే ప్రచురించబడతాయి."
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Good news: “{title}” has shipped. Thank you for asking for it."
+msgstr "శుభవార్త: “{title}” విడుదలైంది. అడిగినందుకు ధన్యవాదాలు."
 
 #: src/features/roadmap/Board.tsx
 msgid "Hidden"
@@ -155,21 +182,30 @@ msgstr "మీ కస్టమర్‌లు ఓటు వేసే ఆలో�
 msgid "Ideas, votes and stages for {inboxName}, with the feedback behind each idea. It stays private until you make it public."
 msgstr "{inboxName} కోసం ఆలోచనలు, ఓట్లు, దశలు, ప్రతి ఆలోచన వెనుక ఉన్న అభిప్రాయాలతో సహా. మీరు పబ్లిక్ చేసే వరకు ఇది ప్రైవేట్‌గానే ఉంటుంది."
 
-#: src/features/roadmap/RoadmapColumn.tsx
-msgid "Ideas: {ideas}"
-msgstr "ఆలోచనలు: {ideas}"
-
 #: src/features/roadmap/NewIdeaDialog.tsx
 msgid "It goes into Ideas on the board, where customers can vote on it."
 msgstr "ఇది బోర్డ్‌లోని ఆలోచనలలోకి వెళ్తుంది, అక్కడ కస్టమర్‌లు ఓటు వేయవచ్చు."
 
-#: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/NewIdeaDialog.tsx
+msgid "It goes into Ideas on the board. The board is private, so only your team sees it."
+msgstr "ఇది బోర్డ్‌లోని ఆలోచనల దశలోకి వెళ్తుంది. బోర్డ్ ప్రైవేట్, కాబట్టి మీ టీమ్ మాత్రమే చూస్తుంది."
+
+#: src/features/roadmap/IdeaFeedback.tsx
 msgid "It was unlinked from the idea."
 msgstr "ఆలోచన నుండి లింక్ తొలగించబడింది."
 
 #: src/features/roadmap/Settings.tsx
 msgid "Its ideas, votes, replies and stage history are deleted with it."
 msgstr "దీని ఆలోచనలు, ఓట్లు, జవాబులు, దశల చరిత్ర కూడా దీనితో పాటు తొలగించబడతాయి."
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgctxt "link feedback to the idea"
+msgid "Link"
+msgstr "లింక్ చేయండి"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Link feedback"
+msgstr "అభిప్రాయాన్ని లింక్ చేయండి"
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Link this feedback to an idea…"
@@ -179,13 +215,21 @@ msgstr "ఈ అభిప్రాయాన్ని ఒక ఆలోచనకు
 msgid "Link to an idea"
 msgstr "ఒక ఆలోచనకు లింక్ చేయండి"
 
-#: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Linked"
+msgstr "లింక్ చేయబడింది"
+
+#: src/features/roadmap/IdeaFeedback.tsx
 msgid "Linked feedback"
 msgstr "లింక్ చేసిన అభిప్రాయాలు"
 
 #: src/features/roadmap/IdeaPane.tsx
 msgid "Linked feedback set to {progress}: {set}"
 msgstr "లింక్ చేసిన అభిప్రాయాలు {progress} గా సెట్ చేయబడ్డాయి: {set}"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Linked feedback that gets the progress {progress}: {gets} of {linked}."
+msgstr "{progress} పురోగతి పొందే లింక్ చేసిన అభిప్రాయాలు: {linked} లో {gets}."
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Linked to {title}"
@@ -195,19 +239,19 @@ msgstr "{title} కు లింక్ చేయబడింది"
 msgid "Load more"
 msgstr "మరిన్ని లోడ్ చేయండి"
 
-#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Make private"
 msgstr "ప్రైవేట్‌గా చేయండి"
 
-#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Make private ({publicKey})"
 msgstr "ప్రైవేట్‌గా చేయండి ({publicKey})"
 
-#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Make public"
 msgstr "పబ్లిక్‌గా చేయండి"
 
-#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Make public ({publicKey})"
 msgstr "పబ్లిక్‌గా చేయండి ({publicKey})"
 
@@ -254,25 +298,37 @@ msgstr "కొత్త ఆలోచన"
 msgid "New idea from this feedback"
 msgstr "ఈ అభిప్రాయం నుండి కొత్త ఆలోచన"
 
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/pages.tsx
+msgid "No board is public yet. Make one public under Settings."
+msgstr "ఇంకా ఏ బోర్డ్ పబ్లిక్ కాదు. సెట్టింగ్‌లలో ఒకదాన్ని పబ్లిక్ చేయండి."
+
+#: src/features/roadmap/pages.tsx
 msgid "No board yet. Owners and admins create it."
 msgstr "ఇంకా బోర్డ్ లేదు. యజమానులు, అడ్మిన్‌లు దీన్ని సృష్టిస్తారు."
 
-#: src/features/roadmap/IdeaPane.tsx
-msgid "No feedback is linked yet. Open a piece of feedback and use Link to an idea."
-msgstr "ఇంకా ఏ అభిప్రాయమూ లింక్ చేయబడలేదు. ఒక అభిప్రాయాన్ని తెరిచి “ఒక ఆలోచనకు లింక్ చేయండి” ఉపయోగించండి."
+#: src/features/roadmap/MoveDialog.tsx
+msgid "No feedback is linked to this idea yet."
+msgstr "ఈ ఆలోచనకు ఇంకా అభిప్రాయం ఏదీ లింక్ కాలేదు."
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "No feedback is linked yet. Use Link feedback, or open a piece of feedback and choose Link to an idea."
+msgstr "ఇంకా అభిప్రాయం ఏదీ లింక్ కాలేదు. “అభిప్రాయాన్ని లింక్ చేయండి” ఉపయోగించండి, లేదా ఒక అభిప్రాయాన్ని తెరిచి “ఒక ఆలోచనకు లింక్ చేయండి” ఎంచుకోండి."
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "No idea matches."
 msgstr "ఏ ఆలోచనా సరిపోలలేదు."
 
-#: src/features/roadmap/RoadmapColumn.tsx
-msgid "No inbox to show a board for."
-msgstr "బోర్డ్ చూపించడానికి ఇన్‌బాక్స్ ఏదీ లేదు."
+#: src/features/roadmap/Board.tsx
+msgid "No ideas yet. New ones land here."
+msgstr "ఇంకా ఆలోచనలు లేవు. కొత్తవి ఇక్కడ వస్తాయి."
 
 #: src/features/roadmap/Settings.tsx
 msgid "None"
 msgstr "ఏదీ లేదు"
+
+#: src/features/roadmap/Board.tsx
+msgid "Nothing here yet."
+msgstr "ఇక్కడ ఇంకా ఏమీ లేదు."
 
 #: src/features/roadmap/Settings.tsx
 msgid "Off"
@@ -282,7 +338,7 @@ msgstr "ఆఫ్"
 msgid "On: anyone with the address reads the board, and signed-in readers vote and suggest ideas. Off: only your team sees it, as a tool to sort feedback."
 msgstr "ఆన్: చిరునామా తెలిసిన ఎవరైనా బోర్డ్‌ను చదవవచ్చు, సైన్ ఇన్ అయిన పాఠకులు ఓటు వేసి ఆలోచనలను సూచిస్తారు. ఆఫ్: మీ బృందం మాత్రమే దీన్ని చూస్తుంది, అభిప్రాయాలను క్రమబద్ధీకరించే సాధనంగా."
 
-#: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/IdeaFeedback.tsx
 msgid "One reply, written once, goes to every open feedback conversation linked to this idea, as you, on each conversation’s own channel."
 msgstr "ఒకసారి రాసిన ఒక జవాబు ఈ ఆలోచనకు లింక్ చేసిన ప్రతి తెరిచి ఉన్న అభిప్రాయ సంభాషణకు, మీ పేరుతో, ప్రతి సంభాషణ సొంత ఛానెల్‌లో వెళ్తుంది."
 
@@ -290,9 +346,22 @@ msgstr "ఒకసారి రాసిన ఒక జవాబు ఈ ఆలో�
 msgid "Open"
 msgstr "తెరవండి"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgctxt "open the feedback"
+msgid "Open"
+msgstr "తెరవండి"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Open Analytics"
+msgstr "అనలిటిక్స్ తెరవండి"
+
 #: src/features/roadmap/IdeaPane.tsx
 msgid "Open on the public board"
 msgstr "పబ్లిక్ బోర్డ్‌లో తెరవండి"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Open Roadmap"
+msgstr "రోడ్‌మ్యాప్ తెరవండి"
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Pick an idea of this inbox’s board"
@@ -302,17 +371,11 @@ msgstr "ఈ ఇన్‌బాక్స్ బోర్డ్ నుండి �
 msgid "Posted as your public reply on the idea. Markdown works."
 msgstr "ఆలోచనపై మీ పబ్లిక్ జవాబుగా పోస్ట్ అవుతుంది. Markdown పని చేస్తుంది."
 
-#: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Private"
 msgstr "ప్రైవేట్"
 
-#: src/features/roadmap/pages.tsx
-msgid "Private, only your team sees it"
-msgstr "ప్రైవేట్, మీ బృందం మాత్రమే చూస్తుంది"
-
-#: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/BoardBar.tsx
 #: src/features/roadmap/Settings.tsx
 msgid "Public"
 msgstr "పబ్లిక్"
@@ -329,19 +392,37 @@ msgstr "పాఠకులు ఆలోచనలను సూచించలే�
 msgid "Readers suggested new ideas. Review them before they show on the public board."
 msgstr "పాఠకులు కొత్త ఆలోచనలు సూచించారు. పబ్లిక్ బోర్డులో కనిపించే ముందు వాటిని సమీక్షించండి."
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Reply to everyone"
+msgstr "అందరికీ జవాబివ్వండి"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Reply to linked ({key})"
+msgstr "లింక్ అయినవాటికి జవాబివ్వండి ({key})"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Resolved feedback does not get it: {closed}"
+msgstr "పరిష్కరించిన అభిప్రాయాలకు ఇది అందదు: {closed}"
+
 #: src/features/roadmap/Board.tsx
 msgid "Review"
 msgstr "సమీక్ష"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Review the reply"
+msgstr "జవాబును సమీక్షించండి"
+
 #: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
 msgid "Roadmap"
 msgstr "రోడ్‌మ్యాప్"
 
-#: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Roadmap boards"
 msgstr "రోడ్‌మ్యాప్ బోర్డ్‌లు"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Save"
+msgstr "సేవ్ చేయండి"
 
 #: src/features/roadmap/Settings.tsx
 msgid "Saved"
@@ -355,9 +436,13 @@ msgstr "ఆలోచనలను వెతకండి"
 msgid "Settings"
 msgstr "సెట్టింగ్‌లు"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Shipped. Open feedback linked to it: {open}. A reply is ready to send."
+msgstr "విడుదలైంది. దీనికి లింక్ అయిన తెరిచి ఉన్న అభిప్రాయాలు: {open}. పంపడానికి ఒక జవాబు సిద్ధంగా ఉంది."
+
 #: src/features/roadmap/pages.tsx
-msgid "Show your customers what you are building, and link the feedback behind each idea. Create a board for an inbox to sort ideas into stages."
-msgstr "మీరు ఏమి నిర్మిస్తున్నారో కస్టమర్‌లకు చూపించి, ప్రతి ఆలోచన వెనుక ఉన్న అభిప్రాయాలను లింక్ చేయండి. ఆలోచనలను దశలుగా క్రమబద్ధీకరించడానికి ఇన్‌బాక్స్ కోసం బోర్డ్ సృష్టించండి."
+msgid "Show your customers what you are building, and link the feedback behind each idea. Create a board for {missingName} to sort ideas into stages."
+msgstr "మీరు ఏం నిర్మిస్తున్నారో కస్టమర్లకు చూపించండి, ప్రతి ఆలోచన వెనుక ఉన్న అభిప్రాయాలను లింక్ చేయండి. ఆలోచనలను దశలుగా విభజించడానికి {missingName} కోసం బోర్డ్‌ను సృష్టించండి."
 
 #: src/features/roadmap/Settings.tsx
 msgid "Shown under the name on the public board."
@@ -404,6 +489,10 @@ msgstr "లింక్ చేసిన అభిప్రాయాల పుర
 msgid "The public board embeds this chat, and ideas your team starts are filed on it."
 msgstr "పబ్లిక్ బోర్డ్ ఈ చాట్‌ను పొందుపరుస్తుంది, మీ బృందం ప్రారంభించే ఆలోచనలు అందులో నమోదవుతాయి."
 
+#: src/features/roadmap/MoveDialog.tsx
+msgid "The rest already have it."
+msgstr "మిగతావారికి ఇది ఇప్పటికే ఉంది."
+
 #: src/features/roadmap/pages.tsx
 msgid "This board no longer exists or you cannot see it."
 msgstr "ఈ బోర్డ్ ఇక లేదు లేదా మీరు దాన్ని చూడలేరు."
@@ -412,14 +501,18 @@ msgstr "ఈ బోర్డ్ ఇక లేదు లేదా మీరు ద
 msgid "This inbox has no roadmap board. Create one under Roadmap first."
 msgstr "ఈ ఇన్‌బాక్స్‌కు రోడ్‌మ్యాప్ బోర్డ్ లేదు. ముందుగా రోడ్‌మ్యాప్‌లో ఒకటి సృష్టించండి."
 
-#: src/features/roadmap/CreateBoardDialog.tsx
-msgid "This inbox has no web chat channel. Add one first, because the public board embeds it."
-msgstr "ఈ ఇన్‌బాక్స్‌కు వెబ్ చాట్ ఛానెల్ లేదు. ముందుగా ఒకటి జోడించండి, ఎందుకంటే పబ్లిక్ బోర్డ్ దాన్ని పొందుపరుస్తుంది."
-
 #: src/features/roadmap/LinkIdeaDialog.tsx
 #: src/features/roadmap/NewIdeaDialog.tsx
 msgid "Title"
 msgstr "శీర్షిక"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Unlink"
+msgstr "లింక్ తొలగించండి"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Unlinked feedback from {inboxName}"
+msgstr "{inboxName} లో లింక్ చేయని అభిప్రాయాలు"
 
 #: src/features/roadmap/Settings.tsx
 msgid "Use 3 to 48 letters, numbers and inner hyphens."
@@ -437,6 +530,6 @@ msgstr "కనిపించే తీరు"
 msgid "Waiting for approval"
 msgstr "ఆమోదం కోసం వేచి ఉంది"
 
-#: src/features/roadmap/RoadmapColumn.tsx
-msgid "Waiting for approval: {pending}"
-msgstr "ఆమోదం కోసం వేచి ఉంది: {pending}"
+#: src/features/roadmap/Settings.tsx
+msgid "You have unsaved changes."
+msgstr "మీ వద్ద సేవ్ చేయని మార్పులు ఉన్నాయి."

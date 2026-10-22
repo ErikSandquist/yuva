@@ -15,7 +15,7 @@ import {
   SenderMissing,
   SenderPicker,
 } from "@/features/broadcasts/ListForm"
-import { useDeleteList, useInboxChannels, useSetList } from "@/features/broadcasts/queries"
+import { useArchiveList, useDeleteList, useInboxChannels, useSetList } from "@/features/broadcasts/queries"
 import { PageSection } from "@/features/settings/channels/sections"
 import { Card, FormActions, FormCard, Section } from "@/features/settings/ui"
 import { api, unwrap, type MailingList, type MailingListUpdate } from "@/lib/api"
@@ -117,16 +117,8 @@ export function ListSettings({ list }: { list: MailingList }) {
   const { t } = useLingui()
   const navigate = useNavigate()
   const { canManage } = useSession()
-  const setList = useSetList()
   const [confirm, confirmDialog] = useConfirm()
-  const archive = useMutation({
-    mutationFn: (archived: boolean) =>
-      unwrap(api.PATCH("/v1/lists/{listId}", { params: { path: { listId: list.id } }, body: { archived } })),
-    onSuccess: (l) => {
-      setList(l)
-      toast(l.archived_at ? t`List archived` : t`List restored`)
-    },
-  })
+  const archive = useArchiveList(list.id)
   const remove = useDeleteList()
   const people = list.counts.subscribed + list.counts.pending + list.counts.unsubscribed
   return (
@@ -136,6 +128,7 @@ export function ListSettings({ list }: { list: MailingList }) {
         <SenderSection list={list} />
         <SignupSection list={list} />
       </fieldset>
+      {canManage && <ListExport list={list} />}
       {canManage && (
         <Section
           title={<Trans>Archive</Trans>}
@@ -148,13 +141,21 @@ export function ListSettings({ list }: { list: MailingList }) {
           <Card>
             <div className="flex flex-wrap items-center gap-3">
               <p className="min-w-0 flex-1 text-body">
-                {list.archived_at ? <Trans>This list is archived.</Trans> : <Trans>Stop taking new subscribers.</Trans>}
+                {list.archived_at ? (
+                  <Trans>Takes sign-ups again and brings the list back to the broadcast audience picker.</Trans>
+                ) : (
+                  <Trans>Stop taking new subscribers. Records and past reports stay, and you can restore it.</Trans>
+                )}
               </p>
               <Button
                 variant="outline"
                 size="sm"
                 disabled={archive.isPending}
-                onClick={() => archive.mutate(!list.archived_at)}
+                onClick={() =>
+                  archive.mutate(!list.archived_at, {
+                    onSuccess: (l) => toast(l.archived_at ? t`List archived` : t`List restored`),
+                  })
+                }
                 data-testid="list-archive"
               >
                 {list.archived_at ? <Trans>Restore</Trans> : <Trans>Archive</Trans>}
@@ -172,7 +173,8 @@ export function ListSettings({ list }: { list: MailingList }) {
                 <Trans>
                   Deletes the list, its subscriptions and their consent records. Download the consent export first if
                   you may need to show it later.
-                </Trans>
+                </Trans>{" "}
+                <Trans>Archive the list instead to keep the records.</Trans>
               </p>
               <Button
                 variant="destructive"
@@ -191,7 +193,8 @@ export function ListSettings({ list }: { list: MailingList }) {
                         <Trans>
                           People who had unsubscribed are remembered as opted out, so nobody on the team can add them
                           again.
-                        </Trans>
+                        </Trans>{" "}
+                        <Trans>Archive the list instead to keep the records.</Trans>
                       </>
                     ),
                     confirm: <Trans>Delete list</Trans>,

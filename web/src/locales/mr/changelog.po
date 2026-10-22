@@ -7,7 +7,7 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: mr\n"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 msgid "{published} of {total} entries published"
 msgstr "{total} पैकी {published} नोंदी प्रकाशित"
 
@@ -41,8 +41,13 @@ msgid "All"
 msgstr "सर्व"
 
 #: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/pages.tsx
 msgid "All labels"
 msgstr "सर्व लेबल"
+
+#: src/features/changelog/pages.tsx
+msgid "All languages"
+msgstr "सर्व भाषा"
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "Analytics property"
@@ -80,6 +85,7 @@ msgstr "वेळ बदला"
 msgid "Changelog"
 msgstr "चेंजलॉग"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "Changelogs"
 msgstr "चेंजलॉग"
@@ -88,16 +94,21 @@ msgstr "चेंजलॉग"
 msgid "Choose a picture"
 msgstr "चित्र निवडा"
 
+#: src/features/changelog/pages.tsx
+msgid "Clear filters"
+msgstr "फिल्टर साफ करा"
+
 #: src/features/changelog/SettingsTab.tsx
 msgid "Counts page views of the changelog without cookies."
 msgstr "कुकीशिवाय चेंजलॉगचे पेज व्ह्यू मोजतो."
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/CreateChangelogDialog.tsx
 #: src/features/changelog/pages.tsx
 msgid "Create changelog"
 msgstr "चेंजलॉग तयार करा"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "Create changelog ({createKey})"
 msgstr "चेंजलॉग तयार करा ({createKey})"
@@ -162,6 +173,11 @@ msgstr "मसुदा सादर केला. मालक किंवा 
 msgid "Drafts"
 msgstr "ड्राफ्ट"
 
+#: src/features/changelog/ChangelogsPage.tsx
+msgid "Each product has one changelog. Owners and admins create and publish them."
+msgstr "प्रत्येक उत्पादनाचा एक चेंजलॉग असतो. मालक आणि अ‍ॅडमिन तो तयार करतात आणि प्रकाशित करतात."
+
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "Entries"
 msgstr "नोंदी"
@@ -173,6 +189,14 @@ msgstr "नोंदी आणि भाषांतरे त्याच्य
 #: src/features/changelog/SettingsTab.tsx
 msgid "Entries can be written and published in these languages. Visitors see their own when it exists."
 msgstr "या भाषांमध्ये नोंदी लिहिता आणि प्रकाशित करता येतात. अभ्यागतांना त्यांची स्वतःची भाषा दिसते, असल्यास."
+
+#: src/features/changelog/pages.tsx
+msgid "Entries show on the public page once they are published."
+msgstr "नोंदी प्रकाशित झाल्यावर सार्वजनिक पानावर दिसतात."
+
+#: src/features/changelog/pages.tsx
+msgid "Entries you have not published yet show up here."
+msgstr "तुम्ही अजून प्रकाशित न केलेल्या नोंदी इथे दिसतात."
 
 #: src/features/changelog/EntryEditor.tsx
 msgid "Every translation is deleted. Broadcasts made from it stay."
@@ -208,6 +232,7 @@ msgid "Keep mine"
 msgstr "माझे ठेवा"
 
 #: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/pages.tsx
 msgid "Label"
 msgstr "लेबल"
 
@@ -219,9 +244,11 @@ msgstr "लेबल"
 #: src/features/changelog/EntriesTab.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/MailDialog.tsx
+#: src/features/changelog/pages.tsx
 msgid "Language"
 msgstr "भाषा"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/SettingsTab.tsx
 msgid "Languages"
 msgstr "भाषा"
@@ -248,6 +275,10 @@ msgid "Main language"
 msgstr "मुख्य भाषा"
 
 #: src/features/changelog/EntryEditor.tsx
+msgid "Mark up to date"
+msgstr "अद्ययावत म्हणून चिन्हांकित करा"
+
+#: src/features/changelog/EntryEditor.tsx
 msgid "More"
 msgstr "आणखी"
 
@@ -272,7 +303,7 @@ msgstr "नवीन पोस्ट"
 msgid "New post ({newKey})"
 msgstr "नवीन पोस्ट ({newKey})"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 msgid "No changelog yet. Owners and admins create it."
 msgstr "अजून चेंजलॉग नाही. तो मालक आणि अ‍ॅडमिन तयार करतात."
 
@@ -281,12 +312,9 @@ msgid "No entries yet. Tell your customers what changed in your latest release."
 msgstr "अजून नोंदी नाहीत. तुमच्या ग्राहकांना सांगा की तुमच्या नवीनतम रिलीझमध्ये काय बदलले."
 
 #: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/pages.tsx
 msgid "No entry matches."
 msgstr "कोणतीही नोंद जुळत नाही."
-
-#: src/features/changelog/ChangelogColumn.tsx
-msgid "No inbox to show a changelog for."
-msgstr "चेंजलॉग दाखवता येईल असा कोणताही इनबॉक्स नाही."
 
 #: src/features/changelog/EntriesTab.tsx
 msgid "No text yet."
@@ -340,6 +368,10 @@ msgstr "या भाषांतराच्या वेब पत्त्य
 msgid "Pick a time in the next year, in your time zone, {zone}."
 msgstr "पुढच्या एका वर्षातील वेळ निवडा, तुमच्या टाइम झोनमध्ये, {zone}."
 
+#: src/features/changelog/pages.tsx
+msgid "Pick a time when you write an entry and it goes public by itself."
+msgstr "नोंद लिहिताना वेळ निवडा, ती आपोआप सार्वजनिक होईल."
+
 #: src/features/changelog/MailDialog.tsx
 msgid "Pick up to 10 lists of this inbox."
 msgstr "या इनबॉक्सच्या जास्तीत जास्त 10 लिस्ट निवडा."
@@ -348,6 +380,7 @@ msgstr "या इनबॉक्सच्या जास्तीत जास
 msgid "Picture"
 msgstr "चित्र"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 #: src/features/changelog/PreviewDialog.tsx
@@ -370,6 +403,7 @@ msgstr "नोंदीचे प्रीव्ह्यू"
 msgid "Public address"
 msgstr "सार्वजनिक पत्ता"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 msgid "Publish"
@@ -380,11 +414,19 @@ msgstr "प्रकाशित करा"
 msgid "Publish ({publishKey})"
 msgstr "प्रकाशित करा ({publishKey})"
 
+#: src/features/changelog/pages.tsx
+msgid "Publish it now or schedule it again."
+msgstr "ती आत्ता प्रकाशित करा किंवा पुन्हा शेड्यूल करा."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Publish now"
+msgstr "आत्ता प्रकाशित करा"
+
 #: src/features/changelog/ScheduleDialog.tsx
 msgid "Publish on"
 msgstr "प्रकाशनाची तारीख"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 #: src/features/changelog/text.tsx
@@ -393,6 +435,7 @@ msgstr "प्रकाशित"
 
 #: src/features/changelog/EntriesTab.tsx
 #: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
 msgid "Publishing on schedule failed."
 msgstr "शेड्यूल केलेले प्रकाशन अयशस्वी झाले."
 
@@ -403,6 +446,10 @@ msgstr "तुमच्या उत्पादनांमध्ये आण�
 #: src/features/changelog/EntryEditor.tsx
 msgid "Remove"
 msgstr "काढा"
+
+#: src/features/changelog/pages.tsx
+msgid "Review"
+msgstr "तपासा"
 
 #: src/features/changelog/EntryEditor.tsx
 msgid "Save now"
@@ -422,23 +469,33 @@ msgstr "सेव्ह होत आहे…"
 msgid "Schedule"
 msgstr "शेड्यूल करा"
 
+#: src/features/changelog/EntryEditor.tsx
+msgid "Schedule again"
+msgstr "पुन्हा शेड्यूल करा"
+
 #: src/features/changelog/ScheduleDialog.tsx
 msgid "Schedule this entry"
 msgstr "ही नोंद शेड्यूल करा"
 
 #: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
 #: src/features/changelog/text.tsx
 msgid "Scheduled"
 msgstr "शेड्यूल केले"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 msgid "Scheduled: {scheduled}"
 msgstr "शेड्यूल केलेल्या: {scheduled}"
+
+#: src/features/changelog/pages.tsx
+msgid "Search entries"
+msgstr "नोंदी शोधा"
 
 #: src/features/changelog/MailDialog.tsx
 msgid "Send through"
 msgstr "याद्वारे पाठवा"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "Settings"
 msgstr "सेटिंग्ज"
@@ -446,6 +503,10 @@ msgstr "सेटिंग्ज"
 #: src/features/changelog/EntryEditor.tsx
 msgid "Show"
 msgstr "दाखवा"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Show the original"
+msgstr "मूळ दाखवा"
 
 #: src/features/changelog/EntriesTab.tsx
 msgid "Shown in the chat bubble, the apps and on {host}."
@@ -482,6 +543,10 @@ msgstr "मसुदा सादर करा"
 #: src/features/changelog/EntryEditor.tsx
 msgid "Submit draft ({publishKey})"
 msgstr "मसुदा सादर करा ({publishKey})"
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Subscribed: {subscribed}"
+msgstr "सदस्य: {subscribed}"
 
 #: src/features/changelog/CreateChangelogDialog.tsx
 msgid "Tell the customers of {inboxName} what is new, improved and fixed. It stays unpublished until you publish it."
@@ -527,6 +592,10 @@ msgstr "मुख्य भाषेत या नोंदीचा अजू�
 msgid "The member who scheduled it may no longer publish."
 msgstr "ज्या सदस्याने ती शेड्यूल केली तो कदाचित आता प्रकाशित करू शकत नाही."
 
+#: src/features/changelog/EntryEditor.tsx
+msgid "The original changed after this translation was saved."
+msgstr "हे भाषांतर सेव्ह केल्यानंतर मूळ मजकूर बदलला."
+
 #: src/features/changelog/PreviewDialog.tsx
 msgid "The page as visitors would see it, drafts included. Only your team sees this."
 msgstr "अभ्यागतांना दिसेल तसे पेज, ड्राफ्टसह. हे फक्त तुमची टीम पाहते."
@@ -534,6 +603,11 @@ msgstr "अभ्यागतांना दिसेल तसे पेज, �
 #: src/features/changelog/EntryEditor.tsx
 msgid "The title needs at least 3 characters"
 msgstr "शीर्षकात किमान 3 अक्षरे हवीत"
+
+#. placeholder {0}: formatDateTime(entry.publish_at, i18n.locale)
+#: src/features/changelog/EntryEditor.tsx
+msgid "This entry is scheduled for {0}."
+msgstr "ही नोंद {0} साठी शेड्यूल केली आहे."
 
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/text.tsx
@@ -569,6 +643,11 @@ msgstr "शीर्षक"
 msgid "Translation deleted"
 msgstr "भाषांतर हटवले"
 
+#: src/features/changelog/pages.tsx
+msgid "Try another word, label or language."
+msgstr "दुसरा शब्द, लेबल किंवा भाषा वापरून पहा."
+
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 msgid "Unpublish"
@@ -582,9 +661,8 @@ msgstr "प्रकाशन मागे घ्या ({publishKey})"
 msgid "Unpublish this entry?"
 msgstr "या नोंदीचे प्रकाशन मागे घ्यायचे?"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
-#: src/features/changelog/pages.tsx
 msgid "Unpublished"
 msgstr "अप्रकाशित"
 
@@ -616,11 +694,12 @@ msgstr "त्यांची आवृत्ती वापरा"
 msgid "View"
 msgstr "पाहा"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "View changelog"
 msgstr "चेंजलॉग पहा"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntriesTab.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
@@ -638,6 +717,10 @@ msgstr "लिहा"
 #: src/features/changelog/text.tsx
 msgid "Write the entry in the main language before publishing."
 msgstr "प्रकाशित करण्यापूर्वी नोंद मुख्य भाषेत लिहा."
+
+#: src/features/changelog/pages.tsx
+msgid "Write the first entry with New post."
+msgstr "नवी पोस्ट वापरून पहिली नोंद लिहा."
 
 #: src/features/changelog/EntryEditor.tsx
 msgid "Write what changed in Markdown…"

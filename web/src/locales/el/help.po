@@ -77,8 +77,8 @@ msgid "Another help center already uses this address, now or before."
 msgstr "Άλλο κέντρο βοήθειας χρησιμοποιεί αυτή τη διεύθυνση, τώρα ή παλιότερα."
 
 #: src/features/help/pages.tsx
-msgid "Answer common questions once, in writing. Each product gets its own help center with articles, collections and a report of what people search for."
-msgstr "Απαντήστε μία φορά στις συχνές ερωτήσεις, γραπτά. Κάθε προϊόν έχει το δικό του κέντρο βοήθειας με άρθρα, συλλογές και μια αναφορά για το τι αναζητούν οι άνθρωποι."
+msgid "Answer common questions once, in writing. Each product gets its own help center with articles, collections and a report of what people search for. Pages are hosted by Yuva, so there is nothing to install on your site."
+msgstr "Απαντήστε στις συχνές ερωτήσεις μία φορά, γραπτά. Κάθε προϊόν έχει το δικό του κέντρο βοήθειας με άρθρα, συλλογές και αναφορά για το τι ψάχνουν οι άνθρωποι. Τις σελίδες τις φιλοξενεί η Yuva, δεν χρειάζεται να εγκαταστήσετε τίποτα στον ιστότοπό σας."
 
 #: src/features/help/pages.tsx
 msgid "Answer common questions once, in writing. Pick an inbox’s help center to write articles, group them in collections and see what customers search for."
@@ -162,6 +162,7 @@ msgstr "Λίστα με κουκκίδες"
 msgid "Cancel"
 msgstr "Ακύρωση"
 
+#: src/features/help/ArticleEditor.tsx
 #: src/features/help/ArticlesTab.tsx
 msgid "Changed"
 msgstr "Άλλαξε"
@@ -226,11 +227,6 @@ msgstr "Δημιουργία κέντρου βοήθειας"
 #: src/features/help/HelpColumn.tsx
 msgid "Create help center ({newKey})"
 msgstr "Δημιουργία κέντρου βοήθειας ({newKey})"
-
-#. placeholder {0}: inbox.name
-#: src/features/help/pages.tsx
-msgid "Create one for {0}"
-msgstr "Δημιουργήστε ένα για το {0}"
 
 #: src/features/help/CollectionsTab.tsx
 #: src/features/help/SettingsTab.tsx
@@ -342,11 +338,16 @@ msgstr "Ομαδοποιήστε τα άρθρα ώστε οι επισκέπτ�
 msgid "Heading"
 msgstr "Επικεφαλίδα"
 
+#: src/features/help/CenterBar.tsx
 #: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 #: src/features/help/SettingsTab.tsx
 msgid "Help center"
 msgstr "Κέντρο βοήθειας"
+
+#: src/features/help/pages.tsx
+msgid "Help center created. Write the first article, then publish it."
+msgstr "Το κέντρο βοήθειας δημιουργήθηκε. Γράψτε το πρώτο άρθρο και μετά δημοσιεύστε το."
 
 #: src/features/help/SettingsTab.tsx
 msgid "Help center deleted"
@@ -445,7 +446,10 @@ msgid "Main language"
 msgstr "Κύρια γλώσσα"
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+msgid "Mark up to date"
+msgstr "Σήμανση ως ενημερωμένη"
+
+#: src/features/help/ArticleEditor.tsx
 msgid "More"
 msgstr "Περισσότερα"
 
@@ -522,6 +526,11 @@ msgstr "Δεν υπάρχουν πρόχειρα. Ό,τι έχει γραφτε�
 msgid "No earlier versions yet."
 msgstr "Δεν υπάρχουν προηγούμενες εκδόσεις ακόμη."
 
+#. placeholder {0}: target.inbox.name
+#: src/features/help/pages.tsx
+msgid "No help center for {0} yet"
+msgstr "Δεν υπάρχει ακόμη κέντρο βοήθειας για το {0}"
+
 #: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 msgid "No help center yet. Owners and admins create it."
@@ -540,6 +549,7 @@ msgstr "Κανένα"
 msgid "not named"
 msgstr "χωρίς όνομα"
 
+#: src/features/help/ArticleEditor.tsx
 #: src/features/help/ArticlesTab.tsx
 msgid "Not written"
 msgstr "Δεν γράφτηκε"
@@ -555,6 +565,10 @@ msgstr "από {answers} απαντήσεις"
 #: src/features/help/SettingsTab.tsx
 msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish and unpublish too."
 msgstr "Ανενεργό: οι πράκτορες γράφουν πρόχειρα και τα υποβάλλουν, οι ιδιοκτήτες και οι διαχειριστές δημοσιεύουν. Ενεργό: και οι πράκτορες με πρόσβαση στα εισερχόμενα δημοσιεύουν και αποδημοσιεύουν."
+
+#: src/features/help/SettingsTab.tsx
+msgid "On: anyone with the address can read the help center. Off: only your team can preview it."
+msgstr "Ενεργό: οποιοσδήποτε έχει τη διεύθυνση μπορεί να διαβάσει το κέντρο βοήθειας. Ανενεργό: μόνο η ομάδα σας μπορεί να το δει σε προεπισκόπηση."
 
 #: src/features/help/ArticleEditor.tsx
 msgid "One path per line, such as /billing/*. The chat widget suggests this article on matching pages."
@@ -618,6 +632,10 @@ msgstr "Προεπισκόπηση"
 msgid "Preview ({alt} P)"
 msgstr "Προεπισκόπηση ({alt} P)"
 
+#: src/features/help/pages.tsx
+msgid "Preview ({previewKey})"
+msgstr "Προεπισκόπηση ({previewKey})"
+
 #. placeholder {0}: center.name
 #: src/features/help/pages.tsx
 msgid "Preview of {0}"
@@ -632,22 +650,27 @@ msgid "Public address"
 msgstr "Δημόσια διεύθυνση"
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "Publish"
 msgstr "Δημοσίευση"
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "Publish ({publishKey})"
 msgstr "Δημοσίευση ({publishKey})"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/CenterBar.tsx
 #: src/features/help/HelpColumn.tsx
-#: src/features/help/pages.tsx
 #: src/features/help/Revisions.tsx
+#: src/features/help/SettingsTab.tsx
 #: src/features/help/text.tsx
 msgid "Published"
 msgstr "Δημοσιευμένο"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Publishing"
+msgstr "Δημοσίευση"
 
 #: src/features/help/text.tsx
 msgid "Question mark"
@@ -758,6 +781,10 @@ msgstr "Ασπίδα"
 msgid "Show"
 msgstr "Εμφάνιση"
 
+#: src/features/help/ArticleEditor.tsx
+msgid "Show original"
+msgstr "Εμφάνιση πρωτοτύπου"
+
 #: src/features/help/SettingsTab.tsx
 msgid "Shown under the name on the home page."
 msgstr "Εμφανίζεται κάτω από το όνομα στην αρχική σελίδα."
@@ -831,6 +858,10 @@ msgid "The main language has no text for this article yet."
 msgstr "Η κύρια γλώσσα δεν έχει ακόμη κείμενο για αυτό το άρθρο."
 
 #: src/features/help/ArticleEditor.tsx
+msgid "The original changed after this translation was written. Compare them, then mark it up to date."
+msgstr "Το πρωτότυπο άλλαξε μετά τη συγγραφή αυτής της μετάφρασης. Συγκρίνετέ τα και μετά σημάνετε τη μετάφραση ως ενημερωμένη."
+
+#: src/features/help/ArticleEditor.tsx
 msgid "The page stops working for visitors. The draft stays, and you can publish it again."
 msgstr "Η σελίδα παύει να λειτουργεί για τους επισκέπτες. Το πρόχειρο μένει και μπορείτε να το δημοσιεύσετε ξανά."
 
@@ -880,15 +911,24 @@ msgid "Type a word to search for."
 msgstr "Πληκτρολογήστε μια λέξη για αναζήτηση."
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "Unpublish"
 msgstr "Αποδημοσίευση"
+
+#: src/features/help/CenterBar.tsx
+msgid "Unpublish ({publishKey})"
+msgstr "Αποδημοσίευση ({publishKey})"
+
+#: src/features/help/CenterBar.tsx
+msgid "Unpublish this help center?"
+msgstr "Να αποδημοσιευτεί αυτό το κέντρο βοήθειας;"
 
 #: src/features/help/ArticleEditor.tsx
 msgid "Unpublish this translation?"
 msgstr "Αποδημοσίευση αυτής της μετάφρασης;"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/CenterBar.tsx
 #: src/features/help/HelpColumn.tsx
 msgid "Unpublished"
 msgstr "Αδημοσίευτο"
@@ -896,10 +936,6 @@ msgstr "Αδημοσίευτο"
 #: src/features/help/text.tsx
 msgid "Unpublished changes"
 msgstr "Αδημοσίευτες αλλαγές"
-
-#: src/features/help/pages.tsx
-msgid "Unpublished, only your team can preview it"
-msgstr "Αδημοσίευτο, μόνο η ομάδα σας μπορεί να το δει σε προεπισκόπηση"
 
 #: src/features/help/ArticleEditor.tsx
 msgid "Unsaved changes"
@@ -929,11 +965,11 @@ msgstr "Η έκδοση επαναφέρθηκε στο πρόχειρο"
 msgid "View"
 msgstr "Προβολή"
 
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "View site"
 msgstr "Προβολή ιστότοπου"
 
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "View site ({openKey})"
 msgstr "Προβολή ιστότοπου ({openKey})"
 
@@ -945,13 +981,13 @@ msgstr "Προβολές"
 msgid "Views · 7 days"
 msgstr "Προβολές · 7 ημέρες"
 
+#: src/features/help/CenterBar.tsx
+msgid "Visitors can no longer open it and the chat widget stops suggesting its articles. Your articles stay as they are."
+msgstr "Οι επισκέπτες δεν θα μπορούν πια να το ανοίξουν και το widget συνομιλίας θα σταματήσει να προτείνει τα άρθρα του. Τα άρθρα σας μένουν όπως είναι."
+
 #: src/features/help/ReportTab.tsx
 msgid "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
 msgstr "Τι διαβάζουν και τι αναζητούν οι επισκέπτες. Οι προβολές είναι κατά προσέγγιση και οι αριθμοί φτάνουν εδώ μέσα σε ένα λεπτό."
-
-#: src/features/help/SettingsTab.tsx
-msgid "Who can publish"
-msgstr "Ποιος μπορεί να δημοσιεύει"
 
 #: src/features/help/ReportTab.tsx
 msgid "Words visitors typed that found nothing. A new article for each is the fastest fix."
@@ -965,6 +1001,10 @@ msgstr "Γραφή"
 #: src/features/help/ArticleEditor.tsx
 msgid "Write the answer in Markdown…"
 msgstr "Γράψτε την απάντηση σε Markdown…"
+
+#: src/features/help/CenterBar.tsx
+msgid "Written here, shown on pages Yuva hosts, searched from the chat widget and the reply box. Documentation pages on your own site live under <0>Docs</0>."
+msgstr "Γράφεται εδώ, εμφανίζεται σε σελίδες που φιλοξενεί η Yuva και αναζητείται από το widget συνομιλίας και το πλαίσιο απάντησης. Οι σελίδες τεκμηρίωσης στον δικό σας ιστότοπο βρίσκονται στο <0>Docs</0>."
 
 #: src/features/help/SettingsTab.tsx
 msgid "Your product."

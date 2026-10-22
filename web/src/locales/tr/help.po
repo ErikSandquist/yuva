@@ -77,8 +77,8 @@ msgid "Another help center already uses this address, now or before."
 msgstr "Başka bir yardım merkezi bu adresi şimdi veya daha önce kullanıyor."
 
 #: src/features/help/pages.tsx
-msgid "Answer common questions once, in writing. Each product gets its own help center with articles, collections and a report of what people search for."
-msgstr "Sık sorulan soruları bir kez, yazılı olarak yanıtlayın. Her ürünün makaleleri, koleksiyonları ve insanların ne aradığını gösteren bir raporu olan kendi yardım merkezi vardır."
+msgid "Answer common questions once, in writing. Each product gets its own help center with articles, collections and a report of what people search for. Pages are hosted by Yuva, so there is nothing to install on your site."
+msgstr "Sık sorulan soruları bir kez, yazılı olarak yanıtlayın. Her ürünün makaleleri, koleksiyonları ve insanların ne aradığını gösteren bir raporu olan kendi yardım merkezi vardır. Sayfaları Yuva barındırır, sitenize kurulacak bir şey yoktur."
 
 #: src/features/help/pages.tsx
 msgid "Answer common questions once, in writing. Pick an inbox’s help center to write articles, group them in collections and see what customers search for."
@@ -162,6 +162,7 @@ msgstr "Madde işaretli liste"
 msgid "Cancel"
 msgstr "Vazgeç"
 
+#: src/features/help/ArticleEditor.tsx
 #: src/features/help/ArticlesTab.tsx
 msgid "Changed"
 msgstr "Değişti"
@@ -226,11 +227,6 @@ msgstr "Yardım merkezi oluştur"
 #: src/features/help/HelpColumn.tsx
 msgid "Create help center ({newKey})"
 msgstr "Yardım merkezi oluştur ({newKey})"
-
-#. placeholder {0}: inbox.name
-#: src/features/help/pages.tsx
-msgid "Create one for {0}"
-msgstr "{0} için bir tane oluşturun"
 
 #: src/features/help/CollectionsTab.tsx
 #: src/features/help/SettingsTab.tsx
@@ -342,11 +338,16 @@ msgstr "Ziyaretçilerin gezinebilmesi için makaleleri gruplayın. Bir koleksiyo
 msgid "Heading"
 msgstr "Başlık"
 
+#: src/features/help/CenterBar.tsx
 #: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 #: src/features/help/SettingsTab.tsx
 msgid "Help center"
 msgstr "Yardım merkezi"
+
+#: src/features/help/pages.tsx
+msgid "Help center created. Write the first article, then publish it."
+msgstr "Yardım merkezi oluşturuldu. İlk makaleyi yazın, sonra yayınlayın."
 
 #: src/features/help/SettingsTab.tsx
 msgid "Help center deleted"
@@ -445,7 +446,10 @@ msgid "Main language"
 msgstr "Ana dil"
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+msgid "Mark up to date"
+msgstr "Güncel olarak işaretle"
+
+#: src/features/help/ArticleEditor.tsx
 msgid "More"
 msgstr "Daha fazla"
 
@@ -522,6 +526,11 @@ msgstr "Taslak yok. Yazılan her şey yayımlandı."
 msgid "No earlier versions yet."
 msgstr "Henüz önceki sürüm yok."
 
+#. placeholder {0}: target.inbox.name
+#: src/features/help/pages.tsx
+msgid "No help center for {0} yet"
+msgstr "{0} için henüz yardım merkezi yok"
+
 #: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 msgid "No help center yet. Owners and admins create it."
@@ -540,6 +549,7 @@ msgstr "Yok"
 msgid "not named"
 msgstr "adlandırılmadı"
 
+#: src/features/help/ArticleEditor.tsx
 #: src/features/help/ArticlesTab.tsx
 msgid "Not written"
 msgstr "Yazılmadı"
@@ -555,6 +565,10 @@ msgstr "{answers} yanıttan"
 #: src/features/help/SettingsTab.tsx
 msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish and unpublish too."
 msgstr "Kapalı: temsilciler taslak yazıp gönderir, sahipler ve yöneticiler yayımlar. Açık: gelen kutusuna erişimi olan temsilciler de yayımlar ve yayından kaldırır."
+
+#: src/features/help/SettingsTab.tsx
+msgid "On: anyone with the address can read the help center. Off: only your team can preview it."
+msgstr "Açık: adresi bilen herkes yardım merkezini okuyabilir. Kapalı: yalnızca ekibiniz önizleyebilir."
 
 #: src/features/help/ArticleEditor.tsx
 msgid "One path per line, such as /billing/*. The chat widget suggests this article on matching pages."
@@ -618,6 +632,10 @@ msgstr "Önizleme"
 msgid "Preview ({alt} P)"
 msgstr "Önizleme ({alt} P)"
 
+#: src/features/help/pages.tsx
+msgid "Preview ({previewKey})"
+msgstr "Önizleme ({previewKey})"
+
 #. placeholder {0}: center.name
 #: src/features/help/pages.tsx
 msgid "Preview of {0}"
@@ -632,22 +650,27 @@ msgid "Public address"
 msgstr "Herkese açık adres"
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "Publish"
 msgstr "Yayımla"
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "Publish ({publishKey})"
 msgstr "Yayımla ({publishKey})"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/CenterBar.tsx
 #: src/features/help/HelpColumn.tsx
-#: src/features/help/pages.tsx
 #: src/features/help/Revisions.tsx
+#: src/features/help/SettingsTab.tsx
 #: src/features/help/text.tsx
 msgid "Published"
 msgstr "Yayında"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Publishing"
+msgstr "Yayın"
 
 #: src/features/help/text.tsx
 msgid "Question mark"
@@ -758,6 +781,10 @@ msgstr "Kalkan"
 msgid "Show"
 msgstr "Göster"
 
+#: src/features/help/ArticleEditor.tsx
+msgid "Show original"
+msgstr "Orijinali göster"
+
 #: src/features/help/SettingsTab.tsx
 msgid "Shown under the name on the home page."
 msgstr "Ana sayfada adın altında gösterilir."
@@ -831,6 +858,10 @@ msgid "The main language has no text for this article yet."
 msgstr "Ana dilde bu makale için henüz metin yok."
 
 #: src/features/help/ArticleEditor.tsx
+msgid "The original changed after this translation was written. Compare them, then mark it up to date."
+msgstr "Bu çeviri yazıldıktan sonra orijinal değişti. İkisini karşılaştırın, sonra güncel olarak işaretleyin."
+
+#: src/features/help/ArticleEditor.tsx
 msgid "The page stops working for visitors. The draft stays, and you can publish it again."
 msgstr "Sayfa ziyaretçiler için çalışmayı bırakır. Taslak kalır ve yeniden yayımlayabilirsiniz."
 
@@ -880,15 +911,24 @@ msgid "Type a word to search for."
 msgstr "Aramak için bir sözcük yazın."
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "Unpublish"
 msgstr "Yayından kaldır"
+
+#: src/features/help/CenterBar.tsx
+msgid "Unpublish ({publishKey})"
+msgstr "Yayından kaldır ({publishKey})"
+
+#: src/features/help/CenterBar.tsx
+msgid "Unpublish this help center?"
+msgstr "Bu yardım merkezi yayından kaldırılsın mı?"
 
 #: src/features/help/ArticleEditor.tsx
 msgid "Unpublish this translation?"
 msgstr "Bu çeviri yayından kaldırılsın mı?"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/CenterBar.tsx
 #: src/features/help/HelpColumn.tsx
 msgid "Unpublished"
 msgstr "Yayında değil"
@@ -896,10 +936,6 @@ msgstr "Yayında değil"
 #: src/features/help/text.tsx
 msgid "Unpublished changes"
 msgstr "Yayımlanmamış değişiklikler"
-
-#: src/features/help/pages.tsx
-msgid "Unpublished, only your team can preview it"
-msgstr "Yayında değil, yalnızca ekibiniz önizleyebilir"
 
 #: src/features/help/ArticleEditor.tsx
 msgid "Unsaved changes"
@@ -929,11 +965,11 @@ msgstr "Sürüm taslağa geri yüklendi"
 msgid "View"
 msgstr "Görüntüle"
 
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "View site"
 msgstr "Siteyi görüntüle"
 
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "View site ({openKey})"
 msgstr "Siteyi görüntüle ({openKey})"
 
@@ -945,13 +981,13 @@ msgstr "Görüntüleme"
 msgid "Views · 7 days"
 msgstr "Görüntüleme · 7 gün"
 
+#: src/features/help/CenterBar.tsx
+msgid "Visitors can no longer open it and the chat widget stops suggesting its articles. Your articles stay as they are."
+msgstr "Ziyaretçiler artık açamaz ve sohbet widget'ı makalelerini önermeyi bırakır. Makaleleriniz olduğu gibi kalır."
+
 #: src/features/help/ReportTab.tsx
 msgid "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
 msgstr "Ziyaretçilerin okuduğu ve aradığı şeyler. Görüntülemeler yaklaşıktır ve sayılar bir dakika içinde bu sayfaya ulaşır."
-
-#: src/features/help/SettingsTab.tsx
-msgid "Who can publish"
-msgstr "Kim yayımlayabilir"
 
 #: src/features/help/ReportTab.tsx
 msgid "Words visitors typed that found nothing. A new article for each is the fastest fix."
@@ -965,6 +1001,10 @@ msgstr "Yaz"
 #: src/features/help/ArticleEditor.tsx
 msgid "Write the answer in Markdown…"
 msgstr "Yanıtı Markdown ile yazın…"
+
+#: src/features/help/CenterBar.tsx
+msgid "Written here, shown on pages Yuva hosts, searched from the chat widget and the reply box. Documentation pages on your own site live under <0>Docs</0>."
+msgstr "Burada yazılır, Yuva'nın barındırdığı sayfalarda gösterilir, sohbet widget'ında ve yanıt kutusunda aranır. Kendi sitenizdeki dokümantasyon sayfaları <0>Dokümanlar</0> altındadır."
 
 #: src/features/help/SettingsTab.tsx
 msgid "Your product."

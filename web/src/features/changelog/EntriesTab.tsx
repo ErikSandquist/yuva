@@ -271,7 +271,11 @@ export function EntryRow({
           </span>
         )}
       </div>
-      {locales && changelog.locales.length > 1 && <LocaleChips e={e} changelog={changelog} />}
+      {locales && changelog.locales.length > 1 && (
+        <span className="phone:hidden">
+          <LocaleChips e={e} changelog={changelog} />
+        </span>
+      )}
       <Pill tone={pillOf[e.state]} data-testid="entry-state" data-state={e.state}>
         {stateText[e.state]}
       </Pill>

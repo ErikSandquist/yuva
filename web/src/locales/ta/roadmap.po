@@ -7,6 +7,10 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: ta\n"
 
+#: src/features/roadmap/CreateBoardDialog.tsx
+msgid "{inboxName} has no web chat channel. Add one first, because the public board embeds it."
+msgstr "{inboxName} க்கு இணைய அரட்டை சேனல் இல்லை. பொது பலகை அதை உட்பொதிப்பதால் முதலில் ஒன்றைச் சேர்க்கவும்."
+
 #: src/features/roadmap/Board.tsx
 msgid "{linked, plural, one {# feedback} other {# feedback}}"
 msgstr "{linked, plural, one {# கருத்து} other {# கருத்துகள்}}"
@@ -29,9 +33,25 @@ msgid "A reader's posts wait for a member until one of theirs is approved. Signe
 msgstr "வாசகரின் இடுகைகள், அவருடைய ஒன்று ஒப்புதல் பெறும் வரை உறுப்பினருக்காகக் காத்திருக்கும். உங்கள் ஆப்பில் உள்நுழைந்த பயனர்கள் உடனே வெளியிடுகிறார்கள்."
 
 #: src/features/roadmap/CreateBoardDialog.tsx
+msgid "Add a web chat channel"
+msgstr "இணைய அரட்டை சேனலைச் சேர்"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
 #: src/features/roadmap/Settings.tsx
 msgid "Address"
 msgstr "முகவரி"
+
+#: src/features/roadmap/BoardBar.tsx
+msgid "All boards"
+msgstr "அனைத்து பலகைகள்"
+
+#: src/features/roadmap/Settings.tsx
+msgid "All changes saved."
+msgstr "அனைத்து மாற்றங்களும் சேமிக்கப்பட்டன."
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "All feedback from {inboxName} that fits is already linked."
+msgstr "{inboxName} இன் பொருந்தும் அனைத்து கருத்துகளும் ஏற்கனவே இணைக்கப்பட்டுள்ளன."
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Already linked"
@@ -89,13 +109,16 @@ msgstr "குக்கீகள் இல்லாமல் பொதுப் 
 
 #: src/features/roadmap/CreateBoardDialog.tsx
 #: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
 msgid "Create board"
 msgstr "பலகையை உருவாக்கு"
 
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Create board ({newKey})"
 msgstr "பலகையை உருவாக்கு ({newKey})"
+
+#: src/features/roadmap/BoardBar.tsx
+msgid "Create board for {name}"
+msgstr "{name} க்கான பலகையை உருவாக்கு"
 
 #: src/features/roadmap/NewIdeaDialog.tsx
 msgid "Create idea"
@@ -123,17 +146,21 @@ msgstr "பலகையை அதன் யோசனைகள், வாக்�
 msgid "Description"
 msgstr "விளக்கம்"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Dismiss"
+msgstr "மூடு"
+
 #: src/features/roadmap/Board.tsx
 msgid "Done"
 msgstr "முடிந்தது"
 
-#: src/features/roadmap/MoveDialog.tsx
-msgid "Every linked feedback that does not have it yet gets the progress {progress}. Linked feedback: {linked}"
-msgstr "இன்னும் அவ்வாறு இல்லாத ஒவ்வொரு இணைக்கப்பட்ட கருத்தின் முன்னேற்றமும் {progress} ஆகும். இணைக்கப்பட்ட கருத்துகள்: {linked}"
-
 #: src/features/roadmap/Settings.tsx
 msgid "Everyone's posts are published at once, except those of authors you marked as spam."
 msgstr "ஸ்பேம் எனக் குறித்த ஆசிரியர்களைத் தவிர, அனைவரின் இடுகைகளும் உடனே வெளியிடப்படும்."
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Good news: “{title}” has shipped. Thank you for asking for it."
+msgstr "நற்செய்தி: “{title}” வெளியிடப்பட்டது. கேட்டதற்கு நன்றி."
 
 #: src/features/roadmap/Board.tsx
 msgid "Hidden"
@@ -155,21 +182,30 @@ msgstr "உங்கள் வாடிக்கையாளர்கள் வ�
 msgid "Ideas, votes and stages for {inboxName}, with the feedback behind each idea. It stays private until you make it public."
 msgstr "{inboxName} க்கான யோசனைகள், வாக்குகள், கட்டங்கள், ஒவ்வொரு யோசனையின் பின்னுள்ள கருத்துகளுடன். நீங்கள் பொதுவாக்கும் வரை இது தனிப்பட்டதாகவே இருக்கும்."
 
-#: src/features/roadmap/RoadmapColumn.tsx
-msgid "Ideas: {ideas}"
-msgstr "யோசனைகள்: {ideas}"
-
 #: src/features/roadmap/NewIdeaDialog.tsx
 msgid "It goes into Ideas on the board, where customers can vote on it."
 msgstr "இது பலகையில் உள்ள யோசனைகளில் சேரும்; அங்கு வாடிக்கையாளர்கள் வாக்களிக்கலாம்."
 
-#: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/NewIdeaDialog.tsx
+msgid "It goes into Ideas on the board. The board is private, so only your team sees it."
+msgstr "இது பலகையின் யோசனைகள் நிலைக்குச் செல்கிறது. பலகை தனிப்பட்டது, எனவே உங்கள் குழு மட்டுமே பார்க்கும்."
+
+#: src/features/roadmap/IdeaFeedback.tsx
 msgid "It was unlinked from the idea."
 msgstr "யோசனையிலிருந்து இணைப்பு நீக்கப்பட்டது."
 
 #: src/features/roadmap/Settings.tsx
 msgid "Its ideas, votes, replies and stage history are deleted with it."
 msgstr "இதன் யோசனைகள், வாக்குகள், பதில்கள், கட்டங்களின் வரலாறு ஆகியவையும் இதனுடன் நீக்கப்படும்."
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgctxt "link feedback to the idea"
+msgid "Link"
+msgstr "இணை"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Link feedback"
+msgstr "கருத்தை இணை"
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Link this feedback to an idea…"
@@ -179,13 +215,21 @@ msgstr "இந்தக் கருத்தை ஒரு யோசனையு
 msgid "Link to an idea"
 msgstr "ஒரு யோசனையுடன் இணை"
 
-#: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Linked"
+msgstr "இணைக்கப்பட்டது"
+
+#: src/features/roadmap/IdeaFeedback.tsx
 msgid "Linked feedback"
 msgstr "இணைக்கப்பட்ட கருத்துகள்"
 
 #: src/features/roadmap/IdeaPane.tsx
 msgid "Linked feedback set to {progress}: {set}"
 msgstr "இணைக்கப்பட்ட கருத்துகள் {progress} ஆக அமைக்கப்பட்டன: {set}"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Linked feedback that gets the progress {progress}: {gets} of {linked}."
+msgstr "{progress} முன்னேற்றம் பெறும் இணைக்கப்பட்ட கருத்துகள்: {linked} இல் {gets}."
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Linked to {title}"
@@ -195,19 +239,19 @@ msgstr "{title} உடன் இணைக்கப்பட்டது"
 msgid "Load more"
 msgstr "மேலும் ஏற்று"
 
-#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Make private"
 msgstr "தனிப்பட்டதாக்கு"
 
-#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Make private ({publicKey})"
 msgstr "தனிப்பட்டதாக்கு ({publicKey})"
 
-#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Make public"
 msgstr "பொதுவாக்கு"
 
-#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Make public ({publicKey})"
 msgstr "பொதுவாக்கு ({publicKey})"
 
@@ -254,25 +298,37 @@ msgstr "புதிய யோசனை"
 msgid "New idea from this feedback"
 msgstr "இந்தக் கருத்திலிருந்து புதிய யோசனை"
 
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/pages.tsx
+msgid "No board is public yet. Make one public under Settings."
+msgstr "இதுவரை எந்தப் பலகையும் பொதுவாக இல்லை. அமைப்புகளில் ஒன்றைப் பொதுவாக்கவும்."
+
+#: src/features/roadmap/pages.tsx
 msgid "No board yet. Owners and admins create it."
 msgstr "இன்னும் பலகை இல்லை. உரிமையாளர்களும் நிர்வாகிகளும் இதை உருவாக்குகிறார்கள்."
 
-#: src/features/roadmap/IdeaPane.tsx
-msgid "No feedback is linked yet. Open a piece of feedback and use Link to an idea."
-msgstr "இன்னும் எந்தக் கருத்தும் இணைக்கப்படவில்லை. ஒரு கருத்தைத் திறந்து “ஒரு யோசனையுடன் இணை” என்பதைப் பயன்படுத்தவும்."
+#: src/features/roadmap/MoveDialog.tsx
+msgid "No feedback is linked to this idea yet."
+msgstr "இந்த யோசனையுடன் இதுவரை கருத்து எதுவும் இணைக்கப்படவில்லை."
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "No feedback is linked yet. Use Link feedback, or open a piece of feedback and choose Link to an idea."
+msgstr "இதுவரை கருத்து எதுவும் இணைக்கப்படவில்லை. “கருத்தை இணை” என்பதைப் பயன்படுத்தவும், அல்லது ஒரு கருத்தைத் திறந்து “ஒரு யோசனையுடன் இணை” என்பதைத் தேர்ந்தெடுக்கவும்."
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "No idea matches."
 msgstr "பொருந்தும் யோசனை எதுவும் இல்லை."
 
-#: src/features/roadmap/RoadmapColumn.tsx
-msgid "No inbox to show a board for."
-msgstr "பலகையைக் காட்ட இன்பாக்ஸ் எதுவும் இல்லை."
+#: src/features/roadmap/Board.tsx
+msgid "No ideas yet. New ones land here."
+msgstr "இதுவரை யோசனைகள் இல்லை. புதியவை இங்கே வரும்."
 
 #: src/features/roadmap/Settings.tsx
 msgid "None"
 msgstr "எதுவுமில்லை"
+
+#: src/features/roadmap/Board.tsx
+msgid "Nothing here yet."
+msgstr "இங்கே இதுவரை எதுவும் இல்லை."
 
 #: src/features/roadmap/Settings.tsx
 msgid "Off"
@@ -282,7 +338,7 @@ msgstr "அணை"
 msgid "On: anyone with the address reads the board, and signed-in readers vote and suggest ideas. Off: only your team sees it, as a tool to sort feedback."
 msgstr "இயக்கம்: முகவரி தெரிந்த எவரும் பலகையைப் படிக்கலாம், உள்நுழைந்த வாசகர்கள் வாக்களித்து யோசனைகளைப் பரிந்துரைக்கிறார்கள். நிறுத்தம்: உங்கள் குழு மட்டுமே இதைப் பார்க்கும், கருத்துகளைப் பிரித்தறியும் கருவியாக."
 
-#: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/IdeaFeedback.tsx
 msgid "One reply, written once, goes to every open feedback conversation linked to this idea, as you, on each conversation’s own channel."
 msgstr "ஒருமுறை எழுதிய ஒரு பதில் இந்த யோசனையுடன் இணைக்கப்பட்ட ஒவ்வொரு திறந்த கருத்து உரையாடலுக்கும், உங்கள் பெயரில், ஒவ்வொரு உரையாடலின் சொந்த சேனலில் செல்லும்."
 
@@ -290,9 +346,22 @@ msgstr "ஒருமுறை எழுதிய ஒரு பதில் இ�
 msgid "Open"
 msgstr "திற"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgctxt "open the feedback"
+msgid "Open"
+msgstr "திற"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Open Analytics"
+msgstr "பகுப்பாய்வைத் திற"
+
 #: src/features/roadmap/IdeaPane.tsx
 msgid "Open on the public board"
 msgstr "பொதுப் பலகையில் திற"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Open Roadmap"
+msgstr "வழிவரைபடத்தைத் திற"
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Pick an idea of this inbox’s board"
@@ -302,17 +371,11 @@ msgstr "இந்த இன்பாக்ஸின் பலகையிலி�
 msgid "Posted as your public reply on the idea. Markdown works."
 msgstr "யோசனைக்கான உங்கள் பொதுப் பதிலாக இடுகையிடப்படும். Markdown செயல்படும்."
 
-#: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Private"
 msgstr "தனிப்பட்டது"
 
-#: src/features/roadmap/pages.tsx
-msgid "Private, only your team sees it"
-msgstr "தனிப்பட்டது, உங்கள் குழு மட்டுமே பார்க்கும்"
-
-#: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/BoardBar.tsx
 #: src/features/roadmap/Settings.tsx
 msgid "Public"
 msgstr "பொது"
@@ -329,19 +392,37 @@ msgstr "வாசகர்கள் யோசனைகளைப் பரிந�
 msgid "Readers suggested new ideas. Review them before they show on the public board."
 msgstr "வாசகர்கள் புதிய யோசனைகளைப் பரிந்துரைத்துள்ளனர். பொதுப் பலகையில் தோன்றும் முன் அவற்றை மதிப்பாய்வு செய்யுங்கள்."
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Reply to everyone"
+msgstr "அனைவருக்கும் பதிலளி"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Reply to linked ({key})"
+msgstr "இணைக்கப்பட்டவற்றுக்குப் பதிலளி ({key})"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Resolved feedback does not get it: {closed}"
+msgstr "தீர்க்கப்பட்ட கருத்துகள் இதைப் பெறாது: {closed}"
+
 #: src/features/roadmap/Board.tsx
 msgid "Review"
 msgstr "மதிப்பாய்வு"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Review the reply"
+msgstr "பதிலைச் சரிபார்"
+
 #: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
 msgid "Roadmap"
 msgstr "ரோட்மேப்"
 
-#: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Roadmap boards"
 msgstr "ரோட்மேப் பலகைகள்"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Save"
+msgstr "சேமி"
 
 #: src/features/roadmap/Settings.tsx
 msgid "Saved"
@@ -355,9 +436,13 @@ msgstr "யோசனைகளைத் தேடு"
 msgid "Settings"
 msgstr "அமைப்புகள்"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Shipped. Open feedback linked to it: {open}. A reply is ready to send."
+msgstr "வெளியிடப்பட்டது. இதனுடன் இணைக்கப்பட்ட திறந்த கருத்துகள்: {open}. அனுப்ப ஒரு பதில் தயாராக உள்ளது."
+
 #: src/features/roadmap/pages.tsx
-msgid "Show your customers what you are building, and link the feedback behind each idea. Create a board for an inbox to sort ideas into stages."
-msgstr "நீங்கள் என்ன உருவாக்குகிறீர்கள் என்பதை வாடிக்கையாளர்களுக்குக் காட்டி, ஒவ்வொரு யோசனையின் பின்னுள்ள கருத்துகளை இணையுங்கள். யோசனைகளை நிலைகளாகப் பிரிக்க ஒரு இன்பாக்ஸுக்கான பலகையை உருவாக்குங்கள்."
+msgid "Show your customers what you are building, and link the feedback behind each idea. Create a board for {missingName} to sort ideas into stages."
+msgstr "நீங்கள் என்ன உருவாக்குகிறீர்கள் என்பதை வாடிக்கையாளர்களுக்குக் காட்டி, ஒவ்வொரு யோசனையின் பின்னுள்ள கருத்துகளை இணைக்கவும். யோசனைகளை நிலைகளாகப் பிரிக்க {missingName} க்கு ஒரு பலகையை உருவாக்கவும்."
 
 #: src/features/roadmap/Settings.tsx
 msgid "Shown under the name on the public board."
@@ -404,6 +489,10 @@ msgstr "இணைக்கப்பட்ட கருத்துகளின�
 msgid "The public board embeds this chat, and ideas your team starts are filed on it."
 msgstr "பொதுப் பலகை இந்த அரட்டையை உட்பொதிக்கிறது, உங்கள் குழு தொடங்கும் யோசனைகள் அதில் சேமிக்கப்படும்."
 
+#: src/features/roadmap/MoveDialog.tsx
+msgid "The rest already have it."
+msgstr "மற்றவர்களிடம் இது ஏற்கனவே உள்ளது."
+
 #: src/features/roadmap/pages.tsx
 msgid "This board no longer exists or you cannot see it."
 msgstr "இந்தப் பலகை இனி இல்லை அல்லது உங்களால் அதைப் பார்க்க முடியாது."
@@ -412,14 +501,18 @@ msgstr "இந்தப் பலகை இனி இல்லை அல்ல�
 msgid "This inbox has no roadmap board. Create one under Roadmap first."
 msgstr "இந்த இன்பாக்ஸுக்கு ரோட்மேப் பலகை இல்லை. முதலில் ரோட்மேப்பில் ஒன்றை உருவாக்குங்கள்."
 
-#: src/features/roadmap/CreateBoardDialog.tsx
-msgid "This inbox has no web chat channel. Add one first, because the public board embeds it."
-msgstr "இந்த இன்பாக்ஸுக்கு வலை அரட்டை சேனல் இல்லை. முதலில் ஒன்றைச் சேர்க்கவும், ஏனெனில் பொதுப் பலகை அதை உட்பொதிக்கிறது."
-
 #: src/features/roadmap/LinkIdeaDialog.tsx
 #: src/features/roadmap/NewIdeaDialog.tsx
 msgid "Title"
 msgstr "தலைப்பு"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Unlink"
+msgstr "இணைப்பை நீக்கு"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Unlinked feedback from {inboxName}"
+msgstr "{inboxName} இன் இணைக்கப்படாத கருத்துகள்"
 
 #: src/features/roadmap/Settings.tsx
 msgid "Use 3 to 48 letters, numbers and inner hyphens."
@@ -437,6 +530,6 @@ msgstr "தெரிவுநிலை"
 msgid "Waiting for approval"
 msgstr "ஒப்புதலுக்காகக் காத்திருக்கிறது"
 
-#: src/features/roadmap/RoadmapColumn.tsx
-msgid "Waiting for approval: {pending}"
-msgstr "ஒப்புதலுக்காகக் காத்திருக்கிறது: {pending}"
+#: src/features/roadmap/Settings.tsx
+msgid "You have unsaved changes."
+msgstr "சேமிக்கப்படாத மாற்றங்கள் உங்களிடம் உள்ளன."

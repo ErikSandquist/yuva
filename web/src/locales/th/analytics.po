@@ -409,6 +409,7 @@ msgid "Break down by prop"
 msgstr "แยกย่อยตาม prop"
 
 #: src/features/analytics/Goals.tsx
+#: src/features/analytics/Overview.tsx
 msgid "Breakdown"
 msgstr "การแยกย่อย"
 
@@ -1360,6 +1361,7 @@ msgstr "ฐานข้อมูลตำแหน่ง"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
 #: src/features/analytics/Sharing.tsx
 msgid "Locations"
 msgstr "ตำแหน่ง"
@@ -1469,6 +1471,10 @@ msgstr "{kind} ใหม่: {value} ที่ {count} ไม่มีในว�
 msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."
 msgstr "{kind} ใหม่: {value} {metric}: {now} ไม่มีในวันที่เปรียบเทียบ"
 
+#: src/features/analytics/Overview.tsx
+msgid "New and returning"
+msgstr "ใหม่และกลับมา"
+
 #: src/features/analytics/Funnels.tsx
 msgid "New funnel"
 msgstr "ฟันเนลใหม่"
@@ -1509,6 +1515,10 @@ msgstr "ไม่เปรียบเทียบ"
 #: src/features/analytics/Settings.tsx
 msgid "No consent features are offered."
 msgstr "ไม่มีคุณลักษณะความยินยอมให้ใช้"
+
+#: src/features/analytics/Overview.tsx
+msgid "No consented visitors in this range."
+msgstr "ไม่มีผู้เข้าชมที่ยินยอมในช่วงนี้"
 
 #: src/features/analytics/Retention.tsx
 msgid "No consented visitors yet"
@@ -2086,6 +2096,7 @@ msgid "Requests with Do Not Track or Global Privacy Control, and events without 
 msgstr "คำขอที่มี Do Not Track หรือ Global Privacy Control และเหตุการณ์ที่ไม่มีความยินยอมบนพร็อพเพอร์ตีที่ต้องการ ถูกรับแต่ไม่เก็บและไม่นับที่นี่"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Overview.tsx
 msgid "Retention"
 msgstr "การเก็บรักษาผู้เข้าชม"
 

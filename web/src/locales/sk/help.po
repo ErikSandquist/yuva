@@ -77,8 +77,8 @@ msgid "Another help center already uses this address, now or before."
 msgstr "Túto adresu už používa iné centrum pomoci, teraz alebo predtým."
 
 #: src/features/help/pages.tsx
-msgid "Answer common questions once, in writing. Each product gets its own help center with articles, collections and a report of what people search for."
-msgstr "Odpovedzte na časté otázky raz, písomne. Každý produkt má vlastné centrum pomoci s článkami, kolekciami a prehľadom toho, čo ľudia hľadajú."
+msgid "Answer common questions once, in writing. Each product gets its own help center with articles, collections and a report of what people search for. Pages are hosted by Yuva, so there is nothing to install on your site."
+msgstr "Na časté otázky odpovedzte raz, písomne. Každý produkt má vlastné centrum pomoci s článkami, kolekciami a prehľadom toho, čo ľudia hľadajú. Stránky hostuje Yuva, na váš web netreba nič inštalovať."
 
 #: src/features/help/pages.tsx
 msgid "Answer common questions once, in writing. Pick an inbox’s help center to write articles, group them in collections and see what customers search for."
@@ -162,6 +162,7 @@ msgstr "Odrážkový zoznam"
 msgid "Cancel"
 msgstr "Zrušiť"
 
+#: src/features/help/ArticleEditor.tsx
 #: src/features/help/ArticlesTab.tsx
 msgid "Changed"
 msgstr "Zmenené"
@@ -226,11 +227,6 @@ msgstr "Vytvoriť centrum pomoci"
 #: src/features/help/HelpColumn.tsx
 msgid "Create help center ({newKey})"
 msgstr "Vytvoriť centrum pomoci ({newKey})"
-
-#. placeholder {0}: inbox.name
-#: src/features/help/pages.tsx
-msgid "Create one for {0}"
-msgstr "Vytvoriť jedno pre {0}"
 
 #: src/features/help/CollectionsTab.tsx
 #: src/features/help/SettingsTab.tsx
@@ -342,11 +338,16 @@ msgstr "Zoskupte články, aby ich návštevníci mohli prehliadať. Kolekcia m�
 msgid "Heading"
 msgstr "Nadpis"
 
+#: src/features/help/CenterBar.tsx
 #: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 #: src/features/help/SettingsTab.tsx
 msgid "Help center"
 msgstr "Centrum pomoci"
+
+#: src/features/help/pages.tsx
+msgid "Help center created. Write the first article, then publish it."
+msgstr "Centrum pomoci bolo vytvorené. Napíšte prvý článok a potom ho zverejnite."
 
 #: src/features/help/SettingsTab.tsx
 msgid "Help center deleted"
@@ -445,7 +446,10 @@ msgid "Main language"
 msgstr "Hlavný jazyk"
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+msgid "Mark up to date"
+msgstr "Označiť ako aktuálne"
+
+#: src/features/help/ArticleEditor.tsx
 msgid "More"
 msgstr "Viac"
 
@@ -522,6 +526,11 @@ msgstr "Žiadne koncepty. Všetko napísané je zverejnené."
 msgid "No earlier versions yet."
 msgstr "Zatiaľ žiadne staršie verzie."
 
+#. placeholder {0}: target.inbox.name
+#: src/features/help/pages.tsx
+msgid "No help center for {0} yet"
+msgstr "Pre {0} zatiaľ neexistuje centrum pomoci"
+
 #: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 msgid "No help center yet. Owners and admins create it."
@@ -540,6 +549,7 @@ msgstr "Žiadne"
 msgid "not named"
 msgstr "bez názvu"
 
+#: src/features/help/ArticleEditor.tsx
 #: src/features/help/ArticlesTab.tsx
 msgid "Not written"
 msgstr "Nenapísané"
@@ -555,6 +565,10 @@ msgstr "z {answers} odpovedí"
 #: src/features/help/SettingsTab.tsx
 msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish and unpublish too."
 msgstr "Vypnuté: agenti píšu koncepty a odosielajú ich, zverejňujú vlastníci a správcovia. Zapnuté: zverejňujú a rušia zverejnenie aj agenti s prístupom ku schránke."
+
+#: src/features/help/SettingsTab.tsx
+msgid "On: anyone with the address can read the help center. Off: only your team can preview it."
+msgstr "Zapnuté: ktokoľvek s adresou môže čítať centrum pomoci. Vypnuté: náhľad vidí len váš tím."
 
 #: src/features/help/ArticleEditor.tsx
 msgid "One path per line, such as /billing/*. The chat widget suggests this article on matching pages."
@@ -618,6 +632,10 @@ msgstr "Ukážka"
 msgid "Preview ({alt} P)"
 msgstr "Ukážka ({alt} P)"
 
+#: src/features/help/pages.tsx
+msgid "Preview ({previewKey})"
+msgstr "Ukážka ({previewKey})"
+
 #. placeholder {0}: center.name
 #: src/features/help/pages.tsx
 msgid "Preview of {0}"
@@ -632,22 +650,27 @@ msgid "Public address"
 msgstr "Verejná adresa"
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "Publish"
 msgstr "Zverejniť"
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "Publish ({publishKey})"
 msgstr "Zverejniť ({publishKey})"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/CenterBar.tsx
 #: src/features/help/HelpColumn.tsx
-#: src/features/help/pages.tsx
 #: src/features/help/Revisions.tsx
+#: src/features/help/SettingsTab.tsx
 #: src/features/help/text.tsx
 msgid "Published"
 msgstr "Zverejnené"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Publishing"
+msgstr "Zverejnenie"
 
 #: src/features/help/text.tsx
 msgid "Question mark"
@@ -758,6 +781,10 @@ msgstr "Štít"
 msgid "Show"
 msgstr "Zobraziť"
 
+#: src/features/help/ArticleEditor.tsx
+msgid "Show original"
+msgstr "Zobraziť originál"
+
 #: src/features/help/SettingsTab.tsx
 msgid "Shown under the name on the home page."
 msgstr "Zobrazí sa pod názvom na domovskej stránke."
@@ -831,6 +858,10 @@ msgid "The main language has no text for this article yet."
 msgstr "Hlavný jazyk zatiaľ nemá k tomuto článku žiadny text."
 
 #: src/features/help/ArticleEditor.tsx
+msgid "The original changed after this translation was written. Compare them, then mark it up to date."
+msgstr "Originál sa zmenil po napísaní tohto prekladu. Porovnajte ich a potom preklad označte ako aktuálny."
+
+#: src/features/help/ArticleEditor.tsx
 msgid "The page stops working for visitors. The draft stays, and you can publish it again."
 msgstr "Stránka prestane pre návštevníkov fungovať. Koncept zostane a môžete ho znova zverejniť."
 
@@ -880,15 +911,24 @@ msgid "Type a word to search for."
 msgstr "Zadajte slovo na vyhľadanie."
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "Unpublish"
 msgstr "Zrušiť zverejnenie"
+
+#: src/features/help/CenterBar.tsx
+msgid "Unpublish ({publishKey})"
+msgstr "Zrušiť zverejnenie ({publishKey})"
+
+#: src/features/help/CenterBar.tsx
+msgid "Unpublish this help center?"
+msgstr "Zrušiť zverejnenie tohto centra pomoci?"
 
 #: src/features/help/ArticleEditor.tsx
 msgid "Unpublish this translation?"
 msgstr "Zrušiť zverejnenie tohto prekladu?"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/CenterBar.tsx
 #: src/features/help/HelpColumn.tsx
 msgid "Unpublished"
 msgstr "Nezverejnené"
@@ -896,10 +936,6 @@ msgstr "Nezverejnené"
 #: src/features/help/text.tsx
 msgid "Unpublished changes"
 msgstr "Nezverejnené zmeny"
-
-#: src/features/help/pages.tsx
-msgid "Unpublished, only your team can preview it"
-msgstr "Nezverejnené, ukážku vidí iba váš tím"
 
 #: src/features/help/ArticleEditor.tsx
 msgid "Unsaved changes"
@@ -929,11 +965,11 @@ msgstr "Verzia bola obnovená do konceptu"
 msgid "View"
 msgstr "Zobraziť"
 
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "View site"
 msgstr "Zobraziť web"
 
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "View site ({openKey})"
 msgstr "Zobraziť web ({openKey})"
 
@@ -945,13 +981,13 @@ msgstr "Zobrazenia"
 msgid "Views · 7 days"
 msgstr "Zobrazenia · 7 dní"
 
+#: src/features/help/CenterBar.tsx
+msgid "Visitors can no longer open it and the chat widget stops suggesting its articles. Your articles stay as they are."
+msgstr "Návštevníci ho už nemôžu otvoriť a chatový widget prestane navrhovať jeho články. Vaše články zostanú bez zmeny."
+
 #: src/features/help/ReportTab.tsx
 msgid "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
 msgstr "Čo návštevníci čítajú a hľadajú. Zobrazenia sú približné a čísla sa sem dostanú do minúty."
-
-#: src/features/help/SettingsTab.tsx
-msgid "Who can publish"
-msgstr "Kto môže zverejňovať"
 
 #: src/features/help/ReportTab.tsx
 msgid "Words visitors typed that found nothing. A new article for each is the fastest fix."
@@ -965,6 +1001,10 @@ msgstr "Písať"
 #: src/features/help/ArticleEditor.tsx
 msgid "Write the answer in Markdown…"
 msgstr "Napíšte odpoveď v Markdowne…"
+
+#: src/features/help/CenterBar.tsx
+msgid "Written here, shown on pages Yuva hosts, searched from the chat widget and the reply box. Documentation pages on your own site live under <0>Docs</0>."
+msgstr "Píše sa tu, zobrazuje sa na stránkach hostovaných Yuvou a hľadá sa z chatového widgetu a poľa odpovede. Stránky dokumentácie na vašom vlastnom webe nájdete v <0>Docs</0>."
 
 #: src/features/help/SettingsTab.tsx
 msgid "Your product."

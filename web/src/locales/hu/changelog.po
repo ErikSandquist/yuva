@@ -7,7 +7,7 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: hu\n"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 msgid "{published} of {total} entries published"
 msgstr "{total} bejegyzésből {published} van közzétéve"
 
@@ -41,8 +41,13 @@ msgid "All"
 msgstr "Összes"
 
 #: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/pages.tsx
 msgid "All labels"
 msgstr "Minden címke"
+
+#: src/features/changelog/pages.tsx
+msgid "All languages"
+msgstr "Minden nyelv"
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "Analytics property"
@@ -80,6 +85,7 @@ msgstr "Időpont módosítása"
 msgid "Changelog"
 msgstr "Változásnapló"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "Changelogs"
 msgstr "Változásnaplók"
@@ -88,16 +94,21 @@ msgstr "Változásnaplók"
 msgid "Choose a picture"
 msgstr "Kép kiválasztása"
 
+#: src/features/changelog/pages.tsx
+msgid "Clear filters"
+msgstr "Szűrők törlése"
+
 #: src/features/changelog/SettingsTab.tsx
 msgid "Counts page views of the changelog without cookies."
 msgstr "Sütik nélkül számolja a változásnapló oldalmegtekintéseit."
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/CreateChangelogDialog.tsx
 #: src/features/changelog/pages.tsx
 msgid "Create changelog"
 msgstr "Változásnapló létrehozása"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "Create changelog ({createKey})"
 msgstr "Változásnapló létrehozása ({createKey})"
@@ -162,6 +173,11 @@ msgstr "A piszkozat beküldve. Tulajdonos vagy adminisztrátor közzéteheti."
 msgid "Drafts"
 msgstr "Piszkozatok"
 
+#: src/features/changelog/ChangelogsPage.tsx
+msgid "Each product has one changelog. Owners and admins create and publish them."
+msgstr "Minden termékhez tartozik egy változásnapló. A tulajdonosok és az adminisztrátorok hozzák létre és teszik közzé."
+
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "Entries"
 msgstr "Bejegyzések"
@@ -173,6 +189,14 @@ msgstr "A bejegyzések és a fordítások vele együtt törlődnek."
 #: src/features/changelog/SettingsTab.tsx
 msgid "Entries can be written and published in these languages. Visitors see their own when it exists."
 msgstr "A bejegyzések ezeken a nyelveken írhatók és tehetők közzé. A látogatók a saját nyelvüket látják, ha van."
+
+#: src/features/changelog/pages.tsx
+msgid "Entries show on the public page once they are published."
+msgstr "A bejegyzések a közzététel után jelennek meg a nyilvános oldalon."
+
+#: src/features/changelog/pages.tsx
+msgid "Entries you have not published yet show up here."
+msgstr "A még közzé nem tett bejegyzések itt jelennek meg."
 
 #: src/features/changelog/EntryEditor.tsx
 msgid "Every translation is deleted. Broadcasts made from it stay."
@@ -208,6 +232,7 @@ msgid "Keep mine"
 msgstr "Az enyém marad"
 
 #: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/pages.tsx
 msgid "Label"
 msgstr "Címke"
 
@@ -219,9 +244,11 @@ msgstr "Címkék"
 #: src/features/changelog/EntriesTab.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/MailDialog.tsx
+#: src/features/changelog/pages.tsx
 msgid "Language"
 msgstr "Nyelv"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/SettingsTab.tsx
 msgid "Languages"
 msgstr "Nyelvek"
@@ -248,6 +275,10 @@ msgid "Main language"
 msgstr "Fő nyelv"
 
 #: src/features/changelog/EntryEditor.tsx
+msgid "Mark up to date"
+msgstr "Megjelölés naprakészként"
+
+#: src/features/changelog/EntryEditor.tsx
 msgid "More"
 msgstr "Továbbiak"
 
@@ -272,7 +303,7 @@ msgstr "Új bejegyzés"
 msgid "New post ({newKey})"
 msgstr "Új bejegyzés ({newKey})"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 msgid "No changelog yet. Owners and admins create it."
 msgstr "Még nincs változásnapló. A tulajdonosok és az adminisztrátorok hozzák létre."
 
@@ -281,12 +312,9 @@ msgid "No entries yet. Tell your customers what changed in your latest release."
 msgstr "Még nincs bejegyzés. Mondd el az ügyfeleidnek, mi változott a legutóbbi kiadásban."
 
 #: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/pages.tsx
 msgid "No entry matches."
 msgstr "Egy bejegyzés sem felel meg."
-
-#: src/features/changelog/ChangelogColumn.tsx
-msgid "No inbox to show a changelog for."
-msgstr "Nincs olyan postafiók, amelyhez változásnaplót lehetne mutatni."
 
 #: src/features/changelog/EntriesTab.tsx
 msgid "No text yet."
@@ -340,6 +368,10 @@ msgstr "A fordítás webcímének része. Üresen a címből készül."
 msgid "Pick a time in the next year, in your time zone, {zone}."
 msgstr "Válassz időpontot a következő évben, a saját időzónádban, {zone}."
 
+#: src/features/changelog/pages.tsx
+msgid "Pick a time when you write an entry and it goes public by itself."
+msgstr "Válasszon időpontot bejegyzés írásakor, és magától nyilvánossá válik."
+
 #: src/features/changelog/MailDialog.tsx
 msgid "Pick up to 10 lists of this inbox."
 msgstr "Válassz legfeljebb 10 listát ebből a postafiókból."
@@ -348,6 +380,7 @@ msgstr "Válassz legfeljebb 10 listát ebből a postafiókból."
 msgid "Picture"
 msgstr "Kép"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 #: src/features/changelog/PreviewDialog.tsx
@@ -370,6 +403,7 @@ msgstr "A bejegyzés előnézete"
 msgid "Public address"
 msgstr "Nyilvános cím"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 msgid "Publish"
@@ -380,11 +414,19 @@ msgstr "Közzététel"
 msgid "Publish ({publishKey})"
 msgstr "Közzététel ({publishKey})"
 
+#: src/features/changelog/pages.tsx
+msgid "Publish it now or schedule it again."
+msgstr "Tegye közzé most, vagy ütemezze újra."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Publish now"
+msgstr "Közzététel most"
+
 #: src/features/changelog/ScheduleDialog.tsx
 msgid "Publish on"
 msgstr "Közzététel ekkor"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 #: src/features/changelog/text.tsx
@@ -393,6 +435,7 @@ msgstr "Közzétéve"
 
 #: src/features/changelog/EntriesTab.tsx
 #: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
 msgid "Publishing on schedule failed."
 msgstr "Az ütemezett közzététel nem sikerült."
 
@@ -403,6 +446,10 @@ msgstr "A termékeidben és a weben megjelenő kiadási megjegyzések"
 #: src/features/changelog/EntryEditor.tsx
 msgid "Remove"
 msgstr "Eltávolítás"
+
+#: src/features/changelog/pages.tsx
+msgid "Review"
+msgstr "Áttekintés"
 
 #: src/features/changelog/EntryEditor.tsx
 msgid "Save now"
@@ -422,23 +469,33 @@ msgstr "Mentés…"
 msgid "Schedule"
 msgstr "Ütemezés"
 
+#: src/features/changelog/EntryEditor.tsx
+msgid "Schedule again"
+msgstr "Újraütemezés"
+
 #: src/features/changelog/ScheduleDialog.tsx
 msgid "Schedule this entry"
 msgstr "A bejegyzés ütemezése"
 
 #: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
 #: src/features/changelog/text.tsx
 msgid "Scheduled"
 msgstr "Ütemezve"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 msgid "Scheduled: {scheduled}"
 msgstr "Ütemezve: {scheduled}"
+
+#: src/features/changelog/pages.tsx
+msgid "Search entries"
+msgstr "Bejegyzések keresése"
 
 #: src/features/changelog/MailDialog.tsx
 msgid "Send through"
 msgstr "Küldés ezen keresztül"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "Settings"
 msgstr "Beállítások"
@@ -446,6 +503,10 @@ msgstr "Beállítások"
 #: src/features/changelog/EntryEditor.tsx
 msgid "Show"
 msgstr "Megjelenítés"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Show the original"
+msgstr "Eredeti megjelenítése"
 
 #: src/features/changelog/EntriesTab.tsx
 msgid "Shown in the chat bubble, the apps and on {host}."
@@ -482,6 +543,10 @@ msgstr "Piszkozat beküldése"
 #: src/features/changelog/EntryEditor.tsx
 msgid "Submit draft ({publishKey})"
 msgstr "Piszkozat beküldése ({publishKey})"
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Subscribed: {subscribed}"
+msgstr "Feliratkozók: {subscribed}"
 
 #: src/features/changelog/CreateChangelogDialog.tsx
 msgid "Tell the customers of {inboxName} what is new, improved and fixed. It stays unpublished until you publish it."
@@ -527,6 +592,10 @@ msgstr "A fő nyelvnek még nincs szövege ehhez a bejegyzéshez."
 msgid "The member who scheduled it may no longer publish."
 msgstr "Lehet, hogy az ütemező tag már nem tehet közzé."
 
+#: src/features/changelog/EntryEditor.tsx
+msgid "The original changed after this translation was saved."
+msgstr "Az eredeti megváltozott e fordítás mentése után."
+
 #: src/features/changelog/PreviewDialog.tsx
 msgid "The page as visitors would see it, drafts included. Only your team sees this."
 msgstr "Az oldal úgy, ahogy a látogatók látnák, a piszkozatokkal együtt. Ezt csak a csapatod látja."
@@ -534,6 +603,11 @@ msgstr "Az oldal úgy, ahogy a látogatók látnák, a piszkozatokkal együtt. E
 #: src/features/changelog/EntryEditor.tsx
 msgid "The title needs at least 3 characters"
 msgstr "A címnek legalább 3 karakteresnek kell lennie"
+
+#. placeholder {0}: formatDateTime(entry.publish_at, i18n.locale)
+#: src/features/changelog/EntryEditor.tsx
+msgid "This entry is scheduled for {0}."
+msgstr "Ez a bejegyzés ekkorra van ütemezve: {0}."
 
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/text.tsx
@@ -569,6 +643,11 @@ msgstr "Cím"
 msgid "Translation deleted"
 msgstr "Fordítás törölve"
 
+#: src/features/changelog/pages.tsx
+msgid "Try another word, label or language."
+msgstr "Próbáljon másik szót, címkét vagy nyelvet."
+
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 msgid "Unpublish"
@@ -582,9 +661,8 @@ msgstr "Visszavonás ({publishKey})"
 msgid "Unpublish this entry?"
 msgstr "Visszavonod ezt a bejegyzést?"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
-#: src/features/changelog/pages.tsx
 msgid "Unpublished"
 msgstr "Nincs közzétéve"
 
@@ -616,11 +694,12 @@ msgstr "Az ő változatuk használata"
 msgid "View"
 msgstr "Megtekintés"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "View changelog"
 msgstr "A változásnapló megtekintése"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntriesTab.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
@@ -638,6 +717,10 @@ msgstr "Írás"
 #: src/features/changelog/text.tsx
 msgid "Write the entry in the main language before publishing."
 msgstr "Közzététel előtt írd meg a bejegyzést a fő nyelven."
+
+#: src/features/changelog/pages.tsx
+msgid "Write the first entry with New post."
+msgstr "Írja meg az első bejegyzést az Új bejegyzés gombbal."
 
 #: src/features/changelog/EntryEditor.tsx
 msgid "Write what changed in Markdown…"

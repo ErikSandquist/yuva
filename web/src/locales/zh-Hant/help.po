@@ -77,8 +77,8 @@ msgid "Another help center already uses this address, now or before."
 msgstr "另一個說明中心現在或曾經使用此位址。"
 
 #: src/features/help/pages.tsx
-msgid "Answer common questions once, in writing. Each product gets its own help center with articles, collections and a report of what people search for."
-msgstr "常見問題只需用文字回答一次。每個產品都有自己的說明中心，包含文章、合集，以及人們搜尋內容的報告。"
+msgid "Answer common questions once, in writing. Each product gets its own help center with articles, collections and a report of what people search for. Pages are hosted by Yuva, so there is nothing to install on your site."
+msgstr "常見問題只需用文字回答一次。每個產品都有自己的說明中心，包含文章、合集和使用者搜尋內容的報告。頁面由 Yuva 代管，無需在你的網站上安裝任何東西。"
 
 #: src/features/help/pages.tsx
 msgid "Answer common questions once, in writing. Pick an inbox’s help center to write articles, group them in collections and see what customers search for."
@@ -162,6 +162,7 @@ msgstr "項目符號清單"
 msgid "Cancel"
 msgstr "取消"
 
+#: src/features/help/ArticleEditor.tsx
 #: src/features/help/ArticlesTab.tsx
 msgid "Changed"
 msgstr "已變更"
@@ -226,11 +227,6 @@ msgstr "建立說明中心"
 #: src/features/help/HelpColumn.tsx
 msgid "Create help center ({newKey})"
 msgstr "建立說明中心（{newKey}）"
-
-#. placeholder {0}: inbox.name
-#: src/features/help/pages.tsx
-msgid "Create one for {0}"
-msgstr "為 {0} 建立一個"
 
 #: src/features/help/CollectionsTab.tsx
 #: src/features/help/SettingsTab.tsx
@@ -342,11 +338,16 @@ msgstr "將文章分組，方便訪客瀏覽。一個集合可以包含一層子
 msgid "Heading"
 msgstr "標題"
 
+#: src/features/help/CenterBar.tsx
 #: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 #: src/features/help/SettingsTab.tsx
 msgid "Help center"
 msgstr "說明中心"
+
+#: src/features/help/pages.tsx
+msgid "Help center created. Write the first article, then publish it."
+msgstr "說明中心已建立。寫好第一篇文章，然後發布。"
 
 #: src/features/help/SettingsTab.tsx
 msgid "Help center deleted"
@@ -445,7 +446,10 @@ msgid "Main language"
 msgstr "主要語言"
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+msgid "Mark up to date"
+msgstr "標記為最新"
+
+#: src/features/help/ArticleEditor.tsx
 msgid "More"
 msgstr "更多"
 
@@ -522,6 +526,11 @@ msgstr "沒有草稿。所有已寫的內容都已發布。"
 msgid "No earlier versions yet."
 msgstr "還沒有早期版本。"
 
+#. placeholder {0}: target.inbox.name
+#: src/features/help/pages.tsx
+msgid "No help center for {0} yet"
+msgstr "{0} 還沒有說明中心"
+
 #: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 msgid "No help center yet. Owners and admins create it."
@@ -540,6 +549,7 @@ msgstr "無"
 msgid "not named"
 msgstr "未命名"
 
+#: src/features/help/ArticleEditor.tsx
 #: src/features/help/ArticlesTab.tsx
 msgid "Not written"
 msgstr "未撰寫"
@@ -555,6 +565,10 @@ msgstr "共 {answers} 個回答"
 #: src/features/help/SettingsTab.tsx
 msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish and unpublish too."
 msgstr "關閉：客服撰寫草稿並提交，由擁有者和管理員發佈。開啟：有權存取收件匣的客服也可以發佈和取消發佈。"
+
+#: src/features/help/SettingsTab.tsx
+msgid "On: anyone with the address can read the help center. Off: only your team can preview it."
+msgstr "開啟：任何知道網址的人都可以閱讀說明中心。關閉：只有你的團隊可以預覽。"
 
 #: src/features/help/ArticleEditor.tsx
 msgid "One path per line, such as /billing/*. The chat widget suggests this article on matching pages."
@@ -618,6 +632,10 @@ msgstr "預覽"
 msgid "Preview ({alt} P)"
 msgstr "預覽（{alt} P）"
 
+#: src/features/help/pages.tsx
+msgid "Preview ({previewKey})"
+msgstr "預覽 ({previewKey})"
+
 #. placeholder {0}: center.name
 #: src/features/help/pages.tsx
 msgid "Preview of {0}"
@@ -632,22 +650,27 @@ msgid "Public address"
 msgstr "公開位址"
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "Publish"
 msgstr "發佈"
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "Publish ({publishKey})"
 msgstr "發佈（{publishKey}）"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/CenterBar.tsx
 #: src/features/help/HelpColumn.tsx
-#: src/features/help/pages.tsx
 #: src/features/help/Revisions.tsx
+#: src/features/help/SettingsTab.tsx
 #: src/features/help/text.tsx
 msgid "Published"
 msgstr "已發佈"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Publishing"
+msgstr "發布"
 
 #: src/features/help/text.tsx
 msgid "Question mark"
@@ -758,6 +781,10 @@ msgstr "盾牌"
 msgid "Show"
 msgstr "顯示"
 
+#: src/features/help/ArticleEditor.tsx
+msgid "Show original"
+msgstr "顯示原文"
+
 #: src/features/help/SettingsTab.tsx
 msgid "Shown under the name on the home page."
 msgstr "顯示在首頁的名稱下方。"
@@ -831,6 +858,10 @@ msgid "The main language has no text for this article yet."
 msgstr "主要語言尚無這篇文章的文字。"
 
 #: src/features/help/ArticleEditor.tsx
+msgid "The original changed after this translation was written. Compare them, then mark it up to date."
+msgstr "此翻譯寫成後原文已變更。請對照後將其標記為最新。"
+
+#: src/features/help/ArticleEditor.tsx
 msgid "The page stops working for visitors. The draft stays, and you can publish it again."
 msgstr "該頁面將對訪客停止運作。草稿會保留，你可以再次發佈。"
 
@@ -880,15 +911,24 @@ msgid "Type a word to search for."
 msgstr "輸入要搜尋的詞。"
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "Unpublish"
 msgstr "取消發佈"
+
+#: src/features/help/CenterBar.tsx
+msgid "Unpublish ({publishKey})"
+msgstr "取消發佈 ({publishKey})"
+
+#: src/features/help/CenterBar.tsx
+msgid "Unpublish this help center?"
+msgstr "取消發布此說明中心？"
 
 #: src/features/help/ArticleEditor.tsx
 msgid "Unpublish this translation?"
 msgstr "取消發佈此翻譯？"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/CenterBar.tsx
 #: src/features/help/HelpColumn.tsx
 msgid "Unpublished"
 msgstr "未發佈"
@@ -896,10 +936,6 @@ msgstr "未發佈"
 #: src/features/help/text.tsx
 msgid "Unpublished changes"
 msgstr "未發佈的變更"
-
-#: src/features/help/pages.tsx
-msgid "Unpublished, only your team can preview it"
-msgstr "未發佈，只有你的團隊可以預覽"
 
 #: src/features/help/ArticleEditor.tsx
 msgid "Unsaved changes"
@@ -929,11 +965,11 @@ msgstr "版本已還原到草稿"
 msgid "View"
 msgstr "檢視"
 
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "View site"
 msgstr "檢視網站"
 
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "View site ({openKey})"
 msgstr "檢視網站 ({openKey})"
 
@@ -945,13 +981,13 @@ msgstr "瀏覽次數"
 msgid "Views · 7 days"
 msgstr "瀏覽 · 7 天"
 
+#: src/features/help/CenterBar.tsx
+msgid "Visitors can no longer open it and the chat widget stops suggesting its articles. Your articles stay as they are."
+msgstr "訪客將無法再開啟它，聊天小工具也不再推薦其中的文章。你的文章維持原樣。"
+
 #: src/features/help/ReportTab.tsx
 msgid "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
 msgstr "訪客閱讀和搜尋的內容。瀏覽次數為近似值，數據會在一分鐘內到達此頁面。"
-
-#: src/features/help/SettingsTab.tsx
-msgid "Who can publish"
-msgstr "誰可以發佈"
 
 #: src/features/help/ReportTab.tsx
 msgid "Words visitors typed that found nothing. A new article for each is the fastest fix."
@@ -965,6 +1001,10 @@ msgstr "撰寫"
 #: src/features/help/ArticleEditor.tsx
 msgid "Write the answer in Markdown…"
 msgstr "用 Markdown 撰寫回答…"
+
+#: src/features/help/CenterBar.tsx
+msgid "Written here, shown on pages Yuva hosts, searched from the chat widget and the reply box. Documentation pages on your own site live under <0>Docs</0>."
+msgstr "在這裡撰寫，顯示在 Yuva 代管的頁面上，可從聊天小工具和回覆框中搜尋。你自己網站上的文件頁面在 <0>Docs</0> 中。"
 
 #: src/features/help/SettingsTab.tsx
 msgid "Your product."

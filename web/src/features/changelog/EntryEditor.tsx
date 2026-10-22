@@ -107,7 +107,7 @@ function Sent({ changelog, entry }: { changelog: Changelog; entry: ChangelogEntr
   const mine = (broadcasts.data?.pages.flatMap((p) => p.items) ?? []).filter((b) => b.changelog_entry_id === entry.id)
   if (mine.length === 0) return null
   return (
-    <Field label={<Trans>Mailed to subscribers</Trans>} className="sm:col-span-2">
+    <Field label={<Trans>Mailed to subscribers</Trans>}>
       <ul className="flex flex-col divide-y rounded-xl border" data-testid="entry-broadcasts">
         {mine.map((b) => (
           <li key={b.id} className="flex items-center gap-3 px-3 py-2">
@@ -299,6 +299,26 @@ function Editor({
       run: () => m.unpublish.mutate(undefined, { onSuccess: () => toast(t`Unpublished`) }),
     })
   const unschedule = () => m.unschedule.mutate()
+  const markCurrent = async () => {
+    await save()
+    const { saved: s, base: b, conflict: c } = live.current
+    if (c || s.title.trim().length < 3) return
+    try {
+      const res = await m.save.mutateAsync({
+        locale,
+        base_version: b,
+        title: s.title,
+        body: s.body,
+        slug: s.slug || undefined,
+      })
+      setBase(res.version)
+      setSaved(fieldsOf(res))
+    } catch (err) {
+      const theirs = conflictOf(err)
+      if (theirs) setConflict(theirs)
+      else setSaveError(err)
+    }
+  }
   const removeEntry = () =>
     confirm({
       title: <Trans>Delete this entry?</Trans>,
@@ -621,6 +641,64 @@ function Editor({
               <Trans>Publishing on schedule failed.</Trans>
             </p>
             <p>{failureText[entry.schedule_failed.reason]}</p>
+            {canPublish && (
+              <div className="flex flex-wrap gap-2">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  disabled={!titleOk || m.publish.isPending}
+                  onClick={() => void publish()}
+                  data-testid="entry-failed-publish"
+                >
+                  <Trans>Publish now</Trans>
+                </Button>
+                <Button size="sm" variant="outline" onClick={() => setScheduling(true)}>
+                  <Trans>Schedule again</Trans>
+                </Button>
+              </div>
+            )}
+          </Notice>
+        )}
+        {canPublish && entry.state === "scheduled" && entry.publish_at && (
+          <Notice tone="info" icon={CalendarClockIcon} data-testid="entry-scheduled">
+            <p className="font-medium">
+              <Trans>This entry is scheduled for {formatDateTime(entry.publish_at, i18n.locale)}.</Trans>
+            </p>
+            <div className="flex flex-wrap gap-2">
+              <Button size="sm" variant="outline" onClick={() => setScheduling(true)}>
+                <Trans>Change the time</Trans>
+              </Button>
+              <Button size="sm" variant="outline" disabled={m.unschedule.isPending} onClick={unschedule}>
+                <Trans>Unschedule</Trans>
+              </Button>
+            </div>
+          </Notice>
+        )}
+        {tr?.outdated && !readOnly && (
+          <Notice tone="warning" icon={TriangleAlertIcon} data-testid="entry-outdated">
+            <p className="font-medium">
+              <Trans>The original changed after this translation was saved.</Trans>
+            </p>
+            <div className="flex flex-wrap gap-2">
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => {
+                  setShowSource(true)
+                  setPane("original")
+                }}
+              >
+                <Trans>Show the original</Trans>
+              </Button>
+              <Button
+                size="sm"
+                variant="outline"
+                disabled={m.save.isPending || !!conflict}
+                onClick={() => void markCurrent()}
+              >
+                <Trans>Mark up to date</Trans>
+              </Button>
+            </div>
           </Notice>
         )}
         {conflict && (
@@ -656,180 +734,189 @@ function Editor({
             m.removeTranslation.error
           }
         />
-        <Input
-          value={fields.title}
-          maxLength={200}
-          readOnly={readOnly}
-          onChange={(e) => set({ title: e.target.value })}
-          placeholder={t`Title`}
-          aria-label={t`Title`}
-          dir="auto"
-          className="h-12 text-title font-semibold"
-          data-testid="entry-editor-title"
-        />
-        <div className="flex flex-col gap-4">
-          <div className="-my-1 overflow-x-auto py-1 lg:hidden">
-            <Segmented
-              value={pane}
-              onChange={setPane}
-              label={t`Show`}
-              items={[
-                { value: "write" as const, label: t`Write` },
-                { value: "preview" as const, label: t`Preview` },
-                ...(sourceVisible ? [{ value: "original" as const, label: t`Original` }] : []),
-              ]}
-            />
-          </div>
-          <div
-            className="grid gap-4 lg:[grid-template-columns:var(--columns)]"
-            style={{ "--columns": `repeat(${columns}, minmax(0, 1fr))` } as React.CSSProperties}
-          >
-            {sourceVisible && (
-              <div className={hide("original", showSource)}>
-                <OriginalText
-                  source={source}
-                  language={originalLanguage}
-                  empty={<Trans>The main language has no text for this entry yet.</Trans>}
-                />
-              </div>
-            )}
-            <div className={cn("flex min-w-0 flex-col gap-2", hide("write", true))}>
-              {!readOnly && <EditorToolbar onFormat={applyFormat} onImage={pickImage} uploading={upload.isPending} />}
-              <input
-                ref={files}
-                type="file"
-                accept="image/png,image/jpeg,image/gif,image/webp"
-                hidden
-                data-testid="entry-image-input"
-                onChange={(e) => {
-                  const file = e.target.files?.[0]
-                  e.target.value = ""
-                  if (file) void addImage(file)
-                }}
-              />
-              <Textarea
-                ref={text}
-                value={fields.body}
-                readOnly={readOnly}
-                onChange={(e) => set({ body: e.target.value })}
-                placeholder={t`Write what changed in Markdown…`}
-                aria-label={t`Text`}
-                spellCheck
-                dir="auto"
-                className="min-h-[55vh] resize-y bg-card font-mono text-[13.5px] leading-relaxed"
-                onPaste={(e) => {
-                  const image = Array.from(e.clipboardData.files).find((f) => f.type.startsWith("image/"))
-                  if (!image) return
-                  e.preventDefault()
-                  void addImage(image)
-                }}
-                onDrop={(e) => {
-                  const image = Array.from(e.dataTransfer.files).find((f) => f.type.startsWith("image/"))
-                  if (!image) return
-                  e.preventDefault()
-                  void addImage(image)
-                }}
-                data-testid="entry-editor-body"
-              />
-            </div>
-            {showPreview && (
-              <div className={hide("preview", showPreview)}>
-                <PreviewPane
-                  title={fields.title}
-                  html={rendered.data ?? ""}
-                  fetching={rendered.isFetching}
-                  error={rendered.error}
-                  frameTitle={t`Preview of the entry`}
-                />
-              </div>
-            )}
-          </div>
-        </div>
-        <div className="grid gap-5 rounded-2xl border bg-card p-4 sm:grid-cols-2" data-testid="entry-editor-details">
-          <Field
-            label={<Trans>Labels</Trans>}
-            hint={
-              labelsLocked && !readOnly ? (
-                <Trans>A member who may publish changes the labels of a published entry.</Trans>
-              ) : undefined
-            }
-          >
-            <div className="flex flex-wrap gap-2" role="group" aria-label={t`Labels`}>
-              {LABELS.map((l) => (
-                <button
-                  key={l}
-                  type="button"
-                  disabled={labelsLocked || m.update.isPending}
-                  aria-pressed={entry.labels.includes(l)}
-                  onClick={() => toggleLabel(l)}
-                  className={cn(
-                    "rounded-lg border px-3 py-1.5 text-body font-medium outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-60",
-                    entry.labels.includes(l) ? LABEL_TONES[l] : "border-border text-muted-foreground"
-                  )}
-                  data-testid={`entry-label-${l}`}
-                >
-                  {labelText[l]}
-                </button>
-              ))}
-            </div>
-          </Field>
-          <Field
-            label={<Trans>Address ending</Trans>}
-            htmlFor="entry-slug"
-            hint={<Trans>Part of this translation’s web address. Made from the title when empty.</Trans>}
-          >
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_300px]">
+          <div className="flex min-w-0 flex-col gap-4">
             <Input
-              id="entry-slug"
-              value={fields.slug}
-              maxLength={100}
+              value={fields.title}
+              maxLength={200}
               readOnly={readOnly}
-              spellCheck={false}
-              autoCapitalize="none"
-              onChange={(e) => set({ slug: e.target.value.toLowerCase() })}
-              data-testid="entry-editor-slug"
+              onChange={(e) => set({ title: e.target.value })}
+              placeholder={t`Title`}
+              aria-label={t`Title`}
+              dir="auto"
+              className="h-12 text-title font-semibold"
+              data-testid="entry-editor-title"
             />
-          </Field>
-          <Field
-            label={<Trans>Picture</Trans>}
-            hint={<Trans>Shown with the entry on the page, in the widget and in the mail.</Trans>}
-          >
-            <div className="flex items-center gap-3">
-              {entry.image ? (
-                <img
-                  src={entry.image.url}
-                  alt={entry.image.filename}
-                  className="h-16 w-24 rounded-lg border object-cover"
-                  data-testid="entry-image"
+            <div className="flex flex-col gap-4">
+              <div className="-my-1 overflow-x-auto py-1 lg:hidden">
+                <Segmented
+                  value={pane}
+                  onChange={setPane}
+                  label={t`Show`}
+                  items={[
+                    { value: "write" as const, label: t`Write` },
+                    { value: "preview" as const, label: t`Preview` },
+                    ...(sourceVisible ? [{ value: "original" as const, label: t`Original` }] : []),
+                  ]}
                 />
-              ) : (
-                <span className="grid h-16 w-24 place-items-center rounded-lg border border-dashed text-faint">
-                  <ImageIcon className="size-5" />
-                </span>
-              )}
-              <div className="flex flex-wrap gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  disabled={labelsLocked}
-                  onClick={() => setPicking(true)}
-                  data-testid="entry-pick-image"
-                >
-                  {entry.image ? <Trans>Change</Trans> : <Trans>Choose a picture</Trans>}
-                </Button>
-                {entry.image && (
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    disabled={labelsLocked}
-                    onClick={() => m.update.mutate({ image_id: null })}
-                  >
-                    <Trans>Remove</Trans>
-                  </Button>
+              </div>
+              <div
+                className="grid gap-4 lg:[grid-template-columns:var(--columns)]"
+                style={{ "--columns": `repeat(${columns}, minmax(0, 1fr))` } as React.CSSProperties}
+              >
+                {sourceVisible && (
+                  <div className={hide("original", showSource)}>
+                    <OriginalText
+                      source={source}
+                      language={originalLanguage}
+                      empty={<Trans>The main language has no text for this entry yet.</Trans>}
+                    />
+                  </div>
+                )}
+                <div className={cn("flex min-w-0 flex-col gap-2", hide("write", true))}>
+                  {!readOnly && (
+                    <EditorToolbar onFormat={applyFormat} onImage={pickImage} uploading={upload.isPending} />
+                  )}
+                  <input
+                    ref={files}
+                    type="file"
+                    accept="image/png,image/jpeg,image/gif,image/webp"
+                    hidden
+                    data-testid="entry-image-input"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0]
+                      e.target.value = ""
+                      if (file) void addImage(file)
+                    }}
+                  />
+                  <Textarea
+                    ref={text}
+                    value={fields.body}
+                    readOnly={readOnly}
+                    onChange={(e) => set({ body: e.target.value })}
+                    placeholder={t`Write what changed in Markdown…`}
+                    aria-label={t`Text`}
+                    spellCheck
+                    dir="auto"
+                    className="min-h-[55vh] resize-y bg-card font-mono text-[13.5px] leading-relaxed"
+                    onPaste={(e) => {
+                      const image = Array.from(e.clipboardData.files).find((f) => f.type.startsWith("image/"))
+                      if (!image) return
+                      e.preventDefault()
+                      void addImage(image)
+                    }}
+                    onDrop={(e) => {
+                      const image = Array.from(e.dataTransfer.files).find((f) => f.type.startsWith("image/"))
+                      if (!image) return
+                      e.preventDefault()
+                      void addImage(image)
+                    }}
+                    data-testid="entry-editor-body"
+                  />
+                </div>
+                {showPreview && (
+                  <div className={hide("preview", showPreview)}>
+                    <PreviewPane
+                      title={fields.title}
+                      html={rendered.data ?? ""}
+                      fetching={rendered.isFetching}
+                      error={rendered.error}
+                      frameTitle={t`Preview of the entry`}
+                    />
+                  </div>
                 )}
               </div>
             </div>
-          </Field>
-          {canMail && <Sent changelog={changelog} entry={entry} />}
+          </div>
+          <aside
+            className="flex flex-col gap-5 rounded-2xl border bg-card p-4 lg:self-start"
+            data-testid="entry-editor-details"
+          >
+            <Field
+              label={<Trans>Labels</Trans>}
+              hint={
+                labelsLocked && !readOnly ? (
+                  <Trans>A member who may publish changes the labels of a published entry.</Trans>
+                ) : undefined
+              }
+            >
+              <div className="flex flex-wrap gap-2" role="group" aria-label={t`Labels`}>
+                {LABELS.map((l) => (
+                  <button
+                    key={l}
+                    type="button"
+                    disabled={labelsLocked || m.update.isPending}
+                    aria-pressed={entry.labels.includes(l)}
+                    onClick={() => toggleLabel(l)}
+                    className={cn(
+                      "rounded-lg border px-3 py-1.5 text-body font-medium outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-60",
+                      entry.labels.includes(l) ? LABEL_TONES[l] : "border-border text-muted-foreground"
+                    )}
+                    data-testid={`entry-label-${l}`}
+                  >
+                    {labelText[l]}
+                  </button>
+                ))}
+              </div>
+            </Field>
+            <Field
+              label={<Trans>Address ending</Trans>}
+              htmlFor="entry-slug"
+              hint={<Trans>Part of this translation’s web address. Made from the title when empty.</Trans>}
+            >
+              <Input
+                id="entry-slug"
+                value={fields.slug}
+                maxLength={100}
+                readOnly={readOnly}
+                spellCheck={false}
+                autoCapitalize="none"
+                onChange={(e) => set({ slug: e.target.value.toLowerCase() })}
+                data-testid="entry-editor-slug"
+              />
+            </Field>
+            <Field
+              label={<Trans>Picture</Trans>}
+              hint={<Trans>Shown with the entry on the page, in the widget and in the mail.</Trans>}
+            >
+              <div className="flex items-center gap-3">
+                {entry.image ? (
+                  <img
+                    src={entry.image.url}
+                    alt={entry.image.filename}
+                    className="h-16 w-24 rounded-lg border object-cover"
+                    data-testid="entry-image"
+                  />
+                ) : (
+                  <span className="grid h-16 w-24 place-items-center rounded-lg border border-dashed text-faint">
+                    <ImageIcon className="size-5" />
+                  </span>
+                )}
+                <div className="flex flex-wrap gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    disabled={labelsLocked}
+                    onClick={() => setPicking(true)}
+                    data-testid="entry-pick-image"
+                  >
+                    {entry.image ? <Trans>Change</Trans> : <Trans>Choose a picture</Trans>}
+                  </Button>
+                  {entry.image && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      disabled={labelsLocked}
+                      onClick={() => m.update.mutate({ image_id: null })}
+                    >
+                      <Trans>Remove</Trans>
+                    </Button>
+                  )}
+                </div>
+              </div>
+            </Field>
+            {canMail && <Sent changelog={changelog} entry={entry} />}
+          </aside>
         </div>
       </div>
       <ImageLibrary

@@ -4,9 +4,14 @@ import { Link } from "react-router"
 
 import { Notice } from "@/components/common"
 import { formatDateTime, useEnumText } from "@/components/common/text"
+import { keyLabel } from "@/components/common/ShortcutSheet"
 import type { Broadcast, BroadcastState, Channel, WorkspaceBroadcasts } from "@/lib/api"
 import { useSession } from "@/lib/session"
 import { cn } from "@/lib/utils"
+
+export function keyHint(label: string, key: string) {
+  return `${label} (${keyLabel(key).join("")})`
+}
 
 export type SenderState = "ready" | "no_smtp" | "no_from"
 

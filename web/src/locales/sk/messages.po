@@ -19,10 +19,6 @@ msgstr "„Bola táto stránka užitočná?“, spätná väzba a diskusie vo va
 msgid "(no subject)"
 msgstr "(bez predmetu)"
 
-#: src/features/settings/members/MemberList.tsx
-msgid "(you)"
-msgstr "(vy)"
-
 #. placeholder {0}: msg.attachments
 #: src/features/migrations/ReviewStep.tsx
 msgid "{0, plural, one {# attachment} other {# attachments}}"
@@ -78,6 +74,7 @@ msgid "{0} active today"
 msgstr "{0} aktívnych dnes"
 
 #. placeholder {0}: done.length
+#. placeholder {0}: done.size
 #: src/features/inbox/ChatList.tsx
 msgid "{0} closed"
 msgstr "{0} uzavretých"
@@ -88,6 +85,8 @@ msgid "{0} events"
 msgstr "{0} udalostí"
 
 #. placeholder {0}: pct.format(good / mine.length)
+#. placeholder {0}: pct.format(good)
+#: src/features/home/HomePage.tsx
 #: src/features/reports/ReportPages.tsx
 msgid "{0} good"
 msgstr "{0} dobrých"
@@ -206,6 +205,10 @@ msgstr "Príloh: {attachmentsLeft} presahuje limit veľkosti tohto servera alebo
 msgid "{author}, sent by {by}"
 msgstr "{author}, odoslal(a) {by}"
 
+#: src/features/team/TeamPage.tsx
+msgid "{available} of {total}"
+msgstr "{available} z {total}"
+
 #: src/features/contact/ContactDetails.tsx
 msgid "{bad} bad"
 msgstr "{bad} zlých"
@@ -227,6 +230,10 @@ msgstr "{clientName} je pripojený"
 msgid "{closed, plural, one {# closed} other {# closed}}"
 msgstr "{closed, plural, one {# uzavretá} few {# uzavreté} many {# uzavretej} other {# uzavretých}}"
 
+#: src/features/status/MonitorsPage.tsx
+msgid "{comp} is not working"
+msgstr "{comp} nefunguje"
+
 #: src/features/migrations/Wizard.tsx
 msgid "{conversations} conversations, {messages} messages"
 msgstr "Konverzácie: {conversations}, správy: {messages}"
@@ -243,10 +250,6 @@ msgstr "{count, plural, one {# značka} few {# značky} many {# značky} other {
 msgid "{count, plural, one {# folder} other {# folders}}"
 msgstr "{count, plural, one {# priečinok} few {# priečinky} many {# priečinka} other {# priečinkov}}"
 
-#: src/features/status/StatusPages.tsx
-msgid "{count, plural, one {# linked conversation} other {# linked conversations}}"
-msgstr "{count, plural, one {# prepojená konverzácia} few {# prepojené konverzácie} many {# prepojenej konverzácie} other {# prepojených konverzácií}}"
-
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "{count, plural, one {# mailbox} other {# mailboxes}}"
 msgstr "{count, plural, one {# schránka} few {# schránky} many {# schránky} other {# schránok}}"
@@ -254,14 +257,6 @@ msgstr "{count, plural, one {# schránka} few {# schránky} many {# schránky} o
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "{count, plural, one {It goes to # recipient.} other {It goes to # recipients.}}"
 msgstr "{count, plural, one {Odíde # príjemcovi.} few {Odíde # príjemcom.} many {Odíde # príjemcovi.} other {Odíde # príjemcom.}}"
-
-#: src/features/broadcasts/ReviewPanel.tsx
-msgid "{count, plural, one {Schedule for # recipient} other {Schedule for # recipients}}"
-msgstr "{count, plural, one {Naplánovať pre # príjemcu} few {Naplánovať pre # príjemcov} many {Naplánovať pre # príjemcu} other {Naplánovať pre # príjemcov}}"
-
-#: src/features/broadcasts/ReviewPanel.tsx
-msgid "{count, plural, one {Send to # recipient} other {Send to # recipients}}"
-msgstr "{count, plural, one {Odoslať # príjemcovi} few {Odoslať # príjemcom} many {Odoslať # príjemcovi} other {Odoslať # príjemcom}}"
 
 #: src/features/settings/webhooks/WebhookList.tsx
 msgid "{count} events"
@@ -288,7 +283,7 @@ msgid "{created, plural, one {# new} other {# new}}"
 msgstr "{created, plural, one {# nový} few {# nové} many {# nového} other {# nových}}"
 
 #: src/features/broadcasts/Growth.tsx
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/Toolbar.tsx
 msgid "{d, plural, one {# day} other {# days}}"
 msgstr "{d, plural, one {# deň} few {# dni} many {# dňa} other {# dní}}"
 
@@ -303,10 +298,6 @@ msgstr "{days, plural, one {# deň} few {# dni} many {# dňa} other {# dní}}"
 #: src/features/home/HomePage.tsx
 msgid "{days, plural, one {median, last # day} other {median, last # days}}"
 msgstr "{days, plural, one {medián, posledný # deň} few {medián, posledné # dni} many {medián, posledného # dňa} other {medián, posledných # dní}}"
-
-#: src/features/docs/DocsPages.tsx
-msgid "{days, plural, one {The last day, over the inboxes you can see.} other {The last # days, over the inboxes you can see.}}"
-msgstr "{days, plural, one {Posledný deň, pre schránky, ktoré vidíte.} few {Posledné # dni, pre schránky, ktoré vidíte.} many {Posledného # dňa, pre schránky, ktoré vidíte.} other {Posledných # dní, pre schránky, ktoré vidíte.}}"
 
 #: src/features/conversation/ConversationStatus.tsx
 msgid "{days, plural, one {Waiting for # day} other {Waiting for # days}}"
@@ -325,12 +316,11 @@ msgstr "{doneParts} z {totalParts} častí"
 msgid "{doneText} of {total}"
 msgstr "{doneText} z {total}"
 
-#: src/features/status/IncidentsTab.tsx
 #: src/features/status/StatusPages.tsx
 msgid "{down, plural, one {# down} other {# down}}"
 msgstr "{down, plural, one {# nedostupný} few {# nedostupné} many {# nedostupného} other {# nedostupných}}"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "{down} not helpful"
 msgstr "{down} neužitočných"
 
@@ -342,7 +332,7 @@ msgstr "{existing} už v Yuve"
 msgid "{feedback, plural, one {# feedback is not resolved yet} other {# feedback are not resolved yet}}"
 msgstr "{feedback, plural, one {# spätná väzba ešte nie je vyriešená} few {# spätné väzby ešte nie sú vyriešené} many {# spätnej väzby ešte nie je vyriešenej} other {# spätných väzieb ešte nie je vyriešených}}"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "{feedback} open feedback"
 msgstr "Otvorená spätná väzba: {feedback}"
 
@@ -361,6 +351,10 @@ msgstr "{first} ohodnotil(a) konverzáciu 👍"
 #: src/features/conversation/messages/Thread.tsx
 msgid "{first} rated the conversation 👎"
 msgstr "{first} ohodnotil(a) konverzáciu 👎"
+
+#: src/features/home/HomePage.tsx
+msgid "{from} – today, {scope}"
+msgstr "{from} – dnes, {scope}"
 
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "{from} has an SPF record. Whether it passes is known once the test mail is read."
@@ -442,6 +436,10 @@ msgstr "{liveText} za posledných 30 minút"
 msgid "{minutes, plural, one {Waiting for # minute} other {Waiting for # minutes}}"
 msgstr "{minutes, plural, one {Čaká # minútu} few {Čaká # minúty} many {Čaká # minúty} other {Čaká # minút}}"
 
+#: src/features/status/IncidentDetail.tsx
+msgid "{monitorName} answers normally again"
+msgstr "{monitorName} opäť odpovedá normálne"
+
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "{mxDomain} has no MX record, so replies to broadcasts cannot arrive. Publish the MX records of your mail service."
 msgstr "{mxDomain} nemá záznam MX, takže odpovede na hromadné správy nemôžu doraziť. Zverejnite záznamy MX svojej e-mailovej služby."
@@ -494,14 +492,25 @@ msgstr "Konverzácií: {n}"
 msgid "{n} in 30 days"
 msgstr "{n} za 30 dní"
 
+#: src/features/inbox/ChatList.tsx
+msgid "{n} marked as read"
+msgstr "{n} označené ako prečítané"
+
+#: src/features/inbox/ChatList.tsx
+msgid "{n} marked as unread"
+msgstr "{n} označené ako neprečítané"
+
 #: src/app/UserMenu.tsx
 msgid "{name} · {statusText}"
 msgstr "{name} · {statusText}"
 
-#: src/features/team/MemberPage.tsx
-#: src/features/team/TeamColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "{name} (you)"
 msgstr "{name} (vy)"
+
+#: src/features/contact/ContactDetail.tsx
+msgid "{name} blocked. Their mail is refused."
+msgstr "{name} zablokovaný. Jeho e-maily sa odmietajú."
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "{name} can reply"
@@ -552,6 +561,10 @@ msgstr "{name} prijíma poštu na tejto adrese. Tu je, čo ste nastavili."
 msgid "{name} replied before you."
 msgstr "{name} odpovedal(a) pred vami."
 
+#: src/features/contact/ContactDetail.tsx
+msgid "{name} unblocked"
+msgstr "{name} odblokovaný"
+
 #: src/features/conversation/messages/context.ts
 #: src/features/inbox/SidePanels.tsx
 msgid "{name} via {via}"
@@ -569,21 +582,12 @@ msgstr "Upozornenie dostanú: {names}"
 msgid "{needs, plural, one {# thing needs you today.} other {# things need you today.}}"
 msgstr "{needs, plural, one {Dnes vás potrebuje # vec.} few {Dnes vás potrebujú # veci.} many {Dnes vás potrebuje # veci.} other {Dnes vás potrebuje # vecí.}}"
 
-#: src/features/status/IncidentsTab.tsx
-msgid "{notOk, plural, one {# not operational} other {# not operational}}"
-msgstr "{notOk, plural, one {# mimo prevádzky} few {# mimo prevádzky} many {# mimo prevádzky} other {# mimo prevádzky}}"
-
 #: src/features/home/HomePage.tsx
 msgid "{on} of {of} online"
 msgstr "online {on} z {of}"
 
-#: src/features/team/TeamColumn.tsx
-msgid "{open, plural, one {# open now} other {# open now}}"
-msgstr "{open, plural, one {# teraz otvorená} few {# teraz otvorené} many {# teraz otvorenej} other {# teraz otvorených}}"
-
 #: src/components/common/Linked.tsx
 #: src/features/home/HomePage.tsx
-#: src/features/team/TeamColumn.tsx
 msgid "{open, plural, one {# open} other {# open}}"
 msgstr "{open, plural, one {# otvorená} few {# otvorené} many {# otvorenej} other {# otvorených}}"
 
@@ -599,27 +603,23 @@ msgstr "{out, plural, one {# riadok sa vynechá} few {# riadky sa vynechajú} ma
 msgid "{pct} satisfied"
 msgstr "{pct} spokojných"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "{pending} posts waiting for approval"
 msgstr "Príspevkov čaká na schválenie: {pending}"
 
-#: src/features/broadcasts/Overview.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "{pending} waiting · {unsubscribed} unsubscribed"
 msgstr "Čaká: {pending} · odhlásení: {unsubscribed}"
 
-#: src/features/docs/discussions/DiscussionsPane.tsx
 #: src/features/docs/discussions/parts.tsx
 msgid "{pending} waiting for approval"
 msgstr "Čaká na schválenie: {pending}"
-
-#: src/features/broadcasts/BroadcastsColumn.tsx
-msgid "{pending} waiting for confirmation"
-msgstr "Čaká na potvrdenie: {pending}"
 
 #: src/features/broadcasts/ListSettings.tsx
 msgid "{people, plural, one {Its # subscription and its consent record are deleted.} other {Its # subscriptions and their consent records are deleted.}}"
 msgstr "{people, plural, one {Jej # odber a záznam o súhlase sa odstránia.} few {Jej # odbery a záznamy o súhlase sa odstránia.} many {Jej # odberu a záznamov o súhlase sa odstráni.} other {Jej # odberov a záznamov o súhlase sa odstráni.}}"
 
+#: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/Overview.tsx
 msgid "{people} people"
 msgstr "{people} ľudí"
@@ -647,6 +647,10 @@ msgstr "{percent} %, {doneText} z {total}"
 #: src/features/migrations/UploadStep.tsx
 msgid "{percent}%, {sent} of {size}"
 msgstr "{percent} %, {sent} z {size}"
+
+#: src/features/inbox/ChatsPage.tsx
+msgid "{product}’s conversations"
+msgstr "Konverzácie produktu {product}"
 
 #: src/features/migrations/text.ts
 msgid "{provider} accepts no passwords over IMAP. This mailbox connects only with “Sign in with Microsoft”: go back and pick Outlook.com and Microsoft 365."
@@ -729,10 +733,6 @@ msgstr "{rated, plural, =0 {zatiaľ žiadne hodnotenia} one {# hodnotenie} few {
 msgid "{rated, plural, one {# rating} other {# ratings}}"
 msgstr "{rated, plural, one {# hodnotenie} few {# hodnotenia} many {# hodnotenia} other {# hodnotení}}"
 
-#: src/features/broadcasts/BroadcastList.tsx
-msgid "{recipients} recipients"
-msgstr "Príjemcov: {recipients}"
-
 #: src/features/broadcasts/Report.tsx
 msgid "{recipients} recipients · {failed} refused by the mail server · {left} skipped · {auto} automatic replies, only counted"
 msgstr "Príjemcov: {recipients} · odmietnuté poštovým serverom: {failed} · preskočené: {left} · automatických odpovedí, iba započítaných: {auto}"
@@ -740,10 +740,6 @@ msgstr "Príjemcov: {recipients} · odmietnuté poštovým serverom: {failed} ·
 #: src/features/migrations/DoneStep.tsx
 msgid "{removable, plural, one {# imported conversation nobody wrote in since can be removed.} other {# imported conversations nobody wrote in since can be removed.}}"
 msgstr "{removable, plural, one {# importovanú konverzáciu, do ktorej odvtedy nikto nepísal, možno odstrániť.} few {# importované konverzácie, do ktorých odvtedy nikto nepísal, možno odstrániť.} many {# importovanej konverzácie, do ktorej odvtedy nikto nepísal, možno odstrániť.} other {# importovaných konverzácií, do ktorých odvtedy nikto nepísal, možno odstrániť.}}"
-
-#: src/features/team/TeamColumn.tsx
-msgid "{replies, plural, one {# reply today} other {# replies today}}"
-msgstr "{replies, plural, one {# odpoveď dnes} few {# odpovede dnes} many {# odpovede dnes} other {# odpovedí dnes}}"
 
 #: src/app/TeamMenu.tsx
 msgid "{replies, plural, one {# reply} other {# replies}}"
@@ -758,6 +754,10 @@ msgstr "Odpovedí: {replies}"
 msgid "{rest, plural, one {and # more page} other {and # more pages}}"
 msgstr "{rest, plural, one {a # ďalšia stránka} few {a # ďalšie stránky} many {a # ďalšej stránky} other {a # ďalších stránok}}"
 
+#: src/features/team/TeamPage.tsx
+msgid "{role} · {language} · sent {sent} · expires {expires}"
+msgstr "{role} · {language} · odoslané {sent} · vyprší {expires}"
+
 #: src/features/broadcasts/Import.tsx
 msgid "{rows} rows, read as {encoding}, separated by {delimiter}."
 msgstr "Riadkov: {rows}, prečítané ako {encoding}, oddeľovač {delimiter}."
@@ -770,15 +770,12 @@ msgstr "Riadkov: {rows}."
 msgid "{satisfied} satisfied"
 msgstr "{satisfied} spokojných"
 
-#: src/features/broadcasts/BroadcastList.tsx
-msgid "{sent} of {all}"
-msgstr "{sent} z {all}"
-
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/broadcasts/Overview.tsx
 msgid "{sent} of {all} done"
 msgstr "{sent} z {all} hotovo"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "{share} helpful"
 msgstr "{share} užitočných"
 
@@ -795,34 +792,30 @@ msgid "{state} since {since}"
 msgstr "{state} od {since}"
 
 #: src/features/broadcasts/AudienceBuilder.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
 msgid "{subscribed} subscribed"
 msgstr "Odberateľov: {subscribed}"
 
-#: src/features/status/StatusColumn.tsx
 #: src/features/status/StatusPages.tsx
 msgid "{subscribed} subscribers"
 msgstr "Odberatelia: {subscribed}"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "{threads} open discussions"
 msgstr "Otvorených diskusií: {threads}"
 
-#: src/features/broadcasts/Overview.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "{unsubscribed} unsubscribed"
 msgstr "Odhlásení: {unsubscribed}"
 
-#: src/features/status/IncidentsTab.tsx
 #: src/features/status/StatusPages.tsx
 msgid "{up, plural, one {# up} other {# up}}"
 msgstr "{up, plural, one {# dostupný} few {# dostupné} many {# dostupného} other {# dostupných}}"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "{up} helpful"
 msgstr "{up} užitočných"
 
 #: src/features/status/IncidentsPage.tsx
-#: src/features/status/IncidentsTab.tsx
 msgid "{updates, plural, one {# update} other {# updates}}"
 msgstr "{updates, plural, one {# aktualizácia} few {# aktualizácie} many {# aktualizácie} other {# aktualizácií}}"
 
@@ -837,8 +830,13 @@ msgstr "{views, plural, one {# zobrazenie} few {# zobrazenia} many {# zobrazenia
 #: src/features/account/AccountPage.tsx
 #: src/features/docs/discussions/parts.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/feedback/RoadmapCard.tsx
 msgid "{votes} votes"
 msgstr "Hlasov: {votes}"
+
+#: src/features/status/StatusPages.tsx
+msgid "{watching, plural, one {Watched by # monitor} other {Watched by # monitors}}"
+msgstr "{watching, plural, one {Sleduje # monitor} few {Sledujú # monitory} many {Sleduje # monitora} other {Sleduje # monitorov}}"
 
 #: src/features/reports/ReportPages.tsx
 msgid "{who} · answered by {name}"
@@ -870,7 +868,7 @@ msgstr "+ Pridať adresu"
 msgid "+ Add channel"
 msgstr "+ Pridať kanál"
 
-#: src/features/broadcasts/Overview.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "+{added} this month"
 msgstr "+{added} tento mesiac"
 
@@ -1083,6 +1081,10 @@ msgstr "Diskusia dostala prijatú odpoveď"
 msgid "A discussion started"
 msgstr "Diskusia sa začala"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "A draft incident opens for your team to review. Customers see nothing until a member publishes it."
+msgstr "Otvorí sa koncept incidentu na kontrolu vaším tímom. Zákazníci nič neuvidia, kým ho člen nezverejní."
+
 #: src/features/status/IncidentDialog.tsx
 msgid "A draft is seen only by your team and changes no component until you publish it."
 msgstr "Koncept vidí iba váš tím a nezmení žiadny komponent, kým ho nezverejníte."
@@ -1131,7 +1133,11 @@ msgstr "Neskoršia správa od kontaktu."
 msgid "A line that makes people open it"
 msgstr "Riadok, ktorý ľudí primeje správu otvoriť"
 
-#: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/features/broadcasts/ListsHome.tsx
+msgid "A list is who agreed to hear from you. Every subscriber keeps a consent record you can export."
+msgstr "Zoznam tvoria ľudia, ktorí súhlasili, že od vás budú dostávať správy. Každý odberateľ má záznam o súhlase, ktorý môžete exportovať."
+
+#: src/features/broadcasts/ListParts.tsx
 msgid "A mailing list holds the people who agreed to get your broadcasts. They join on a subscribe form on your site, or your team adds them and records how they agreed. Every step is kept as proof of consent, and everyone can leave with one click."
 msgstr "E-mailový zoznam obsahuje ľudí, ktorí súhlasili s prijímaním vašich hromadných správ. Pripájajú sa cez formulár na odber na vašom webe, alebo ich pridá váš tím a zaznamená, ako súhlasili. Každý krok sa uchováva ako dôkaz súhlasu a každý sa môže odhlásiť jedným kliknutím."
 
@@ -1142,10 +1148,6 @@ msgstr "E-mailový zoznam odosiela v mene schránky cez jej e-mailový kanál. N
 #: src/features/setup/SetupHub.tsx
 msgid "A mailing list with subscribe forms, for your broadcasts"
 msgstr "E-mailový zoznam s formulármi na odber pre vaše hromadné správy"
-
-#: src/features/status/MonitorsTab.tsx
-msgid "A member set the component by hand later, so it stays as they left it."
-msgstr "Člen neskôr nastavil komponent ručne, takže zostáva tak, ako ho nechal."
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "A merge field without a fallback would be empty for some recipients. Give it a fallback."
@@ -1166,6 +1168,10 @@ msgstr "Názov, ktorý ovládate, napr. status.example.com. Yuva vám ukáže dv
 #: src/features/setup/StartStep.tsx
 msgid "A new product"
 msgstr "Nový produkt"
+
+#: src/features/docs/PagesTab.tsx
+msgid "A new reader’s first post waits for your approval. You can change this in the inbox settings."
+msgstr "Prvý príspevok nového čitateľa čaká na vaše schválenie. Môžete to zmeniť v nastaveniach schránky."
 
 #: src/components/common/ServiceWorkerBridge.tsx
 msgid "A new version of Yuva is ready."
@@ -1362,10 +1368,15 @@ msgstr "Acme Support"
 msgid "Actions for {0}"
 msgstr "Akcie pre {0}"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/status/DomainCard.tsx
 #: src/features/status/IncidentsPage.tsx
 msgid "Active"
 msgstr "Aktívne"
+
+#: src/features/contact/ContactDetail.tsx
+msgid "Activity"
+msgstr "Aktivita"
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/contact/ContactDetails.tsx
@@ -1376,6 +1387,10 @@ msgstr "Pridať"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Add a block"
 msgstr "Pridať blok"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Add a component"
+msgstr "Pridať komponent"
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Add a condition"
@@ -1492,7 +1507,7 @@ msgstr "Pridať hlavičku"
 msgid "Add monitor"
 msgstr "Pridať monitor"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Add monitor ({addKey})"
 msgstr "Pridať monitor ({addKey})"
 
@@ -1505,6 +1520,11 @@ msgstr "Pridať poznámku"
 msgid "Add product"
 msgstr "Pridať produkt"
 
+#: src/features/docs/InstallDialog.tsx
+msgid "Add ratings and discussions to your docs"
+msgstr "Pridajte do dokumentácie hodnotenia a diskusie"
+
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 #: src/features/broadcasts/Subscribers.tsx
 msgid "Add subscriber"
@@ -1513,10 +1533,6 @@ msgstr "Pridať odberateľa"
 #: src/features/setup/InstallStep.tsx
 msgid "Add the chat to your site"
 msgstr "Pridajte chat na svoj web"
-
-#: src/features/docs/DocsColumn.tsx
-msgid "Add the page feedback and discussions elements to your documentation site, on one of the inbox's chat channels. Ratings, feedback and discussions then show up here per page."
-msgstr "Pridajte na svoj dokumentačný web prvky spätnej väzby k stránke a diskusií, v jednom z chatovacích kanálov schránky. Hodnotenia, spätná väzba a diskusie sa potom tu zobrazia podľa stránok."
 
 #: src/features/setup/InstallStep.tsx
 msgid "Add the SDK and create one client"
@@ -1530,6 +1546,7 @@ msgstr "Pridajte server v termináli:"
 msgid "Add the site's address."
 msgstr "Pridajte adresu webu."
 
+#: src/features/docs/PagesTab.tsx
 #: src/features/setup/InstallStep.tsx
 msgid "Add the two elements under every docs page"
 msgstr "Pridajte dva prvky pod každú stránku dokumentácie"
@@ -1537,14 +1554,6 @@ msgstr "Pridajte dva prvky pod každú stránku dokumentácie"
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Add to Cursor"
 msgstr "Pridať do Cursoru"
-
-#: src/features/feedback/FeedbackPage.tsx
-msgid "Add to roadmap"
-msgstr "Pridať do plánu vývoja"
-
-#: src/features/feedback/FeedbackPage.tsx
-msgid "Add to roadmap (B)"
-msgstr "Pridať do plánu vývoja (B)"
 
 #: src/features/setup/InstallStep.tsx
 msgid "Add Yuva to your app"
@@ -1580,6 +1589,7 @@ msgstr "Pridané tímom"
 #: src/features/setup/email/EmailLayout.tsx
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/MonitorHttpFields.tsx
+#: src/features/status/MonitorsPage.tsx
 #: src/features/status/MonitorToken.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Address"
@@ -1598,11 +1608,11 @@ msgstr "Správca"
 msgid "Admin routing"
 msgstr "Smerovanie správcu"
 
-#: src/features/status/IncidentPane.tsx
-msgid "Affected"
-msgstr "Dotknuté"
+#: src/features/team/TeamPage.tsx
+msgid "Admins see every inbox and manage products, channels and members."
+msgstr "Správcovia vidia každú schránku a spravujú produkty, kanály a členov."
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Affects"
 msgstr "Týka sa"
 
@@ -1613,6 +1623,10 @@ msgstr "Agent"
 #: src/features/migrations/MapStep.tsx
 msgid "Agents"
 msgstr "Agenti"
+
+#: src/features/team/TeamPage.tsx
+msgid "Agents see the inboxes they were given and answer in them."
+msgstr "Agenti vidia schránky, ktoré im boli pridelené, a odpovedajú v nich."
 
 #: src/features/conversation/Collision.tsx
 msgid "Agree who replies."
@@ -1646,6 +1660,7 @@ msgstr "Alertmanager"
 #: src/features/inbox/ChatList.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "All"
 msgstr "Všetko"
 
@@ -1654,7 +1669,7 @@ msgstr "Všetko"
 msgid "All components"
 msgstr "Všetky komponenty"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "All good"
 msgstr "Všetko v poriadku"
 
@@ -1678,17 +1693,21 @@ msgstr "Všetka pošta"
 msgid "All marked as read"
 msgstr "Všetko označené ako prečítané"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "All monitors"
+msgstr "Všetky monitory"
+
 #: src/features/settings/inboxes/InboxSecurity.tsx
 msgid "All of its conversations are deleted with it."
 msgstr "Všetky jej konverzácie sa s ňou odstránia."
 
-#: src/features/status/IncidentsTab.tsx
-msgid "all operational"
-msgstr "všetko v prevádzke"
-
 #: src/features/migrations/UploadStep.tsx
 msgid "All parts arrived. Reading the file…"
 msgstr "Všetky časti dorazili. Číta sa súbor…"
+
+#: src/features/home/HomePage.tsx
+msgid "all products"
+msgstr "všetky produkty"
 
 #: src/features/inbox/InboxPicker.tsx
 #: src/features/inbox/ProductSwitcher.tsx
@@ -1702,7 +1721,7 @@ msgstr "Všetky produkty"
 msgid "All scopes"
 msgstr "Všetky rozsahy"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/Toolbar.tsx
 msgid "All sites"
 msgstr "Všetky weby"
 
@@ -1714,7 +1733,6 @@ msgstr "všetky weby a aplikácie"
 msgid "All systems operational"
 msgstr "Všetky systémy fungujú"
 
-#: src/features/status/IncidentsTab.tsx
 #: src/features/status/StatusPages.tsx
 msgid "all up"
 msgstr "všetko dostupné"
@@ -1758,6 +1776,7 @@ msgstr "Už skôr v súbore"
 msgid "Already in Yuva"
 msgstr "Už v Yuve"
 
+#: src/features/status/LinkConversationsDialog.tsx
 #: src/features/status/LinkIncidentDialog.tsx
 msgid "Already linked"
 msgstr "Už je prepojená"
@@ -1903,6 +1922,14 @@ msgstr "Obrázok https."
 msgid "An inbox collects the conversations of one product or brand. Name it after the product your customers know."
 msgstr "Schránka zhromažďuje konverzácie jedného produktu alebo značky. Pomenujte ju podľa produktu, ktorý vaši zákazníci poznajú."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "An incident is published at once, so customers see it on the page."
+msgstr "Incident sa zverejní hneď, takže ho zákazníci uvidia na stránke."
+
+#: src/features/status/MonitorsPage.tsx
+msgid "An incident is still open. Post the all-clear."
+msgstr "Incident je stále otvorený. Zverejnite oznam, že je všetko v poriadku."
+
 #: src/components/common/text.ts
 msgid "An incident or maintenance changed or got an update"
 msgstr "Incident alebo údržba sa zmenili alebo dostali aktualizáciu"
@@ -1919,9 +1946,13 @@ msgstr "K incidentu možno prepojiť najviac 5 000 konverzácií. Najprv niektor
 msgid "An incident was resolved or maintenance completed"
 msgstr "Incident bol vyriešený alebo údržba dokončená"
 
-#: src/features/settings/members/Invites.tsx
+#: src/features/team/TeamPage.tsx
 msgid "An invite is accepted when the person signs in with a code sent to that address. It expires after 7 days."
 msgstr "Pozvánka sa prijme, keď sa osoba prihlási kódom zaslaným na túto adresu. Vyprší po 7 dňoch."
+
+#: src/features/team/TeamPage.tsx
+msgid "An owner cannot be removed. Change their role first."
+msgstr "Vlastníka nemožno odstrániť. Najprv mu zmeňte rolu."
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "An owner or admin can let assistants send on their own with Bots may send."
@@ -1993,6 +2024,10 @@ msgstr "iná schránka"
 msgid "Another page verified this domain first, and only a verified claim holds a name. Remove the domain, or start over once the other page lets it go."
 msgstr "Iná stránka túto doménu overila skôr a názov drží len overený nárok. Doménu odstráňte, alebo začnite odznova, keď ju druhá stránka uvoľní."
 
+#: src/features/docs/discussions/FromConversation.tsx
+msgid "Another page…"
+msgstr "Iná stránka…"
+
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "Another SMTP server"
 msgstr "Iný server SMTP"
@@ -2046,6 +2081,10 @@ msgstr "Akýkoľvek klient, ktorý hovorí MCP cez HTTP. Koná ako vy, s prístu
 msgid "Any conversation"
 msgstr "Akákoľvek konverzácia"
 
+#: src/features/contact/ContactsPage.tsx
+msgid "Any country"
+msgstr "Ľubovoľná krajina"
+
 #: src/features/inbox/ChatList.tsx
 msgid "Any label"
 msgstr "Ľubovoľný štítok"
@@ -2078,7 +2117,7 @@ msgstr "API a MCP"
 msgid "API channel"
 msgstr "Kanál API"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "API key"
 msgstr "Kľúč API"
 
@@ -2090,6 +2129,7 @@ msgstr "Kľúče API"
 
 #: src/components/common/Source.tsx
 #: src/features/conversation/Feedback.tsx
+#: src/features/feedback/FeedbackFormDialog.tsx
 #: src/features/oauth/ConsentPage.tsx
 msgid "App"
 msgstr "Aplikácia"
@@ -2155,9 +2195,19 @@ msgctxt "mail folder kind"
 msgid "Archive"
 msgstr "Archív"
 
+#: src/features/broadcasts/ListSettings.tsx
+msgid "Archive the list instead to keep the records."
+msgstr "Zoznam radšej archivujte, záznamy tak zostanú."
+
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "Archived"
 msgstr "Archivované"
+
+#: src/features/broadcasts/ListsHome.tsx
+msgid "Archived lists keep their subscribers and consent records but take no new sign-ups."
+msgstr "Archivované zoznamy si ponechajú odberateľov aj záznamy o súhlase, ale neprijímajú nové prihlášky."
 
 #: src/features/setup/previews.tsx
 msgid "Arrived"
@@ -2174,6 +2224,10 @@ msgstr "Dorazilo cez presmerovanie, {verifiedAt}."
 #: src/components/common/ShortcutSheet.tsx
 msgid "Articles"
 msgstr "Články"
+
+#: src/features/docs/PagesTab.tsx
+msgid "Articles you write in Yuva"
+msgstr "Články, ktoré píšete v Yuva"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "As {name}, since {when}"
@@ -2233,17 +2287,15 @@ msgstr "Prideliť (A)"
 
 #: src/app/Palette.tsx
 #: src/components/common/ShortcutSheet.tsx
-#: src/features/conversation/ConversationMenu.tsx
 msgid "Assign or hand to a teammate"
 msgstr "Prideliť alebo odovzdať kolegovi"
 
-#: src/features/conversation/ConversationMenu.tsx
+#: src/features/conversation/ChatView.tsx
 #: src/features/conversation/HeaderActions.tsx
 msgid "Assign to me"
 msgstr "Prideliť mne"
 
 #. placeholder {0}: assignee.name || assignee.email
-#: src/features/conversation/ChatView.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Assigned to {0}"
 msgstr "Pridelené používateľovi {0}"
@@ -2344,7 +2396,7 @@ msgstr "Atribút podmienky {n}"
 msgid "attribute, e.g. plan"
 msgstr "atribút, napr. plan"
 
-#: src/features/contact/ContactsPage.tsx
+#: src/features/contact/ContactDetail.tsx
 #: src/features/contact/MergePreview.tsx
 msgid "Attributes"
 msgstr "Atribúty"
@@ -2368,7 +2420,7 @@ msgstr "Automatické odpovede, newslettre a doručenky, na ktoré nikto neodpove
 msgid "Auto-reply"
 msgstr "Automatická odpoveď"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "automatic"
 msgstr "automaticky"
 
@@ -2380,7 +2432,7 @@ msgstr "Automatická pošta nikdy nespustí automatickú odpoveď."
 msgid "Available"
 msgstr "Dostupný"
 
-#: src/features/team/TeamColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "available now"
 msgstr "teraz dostupný"
 
@@ -2397,6 +2449,7 @@ msgstr "Preč"
 #: src/components/common/Linked.tsx
 #: src/components/common/Wizard.tsx
 #: src/features/auth/CreateWorkspace.tsx
+#: src/features/broadcasts/ReviewPanel.tsx
 #: src/features/contact/MergeContactDialog.tsx
 msgid "Back"
 msgstr "Späť"
@@ -2461,6 +2514,10 @@ msgstr "predtým: {0}, {1}"
 msgid "Before you connect"
 msgstr "Skôr než sa pripojíte"
 
+#: src/features/broadcasts/Composer.tsx
+msgid "Before you send"
+msgstr "Pred odoslaním"
+
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Billing"
 msgstr "Fakturácia"
@@ -2474,8 +2531,12 @@ msgstr "Fakturačný bot"
 msgid "Billing events"
 msgstr "Fakturačné udalosti"
 
+#: src/features/contact/ContactDetail.tsx
+msgid "Block contact"
+msgstr "Zablokovať kontakt"
+
 #: src/features/contact/ContactCard.tsx
-#: src/features/contact/ContactPage.tsx
+#: src/features/contact/ContactDetail.tsx
 #: src/features/contact/ContactSheet.tsx
 #: src/features/contact/ContactsPage.tsx
 #: src/features/status/DomainCard.tsx
@@ -2485,6 +2546,10 @@ msgstr "Zablokované"
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Blocked contacts"
 msgstr "Zablokované kontakty"
+
+#: src/features/contact/ContactDetail.tsx
+msgid "Blocked. Mail from this contact is refused and nothing new reaches the inbox. Unblock them from the menu."
+msgstr "Zablokovaný. E-maily od tohto kontaktu sa odmietajú a do schránky nepríde nič nové. Odblokujte ho v ponuke."
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Board"
@@ -2603,6 +2668,7 @@ msgstr "Preneste históriu pošty a helpdesku, zo zdroja iba na čítanie"
 msgid "Bring your old mail"
 msgstr "Preneste svoju starú poštu"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/Overview.tsx
 msgid "Broadcast"
@@ -2622,9 +2688,9 @@ msgstr "Hromadné odosielanie"
 #: src/app/Rail.tsx
 #: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
-#: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/Overview.tsx
 #: src/features/settings/webhooks/events.tsx
 #: src/features/settings/workspace/BroadcastsSettings.tsx
@@ -2661,11 +2727,6 @@ msgstr "Chyby, nápady a pochvaly z vašich aplikácií a stránok"
 msgid "Business hours"
 msgstr "Pracovný čas"
 
-#: src/features/broadcasts/SubscriberSheet.tsx
-msgid "By"
-msgstr "Autor"
-
-#: src/features/status/IncidentsTab.tsx
 #: src/features/status/StatusPages.tsx
 msgid "by e-mail"
 msgstr "e-mailom"
@@ -2701,14 +2762,18 @@ msgstr "Názov kampane"
 #: src/components/common/Wizard.tsx
 #: src/features/account/ConnectPage.tsx
 #: src/features/broadcasts/Import.tsx
+#: src/features/broadcasts/ListsHome.tsx
 #: src/features/broadcasts/NewBroadcastDialog.tsx
 #: src/features/broadcasts/Pace.tsx
 #: src/features/broadcasts/ReviewPanel.tsx
+#: src/features/broadcasts/SubscriberSheet.tsx
 #: src/features/contact/ContactDetails.tsx
+#: src/features/contact/ContactNotes.tsx
 #: src/features/contact/ContactsPage.tsx
 #: src/features/conversation/messages/Thread.tsx
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/docs/FromDocs.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
@@ -2716,10 +2781,10 @@ msgstr "Názov kampane"
 #: src/features/status/AddSubscriberDialog.tsx
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/CreatePageDialog.tsx
+#: src/features/status/IncidentDetail.tsx
 #: src/features/status/IncidentDialog.tsx
-#: src/features/status/IncidentPane.tsx
 #: src/features/status/MonitorDialog.tsx
-#: src/features/team/TeamColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Cancel"
 msgstr "Zrušiť"
 
@@ -2803,7 +2868,7 @@ msgstr "Zachytávacia adresa bez adresy Od"
 msgid "Category"
 msgstr "Kategória"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Cause found"
 msgstr "Príčina nájdená"
 
@@ -2815,18 +2880,23 @@ msgstr "Kópia: {cc}"
 msgid "Certificate"
 msgstr "Certifikát"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Certificate expired {expires}"
 msgstr "Certifikát vypršal {expires}"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Certificate expires {expires}"
 msgstr "Certifikát vyprší {expires}"
+
+#: src/features/feedback/RoadmapCard.tsx
+msgid "Change"
+msgstr "Zmeniť"
 
 #: src/features/auth/SignInForm.tsx
 msgid "Change address"
 msgstr "Zmeniť adresu"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Change pace"
 msgstr "Zmeniť tempo"
@@ -2868,7 +2938,6 @@ msgid "Changing the sending domain turns DKIM signing off until you enable it ag
 msgstr "Zmena odosielacej domény vypne podpisovanie DKIM, kým ho pre novú doménu znova nezapnete."
 
 #: src/features/contact/ContactDetails.tsx
-#: src/features/inbox/ChatList.tsx
 #: src/features/setup/email/EmailLayout.tsx
 #: src/features/setup/SetupLayout.tsx
 msgid "Channel"
@@ -2882,10 +2951,22 @@ msgstr "Kanál pridaný"
 msgid "Channel removed"
 msgstr "Kanál odstránený"
 
+#: src/features/feedback/FeedbackFormDialog.tsx
+msgid "Channel settings"
+msgstr "Nastavenia kanála"
+
 #: src/app/Sidebar.tsx
 #: src/features/settings/ProductsPage.tsx
 msgid "Channels"
 msgstr "Kanály"
+
+#: src/features/docs/InstallDialog.tsx
+msgid "Chat channel"
+msgstr "Chatový kanál"
+
+#: src/features/broadcasts/ReviewPanel.tsx
+msgid "Check"
+msgstr "Skontrolovať"
 
 #: src/features/settings/channels/email/Deliverability.tsx
 #: src/features/setup/email/EmailTestStep.tsx
@@ -2913,6 +2994,7 @@ msgid "Check DNS and start signing"
 msgstr "Skontrolovať DNS a začať podpisovať"
 
 #: src/features/status/MonitorDialog.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Check every"
 msgstr "Kontrolovať každých"
 
@@ -2941,7 +3023,6 @@ msgid "Check your e-mail"
 msgstr "Skontrolujte svoj e-mail"
 
 #: src/features/setup/email/EmailDoneStep.tsx
-#: src/features/status/MonitorsTab.tsx
 msgid "Checked"
 msgstr "Skontrolované"
 
@@ -2982,7 +3063,7 @@ msgstr "Kontroluje sa…"
 msgid "Checks"
 msgstr "Kontroly"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Checks that watch your products and set component states"
 msgstr "Kontroly, ktoré strážia vaše produkty a nastavujú stavy komponentov"
 
@@ -3006,9 +3087,9 @@ msgstr "Zvoľte „Vygenerovať heslo aplikácie“, pomenujte ho „Yuva“ a v
 msgid "Choose a channel"
 msgstr "Vyberte kanál"
 
-#: src/features/status/MonitorDialog.tsx
-msgid "Choose a component"
-msgstr "Vyberte komponent"
+#: src/features/docs/discussions/FromConversation.tsx
+msgid "Choose a page"
+msgstr "Vyberte stránku"
 
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "Choose a region"
@@ -3047,6 +3128,14 @@ msgstr "claude.ai a Claude Desktop"
 #: src/features/conversation/HeaderActions.tsx
 msgid "Clear"
 msgstr "Vymazať"
+
+#: src/features/contact/ContactsPage.tsx
+msgid "Clear filters"
+msgstr "Zrušiť filtre"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Clear search and filters"
+msgstr "Zrušiť vyhľadávanie a filtre"
 
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Clear the answer"
@@ -3107,6 +3196,7 @@ msgstr "Tajný kľúč klienta"
 #: src/components/ui/sheet.tsx
 #: src/features/contact/ContactCard.tsx
 #: src/features/contact/ContactSheet.tsx
+#: src/features/docs/DocsPage.tsx
 #: src/features/migrations/Wizard.tsx
 #: src/features/setup/SetupHub.tsx
 msgid "Close"
@@ -3150,6 +3240,10 @@ msgstr "Zavrieť staršie konverzácie"
 msgid "Close or reopen"
 msgstr "Zavrieť alebo znova otvoriť"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Close the discussion"
+msgstr "Zavrieť diskusiu"
+
 #: src/features/conversation/ChatView.tsx
 msgid "Close the search"
 msgstr "Zavrieť hľadanie"
@@ -3169,7 +3263,7 @@ msgid "Closed conversations untouched for this many days are deleted with their 
 msgstr "Uzavreté konverzácie, ktorých sa toľko dní nikto nedotkol, sa odstránia aj so správami a prílohami a surové e-maily staršie než toto sa odstránia. Nechajte prázdne, ak chcete zachovať všetko."
 
 #: src/features/inbox/ChatsPage.tsx
-#: src/features/team/MemberPage.tsx
+#: src/features/team/TeamPage.tsx
 msgid "closed today"
 msgstr "dnes uzavreté"
 
@@ -3239,17 +3333,24 @@ msgid "Comparison of condition {n}"
 msgstr "Porovnanie podmienky {n}"
 
 #: src/features/settings/inboxes/SenderIdentity.tsx
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Complete"
 msgstr "Dokončené"
+
+#: src/features/status/IncidentDetail.tsx
+msgid "Complete maintenance"
+msgstr "Dokončiť údržbu"
 
 #: src/features/migrations/text.ts
 #: src/features/status/text.tsx
 msgid "Completed"
 msgstr "Dokončené"
 
+#: src/features/status/IncidentDetail.tsx
+msgid "Completed at {endedAt}"
+msgstr "Dokončené o {endedAt}"
+
 #: src/features/status/MonitorDialog.tsx
-#: src/features/status/MonitorsTab.tsx
 msgid "Component"
 msgstr "Komponent"
 
@@ -3259,9 +3360,7 @@ msgstr "Komponent bol odstránený"
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/SubscriberSheet.tsx
-#: src/features/status/IncidentPane.tsx
-#: src/features/status/IncidentsTab.tsx
-#: src/features/status/StatusPagePane.tsx
+#: src/features/status/IncidentDetail.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Components"
 msgstr "Komponenty"
@@ -3312,7 +3411,6 @@ msgid "Confirmation asked"
 msgstr "Vyžiadané potvrdenie"
 
 #: src/components/common/text.ts
-#: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Confirmation mail sent"
 msgstr "Potvrdzovacia správa odoslaná"
 
@@ -3432,6 +3530,7 @@ msgstr "Pripojenie sa stratilo. Pripája sa znova…"
 msgid "Connections"
 msgstr "Pripojenia"
 
+#: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/ListSettings.tsx
 #: src/features/status/SubscribersTab.tsx
 msgid "Consent export"
@@ -3445,13 +3544,18 @@ msgstr "Súhlas udelený"
 msgid "Consent record"
 msgstr "Záznam o súhlase"
 
+#: src/features/contact/ContactDetail.tsx
 #: src/features/contact/ContactSheet.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "Contact"
 msgstr "Kontakt"
 
-#: src/features/contact/ContactPage.tsx
+#: src/features/contact/ContactsPage.tsx
+msgid "Contact added. Use New conversation to write to them."
+msgstr "Kontakt pridaný. Napíšte mu cez Nová konverzácia."
+
+#: src/features/contact/ContactDetail.tsx
 msgid "Contact and identities"
 msgstr "Kontakt a identity"
 
@@ -3459,7 +3563,6 @@ msgstr "Kontakt a identity"
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/contact/ContactSheet.tsx
 #: src/features/contact/ContactsPage.tsx
-#: src/features/conversation/ConversationMenu.tsx
 msgid "Contact details"
 msgstr "Údaje kontaktu"
 
@@ -3467,7 +3570,11 @@ msgstr "Údaje kontaktu"
 msgid "Contact details (C)"
 msgstr "Údaje kontaktu (C)"
 
-#: src/features/contact/ContactPage.tsx
+#: src/features/contact/ContactDetail.tsx
+msgid "Contact id copied"
+msgstr "ID kontaktu skopírované"
+
+#: src/features/contact/ContactDetail.tsx
 #: src/features/contact/ContactSheet.tsx
 msgid "Contact since {since}"
 msgstr "Kontakt od {since}"
@@ -3493,6 +3600,7 @@ msgid "Content"
 msgstr "Obsah"
 
 #: src/features/broadcasts/Import.tsx
+#: src/features/broadcasts/ReviewPanel.tsx
 #: src/features/migrations/ChooseStep.tsx
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/migrations/MapStep.tsx
@@ -3523,6 +3631,10 @@ msgstr "Pokračovať novšou poštou"
 msgid "Convers."
 msgstr "Konv."
 
+#: src/features/conversation/ChatView.tsx
+msgid "Conversation actions"
+msgstr "Akcie konverzácie"
+
 #: src/features/conversation/actions.ts
 msgid "Conversation closed"
 msgstr "Konverzácia uzavretá"
@@ -3532,22 +3644,27 @@ msgid "Conversation list"
 msgstr "Zoznam konverzácií"
 
 #: src/features/conversation/actions.ts
+#: src/features/conversation/ChatView.tsx
 msgid "Conversation reopened"
 msgstr "Konverzácia znova otvorená"
 
-#: src/features/contact/ContactPage.tsx
+#: src/features/contact/ContactDetail.tsx
+msgid "Conversation started"
+msgstr "Konverzácia sa začala"
+
+#: src/features/contact/ContactDetail.tsx
 #: src/features/reports/ReportPages.tsx
 msgid "conversations"
 msgstr "konverzácií"
 
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/contact/ContactDetail.tsx
 #: src/features/contact/ContactDetails.tsx
-#: src/features/contact/ContactPage.tsx
 #: src/features/contact/ContactSheet.tsx
-#: src/features/contact/ContactsPage.tsx
 #: src/features/contact/MergePreview.tsx
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/FromDocs.tsx
+#: src/features/docs/PagesTab.tsx
 #: src/features/home/HomePage.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/DoneStep.tsx
@@ -3563,10 +3680,6 @@ msgstr "Konverzácie skopírované"
 #: src/features/inbox/ChatsPage.tsx
 msgid "Conversations from every product"
 msgstr "Konverzácie zo všetkých produktov"
-
-#: src/features/inbox/ChatsPage.tsx
-msgid "Conversations in {product}"
-msgstr "Konverzácie v {product}"
 
 #: src/features/migrations/DoneStep.tsx
 msgid "Conversations nobody wrote in after the import are deleted. Nothing changed in {address}."
@@ -3616,7 +3729,7 @@ msgstr "Kopírovať"
 msgid "Copy a message for your admin"
 msgstr "Skopírovať správu pre správcu"
 
-#: src/features/contact/ContactsPage.tsx
+#: src/features/contact/ContactDetail.tsx
 msgid "Copy contact id"
 msgstr "Kopírovať ID kontaktu"
 
@@ -3750,14 +3863,16 @@ msgid "Create list"
 msgstr "Vytvoriť zoznam"
 
 #: src/features/status/CreatePageDialog.tsx
-#: src/features/status/StatusColumn.tsx
 msgid "Create status page"
 msgstr "Vytvoriť stránku stavu"
 
-#: src/features/status/StatusColumn.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Create status page ({newKey})"
 msgstr "Vytvoriť stránku stavu ({newKey})"
+
+#: src/features/status/StatusPages.tsx
+msgid "Create status page for {product}"
+msgstr "Vytvoriť stránku stavu pre {product}"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Create the board"
@@ -3816,6 +3931,10 @@ msgstr "Vlastné"
 #: src/app/Sidebar.tsx
 msgid "Customers"
 msgstr "Zákazníci"
+
+#: src/features/status/MonitorsPage.tsx
+msgid "Customers cannot see this yet. Tell them with an incident."
+msgstr "Zákazníci to zatiaľ nevidia. Informujte ich incidentom."
 
 #: src/features/setup/ChannelStep.tsx
 #: src/features/setup/SetupHub.tsx
@@ -3876,6 +3995,7 @@ msgstr "Koľko dní pred vypršaním kontrola zlyhá. Hodnota 0 overuje iba plat
 msgid "Days of history"
 msgstr "Dní histórie"
 
+#: src/features/docs/PagesTab.tsx
 #: src/features/setup/InstallStep.tsx
 msgid "Decide who may write in discussions"
 msgstr "Rozhodnite, kto smie písať do diskusií"
@@ -3889,6 +4009,7 @@ msgid "Degraded performance"
 msgstr "Znížený výkon"
 
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/ListSettings.tsx
 #: src/features/broadcasts/SubscriberSheet.tsx
 #: src/features/contact/ContactNotes.tsx
@@ -3897,28 +4018,33 @@ msgstr "Znížený výkon"
 #: src/features/settings/inboxes/InboxSecurity.tsx
 #: src/features/settings/labels/LabelsPage.tsx
 #: src/features/status/ComponentsTab.tsx
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Delete"
 msgstr "Odstrániť"
 
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/broadcasts/Composer.tsx
 msgid "Delete “{name}”?"
 msgstr "Odstrániť „{name}“?"
+
+#: src/features/status/MonitorsPage.tsx
+msgid "Delete ({removeKey})"
+msgstr "Odstrániť ({removeKey})"
 
 #. placeholder {0}: c.name
 #. placeholder {0}: i.title
 #. placeholder {0}: list.name
 #: src/features/broadcasts/ListSettings.tsx
 #: src/features/status/ComponentsTab.tsx
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Delete {0}?"
 msgstr "Odstrániť {0}?"
 
 #: src/features/settings/inboxes/InboxSecurity.tsx
 #: src/features/settings/workspace/DeleteWorkspace.tsx
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Delete {name}?"
 msgstr "Odstrániť {name}?"
 
@@ -3930,12 +4056,12 @@ msgstr "Odstrániť po (dňoch)"
 msgid "Delete component"
 msgstr "Odstrániť komponent"
 
-#: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/status/IncidentPane.tsx
+#: src/features/broadcasts/Composer.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Delete draft"
 msgstr "Odstrániť koncept"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Delete draft ({removeKey})"
 msgstr "Odstrániť koncept ({removeKey})"
 
@@ -3955,7 +4081,7 @@ msgstr "Odstrániť kľúč"
 msgid "Delete list"
 msgstr "Odstrániť zoznam"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Delete monitor"
 msgstr "Odstrániť monitor"
 
@@ -3991,6 +4117,10 @@ msgstr "Zmazať záznam"
 #: src/features/settings/labels/LabelsPage.tsx
 msgid "Delete the label {name}?"
 msgstr "Odstrániť štítok {name}?"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Delete the monitor"
+msgstr "Odstrániť monitor"
 
 #: src/features/migrations/DoneStep.tsx
 msgid "Delete the OAuth client you created for Yuva"
@@ -4044,11 +4174,15 @@ msgstr "Odstrániť váš účet"
 msgid "Delete your account?"
 msgstr "Odstrániť váš účet?"
 
+#: src/features/contact/MergeContactDialog.tsx
+msgid "deleted afterwards"
+msgstr "potom sa odstráni"
+
 #: src/features/docs/discussions/parts.tsx
 msgid "Deleted by its author."
 msgstr "Odstránené autorom."
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Deleted component"
 msgstr "Odstránený komponent"
 
@@ -4136,9 +4270,11 @@ msgstr "Oznámenia na ploche sú povolené."
 msgid "Desktop notifications are blocked for this site in the browser's settings, so only the sound plays."
 msgstr "Oznámenia na ploche sú pre tento web zablokované v nastaveniach prehliadača, takže sa prehrá len zvuk."
 
+#: src/features/broadcasts/SubscriberSheet.tsx
 #: src/features/contact/ContactCard.tsx
-#: src/features/contact/ContactPage.tsx
+#: src/features/contact/ContactDetail.tsx
 #: src/features/contact/ContactSheet.tsx
+#: src/features/feedback/FeedbackPage.tsx
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/migrations/ImportBanner.tsx
 msgid "Details"
@@ -4152,6 +4288,10 @@ msgstr "Deutsch"
 msgid "Device"
 msgstr "Zariadenie"
 
+#: src/app/Sidebar.tsx
+msgid "Devices"
+msgstr "Zariadenia"
+
 #: src/features/contact/ContactVisits.tsx
 msgid "Direct"
 msgstr "Priamo"
@@ -4160,16 +4300,17 @@ msgstr "Priamo"
 msgid "Directory (tenant) ID, optional"
 msgstr "ID adresára (tenanta), voliteľné"
 
+#: src/features/conversation/composer/ReplyBox.tsx
 #: src/features/conversation/messages/Thread.tsx
 msgid "Discard"
 msgstr "Zahodiť"
 
 #: src/components/common/ShortcutSheet.tsx
-#: src/features/conversation/composer/ReplyBox.tsx
 msgid "Discard the suggested reply"
 msgstr "Zahodiť navrhnutú odpoveď"
 
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/docs/DocsPage.tsx
 msgid "Discussion"
 msgstr "Diskusia"
 
@@ -4182,9 +4323,10 @@ msgid "Discussion started"
 msgstr "Diskusia začatá"
 
 #: src/app/Palette.tsx
-#: src/features/docs/discussions/ThreadPane.tsx
-#: src/features/docs/DocsColumn.tsx
-#: src/features/docs/DocsPages.tsx
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/docs/DiscussionsTab.tsx
+#: src/features/docs/DocsPage.tsx
+#: src/features/docs/PagesTab.tsx
 #: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/chat/ChatSections.tsx
 #: src/features/settings/webhooks/events.tsx
@@ -4215,6 +4357,10 @@ msgstr "Diskusie, ktoré ste začali alebo do ktorých ste odpovedali"
 #: src/components/common/Linked.tsx
 msgid "Dismiss"
 msgstr "Skryť"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Display"
+msgstr "Zobrazenie"
 
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Display name"
@@ -4277,12 +4423,16 @@ msgstr "Urobiť to neskôr"
 #: src/app/Palette.tsx
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/DocsPage.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "Docs"
 msgstr "Docs"
 
-#: src/features/docs/DocsColumn.tsx
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/PagesTab.tsx
+msgid "Docs are the pages you keep on your own site and host yourself. Once Yuva’s two elements are on them, every page shows up here with its ratings, feedback and discussions."
+msgstr "Docs sú stránky, ktoré spravujete na vlastnom webe a sami hostujete. Akonáhle na nich budú dva prvky Yuva, každá stránka sa tu zobrazí so svojimi hodnoteniami, spätnou väzbou a diskusiami."
+
+#: src/features/docs/PagesTab.tsx
 msgid "Documentation pages"
 msgstr "Stránky dokumentácie"
 
@@ -4310,6 +4460,7 @@ msgstr "Doména neoverená"
 #: src/features/broadcasts/Import.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/conversation/ConversationStatus.tsx
+#: src/features/feedback/FeedbackFormDialog.tsx
 #: src/features/migrations/Wizard.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
@@ -4317,7 +4468,8 @@ msgstr "Doména neoverená"
 #: src/features/setup/NewsletterStep.tsx
 #: src/features/setup/SetupHub.tsx
 #: src/features/setup/SetupLayout.tsx
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
+#: src/features/status/LinkConversationsDialog.tsx
 #: src/features/status/MonitorToken.tsx
 msgid "Done"
 msgstr "Hotovo"
@@ -4327,13 +4479,19 @@ msgctxt "feedback progress"
 msgid "Done"
 msgstr "Hotovo"
 
-#: src/features/broadcasts/Overview.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "Double opt-in"
 msgstr "Dvojité potvrdenie"
 
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/MonitorsPage.tsx
 #: src/features/status/text.tsx
 msgid "Down"
 msgstr "Nefunguje"
+
+#: src/features/status/MonitorsPage.tsx
+msgid "Down since {since}"
+msgstr "Nedostupné od {since}"
 
 #. placeholder {0}: a.filename
 #: src/features/conversation/messages/Attachments.tsx
@@ -4366,9 +4524,10 @@ msgid "Download the rows left out"
 msgstr "Stiahnuť vynechané riadky"
 
 #: src/components/common/text.ts
+#: src/features/status/IncidentDetail.tsx
 #: src/features/status/IncidentsPage.tsx
-#: src/features/status/IncidentsTab.tsx
 #: src/features/status/LinkIncidentDialog.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Draft"
 msgstr "Koncept"
 
@@ -4381,12 +4540,13 @@ msgstr "Koncept"
 msgid "Draft author"
 msgstr "Autor konceptu"
 
+#: src/features/conversation/composer/ReplyBox.tsx
 #: src/features/conversation/messages/Thread.tsx
 #: src/features/inbox/SidePanels.tsx
 msgid "Draft by {author}"
 msgstr "Koncept od {author}"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Draft deleted"
 msgstr "Koncept bol odstránený"
 
@@ -4402,7 +4562,6 @@ msgstr "Text konceptu"
 msgid "Draft:"
 msgstr "Koncept:"
 
-#: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/Overview.tsx
 #: src/features/migrations/parts.tsx
 #: src/features/settings/webhooks/events.tsx
@@ -4453,8 +4612,8 @@ msgstr "E-mail"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 #: src/features/broadcasts/Import.tsx
 #: src/features/contact/ContactDetails.tsx
-#: src/features/settings/members/Invites.tsx
 #: src/features/status/AddSubscriberDialog.tsx
+#: src/features/team/TeamPage.tsx
 msgid "E-mail address"
 msgstr "E-mailová adresa"
 
@@ -4498,7 +4657,6 @@ msgstr "E-mailoví odberatelia sú vypnutí"
 msgid "E-mail subscribers are off. Nobody can subscribe and no notices go out, but the list is kept."
 msgstr "E-mailoví odberatelia sú vypnutí. Nikto sa nemôže prihlásiť na odber a nechodia žiadne upozornenia, zoznam sa však zachová."
 
-#: src/features/status/IncidentsTab.tsx
 #: src/features/status/StatusPages.tsx
 msgid "E-mail subscriptions are off"
 msgstr "E-mailové odbery sú vypnuté"
@@ -4543,6 +4701,10 @@ msgstr "Každá ide do e-mailového kanála svojej schránky pre jej adresu, ina
 msgid "Each message's original source is stored, as for mail that arrives live. Uses more storage."
 msgstr "Pôvodný zdroj každej správy sa ukladá, rovnako ako pri pošte, ktorá prichádza naživo. Zaberá viac miesta."
 
+#: src/features/status/MonitorsPage.tsx
+msgid "Each monitor sets the state of one component while it is down."
+msgstr "Každý monitor nastavuje stav jedného komponentu, kým je nedostupný."
+
 #: src/features/setup/email/EmailAddressStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
 #: src/features/setup/email/EmailRepliesStep.tsx
@@ -4571,9 +4733,13 @@ msgstr "Každá so všetkými svojimi správami a poznámkami"
 #: src/features/settings/canned/CannedRepliesPage.tsx
 #: src/features/settings/labels/LabelsPage.tsx
 #: src/features/status/ComponentsTab.tsx
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Edit"
 msgstr "Upraviť"
+
+#: src/features/status/MonitorsPage.tsx
+msgid "Edit ({editKey})"
+msgstr "Upraviť ({editKey})"
 
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
 msgid "Edit API key"
@@ -4591,12 +4757,12 @@ msgstr "Upraviť komponent"
 msgid "Edit design"
 msgstr "Upraviť návrh"
 
+#: src/features/status/IncidentDetail.tsx
 #: src/features/status/IncidentDialog.tsx
-#: src/features/status/IncidentPane.tsx
 msgid "Edit details"
 msgstr "Upraviť podrobnosti"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Edit details ({editKey})"
 msgstr "Upraviť podrobnosti ({editKey})"
 
@@ -4625,11 +4791,15 @@ msgid "Edit the incident"
 msgstr "Upraviť incident"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Edit the monitor"
+msgstr "Upraviť monitor"
+
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Edit the title"
 msgstr "Upraviť názov"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Edit this update"
 msgstr "Upraviť túto aktualizáciu"
 
@@ -4638,7 +4808,7 @@ msgid "Edit, or preview on a desktop, a phone or in dark mode"
 msgstr "Upraviť, alebo zobraziť náhľad na počítači, telefóne či v tmavom režime"
 
 #: src/features/docs/discussions/ThreadPane.tsx
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "edited"
 msgstr "upravené"
 
@@ -4750,15 +4920,16 @@ msgstr "Chyba"
 msgid "Error or answer"
 msgstr "Chyba alebo odpoveď"
 
+#: src/app/Sidebar.tsx
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Events"
 msgstr "Udalosti"
 
-#: src/features/status/MonitorsTab.tsx
-msgid "every {every}"
-msgstr "každých {every}"
+#: src/features/contact/ContactDetails.tsx
+msgid "Every address of this contact is undeliverable. Clear one first, or write in another channel."
+msgstr "Všetky adresy tohto kontaktu sú nedoručiteľné. Najprv jednu vymažte alebo píšte iným kanálom."
 
 #: src/features/settings/webhooks/sections.tsx
 msgid "Every attempt has failed since {failingSince}. After 24 hours of failures Yuva turns the endpoint off."
@@ -4796,7 +4967,7 @@ msgstr "Každý jazyk. Pridajte jazyk, aby ste ponechali iba kontakty, ktoré ho
 msgid "Every open conversation has someone."
 msgstr "Každá otvorená konverzácia má niekoho pridelenú."
 
-#: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/docs/DiscussionsTab.tsx
 msgid "Every open discussion has an answer."
 msgstr "Každá otvorená diskusia má odpoveď."
 
@@ -4884,8 +5055,13 @@ msgid "Expand the sidebar"
 msgstr "Rozbaliť bočný panel"
 
 #: src/features/status/MonitorDialog.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Expected every"
 msgstr "Očakáva sa každých"
+
+#: src/features/status/MonitorsPage.tsx
+msgid "Expected status"
+msgstr "Očakávaný stav"
 
 #: src/features/status/MonitorHttpFields.tsx
 msgid "Expected status from"
@@ -4894,10 +5070,6 @@ msgstr "Očakávaný stav od"
 #: src/features/status/MonitorHttpFields.tsx
 msgid "Expected status to"
 msgstr "Očakávaný stav do"
-
-#: src/features/status/MonitorsTab.tsx
-msgid "expects a ping every {every}"
-msgstr "očakáva ping každých {every}"
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "expired {expires}"
@@ -4911,10 +5083,7 @@ msgstr "Vyprší"
 msgid "Expires (optional)"
 msgstr "Vyprší (voliteľné)"
 
-#: src/features/settings/members/Invites.tsx
-msgid "expires {expires}"
-msgstr "vyprší {expires}"
-
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/reports/ReportPages.tsx
 msgid "Export"
@@ -4942,6 +5111,7 @@ msgstr "Externé ID"
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
 #: src/features/status/MonitorChecks.tsx
+#: src/features/status/ResponseChart.tsx
 msgid "Failed"
 msgstr "Zlyhalo"
 
@@ -4971,10 +5141,11 @@ msgid "Fails the monitor at once, without waiting for the grace."
 msgstr "Okamžite vyradí monitor bez čakania na toleranciu."
 
 #: src/features/status/MonitorDialog.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Failures to go down"
 msgstr "Zlyhania do výpadku"
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/DocsPage.tsx
 msgid "feedback"
 msgstr "spätná väzba"
 
@@ -4983,20 +5154,12 @@ msgstr "spätná väzba"
 #: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Source.tsx
 #: src/features/contact/ContactCard.tsx
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/PagesTab.tsx
 #: src/features/feedback/FeedbackList.tsx
 #: src/features/feedback/FeedbackPage.tsx
 #: src/features/settings/webhooks/events.tsx
 msgid "Feedback"
 msgstr "Spätná väzba"
-
-#: src/features/docs/DocsPages.tsx
-msgid "Feedback and discussions from your documentation"
-msgstr "Spätná väzba a diskusie z vašej dokumentácie"
-
-#: src/features/docs/DocsPages.tsx
-msgid "Feedback and discussions per day"
-msgstr "Spätná väzba a diskusie za deň"
 
 #: src/components/common/text.ts
 msgid "Feedback arrived"
@@ -5006,6 +5169,7 @@ msgstr "Dorazila spätná väzba"
 msgid "Feedback details"
 msgstr "Podrobnosti spätnej väzby"
 
+#: src/features/feedback/FeedbackFormDialog.tsx
 #: src/features/feedback/FeedbackPage.tsx
 msgid "Feedback form"
 msgstr "Formulár spätnej väzby"
@@ -5055,6 +5219,10 @@ msgstr "Vyplnené hodnotami používateľa {who}"
 #: src/features/inbox/SourceFilter.tsx
 msgid "Filter"
 msgstr "Filter"
+
+#: src/features/contact/ContactsPage.tsx
+msgid "Filter by country"
+msgstr "Filtrovať podľa krajiny"
 
 #: src/features/inbox/ChatList.tsx
 msgid "Filter by label"
@@ -5126,7 +5294,7 @@ msgstr "Prvá správa"
 msgid "First name"
 msgstr "Meno"
 
-#: src/features/contact/ContactPage.tsx
+#: src/features/contact/ContactDetail.tsx
 #: src/features/reports/ReportPages.tsx
 msgid "first reply"
 msgstr "prvá odpoveď"
@@ -5144,10 +5312,6 @@ msgstr "prvá odpoveď za {first}"
 msgid "First rows of the file"
 msgstr "Prvé riadky súboru"
 
-#: src/features/contact/ContactsPage.tsx
-msgid "First seen"
-msgstr "Prvýkrát videný"
-
 #: src/features/status/IncidentDialog.tsx
 msgid "First update"
 msgstr "Prvá aktualizácia"
@@ -5156,14 +5320,16 @@ msgstr "Prvá aktualizácia"
 msgid "First, an e-mail address"
 msgstr "Najprv e-mailová adresa"
 
+#: src/features/broadcasts/ReviewPanel.tsx
 #: src/features/settings/ProductsPage.tsx
 msgid "Fix"
 msgstr "Opraviť"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Fix is out"
 msgstr "Oprava je vonku"
 
+#: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Fix it"
 msgstr "Opraviť"
@@ -5255,6 +5421,7 @@ msgstr "Pri prihlásených používateľoch váš backend podpisuje token identi
 msgid "For signed-in users: the identity secret, shown only now"
 msgstr "Pri prihlásených používateľoch: tajný kľúč identity, zobrazený len teraz"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
 msgid "Form"
 msgstr "Formulár"
@@ -5266,6 +5433,10 @@ msgstr "Formát"
 #: src/features/broadcasts/FormSnippets.tsx
 msgid "Forms run on a website chat channel of this inbox, which lists the sites they may be used on. This inbox has none yet."
 msgstr "Formuláre bežia na chatovacom kanáli webu tejto schránky, ktorý uvádza weby, na ktorých ich možno používať. Táto schránka zatiaľ žiadny nemá."
+
+#: src/features/conversation/messages/MessageActions.tsx
+msgid "Forward"
+msgstr "Preposlať"
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "Forward all incoming mail to the address below and keep a copy in the mailbox."
@@ -5301,6 +5472,10 @@ msgstr "Presmerovanie"
 msgid "Forwarding address"
 msgstr "Adresa presmerovania"
 
+#: src/features/status/DomainCard.tsx
+msgid "Found"
+msgstr "Nájdené"
+
 #: src/features/migrations/SourceStep.tsx
 msgid "Found from the domain's IMAP record."
 msgstr "Nájdené v zázname IMAP domény."
@@ -5333,7 +5508,9 @@ msgstr "Od (voliteľné)"
 msgid "from {from}"
 msgstr "od {from}"
 
-#: src/features/broadcasts/Overview.tsx
+#: src/features/broadcasts/ListPage.tsx
+#: src/features/broadcasts/ListsHome.tsx
+#: src/features/broadcasts/ReviewPanel.tsx
 msgid "From {from}"
 msgstr "Od {from}"
 
@@ -5341,7 +5518,9 @@ msgstr "Od {from}"
 msgid "From a blocked contact"
 msgstr "Od zablokovaného kontaktu"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/docs/DocsPage.tsx
 msgid "From a conversation"
 msgstr "Z konverzácie"
 
@@ -5360,10 +5539,6 @@ msgstr "Adresa odosielateľa (voliteľné)"
 #: src/features/migrations/parts.tsx
 msgid "From blocked contacts"
 msgstr "Od zablokovaných kontaktov"
-
-#: src/features/broadcasts/Overview.tsx
-msgid "From no sender yet"
-msgstr "Zatiaľ žiadny odosielateľ"
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "From the terminal"
@@ -5395,9 +5570,14 @@ msgstr "Úplný sprievodca s obrazovkami a push oznámeniami"
 msgid "Full name"
 msgstr "Celé meno"
 
+#: src/features/docs/InstallDialog.tsx
 #: src/features/setup/InstallStep.tsx
 msgid "Fumadocs / React"
 msgstr "Fumadocs / React"
+
+#: src/app/Sidebar.tsx
+msgid "Funnels"
+msgstr "Lieviky"
 
 #: src/features/migrations/parts.tsx
 msgid "Further copies of the same message"
@@ -5447,6 +5627,10 @@ msgstr "Získať formulár na odber"
 msgid "Give the channel a new forwarding address?"
 msgstr "Dať kanálu novú adresu na presmerovanie?"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Give the page a name."
+msgstr "Pomenujte stránku."
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "Gmail forwards only new mail that is not spam. If a Workspace admin turned forwarding off, use the admin's routing."
 msgstr "Gmail presmerováva len novú poštu, ktorá nie je spam. Ak správca Workspace presmerovanie vypol, použite smerovanie správcu."
@@ -5458,6 +5642,10 @@ msgstr "Gmail nechá iné aplikácie čítať asi 1,5 GB denne cez IMAP, takže 
 #: src/features/settings/workspace/WorkspacePage.tsx
 msgid "Gmail, Outlook, Yandex, any IMAP"
 msgstr "Gmail, Outlook, Yandex, ľubovoľné IMAP"
+
+#: src/features/status/IncidentDetail.tsx
+msgid "go back to operational when you post this"
+msgstr "sa po zverejnení vrátia do prevádzky"
 
 #: src/app/Palette.tsx
 msgid "Go to"
@@ -5508,6 +5696,7 @@ msgid "Google Takeout"
 msgstr "Google Takeout"
 
 #: src/features/status/MonitorDialog.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Grace"
 msgstr "Tolerancia"
 
@@ -5528,6 +5717,7 @@ msgstr "Pozdraví nové konverzácie e-mailom, raz na kontakt v rámci intervalu
 msgid "Group"
 msgstr "Skupina"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/Growth.tsx
 #: src/features/broadcasts/ListPage.tsx
 msgid "Growth"
@@ -5556,6 +5746,10 @@ msgstr "Hlavičky"
 #: src/features/status/text.tsx
 msgid "Heartbeat"
 msgstr "Heartbeat"
+
+#: src/features/status/MonitorsPage.tsx
+msgid "Heartbeat address"
+msgstr "Adresa heartbeatu"
 
 #: src/features/status/ComponentsTab.tsx
 msgid "Held by an incident, {since}"
@@ -5594,6 +5788,7 @@ msgstr "Články pomoci"
 
 #: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "Help center"
 msgstr "Centrum pomoci"
 
@@ -5609,17 +5804,18 @@ msgstr "Report pomoci"
 msgid "Help Scout has no read-only permission, so the app could change data; Yuva's connection refuses every request that is not a read."
 msgstr "Help Scout nemá oprávnenie len na čítanie, takže by aplikácia mohla meniť údaje; pripojenie Yuvy odmieta každú požiadavku, ktorá nie je čítanie."
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "helpful"
 msgstr "užitočné"
 
 #: src/features/conversation/Feedback.tsx
-#: src/features/docs/DocsPages.tsx
 #: src/features/docs/PageContext.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "Helpful"
 msgstr "Užitočné"
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/DocsPage.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "helpful share"
 msgstr "podiel užitočných"
 
@@ -5658,6 +5854,10 @@ msgstr "Skryť"
 msgid "Hide from the page"
 msgstr "Skryť na stránke"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Hide HTTP details"
+msgstr "Skryť podrobnosti HTTP"
+
 #: src/features/conversation/messages/EmailBody.tsx
 msgid "Hide quoted text"
 msgstr "Skryť citovaný text"
@@ -5676,7 +5876,7 @@ msgstr "Skryť vybraný príspevok"
 msgid "High"
 msgstr "Vysoká"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/Toolbar.tsx
 msgid "Highest share of “helpful” first, among pages with at least 5 ratings"
 msgstr "Najvyšší podiel „užitočných“ najprv, medzi stránkami s aspoň 5 hodnoteniami"
 
@@ -5707,8 +5907,13 @@ msgid "Home"
 msgstr "Domov"
 
 #: src/features/status/MonitorDialog.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Host"
 msgstr "Hostiteľ"
+
+#: src/features/docs/PagesTab.tsx
+msgid "Hosted by Yuva on its own address. Searched from the chat widget and the reply box. For support answers."
+msgstr "Hostuje ich Yuva na vlastnej adrese. Hľadá sa v nich z chatového widgetu a z poľa odpovede. Pre odpovede podpory."
 
 #: src/features/status/DomainCard.tsx
 msgid "Hostname"
@@ -5774,8 +5979,10 @@ msgstr "Ako súhlasili, alebo váš vlastný záznam (voliteľné)"
 msgid "How they left:"
 msgstr "Ako odišli:"
 
-#: src/features/docs/DocsColumn.tsx
-msgid "How to add them"
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/docs/DocsPage.tsx
+#: src/features/docs/PagesTab.tsx
+msgid "How to add"
 msgstr "Ako ich pridať"
 
 #: src/features/migrations/SwitchStep.tsx
@@ -5797,10 +6004,6 @@ msgstr "Kontrola HTTP"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "I confirm that this person agreed to get e-mails from this list as described above, and that we can show how and when if asked."
 msgstr "Potvrdzujem, že táto osoba súhlasila s príjmom e-mailov z tohto zoznamu, ako je popísané vyššie, a že na požiadanie môžeme preukázať ako a kedy."
-
-#: src/features/broadcasts/AddSubscriberDialog.tsx
-msgid "I confirm that this person asked to join this list."
-msgstr "Potvrdzujem, že táto osoba požiadala o pripojenie k tomuto zoznamu."
 
 #: src/components/common/SecretDialog.tsx
 msgid "I saved it"
@@ -5900,20 +6103,25 @@ msgstr "Server IMAP"
 msgid "Impact"
 msgstr "Dopad"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
 #: src/features/broadcasts/ListPage.tsx
-#: src/features/broadcasts/Overview.tsx
 msgid "Import"
 msgstr "Importovať"
 
-#: src/features/broadcasts/Import.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "Import a CSV file"
 msgstr "Importovať súbor CSV"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Import another file"
 msgstr "Importovať ďalší súbor"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/broadcasts/ListsHome.tsx
+msgid "Import CSV"
+msgstr "Importovať CSV"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Import finished"
@@ -5959,10 +6167,6 @@ msgstr "Importuje sa história z {address} · {percent} % · nová pošta stále
 #: src/features/broadcasts/Import.tsx
 msgid "Importing…"
 msgstr "Importuje sa…"
-
-#: src/features/broadcasts/Import.tsx
-msgid "Imports"
-msgstr "Importy"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Imports run one at a time in the workspace. Try again when the other one ends."
@@ -6071,9 +6275,11 @@ msgstr "V Zoho Mail otvorte Settings › Mail accounts › IMAP access a zapnite
 
 #: src/app/Palette.tsx
 #: src/app/Sidebar.tsx
+#: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/broadcasts/NewBroadcastDialog.tsx
 #: src/features/contact/ContactDetails.tsx
+#: src/features/docs/InstallDialog.tsx
 #: src/features/inbox/ChatsPage.tsx
 #: src/features/migrations/MapStep.tsx
 #: src/features/migrations/text.ts
@@ -6099,18 +6305,28 @@ msgstr "Schránky"
 msgid "Inboxes cut off subjects longer than 80 characters."
 msgstr "Schránky orezávajú predmety dlhšie než 80 znakov."
 
+#: src/features/home/HomePage.tsx
 #: src/features/status/text.tsx
 msgid "Incident"
 msgstr "Incident"
 
+#: src/features/status/MonitorsPage.tsx
+msgid "Incident opened"
+msgstr "Incident otvorený"
+
+#: src/features/status/MonitorsPage.tsx
+msgid "Incident: {title} · {state}"
+msgstr "Incident: {title} · {state}"
+
 #: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
-#: src/features/status/IncidentPane.tsx
 #: src/features/status/IncidentsPage.tsx
-#: src/features/status/IncidentsTab.tsx
-#: src/features/status/StatusPagePane.tsx
 msgid "Incidents"
 msgstr "Incidenty"
+
+#: src/features/status/IncidentsPage.tsx
+msgid "Incidents live on a status page. Create one first."
+msgstr "Incidenty patria na stránku stavu. Najprv ju vytvorte."
 
 #: src/features/settings/webhooks/events.tsx
 msgid "Include notes"
@@ -6156,12 +6372,15 @@ msgstr "Inštalácia"
 msgid "Investigating"
 msgstr "Skúma sa"
 
-#: src/features/settings/members/Invites.tsx
-#: src/features/team/TeamColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Invite"
 msgstr "Pozvať"
 
-#: src/features/settings/members/Invites.tsx
+#: src/features/team/TeamPage.tsx
+msgid "Invite a teammate"
+msgstr "Pozvať kolegu"
+
+#: src/features/team/TeamPage.tsx
 msgid "Invite language"
 msgstr "Jazyk pozvánky"
 
@@ -6169,11 +6388,7 @@ msgstr "Jazyk pozvánky"
 msgid "Invite your team"
 msgstr "Pozvite svoj tím"
 
-#: src/features/team/TeamColumn.tsx
-msgid "Invited · waiting"
-msgstr "Pozvaný · čaká"
-
-#: src/features/settings/members/Invites.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Invites"
 msgstr "Pozvánky"
 
@@ -6311,7 +6526,7 @@ msgstr "Kurzíva"
 msgid "Its access ends at once. To use it again, connect it again."
 msgstr "Jeho prístup okamžite skončí. Ak ho chcete použiť znova, pripojte ho znova."
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Its checks are deleted. An incident it opened is resolved."
 msgstr "Jeho kontroly sa odstránia. Incident, ktorý otvoril, sa vyrieši."
 
@@ -6332,6 +6547,7 @@ msgid "Its history is deleted. Incidents that named it no longer do."
 msgstr "Jeho história sa odstráni. Incidenty, ktoré ho spomínali, ho už nespomínajú."
 
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/broadcasts/Composer.tsx
 msgid "Its report and the list of recipients are deleted. Conversations opened by replies stay."
 msgstr "Jej správa a zoznam príjemcov sa odstránia. Konverzácie otvorené odpoveďami zostanú."
 
@@ -6363,6 +6579,10 @@ msgstr "Ponechať len meno"
 msgid "Keep this page open. If the connection drops, the upload goes on when it is back; after a reload, pick the same file and only the missing parts are sent."
 msgstr "Nechajte túto stránku otvorenú. Ak sa spojenie preruší, nahrávanie pokračuje po jeho obnovení; po načítaní stránky znova vyberte rovnaký súbor a odošlú sa len chýbajúce časti."
 
+#: src/features/contact/MergeContactDialog.tsx
+msgid "kept"
+msgstr "zostane"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Kept with every subscription from this file, as the record of their consent."
 msgstr "Uchováva sa pri každom odbere z tohto súboru ako záznam ich súhlasu."
@@ -6370,6 +6590,10 @@ msgstr "Uchováva sa pri každom odbere z tohto súboru ako záznam ich súhlasu
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Key"
 msgstr "Kľúč"
+
+#: src/features/home/HomePage.tsx
+msgid "Key figures"
+msgstr "Kľúčové čísla"
 
 #: src/app/Palette.tsx
 #: src/app/TopBar.tsx
@@ -6436,9 +6660,10 @@ msgstr "Len štítok: jeho pošta pochádza zo Všetkej pošty a jeho konverzác
 msgid "Labels"
 msgstr "Štítky"
 
-#: src/features/conversation/HeaderActions.tsx
-msgid "Labels (L)"
-msgstr "Štítky (L)"
+#: src/features/conversation/ChatView.tsx
+#: src/features/inbox/ChatList.tsx
+msgid "Labels changed"
+msgstr "Štítky zmenené"
 
 #: src/app/UserMenu.tsx
 #: src/components/common/LanguageMenu.tsx
@@ -6446,12 +6671,15 @@ msgstr "Štítky (L)"
 #: src/features/contact/ContactCard.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
-#: src/features/settings/members/Invites.tsx
 #: src/features/settings/ProductsPage.tsx
 #: src/features/setup/NameStep.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Language"
 msgstr "Jazyk"
+
+#: src/features/team/TeamPage.tsx
+msgid "Language of the invite"
+msgstr "Jazyk pozvánky"
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Language to keep"
@@ -6516,6 +6744,10 @@ msgstr "Posledný push zlyhal: {failed}"
 msgid "Last read {when}"
 msgstr "Naposledy prečítané {when}"
 
+#: src/features/status/MonitorsPage.tsx
+msgid "Last result {last}"
+msgstr "Posledný výsledok {last}"
+
 #: src/features/contact/ContactsPage.tsx
 msgid "Last seen"
 msgstr "Naposledy videný"
@@ -6524,7 +6756,7 @@ msgstr "Naposledy videný"
 msgid "Last seen {seen}"
 msgstr "Naposledy videný {seen}"
 
-#: src/features/contact/ContactPage.tsx
+#: src/features/contact/ContactDetail.tsx
 msgid "last seen {seenText}"
 msgstr "naposledy videný {seenText}"
 
@@ -6580,7 +6812,6 @@ msgstr "Ponechať text, potom blok"
 msgid "Left off the public page and its overall state."
 msgstr "Vynechané na verejnej stránke aj v jej celkovom stave."
 
-#: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/broadcasts/Import.tsx
 msgid "Left out"
 msgstr "Vynechané"
@@ -6588,6 +6819,10 @@ msgstr "Vynechané"
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Left out by a condition or language"
 msgstr "Vynechané kvôli podmienke alebo jazyku"
+
+#: src/features/broadcasts/AudienceBuilder.tsx
+msgid "Left out: {left} of {total} people on the lists"
+msgstr "Vynechané: {left} z {total} ľudí v zoznamoch"
 
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "Legal name"
@@ -6606,9 +6841,23 @@ msgstr "Svetlý vzhľad"
 msgid "Limit the pace"
 msgstr "Obmedziť tempo"
 
+#: src/components/common/Linked.tsx
+#: src/features/status/LinkConversationsDialog.tsx
+msgid "Link"
+msgstr "Prepojiť"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/LinkConversationsDialog.tsx
+msgid "Link conversations"
+msgstr "Prepojiť konverzácie"
+
 #: src/components/common/text.ts
 msgid "Link feedback to ideas, reply to linked customers and manage roadmap boards"
 msgstr "Prepájať spätnú väzbu s nápadmi, odpovedať prepojeným zákazníkom a spravovať nástenky plánu vývoja"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Link feedback to the idea"
+msgstr "Prepojiť spätnú väzbu s nápadom"
 
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Link for your Microsoft 365 admin"
@@ -6641,8 +6890,13 @@ msgid "Link to a status incident"
 msgstr "Prepojiť s incidentom stavu"
 
 #: src/features/conversation/ConversationMenu.tsx
+#: src/features/feedback/RoadmapCard.tsx
 msgid "Link to an idea"
 msgstr "Prepojiť s nápadom"
+
+#: src/features/feedback/RoadmapCard.tsx
+msgid "Link to an idea (B)"
+msgstr "Prepojiť s nápadom (B)"
 
 #: src/features/conversation/ConversationMenu.tsx
 #: src/features/inbox/ChatList.tsx
@@ -6673,6 +6927,10 @@ msgstr "Vybrané konverzácie boli prepojené s incidentom {title}"
 #: src/features/status/LinkIncidentDialog.tsx
 msgid "Linked to {title}"
 msgstr "Prepojené s incidentom {title}"
+
+#: src/features/feedback/RoadmapCard.tsx
+msgid "linked with {others} other feedback"
+msgstr "prepojené s {others} ďalšími spätnými väzbami"
 
 #: src/features/status/LinkIncidentDialog.tsx
 msgid "Linking…"
@@ -6711,7 +6969,9 @@ msgstr "Uveďte najviac 20 originov."
 msgid "List deleted"
 msgstr "Zoznam odstránený"
 
+#: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/ListSettings.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "List restored"
 msgstr "Zoznam obnovený"
 
@@ -6728,11 +6988,12 @@ msgid "Listing the tickets…"
 msgstr "Vypisujú sa tikety…"
 
 #: src/app/Sidebar.tsx
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/ListPage.tsx
-#: src/features/broadcasts/Overview.tsx
+#: src/features/broadcasts/ListsHome.tsx
 #: src/features/settings/webhooks/events.tsx
 msgid "Lists"
 msgstr "Zoznamy"
@@ -6751,24 +7012,22 @@ msgid "Load images"
 msgstr "Načítať obrázky"
 
 #: src/features/account/AccountPage.tsx
-#: src/features/broadcasts/BroadcastList.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/Import.tsx
+#: src/features/broadcasts/ListsHome.tsx
 #: src/features/broadcasts/Overview.tsx
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/Subscribers.tsx
+#: src/features/contact/ContactDetail.tsx
 #: src/features/contact/ContactNotes.tsx
-#: src/features/contact/ContactPage.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/contact/ContactSheet.tsx
 #: src/features/contact/ContactsPage.tsx
 #: src/features/docs/discussions/parts.tsx
-#: src/features/docs/DocsColumn.tsx
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/PagesTab.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
-#: src/features/status/IncidentsTab.tsx
+#: src/features/status/LinkConversationsDialog.tsx
 #: src/features/status/MonitorChecks.tsx
-#: src/features/team/MemberPage.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Load more"
 msgstr "Načítať ďalšie"
 
@@ -6783,6 +7042,10 @@ msgstr "Načítava sa…"
 #: src/features/conversation/Feedback.tsx
 msgid "Locale"
 msgstr "Národné prostredie"
+
+#: src/app/Sidebar.tsx
+msgid "Locations"
+msgstr "Polohy"
 
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Lock"
@@ -6828,7 +7091,7 @@ msgstr "Prehliadať ďalšie kontakty"
 msgid "Looking at {where}"
 msgstr "Pozerá sa na {where}"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Looking into it"
 msgstr "Preverujeme to"
 
@@ -6933,12 +7196,12 @@ msgid "Maildir in a zip"
 msgstr "Maildir v archíve zip"
 
 #: src/app/Palette.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
-#: src/features/broadcasts/Overview.tsx
-#: src/features/contact/ContactPage.tsx
+#: src/features/broadcasts/ListsHome.tsx
+#: src/features/contact/ContactDetail.tsx
 msgid "Mailing lists"
 msgstr "E-mailové zoznamy"
 
+#: src/features/home/HomePage.tsx
 #: src/features/status/text.tsx
 msgid "Maintenance"
 msgstr "Údržba"
@@ -6951,7 +7214,7 @@ msgstr "Veľký"
 msgid "Major outage"
 msgstr "Veľký výpadok"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Make a new address for {name}?"
 msgstr "Vytvoriť novú adresu pre „{name}“?"
 
@@ -6959,7 +7222,7 @@ msgstr "Vytvoriť novú adresu pre „{name}“?"
 msgid "Make it public"
 msgstr "Zverejniť"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Make new address"
 msgstr "Vytvoriť novú adresu"
 
@@ -6996,6 +7259,10 @@ msgstr "Spravovať e-mailové zoznamy a odberateľov"
 #: src/components/common/text.ts
 msgid "Manage status pages, set component states and run incidents"
 msgstr "Spravujte stránky stavu, nastavujte stavy komponentov a veďte incidenty"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Manage the changelogs"
+msgstr "Spravovať zoznamy zmien"
 
 #: src/components/common/text.ts
 msgid "Manage webhooks"
@@ -7055,6 +7322,7 @@ msgstr "Označiť tento príspevok ako spam?"
 msgid "Markdown works."
 msgstr "Markdown funguje."
 
+#: src/features/conversation/ChatView.tsx
 #: src/features/docs/discussions/parts.tsx
 msgid "Marked as spam"
 msgstr "Označené ako spam"
@@ -7105,7 +7373,7 @@ msgstr "medián"
 msgid "Median"
 msgstr "Medián"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "median {median}"
 msgstr "medián {median}"
 
@@ -7124,9 +7392,9 @@ msgstr "Člen"
 
 #: src/app/Palette.tsx
 #: src/features/inbox/SidePanels.tsx
-#: src/features/settings/members/MembersPage.tsx
 #: src/features/settings/ProductsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Members"
 msgstr "Členovia"
 
@@ -7160,8 +7428,6 @@ msgstr "Zmienky: {names}"
 msgid "Menu"
 msgstr "Ponuka"
 
-#: src/features/contact/ContactPage.tsx
-#: src/features/contact/ContactsPage.tsx
 #: src/features/contact/MergeContactDialog.tsx
 msgid "Merge"
 msgstr "Zlúčiť"
@@ -7184,6 +7450,7 @@ msgid "Merge with another contact"
 msgstr "Zlúčiť s iným kontaktom"
 
 #: src/features/contact/ContactCard.tsx
+#: src/features/contact/ContactDetail.tsx
 #: src/features/contact/ContactsPage.tsx
 msgid "Merge…"
 msgstr "Zlúčiť…"
@@ -7297,11 +7564,7 @@ msgstr "Moderované"
 msgid "Monday"
 msgstr "Pondelok"
 
-#: src/features/status/MonitorsTab.tsx
-msgid "Monitor"
-msgstr "Monitor"
-
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Monitor deleted"
 msgstr "Monitor odstránený"
 
@@ -7311,14 +7574,16 @@ msgstr "Sleduje sa"
 
 #: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
-#: src/features/status/IncidentsTab.tsx
-#: src/features/status/MonitorsTab.tsx
-#: src/features/status/StatusPagePane.tsx
+#: src/features/status/MonitorsPage.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Monitors"
 msgstr "Monitory"
 
-#: src/features/contact/ContactsPage.tsx
+#: src/features/status/MonitorsPage.tsx
+msgid "Monitors set the state of a status page component. Create a status page first."
+msgstr "Monitory nastavujú stav komponentu stránky stavu. Najprv vytvorte stránku stavu."
+
+#: src/features/contact/ContactDetail.tsx
 msgid "More"
 msgstr "Viac"
 
@@ -7331,15 +7596,12 @@ msgid "More actions for {address}"
 msgstr "Ďalšie akcie pre {address}"
 
 #. placeholder {0}: c.name
-#. placeholder {0}: i.title
-#. placeholder {0}: p.name
+#. placeholder {0}: s.group.name
 #: src/features/status/ComponentsTab.tsx
-#: src/features/status/IncidentPane.tsx
-#: src/features/status/StatusPages.tsx
 msgid "More for {0}"
 msgstr "Viac pre {0}"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "More for {name}"
 msgstr "Viac pre „{name}“"
 
@@ -7351,15 +7613,15 @@ msgstr "Ďalšie možnosti"
 msgid "More than {count} conversations"
 msgstr "Viac než {count} konverzácií"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/Toolbar.tsx
 msgid "Most “helpful” ratings first"
 msgstr "Najprv najviac hodnotení „užitočné“"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/Toolbar.tsx
 msgid "Most “not helpful” ratings first"
 msgstr "Najprv najviac hodnotení „neužitočné“"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/Toolbar.tsx
 msgid "Most active"
 msgstr "Najaktívnejšie"
 
@@ -7367,23 +7629,23 @@ msgstr "Najaktívnejšie"
 msgid "Most asked for"
 msgstr "Najžiadanejšie"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/Toolbar.tsx
 msgid "Most disliked"
 msgstr "Najmenej obľúbené"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/Toolbar.tsx
 msgid "Most helpful"
 msgstr "Najužitočnejšie"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/Toolbar.tsx
 msgid "Most liked"
 msgstr "Najobľúbenejšie"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/Toolbar.tsx
 msgid "Most ratings, open feedback, open discussions and waiting posts first"
 msgstr "Najprv najviac hodnotení, otvorená spätná väzba, otvorené diskusie a čakajúce príspevky"
 
-#: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/docs/DocsPage.tsx
 msgid "Most votes"
 msgstr "Najviac hlasov"
 
@@ -7424,8 +7686,20 @@ msgid "Move through the ideas"
 msgstr "Prechádzať nápady"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the incidents"
+msgstr "Prechádzať incidenty"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the list"
 msgstr "Prechádzať zoznam"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move through the lists"
+msgstr "Prechádzať zoznamy"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move through the monitors"
+msgstr "Prechádzať monitory"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Move through the posts"
@@ -7461,9 +7735,17 @@ msgstr "Posunúť nahor"
 msgid "Moved from {from}"
 msgstr "Presunuté z {from}"
 
+#: src/features/conversation/ChatView.tsx
+msgid "Moved to {to}"
+msgstr "Presunuté do {to}"
+
 #: src/features/migrations/MigrationsPage.tsx
 msgid "Moving from Gmail, Google Workspace, Yandex, iCloud, Zoho, Yahoo, Fastmail, GMX or any IMAP server? Yuva copies the mailbox's history into an inbox, quietly and newest first, while your team keeps working. Then you forward the mailbox here and nothing is lost in between."
 msgstr "Prechádzate z Gmailu, Google Workspace, Yandexu, iCloudu, Zoho, Yahoo, Fastmailu, GMX alebo z ľubovoľného servera IMAP? Yuva skopíruje históriu schránky do schránky, potichu a od najnovšej, kým váš tím ďalej pracuje. Potom poštu presmerujete sem a medzitým sa nič nestratí."
+
+#: src/features/feedback/FeedbackPage.tsx
+msgid "Moving the idea to Planned, In progress or Shipped sets this for linked feedback that has no progress yet."
+msgstr "Presunutie nápadu do Plánované, Rozpracované alebo Vydané nastaví to isté prepojeným spätným väzbám bez stavu."
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "MX change"
@@ -7542,7 +7824,7 @@ msgstr "meno@example.com"
 msgid "Needed for broadcasts"
 msgstr "Potrebné pre hromadné správy"
 
-#: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/features/broadcasts/ListParts.tsx
 msgid "Needs a sender"
 msgstr "Potrebuje odosielateľa"
 
@@ -7593,10 +7875,6 @@ msgstr "nové"
 msgid "New"
 msgstr "Nové"
 
-#: src/features/status/MonitorsTab.tsx
-msgid "New address"
-msgstr "Nová adresa"
-
 #: src/features/status/MonitorToken.tsx
 msgid "New address for {name}"
 msgstr "Nová adresa pre „{name}“"
@@ -7614,16 +7892,10 @@ msgid "New article"
 msgstr "Nový článok"
 
 #: src/components/common/ShortcutSheet.tsx
-#: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/NewBroadcastDialog.tsx
 #: src/features/broadcasts/Overview.tsx
 msgid "New broadcast"
 msgstr "Nová hromadná správa"
-
-#: src/features/broadcasts/BroadcastList.tsx
-#: src/features/broadcasts/Overview.tsx
-msgid "New broadcast ({newKey})"
-msgstr "Nová hromadná správa ({newKey})"
 
 #: src/features/settings/canned/CannedRepliesPage.tsx
 #: src/features/settings/canned/CannedReplyDialog.tsx
@@ -7644,8 +7916,8 @@ msgid "New contacts created"
 msgstr "Nové kontakty vytvorené"
 
 #: src/features/contact/ContactCard.tsx
+#: src/features/contact/ContactDetail.tsx
 #: src/features/contact/ContactDetails.tsx
-#: src/features/contact/ContactPage.tsx
 #: src/features/contact/ContactSheet.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/inbox/ChatsPage.tsx
@@ -7693,7 +7965,7 @@ msgstr "Nový návrh"
 msgid "New discussion"
 msgstr "Nová diskusia"
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/DocsPage.tsx
 msgid "new discussions"
 msgstr "nové diskusie"
 
@@ -7704,6 +7976,10 @@ msgstr "Nový záznam"
 #: src/features/docs/discussions/QueuePane.tsx
 msgid "New idea"
 msgstr "Nový nápad"
+
+#: src/features/feedback/RoadmapCard.tsx
+msgid "New idea from this"
+msgstr "Nový nápad z tohto"
 
 #: src/features/settings/inboxes/InboxSecurity.tsx
 msgid "New identity secret"
@@ -7717,20 +7993,14 @@ msgstr "nové za posledných {days} dní"
 msgid "New inbox…"
 msgstr "Nová schránka…"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/status/IncidentsPage.tsx
-#: src/features/status/IncidentsTab.tsx
-#: src/features/status/StatusPages.tsx
 msgid "New incident"
 msgstr "Nový incident"
 
 #: src/features/status/IncidentsPage.tsx
-#: src/features/status/IncidentsTab.tsx
 msgid "New incident ({incidentKey})"
 msgstr "Nový incident ({incidentKey})"
-
-#: src/components/common/ShortcutSheet.tsx
-msgid "New incident or status page"
-msgstr "Nový incident alebo stránka stavu"
 
 #: src/features/settings/labels/LabelDialog.tsx
 #: src/features/settings/labels/LabelsPage.tsx
@@ -7741,8 +8011,8 @@ msgstr "Nový štítok"
 msgid "New label “{folder}”"
 msgstr "Nový štítok „{folder}“"
 
-#: src/features/broadcasts/BroadcastsColumn.tsx
-#: src/features/broadcasts/Overview.tsx
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "New list"
 msgstr "Nový zoznam"
 
@@ -7763,7 +8033,7 @@ msgstr "Nová správa v nepridelenej konverzácii"
 msgid "New migration"
 msgstr "Nová migrácia"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "New monitor"
 msgstr "Nový monitor"
 
@@ -7783,11 +8053,15 @@ msgstr "Nová odpoveď v <0>{title}</0>"
 msgid "New signing secret"
 msgstr "Nový podpisový tajný kľúč"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "New status page"
+msgstr "Nová stránka stavu"
+
 #: src/features/broadcasts/Import.tsx
 msgid "New subscribers added"
 msgstr "Noví odberatelia pridaní"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "New update · {stage}"
 msgstr "Nová aktualizácia · {stage}"
 
@@ -7811,7 +8085,7 @@ msgstr "Novšia zhoda (⇧Enter)"
 msgid "Newer ones stay open when the customer wrote last, pending when your team did."
 msgstr "Novšie zostávajú otvorené, keď písal naposledy zákazník, a čakajúce, keď písal váš tím."
 
-#: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/docs/DocsPage.tsx
 msgid "Newest"
 msgstr "Najnovšie"
 
@@ -7855,6 +8129,10 @@ msgstr "Ďalšia kontrola {next}."
 msgid "Next mail on {local} ({utc} UTC), at this broadcast’s pace."
 msgstr "Ďalšia správa {local} ({utc} UTC), tempom tejto hromadnej správy."
 
+#: src/features/feedback/Lightbox.tsx
+msgid "Next screenshot"
+msgstr "Ďalšia snímka obrazovky"
+
 #: src/features/migrations/UploadStep.tsx
 msgid "Next, choose what to bring. The scan reads the file once."
 msgstr "Ďalej vyberte, čo preniesť. Prehľadanie prečíta súbor raz."
@@ -7870,6 +8148,10 @@ msgstr "Nočná záloha"
 #: src/features/setup/previews.tsx
 msgid "No"
 msgstr "Nie"
+
+#: src/features/contact/ContactDetails.tsx
+msgid "No {inboxName} id on file. They can only be reached by e-mail until they sign in."
+msgstr "Nie je uložené žiadne ID {inboxName}. Do prihlásenia sa dá kontaktovať len e-mailom."
 
 #: src/features/migrations/text.ts
 msgid "No {provider} account has that subdomain. Check it in your address: acme in acme.zendesk.com."
@@ -7895,8 +8177,7 @@ msgstr "V tomto pláne nie je API"
 msgid "No App passwords page? Your admin must allow 2-Step Verification and IMAP in the Google Admin console."
 msgstr "Žiadna stránka Heslá aplikácií? Váš správca musí v konzole Google Admin povoliť dvojfázové overenie a IMAP."
 
-#: src/features/broadcasts/BroadcastsColumn.tsx
-#: src/features/broadcasts/Overview.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "No archived lists"
 msgstr "Žiadne archivované zoznamy"
 
@@ -7912,7 +8193,18 @@ msgstr "Zatiaľ žiadny pokus."
 msgid "No attempts yet."
 msgstr "Zatiaľ žiadne pokusy."
 
-#: src/features/broadcasts/BroadcastList.tsx
+#: src/features/broadcasts/Overview.tsx
+msgid "No broadcast is scheduled."
+msgstr "Žiadne rozoslanie nie je naplánované."
+
+#: src/features/broadcasts/Overview.tsx
+msgid "No broadcasts for {scope} yet."
+msgstr "Zatiaľ žiadne rozoslania pre {scope}."
+
+#: src/features/broadcasts/Overview.tsx
+msgid "No broadcasts have gone out yet."
+msgstr "Zatiaľ nebolo odoslané žiadne rozoslanie."
+
 #: src/features/broadcasts/Overview.tsx
 msgid "No broadcasts yet"
 msgstr "Zatiaľ žiadne hromadné správy"
@@ -7952,13 +8244,25 @@ msgstr "Zatiaľ žiadne kanály. Pridajte jeden, aby zákazníci mohli písať n
 msgid "No chat channel of this inbox allows the page's site with discussions on. Turn discussions on in the inbox settings."
 msgstr "Žiadny chatovací kanál tejto schránky nepovoľuje web stránky so zapnutými diskusiami. Zapnite diskusie v nastaveniach schránky."
 
+#: src/features/status/IncidentDetail.tsx
+msgid "No component is named."
+msgstr "Nie je uvedený žiadny komponent."
+
 #: src/features/status/ComponentsTab.tsx
 msgid "No components in this group."
 msgstr "V tejto skupine nie sú žiadne komponenty."
 
-#: src/features/status/StatusPages.tsx
+#: src/features/home/HomePage.tsx
 msgid "No components yet."
 msgstr "Zatiaľ žiadne komponenty."
+
+#: src/features/status/MonitorDialog.tsx
+msgid "No components yet. Add one to a status page first."
+msgstr "Zatiaľ žiadne komponenty. Najprv nejaký pridajte na stránku stavu."
+
+#: src/features/status/StatusPages.tsx
+msgid "No components yet. Add the parts of your product that customers depend on, in the Components tab."
+msgstr "Zatiaľ žiadne komponenty. Na karte Komponenty pridajte časti produktu, na ktorých zákazníci závisia."
 
 #: src/features/status/ComponentsTab.tsx
 msgid "No components yet. Add the parts of your product that customers depend on."
@@ -7995,13 +8299,21 @@ msgstr "Zatiaľ žiadne kontakty. Objavia sa, keď niekto napíše."
 msgid "No conversation is linked yet. Open one and use Link to an incident, or select several in the list."
 msgstr "Zatiaľ nie je prepojená žiadna konverzácia. Otvorte niektorú a použite Prepojiť s incidentom, alebo ich v zozname vyberte viac."
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/status/LinkConversationsDialog.tsx
+msgid "No conversation matches."
+msgstr "Žiadna konverzácia nezodpovedá."
+
+#: src/features/docs/PagesTab.tsx
 msgid "No conversations from this page."
 msgstr "Žiadne konverzácie z tejto stránky."
 
 #: src/features/contact/ContactDetails.tsx
 msgid "No conversations here."
 msgstr "Žiadne konverzácie."
+
+#: src/features/docs/FromDocs.tsx
+msgid "No conversations to choose from."
+msgstr "Žiadne konverzácie na výber."
 
 #: src/features/contact/ContactCard.tsx
 #: src/features/inbox/ChatList.tsx
@@ -8012,7 +8324,7 @@ msgstr "Zatiaľ žiadne konverzácie."
 msgid "No design yet"
 msgstr "Zatiaľ žiadny návrh"
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "No discussions on this page yet."
 msgstr "Na tejto stránke zatiaľ nie sú žiadne diskusie."
 
@@ -8020,7 +8332,7 @@ msgstr "Na tejto stránke zatiaľ nie sú žiadne diskusie."
 msgid "No discussions under the pages of these sites."
 msgstr "Pod stránkami týchto webov nie sú žiadne diskusie."
 
-#: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/docs/DiscussionsTab.tsx
 msgid "No discussions yet. Readers start them under your documentation pages."
 msgstr "Zatiaľ žiadne diskusie. Čitatelia ich začínajú pod stránkami vašej dokumentácie."
 
@@ -8032,6 +8344,10 @@ msgstr "Neprešiel žiadny podpis DKIM, takže hromadné správy nemožno odosla
 msgid "No drafts are waiting. Replies an assistant, a bot or a teammate drafts show up here until someone sends or discards them."
 msgstr "Žiadne koncepty nečakajú. Odpovede, ktoré pripraví asistent, bot alebo kolega, sa zobrazia tu, kým ich niekto neodošle alebo nezahodí."
 
+#: src/features/broadcasts/Overview.tsx
+msgid "No drafts."
+msgstr "Žiadne koncepty."
+
 #: src/features/contact/ContactsPage.tsx
 msgid "no e-mail"
 msgstr "bez e-mailu"
@@ -8040,7 +8356,7 @@ msgstr "bez e-mailu"
 msgid "No e-mail address given"
 msgstr "Nebola zadaná e-mailová adresa"
 
-#: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/features/broadcasts/ListParts.tsx
 msgid "No e-mail channel that can send its confirmation and welcome mails"
 msgstr "Žiadny e-mailový kanál, ktorý by mohol odoslať potvrdzovacie a uvítacie správy"
 
@@ -8060,7 +8376,7 @@ msgstr "Zatiaľ žiadne koncové body."
 msgid "No events recorded."
 msgstr "Nezaznamenané žiadne udalosti."
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "No feedback from this page."
 msgstr "Žiadna spätná väzba z tejto stránky."
 
@@ -8069,13 +8385,17 @@ msgstr "Žiadna spätná väzba z tejto stránky."
 msgid "No group"
 msgstr "Bez skupiny"
 
-#: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/docs/DiscussionsTab.tsx
 msgid "No hidden discussions."
 msgstr "Žiadne skryté diskusie."
 
 #: src/features/home/HomePage.tsx
 msgid "No ideas yet. Customers’ votes show up here."
 msgstr "Zatiaľ žiadne nápady. Hlasy zákazníkov sa zobrazia tu."
+
+#: src/features/contact/ContactDetail.tsx
+msgid "No ids yet. This person has not been identified by an app or widget."
+msgstr "Zatiaľ žiadne ID. Túto osobu neidentifikovala žiadna aplikácia ani widget."
 
 #: src/features/status/text.tsx
 msgid "No impact"
@@ -8084,10 +8404,6 @@ msgstr "Bez dopadu"
 #: src/features/broadcasts/Import.tsx
 msgid "No imports yet."
 msgstr "Zatiaľ žiadne importy."
-
-#: src/features/status/StatusColumn.tsx
-msgid "No inbox to show a status page for."
-msgstr "Žiadna schránka, pre ktorú by sa zobrazila stránka stavu."
 
 #: src/features/status/LinkIncidentDialog.tsx
 msgid "No incident matches."
@@ -8106,7 +8422,7 @@ msgid "No labels yet"
 msgstr "Zatiaľ žiadne štítky"
 
 #: src/features/conversation/ConversationMenu.tsx
-#: src/features/conversation/HeaderActions.tsx
+#: src/features/inbox/ChatList.tsx
 msgid "No labels yet. Add them in settings."
 msgstr "Zatiaľ žiadne štítky. Pridajte ich v nastaveniach."
 
@@ -8114,7 +8430,11 @@ msgstr "Zatiaľ žiadne štítky. Pridajte ich v nastaveniach."
 msgid "No limit"
 msgstr "Bez limitu"
 
-#: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/broadcasts/ListsHome.tsx
+msgid "No lists for {scope} yet"
+msgstr "Zatiaľ žiadne zoznamy pre {scope}"
+
+#: src/features/docs/DiscussionsTab.tsx
 msgid "No locked discussions."
 msgstr "Žiadne zamknuté diskusie."
 
@@ -8126,10 +8446,13 @@ msgstr "Už nie je v schránke"
 msgid "No mail server was found for {domain}. Pick your provider below, or “Other IMAP server” and enter the server on the next step."
 msgstr "Pre {domain} sa nenašiel žiadny poštový server. Vyberte nižšie svojho poskytovateľa, alebo „Iný server IMAP“ a server zadajte v ďalšom kroku."
 
-#: src/features/broadcasts/BroadcastsColumn.tsx
-#: src/features/broadcasts/Overview.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "No mailing lists yet"
 msgstr "Zatiaľ žiadne e-mailové zoznamy"
+
+#: src/features/status/IncidentsPage.tsx
+msgid "No maintenance is planned."
+msgstr "Nie je plánovaná žiadna údržba."
 
 #: src/features/conversation/ChatView.tsx
 msgid "No matches"
@@ -8147,7 +8470,15 @@ msgstr "Žiadne zmienky."
 msgid "No messages yet"
 msgstr "Zatiaľ žiadne správy"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
+msgid "No monitor matches this filter."
+msgstr "Filtru nezodpovedá žiadny monitor."
+
+#: src/features/status/StatusPages.tsx
+msgid "No monitor watches this page yet"
+msgstr "Túto stránku zatiaľ nesleduje žiadny monitor"
+
+#: src/features/status/MonitorsPage.tsx
 msgid "No monitors yet. Add one to let a check, a job or your monitoring set a component’s state."
 msgstr "Zatiaľ žiadne monitory. Pridajte jeden, aby stav komponentu nastavovala kontrola, úloha alebo váš monitoring."
 
@@ -8163,10 +8494,6 @@ msgstr "Nikto vás zatiaľ nezmienil v poznámke. Keď kolega napíše @ a vaše
 msgid "No open feedback."
 msgstr "Žiadna otvorená spätná väzba."
 
-#: src/features/status/IncidentsTab.tsx
-msgid "No open incidents or maintenance."
-msgstr "Žiadne otvorené incidenty ani údržby."
-
 #: src/features/contact/ContactSearch.tsx
 msgid "No other contact matches."
 msgstr "Žiadny iný kontakt nezodpovedá."
@@ -8175,11 +8502,11 @@ msgstr "Žiadny iný kontakt nezodpovedá."
 msgid "No other conversations."
 msgstr "Žiadne ďalšie konverzácie."
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "No pages yet"
 msgstr "Zatiaľ žiadne stránky"
 
-#: src/features/settings/members/Invites.tsx
+#: src/features/team/TeamPage.tsx
 msgid "No pending invites."
 msgstr "Žiadne čakajúce pozvánky."
 
@@ -8195,7 +8522,7 @@ msgstr "Nenašiel sa žiadny zverejnený článok."
 msgid "No ratings in this period."
 msgstr "V tomto období žiadne hodnotenia."
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "No ratings in this window."
 msgstr "V tomto okne nie sú žiadne hodnotenia."
 
@@ -8216,13 +8543,13 @@ msgstr "Žiadny účet pre odpovede"
 msgid "No response times in this range yet."
 msgstr "V tomto rozsahu zatiaľ nie sú žiadne časy odozvy."
 
-#: src/features/status/MonitorsTab.tsx
-msgid "No result yet"
-msgstr "Zatiaľ žiadny výsledok"
-
 #: src/app/Palette.tsx
 msgid "No results"
 msgstr "Žiadne výsledky"
+
+#: src/features/broadcasts/ListsHome.tsx
+msgid "No sender yet"
+msgstr "Zatiaľ žiadny odosielateľ"
 
 #: src/features/settings/channels/ChannelSummary.tsx
 msgid "No settings"
@@ -8240,7 +8567,7 @@ msgstr "Žiadny účet SMTP"
 msgid "No status page yet. Create one under Status first."
 msgstr "Zatiaľ nie je žiadna stránka stavu. Najprv ju vytvorte v časti Stav."
 
-#: src/features/status/StatusColumn.tsx
+#: src/features/status/StatusPages.tsx
 msgid "No status page yet. Owners and admins create it."
 msgstr "Zatiaľ žiadna stránka stavu. Vytvárajú ju vlastníci a správcovia."
 
@@ -8251,7 +8578,6 @@ msgstr "Zatiaľ žiadna stránka stavu. Vytvárajú ju vlastníci a správcovia.
 msgid "No subject"
 msgstr "Bez predmetu"
 
-#: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/Overview.tsx
 msgid "No subject yet"
 msgstr "Zatiaľ bez predmetu"
@@ -8291,6 +8617,14 @@ msgstr "Od poslednej zmeny nebol odoslaný žiadny test."
 #: src/features/broadcasts/Report.tsx
 msgid "No visits from this campaign yet."
 msgstr "Zatiaľ žiadne návštevy z tejto kampane."
+
+#: src/features/contact/ContactDetail.tsx
+msgid "No visits yet."
+msgstr "Zatiaľ žiadne návštevy."
+
+#: src/features/feedback/FeedbackFormDialog.tsx
+msgid "No website chat or app is set up yet."
+msgstr "Zatiaľ nie je nastavený webový chat ani aplikácia."
 
 #: src/features/broadcasts/Import.tsx
 msgid "No welcome mail is sent. Each new address waits for confirmation and joins after clicking the link in the mail."
@@ -8333,6 +8667,10 @@ msgstr "V tomto období nikto nezanechal komentár s hodnotením."
 msgid "Nobody matches."
 msgstr "Nikto nezodpovedá."
 
+#: src/features/team/TeamPage.tsx
+msgid "Nobody on the team works on this product yet."
+msgstr "Na tomto produkte zatiaľ nikto z tímu nepracuje."
+
 #: src/features/broadcasts/Report.tsx
 msgid "Nobody opened a link yet."
 msgstr "Zatiaľ nikto neotvoril odkaz."
@@ -8349,6 +8687,7 @@ msgstr "Nikto by túto správu nedostal. Vyberte zoznamy s odberateľmi, alebo p
 #: src/features/settings/SettingsColumn.tsx
 #: src/features/setup/email/EmailTestStep.tsx
 #: src/features/status/MonitorDialog.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "None"
 msgstr "Žiadne"
 
@@ -8417,13 +8756,17 @@ msgstr "Zatiaľ nepripojené. Táto stránka sa aktualizuje, keď dokončíte pr
 msgid "Not delivered"
 msgstr "Nedoručené"
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/status/DomainCard.tsx
+msgid "Not found"
+msgstr "Nenájdené"
+
+#: src/features/docs/PagesTab.tsx
 msgid "not helpful"
 msgstr "neužitočné"
 
 #: src/features/conversation/Feedback.tsx
-#: src/features/docs/DocsPages.tsx
 #: src/features/docs/PageContext.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "Not helpful"
 msgstr "Neužitočné"
 
@@ -8444,17 +8787,17 @@ msgstr "Na tomto serveri sa nenúka"
 msgid "Not on any mailing list."
 msgstr "Nie je v žiadnom e-mailovom zozname."
 
+#: src/features/feedback/RoadmapCard.tsx
+msgid "Not on the roadmap yet. Link it to an idea, so you can tell everyone who asked when it ships."
+msgstr "Zatiaľ nie je v pláne. Prepojte s nápadom, aby ste všetkým, ktorí o to žiadali, mohli povedať, kedy vyjde."
+
 #: src/features/status/StatusPages.tsx
 msgid "not posted yet"
 msgstr "ešte nezverejnené"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "not public"
 msgstr "neverejný"
-
-#: src/features/status/IncidentsTab.tsx
-msgid "not public yet"
-msgstr "zatiaľ neverejné"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Not ready"
@@ -8532,6 +8875,7 @@ msgid "Note, only the team sees it"
 msgstr "Poznámka, vidí ju len tím"
 
 #: src/features/contact/ContactCard.tsx
+#: src/features/contact/ContactDetail.tsx
 #: src/features/contact/ContactSheet.tsx
 msgid "Notes"
 msgstr "Poznámky"
@@ -8557,15 +8901,19 @@ msgid "Nothing from the file is added, and the uploaded file is deleted."
 msgstr "Zo súboru sa nič nepridá a nahraný súbor sa odstráni."
 
 #: src/features/status/MonitorChecks.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Nothing has arrived yet."
 msgstr "Zatiaľ nič neprišlo."
+
+#: src/features/status/IncidentsPage.tsx
+msgid "Nothing has been resolved yet."
+msgstr "Zatiaľ nebolo nič vyriešené."
 
 #: src/features/broadcasts/Report.tsx
 msgid "Nothing has happened yet."
 msgstr "Zatiaľ sa nič nestalo."
 
 #: src/features/broadcasts/Overview.tsx
-#: src/features/status/IncidentsPage.tsx
 msgid "Nothing here."
 msgstr "Nič tu nie je."
 
@@ -8602,7 +8950,6 @@ msgid "Nothing is lost: when it continues, copying picks up where it stopped."
 msgstr "Nič sa nestratí: keď bude pokračovať, kopírovanie nadviaže tam, kde prestalo."
 
 #: src/features/feedback/FeedbackList.tsx
-#: src/features/status/IncidentsTab.tsx
 msgid "Nothing is resolved yet."
 msgstr "Zatiaľ nie je nič vyriešené."
 
@@ -8614,10 +8961,14 @@ msgstr "Nič nie je naplánované."
 msgid "Nothing is snoozed."
 msgstr "Nič nie je odložené."
 
-#: src/features/docs/discussions/DiscussionsPane.tsx
 #: src/features/docs/discussions/QueuePane.tsx
+#: src/features/docs/DiscussionsTab.tsx
 msgid "Nothing is waiting for approval."
 msgstr "Nič nečaká na schválenie."
+
+#: src/features/status/IncidentsPage.tsx
+msgid "Nothing is wrong right now. Open an incident when something breaks."
+msgstr "Práve teraz je všetko v poriadku. Keď sa niečo pokazí, otvorte incident."
 
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing matches these filters."
@@ -8633,8 +8984,16 @@ msgid "Nothing needs you"
 msgstr "Nič na vás nečaká"
 
 #: src/features/home/HomePage.tsx
+msgid "Nothing needs you in {scoped}"
+msgstr "V {scoped} na vás nič nečaká"
+
+#: src/features/home/HomePage.tsx
 msgid "Nothing needs you today."
 msgstr "Dnes vás nič nepotrebuje."
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Nothing opens by itself. Open an incident from the monitor when you want one."
+msgstr "Nič sa neotvorí samo. Incident otvorte z monitora, keď budete chcieť."
 
 #: src/features/account/AccountPage.tsx
 msgid "Nothing unread."
@@ -8727,6 +9086,7 @@ msgid "Offline"
 msgstr "Offline"
 
 #: src/features/status/MonitorChecks.tsx
+#: src/features/status/ResponseChart.tsx
 msgid "OK"
 msgstr "OK"
 
@@ -8753,6 +9113,10 @@ msgstr "Staršie návštevy"
 #: src/features/home/HomePage.tsx
 msgid "oldest {oldestFor}"
 msgstr "najstaršia {oldestFor}"
+
+#: src/features/home/HomePage.tsx
+msgid "oldest {oldestFor}, {oldestWho}"
+msgstr "najstaršia {oldestFor}, {oldestWho}"
 
 #: src/features/home/HomePage.tsx
 msgid "oldest {oldestFor}, in {oldestInbox}"
@@ -8786,11 +9150,6 @@ msgstr "Na viacerých zoznamoch, jedna správa každému"
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "On Team and Enterprise plans an owner adds it once in <0>Organization settings › Connectors</0>; members then find it under Connectors and click Connect."
 msgstr "V plánoch Team a Enterprise ho vlastník pridá raz v <0>Organization settings › Connectors</0>; členovia ho potom nájdu v Connectors a kliknú na Connect."
-
-#. placeholder {0}: c.idea.title
-#: src/features/feedback/FeedbackPage.tsx
-msgid "On the roadmap: {0}"
-msgstr "V pláne vývoja: {0}"
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "On the web"
@@ -8874,7 +9233,7 @@ msgstr "Stav online"
 msgid "Only {0}"
 msgstr "Iba {0}"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Only a draft can be deleted. It was never shown on the page."
 msgstr "Odstrániť sa dá iba koncept. Nikdy nebol zobrazený na stránke."
 
@@ -8885,6 +9244,10 @@ msgstr "Odstrániť sa dá iba koncept. Namiesto toho zverejnite aktualizáciu."
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Only add people who agreed to get this list. What you enter here is kept as their consent record."
 msgstr "Pridávajte len ľudí, ktorí súhlasili s prijímaním tohto zoznamu. Čo sem zadáte, uchová sa ako ich záznam o súhlase."
+
+#: src/features/team/TeamPage.tsx
+msgid "Only an owner can change an owner's role."
+msgstr "Rolu vlastníka môže zmeniť iba vlastník."
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Only contacts whose language is one of these."
@@ -8930,10 +9293,6 @@ msgstr "Iba vlastníci môžu odstrániť pracovný priestor."
 msgid "Only pages on these addresses can open the chat. Enter scheme and host, without a path."
 msgstr "Chat môžu otvoriť len stránky na týchto adresách. Zadajte schému a hostiteľa, bez cesty."
 
-#: src/features/broadcasts/Composer.tsx
-msgid "Only people who subscribed get it. Unsubscribed, unconfirmed, bounced and blocked addresses are always left out."
-msgstr "Dostanú ju len tí, ktorí sa prihlásili na odber. Odhlásené, nepotvrdené, nedoručené a zablokované adresy sa vždy vynechávajú."
-
 #: src/features/migrations/ChooseStep.tsx
 msgid "Only read requests are sent. You can close this page; the scan goes on and the list in Settings shows when it is done."
 msgstr "Odosielajú sa len požiadavky na čítanie. Túto stránku môžete zavrieť; prehľadávanie pokračuje a zoznam v Nastaveniach ukáže, kedy je hotovo."
@@ -8966,13 +9325,21 @@ msgstr "Iba návštevy po udelení súhlasu s trvalým ID a prihlásení."
 msgid "Only while the panel is open in this browser. Away, you are alerted only about conversations assigned to you."
 msgstr "Len keď je panel otvorený v tomto prehliadači. Keď ste preč, upozorníme vás len na konverzácie pridelené vám."
 
-#: src/features/broadcasts/Composer.tsx
+#: src/features/status/StatusPages.tsx
+msgid "only your team can preview it"
+msgstr "ukážku uvidí iba váš tím"
+
 #: src/features/broadcasts/NewBroadcastDialog.tsx
 msgid "Only your team sees it."
 msgstr "Vidí to len váš tím."
 
+#: src/features/team/TeamPage.tsx
+msgid "open"
+msgstr "otvorené"
+
 #: src/components/common/text.ts
 #: src/features/account/AccountPage.tsx
+#: src/features/broadcasts/Overview.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/conversation/ConversationStatus.tsx
@@ -8981,7 +9348,7 @@ msgstr "Vidí to len váš tím."
 #: src/features/home/HomePage.tsx
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/settings/channels/chat/ChatFields.tsx
-#: src/features/status/IncidentsTab.tsx
+#: src/features/status/StatusPages.tsx
 msgid "Open"
 msgstr "Otvorené"
 
@@ -8989,6 +9356,10 @@ msgstr "Otvorené"
 #: src/features/conversation/messages/Attachments.tsx
 msgid "Open {0}"
 msgstr "Otvoriť {0}"
+
+#: src/features/status/IncidentDetail.tsx
+msgid "Open {name} in Monitors"
+msgstr "Otvoriť {name} v Monitoroch"
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "Open {provider}'s mail settings and find forwarding, or a filter that forwards all incoming mail."
@@ -8998,6 +9369,7 @@ msgstr "Otvorte nastavenia pošty {provider} a nájdite presmerovanie alebo filt
 msgid "Open a draft incident"
 msgstr "Otvoriť koncept incidentu"
 
+#: src/features/docs/PagesTab.tsx
 #: src/features/setup/InstallStep.tsx
 msgid "Open a page of your docs"
 msgstr "Otvorte stránku svojej dokumentácie"
@@ -9014,9 +9386,15 @@ msgstr "Otvoriť Zabezpečenie účtu"
 msgid "Open Account security in your Yahoo account."
 msgstr "Otvorte Zabezpečenie účtu vo svojom účte Yahoo."
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/status/IncidentDialog.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Open an incident"
 msgstr "Otvoriť incident"
+
+#: src/features/status/MonitorsPage.tsx
+msgid "Open an incident ({incidentKey})"
+msgstr "Otvoriť incident ({incidentKey})"
 
 #: src/features/migrations/text.ts
 msgid "Open App passwords"
@@ -9051,16 +9429,23 @@ msgstr "Otvoriť konverzáciu"
 msgid "Open conversations"
 msgstr "Otvorené konverzácie"
 
-#: src/features/team/MemberPage.tsx
-#: src/features/team/TeamColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Open conversations assigned"
 msgstr "Otvorené pridelené konverzácie"
+
+#: src/features/status/LinkConversationsDialog.tsx
+msgid "Open conversations of this product that may be about {title}."
+msgstr "Otvorené konverzácie tohto produktu, ktoré sa môžu týkať: {title}."
 
 #: src/components/common/Linked.tsx
 msgid "Open conversations that get this reply: {open}"
 msgstr "Otvorené konverzácie, ktoré dostanú túto odpoveď: {open}"
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/discussions/QueuePane.tsx
+msgid "Open discussion"
+msgstr "Otvoriť diskusiu"
+
+#: src/features/docs/PagesTab.tsx
 msgid "open discussions"
 msgstr "otvorené diskusie"
 
@@ -9068,11 +9453,11 @@ msgstr "otvorené diskusie"
 msgid "Open Enterprise applications"
 msgstr "Otvoriť Enterprise applications"
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "open feedback"
 msgstr "otvorená spätná väzba"
 
-#: src/features/contact/ContactsPage.tsx
+#: src/features/contact/ContactDetail.tsx
 msgid "Open full page"
 msgstr "Otvoriť celú stránku"
 
@@ -9088,7 +9473,15 @@ msgstr "Otvorte Google Takeout, zvoľte „Zrušiť výber všetkých“ a potom
 msgid "Open Google's confirmation page"
 msgstr "Otvoriť potvrdzovaciu stránku Googlu"
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/PagesTab.tsx
+msgid "Open Help center"
+msgstr "Otvoriť centrum pomoci"
+
+#: src/features/feedback/RoadmapCard.tsx
+msgid "Open idea"
+msgstr "Otvoriť nápad"
+
+#: src/features/docs/PagesTab.tsx
 msgid "Open in Analytics"
 msgstr "Otvoriť v Analytike"
 
@@ -9096,7 +9489,7 @@ msgstr "Otvoriť v Analytike"
 msgid "Open inbox →"
 msgstr "Otvoriť schránku →"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Open incident"
 msgstr "Otvoriť incident"
 
@@ -9179,6 +9572,10 @@ msgstr "Otvoriť schránku"
 msgid "Open the inbox settings"
 msgstr "Otvoriť nastavenia schránky"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the list"
+msgstr "Otvoriť zoznam"
+
 #: src/features/migrations/text.ts
 msgid "Open the Microsoft Entra admin center or the Azure portal, go to App registrations and choose New registration. Name it “Yuva”."
 msgstr "Otvorte Microsoft Entra admin center alebo portál Azure, prejdite na App registrations a zvoľte New registration. Pomenujte ju „Yuva“."
@@ -9203,19 +9600,27 @@ msgstr "Otvoriť verejný zoznam zmien"
 msgid "Open the public help center"
 msgstr "Otvoriť verejné centrum pomoci"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the public page"
+msgstr "Otvoriť verejnú stránku"
+
 #: src/features/broadcasts/Report.tsx
 msgid "Open the reply"
 msgstr "Otvoriť odpoveď"
 
-#: src/components/common/ShortcutSheet.tsx
-msgid "Open the status page"
-msgstr "Otvoriť stránku stavu"
+#: src/features/broadcasts/FormSnippets.tsx
+msgid "Open the settings"
+msgstr "Otvoriť nastavenia"
+
+#: src/features/team/TeamPage.tsx
+msgid "Open the unassigned queue"
+msgstr "Otvoriť front nepridelených"
 
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "Open the workspace settings"
 msgstr "Otvoriť nastavenia pracovného priestoru"
 
-#: src/features/team/MemberPage.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Open what they see"
 msgstr "Otvoriť to, čo vidia"
 
@@ -9236,11 +9641,11 @@ msgstr "Otvorte svoj web"
 msgid "Open Zoho Accounts"
 msgstr "Otvoriť Zoho Accounts"
 
-#: src/features/team/MemberPage.tsx
+#: src/features/team/TeamPage.tsx
 msgid "open, assigned"
 msgstr "otvorené, pridelené"
 
-#: src/features/team/TeamColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "open, unassigned"
 msgstr "otvorené, nepridelené"
 
@@ -9322,6 +9727,10 @@ msgstr "Iný server IMAP"
 msgid "Other MCP client"
 msgstr "Iný klient MCP"
 
+#: src/features/status/MonitorsPage.tsx
+msgid "Our monitor {monitor} has seen a problem since {at}. We are looking into it."
+msgstr "Náš monitor {monitor} zaznamenal problém od {at}. Skúmame to."
+
 #: src/features/migrations/text.ts
 msgid "Outlook.com and Microsoft 365"
 msgstr "Outlook.com a Microsoft 365"
@@ -9355,7 +9764,8 @@ msgid "Over time"
 msgstr "V čase"
 
 #: src/app/Sidebar.tsx
-#: src/features/docs/DocsColumn.tsx
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/StatusPages.tsx
 msgid "Overview"
 msgstr "Prehľad"
 
@@ -9371,22 +9781,21 @@ msgstr "Vlastný tenant"
 msgid "Owner"
 msgstr "Vlastník"
 
-#: src/features/broadcasts/BroadcastsColumn.tsx
-#: src/features/broadcasts/Overview.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "Owners and admins create lists, add subscribers and send broadcasts."
 msgstr "Vlastníci a správcovia vytvárajú zoznamy, pridávajú odberateľov a odosielajú hromadné správy."
 
-#: src/features/settings/members/MembersPage.tsx
-msgid "Owners and admins see every inbox; agents see the inboxes they were given."
-msgstr "Vlastníci a správcovia vidia každú schránku; agenti vidia schránky, ktoré dostali."
+#: src/features/team/TeamPage.tsx
+msgid "Owners and admins see every inbox; agents see the inboxes they were given. Only owners and admins can invite, change roles or remove members."
+msgstr "Vlastníci a správcovia vidia každú schránku; agenti vidia schránky, ktoré im boli pridelené. Pozývať, meniť roly alebo odstraňovať členov môžu iba vlastníci a správcovia."
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Owners and admins see every inbox; members see the inboxes they are given."
 msgstr "Vlastníci a správcovia vidia každú schránku; členovia vidia schránky, ktoré dostali."
 
-#: src/features/broadcasts/BroadcastList.tsx
-msgid "Owners and admins write and send broadcasts. You see the broadcasts of your inboxes, so you know what a reply answers."
-msgstr "Vlastníci a správcovia píšu a odosielajú hromadné správy. Hromadné správy svojich schránok vidíte, takže viete, na čo odpoveď odpovedá."
+#: src/features/team/TeamPage.tsx
+msgid "Owners can do everything, including billing and deleting the workspace."
+msgstr "Vlastníci môžu robiť všetko, vrátane fakturácie a zmazania pracovného priestoru."
 
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Pace (mails a second)"
@@ -9395,13 +9804,11 @@ msgstr "Tempo (správ za sekundu)"
 #: src/features/broadcasts/SubscriberSheet.tsx
 #: src/features/conversation/Feedback.tsx
 #: src/features/docs/discussions/FromConversation.tsx
-#: src/features/docs/discussions/ThreadPane.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Page"
 msgstr "Stránka"
 
 #: src/components/common/ShortcutSheet.tsx
-#: src/features/status/StatusPages.tsx
 msgid "Page settings"
 msgstr "Nastavenia stránky"
 
@@ -9410,9 +9817,19 @@ msgid "Page where they agreed (optional)"
 msgstr "Stránka, kde súhlasili (voliteľné)"
 
 #: src/app/Sidebar.tsx
-#: src/features/docs/DocsColumn.tsx
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/docs/DocsPage.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "Pages"
 msgstr "Stránky"
+
+#: src/features/docs/PagesTab.tsx
+msgid "Pages live on your own site. Articles hosted by Yuva are in <0>Help center</0>."
+msgstr "Stránky sú na vašom vlastnom webe. Články hostované v Yuva sú v <0>Centre pomoci</0>."
+
+#: src/features/docs/PagesTab.tsx
+msgid "Pages on your own site"
+msgstr "Stránky na vašom webe"
 
 #: src/features/settings/channels/chat/ChatInstall.tsx
 msgid "Pages that embed the old key can no longer start chats until you update the snippet. Visitors already chatting keep their session."
@@ -9463,8 +9880,8 @@ msgstr "Heslo"
 msgid "Password set"
 msgstr "Heslo nastavené"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/status/IncidentsPage.tsx
-#: src/features/status/IncidentsTab.tsx
 msgid "Past"
 msgstr "Minulé"
 
@@ -9481,9 +9898,10 @@ msgid "Paste this before the closing body tag of your pages"
 msgstr "Vložte to pred uzatvárací tag body svojich stránok"
 
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/broadcasts/Overview.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MigrationsPage.tsx
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Pause"
 msgstr "Pozastaviť"
 
@@ -9491,6 +9909,11 @@ msgstr "Pozastaviť"
 msgid "Pause or resume sending"
 msgstr "Pozastaviť alebo obnoviť odosielanie"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Pause or resume the monitor"
+msgstr "Pozastaviť alebo obnoviť monitor"
+
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/text.ts
 #: src/features/migrations/text.ts
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -9498,6 +9921,7 @@ msgstr "Pozastaviť alebo obnoviť odosielanie"
 #: src/features/setup/email/EmailDoneStep.tsx
 #: src/features/setup/email/EmailTestStep.tsx
 #: src/features/status/MonitorDialog.tsx
+#: src/features/status/MonitorsPage.tsx
 #: src/features/status/text.tsx
 msgid "Paused"
 msgstr "Pozastavené"
@@ -9542,6 +9966,10 @@ msgstr "Pozastavené. Z {address} sa nič nečíta, kým neobnovíte."
 msgid "Paused. Nothing is read from {provider} until you resume."
 msgstr "Pozastavené. Z {provider} sa nič nečíta, kým neobnovíte."
 
+#: src/features/status/MonitorsPage.tsx
+msgid "Paused. Results are ignored and the component goes back to how you set it."
+msgstr "Pozastavené. Výsledky sa ignorujú a komponent sa vráti do stavu, ktorý ste nastavili."
+
 #: src/features/settings/webhooks/DeliverySheet.tsx
 msgid "Payload"
 msgstr "Obsah požiadavky"
@@ -9558,6 +9986,14 @@ msgstr "Čakajúce doručenia sa s ním zahodia."
 #: src/features/setup/NewsletterStep.tsx
 msgid "People join it on a subscribe form or are added with their consent. Broadcasts go to lists."
 msgstr "Ľudia sa k nemu pripájajú cez formulár na odber alebo sú pridaní so svojím súhlasom. Hromadné správy idú zoznamom."
+
+#: src/features/feedback/FeedbackFormDialog.tsx
+msgid "People send a bug, an idea or praise, with a screenshot and the device details. It lands here."
+msgstr "Ľudia posielajú chybu, nápad alebo pochvalu so snímkou obrazovky a údajmi o zariadení. Príde to sem."
+
+#: src/features/contact/ContactsPage.tsx
+msgid "People so far: {shownCount}"
+msgstr "Zatiaľ osôb: {shownCount}"
 
 #: src/features/setup/SetupHub.tsx
 msgid "People subscribe on your site; broadcasts go to the list."
@@ -9588,6 +10024,10 @@ msgstr "Ľudia, ktorí napísali do produktu {product}"
 #: src/features/setup/SetupHub.tsx
 msgid "People write from inside your app, signed in as themselves."
 msgstr "Ľudia píšu zvnútra vašej aplikácie, prihlásení ako oni sami."
+
+#: src/features/contact/ContactsPage.tsx
+msgid "People: {shownCount}"
+msgstr "Osôb: {shownCount}"
 
 #: src/features/broadcasts/Pace.tsx
 msgid "Per day"
@@ -9621,6 +10061,10 @@ msgstr "Oprávnenie na odosielanie"
 #: src/features/contact/ContactsPage.tsx
 msgid "Person"
 msgstr "Osoba"
+
+#: src/features/docs/PagesTab.tsx
+msgid "Pick a chat channel of the product and paste the snippet. Ratings and questions land in its inbox."
+msgstr "Vyberte chatový kanál produktu a vložte kód. Hodnotenia a otázky prídu do jeho schránky."
 
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Pick a color"
@@ -9658,6 +10102,18 @@ msgstr "Najprv vyberte návrh."
 msgid "Pick a design that renders without errors."
 msgstr "Vyberte návrh, ktorý sa vykreslí bez chýb."
 
+#: src/features/docs/DiscussionsTab.tsx
+msgid "Pick a discussion to read and answer it."
+msgstr "Vyberte diskusiu, ktorú si chcete prečítať a odpovedať na ňu."
+
+#: src/features/status/MonitorsPage.tsx
+msgid "Pick a monitor to see what happened."
+msgstr "Vyberte monitor, aby ste videli, čo sa stalo."
+
+#: src/features/docs/PagesTab.tsx
+msgid "Pick a page to see its ratings, discussions and questions."
+msgstr "Vyberte stránku a uvidíte jej hodnotenia, diskusie a otázky."
+
 #: src/features/feedback/FeedbackList.tsx
 msgid "Pick a piece of feedback"
 msgstr "Vyberte spätnú väzbu"
@@ -9685,6 +10141,10 @@ msgstr "Vyberte e-mailový kanál tejto schránky, ktorý má účet SMTP. Odosi
 #: src/features/migrations/MapStep.tsx
 msgid "Pick an inbox"
 msgstr "Vyberte schránku"
+
+#: src/features/status/IncidentsPage.tsx
+msgid "Pick an incident to read it."
+msgstr "Vyberte incident, aby ste si ho prečítali."
 
 #: src/features/status/LinkIncidentDialog.tsx
 msgid "Pick an open incident or maintenance"
@@ -9729,6 +10189,10 @@ msgstr "Vyberte ho neskôr v nastaveniach zoznamu."
 msgid "Pick the column that holds the e-mail addresses."
 msgstr "Vyberte stĺpec s e-mailovými adresami."
 
+#: src/features/docs/FromDocs.tsx
+msgid "Pick the conversation to answer in public. The next reader finds it under your documentation page."
+msgstr "Vyberte konverzáciu, na ktorú odpoviete verejne. Ďalší čitateľ ju nájde pod vašou stránkou dokumentácie."
+
 #: src/features/broadcasts/Import.tsx
 msgid "Pick the file to import."
 msgstr "Vyberte súbor na import."
@@ -9748,6 +10212,10 @@ msgstr "Vyberte schránku pre {address}, kto vo vašom tíme čo písal a ako sa
 #: src/features/migrations/MapStep.tsx
 msgid "Pick the inboxes for {provider}'s conversations, which member each agent is, and how tags become labels. Changing these after the scan plans the import again in a moment."
 msgstr "Vyberte schránky pre konverzácie z {provider}, ktorý člen je ktorý agent a ako sa tagy stanú štítkami. Zmena po prehľadaní plán importu o chvíľu prepočíta."
+
+#: src/features/broadcasts/ListsHome.tsx
+msgid "Pick the list the people join."
+msgstr "Vyberte zoznam, do ktorého sa ľudia pridávajú."
 
 #: src/features/contact/MergeContactDialog.tsx
 msgid "Pick the other contact. It is merged into this one and then deleted."
@@ -9790,7 +10258,6 @@ msgid "Pick what Yuva should tell your server about. You can change this later."
 msgstr "Vyberte, o čom má Yuva váš server informovať. Môžete to neskôr zmeniť."
 
 #: src/features/conversation/ConversationMenu.tsx
-#: src/features/inbox/ChatList.tsx
 msgid "Pin to the top"
 msgstr "Pripnúť hore"
 
@@ -9812,17 +10279,16 @@ msgstr "Obyčajný text s odkazmi a zalomením riadkov, najviac 5 000 znakov."
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/status/IncidentDialog.tsx
-#: src/features/status/IncidentsTab.tsx
+#: src/features/status/IncidentsPage.tsx
 msgid "Plan maintenance"
 msgstr "Naplánovať údržbu"
 
 #: src/features/status/IncidentsPage.tsx
-#: src/features/status/IncidentsTab.tsx
 msgid "Plan maintenance ({maintenanceKey})"
 msgstr "Naplánovať údržbu ({maintenanceKey})"
 
 #: src/components/common/text.ts
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Planned"
 msgstr "Plánované"
 
@@ -9862,11 +10328,7 @@ msgstr "Port"
 msgid "Post an update"
 msgstr "Zverejniť aktualizáciu"
 
-#: src/features/status/StatusPages.tsx
-msgid "Post an update ({incidentKey})"
-msgstr "Zverejniť aktualizáciu ({incidentKey})"
-
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Post an update ({updateKey})"
 msgstr "Zverejniť aktualizáciu ({updateKey})"
 
@@ -9878,7 +10340,6 @@ msgstr "Zbierajte spätnú väzbu od používateľov svojej aplikácie"
 msgid "Post status update"
 msgstr "Zverejniť aktualizáciu stavu"
 
-#: src/features/status/IncidentsTab.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Post update"
 msgstr "Odoslať aktualizáciu"
@@ -9908,12 +10369,10 @@ msgstr "Pripravuje sa"
 #: src/components/common/Wizard.tsx
 #: src/features/settings/labels/LabelDialog.tsx
 #: src/features/status/PreviewDialog.tsx
-#: src/features/status/StatusPagePane.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Preview"
 msgstr "Náhľad"
 
-#: src/features/status/StatusPagePane.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Preview ({previewKey})"
 msgstr "Náhľad ({previewKey})"
@@ -9941,24 +10400,32 @@ msgid "Preview the page"
 msgstr "Zobraziť náhľad stránky"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Previous or next discussion"
+msgstr "Predchádzajúca alebo ďalšia diskusia"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Previous or next language"
 msgstr "Predchádzajúci alebo nasledujúci jazyk"
+
+#: src/features/feedback/Lightbox.tsx
+msgid "Previous screenshot"
+msgstr "Predchádzajúca snímka obrazovky"
 
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Priority"
 msgstr "Priorita"
+
+#: src/features/conversation/ChatView.tsx
+msgid "Priority set to {level}"
+msgstr "Priorita nastavená na {level}"
 
 #: src/app/Palette.tsx
 #: src/components/common/ShortcutSheet.tsx
 msgid "Priority, inbox, spam and more"
 msgstr "Priorita, doručená pošta, spam a ďalšie"
 
-#: src/features/broadcasts/Overview.tsx
-msgid "private"
-msgstr "súkromný"
-
-#: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/ListPage.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "Private"
 msgstr "Súkromný"
 
@@ -9968,6 +10435,8 @@ msgstr "pro, tím"
 
 #: src/features/contact/ContactsPage.tsx
 #: src/features/inbox/InboxPicker.tsx
+#: src/features/status/CreatePageDialog.tsx
+#: src/features/status/IncidentDialog.tsx
 msgid "Product"
 msgstr "Produkt"
 
@@ -9996,6 +10465,7 @@ msgstr "Produkčný backend"
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/ProductsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Products"
 msgstr "Produkty"
 
@@ -10025,7 +10495,6 @@ msgstr "Stav spracovania (O)"
 msgid "Proton Mail is reachable over IMAP only through Proton Mail Bridge on your own computer, which a server cannot reach. Export the mailbox with Proton Mail's export tool, put the folder in a .zip and upload it as an export file below."
 msgstr "K Proton Mail sa cez IMAP dostanete len cez Proton Mail Bridge na vašom vlastnom počítači, ku ktorému sa server nedostane. Exportujte schránku exportným nástrojom Proton Mail, vložte priečinok do .zip a nahrajte ho nižšie ako exportný súbor."
 
-#: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/broadcasts/ListPage.tsx
 msgid "Public"
@@ -10035,10 +10504,6 @@ msgstr "Verejný"
 msgid "Public address"
 msgstr "Verejná adresa"
 
-#: src/features/broadcasts/Overview.tsx
-msgid "public form"
-msgstr "verejný formulár"
-
 #: src/features/settings/channels/PublicKeyField.tsx
 msgid "Public key"
 msgstr "Verejný kľúč"
@@ -10047,12 +10512,7 @@ msgstr "Verejný kľúč"
 msgid "Public pages that say whether your products work"
 msgstr "Verejné stránky, ktoré hovoria, či vaše produkty fungujú"
 
-#: src/features/docs/discussions/DiscussionsPane.tsx
-msgid "Public threads under your documentation pages, in every state."
-msgstr "Verejné vlákna pod stránkami vašej dokumentácie, vo všetkých stavoch."
-
-#: src/features/status/IncidentPane.tsx
-#: src/features/status/StatusPagePane.tsx
+#: src/features/status/IncidentDetail.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Publish"
 msgstr "Zverejniť"
@@ -10062,8 +10522,7 @@ msgctxt "sidebar group"
 msgid "Publish"
 msgstr "Publikovanie"
 
-#: src/features/status/IncidentPane.tsx
-#: src/features/status/StatusPagePane.tsx
+#: src/features/status/IncidentDetail.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Publish ({publishKey})"
 msgstr "Zverejniť ({publishKey})"
@@ -10100,7 +10559,7 @@ msgstr "Zverejniť koncept"
 msgid "Publish this TXT record in your domain’s DNS:"
 msgstr "Zverejnite tento záznam TXT v DNS svojej domény:"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Publish update"
 msgstr "Zverejniť aktualizáciu"
 
@@ -10112,8 +10571,6 @@ msgstr "Zverejniť, alebo odoslať koncept"
 msgid "Publish, schedule and unpublish What's new entries"
 msgstr "Zverejňovať, plánovať a sťahovať záznamy v Novinkách"
 
-#: src/features/status/StatusColumn.tsx
-#: src/features/status/StatusPagePane.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Published"
 msgstr "Zverejnená"
@@ -10129,6 +10586,10 @@ msgstr "Push"
 #: src/features/status/MonitorToken.tsx
 msgid "Push a state"
 msgstr "Odoslať stav"
+
+#: src/features/status/MonitorsPage.tsx
+msgid "Push address"
+msgstr "Adresa push"
 
 #: src/features/settings/notifications/events.ts
 msgid "Push and e-mail"
@@ -10167,6 +10628,10 @@ msgstr "Umiestnite jeho formulár na odber na svoj web, alebo pridajte ľudí, k
 msgid "Put the SDK's conversations view behind a Help button in your app, then send a message from it."
 msgstr "Umiestnite zobrazenie konverzácií SDK za tlačidlo Pomocník vo svojej aplikácii a potom z neho pošlite správu."
 
+#: src/features/docs/InstallDialog.tsx
+msgid "Put these elements under every page of your documentation. They use a chat channel of the product, so the results land in its inbox."
+msgstr "Umiestnite tieto prvky pod každú stránku dokumentácie. Používajú chatový kanál produktu, takže výsledky prídu do jeho schránky."
+
 #: src/features/docs/discussions/FromConversation.tsx
 msgid "Question"
 msgstr "Otázka"
@@ -10183,6 +10648,10 @@ msgstr "Vo fronte. Nový pokus sa o chvíľu zobrazí nižšie."
 msgid "Quick cleanup"
 msgstr "Rýchle upratovanie"
 
+#: src/features/conversation/messages/MessageActions.tsx
+msgid "Quote"
+msgstr "Citovať"
+
 #: src/features/status/ResponseChart.tsx
 msgid "Range"
 msgstr "Rozsah"
@@ -10191,7 +10660,7 @@ msgstr "Rozsah"
 msgid "Rated bad"
 msgstr "Hodnotené ako zlé"
 
-#: src/features/contact/ContactPage.tsx
+#: src/features/contact/ContactDetail.tsx
 msgid "rated good"
 msgstr "hodnotené ako dobré"
 
@@ -10211,21 +10680,21 @@ msgstr "Hodnotenie"
 msgid "Ratings"
 msgstr "Hodnotenia"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/Toolbar.tsx
 msgid "Ratings over"
 msgstr "Hodnotenia v čase"
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "ratings per 1,000 views"
 msgstr "hodnotení na 1 000 zobrazení"
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "Ratings per day"
 msgstr "Hodnotenia za deň"
 
-#: src/features/docs/DocsColumn.tsx
-msgid "Ratings, feedback and discussions from your documentation"
-msgstr "Hodnotenia, spätná väzba a diskusie z vašej dokumentácie"
+#: src/features/docs/DocsPage.tsx
+msgid "Ratings, questions and discussions from the documentation pages on your own site"
+msgstr "Hodnotenia, otázky a diskusie zo stránok dokumentácie na vašom webe"
 
 #: src/features/conversation/messages/MessageActions.tsx
 msgid "Read"
@@ -10291,6 +10760,8 @@ msgstr "Čítať stránky stavu, komponenty a incidenty"
 msgid "Read the folders"
 msgstr "Prečítať priečinky"
 
+#: src/features/docs/InstallDialog.tsx
+#: src/features/docs/PagesTab.tsx
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/migrations/SwitchStep.tsx
 #: src/features/migrations/text.ts
@@ -10348,6 +10819,10 @@ msgstr "Pripravené na import"
 msgid "Ready to send"
 msgstr "Pripravené na odoslanie"
 
+#: src/app/Sidebar.tsx
+msgid "Realtime"
+msgstr "Reálny čas"
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "Received {when}. Enter it in Gmail's forwarding settings, or open the link."
 msgstr "Prijaté {when}. Zadajte ho v nastaveniach presmerovania Gmailu, alebo otvorte odkaz."
@@ -10369,15 +10844,15 @@ msgstr "iba prijíma, bez účtu SMTP"
 msgid "Receiving"
 msgstr "Príjem"
 
-#: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/docs/DocsPage.tsx
 msgid "Recent activity"
 msgstr "Nedávna aktivita"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorChecks.tsx
 msgid "Recent checks"
 msgstr "Posledné kontroly"
 
-#: src/features/contact/ContactPage.tsx
+#: src/features/contact/ContactDetail.tsx
 msgid "Recent visits"
 msgstr "Nedávne návštevy"
 
@@ -10463,13 +10938,13 @@ msgstr "Vzdialené obrázky môžu odosielateľovi prezradiť, že ste správu o
 #: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
 #: src/features/settings/channels/sections.tsx
-#: src/features/settings/members/MemberList.tsx
 #: src/features/settings/notifications/PushSection.tsx
 #: src/features/settings/profile/Passkeys.tsx
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/status/DomainCard.tsx
 #: src/features/status/MonitorHttpFields.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Remove"
 msgstr "Odstrániť"
 
@@ -10490,14 +10965,14 @@ msgstr "Odstrániť {0}?"
 msgid "Remove {lang}"
 msgstr "Odstrániť {lang}"
 
-#: src/features/settings/members/MemberList.tsx
 #: src/features/settings/notifications/PushSection.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Remove {name}"
 msgstr "Odstrániť {name}"
 
-#: src/features/settings/members/MemberList.tsx
-msgid "Remove {name} from the workspace?"
-msgstr "Odstrániť {name} z pracovného priestoru?"
+#: src/features/team/TeamPage.tsx
+msgid "Remove {name}?"
+msgstr "Odstrániť používateľa {name}?"
 
 #: src/features/migrations/MapStep.tsx
 msgid "Remove {sender}"
@@ -10518,6 +10993,10 @@ msgstr "Odstrániť doménu"
 #: src/features/settings/webhooks/sections.tsx
 msgid "Remove endpoint"
 msgstr "Odstrániť koncový bod"
+
+#: src/features/team/TeamPage.tsx
+msgid "Remove from the workspace"
+msgstr "Odstrániť z pracovného priestoru"
 
 #: src/features/status/MonitorHttpFields.tsx
 msgid "Remove header {header}"
@@ -10662,7 +11141,7 @@ msgid "Replies to this address are refused until you clear it."
 msgstr "Odpovede na túto adresu sú odmietané, kým ju nevymažete."
 
 #: src/features/inbox/ChatsPage.tsx
-#: src/features/team/MemberPage.tsx
+#: src/features/team/TeamPage.tsx
 msgid "replies today"
 msgstr "odpovedí dnes"
 
@@ -10806,7 +11285,7 @@ msgstr "Správy"
 msgid "Reputation impact"
 msgstr "Vplyv na reputáciu"
 
-#: src/features/team/TeamColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Resend"
 msgstr "Odoslať znova"
 
@@ -10816,7 +11295,7 @@ msgstr "Obnoviť predvolené"
 
 #: src/features/conversation/HeaderActions.tsx
 #: src/features/feedback/FeedbackPage.tsx
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Resolve"
 msgstr "Vyriešiť"
 
@@ -10824,6 +11303,10 @@ msgstr "Vyriešiť"
 #: src/features/feedback/FeedbackPage.tsx
 msgid "Resolve (E)"
 msgstr "Vyriešiť (E)"
+
+#: src/features/status/IncidentDetail.tsx
+msgid "Resolve incident"
+msgstr "Vyriešiť incident"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Resolve or complete"
@@ -10837,38 +11320,53 @@ msgstr "Vyriešiť alebo dokončiť"
 msgid "Resolved"
 msgstr "Vyriešené"
 
+#: src/features/status/IncidentDetail.tsx
+msgid "Resolved at {endedAt}"
+msgstr "Vyriešené o {endedAt}"
+
 #. placeholder {0}: took(last)
 #: src/features/status/StatusPages.tsx
 msgid "resolved in {0}"
 msgstr "vyriešené za {0}"
 
-#: src/features/status/MonitorsTab.tsx
-msgid "Response · 24 h"
-msgstr "Odpoveď · 24 h"
+#: src/features/feedback/FeedbackPage.tsx
+msgid "Resolved. It moved to the Resolved tab."
+msgstr "Vyriešené. Presunulo sa na kartu Vyriešené."
 
 #: src/features/status/ResponseChart.tsx
 msgid "Response time"
 msgstr "Čas odozvy"
 
-#: src/features/status/IncidentPane.tsx
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/IncidentDetail.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Response time, last 24 hours"
 msgstr "Čas odozvy, posledných 24 hodín"
 
+#: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/ListSettings.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "Restore"
 msgstr "Obnoviť"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/ResponseChart.tsx
+msgid "Results"
+msgstr "Výsledky"
+
+#: src/features/status/MonitorsPage.tsx
 msgid "Results, last 24 hours"
 msgstr "Výsledky, posledných 24 hodín"
 
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/broadcasts/Overview.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MigrationsPage.tsx
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Resume"
 msgstr "Pokračovať"
+
+#: src/app/Sidebar.tsx
+msgid "Retention"
+msgstr "Retencia"
 
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MigrationsPage.tsx
@@ -10889,12 +11387,16 @@ msgstr "Vracia vás na"
 
 #: src/components/common/Linked.tsx
 #: src/features/broadcasts/Import.tsx
-#: src/features/inbox/ChatList.tsx
 #: src/features/migrations/Wizard.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Review"
 msgstr "Prehľad"
 
+#: src/features/status/StatusPages.tsx
+msgid "Review and post"
+msgstr "Skontrolovať a zverejniť"
+
+#: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Review and send"
 msgstr "Skontrolovať a odoslať"
@@ -10908,12 +11410,10 @@ msgid "Review the key"
 msgstr "Skontrolovať kľúč"
 
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/broadcasts/Composer.tsx
+#: src/features/broadcasts/ReviewPanel.tsx
 msgid "Review, then send or schedule"
 msgstr "Skontrolujte, potom odošlite alebo naplánujte"
-
-#: src/features/broadcasts/ReviewPanel.tsx
-msgid "Review, then send or schedule ({key})"
-msgstr "Skontrolujte, potom odošlite alebo naplánujte ({key})"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Revisions"
@@ -10943,6 +11443,7 @@ msgstr "Hneď po prihlásení na odber ľudia dostanú krátku správu, ktorá t
 #: src/app/Palette.tsx
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/feedback/RoadmapCard.tsx
 msgid "Roadmap"
 msgstr "Plán vývoja"
 
@@ -10950,7 +11451,7 @@ msgstr "Plán vývoja"
 msgid "Roadmap →"
 msgstr "Plán vývoja →"
 
-#: src/features/settings/members/Invites.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Role"
 msgstr "Rola"
 
@@ -10958,7 +11459,7 @@ msgstr "Rola"
 msgid "Role addresses such as postmaster@ or noreply@"
 msgstr "Funkčné adresy ako postmaster@ alebo noreply@"
 
-#: src/features/settings/members/MemberList.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Role of {name}"
 msgstr "Rola používateľa {name}"
 
@@ -10993,6 +11494,10 @@ msgstr "Nasmerujte svoju doménu"
 #: src/features/setup/email/EmailReceiveStep.tsx
 msgid "Route your mail to Yuva"
 msgstr "Nasmerujte poštu do Yuvy"
+
+#: src/features/status/MonitorsPage.tsx
+msgid "Rules"
+msgstr "Pravidlá"
 
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Run a check"
@@ -11044,8 +11549,8 @@ msgstr "Sobota"
 #: src/features/settings/ui.tsx
 #: src/features/settings/workspace/RetentionForm.tsx
 #: src/features/status/ComponentDialogs.tsx
+#: src/features/status/IncidentDetail.tsx
 #: src/features/status/IncidentDialog.tsx
-#: src/features/status/IncidentPane.tsx
 #: src/features/status/MonitorDialog.tsx
 msgid "Save"
 msgstr "Uložiť"
@@ -11131,16 +11636,12 @@ msgstr "Naplánovať"
 msgid "Schedule and send broadcasts, when the workspace lets keys and assistants send them"
 msgstr "Plánovať a odosielať hromadné správy, keď pracovný priestor dovolí kľúčom a asistentom ich odosielať"
 
-#: src/features/status/IncidentsPage.tsx
-msgid "Schedule maintenance"
-msgstr "Naplánovať údržbu"
-
 #: src/components/common/ShortcutSheet.tsx
 msgid "Schedule the entry"
 msgstr "Naplánovať záznam"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/text.ts
-#: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/Overview.tsx
 #: src/features/status/IncidentsPage.tsx
 #: src/features/status/text.tsx
@@ -11152,6 +11653,7 @@ msgid "Scheduled by"
 msgstr "Naplánoval(a)"
 
 #: src/features/status/Notices.tsx
+#: src/features/status/StatusPages.tsx
 msgid "Scheduled for {due}"
 msgstr "Naplánované na {due}"
 
@@ -11175,6 +11677,10 @@ msgstr "Skóre {score} z 5"
 #: src/features/conversation/Feedback.tsx
 msgid "Screen"
 msgstr "Obrazovka"
+
+#: src/features/feedback/Lightbox.tsx
+msgid "Screenshot"
+msgstr "Snímka obrazovky"
 
 #: src/features/feedback/FeedbackList.tsx
 msgid "Screenshots attached"
@@ -11204,12 +11710,9 @@ msgstr "Hľadať kontakty"
 #: src/app/Palette.tsx
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/inbox/ChatList.tsx
+#: src/features/status/LinkConversationsDialog.tsx
 msgid "Search conversations"
 msgstr "Hľadať konverzácie"
-
-#: src/features/inbox/ChatList.tsx
-msgid "Search conversations (/)"
-msgstr "Hľadať v konverzáciách (/)"
 
 #: src/app/Palette.tsx
 msgid "Search conversations for “{search}”"
@@ -11227,10 +11730,6 @@ msgstr "Hľadať emoji (po anglicky)"
 msgid "Search feedback"
 msgstr "Hľadať v spätnej väzbe"
 
-#: src/features/feedback/FeedbackList.tsx
-msgid "Search feedback (/)"
-msgstr "Hľadať v spätnej väzbe (/)"
-
 #: src/features/conversation/composer/ArticlePicker.tsx
 msgid "Search help articles…"
 msgstr "Hľadať články pomoci…"
@@ -11244,11 +11743,6 @@ msgstr "Hľadať v načítaných správach"
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Search in this conversation"
 msgstr "Hľadať v tejto konverzácii"
-
-#. placeholder {0}: keyLabel(SHORTCUTS.find).join("")
-#: src/features/conversation/ChatView.tsx
-msgid "Search in this conversation ({0})"
-msgstr "Hľadať v tejto konverzácii ({0})"
 
 #: src/features/status/LinkIncidentDialog.tsx
 msgid "Search incidents"
@@ -11303,7 +11797,7 @@ msgstr "Sekcie"
 msgid "Seen {seen}"
 msgstr "Videný {seen}"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Seen by the monitor"
 msgstr "Videné monitorom"
 
@@ -11378,6 +11872,7 @@ msgid "Send a new code"
 msgstr "Poslať nový kód"
 
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/Overview.tsx
 #: src/features/broadcasts/TestSend.tsx
 msgid "Send a test"
@@ -11432,6 +11927,10 @@ msgstr "Posielať udalosti na vlastný server"
 msgid "Send feedback from a page"
 msgstr "Posielať spätnú väzbu zo stránky"
 
+#: src/features/team/TeamPage.tsx
+msgid "Send invite"
+msgstr "Odoslať pozvánku"
+
 #: src/features/auth/SignInForm.tsx
 msgid "Send me a code"
 msgstr "Pošlite mi kód"
@@ -11474,7 +11973,7 @@ msgid "Send the e-mail after"
 msgstr "Odoslať e-mail po"
 
 #. placeholder {0}: invite.email
-#: src/features/team/TeamColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Send the invite for {0} again"
 msgstr "Znova odoslať pozvánku pre {0}"
 
@@ -11509,7 +12008,6 @@ msgid "Sender identity"
 msgstr "Identita odosielateľa"
 
 #: src/components/common/text.ts
-#: src/features/broadcasts/BroadcastList.tsx
 #: src/features/migrations/UploadStep.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -11556,7 +12054,6 @@ msgid "Sending kept failing, so Yuva gave up."
 msgstr "Odosielanie stále zlyhávalo, a tak to Yuva vzdala."
 
 #: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Sending pace"
 msgstr "Tempo odosielania"
@@ -11614,12 +12111,11 @@ msgid "sent"
 msgstr "odoslané"
 
 #: src/components/common/Linked.tsx
-#: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/Overview.tsx
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
 #: src/features/status/Notices.tsx
-#: src/features/team/TeamColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Sent"
 msgstr "Odoslané"
 
@@ -11636,10 +12132,6 @@ msgstr "Odoslané"
 #: src/features/migrations/MapStep.tsx
 msgid "Sent {count} messages from this address"
 msgstr "Odoslaných správ z tejto adresy: {count}"
-
-#: src/features/team/TeamColumn.tsx
-msgid "Sent {sent}"
-msgstr "Odoslané {sent}"
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "Sent {sentAt}. Waiting for it to arrive…"
@@ -11711,6 +12203,10 @@ msgstr "Tenant SES"
 msgid "Set by a monitor, {since}"
 msgstr "Nastavil monitor, {since}"
 
+#: src/features/inbox/InboxPicker.tsx
+msgid "Set by the product in the sidebar"
+msgstr "Určuje produkt v bočnom paneli"
+
 #: src/features/conversation/HeaderActions.tsx
 msgid "Set progress"
 msgstr "Nastaviť stav spracovania"
@@ -11737,6 +12233,10 @@ msgstr "Nastaviť e-mail"
 msgid "Set up Yuva"
 msgstr "Nastaviť Yuvu"
 
+#: src/features/status/MonitorsPage.tsx
+msgid "Sets {cname} to {downState} while it is down"
+msgstr "Nastaví {cname} na „{downState}“, kým je nedostupný"
+
 #: src/features/settings/channels/email/Ses.tsx
 msgid "Setting up the inbox’s Amazon SES tenant…"
 msgstr "Nastavuje sa tenant Amazon SES schránky…"
@@ -11760,7 +12260,7 @@ msgstr "Nastavuje sa…"
 #: src/features/settings/ProductsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
 #: src/features/settings/ui.tsx
-#: src/features/status/StatusPagePane.tsx
+#: src/features/status/StatusPages.tsx
 msgid "Settings"
 msgstr "Nastavenia"
 
@@ -11803,20 +12303,20 @@ msgstr "Skratka"
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/contact/ContactsPage.tsx
-#: src/features/docs/discussions/DiscussionsPane.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/docs/DocsPage.tsx
 #: src/features/inbox/SidePanels.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Show"
 msgstr "Zobraziť"
-
-#: src/features/broadcasts/BroadcastsColumn.tsx
-#: src/features/broadcasts/Overview.tsx
-msgid "Show archived lists"
-msgstr "Zobraziť archivované zoznamy"
 
 #: src/features/conversation/messages/EmailBody.tsx
 msgid "Show as sent"
 msgstr "Zobraziť ako odoslané"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Show HTTP details"
+msgstr "Zobraziť podrobnosti HTTP"
 
 #: src/features/inbox/SidePanels.tsx
 #: src/features/migrations/CopyStep.tsx
@@ -12102,19 +12602,15 @@ msgstr "Od"
 msgid "Since {since}"
 msgstr "Od {since}"
 
-#: src/features/status/IncidentsTab.tsx
-msgid "since {started}"
-msgstr "začalo {started}"
-
 #: src/features/migrations/ChooseStep.tsx
 msgid "Since…"
 msgstr "Od…"
 
-#: src/features/broadcasts/Overview.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "Single opt-in"
 msgstr "Jednoduché potvrdenie"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/Toolbar.tsx
 #: src/features/inbox/SourceFilter.tsx
 #: src/features/setup/SetupLayout.tsx
 msgid "Site"
@@ -12125,6 +12621,7 @@ msgid "Site address"
 msgstr "Adresa webu"
 
 #: src/features/broadcasts/FormSnippets.tsx
+#: src/features/docs/InstallDialog.tsx
 #: src/features/setup/InstallStep.tsx
 msgid "Site generator"
 msgstr "Generátor webu"
@@ -12183,7 +12680,6 @@ msgstr "Hostiteľ SMTP"
 
 #: src/app/Palette.tsx
 #: src/components/common/ShortcutSheet.tsx
-#: src/features/conversation/ConversationMenu.tsx
 #: src/features/conversation/HeaderActions.tsx
 msgid "Snooze"
 msgstr "Odložiť"
@@ -12200,6 +12696,10 @@ msgstr "Odložené"
 #: src/features/conversation/ConversationStatus.tsx
 msgid "Snoozed until {until}"
 msgstr "Odložené do {until}"
+
+#: src/features/contact/ContactDetail.tsx
+msgid "Some addresses are undeliverable. Clear them under Contact and identities once they work again."
+msgstr "Niektoré adresy sú nedoručiteľné. Vymažte ich v časti Kontakt a identity, keď budú znova fungovať."
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Some images have no description for people who cannot see them."
@@ -12253,8 +12753,8 @@ msgstr "Na serveri sa niečo pokazilo. Skúste to znova."
 msgid "Something you can find again if asked, such as an order number or a signed form."
 msgstr "Niečo, čo možno na požiadanie dohľadať, napríklad číslo objednávky alebo podpísaný formulár."
 
-#: src/features/docs/discussions/DiscussionsPane.tsx
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/DocsPage.tsx
+#: src/features/docs/Toolbar.tsx
 msgid "Sort"
 msgstr "Zoradiť"
 
@@ -12269,6 +12769,10 @@ msgstr "Zoraďte konverzácie po svojom"
 #: src/features/migrations/Wizard.tsx
 msgid "Source"
 msgstr "Zdroj"
+
+#: src/app/Sidebar.tsx
+msgid "Sources"
+msgstr "Zdroje"
 
 #: src/features/docs/discussions/QueuePane.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
@@ -12304,7 +12808,7 @@ msgstr "SPF prechádza pre {spfDomain}, nie pre odosielaciu doménu {from}, tak�
 msgid "SPF passes for {spfDomain}."
 msgstr "SPF prechádza pre {spfDomain}."
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Stage"
 msgstr "Fáza"
 
@@ -12352,7 +12856,7 @@ msgstr "Založte svoj e-mailový zoznam"
 msgid "Started"
 msgstr "Začaté"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "started {started} · {lasted}"
 msgstr "začalo {started} · trvalo {lasted}"
 
@@ -12387,7 +12891,6 @@ msgstr "STARTTLS (port 587)"
 #: src/features/migrations/Wizard.tsx
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/IncidentDialog.tsx
-#: src/features/status/MonitorsTab.tsx
 msgid "State"
 msgstr "Stav"
 
@@ -12401,11 +12904,8 @@ msgstr "Stav: {0}"
 msgid "State of {0} while it is open"
 msgstr "Stav: {0}, kým je otvorený"
 
-#: src/features/status/MonitorsTab.tsx
-msgid "state pushed by your alerting"
-msgstr "stav odoslal váš systém upozornení"
-
 #: src/features/status/MonitorDialog.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "State while down"
 msgstr "Stav pri výpadku"
 
@@ -12415,15 +12915,14 @@ msgstr "Stav pri výpadku"
 #: src/features/broadcasts/Overview.tsx
 #: src/features/feedback/FeedbackList.tsx
 #: src/features/feedback/FeedbackPage.tsx
+#: src/features/home/HomePage.tsx
 #: src/features/migrations/MapStep.tsx
 #: src/features/settings/webhooks/AttemptLog.tsx
 #: src/features/settings/webhooks/events.tsx
-#: src/features/status/StatusColumn.tsx
-#: src/features/status/StatusPagePane.tsx
 msgid "Status"
 msgstr "Stav"
 
-#: src/features/status/StatusPagePane.tsx
+#: src/features/status/StatusPages.tsx
 msgid "Status page"
 msgstr "Stránka stavu"
 
@@ -12432,8 +12931,9 @@ msgid "Status page deleted"
 msgstr "Stránka stavu bola odstránená"
 
 #: src/app/Sidebar.tsx
-#: src/features/status/StatusColumn.tsx
-#: src/features/status/StatusPagePane.tsx
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/IncidentsPage.tsx
+#: src/features/status/MonitorsPage.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Status pages"
 msgstr "Stránky stavu"
@@ -12467,8 +12967,8 @@ msgid "Stop signing"
 msgstr "Prestať podpisovať"
 
 #: src/features/broadcasts/ListSettings.tsx
-msgid "Stop taking new subscribers."
-msgstr "Prestať prijímať nových odberateľov."
+msgid "Stop taking new subscribers. Records and past reports stay, and you can restore it."
+msgstr "Prestať prijímať nových odberateľov. Záznamy a skoršie prehľady zostanú a zoznam môžete obnoviť."
 
 #: src/features/migrations/ReviewStep.tsx
 msgid "Storage"
@@ -12527,8 +13027,6 @@ msgstr "Práve prihlásený do zoznamu"
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/Subscribers.tsx
-#: src/features/status/IncidentsTab.tsx
-#: src/features/status/StatusPagePane.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Subscribers"
 msgstr "Odberatelia"
@@ -12541,7 +13039,7 @@ msgstr "Odberatelia pridaní"
 msgid "Subscribers confirm their address by mail before they get notices."
 msgstr "Odberatelia pred prvým upozornením potvrdia svoju adresu e-mailom."
 
-#: src/features/broadcasts/Overview.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "Subscribers over the last 30 days"
 msgstr "Odberatelia za posledných 30 dní"
 
@@ -12554,16 +13052,13 @@ msgid "Succeeded"
 msgstr "Uspelo"
 
 #: src/features/status/MonitorDialog.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Successes to recover"
 msgstr "Úspechy do obnovenia"
 
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "Such as a MERSİS number, trade register or VAT id, if you have one"
 msgstr "Napríklad číslo MERSİS, obchodný register alebo IČ DPH, ak ho máte"
-
-#: src/features/conversation/composer/ReplyBox.tsx
-msgid "Suggested by {author}"
-msgstr "Navrhol(a) {author}"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Suggested scopes"
@@ -12573,13 +13068,17 @@ msgstr "Navrhované rozsahy"
 msgid "Suggestion discarded"
 msgstr "Návrh zahodený"
 
-#: src/features/contact/ContactPage.tsx
+#: src/features/contact/ContactDetail.tsx
 msgid "Summary"
 msgstr "Zhrnutie"
 
 #: src/components/common/text.ts
 msgid "Sunday"
 msgstr "Nedeľa"
+
+#: src/app/Sidebar.tsx
+msgid "Support"
+msgstr "Podpora"
 
 #: src/features/migrations/SourceStep.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
@@ -12646,6 +13145,10 @@ msgstr "karty"
 msgid "Tags"
 msgstr "Tagy"
 
+#: src/features/broadcasts/ListSettings.tsx
+msgid "Takes sign-ups again and brings the list back to the broadcast audience picker."
+msgstr "Znova prijíma prihlášky a vracia zoznam do výberu publika rozoslaní."
+
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Taking the recipients: {prepared} so far"
 msgstr "Určujú sa príjemcovia: zatiaľ {prepared}"
@@ -12667,8 +13170,7 @@ msgstr "Kontrola TCP"
 #: src/features/home/HomePage.tsx
 #: src/features/reports/ReportPages.tsx
 #: src/features/settings/SettingsColumn.tsx
-#: src/features/team/MemberPage.tsx
-#: src/features/team/TeamColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Team"
 msgstr "Tím"
 
@@ -12684,7 +13186,7 @@ msgstr "Člen tímu pre {sender}"
 msgid "Team note"
 msgstr "Poznámka tímu"
 
-#: src/features/contact/ContactPage.tsx
+#: src/features/contact/ContactDetail.tsx
 msgid "Team notes"
 msgstr "Poznámky tímu"
 
@@ -12700,15 +13202,14 @@ msgstr "Odpoveď tímu"
 msgid "Team right now"
 msgstr "Tím práve teraz"
 
-#: src/features/settings/members/Invites.tsx
+#: src/features/team/TeamPage.tsx
 msgid "teammate@company.com"
 msgstr "kolega@firma.sk"
 
 #: src/features/status/StatusPages.tsx
-msgid "Tell your customers whether your product works. Each inbox gets one page, where you open incidents, plan maintenance and set the state of each component."
-msgstr "Povedzte zákazníkom, či váš produkt funguje. Každá schránka dostane stránku, kde zakladáte incidenty, plánujete údržbu a nastavujete stav každého komponentu."
+msgid "Tell your customers whether your product works. Each product gets one page, where you open incidents, plan maintenance and set the state of each component."
+msgstr "Povedzte zákazníkom, či váš produkt funguje. Každý produkt má jednu stránku, kde otvárate incidenty, plánujete údržbu a nastavujete stav každého komponentu."
 
-#: src/features/broadcasts/Composer.tsx
 #: src/features/setup/email/EmailLayout.tsx
 msgid "Test"
 msgstr "Test"
@@ -12851,6 +13352,10 @@ msgstr "Stĺpce sa odhadujú z riadka hlavičky. Jeden musí byť e-mailová adr
 msgid "The component whose state this monitor sets."
 msgstr "Komponent, ktorého stav tento monitor nastavuje."
 
+#: src/features/status/IncidentDetail.tsx
+msgid "The components are back to operational. It moved to Past."
+msgstr "Komponenty opäť fungujú. Presunuté do Minulé."
+
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "The confirmation mail is on its way."
 msgstr "Potvrdzovacia správa je na ceste."
@@ -12867,7 +13372,7 @@ msgstr "Kontakt bol odstránený"
 msgid "The conversations stay open. Customers get it right away and it cannot be recalled."
 msgstr "Konverzácie zostanú otvorené. Zákazníci odpoveď dostanú hneď a nedá sa vziať späť."
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "The current address stops working at once. Update whatever calls it."
 msgstr "Súčasná adresa prestane fungovať okamžite. Aktualizujte všetko, čo ju volá."
 
@@ -13007,6 +13512,10 @@ msgstr "Prvá správa konverzácie v schránke, ktorá zobrazuje, kto je dostupn
 msgid "the first one"
 msgstr "prvý"
 
+#: src/features/docs/PagesTab.tsx
+msgid "The first rating makes the page appear here."
+msgstr "Prvé hodnotenie spôsobí, že sa stránka zobrazí tu."
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "The first thing the chat says"
 msgstr "Prvá vec, ktorú chat povie"
@@ -13022,6 +13531,10 @@ msgstr "Formulár zobrazuje nezačiarknuté políčko súhlasu a ukladá presné
 #: src/features/broadcasts/FormSnippets.tsx
 msgid "The form works on these addresses:"
 msgstr "Formulár funguje na týchto adresách:"
+
+#: src/features/status/MonitorsPage.tsx
+msgid "The full address is shown only once, when you make it. Anyone who has it can report for this monitor."
+msgstr "Celá adresa sa zobrazí iba raz, pri jej vytvorení. Ktokoľvek ju má, môže hlásiť za tento monitor."
 
 #: src/features/oauth/ConsentPage.tsx
 msgid "The full API: MCP, the REST API and live updates, like a member app."
@@ -13197,6 +13710,10 @@ msgstr "Schránka odmietla prihlásenie"
 msgid "The mailbox refused the sign-in over IMAP"
 msgstr "Schránka odmietla prihlásenie cez IMAP"
 
+#: src/features/status/IncidentDetail.tsx
+msgid "The maintenance is complete. Everything works as before."
+msgstr "Údržba je dokončená. Všetko funguje ako predtým."
+
 #: src/components/common/text.ts
 msgid "The mbox file is compressed inside the zip. Unzip the Takeout archive and upload the .mbox file."
 msgstr "Súbor mbox je vo vnútri archívu zip komprimovaný. Rozbaľte archív Takeout a nahrajte súbor .mbox."
@@ -13257,6 +13774,10 @@ msgstr "Stránka už za poslednú hodinu odoslala 10 upozornení"
 msgid "The page answers at"
 msgstr "Stránka odpovedá na"
 
+#: src/features/status/StatusPages.tsx
+msgid "The page answers not found until you publish it again."
+msgstr "Stránka odpovedá „nenájdené“, kým ju znova nezverejníte."
+
 #: src/features/status/PreviewDialog.tsx
 msgid "The page as visitors see it now. Drafts are left out."
 msgstr "Stránka tak, ako ju teraz vidia návštevníci. Koncepty sú vynechané."
@@ -13282,8 +13803,8 @@ msgid "The page stops answering on this domain. Its address on this server keeps
 msgstr "Stránka na tejto doméne prestane odpovedať. Jej adresa na tomto serveri naďalej funguje."
 
 #: src/features/status/ComponentsTab.tsx
-msgid "The parts of your product. Set a state by hand, or let an incident do it."
-msgstr "Časti vášho produktu. Nastavte stav ručne, alebo to nechajte urobiť incident."
+msgid "The parts of your product. Set a state by hand, or let an incident or a monitor do it."
+msgstr "Časti vášho produktu. Nastavte stav ručne, alebo to nechajte na incidente či monitore."
 
 #: src/features/auth/SignInForm.tsx
 msgid "The passkey sign-in did not complete. Try again or use an e-mailed code."
@@ -13324,6 +13845,10 @@ msgstr "Port musí byť 1 až 65535."
 #: src/features/settings/webhooks/sections.tsx
 msgid "The previous secret also signs until {rotatedUntil}."
 msgstr "Predchádzajúci tajný kľúč tiež podpisuje do {rotatedUntil}."
+
+#: src/features/status/IncidentDetail.tsx
+msgid "The problem is fixed. Sorry for the trouble."
+msgstr "Problém je vyriešený. Ospravedlňujeme sa za komplikácie."
 
 #: src/features/migrations/text.ts
 msgid "The provider asked to slow down"
@@ -13584,7 +14109,7 @@ msgstr "Časové pásmo denných stĺpcov."
 msgid "Their consent records, for a request about what you hold on them:"
 msgstr "Ich záznamy o súhlase, pre žiadosť o to, čo o nich máte:"
 
-#: src/features/settings/members/MemberList.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Their conversations stay; they lose access at once."
 msgstr "Ich konverzácie zostanú; prístup stratia okamžite."
 
@@ -13605,8 +14130,8 @@ msgid "These choices are kept on this device only."
 msgstr "Tieto voľby sa uchovávajú len na tomto zariadení."
 
 #: src/features/contact/ContactsPage.tsx
-msgid "These look like the same person. Merging keeps the left one and moves addresses, ids and conversations into it."
-msgstr "Vyzerá to na rovnakú osobu. Zlúčenie ponechá ľavý kontakt a presunie do neho adresy, ID a konverzácie."
+msgid "These look like the same person. Merging keeps the left one and moves addresses, ids and conversations into it. Nothing is merged until you have seen what changes."
+msgstr "Vyzerajú ako tá istá osoba. Zlúčenie ponechá ľavý kontakt a presunie do neho adresy, ID a konverzácie. Nič sa nezlúči, kým neuvidíte, čo sa zmení."
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "These merge fields have no fallback and would be empty for some recipients:"
@@ -13712,6 +14237,10 @@ msgstr "Hromadné správy tohto kanála idú cez Amazon SES, ktorý podpisuje va
 msgid "This conflicts with something that already exists."
 msgstr "To je v konflikte s niečím, čo už existuje."
 
+#: src/features/contact/ContactDetails.tsx
+msgid "This contact has no e-mail address yet. Add one under Contact and identities first."
+msgstr "Tento kontakt zatiaľ nemá e-mailovú adresu. Najprv ju pridajte v časti Kontakt a identity."
+
 #: src/features/contact/MergePreview.tsx
 msgid "This contact keeps its own value"
 msgstr "Tento kontakt si ponecháva vlastnú hodnotu"
@@ -13766,6 +14295,10 @@ msgstr "Táto schránka už má zoznam s týmto názvom."
 msgid "This inbox already has a status page."
 msgstr "Táto schránka už stránku stavu má."
 
+#: src/features/docs/InstallDialog.tsx
+msgid "This inbox has no chat channel yet. Add one under <0>Add a channel</0>."
+msgstr "Táto schránka zatiaľ nemá chatový kanál. Pridajte ho v časti <0>Pridať kanál</0>."
+
 #: src/features/setup/NewsletterStep.tsx
 msgid "This inbox has no e-mail channel that can send yet. You can create the list now; it sends once an e-mail channel with a reply account is picked in its settings."
 msgstr "Táto schránka zatiaľ nemá e-mailový kanál, ktorý môže odosielať. Zoznam môžete vytvoriť hneď; odosiela, keď je v jeho nastaveniach vybraný e-mailový kanál s účtom pre odpovede."
@@ -13790,7 +14323,7 @@ msgstr "Táto schránka zatiaľ nemá e-mailový zoznam. Hromadná správa ide l
 msgid "This is a compressed archive. Unzip the Takeout archive and upload the .mbox file."
 msgstr "Toto je komprimovaný archív. Rozbaľte archív Takeout a nahrajte súbor .mbox."
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "This is a draft. Only your team sees it, and it changes no component until you publish it."
 msgstr "Toto je koncept. Vidí ho iba váš tím a nezmení žiadny komponent, kým ho nezverejníte."
 
@@ -13858,9 +14391,9 @@ msgstr "Tento zoznam nemá e-mailový kanál, ktorý môže odosielať, takže z
 msgid "This list has no e-mail channel that can send. Until it has one, forms send no confirmation mail, new form subscribers stay waiting for confirmation and nobody gets a welcome mail. Pick an e-mail channel with an SMTP account below, or add the SMTP account in the inbox settings."
 msgstr "Tento zoznam nemá e-mailový kanál, ktorý môže odosielať. Kým ho nemá, formuláre neposielajú potvrdzovacie správy, noví odberatelia z formulárov čakajú na potvrdenie a nikto nedostane uvítaciu správu. Vyberte nižšie e-mailový kanál s účtom SMTP, alebo účet SMTP pridajte v nastaveniach schránky."
 
-#: src/features/broadcasts/ListSettings.tsx
-msgid "This list is archived."
-msgstr "Tento zoznam je archivovaný."
+#: src/features/broadcasts/ListPage.tsx
+msgid "This list is archived. It takes no new subscribers and broadcasts cannot pick it."
+msgstr "Tento zoznam je archivovaný. Neprijíma nových odberateľov a rozoslania ho nemôžu vybrať."
 
 #: src/features/broadcasts/FormSnippets.tsx
 msgid "This list is private, so forms do not offer it. Make it public in the settings to use a form."
@@ -13870,7 +14403,7 @@ msgstr "Tento zoznam je súkromný, takže ho formuláre nenúkajú. Pre použit
 msgid "This mailbox connects only with “Sign in with Microsoft”, which this Yuva server does not offer. Ask its operator to set it up."
 msgstr "Táto schránka sa pripája len cez „Prihlásiť sa cez Microsoft“, čo tento server Yuvy nenúka. Požiadajte jeho prevádzkovateľa o nastavenie."
 
-#: src/features/team/MemberPage.tsx
+#: src/features/team/TeamPage.tsx
 msgid "This member is not in the workspace any more."
 msgstr "Tento člen už v pracovnom priestore nie je."
 
@@ -13881,6 +14414,10 @@ msgstr "Táto migrácia skončila, takže už nemožno nič nahrať. Pre ďalš�
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "This month"
 msgstr "Tento mesiac"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "This page is not public yet, so visitors see nothing until you publish the page."
+msgstr "Táto stránka zatiaľ nie je verejná, takže návštevníci nič neuvidia, kým ju nezverejníte."
 
 #: src/components/common/text.ts
 msgid "This person unsubscribed from everything, reported a mail as spam or had their data erased, so the team cannot add them again."
@@ -14042,6 +14579,7 @@ msgid "Time zone"
 msgstr "Časové pásmo"
 
 #: src/features/status/MonitorDialog.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Timeout"
 msgstr "Časový limit"
 
@@ -14161,6 +14699,7 @@ msgstr "Türkçe"
 #: src/app/Palette.tsx
 #: src/features/conversation/ConversationMenu.tsx
 #: src/features/docs/discussions/FromConversation.tsx
+#: src/features/docs/FromDocs.tsx
 msgid "Turn into a discussion"
 msgstr "Zmeniť na diskusiu"
 
@@ -14206,7 +14745,6 @@ msgid "TXT record"
 msgstr "Záznam TXT"
 
 #: src/features/inbox/SourceFilter.tsx
-#: src/features/status/MonitorsTab.tsx
 msgid "Type"
 msgstr "Typ"
 
@@ -14240,7 +14778,12 @@ msgstr "Nezodpovedané"
 msgid "Unassigned"
 msgstr "Nepridelené"
 
+#: src/features/contact/ContactDetail.tsx
+msgid "Unblock contact"
+msgstr "Odblokovať kontakt"
+
 #: src/features/contact/ContactDetails.tsx
+#: src/features/contact/ContactsPage.tsx
 msgid "Undeliverable"
 msgstr "Nedoručiteľné"
 
@@ -14299,6 +14842,10 @@ msgstr "Sledovanie ukončené"
 msgid "Unknown device"
 msgstr "Neznáme zariadenie"
 
+#: src/features/feedback/RoadmapCard.tsx
+msgid "Unlink"
+msgstr "Odpojiť"
+
 #: src/components/common/Linked.tsx
 msgid "Unlink {name}"
 msgstr "Odpojiť {name}"
@@ -14321,7 +14868,7 @@ msgstr "Odomknuté"
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/TestSend.tsx
 #: src/features/contact/ContactCard.tsx
-#: src/features/contact/ContactPage.tsx
+#: src/features/contact/ContactDetail.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/contact/ContactSearch.tsx
 #: src/features/contact/ContactSheet.tsx
@@ -14333,7 +14880,6 @@ msgid "Unnamed contact"
 msgstr "Kontakt bez mena"
 
 #: src/features/conversation/ConversationMenu.tsx
-#: src/features/inbox/ChatList.tsx
 msgid "Unpin"
 msgstr "Odopnúť"
 
@@ -14341,15 +14887,17 @@ msgstr "Odopnúť"
 msgid "Unpinned"
 msgstr "Odopnuté"
 
-#: src/features/status/StatusPagePane.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Unpublish"
 msgstr "Stiahnuť"
 
-#: src/features/status/StatusPagePane.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Unpublish ({publishKey})"
 msgstr "Stiahnuť ({publishKey})"
+
+#: src/features/status/StatusPages.tsx
+msgid "Unpublish {pageName}?"
+msgstr "Zrušiť zverejnenie {pageName}?"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Unpublish or unschedule the entry"
@@ -14359,14 +14907,9 @@ msgstr "Stiahnuť záznam alebo zrušiť jeho naplánovanie"
 msgid "Unpublish the translation"
 msgstr "Zrušiť zverejnenie prekladu"
 
-#: src/features/status/StatusColumn.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Unpublished"
 msgstr "Nezverejnená"
-
-#: src/features/status/StatusPagePane.tsx
-msgid "Unpublished, only your team can preview it"
-msgstr "Nezverejnená, náhľad vidí iba váš tím"
 
 #: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
@@ -14433,6 +14976,10 @@ msgstr "odhlásené teraz"
 msgid "until {expires}"
 msgstr "do {expires}"
 
+#: src/features/broadcasts/ReviewPanel.tsx
+msgid "Until it starts you can go back to a draft."
+msgstr "Do začiatku sa môžete vrátiť ku konceptu."
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Until they click the link they stay waiting for confirmation and get no other mail. Unconfirmed subscriptions are deleted after 30 days."
 msgstr "Kým na odkaz nekliknú, zostanú čakať na potvrdenie a nedostanú žiadnu ďalšiu poštu. Nepotvrdené odbery sa po 30 dňoch odstránia."
@@ -14445,17 +14992,31 @@ msgstr "Kým na odkaz nekliknú, čakajú na potvrdenie. Nepotvrdené adresy sa 
 msgid "Unverified sender"
 msgstr "Neoverený odosielateľ"
 
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/MonitorsPage.tsx
 #: src/features/status/text.tsx
 msgid "Up"
 msgstr "Funguje"
+
+#: src/features/status/MonitorsPage.tsx
+msgid "Up again"
+msgstr "Opäť v prevádzke"
+
+#: src/features/status/IncidentDetail.tsx
+msgid "Up since {upSince}. Post the all-clear when you are sure."
+msgstr "V prevádzke od {upSince}. Keď si budete istí, zverejnite oznam, že je všetko v poriadku."
 
 #: src/features/broadcasts/Import.tsx
 msgid "Up to {max} and 100,000 rows, with a header row. Excel files in Turkish or Western encodings and columns separated by commas, semicolons or tabs are read as they are."
 msgstr "Až {max} a 100 000 riadkov, s riadkom hlavičky. Súbory Excelu v tureckom alebo západnom kódovaní a stĺpce oddelené čiarkami, bodkočiarkami alebo tabulátormi sa čítajú tak, ako sú."
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Update text"
 msgstr "Text aktualizácie"
+
+#: src/features/status/IncidentDetail.tsx
+msgid "Updates"
+msgstr "Aktualizácie"
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Updating"
@@ -14497,14 +15058,13 @@ msgstr "Nahrané {step} %"
 msgid "Uploading…"
 msgstr "Nahráva sa…"
 
-#: src/features/status/MonitorsTab.tsx
 #: src/features/status/ResponseChart.tsx
 msgid "Uptime"
 msgstr "Dostupnosť"
 
 #: src/features/home/HomePage.tsx
-msgid "uptime · 30 days"
-msgstr "dostupnosť · 30 dní"
+msgid "uptime · {shown} days"
+msgstr "dostupnosť · {shown} dní"
 
 #: src/features/status/ComponentsTab.tsx
 msgid "Uptime is hidden on this page. Turn it on in the settings to see each day here."
@@ -14706,23 +15266,27 @@ msgstr "Veľmi veľká schránka? Začnite súborom Google Takeout"
 msgid "View"
 msgstr "Zobraziť"
 
-#: src/features/status/StatusPagePane.tsx
 #: src/features/status/StatusPages.tsx
 msgid "View page"
 msgstr "Zobraziť stránku"
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/status/StatusPages.tsx
+msgid "View page ({openKey})"
+msgstr "Zobraziť stránku ({openKey})"
+
+#: src/features/docs/PagesTab.tsx
 msgid "views"
 msgstr "zobrazenia"
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "Views"
 msgstr "Zobrazenia"
 
 #: src/components/common/Source.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/contact/ContactsPage.tsx
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/FromDocs.tsx
+#: src/features/docs/PagesTab.tsx
 #: src/features/setup/previews.tsx
 msgid "Visitor"
 msgstr "Návštevník"
@@ -14732,7 +15296,7 @@ msgid "Visitor · {where}"
 msgstr "Návštevník · {where}"
 
 #: src/features/broadcasts/Report.tsx
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "visitors"
 msgstr "návštevníkov"
 
@@ -14787,7 +15351,8 @@ msgstr "Návštevy vašich webov s utm_campaign={campaign} od začatia odosielan
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/parts.tsx
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/DomainCard.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Waiting"
 msgstr "Čaká"
 
@@ -14795,15 +15360,17 @@ msgstr "Čaká"
 msgid "Waiting for {provider}'s limit; continues at {waiting}."
 msgstr "Čaká sa na limit {provider}; pokračuje {waiting}."
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/DocsPage.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "waiting for approval"
 msgstr "čaká na schválenie"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/account/AccountPage.tsx
 #: src/features/docs/discussions/DiscussionsPane.tsx
 #: src/features/docs/discussions/parts.tsx
-#: src/features/docs/discussions/ThreadPane.tsx
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/DiscussionsTab.tsx
+#: src/features/docs/DocsPage.tsx
 msgid "Waiting for approval"
 msgstr "Čaká na schválenie"
 
@@ -14897,6 +15464,10 @@ msgstr "Poslali sme nový kód. Funguje len najnovší kód."
 msgid "Web chat"
 msgstr "Webový chat"
 
+#: src/features/feedback/FeedbackFormDialog.tsx
+msgid "Web pages use the chat widget with the feedback form turned on. Apps call the feedback form from the SDK."
+msgstr "Webové stránky používajú chatovací widget so zapnutým formulárom spätnej väzby. Aplikácie formulár volajú zo SDK."
+
 #: src/features/settings/webhooks/WebhookPage.tsx
 msgid "Webhook endpoint"
 msgstr "Koncový bod webhooku"
@@ -14917,6 +15488,10 @@ msgstr "Webhooky pre {0}"
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Webhooks for this inbox"
 msgstr "Webhooky pre túto schránku"
+
+#: src/features/feedback/FeedbackFormDialog.tsx
+msgid "Website"
+msgstr "Web"
 
 #: src/features/setup/AddChannelStep.tsx
 msgid "Website addresses"
@@ -14951,7 +15526,7 @@ msgstr "Čo sa prenesie"
 msgid "What did they agree to?"
 msgstr "S čím súhlasili?"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "What do customers need to know?"
 msgstr "Čo majú zákazníci vedieť?"
 
@@ -14963,6 +15538,7 @@ msgstr "Čo majú títo zákazníci vedieť?"
 msgid "What each column holds"
 msgstr "Čo obsahuje každý stĺpec"
 
+#: src/features/broadcasts/SubscriberSheet.tsx
 #: src/features/migrations/DoneStep.tsx
 msgid "What happened"
 msgstr "Čo sa stalo"
@@ -15030,6 +15606,7 @@ msgstr "Čo píšete často"
 #: src/app/Palette.tsx
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/home/HomePage.tsx
 #: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/chat/ChatSections.tsx
 msgid "What’s new"
@@ -15060,6 +15637,7 @@ msgid "When did they agree?"
 msgstr "Kedy súhlasili?"
 
 #: src/features/status/MonitorDialog.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "When it goes down"
 msgstr "Pri výpadku"
 
@@ -15086,6 +15664,10 @@ msgstr "Keď vám ju pridelí niekto iný."
 #: src/features/feedback/FeedbackList.tsx
 msgid "When someone sends feedback, it will be in the list."
 msgstr "Keď niekto pošle spätnú väzbu, zobrazí sa v zozname."
+
+#: src/features/feedback/RoadmapCard.tsx
+msgid "When this idea ships, you can answer everyone linked to it in one reply."
+msgstr "Keď sa tento nápad vydá, odpoviete všetkým prepojeným jednou správou."
 
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "When to notify me"
@@ -15159,11 +15741,11 @@ msgstr "Keď je vypnutý, žiadne doručenia sa nevykonávajú."
 msgid "While your status is Away, only new messages in conversations assigned to you and new assignments notify you. A conversation you have open in the panel never notifies you."
 msgstr "Keď je váš stav Preč, upozornia vás len nové správy v konverzáciách pridelených vám a nové pridelenia. Konverzácia, ktorú máte otvorenú v paneli, vás nikdy neupozorní."
 
-#: src/features/broadcasts/Overview.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "Who agreed to hear from you, with consent recorded"
 msgstr "Kto súhlasil, že sa mu ozvete, so zaznamenaným súhlasom"
 
-#: src/features/team/TeamColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Who answers, where, and who is online"
 msgstr "Kto odpovedá, kde a kto je online"
 
@@ -15171,7 +15753,7 @@ msgstr "Kto odpovedá, kde a kto je online"
 msgid "Who can reply"
 msgstr "Kto môže odpovedať"
 
-#: src/features/team/TeamColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Who is here"
 msgstr "Kto je tu"
 
@@ -15211,16 +15793,18 @@ msgstr "S vlastným menom, jazykom a časovým pásmom"
 msgid "With two-factor sign-in, create an app password in Zoho Accounts › Security › App passwords; otherwise your password works."
 msgstr "Pri dvojfázovom prihlásení vytvorte heslo aplikácie v Zoho Accounts › Security › App passwords; inak funguje vaše heslo."
 
-#: src/features/settings/members/Invites.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Withdraw"
 msgstr "Odvolať"
 
-#. placeholder {0}: inv.email
 #. placeholder {0}: invite.email
-#: src/features/settings/members/Invites.tsx
-#: src/features/team/TeamColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Withdraw the invite for {0}"
 msgstr "Odvolať pozvánku pre {0}"
+
+#: src/features/team/TeamPage.tsx
+msgid "Withdraw this invite?"
+msgstr "Zrušiť túto pozvánku?"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Within {m} minutes"
@@ -15250,7 +15834,7 @@ msgstr "Bez potvrdenia môže ktokoľvek zadať do vášho formulára cudziu adr
 msgid "Won't do"
 msgstr "Nebude sa robiť"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Work is going on"
 msgstr "Prebiehajú práce"
 
@@ -15279,10 +15863,6 @@ msgstr "Pracuje sa…"
 msgid "Workspace"
 msgstr "Pracovný priestor"
 
-#: src/features/settings/members/MemberList.tsx
-msgid "Workspace members"
-msgstr "Členovia pracovného priestoru"
-
 #: src/features/auth/CreateWorkspace.tsx
 msgid "Workspace name"
 msgstr "Názov pracovného priestoru"
@@ -15302,10 +15882,6 @@ msgstr "Pracovný priestor: {name}"
 #: src/app/Sidebar.tsx
 msgid "Workspaces"
 msgstr "Pracovné priestory"
-
-#: src/features/contact/ContactsPage.tsx
-msgid "Write"
-msgstr "Napísať"
 
 #: src/features/setup/previews.tsx
 msgid "Write a message…"
@@ -15431,6 +16007,14 @@ msgstr "Túto stránku môžete opustiť: konverzácia na vás počká v zozname
 msgid "You can then write, vote and follow discussions there. The team behind {host} sees your name and e-mail address when you write; other readers see only your name."
 msgstr "Potom tam môžete písať, hlasovať a sledovať diskusie. Tím za {host} vidí pri písaní vaše meno a e-mailovú adresu; ostatní čitatelia vidia len vaše meno."
 
+#: src/features/team/TeamPage.tsx
+msgid "You cannot change your own role."
+msgstr "Nemôžete zmeniť vlastnú rolu."
+
+#: src/features/team/TeamPage.tsx
+msgid "You cannot remove yourself."
+msgstr "Nemôžete odstrániť sami seba."
+
 #: src/features/account/AccountPage.tsx
 msgid "You follow no discussions. You follow the ones you start or reply to."
 msgstr "Nesledujete žiadne diskusie. Sledujete tie, ktoré začnete alebo do ktorých odpoviete."
@@ -15442,6 +16026,14 @@ msgstr "Nový tajný kľúč dostanete raz. Počas 24 hodín nesie každé doru�
 #: src/features/account/AccountPage.tsx
 msgid "You get a notification when someone replies in these"
 msgstr "Dostanete oznámenie, keď niekto odpovie v týchto"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "You get the address to call when you save. It is shown only once."
+msgstr "Po uložení získate adresu, ktorú treba volať. Zobrazí sa iba raz."
+
+#: src/features/status/MonitorDialog.tsx
+msgid "You get the address your alerting calls when you save, for Alertmanager, Grafana or your own script. It is shown only once."
+msgstr "Po uložení získate adresu, ktorú volá váš systém upozornení, pre Alertmanager, Grafanu alebo váš skript. Zobrazí sa iba raz."
 
 #: src/features/auth/CreateWorkspace.tsx
 msgid "You have created as many workspaces as this server allows. Delete one you no longer use, or ask to be invited to another."
@@ -15458,10 +16050,6 @@ msgstr "Zatiaľ ste nenapísali do žiadnej diskusie."
 #: src/features/inbox/SidePanels.tsx
 msgid "You have read every mention."
 msgstr "Prečítali ste všetky zmienky."
-
-#: src/features/inbox/ChatList.tsx
-msgid "You have read everything."
-msgstr "Prečítali ste všetko."
 
 #: src/features/auth/DeleteAccountButton.tsx
 msgid "You leave every workspace and lose your sign-ins, passkeys and notifications. Messages you wrote stay in their conversations, shown as from a deleted member. This cannot be undone."
@@ -15483,6 +16071,10 @@ msgstr "Začali ste ju"
 msgid "You will no longer be able to sign in with it."
 msgstr "Už sa s ním nebudete môcť prihlásiť."
 
+#: src/features/docs/PagesTab.tsx
+msgid "You write and host them. Yuva adds a rating and a discussion under each page and shows the results here."
+msgstr "Píšete a hostujete ich sami. Yuva pod každú stránku pridá hodnotenie a diskusiu a výsledky ukáže tu."
+
 #: src/features/auth/SignInForm.tsx
 msgid "you@company.com"
 msgstr "vy@firma.sk"
@@ -15503,7 +16095,7 @@ msgstr "Váš účet"
 msgid "Your admin allowed Yuva"
 msgstr "Váš správca povolil Yuvu"
 
-#: src/features/contact/ContactPage.tsx
+#: src/features/contact/ContactDetail.tsx
 msgid "Your app or widget sends these when it identifies the contact."
 msgstr "Vaša aplikácia alebo widget ich posiela, keď identifikuje kontakt."
 

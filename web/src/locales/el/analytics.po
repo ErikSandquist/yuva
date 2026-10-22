@@ -409,6 +409,7 @@ msgid "Break down by prop"
 msgstr "Ανάλυση ανά παράμετρο"
 
 #: src/features/analytics/Goals.tsx
+#: src/features/analytics/Overview.tsx
 msgid "Breakdown"
 msgstr "Ανάλυση"
 
@@ -1360,6 +1361,7 @@ msgstr "Βάση δεδομένων τοποθεσιών"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
 #: src/features/analytics/Sharing.tsx
 msgid "Locations"
 msgstr "Τοποθεσίες"
@@ -1469,6 +1471,10 @@ msgstr "Νέο {kind}: {value} με {count}, κανένα στις συγκρι�
 msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."
 msgstr "Νέο {kind}: {value}. {metric}: {now}, κανένα στις συγκρινόμενες ημέρες."
 
+#: src/features/analytics/Overview.tsx
+msgid "New and returning"
+msgstr "Νέοι και επιστρέφοντες"
+
 #: src/features/analytics/Funnels.tsx
 msgid "New funnel"
 msgstr "Νέα χοάνη"
@@ -1509,6 +1515,10 @@ msgstr "Χωρίς σύγκριση"
 #: src/features/analytics/Settings.tsx
 msgid "No consent features are offered."
 msgstr "Δεν προσφέρονται λειτουργίες συναίνεσης."
+
+#: src/features/analytics/Overview.tsx
+msgid "No consented visitors in this range."
+msgstr "Κανένας επισκέπτης που συναίνεσε σε αυτό το διάστημα."
 
 #: src/features/analytics/Retention.tsx
 msgid "No consented visitors yet"
@@ -2086,6 +2096,7 @@ msgid "Requests with Do Not Track or Global Privacy Control, and events without 
 msgstr "Αιτήματα με Do Not Track ή Global Privacy Control, και συμβάντα χωρίς συναίνεση σε ιδιότητα που τη χρειάζεται, γίνονται δεκτά αλλά δεν αποθηκεύονται ούτε μετρώνται εδώ."
 
 #: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Overview.tsx
 msgid "Retention"
 msgstr "Διατήρηση"
 

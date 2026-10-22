@@ -409,6 +409,7 @@ msgid "Break down by prop"
 msgstr "Del opp etter prop"
 
 #: src/features/analytics/Goals.tsx
+#: src/features/analytics/Overview.tsx
 msgid "Breakdown"
 msgstr "Oppdeling"
 
@@ -1360,6 +1361,7 @@ msgstr "Stedsdatabase"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
 #: src/features/analytics/Sharing.tsx
 msgid "Locations"
 msgstr "Steder"
@@ -1469,6 +1471,10 @@ msgstr "Ny {kind}: {value} med {count}, ingen i de sammenlignede dagene."
 msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."
 msgstr "Ny {kind}: {value}. {metric}: {now}, ingen i de sammenlignede dagene."
 
+#: src/features/analytics/Overview.tsx
+msgid "New and returning"
+msgstr "Nye og tilbakevendende"
+
 #: src/features/analytics/Funnels.tsx
 msgid "New funnel"
 msgstr "Ny trakt"
@@ -1509,6 +1515,10 @@ msgstr "Ingen sammenligning"
 #: src/features/analytics/Settings.tsx
 msgid "No consent features are offered."
 msgstr "Ingen samtykkefunksjoner tilbys."
+
+#: src/features/analytics/Overview.tsx
+msgid "No consented visitors in this range."
+msgstr "Ingen besøkende har samtykket i dette området."
 
 #: src/features/analytics/Retention.tsx
 msgid "No consented visitors yet"
@@ -2086,6 +2096,7 @@ msgid "Requests with Do Not Track or Global Privacy Control, and events without 
 msgstr "Forespørsler med Do Not Track eller Global Privacy Control, og hendelser uten samtykke på en property som trenger det, tas imot, men verken lagres eller telles her."
 
 #: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Overview.tsx
 msgid "Retention"
 msgstr "Oppbevaring"
 

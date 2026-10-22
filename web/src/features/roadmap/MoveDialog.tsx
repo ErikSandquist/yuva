@@ -13,9 +13,11 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { Textarea } from "@/components/ui/textarea"
-import { progressOf, useMoveStage } from "@/features/roadmap/queries"
-import { ChoiceSelect, Field } from "@/features/settings/ui"
+import { progressOf, useLinkedFeedback, useMoveStage } from "@/features/roadmap/queries"
+import { STAGE_DOT } from "@/features/roadmap/stages"
+import { Field } from "@/features/settings/ui"
 import type { Discussion, IdeaStage } from "@/lib/api"
+import { cn } from "@/lib/utils"
 
 export function MoveDialog({
   idea,
@@ -31,14 +33,19 @@ export function MoveDialog({
   const { t } = useLingui()
   const text = useEnumText()
   const move = useMoveStage(idea.id)
+  const linkedList = useLinkedFeedback(idea.id)
   const [to, setTo] = useState(initial)
   const [comment, setComment] = useState("")
-  const linked = idea.linked_count ?? 0
+  const items = linkedList.data?.pages.flatMap((p) => p.items) ?? []
+  const loaded = !linkedList.isPending && !linkedList.hasNextPage
+  const linked = loaded ? items.length : (idea.linked_count ?? 0)
+  const target = to in progressOf ? progressOf[to as keyof typeof progressOf] : undefined
+  const gets = items.filter((c) => c.feedback?.progress !== target).length
   const title = idea.title
-  const progress = to in progressOf ? text.progress[progressOf[to as keyof typeof progressOf]] : ""
+  const progress = target ? text.progress[target] : ""
   return (
     <Dialog open onOpenChange={(o) => !o && !move.isPending && onClose()}>
-      <DialogContent data-testid="move-dialog">
+      <DialogContent className="sm:max-w-xl" data-testid="move-dialog">
         <form
           className="flex flex-col gap-5"
           onSubmit={(e) => {
@@ -60,25 +67,53 @@ export function MoveDialog({
             <DialogTitle>
               <Trans>Move “{title}”</Trans>
             </DialogTitle>
-            <DialogDescription>
-              {progress && linked > 0 ? (
-                <Trans>
-                  Every linked feedback that does not have it yet gets the progress {progress}. Linked feedback:{" "}
-                  {linked}
-                </Trans>
-              ) : (
+            <DialogDescription data-testid="move-effect">
+              {linked === 0 ? (
+                <Trans>No feedback is linked to this idea yet.</Trans>
+              ) : !progress ? (
                 <Trans>The progress of the linked feedback does not change. Linked feedback: {linked}</Trans>
+              ) : !loaded ? null : (
+                <>
+                  <Trans>
+                    Linked feedback that gets the progress {progress}: {gets} of {linked}.
+                  </Trans>
+                  {gets < linked && (
+                    <>
+                      {" "}
+                      <Trans>The rest already have it.</Trans>
+                    </>
+                  )}
+                </>
               )}
             </DialogDescription>
           </DialogHeader>
           <Field label={<Trans>Stage</Trans>} htmlFor="move-stage">
-            <ChoiceSelect
+            <div
               id="move-stage"
-              value={to}
-              onChange={setTo}
-              options={IDEA_STAGES.map((s) => [s, text.stage[s]] as const)}
-              label={t`Stage`}
-            />
+              role="radiogroup"
+              aria-label={t`Stage`}
+              className="grid grid-cols-5 gap-1.5 phone:grid-cols-3"
+            >
+              {IDEA_STAGES.map((s) => (
+                <Button
+                  key={s}
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  role="radio"
+                  aria-checked={s === to}
+                  className={cn(
+                    "min-w-0 gap-1.5 rounded-lg px-1.5 font-normal",
+                    s === to && "border-foreground bg-muted font-medium"
+                  )}
+                  onClick={() => setTo(s)}
+                  data-testid={`move-stage-${s}`}
+                >
+                  <span aria-hidden className={cn("size-[7px] shrink-0 rounded-full", STAGE_DOT[s])} />
+                  {text.stage[s]}
+                </Button>
+              ))}
+            </div>
           </Field>
           <Field
             label={<Trans>Comment (optional)</Trans>}

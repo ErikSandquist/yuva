@@ -43,7 +43,9 @@ function Record({
   valueLabel,
   value,
   id,
+  tag,
 }: {
+  tag?: React.ReactNode
   title: React.ReactNode
   nameLabel: React.ReactNode
   name: string
@@ -53,7 +55,10 @@ function Record({
 }) {
   return (
     <div className="flex min-w-0 flex-col gap-2.5 rounded-xl border p-3.5" data-testid={`status-domain-${id}`}>
-      <p className="text-body font-medium">{title}</p>
+      <p className="flex items-center justify-between gap-2 text-body font-medium">
+        {title}
+        {tag}
+      </p>
       <div className="flex min-w-0 flex-col gap-1.5">
         <p className="text-small text-faint">{nameLabel}</p>
         <CodeLine value={name} />
@@ -205,6 +210,14 @@ function Added({ page, d }: { page: StatusPage; d: StatusCustomDomain }) {
     d.state === "verified" && (d.certificates === "ask" || (cf?.status === "active" && cf?.ssl_status === "active"))
   const last = d.checked_at ? formatRelative(d.checked_at, i18n.locale) : null
   const next = !ended && d.next_check_at ? formatRelative(d.next_check_at, i18n.locale) : null
+  const found =
+    d.state === "verified" ? (
+      <StatusTag tone="success">{t`Found`}</StatusTag>
+    ) : d.state === "failed" ? (
+      <StatusTag tone="danger">{t`Not found`}</StatusTag>
+    ) : (
+      <StatusTag tone="warning">{t`Waiting`}</StatusTag>
+    )
   const tags = {
     pending: <StatusTag tone="warning">{t`Waiting for DNS`}</StatusTag>,
     verified: <StatusTag tone="success">{t`Verified`}</StatusTag>,
@@ -292,6 +305,7 @@ function Added({ page, d }: { page: StatusPage; d: StatusCustomDomain }) {
           <>
             <Record
               id="cname"
+              tag={found}
               title={<Trans>CNAME record</Trans>}
               nameLabel={<Trans>Name</Trans>}
               name={d.domain}
@@ -300,6 +314,7 @@ function Added({ page, d }: { page: StatusPage; d: StatusCustomDomain }) {
             />
             <Record
               id="txt"
+              tag={found}
               title={<Trans>TXT record</Trans>}
               nameLabel={<Trans>Name</Trans>}
               name={d.txt_name}

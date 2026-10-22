@@ -7,7 +7,7 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: nb\n"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 msgid "{published} of {total} entries published"
 msgstr "{published} av {total} innlegg publisert"
 
@@ -41,8 +41,13 @@ msgid "All"
 msgstr "Alle"
 
 #: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/pages.tsx
 msgid "All labels"
 msgstr "Alle etiketter"
+
+#: src/features/changelog/pages.tsx
+msgid "All languages"
+msgstr "Alle språk"
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "Analytics property"
@@ -80,6 +85,7 @@ msgstr "Endre tidspunktet"
 msgid "Changelog"
 msgstr "Endringslogg"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "Changelogs"
 msgstr "Endringslogger"
@@ -88,16 +94,21 @@ msgstr "Endringslogger"
 msgid "Choose a picture"
 msgstr "Velg et bilde"
 
+#: src/features/changelog/pages.tsx
+msgid "Clear filters"
+msgstr "Fjern filtre"
+
 #: src/features/changelog/SettingsTab.tsx
 msgid "Counts page views of the changelog without cookies."
 msgstr "Teller sidevisninger av endringsloggen uten informasjonskapsler."
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/CreateChangelogDialog.tsx
 #: src/features/changelog/pages.tsx
 msgid "Create changelog"
 msgstr "Opprett endringslogg"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "Create changelog ({createKey})"
 msgstr "Opprett endringslogg ({createKey})"
@@ -162,6 +173,11 @@ msgstr "Utkastn er indsendt. En ejer eller administrator kan publisere den."
 msgid "Drafts"
 msgstr "Utkast"
 
+#: src/features/changelog/ChangelogsPage.tsx
+msgid "Each product has one changelog. Owners and admins create and publish them."
+msgstr "Hvert produkt har en endringslogg. Eiere og administratorer oppretter og publiserer den."
+
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "Entries"
 msgstr "Innlegg"
@@ -173,6 +189,14 @@ msgstr "Innlegg og oversettelser slettes sammen med den."
 #: src/features/changelog/SettingsTab.tsx
 msgid "Entries can be written and published in these languages. Visitors see their own when it exists."
 msgstr "Innlegg kan skrives og publiseres på disse språkene. Besøkende ser sitt eget når det finnes."
+
+#: src/features/changelog/pages.tsx
+msgid "Entries show on the public page once they are published."
+msgstr "Innlegg vises på den offentlige siden når de er publisert."
+
+#: src/features/changelog/pages.tsx
+msgid "Entries you have not published yet show up here."
+msgstr "Innlegg du ikke har publisert ennå, vises her."
 
 #: src/features/changelog/EntryEditor.tsx
 msgid "Every translation is deleted. Broadcasts made from it stay."
@@ -208,6 +232,7 @@ msgid "Keep mine"
 msgstr "Behold min"
 
 #: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/pages.tsx
 msgid "Label"
 msgstr "Etikett"
 
@@ -219,9 +244,11 @@ msgstr "Etiketter"
 #: src/features/changelog/EntriesTab.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/MailDialog.tsx
+#: src/features/changelog/pages.tsx
 msgid "Language"
 msgstr "Språk"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/SettingsTab.tsx
 msgid "Languages"
 msgstr "Språk"
@@ -248,6 +275,10 @@ msgid "Main language"
 msgstr "Hovedsprog"
 
 #: src/features/changelog/EntryEditor.tsx
+msgid "Mark up to date"
+msgstr "Merk som oppdatert"
+
+#: src/features/changelog/EntryEditor.tsx
 msgid "More"
 msgstr "Mere"
 
@@ -272,7 +303,7 @@ msgstr "Nytt innlegg"
 msgid "New post ({newKey})"
 msgstr "Nytt innlegg ({newKey})"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 msgid "No changelog yet. Owners and admins create it."
 msgstr "Ingen endringslogg ennå. Eiere og administratorer oppretter den."
 
@@ -281,12 +312,9 @@ msgid "No entries yet. Tell your customers what changed in your latest release."
 msgstr "Ingen innlegg ennå. Fortell kundene dine hva som ble endret i den siste versjonen."
 
 #: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/pages.tsx
 msgid "No entry matches."
 msgstr "Ingen innlegg samsvarer."
-
-#: src/features/changelog/ChangelogColumn.tsx
-msgid "No inbox to show a changelog for."
-msgstr "Ingen innboks å vise en endringslogg for."
 
 #: src/features/changelog/EntriesTab.tsx
 msgid "No text yet."
@@ -340,6 +368,10 @@ msgstr "Del af denne oversættelses webadresse. Laves af titlen, når den er tom
 msgid "Pick a time in the next year, in your time zone, {zone}."
 msgstr "Velg et tidspunkt i det kommende året, i din tidssone, {zone}."
 
+#: src/features/changelog/pages.tsx
+msgid "Pick a time when you write an entry and it goes public by itself."
+msgstr "Velg et tidspunkt når du skriver et innlegg, så går det ut av seg selv."
+
 #: src/features/changelog/MailDialog.tsx
 msgid "Pick up to 10 lists of this inbox."
 msgstr "Velg opptil 10 lister i denne innboksen."
@@ -348,6 +380,7 @@ msgstr "Velg opptil 10 lister i denne innboksen."
 msgid "Picture"
 msgstr "Bilde"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 #: src/features/changelog/PreviewDialog.tsx
@@ -370,6 +403,7 @@ msgstr "Forhåndsvisning av innlegget"
 msgid "Public address"
 msgstr "Offentlig adresse"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 msgid "Publish"
@@ -380,11 +414,19 @@ msgstr "Publiser"
 msgid "Publish ({publishKey})"
 msgstr "Publiser ({publishKey})"
 
+#: src/features/changelog/pages.tsx
+msgid "Publish it now or schedule it again."
+msgstr "Publiser det nå, eller planlegg det på nytt."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Publish now"
+msgstr "Publiser nå"
+
 #: src/features/changelog/ScheduleDialog.tsx
 msgid "Publish on"
 msgstr "Publiser den"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 #: src/features/changelog/text.tsx
@@ -393,6 +435,7 @@ msgstr "Publisert"
 
 #: src/features/changelog/EntriesTab.tsx
 #: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
 msgid "Publishing on schedule failed."
 msgstr "Den planlagte publiseringen mislyktes."
 
@@ -403,6 +446,10 @@ msgstr "Utgivelsesnotater som vises i produktene dine og på nettet"
 #: src/features/changelog/EntryEditor.tsx
 msgid "Remove"
 msgstr "Fjern"
+
+#: src/features/changelog/pages.tsx
+msgid "Review"
+msgstr "Gå gjennom"
 
 #: src/features/changelog/EntryEditor.tsx
 msgid "Save now"
@@ -422,23 +469,33 @@ msgstr "Lagrer …"
 msgid "Schedule"
 msgstr "Planlegg"
 
+#: src/features/changelog/EntryEditor.tsx
+msgid "Schedule again"
+msgstr "Planlegg på nytt"
+
 #: src/features/changelog/ScheduleDialog.tsx
 msgid "Schedule this entry"
 msgstr "Planlegg dette innlegget"
 
 #: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
 #: src/features/changelog/text.tsx
 msgid "Scheduled"
 msgstr "Planlagt"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 msgid "Scheduled: {scheduled}"
 msgstr "Planlagt: {scheduled}"
+
+#: src/features/changelog/pages.tsx
+msgid "Search entries"
+msgstr "Søk i innlegg"
 
 #: src/features/changelog/MailDialog.tsx
 msgid "Send through"
 msgstr "Send via"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "Settings"
 msgstr "Innstillinger"
@@ -446,6 +503,10 @@ msgstr "Innstillinger"
 #: src/features/changelog/EntryEditor.tsx
 msgid "Show"
 msgstr "Vis"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Show the original"
+msgstr "Vis originalen"
 
 #: src/features/changelog/EntriesTab.tsx
 msgid "Shown in the chat bubble, the apps and on {host}."
@@ -482,6 +543,10 @@ msgstr "Indsend kladde"
 #: src/features/changelog/EntryEditor.tsx
 msgid "Submit draft ({publishKey})"
 msgstr "Indsend kladde ({publishKey})"
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Subscribed: {subscribed}"
+msgstr "Abonnenter: {subscribed}"
 
 #: src/features/changelog/CreateChangelogDialog.tsx
 msgid "Tell the customers of {inboxName} what is new, improved and fixed. It stays unpublished until you publish it."
@@ -527,6 +592,10 @@ msgstr "Hovedspråket har ennå ingen tekst for dette innlegget."
 msgid "The member who scheduled it may no longer publish."
 msgstr "Medlemmet som planla det, kan kanskje ikke lenger publisere."
 
+#: src/features/changelog/EntryEditor.tsx
+msgid "The original changed after this translation was saved."
+msgstr "Originalen ble endret etter at denne oversettelsen ble lagret."
+
 #: src/features/changelog/PreviewDialog.tsx
 msgid "The page as visitors would see it, drafts included. Only your team sees this."
 msgstr "Siden slik besøkende ville sett den, med utkast. Bare teamet ditt ser dette."
@@ -534,6 +603,11 @@ msgstr "Siden slik besøkende ville sett den, med utkast. Bare teamet ditt ser d
 #: src/features/changelog/EntryEditor.tsx
 msgid "The title needs at least 3 characters"
 msgstr "Titlen skal være mindst 3 tegn"
+
+#. placeholder {0}: formatDateTime(entry.publish_at, i18n.locale)
+#: src/features/changelog/EntryEditor.tsx
+msgid "This entry is scheduled for {0}."
+msgstr "Dette innlegget er planlagt til {0}."
 
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/text.tsx
@@ -569,6 +643,11 @@ msgstr "Tittel"
 msgid "Translation deleted"
 msgstr "Oversættelsen er slettet"
 
+#: src/features/changelog/pages.tsx
+msgid "Try another word, label or language."
+msgstr "Prøv et annet ord, en annen etikett eller et annet språk."
+
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 msgid "Unpublish"
@@ -582,9 +661,8 @@ msgstr "Trekk tilbake ({publishKey})"
 msgid "Unpublish this entry?"
 msgstr "Trekke dette innlegget tilbake?"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
-#: src/features/changelog/pages.tsx
 msgid "Unpublished"
 msgstr "Upublisert"
 
@@ -616,11 +694,12 @@ msgstr "Brug deres version"
 msgid "View"
 msgstr "Vis"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "View changelog"
 msgstr "Se endringsloggen"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntriesTab.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
@@ -638,6 +717,10 @@ msgstr "Skriv"
 #: src/features/changelog/text.tsx
 msgid "Write the entry in the main language before publishing."
 msgstr "Skriv innlegget på hovedspråket før du publiserer."
+
+#: src/features/changelog/pages.tsx
+msgid "Write the first entry with New post."
+msgstr "Skriv det første innlegget med Nytt innlegg."
 
 #: src/features/changelog/EntryEditor.tsx
 msgid "Write what changed in Markdown…"

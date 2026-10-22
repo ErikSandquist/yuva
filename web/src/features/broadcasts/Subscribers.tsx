@@ -82,10 +82,7 @@ export function Subscribers({ list }: { list: MailingList }) {
   const subs = useSubscriptions(list.id, state, q)
   const items = subs.data?.pages.flatMap((p) => p.items) ?? []
   const filtered = !!state || !!q
-  useHotkeys(
-    { [STATUS_KEYS.addSubscriber]: () => setAdding(true) },
-    status && canManage && !list.archived_at && !adding && !open
-  )
+  useHotkeys({ [STATUS_KEYS.addSubscriber]: () => setAdding(true) }, canManage && !list.archived_at && !adding && !open)
   return (
     <Section
       title={<Trans>Subscribers</Trans>}

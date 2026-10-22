@@ -106,13 +106,22 @@ function NewIdea({ c, onClose, onBack }: { c: Conversation; onClose: () => void;
   )
 }
 
-export default function LinkIdeaDialog({ c, onClose }: { c: Conversation; onClose: () => void }) {
+export default function LinkIdeaDialog({
+  c,
+  onClose,
+  startNew = false,
+}: {
+  c: Conversation
+  onClose: () => void
+  startNew?: boolean
+}) {
   const { t } = useLingui()
   const text = useEnumText()
   const boards = useBoards()
   const board = boardOfInbox(boards.data, c.inbox_id)
   const [q, setQ] = useState("")
-  const [creating, setCreating] = useState(false)
+  const navigate = useNavigate()
+  const [creating, setCreating] = useState(startNew)
   const [error, setError] = useState<unknown>(null)
   const [search, setSearch] = useState("")
   useEffect(() => {
@@ -133,14 +142,17 @@ export default function LinkIdeaDialog({ c, onClose }: { c: Conversation; onClos
       className="top-[14vh] w-[560px] max-w-[calc(100%-32px)] gap-0 rounded-[18px]! border bg-card p-0 shadow-[0_30px_80px_-20px_rgb(0_0_0/0.35)] sm:max-w-[560px]"
     >
       <Command className="rounded-[18px]! bg-card p-0" data-testid="link-idea" loop shouldFilter={false}>
-        <CommandPrimitive.Input
-          value={q}
-          onValueChange={setQ}
-          placeholder={t`Link this feedback to an idea…`}
-          aria-label={t`Search ideas`}
-          className="w-full border-b bg-transparent px-[18px] py-4 text-base outline-none md:text-body placeholder:text-faint"
-          data-testid="link-idea-search"
-        />
+        <div className="flex items-center gap-3 border-b pe-[18px]">
+          <CommandPrimitive.Input
+            value={q}
+            onValueChange={setQ}
+            placeholder={t`Link this feedback to an idea…`}
+            aria-label={t`Search ideas`}
+            className="min-w-0 flex-1 bg-transparent px-[18px] py-4 text-base outline-none md:text-body placeholder:text-faint"
+            data-testid="link-idea-search"
+          />
+          {board && <span className="max-w-40 shrink-0 truncate text-caption text-faint">{board.name}</span>}
+        </div>
         <CommandList className="max-h-[50vh] p-1.5">
           {boards.isPending || (board && ideas.isPending) ? (
             <div className="grid gap-2 p-2">
@@ -148,9 +160,20 @@ export default function LinkIdeaDialog({ c, onClose }: { c: Conversation; onClos
               <Skeleton className="h-9 w-full" />
             </div>
           ) : !board ? (
-            <CommandEmpty className="px-6 py-10 text-faint">
+            <div className="flex flex-col items-center gap-3 px-6 py-8 text-center text-muted-foreground">
               <Trans>This inbox has no roadmap board. Create one under Roadmap first.</Trans>
-            </CommandEmpty>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  onClose()
+                  navigate("/board")
+                }}
+                data-testid="link-idea-roadmap"
+              >
+                <Trans>Open Roadmap</Trans>
+              </Button>
+            </div>
           ) : (
             <>
               {items.length === 0 && (

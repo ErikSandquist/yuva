@@ -7,7 +7,7 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: cs\n"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 msgid "{published} of {total} entries published"
 msgstr "Zveřejněno {published} ze {total} záznamů"
 
@@ -41,8 +41,13 @@ msgid "All"
 msgstr "Vše"
 
 #: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/pages.tsx
 msgid "All labels"
 msgstr "Všechny štítky"
+
+#: src/features/changelog/pages.tsx
+msgid "All languages"
+msgstr "Všechny jazyky"
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "Analytics property"
@@ -80,6 +85,7 @@ msgstr "Změnit čas"
 msgid "Changelog"
 msgstr "Seznam změn"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "Changelogs"
 msgstr "Seznamy změn"
@@ -88,16 +94,21 @@ msgstr "Seznamy změn"
 msgid "Choose a picture"
 msgstr "Vybrat obrázek"
 
+#: src/features/changelog/pages.tsx
+msgid "Clear filters"
+msgstr "Zrušit filtry"
+
 #: src/features/changelog/SettingsTab.tsx
 msgid "Counts page views of the changelog without cookies."
 msgstr "Počítá zobrazení stránek seznamu změn bez cookies."
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/CreateChangelogDialog.tsx
 #: src/features/changelog/pages.tsx
 msgid "Create changelog"
 msgstr "Vytvořit seznam změn"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "Create changelog ({createKey})"
 msgstr "Vytvořit seznam změn ({createKey})"
@@ -162,6 +173,11 @@ msgstr "Koncept odeslán. Publikovat ho může vlastník nebo správce."
 msgid "Drafts"
 msgstr "Koncepty"
 
+#: src/features/changelog/ChangelogsPage.tsx
+msgid "Each product has one changelog. Owners and admins create and publish them."
+msgstr "Každý produkt má seznam změn. Vlastníci a správci jej vytvářejí a publikují."
+
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "Entries"
 msgstr "Záznamy"
@@ -173,6 +189,14 @@ msgstr "Záznamy a překlady se smažou s ním."
 #: src/features/changelog/SettingsTab.tsx
 msgid "Entries can be written and published in these languages. Visitors see their own when it exists."
 msgstr "Záznamy lze psát a zveřejňovat v těchto jazycích. Návštěvníci vidí svůj jazyk, pokud existuje."
+
+#: src/features/changelog/pages.tsx
+msgid "Entries show on the public page once they are published."
+msgstr "Příspěvky se zobrazí na veřejné stránce po zveřejnění."
+
+#: src/features/changelog/pages.tsx
+msgid "Entries you have not published yet show up here."
+msgstr "Příspěvky, které jste ještě nezveřejnili, se zobrazí zde."
 
 #: src/features/changelog/EntryEditor.tsx
 msgid "Every translation is deleted. Broadcasts made from it stay."
@@ -208,6 +232,7 @@ msgid "Keep mine"
 msgstr "Ponechat moji"
 
 #: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/pages.tsx
 msgid "Label"
 msgstr "Štítek"
 
@@ -219,9 +244,11 @@ msgstr "Štítky"
 #: src/features/changelog/EntriesTab.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/MailDialog.tsx
+#: src/features/changelog/pages.tsx
 msgid "Language"
 msgstr "Jazyk"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/SettingsTab.tsx
 msgid "Languages"
 msgstr "Jazyky"
@@ -248,6 +275,10 @@ msgid "Main language"
 msgstr "Hlavní jazyk"
 
 #: src/features/changelog/EntryEditor.tsx
+msgid "Mark up to date"
+msgstr "Označit jako aktuální"
+
+#: src/features/changelog/EntryEditor.tsx
 msgid "More"
 msgstr "Více"
 
@@ -272,7 +303,7 @@ msgstr "Nový příspěvek"
 msgid "New post ({newKey})"
 msgstr "Nový příspěvek ({newKey})"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 msgid "No changelog yet. Owners and admins create it."
 msgstr "Zatím žádný seznam změn. Vytvářejí ho vlastníci a správci."
 
@@ -281,12 +312,9 @@ msgid "No entries yet. Tell your customers what changed in your latest release."
 msgstr "Zatím žádné záznamy. Řekněte zákazníkům, co se změnilo v poslední verzi."
 
 #: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/pages.tsx
 msgid "No entry matches."
 msgstr "Žádný záznam neodpovídá."
-
-#: src/features/changelog/ChangelogColumn.tsx
-msgid "No inbox to show a changelog for."
-msgstr "Žádná schránka, pro kterou by šel zobrazit seznam změn."
 
 #: src/features/changelog/EntriesTab.tsx
 msgid "No text yet."
@@ -340,6 +368,10 @@ msgstr "Část webové adresy tohoto překladu. Je-li prázdná, vytvoří se z 
 msgid "Pick a time in the next year, in your time zone, {zone}."
 msgstr "Vyberte čas v příštím roce, ve svém časovém pásmu, {zone}."
 
+#: src/features/changelog/pages.tsx
+msgid "Pick a time when you write an entry and it goes public by itself."
+msgstr "Při psaní příspěvku vyberte čas a zveřejní se sám."
+
 #: src/features/changelog/MailDialog.tsx
 msgid "Pick up to 10 lists of this inbox."
 msgstr "Vyberte nejvýše 10 seznamů této schránky."
@@ -348,6 +380,7 @@ msgstr "Vyberte nejvýše 10 seznamů této schránky."
 msgid "Picture"
 msgstr "Obrázek"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 #: src/features/changelog/PreviewDialog.tsx
@@ -370,6 +403,7 @@ msgstr "Náhled záznamu"
 msgid "Public address"
 msgstr "Veřejná adresa"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 msgid "Publish"
@@ -380,11 +414,19 @@ msgstr "Zveřejnit"
 msgid "Publish ({publishKey})"
 msgstr "Zveřejnit ({publishKey})"
 
+#: src/features/changelog/pages.tsx
+msgid "Publish it now or schedule it again."
+msgstr "Zveřejněte jej hned, nebo naplánujte znovu."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Publish now"
+msgstr "Zveřejnit hned"
+
 #: src/features/changelog/ScheduleDialog.tsx
 msgid "Publish on"
 msgstr "Zveřejnit"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 #: src/features/changelog/text.tsx
@@ -393,6 +435,7 @@ msgstr "Zveřejněná"
 
 #: src/features/changelog/EntriesTab.tsx
 #: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
 msgid "Publishing on schedule failed."
 msgstr "Naplánované zveřejnění se nezdařilo."
 
@@ -403,6 +446,10 @@ msgstr "Poznámky k vydání zobrazené ve vašich produktech a na webu"
 #: src/features/changelog/EntryEditor.tsx
 msgid "Remove"
 msgstr "Odebrat"
+
+#: src/features/changelog/pages.tsx
+msgid "Review"
+msgstr "Zkontrolovat"
 
 #: src/features/changelog/EntryEditor.tsx
 msgid "Save now"
@@ -422,23 +469,33 @@ msgstr "Ukládá se…"
 msgid "Schedule"
 msgstr "Naplánovat"
 
+#: src/features/changelog/EntryEditor.tsx
+msgid "Schedule again"
+msgstr "Naplánovat znovu"
+
 #: src/features/changelog/ScheduleDialog.tsx
 msgid "Schedule this entry"
 msgstr "Naplánovat tento záznam"
 
 #: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
 #: src/features/changelog/text.tsx
 msgid "Scheduled"
 msgstr "Naplánováno"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 msgid "Scheduled: {scheduled}"
 msgstr "Naplánováno: {scheduled}"
+
+#: src/features/changelog/pages.tsx
+msgid "Search entries"
+msgstr "Hledat příspěvky"
 
 #: src/features/changelog/MailDialog.tsx
 msgid "Send through"
 msgstr "Odeslat přes"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "Settings"
 msgstr "Nastavení"
@@ -446,6 +503,10 @@ msgstr "Nastavení"
 #: src/features/changelog/EntryEditor.tsx
 msgid "Show"
 msgstr "Zobrazit"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Show the original"
+msgstr "Zobrazit originál"
 
 #: src/features/changelog/EntriesTab.tsx
 msgid "Shown in the chat bubble, the apps and on {host}."
@@ -482,6 +543,10 @@ msgstr "Odeslat koncept"
 #: src/features/changelog/EntryEditor.tsx
 msgid "Submit draft ({publishKey})"
 msgstr "Odeslat koncept ({publishKey})"
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Subscribed: {subscribed}"
+msgstr "Odběratelé: {subscribed}"
 
 #: src/features/changelog/CreateChangelogDialog.tsx
 msgid "Tell the customers of {inboxName} what is new, improved and fixed. It stays unpublished until you publish it."
@@ -527,6 +592,10 @@ msgstr "Hlavní jazyk zatím nemá text tohoto záznamu."
 msgid "The member who scheduled it may no longer publish."
 msgstr "Člen, který ho naplánoval, už možná nesmí zveřejňovat."
 
+#: src/features/changelog/EntryEditor.tsx
+msgid "The original changed after this translation was saved."
+msgstr "Originál se změnil po uložení tohoto překladu."
+
 #: src/features/changelog/PreviewDialog.tsx
 msgid "The page as visitors would see it, drafts included. Only your team sees this."
 msgstr "Stránka tak, jak by ji viděli návštěvníci, včetně konceptů. Vidí to jen váš tým."
@@ -534,6 +603,11 @@ msgstr "Stránka tak, jak by ji viděli návštěvníci, včetně konceptů. Vid
 #: src/features/changelog/EntryEditor.tsx
 msgid "The title needs at least 3 characters"
 msgstr "Název musí mít alespoň 3 znaky"
+
+#. placeholder {0}: formatDateTime(entry.publish_at, i18n.locale)
+#: src/features/changelog/EntryEditor.tsx
+msgid "This entry is scheduled for {0}."
+msgstr "Tento příspěvek je naplánován na {0}."
 
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/text.tsx
@@ -569,6 +643,11 @@ msgstr "Název"
 msgid "Translation deleted"
 msgstr "Překlad smazán"
 
+#: src/features/changelog/pages.tsx
+msgid "Try another word, label or language."
+msgstr "Zkuste jiné slovo, štítek nebo jazyk."
+
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 msgid "Unpublish"
@@ -582,9 +661,8 @@ msgstr "Stáhnout ({publishKey})"
 msgid "Unpublish this entry?"
 msgstr "Stáhnout tento záznam?"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
-#: src/features/changelog/pages.tsx
 msgid "Unpublished"
 msgstr "Nezveřejněná"
 
@@ -616,11 +694,12 @@ msgstr "Použít jejich verzi"
 msgid "View"
 msgstr "Zobrazit"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "View changelog"
 msgstr "Zobrazit seznam změn"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntriesTab.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
@@ -638,6 +717,10 @@ msgstr "Psát"
 #: src/features/changelog/text.tsx
 msgid "Write the entry in the main language before publishing."
 msgstr "Před zveřejněním napište záznam v hlavním jazyce."
+
+#: src/features/changelog/pages.tsx
+msgid "Write the first entry with New post."
+msgstr "Napište první příspěvek tlačítkem Nový příspěvek."
 
 #: src/features/changelog/EntryEditor.tsx
 msgid "Write what changed in Markdown…"

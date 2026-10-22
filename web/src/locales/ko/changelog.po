@@ -7,7 +7,7 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: ko\n"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 msgid "{published} of {total} entries published"
 msgstr "항목 {total}개 중 {published}개 게시됨"
 
@@ -41,8 +41,13 @@ msgid "All"
 msgstr "전체"
 
 #: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/pages.tsx
 msgid "All labels"
 msgstr "모든 레이블"
+
+#: src/features/changelog/pages.tsx
+msgid "All languages"
+msgstr "모든 언어"
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "Analytics property"
@@ -80,6 +85,7 @@ msgstr "시간 변경"
 msgid "Changelog"
 msgstr "변경 내역"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "Changelogs"
 msgstr "변경 로그"
@@ -88,16 +94,21 @@ msgstr "변경 로그"
 msgid "Choose a picture"
 msgstr "이미지 선택"
 
+#: src/features/changelog/pages.tsx
+msgid "Clear filters"
+msgstr "필터 지우기"
+
 #: src/features/changelog/SettingsTab.tsx
 msgid "Counts page views of the changelog without cookies."
 msgstr "쿠키 없이 변경 내역의 페이지 조회수를 집계합니다."
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/CreateChangelogDialog.tsx
 #: src/features/changelog/pages.tsx
 msgid "Create changelog"
 msgstr "변경 내역 만들기"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "Create changelog ({createKey})"
 msgstr "변경 로그 만들기 ({createKey})"
@@ -162,6 +173,11 @@ msgstr "초안을 제출했습니다. 소유자 또는 관리자가 게시할 �
 msgid "Drafts"
 msgstr "초안"
 
+#: src/features/changelog/ChangelogsPage.tsx
+msgid "Each product has one changelog. Owners and admins create and publish them."
+msgstr "제품마다 변경 내역이 하나 있습니다. 소유자와 관리자가 만들고 게시합니다."
+
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "Entries"
 msgstr "항목"
@@ -173,6 +189,14 @@ msgstr "항목과 번역도 함께 삭제됩니다."
 #: src/features/changelog/SettingsTab.tsx
 msgid "Entries can be written and published in these languages. Visitors see their own when it exists."
 msgstr "이 언어들로 항목을 쓰고 게시할 수 있습니다. 방문자에게는 있으면 자신의 언어가 보입니다."
+
+#: src/features/changelog/pages.tsx
+msgid "Entries show on the public page once they are published."
+msgstr "항목은 게시되면 공개 페이지에 표시됩니다."
+
+#: src/features/changelog/pages.tsx
+msgid "Entries you have not published yet show up here."
+msgstr "아직 게시하지 않은 항목이 여기에 표시됩니다."
 
 #: src/features/changelog/EntryEditor.tsx
 msgid "Every translation is deleted. Broadcasts made from it stay."
@@ -208,6 +232,7 @@ msgid "Keep mine"
 msgstr "내 것 유지"
 
 #: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/pages.tsx
 msgid "Label"
 msgstr "레이블"
 
@@ -219,9 +244,11 @@ msgstr "레이블"
 #: src/features/changelog/EntriesTab.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/MailDialog.tsx
+#: src/features/changelog/pages.tsx
 msgid "Language"
 msgstr "언어"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/SettingsTab.tsx
 msgid "Languages"
 msgstr "언어"
@@ -248,6 +275,10 @@ msgid "Main language"
 msgstr "기본 언어"
 
 #: src/features/changelog/EntryEditor.tsx
+msgid "Mark up to date"
+msgstr "최신으로 표시"
+
+#: src/features/changelog/EntryEditor.tsx
 msgid "More"
 msgstr "더 보기"
 
@@ -272,7 +303,7 @@ msgstr "새 게시물"
 msgid "New post ({newKey})"
 msgstr "새 게시물 ({newKey})"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 msgid "No changelog yet. Owners and admins create it."
 msgstr "아직 변경 내역이 없습니다. 소유자와 관리자가 만듭니다."
 
@@ -281,12 +312,9 @@ msgid "No entries yet. Tell your customers what changed in your latest release."
 msgstr "아직 항목이 없습니다. 최신 릴리스에서 무엇이 바뀌었는지 고객에게 알려 주세요."
 
 #: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/pages.tsx
 msgid "No entry matches."
 msgstr "일치하는 항목이 없습니다."
-
-#: src/features/changelog/ChangelogColumn.tsx
-msgid "No inbox to show a changelog for."
-msgstr "변경 내역을 보여 줄 받은편지함이 없습니다."
 
 #: src/features/changelog/EntriesTab.tsx
 msgid "No text yet."
@@ -340,6 +368,10 @@ msgstr "이 번역의 웹 주소 일부입니다. 비어 있으면 제목으로 
 msgid "Pick a time in the next year, in your time zone, {zone}."
 msgstr "앞으로 1년 안의 시간을 고르세요. 사용 중인 시간대({zone}) 기준입니다."
 
+#: src/features/changelog/pages.tsx
+msgid "Pick a time when you write an entry and it goes public by itself."
+msgstr "항목을 쓸 때 시간을 고르면 저절로 공개됩니다."
+
 #: src/features/changelog/MailDialog.tsx
 msgid "Pick up to 10 lists of this inbox."
 msgstr "이 받은편지함의 목록을 최대 10개까지 고르세요."
@@ -348,6 +380,7 @@ msgstr "이 받은편지함의 목록을 최대 10개까지 고르세요."
 msgid "Picture"
 msgstr "이미지"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 #: src/features/changelog/PreviewDialog.tsx
@@ -370,6 +403,7 @@ msgstr "항목 미리 보기"
 msgid "Public address"
 msgstr "공개 주소"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 msgid "Publish"
@@ -380,11 +414,19 @@ msgstr "게시"
 msgid "Publish ({publishKey})"
 msgstr "게시({publishKey})"
 
+#: src/features/changelog/pages.tsx
+msgid "Publish it now or schedule it again."
+msgstr "지금 게시하거나 다시 예약하세요."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Publish now"
+msgstr "지금 게시"
+
 #: src/features/changelog/ScheduleDialog.tsx
 msgid "Publish on"
 msgstr "게시 일시"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 #: src/features/changelog/text.tsx
@@ -393,6 +435,7 @@ msgstr "게시됨"
 
 #: src/features/changelog/EntriesTab.tsx
 #: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
 msgid "Publishing on schedule failed."
 msgstr "예약 게시에 실패했습니다."
 
@@ -403,6 +446,10 @@ msgstr "제품과 웹에 표시되는 릴리스 노트"
 #: src/features/changelog/EntryEditor.tsx
 msgid "Remove"
 msgstr "제거"
+
+#: src/features/changelog/pages.tsx
+msgid "Review"
+msgstr "검토"
 
 #: src/features/changelog/EntryEditor.tsx
 msgid "Save now"
@@ -422,23 +469,33 @@ msgstr "저장 중…"
 msgid "Schedule"
 msgstr "예약"
 
+#: src/features/changelog/EntryEditor.tsx
+msgid "Schedule again"
+msgstr "다시 예약"
+
 #: src/features/changelog/ScheduleDialog.tsx
 msgid "Schedule this entry"
 msgstr "이 항목 예약"
 
 #: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
 #: src/features/changelog/text.tsx
 msgid "Scheduled"
 msgstr "예약됨"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 msgid "Scheduled: {scheduled}"
 msgstr "예약됨: {scheduled}"
+
+#: src/features/changelog/pages.tsx
+msgid "Search entries"
+msgstr "항목 검색"
 
 #: src/features/changelog/MailDialog.tsx
 msgid "Send through"
 msgstr "발송 경로"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "Settings"
 msgstr "설정"
@@ -446,6 +503,10 @@ msgstr "설정"
 #: src/features/changelog/EntryEditor.tsx
 msgid "Show"
 msgstr "보기"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Show the original"
+msgstr "원문 보기"
 
 #: src/features/changelog/EntriesTab.tsx
 msgid "Shown in the chat bubble, the apps and on {host}."
@@ -482,6 +543,10 @@ msgstr "초안 제출"
 #: src/features/changelog/EntryEditor.tsx
 msgid "Submit draft ({publishKey})"
 msgstr "초안 제출 ({publishKey})"
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Subscribed: {subscribed}"
+msgstr "구독자: {subscribed}"
 
 #: src/features/changelog/CreateChangelogDialog.tsx
 msgid "Tell the customers of {inboxName} what is new, improved and fixed. It stays unpublished until you publish it."
@@ -527,6 +592,10 @@ msgstr "이 항목의 기본 언어 텍스트가 아직 없습니다."
 msgid "The member who scheduled it may no longer publish."
 msgstr "예약한 멤버가 더 이상 게시할 수 없을 수 있습니다."
 
+#: src/features/changelog/EntryEditor.tsx
+msgid "The original changed after this translation was saved."
+msgstr "이 번역을 저장한 뒤 원문이 바뀌었습니다."
+
 #: src/features/changelog/PreviewDialog.tsx
 msgid "The page as visitors would see it, drafts included. Only your team sees this."
 msgstr "방문자에게 보이는 그대로의 페이지입니다. 초안도 포함됩니다. 팀만 볼 수 있습니다."
@@ -534,6 +603,11 @@ msgstr "방문자에게 보이는 그대로의 페이지입니다. 초안도 포
 #: src/features/changelog/EntryEditor.tsx
 msgid "The title needs at least 3 characters"
 msgstr "제목은 3자 이상이어야 합니다"
+
+#. placeholder {0}: formatDateTime(entry.publish_at, i18n.locale)
+#: src/features/changelog/EntryEditor.tsx
+msgid "This entry is scheduled for {0}."
+msgstr "이 항목은 {0}에 예약되어 있습니다."
 
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/text.tsx
@@ -569,6 +643,11 @@ msgstr "제목"
 msgid "Translation deleted"
 msgstr "번역을 삭제했습니다"
 
+#: src/features/changelog/pages.tsx
+msgid "Try another word, label or language."
+msgstr "다른 단어, 라벨 또는 언어로 시도해 보세요."
+
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 msgid "Unpublish"
@@ -582,9 +661,8 @@ msgstr "게시 취소({publishKey})"
 msgid "Unpublish this entry?"
 msgstr "이 항목의 게시를 취소할까요?"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
-#: src/features/changelog/pages.tsx
 msgid "Unpublished"
 msgstr "게시 안 됨"
 
@@ -616,11 +694,12 @@ msgstr "상대방 버전 사용"
 msgid "View"
 msgstr "보기"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "View changelog"
 msgstr "변경 내역 보기"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntriesTab.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
@@ -638,6 +717,10 @@ msgstr "작성"
 #: src/features/changelog/text.tsx
 msgid "Write the entry in the main language before publishing."
 msgstr "게시하기 전에 기본 언어로 항목을 쓰세요."
+
+#: src/features/changelog/pages.tsx
+msgid "Write the first entry with New post."
+msgstr "새 게시물로 첫 항목을 작성해 보세요."
 
 #: src/features/changelog/EntryEditor.tsx
 msgid "Write what changed in Markdown…"

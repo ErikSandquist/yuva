@@ -5,7 +5,8 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Switch } from "@/components/ui/switch"
 import { Textarea } from "@/components/ui/textarea"
-import { ChoiceSelect, Field, ToggleRow } from "@/features/settings/ui"
+import { Field, ToggleRow } from "@/features/settings/ui"
+import { ChoiceChips } from "@/features/status/Choice"
 import type { FieldErrors } from "@/features/status/monitorErrors"
 import type { StatusMonitorHTTPMethod } from "@/lib/api"
 
@@ -117,7 +118,34 @@ function HeadersEditor({
   )
 }
 
-export function MonitorHttpFields({
+export function HttpUrlField({
+  value,
+  onChange,
+  errors,
+}: {
+  value: HttpForm
+  onChange: (patch: Partial<HttpForm>) => void
+  errors: FieldErrors
+}) {
+  return (
+    <Field label={<Trans>Address</Trans>} htmlFor="status-monitor-url" error={errors.url}>
+      <Input
+        id="status-monitor-url"
+        type="url"
+        inputMode="url"
+        value={value.url}
+        maxLength={2000}
+        required
+        placeholder="https://example.com/health"
+        aria-invalid={!!errors.url}
+        onChange={(e) => onChange({ url: e.target.value })}
+        data-testid="status-monitor-url-input"
+      />
+    </Field>
+  )
+}
+
+export function HttpDetails({
   value,
   onChange,
   errors,
@@ -130,28 +158,13 @@ export function MonitorHttpFields({
   const num = (v: string, lo: number, hi: number) => Math.min(hi, Math.max(lo, Number(v) || lo))
   const bodyless = value.method === "GET" || value.method === "HEAD" || value.method === "OPTIONS"
   return (
-    <>
-      <Field label={<Trans>Address</Trans>} htmlFor="status-monitor-url" error={errors.url}>
-        <Input
-          id="status-monitor-url"
-          type="url"
-          inputMode="url"
-          value={value.url}
-          maxLength={2000}
-          required
-          placeholder="https://example.com/health"
-          aria-invalid={!!errors.url}
-          onChange={(e) => onChange({ url: e.target.value })}
-          data-testid="status-monitor-url-input"
-        />
-      </Field>
+    <div className="flex flex-col gap-5 rounded-xl border p-4" data-testid="status-monitor-http-details">
       <Field label={<Trans>Method</Trans>}>
-        <ChoiceSelect
+        <ChoiceChips
           value={value.method}
           onChange={(method) => onChange({ method })}
           options={HTTP_METHODS.map((m) => [m, m] as const)}
           label={t`Method`}
-          className="w-full"
         />
       </Field>
       <HeadersEditor rows={value.headers} onChange={(headers) => onChange({ headers })} error={errors.headers} />
@@ -230,6 +243,6 @@ export function MonitorHttpFields({
       >
         <Switch checked={value.follow} onCheckedChange={(follow) => onChange({ follow })} />
       </ToggleRow>
-    </>
+    </div>
   )
 }

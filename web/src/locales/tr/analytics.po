@@ -409,6 +409,7 @@ msgid "Break down by prop"
 msgstr "Özelliğe göre dök"
 
 #: src/features/analytics/Goals.tsx
+#: src/features/analytics/Overview.tsx
 msgid "Breakdown"
 msgstr "Döküm"
 
@@ -1360,6 +1361,7 @@ msgstr "Konum veritabanı"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
 #: src/features/analytics/Sharing.tsx
 msgid "Locations"
 msgstr "Konumlar"
@@ -1469,6 +1471,10 @@ msgstr "Yeni {kind}: {value}, {count}; karşılaştırılan günlerde hiç yoktu
 msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."
 msgstr "Yeni {kind}: {value}. {metric}: {now}; karşılaştırılan günlerde hiç yoktu."
 
+#: src/features/analytics/Overview.tsx
+msgid "New and returning"
+msgstr "Yeni ve geri dönen"
+
 #: src/features/analytics/Funnels.tsx
 msgid "New funnel"
 msgstr "Yeni huni"
@@ -1509,6 +1515,10 @@ msgstr "Karşılaştırma yok"
 #: src/features/analytics/Settings.tsx
 msgid "No consent features are offered."
 msgstr "Hiçbir izin özelliği sunulmuyor."
+
+#: src/features/analytics/Overview.tsx
+msgid "No consented visitors in this range."
+msgstr "Bu aralıkta izin veren ziyaretçi yok."
 
 #: src/features/analytics/Retention.tsx
 msgid "No consented visitors yet"
@@ -2086,6 +2096,7 @@ msgid "Requests with Do Not Track or Global Privacy Control, and events without 
 msgstr "Do Not Track ya da Global Privacy Control taşıyan istekler ve onay isteyen bir mülkte onaysız gelen olaylar alınır, ama ne saklanır ne de burada sayılır."
 
 #: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Overview.tsx
 msgid "Retention"
 msgstr "Geri dönüş"
 

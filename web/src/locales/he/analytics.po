@@ -409,6 +409,7 @@ msgid "Break down by prop"
 msgstr "פירוט לפי מאפיין"
 
 #: src/features/analytics/Goals.tsx
+#: src/features/analytics/Overview.tsx
 msgid "Breakdown"
 msgstr "פירוט"
 
@@ -1360,6 +1361,7 @@ msgstr "מסד נתוני מיקום"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
 #: src/features/analytics/Sharing.tsx
 msgid "Locations"
 msgstr "מיקומים"
@@ -1469,6 +1471,10 @@ msgstr "{kind} חדש: {value} עם {count}, אפס בימים שהושוו."
 msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."
 msgstr "{kind} חדש: {value}. {metric}: {now}, אפס בימים שהושוו."
 
+#: src/features/analytics/Overview.tsx
+msgid "New and returning"
+msgstr "חדשים וחוזרים"
+
 #: src/features/analytics/Funnels.tsx
 msgid "New funnel"
 msgstr "משפך חדש"
@@ -1509,6 +1515,10 @@ msgstr "ללא השוואה"
 #: src/features/analytics/Settings.tsx
 msgid "No consent features are offered."
 msgstr "לא מוצעות תכונות הסכמה."
+
+#: src/features/analytics/Overview.tsx
+msgid "No consented visitors in this range."
+msgstr "אין מבקרים שהסכימו בטווח הזה."
 
 #: src/features/analytics/Retention.tsx
 msgid "No consented visitors yet"
@@ -2086,6 +2096,7 @@ msgid "Requests with Do Not Track or Global Privacy Control, and events without 
 msgstr "בקשות עם Do Not Track או Global Privacy Control, ואירועים בלי הסכמה בנכס שדורש אותה, מתקבלים אבל לא נשמרים ולא נספרים כאן."
 
 #: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Overview.tsx
 msgid "Retention"
 msgstr "שימור"
 

@@ -409,6 +409,7 @@ msgid "Break down by prop"
 msgstr "ಪ್ರಾಪ್ ಪ್ರಕಾರ ವಿಭಜಿಸಿ"
 
 #: src/features/analytics/Goals.tsx
+#: src/features/analytics/Overview.tsx
 msgid "Breakdown"
 msgstr "ವಿಭಜನೆ"
 
@@ -1360,6 +1361,7 @@ msgstr "ಸ್ಥಳ ಡೇಟಾಬೇಸ್"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
 #: src/features/analytics/Sharing.tsx
 msgid "Locations"
 msgstr "ಸ್ಥಳಗಳು"
@@ -1469,6 +1471,10 @@ msgstr "ಹೊಸ {kind}: {value}, {count} ರೊಂದಿಗೆ, ಹೋಲಿ�
 msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."
 msgstr "ಹೊಸ {kind}: {value}. {metric}: {now}, ಹೋಲಿಸಿದ ದಿನಗಳಲ್ಲಿ ಇಲ್ಲ."
 
+#: src/features/analytics/Overview.tsx
+msgid "New and returning"
+msgstr "ಹೊಸ ಮತ್ತು ಮರಳಿದವರು"
+
 #: src/features/analytics/Funnels.tsx
 msgid "New funnel"
 msgstr "ಹೊಸ ಫನೆಲ್"
@@ -1509,6 +1515,10 @@ msgstr "ಹೋಲಿಕೆ ಇಲ್ಲ"
 #: src/features/analytics/Settings.tsx
 msgid "No consent features are offered."
 msgstr "ಯಾವ ಒಪ್ಪಿಗೆ ವೈಶಿಷ್ಟ್ಯಗಳನ್ನೂ ನೀಡಲಾಗಿಲ್ಲ."
+
+#: src/features/analytics/Overview.tsx
+msgid "No consented visitors in this range."
+msgstr "ಈ ಅವಧಿಯಲ್ಲಿ ಒಪ್ಪಿದ ಸಂದರ್ಶಕರಿಲ್ಲ."
 
 #: src/features/analytics/Retention.tsx
 msgid "No consented visitors yet"
@@ -2086,6 +2096,7 @@ msgid "Requests with Do Not Track or Global Privacy Control, and events without 
 msgstr "Do Not Track ಅಥವಾ Global Privacy Control ಇರುವ ವಿನಂತಿಗಳು, ಮತ್ತು ಅದು ಬೇಕಾದ ಪ್ರಾಪರ್ಟಿಯಲ್ಲಿ ಒಪ್ಪಿಗೆಯಿಲ್ಲದ ಈವೆಂಟ್‌ಗಳನ್ನು ತೆಗೆದುಕೊಳ್ಳಲಾಗುತ್ತದೆ ಆದರೆ ಇಲ್ಲಿ ಸಂಗ್ರಹಿಸಲೂ ಇಲ್ಲ ಎಣಿಸಲೂ ಇಲ್ಲ."
 
 #: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Overview.tsx
 msgid "Retention"
 msgstr "ಉಳಿಕೆ"
 

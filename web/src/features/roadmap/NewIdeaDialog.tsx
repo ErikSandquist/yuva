@@ -19,13 +19,22 @@ import { ideaLink, useCreateIdea } from "@/features/roadmap/queries"
 import { ChoiceSelect, Field } from "@/features/settings/ui"
 import type { RoadmapBoard } from "@/lib/api"
 
-export function NewIdeaDialog({ boards, onClose }: { boards: RoadmapBoard[]; onClose: () => void }) {
+export function NewIdeaDialog({
+  boards,
+  initialBoardId,
+  onClose,
+}: {
+  boards: RoadmapBoard[]
+  initialBoardId?: string
+  onClose: () => void
+}) {
   const { t } = useLingui()
   const navigate = useNavigate()
   const create = useCreateIdea()
-  const [boardId, setBoardId] = useState(boards[0]?.id ?? "")
+  const [boardId, setBoardId] = useState(boards.find((b) => b.id === initialBoardId)?.id ?? boards[0]?.id ?? "")
   const [title, setTitle] = useState("")
   const [body, setBody] = useState("")
+  const priv = boards.find((b) => b.id === boardId)?.public === false
   const ok = !!boardId && title.trim().length >= 3 && body.trim().length > 0
   return (
     <Dialog open onOpenChange={(o) => !o && onClose()}>
@@ -46,7 +55,11 @@ export function NewIdeaDialog({ boards, onClose }: { boards: RoadmapBoard[]; onC
               <Trans>New idea</Trans>
             </DialogTitle>
             <DialogDescription>
-              <Trans>It goes into Ideas on the board, where customers can vote on it.</Trans>
+              {priv ? (
+                <Trans>It goes into Ideas on the board. The board is private, so only your team sees it.</Trans>
+              ) : (
+                <Trans>It goes into Ideas on the board, where customers can vote on it.</Trans>
+              )}
             </DialogDescription>
           </DialogHeader>
           {boards.length > 1 && (

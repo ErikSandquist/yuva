@@ -4,7 +4,6 @@ import { useEffect, useMemo, useRef, useState } from "react"
 
 import { ErrorLine, hostPath, Kbd, useContactName } from "@/components/common"
 import { useEnumText } from "@/components/common/text"
-import { Button } from "@/components/ui/button"
 import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from "@/components/ui/input-group"
 import { Skeleton } from "@/components/ui/skeleton"
 import { ScoreMark } from "@/features/conversation/Feedback"
@@ -153,7 +152,7 @@ function Row({
             </span>
           )}
           {f?.score ? <ScoreMark score={f.score} /> : null}
-          {c.idea && <IdeaMark idea={c.idea} className="max-w-40" />}
+          {c.idea && <IdeaMark idea={c.idea} pill className="max-w-48" />}
         </span>
       </span>
       {f?.progress && <ProgressPill progress={f.progress} />}
@@ -191,7 +190,6 @@ export function FeedbackList({
   const [ownTab, setTabState] = useState<Tab>(rememberedTab)
   const tab = controlledTab ?? ownTab
   const [category, setCategoryState] = useState<Category>(rememberedCategory)
-  const [searching, setSearching] = useState(false)
   const search = useRef<HTMLInputElement>(null)
   const scroller = useRef<HTMLDivElement>(null)
   const sentinel = useRef<HTMLDivElement>(null)
@@ -213,11 +211,6 @@ export function FeedbackList({
     onRows?.(ids ? ids.split(" ") : [])
   }, [ids, onRows])
 
-  const [focusSeen, setFocusSeen] = useState(focused)
-  if (focus > focusSeen) {
-    setFocusSeen(focus)
-    setSearching(true)
-  }
   useEffect(() => {
     if (focus <= focused) return
     focused = focus
@@ -286,7 +279,6 @@ export function FeedbackList({
           setListQuery(e.target.value)
           setCursorId(null)
         }}
-        onBlur={() => !query && setSearching(false)}
         onKeyDown={(e) => {
           if (e.key === "ArrowDown" || e.key === "ArrowUp") {
             e.preventDefault()
@@ -341,32 +333,13 @@ export function FeedbackList({
       ))}
     </div>
   )
-  const showSearch = !embedded || searching || !!query
 
   return (
     <nav aria-label={t`Feedback`} className="flex h-full min-h-0 flex-col bg-background" data-testid="feedback-list">
       {embedded ? (
         <>
-          <div className="flex shrink-0 items-center gap-2 border-b px-6 py-3">
-            {pills}
-            {!showSearch && (
-              <Button
-                variant="ghost"
-                size="icon-sm"
-                className="size-[30px] rounded-lg text-faint"
-                onClick={() => {
-                  setSearching(true)
-                  requestAnimationFrame(() => search.current?.focus())
-                }}
-                aria-label={t`Search feedback`}
-                title={t`Search feedback (/)`}
-                data-testid="list-search-open"
-              >
-                <SearchIcon />
-              </Button>
-            )}
-          </div>
-          {showSearch && <div className="flex shrink-0 border-b px-6 py-2">{searchBox}</div>}
+          <div className="flex shrink-0 border-b px-6 py-2.5">{searchBox}</div>
+          <div className="flex shrink-0 border-b px-6 py-2.5">{pills}</div>
         </>
       ) : (
         <>

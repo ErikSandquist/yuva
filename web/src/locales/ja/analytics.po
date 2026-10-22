@@ -409,6 +409,7 @@ msgid "Break down by prop"
 msgstr "プロパティで内訳を表示"
 
 #: src/features/analytics/Goals.tsx
+#: src/features/analytics/Overview.tsx
 msgid "Breakdown"
 msgstr "内訳"
 
@@ -1360,6 +1361,7 @@ msgstr "位置情報データベース"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
 #: src/features/analytics/Sharing.tsx
 msgid "Locations"
 msgstr "場所"
@@ -1469,6 +1471,10 @@ msgstr "新しい {kind}: {value}({count} 件)、比較した日にはありま�
 msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."
 msgstr "新しい {kind}: {value}。{metric}: {now}、比較した日にはありません。"
 
+#: src/features/analytics/Overview.tsx
+msgid "New and returning"
+msgstr "新規とリピート"
+
 #: src/features/analytics/Funnels.tsx
 msgid "New funnel"
 msgstr "新しいファネル"
@@ -1509,6 +1515,10 @@ msgstr "比較なし"
 #: src/features/analytics/Settings.tsx
 msgid "No consent features are offered."
 msgstr "同意機能は提供されていません。"
+
+#: src/features/analytics/Overview.tsx
+msgid "No consented visitors in this range."
+msgstr "この期間に同意した訪問者はいません。"
 
 #: src/features/analytics/Retention.tsx
 msgid "No consented visitors yet"
@@ -2086,6 +2096,7 @@ msgid "Requests with Do Not Track or Global Privacy Control, and events without 
 msgstr "Do Not Track や Global Privacy Control のあるリクエスト、および同意が必要なプロパティで同意のないイベントは、受け取りますが、保存も集計もされません。"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Overview.tsx
 msgid "Retention"
 msgstr "リテンション"
 

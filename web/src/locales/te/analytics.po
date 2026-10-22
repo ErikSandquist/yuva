@@ -409,6 +409,7 @@ msgid "Break down by prop"
 msgstr "ప్రాప్ ద్వారా విభజించండి"
 
 #: src/features/analytics/Goals.tsx
+#: src/features/analytics/Overview.tsx
 msgid "Breakdown"
 msgstr "విభజన"
 
@@ -1360,6 +1361,7 @@ msgstr "స్థాన డేటాబేస్"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
 #: src/features/analytics/Sharing.tsx
 msgid "Locations"
 msgstr "స్థలాలు"
@@ -1469,6 +1471,10 @@ msgstr "కొత్త {kind}: {value}, {count} తో, పోల్చిన �
 msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."
 msgstr "కొత్త {kind}: {value}. {metric}: {now}, పోల్చిన రోజుల్లో ఏదీ లేదు."
 
+#: src/features/analytics/Overview.tsx
+msgid "New and returning"
+msgstr "కొత్తవారు మరియు తిరిగి వచ్చేవారు"
+
 #: src/features/analytics/Funnels.tsx
 msgid "New funnel"
 msgstr "కొత్త ఫన్నెల్"
@@ -1509,6 +1515,10 @@ msgstr "పోలిక లేదు"
 #: src/features/analytics/Settings.tsx
 msgid "No consent features are offered."
 msgstr "సమ్మతి ఫీచర్‌లు ఏవీ అందించబడలేదు."
+
+#: src/features/analytics/Overview.tsx
+msgid "No consented visitors in this range."
+msgstr "ఈ పరిధిలో అంగీకరించిన సందర్శకులు లేరు."
 
 #: src/features/analytics/Retention.tsx
 msgid "No consented visitors yet"
@@ -2086,6 +2096,7 @@ msgid "Requests with Do Not Track or Global Privacy Control, and events without 
 msgstr "Do Not Track లేదా Global Privacy Control ఉన్న అభ్యర్థనలు, మరియు సమ్మతి అవసరమైన ప్రాపర్టీలో సమ్మతి లేని ఈవెంట్‌లు, తీసుకోబడతాయి కానీ ఇక్కడ నిల్వ చేయబడవు లేదా లెక్కించబడవు."
 
 #: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Overview.tsx
 msgid "Retention"
 msgstr "నిలుపుదల"
 

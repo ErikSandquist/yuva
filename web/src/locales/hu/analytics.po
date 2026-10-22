@@ -409,6 +409,7 @@ msgid "Break down by prop"
 msgstr "Bontás propok szerint"
 
 #: src/features/analytics/Goals.tsx
+#: src/features/analytics/Overview.tsx
 msgid "Breakdown"
 msgstr "Bontás"
 
@@ -1360,6 +1361,7 @@ msgstr "Helyadatbázis"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
 #: src/features/analytics/Sharing.tsx
 msgid "Locations"
 msgstr "Helyek"
@@ -1469,6 +1471,10 @@ msgstr "Új {kind}: {value} {count} értékkel, egy sem az összehasonlított na
 msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."
 msgstr "Új {kind}: {value}. {metric}: {now}, egy sem az összehasonlított napokon."
 
+#: src/features/analytics/Overview.tsx
+msgid "New and returning"
+msgstr "Új és visszatérő"
+
 #: src/features/analytics/Funnels.tsx
 msgid "New funnel"
 msgstr "Új tölcsér"
@@ -1509,6 +1515,10 @@ msgstr "Nincs összehasonlítás"
 #: src/features/analytics/Settings.tsx
 msgid "No consent features are offered."
 msgstr "Hozzájárulási funkciók nem érhetők el."
+
+#: src/features/analytics/Overview.tsx
+msgid "No consented visitors in this range."
+msgstr "Ebben a tartományban nincsenek beleegyező látogatók."
 
 #: src/features/analytics/Retention.tsx
 msgid "No consented visitors yet"
@@ -2086,6 +2096,7 @@ msgid "Requests with Do Not Track or Global Privacy Control, and events without 
 msgstr "A Do Not Track vagy Global Privacy Control kéréseket, és a hozzájárulást igénylő tulajdonságnál a hozzájárulás nélküli eseményeket fogadjuk, de itt nem tároljuk és nem számoljuk."
 
 #: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Overview.tsx
 msgid "Retention"
 msgstr "Megtartás"
 

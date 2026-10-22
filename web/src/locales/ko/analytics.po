@@ -409,6 +409,7 @@ msgid "Break down by prop"
 msgstr "속성별로 나누기"
 
 #: src/features/analytics/Goals.tsx
+#: src/features/analytics/Overview.tsx
 msgid "Breakdown"
 msgstr "내역"
 
@@ -1360,6 +1361,7 @@ msgstr "위치 데이터베이스"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
 #: src/features/analytics/Sharing.tsx
 msgid "Locations"
 msgstr "위치"
@@ -1469,6 +1471,10 @@ msgstr "새 {kind}: {value}({count}건), 비교한 날에는 없습니다."
 msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."
 msgstr "새 {kind}: {value}. {metric}: {now}, 비교한 날에는 없습니다."
 
+#: src/features/analytics/Overview.tsx
+msgid "New and returning"
+msgstr "신규와 재방문"
+
 #: src/features/analytics/Funnels.tsx
 msgid "New funnel"
 msgstr "새 퍼널"
@@ -1509,6 +1515,10 @@ msgstr "비교 안 함"
 #: src/features/analytics/Settings.tsx
 msgid "No consent features are offered."
 msgstr "제공되는 동의 기능이 없습니다."
+
+#: src/features/analytics/Overview.tsx
+msgid "No consented visitors in this range."
+msgstr "이 범위에 동의한 방문자가 없습니다."
 
 #: src/features/analytics/Retention.tsx
 msgid "No consented visitors yet"
@@ -2086,6 +2096,7 @@ msgid "Requests with Do Not Track or Global Privacy Control, and events without 
 msgstr "Do Not Track 또는 Global Privacy Control이 있는 요청과, 동의가 필요한 속성에서 동의 없이 온 이벤트는 받아들이지만 저장하거나 집계하지 않습니다."
 
 #: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Overview.tsx
 msgid "Retention"
 msgstr "리텐션"
 

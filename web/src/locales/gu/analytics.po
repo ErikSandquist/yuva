@@ -409,6 +409,7 @@ msgid "Break down by prop"
 msgstr "પ્રૉપ પ્રમાણે વિભાજિત કરો"
 
 #: src/features/analytics/Goals.tsx
+#: src/features/analytics/Overview.tsx
 msgid "Breakdown"
 msgstr "બ્રેકડાઉન"
 
@@ -1360,6 +1361,7 @@ msgstr "સ્થળ ડેટાબેઝ"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
 #: src/features/analytics/Sharing.tsx
 msgid "Locations"
 msgstr "સ્થળો"
@@ -1469,6 +1471,10 @@ msgstr "નવું {kind}: {value}, {count} સાથે, સરખાવે�
 msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."
 msgstr "નવું {kind}: {value}. {metric}: {now}, સરખાવેલા દિવસોમાં કોઈ નહીં."
 
+#: src/features/analytics/Overview.tsx
+msgid "New and returning"
+msgstr "નવા અને પાછા આવનાર"
+
 #: src/features/analytics/Funnels.tsx
 msgid "New funnel"
 msgstr "નવું ફનલ"
@@ -1509,6 +1515,10 @@ msgstr "સરખામણી નથી"
 #: src/features/analytics/Settings.tsx
 msgid "No consent features are offered."
 msgstr "કોઈ સંમતિ સુવિધા ઑફર થતી નથી."
+
+#: src/features/analytics/Overview.tsx
+msgid "No consented visitors in this range."
+msgstr "આ શ્રેણીમાં સંમતિ આપનાર મુલાકાતીઓ નથી."
 
 #: src/features/analytics/Retention.tsx
 msgid "No consented visitors yet"
@@ -2086,6 +2096,7 @@ msgid "Requests with Do Not Track or Global Privacy Control, and events without 
 msgstr "Do Not Track કે Global Privacy Control વાળી વિનંતીઓ, અને સંમતિ જોઈતી પ્રૉપર્ટી પર સંમતિ વિનાની ઇવેન્ટ, લેવાય છે પણ અહીં સંગ્રહાતી કે ગણાતી નથી."
 
 #: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Overview.tsx
 msgid "Retention"
 msgstr "રિટેન્શન"
 

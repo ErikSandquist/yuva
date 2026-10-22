@@ -15,7 +15,8 @@ import {
 import { Input } from "@/components/ui/input"
 import { useCreateStatusPage } from "@/features/status/queries"
 import { Field } from "@/features/settings/ui"
-import type { StatusPage } from "@/lib/api"
+import { ChoiceChips } from "@/features/status/Choice"
+import type { Inbox, StatusPage } from "@/lib/api"
 
 export function slugify(name: string) {
   return name
@@ -35,22 +36,25 @@ export function validSlug(slug: string) {
 }
 
 export function CreatePageDialog({
-  inboxId,
-  inboxName,
+  inboxes,
+  inboxId: initial,
   onClose,
   onCreated,
 }: {
-  inboxId: string
-  inboxName: string
+  inboxes: Inbox[]
+  inboxId?: string
   onClose: () => void
   onCreated: (p: StatusPage) => void
 }) {
   const { t } = useLingui()
+  const [inboxId, setInboxId] = useState(initial ?? inboxes[0]?.id ?? "")
+  const inboxName = inboxes.find((i) => i.id === inboxId)?.name ?? ""
   const [name, setName] = useState(inboxName)
   const [slug, setSlug] = useState(slugify(inboxName))
   const [edited, setEdited] = useState(false)
+  const [nameEdited, setNameEdited] = useState(false)
   const create = useCreateStatusPage()
-  const ok = name.trim() && validSlug(slug)
+  const ok = inboxId && name.trim() && validSlug(slug)
   return (
     <Dialog open onOpenChange={(o) => !o && onClose()}>
       <DialogContent data-testid="new-status-page-dialog">
@@ -72,6 +76,21 @@ export function CreatePageDialog({
               </Trans>
             </DialogDescription>
           </DialogHeader>
+          {inboxes.length > 1 && (
+            <Field label={<Trans>Product</Trans>}>
+              <ChoiceChips
+                value={inboxId}
+                onChange={(id) => {
+                  const next = inboxes.find((i) => i.id === id)?.name ?? ""
+                  setInboxId(id)
+                  if (!nameEdited) setName(next)
+                  if (!edited && !nameEdited) setSlug(slugify(next))
+                }}
+                options={inboxes.map((i) => [i.id, i.name] as const)}
+                label={t`Product`}
+              />
+            </Field>
+          )}
           <Field label={<Trans>Name</Trans>} htmlFor="status-page-name">
             <Input
               id="status-page-name"
@@ -81,6 +100,7 @@ export function CreatePageDialog({
               required
               placeholder={t`Acme status`}
               onChange={(e) => {
+                setNameEdited(true)
                 setName(e.target.value)
                 if (!edited) setSlug(slugify(e.target.value))
               }}

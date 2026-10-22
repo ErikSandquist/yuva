@@ -1,6 +1,7 @@
 import { Trans, useLingui } from "@lingui/react/macro"
 import { LoaderIcon } from "lucide-react"
 import { useState } from "react"
+import { Link, useLocation } from "react-router"
 
 import { ErrorLine } from "@/components/common"
 import { Button } from "@/components/ui/button"
@@ -31,7 +32,10 @@ export function CreateBoardDialog({
   onCreated: (b: RoadmapBoard) => void
 }) {
   const { t } = useLingui()
-  const channels = (useInboxChannels(inboxId).data ?? []).filter((c) => c.kind === "chat")
+  const { pathname } = useLocation()
+  const channelQuery = useInboxChannels(inboxId)
+  const channels = (channelQuery.data ?? []).filter((c) => c.kind === "chat")
+  const blocked = !!channelQuery.data && channels.length === 0
   const [name, setName] = useState(inboxName)
   const [slug, setSlug] = useState(slugify(inboxName))
   const [edited, setEdited] = useState(false)
@@ -97,26 +101,45 @@ export function CreateBoardDialog({
               data-testid="new-board-slug"
             />
           </Field>
-          <Field
-            label={<Trans>Chat channel</Trans>}
-            htmlFor="board-new-channel"
-            hint={
-              channels.length === 0 ? (
-                <Trans>This inbox has no web chat channel. Add one first, because the public board embeds it.</Trans>
-              ) : (
-                <Trans>The public board embeds this chat, and ideas your team starts are filed on it.</Trans>
-              )
-            }
-          >
-            <ChoiceSelect
-              id="board-new-channel"
-              value={channel}
-              onChange={setPicked}
-              options={channels.map((c) => [c.id, c.name] as const)}
-              label={t`Chat channel`}
-              disabled={channels.length === 0}
-            />
-          </Field>
+          {blocked ? (
+            <div className="flex flex-col gap-2">
+              <span className="text-body font-medium">
+                <Trans>Chat channel</Trans>
+              </span>
+              <div
+                className="flex flex-wrap items-center gap-3 rounded-lg border border-dashed border-warning/60 bg-warning/10 px-3 py-2.5"
+                data-testid="new-board-blocked"
+              >
+                <p className="min-w-0 flex-1 text-body">
+                  <Trans>{inboxName} has no web chat channel. Add one first, because the public board embeds it.</Trans>
+                </p>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  render={<Link to={`/setup/${inboxId}/add/chat`} state={{ back: pathname, existing: true }} />}
+                  data-testid="new-board-add-chat"
+                >
+                  <Trans>Add a web chat channel</Trans>
+                </Button>
+              </div>
+            </div>
+          ) : (
+            <Field
+              label={<Trans>Chat channel</Trans>}
+              htmlFor="board-new-channel"
+              hint={<Trans>The public board embeds this chat, and ideas your team starts are filed on it.</Trans>}
+            >
+              <ChoiceSelect
+                id="board-new-channel"
+                value={channel}
+                onChange={setPicked}
+                options={channels.map((c) => [c.id, c.name] as const)}
+                label={t`Chat channel`}
+                disabled={channels.length === 0}
+              />
+            </Field>
+          )}
           <ErrorLine error={create.error} />
           <DialogFooter>
             <Button type="button" variant="ghost" onClick={onClose}>

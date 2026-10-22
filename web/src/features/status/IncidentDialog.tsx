@@ -16,18 +16,20 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { ChoiceSelect, Field } from "@/features/settings/ui"
+import { Field } from "@/features/settings/ui"
+import { ChoiceChips } from "@/features/status/Choice"
 import { NotifyCheck } from "@/features/status/NotifyCheck"
-import { useIncidentMutations, useStatusComponents, useStatusPage } from "@/features/status/queries"
-import { StateSelect } from "@/features/status/StateSelect"
-import { IMPACTS, INCIDENT_STATES, useStatusText } from "@/features/status/text"
+import { useIncidentMutations, useStatusComponents } from "@/features/status/queries"
+import { COMPONENT_STATES, IMPACTS, INCIDENT_STATES, useStatusText } from "@/features/status/text"
 import type {
   StatusComponentStateValue,
   StatusIncident,
   StatusIncidentImpact,
   StatusIncidentKind,
   StatusIncidentState,
+  StatusPage,
 } from "@/lib/api"
+import { useInboxes } from "@/lib/workspace"
 
 function toLocalInput(date: Date) {
   const pad = (n: number) => String(n).padStart(2, "0")
@@ -41,46 +43,64 @@ function defaultWindow() {
   return [toLocalInput(start), toLocalInput(new Date(start.getTime() + 3600_000))] as const
 }
 
+export type IncidentPrefill = {
+  title: string
+  impact: StatusIncidentImpact
+  components: Record<string, StatusComponentStateValue>
+  message: string
+}
+
 export function IncidentDialog({
+  pages,
   pageId,
   kind,
   edit,
+  prefill,
   onClose,
   onDone,
 }: {
-  pageId: string
+  pages: StatusPage[]
+  pageId?: string
   kind: StatusIncidentKind
   edit?: StatusIncident
+  prefill?: IncidentPrefill
   onClose: () => void
   onDone: (i: StatusIncident) => void
 }) {
   const { t } = useLingui()
   const text = useStatusText()
-  const m = useIncidentMutations(pageId)
-  const components = useStatusComponents(pageId).data ?? []
-  const page = useStatusPage(pageId).data
+  const inboxes = useInboxes().data ?? []
+  const [chosen, setChosen] = useState(edit?.page_id ?? pageId ?? pages[0]?.id ?? "")
+  const page = pages.find((p) => p.id === chosen)
+  const m = useIncidentMutations(chosen)
+  const components = useStatusComponents(chosen).data ?? []
   const [notify, setNotify] = useState(true)
   const maintenance = kind === "maintenance"
-  const [title, setTitle] = useState(edit?.title ?? "")
-  const [impact, setImpact] = useState<StatusIncidentImpact>(edit?.impact ?? (maintenance ? "none" : "minor"))
+  const [title, setTitle] = useState(edit?.title ?? prefill?.title ?? "")
+  const [impact, setImpact] = useState<StatusIncidentImpact>(
+    edit?.impact ?? prefill?.impact ?? (maintenance ? "none" : "minor")
+  )
   const [state, setState] = useState<StatusIncidentState>("investigating")
-  const [message, setMessage] = useState("")
+  const [message, setMessage] = useState(prefill?.message ?? "")
   const [defaults] = useState(defaultWindow)
   const [start, setStart] = useState(edit?.scheduled_start ? toLocalInput(new Date(edit.scheduled_start)) : defaults[0])
   const [end, setEnd] = useState(edit?.scheduled_end ? toLocalInput(new Date(edit.scheduled_end)) : defaults[1])
   const fallback: StatusComponentStateValue = maintenance ? "maintenance" : "major_outage"
   const [touched, setTouched] = useState<Record<string, StatusComponentStateValue>>(
-    Object.fromEntries((edit?.components ?? []).map((c) => [c.component_id, c.state]))
+    prefill?.components ?? Object.fromEntries((edit?.components ?? []).map((c) => [c.component_id, c.state]))
   )
   const windowChanged =
     !!edit &&
     maintenance &&
     (new Date(start).getTime() !== Date.parse(edit.scheduled_start ?? "") ||
       new Date(end).getTime() !== Date.parse(edit.scheduled_end ?? ""))
-  const askNotify = !!page && (!edit || windowChanged)
+  const reachable = !!page?.published && !!page.email_subscribers.enabled
+  const askNotify = !!page && reachable && (!edit || windowChanged)
   const pending = m.create.isPending || m.patch.isPending
   const windowOk = !maintenance || (!!start && !!end && new Date(end) > new Date(start))
-  const ok = !!title.trim() && (!!edit || !!message.trim()) && windowOk
+  const ok = !!chosen && !!title.trim() && (!!edit || !!message.trim()) && windowOk
+  const showProducts = !edit && !prefill && pages.length > 1
+  const markName = (p: StatusPage) => inboxes.find((i) => i.id === p.inbox_id)?.name ?? p.name
 
   const body = () => ({
     title: title.trim(),
@@ -94,7 +114,7 @@ export function IncidentDialog({
     if (!ok) return
     if (edit)
       m.patch.mutate(
-        { id: edit.id, ...body(), ...(windowChanged && page?.email_subscribers.enabled ? { notify } : {}) },
+        { id: edit.id, ...body(), ...(windowChanged && reachable ? { notify } : {}) },
         { onSuccess: onDone }
       )
     else
@@ -105,16 +125,17 @@ export function IncidentDialog({
           message: message.trim(),
           publish,
           ...(maintenance ? {} : { state }),
-          ...(page?.email_subscribers.enabled ? { notify } : {}),
+          ...(reachable ? { notify } : {}),
         },
         { onSuccess: onDone }
       )
   }
   const states = INCIDENT_STATES.filter((s) => s !== "resolved").map((s) => [s, text.incident[s]] as const)
   const impacts = IMPACTS.map((s) => [s, text.impact[s]] as const)
+  const touchStates = COMPONENT_STATES.filter((s) => s !== "operational").map((s) => [s, text.component[s]] as const)
   return (
     <Dialog open onOpenChange={(o) => !o && onClose()}>
-      <DialogContent className="sm:max-w-xl" data-testid="status-incident-dialog">
+      <DialogContent className="max-h-[92vh] overflow-y-auto sm:max-w-xl" data-testid="status-incident-dialog">
         <form
           className="flex flex-col gap-5"
           onSubmit={(e) => {
@@ -138,6 +159,19 @@ export function IncidentDialog({
               </DialogDescription>
             )}
           </DialogHeader>
+          {showProducts && (
+            <Field label={<Trans>Product</Trans>}>
+              <ChoiceChips
+                value={chosen}
+                onChange={(id) => {
+                  setChosen(id)
+                  setTouched({})
+                }}
+                options={pages.map((p) => [p.id, markName(p)] as const)}
+                label={t`Product`}
+              />
+            </Field>
+          )}
           <Field label={<Trans>Title</Trans>} htmlFor="status-incident-title">
             <Input
               id="status-incident-title"
@@ -151,24 +185,12 @@ export function IncidentDialog({
             />
           </Field>
           <div className="grid gap-5 sm:grid-cols-2">
-            <Field label={<Trans>Impact</Trans>} htmlFor="status-incident-impact">
-              <ChoiceSelect
-                id="status-incident-impact"
-                value={impact}
-                onChange={setImpact}
-                options={impacts}
-                label={t`Impact`}
-              />
+            <Field label={<Trans>Impact</Trans>}>
+              <ChoiceChips value={impact} onChange={setImpact} options={impacts} label={t`Impact`} />
             </Field>
             {!edit && !maintenance && (
-              <Field label={<Trans>State</Trans>} htmlFor="status-incident-state">
-                <ChoiceSelect
-                  id="status-incident-state"
-                  value={state}
-                  onChange={setState}
-                  options={states}
-                  label={t`State`}
-                />
+              <Field label={<Trans>State</Trans>}>
+                <ChoiceChips value={state} onChange={setState} options={states} label={t`State`} />
               </Field>
             )}
           </div>
@@ -210,7 +232,7 @@ export function IncidentDialog({
                   const on = c.id in touched
                   return (
                     <li key={c.id} className="flex flex-wrap items-center gap-x-3 gap-y-2 px-3 py-2">
-                      <Label className="min-w-0 flex-1 basis-40 font-normal">
+                      <Label className="min-w-0 flex-1 basis-32 font-normal">
                         <Checkbox
                           checked={on}
                           onCheckedChange={(v) =>
@@ -226,11 +248,11 @@ export function IncidentDialog({
                         <span className="truncate">{c.name}</span>
                       </Label>
                       {on && (
-                        <StateSelect
+                        <ChoiceChips
                           value={touched[c.id]}
-                          label={t`State of ${c.name} while it is open`}
                           onChange={(s) => setTouched((cur) => ({ ...cur, [c.id]: s }))}
-                          className="w-48 phone:w-full"
+                          options={touchStates}
+                          label={t`State of ${c.name} while it is open`}
                         />
                       )}
                     </li>
@@ -263,41 +285,50 @@ export function IncidentDialog({
               />
             </Field>
           )}
-          {askNotify && (
-            <NotifyCheck
-              page={page}
-              components={Object.keys(touched)}
-              checked={notify}
-              onChange={setNotify}
-              testId="status-incident-notify"
-            />
+          {page && !page.published && (
+            <p className="rounded-lg border border-dashed px-3 py-2 text-small text-muted-foreground">
+              <Trans>This page is not public yet, so visitors see nothing until you publish the page.</Trans>
+            </p>
           )}
           <ErrorLine error={m.create.error ?? m.patch.error} />
-          <DialogFooter>
-            <Button type="button" variant="ghost" onClick={onClose}>
-              <Trans>Cancel</Trans>
-            </Button>
-            {edit ? (
-              <Button type="submit" disabled={!ok || pending} data-testid="status-incident-save">
-                {pending && <LoaderIcon className="animate-spin" />}
-                <Trans>Save</Trans>
-              </Button>
+          <DialogFooter className="items-center sm:justify-between">
+            {askNotify && page ? (
+              <NotifyCheck
+                page={page}
+                components={Object.keys(touched)}
+                checked={notify}
+                onChange={setNotify}
+                testId="status-incident-notify"
+              />
             ) : (
-              <>
-                <Button type="submit" variant="outline" disabled={!ok || pending} data-testid="status-incident-draft">
-                  <Trans>Save as draft</Trans>
-                </Button>
-                <Button
-                  type="button"
-                  disabled={!ok || pending}
-                  onClick={() => save(true)}
-                  data-testid="status-incident-publish"
-                >
-                  {pending && <LoaderIcon className="animate-spin" />}
-                  <Trans>Publish now</Trans>
-                </Button>
-              </>
+              <span />
             )}
+            <div className="flex flex-wrap justify-end gap-2">
+              <Button type="button" variant="ghost" onClick={onClose}>
+                <Trans>Cancel</Trans>
+              </Button>
+              {edit ? (
+                <Button type="submit" disabled={!ok || pending} data-testid="status-incident-save">
+                  {pending && <LoaderIcon className="animate-spin" />}
+                  <Trans>Save</Trans>
+                </Button>
+              ) : (
+                <>
+                  <Button type="submit" variant="outline" disabled={!ok || pending} data-testid="status-incident-draft">
+                    <Trans>Save as draft</Trans>
+                  </Button>
+                  <Button
+                    type="button"
+                    disabled={!ok || pending}
+                    onClick={() => save(true)}
+                    data-testid="status-incident-publish"
+                  >
+                    {pending && <LoaderIcon className="animate-spin" />}
+                    <Trans>Publish now</Trans>
+                  </Button>
+                </>
+              )}
+            </div>
           </DialogFooter>
         </form>
       </DialogContent>

@@ -7,6 +7,10 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: fi\n"
 
+#: src/features/roadmap/CreateBoardDialog.tsx
+msgid "{inboxName} has no web chat channel. Add one first, because the public board embeds it."
+msgstr "Tuotteella {inboxName} ei ole verkkochat-kanavaa. Lisää ensin yksi, koska julkinen taulu upottaa sen."
+
 #: src/features/roadmap/Board.tsx
 msgid "{linked, plural, one {# feedback} other {# feedback}}"
 msgstr "{linked, plural, one {# palaute} other {# palautetta}}"
@@ -29,9 +33,25 @@ msgid "A reader's posts wait for a member until one of theirs is approved. Signe
 msgstr "Lukijan viestit odottavat jäsentä, kunnes yksi niistä hyväksytään. Sovelluksesi kirjautuneet käyttäjät julkaisevat heti."
 
 #: src/features/roadmap/CreateBoardDialog.tsx
+msgid "Add a web chat channel"
+msgstr "Lisää verkkochat-kanava"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
 #: src/features/roadmap/Settings.tsx
 msgid "Address"
 msgstr "Osoite"
+
+#: src/features/roadmap/BoardBar.tsx
+msgid "All boards"
+msgstr "Kaikki taulut"
+
+#: src/features/roadmap/Settings.tsx
+msgid "All changes saved."
+msgstr "Kaikki muutokset tallennettu."
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "All feedback from {inboxName} that fits is already linked."
+msgstr "Kaikki sopiva palaute tuotteelta {inboxName} on jo liitetty."
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Already linked"
@@ -89,13 +109,16 @@ msgstr "Laskee julkisen taulun sivunäytöt ilman evästeitä."
 
 #: src/features/roadmap/CreateBoardDialog.tsx
 #: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
 msgid "Create board"
 msgstr "Luo taulu"
 
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Create board ({newKey})"
 msgstr "Luo taulu ({newKey})"
+
+#: src/features/roadmap/BoardBar.tsx
+msgid "Create board for {name}"
+msgstr "Luo taulu tuotteelle {name}"
 
 #: src/features/roadmap/NewIdeaDialog.tsx
 msgid "Create idea"
@@ -123,17 +146,21 @@ msgstr "Poistaa taulun ideoineen, ääninen, vastauksineen ja vaiheiden historio
 msgid "Description"
 msgstr "Kuvaus"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Dismiss"
+msgstr "Sulje"
+
 #: src/features/roadmap/Board.tsx
 msgid "Done"
 msgstr "Valmis"
 
-#: src/features/roadmap/MoveDialog.tsx
-msgid "Every linked feedback that does not have it yet gets the progress {progress}. Linked feedback: {linked}"
-msgstr "Jokainen liitetty palaute, jolla ei vielä ole edistymistä {progress}, saa sen. Liitetty palaute: {linked}"
-
 #: src/features/roadmap/Settings.tsx
 msgid "Everyone's posts are published at once, except those of authors you marked as spam."
 msgstr "Kaikkien viestit julkaistaan heti, paitsi niiden tekijöiden, jotka merkitsit roskapostiksi."
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Good news: “{title}” has shipped. Thank you for asking for it."
+msgstr "Hyviä uutisia: ”{title}” on julkaistu. Kiitos, että pyysit sitä."
 
 #: src/features/roadmap/Board.tsx
 msgid "Hidden"
@@ -155,21 +182,30 @@ msgstr "Ideat, joita asiakkaasi äänestävät, ja niiden taustalla oleva palaut
 msgid "Ideas, votes and stages for {inboxName}, with the feedback behind each idea. It stays private until you make it public."
 msgstr "Ideat, äänet ja vaiheet kohteelle {inboxName}, ja jokaisen idean takana oleva palaute. Se pysyy yksityisenä, kunnes teet siitä julkisen."
 
-#: src/features/roadmap/RoadmapColumn.tsx
-msgid "Ideas: {ideas}"
-msgstr "Ideat: {ideas}"
-
 #: src/features/roadmap/NewIdeaDialog.tsx
 msgid "It goes into Ideas on the board, where customers can vote on it."
 msgstr "Se päätyy taulun Ideat-sarakkeeseen, jossa asiakkaat voivat äänestää sitä."
 
-#: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/NewIdeaDialog.tsx
+msgid "It goes into Ideas on the board. The board is private, so only your team sees it."
+msgstr "Se päätyy taulun Ideat-vaiheeseen. Taulu on yksityinen, joten vain tiimisi näkee sen."
+
+#: src/features/roadmap/IdeaFeedback.tsx
 msgid "It was unlinked from the idea."
 msgstr "Liitos ideaan poistettiin."
 
 #: src/features/roadmap/Settings.tsx
 msgid "Its ideas, votes, replies and stage history are deleted with it."
 msgstr "Sen ideat, äänet, vastaukset ja vaiheiden historia poistetaan sen mukana."
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgctxt "link feedback to the idea"
+msgid "Link"
+msgstr "Liitä"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Link feedback"
+msgstr "Liitä palaute"
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Link this feedback to an idea…"
@@ -179,13 +215,21 @@ msgstr "Liitä tämä palaute ideaan…"
 msgid "Link to an idea"
 msgstr "Liitä ideaan"
 
-#: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Linked"
+msgstr "Liitetty"
+
+#: src/features/roadmap/IdeaFeedback.tsx
 msgid "Linked feedback"
 msgstr "Liitetty palaute"
 
 #: src/features/roadmap/IdeaPane.tsx
 msgid "Linked feedback set to {progress}: {set}"
 msgstr "Liitetyn palautteen tilaksi asetettiin {progress}: {set}"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Linked feedback that gets the progress {progress}: {gets} of {linked}."
+msgstr "Liitetty palaute, joka saa edistymisen {progress}: {gets} / {linked}."
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Linked to {title}"
@@ -195,19 +239,19 @@ msgstr "Liitetty kohteeseen {title}"
 msgid "Load more"
 msgstr "Lataa lisää"
 
-#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Make private"
 msgstr "Tee yksityiseksi"
 
-#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Make private ({publicKey})"
 msgstr "Tee yksityiseksi ({publicKey})"
 
-#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Make public"
 msgstr "Tee julkiseksi"
 
-#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Make public ({publicKey})"
 msgstr "Tee julkiseksi ({publicKey})"
 
@@ -254,25 +298,37 @@ msgstr "Uusi idea"
 msgid "New idea from this feedback"
 msgstr "Uusi idea tästä palautteesta"
 
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/pages.tsx
+msgid "No board is public yet. Make one public under Settings."
+msgstr "Yksikään taulu ei ole vielä julkinen. Julkaise yksi Asetuksissa."
+
+#: src/features/roadmap/pages.tsx
 msgid "No board yet. Owners and admins create it."
 msgstr "Taulua ei vielä ole. Omistajat ja ylläpitäjät luovat sen."
 
-#: src/features/roadmap/IdeaPane.tsx
-msgid "No feedback is linked yet. Open a piece of feedback and use Link to an idea."
-msgstr "Palautetta ei ole vielä liitetty. Avaa palaute ja käytä toimintoa “Liitä ideaan”."
+#: src/features/roadmap/MoveDialog.tsx
+msgid "No feedback is linked to this idea yet."
+msgstr "Tähän ideaan ei ole vielä liitetty palautetta."
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "No feedback is linked yet. Use Link feedback, or open a piece of feedback and choose Link to an idea."
+msgstr "Palautetta ei ole vielä liitetty. Käytä Liitä palaute -toimintoa tai avaa palaute ja valitse Liitä ideaan."
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "No idea matches."
 msgstr "Mikään idea ei täsmää."
 
-#: src/features/roadmap/RoadmapColumn.tsx
-msgid "No inbox to show a board for."
-msgstr "Ei saapuneet-kansiota, jolle taulu näytettäisiin."
+#: src/features/roadmap/Board.tsx
+msgid "No ideas yet. New ones land here."
+msgstr "Ideoita ei ole vielä. Uudet ilmestyvät tänne."
 
 #: src/features/roadmap/Settings.tsx
 msgid "None"
 msgstr "Ei mitään"
+
+#: src/features/roadmap/Board.tsx
+msgid "Nothing here yet."
+msgstr "Täällä ei ole vielä mitään."
 
 #: src/features/roadmap/Settings.tsx
 msgid "Off"
@@ -282,7 +338,7 @@ msgstr "Pois"
 msgid "On: anyone with the address reads the board, and signed-in readers vote and suggest ideas. Off: only your team sees it, as a tool to sort feedback."
 msgstr "Päällä: kaikki, joilla on osoite, lukevat taulun, ja kirjautuneet lukijat äänestävät ja ehdottavat ideoita. Pois: vain tiimisi näkee sen, työkaluna palautteen lajitteluun."
 
-#: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/IdeaFeedback.tsx
 msgid "One reply, written once, goes to every open feedback conversation linked to this idea, as you, on each conversation’s own channel."
 msgstr "Yksi vastaus, kirjoitettuna kerran, menee jokaiseen tähän ideaan liitettyyn avoimeen palautekeskusteluun sinuna, kunkin keskustelun omaa kanavaa pitkin."
 
@@ -290,9 +346,22 @@ msgstr "Yksi vastaus, kirjoitettuna kerran, menee jokaiseen tähän ideaan liite
 msgid "Open"
 msgstr "Avoin"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgctxt "open the feedback"
+msgid "Open"
+msgstr "Avaa"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Open Analytics"
+msgstr "Avaa analytiikka"
+
 #: src/features/roadmap/IdeaPane.tsx
 msgid "Open on the public board"
 msgstr "Avaa julkisella taululla"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Open Roadmap"
+msgstr "Avaa tiekartta"
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Pick an idea of this inbox’s board"
@@ -302,17 +371,11 @@ msgstr "Valitse idea tämän saapuneet-kansion taululta"
 msgid "Posted as your public reply on the idea. Markdown works."
 msgstr "Julkaistaan julkisena vastauksenasi ideaan. Markdown toimii."
 
-#: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Private"
 msgstr "Yksityinen"
 
-#: src/features/roadmap/pages.tsx
-msgid "Private, only your team sees it"
-msgstr "Yksityinen, vain tiimisi näkee sen"
-
-#: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/BoardBar.tsx
 #: src/features/roadmap/Settings.tsx
 msgid "Public"
 msgstr "Julkinen"
@@ -329,19 +392,37 @@ msgstr "Lukijat eivät voi ehdottaa ideoita. Äänet ja vastaukset toimivat silt
 msgid "Readers suggested new ideas. Review them before they show on the public board."
 msgstr "Lukijat ehdottivat uusia ideoita. Tarkista ne ennen kuin ne näkyvät julkisella taululla."
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Reply to everyone"
+msgstr "Vastaa kaikille"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Reply to linked ({key})"
+msgstr "Vastaa liitettyihin ({key})"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Resolved feedback does not get it: {closed}"
+msgstr "Ratkaistu palaute ei saa sitä: {closed}"
+
 #: src/features/roadmap/Board.tsx
 msgid "Review"
 msgstr "Tarkistus"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Review the reply"
+msgstr "Tarkista vastaus"
+
 #: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
 msgid "Roadmap"
 msgstr "Tiekartta"
 
-#: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Roadmap boards"
 msgstr "Tiekarttataulut"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Save"
+msgstr "Tallenna"
 
 #: src/features/roadmap/Settings.tsx
 msgid "Saved"
@@ -355,9 +436,13 @@ msgstr "Hae ideoita"
 msgid "Settings"
 msgstr "Asetukset"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Shipped. Open feedback linked to it: {open}. A reply is ready to send."
+msgstr "Julkaistu. Siihen liitetty avoin palaute: {open}. Vastaus on valmiina lähetettäväksi."
+
 #: src/features/roadmap/pages.tsx
-msgid "Show your customers what you are building, and link the feedback behind each idea. Create a board for an inbox to sort ideas into stages."
-msgstr "Näytä asiakkaillesi, mitä rakennat, ja liitä kunkin idean takana oleva palaute. Luo taulu postilaatikolle lajitellaksesi ideat vaiheisiin."
+msgid "Show your customers what you are building, and link the feedback behind each idea. Create a board for {missingName} to sort ideas into stages."
+msgstr "Näytä asiakkaillesi, mitä rakennat, ja liitä jokaisen idean takana oleva palaute. Luo taulu tuotteelle {missingName}, jotta voit lajitella ideat vaiheisiin."
 
 #: src/features/roadmap/Settings.tsx
 msgid "Shown under the name on the public board."
@@ -404,6 +489,10 @@ msgstr "Liitetyn palautteen edistyminen ei muutu. Liitetty palaute: {linked}"
 msgid "The public board embeds this chat, and ideas your team starts are filed on it."
 msgstr "Julkinen taulu upottaa tämän chatin, ja tiimisi aloittamat ideat tallennetaan siihen."
 
+#: src/features/roadmap/MoveDialog.tsx
+msgid "The rest already have it."
+msgstr "Muilla se on jo."
+
 #: src/features/roadmap/pages.tsx
 msgid "This board no longer exists or you cannot see it."
 msgstr "Tätä taulua ei enää ole tai et voi nähdä sitä."
@@ -412,14 +501,18 @@ msgstr "Tätä taulua ei enää ole tai et voi nähdä sitä."
 msgid "This inbox has no roadmap board. Create one under Roadmap first."
 msgstr "Tällä saapuneet-kansiolla ei ole tiekarttataulua. Luo sellainen ensin kohdassa Tiekartta."
 
-#: src/features/roadmap/CreateBoardDialog.tsx
-msgid "This inbox has no web chat channel. Add one first, because the public board embeds it."
-msgstr "Tällä saapuneet-kansiolla ei ole verkkochat-kanavaa. Lisää ensin yksi, koska julkinen taulu upottaa sen."
-
 #: src/features/roadmap/LinkIdeaDialog.tsx
 #: src/features/roadmap/NewIdeaDialog.tsx
 msgid "Title"
 msgstr "Otsikko"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Unlink"
+msgstr "Poista liitos"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Unlinked feedback from {inboxName}"
+msgstr "Liittämätön palaute tuotteelta {inboxName}"
 
 #: src/features/roadmap/Settings.tsx
 msgid "Use 3 to 48 letters, numbers and inner hyphens."
@@ -437,6 +530,6 @@ msgstr "Näkyvyys"
 msgid "Waiting for approval"
 msgstr "Odottaa hyväksyntää"
 
-#: src/features/roadmap/RoadmapColumn.tsx
-msgid "Waiting for approval: {pending}"
-msgstr "Odottaa hyväksyntää: {pending}"
+#: src/features/roadmap/Settings.tsx
+msgid "You have unsaved changes."
+msgstr "Sinulla on tallentamattomia muutoksia."

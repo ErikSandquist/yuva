@@ -332,6 +332,12 @@ function Editor({
     ...article.translations.map((x) => x.locale).filter((l) => !center.locales.includes(l)),
   ]
   const localeState = (l: string) => article.translations.find((x) => x.locale === l)?.state
+  const localeLabel = (l: string) => {
+    const x = article.translations.find((y) => y.locale === l)
+    if (!x) return t`Not written`
+    if (x.outdated) return t`Out of date`
+    return x.state === "changed" ? t`Changed` : stateText[x.state]
+  }
 
   const status = m.save.isPending ? (
     <span className="inline-flex items-center gap-1.5">
@@ -353,6 +359,28 @@ function Editor({
   const publishKey = `${mod} ↵`
   const canDeleteArticle = canPublish || !article.translations.some((x) => x.state !== "draft")
   const canDeleteTranslation = article.translations.length > 1 && (canPublish || !published) && !!tr
+
+  const markUpToDate = async () => {
+    const current = await save()
+    if (!current) return
+    try {
+      const res = await m.save.mutateAsync({
+        locale,
+        base_version: current.version,
+        title: current.title,
+        body: current.body,
+        keywords: current.keywords,
+        slug: current.slug || undefined,
+      })
+      setBase(res.version)
+      setSaved(fieldsOf(res))
+      setSaveError(null)
+    } catch (err) {
+      const theirs = conflictOf(err)
+      if (theirs) setConflict(theirs)
+      else setSaveError(err)
+    }
+  }
 
   const originalLanguage = localeName(center.default_locale)
   const sourceVisible = !!source || locale !== center.default_locale
@@ -376,6 +404,14 @@ function Editor({
                   <span className="inline-flex items-center gap-1.5">
                     <StateDot state={localeState(l)} />
                     {localeName(l)}
+                    <span
+                      className={cn(
+                        "text-caption font-normal",
+                        article.translations.find((y) => y.locale === l)?.outdated ? "text-warning" : "text-faint"
+                      )}
+                    >
+                      {localeLabel(l)}
+                    </span>
                   </span>
                 ),
                 testId: `help-editor-locale-${l}`,
@@ -508,6 +544,37 @@ function Editor({
             </Button>
           </div>
         </div>
+        {tr?.outdated && source && (
+          <Notice tone="warning" icon={TriangleAlertIcon} data-testid="help-outdated">
+            <p className="font-medium">
+              <Trans>
+                The original changed after this translation was written. Compare them, then mark it up to date.
+              </Trans>
+            </p>
+            <div className="flex flex-wrap gap-2">
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => {
+                  setShowSource(true)
+                  setPane("original")
+                }}
+                data-testid="help-show-original"
+              >
+                <Trans>Show original</Trans>
+              </Button>
+              <Button
+                size="sm"
+                variant="outline"
+                disabled={m.save.isPending || !titleOk}
+                onClick={() => void markUpToDate()}
+                data-testid="help-mark-current"
+              >
+                <Trans>Mark up to date</Trans>
+              </Button>
+            </div>
+          </Notice>
+        )}
         {conflict && (
           <Notice tone="warning" icon={TriangleAlertIcon} data-testid="help-conflict">
             <p className="font-medium">

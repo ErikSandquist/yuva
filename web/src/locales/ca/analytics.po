@@ -409,6 +409,7 @@ msgid "Break down by prop"
 msgstr "Desglossa per propietat"
 
 #: src/features/analytics/Goals.tsx
+#: src/features/analytics/Overview.tsx
 msgid "Breakdown"
 msgstr "Desglossament"
 
@@ -1360,6 +1361,7 @@ msgstr "Base de dades de llocs"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
 #: src/features/analytics/Sharing.tsx
 msgid "Locations"
 msgstr "Llocs"
@@ -1469,6 +1471,10 @@ msgstr "Nou {kind}: {value} amb {count}, cap en els dies comparats."
 msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."
 msgstr "Nou {kind}: {value}. {metric}: {now}, cap en els dies comparats."
 
+#: src/features/analytics/Overview.tsx
+msgid "New and returning"
+msgstr "Nous i recurrents"
+
 #: src/features/analytics/Funnels.tsx
 msgid "New funnel"
 msgstr "Embut nou"
@@ -1509,6 +1515,10 @@ msgstr "Sense comparació"
 #: src/features/analytics/Settings.tsx
 msgid "No consent features are offered."
 msgstr "No s'ofereix cap funció de consentiment."
+
+#: src/features/analytics/Overview.tsx
+msgid "No consented visitors in this range."
+msgstr "Cap visitant que hagi acceptat en aquest interval."
 
 #: src/features/analytics/Retention.tsx
 msgid "No consented visitors yet"
@@ -2086,6 +2096,7 @@ msgid "Requests with Do Not Track or Global Privacy Control, and events without 
 msgstr "Les sol·licituds amb Do Not Track o Global Privacy Control, i els esdeveniments sense consentiment en una propietat que el necessita, es reben però ni es desen ni es compten aquí."
 
 #: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Overview.tsx
 msgid "Retention"
 msgstr "Retenció"
 

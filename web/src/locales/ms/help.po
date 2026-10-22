@@ -77,8 +77,8 @@ msgid "Another help center already uses this address, now or before."
 msgstr "Pusat bantuan lain menggunakan alamat ini, sekarang atau sebelum ini."
 
 #: src/features/help/pages.tsx
-msgid "Answer common questions once, in writing. Each product gets its own help center with articles, collections and a report of what people search for."
-msgstr "Jawab soalan lazim sekali sahaja, secara bertulis. Setiap produk mendapat pusat bantuannya sendiri dengan artikel, koleksi dan laporan tentang apa yang dicari orang."
+msgid "Answer common questions once, in writing. Each product gets its own help center with articles, collections and a report of what people search for. Pages are hosted by Yuva, so there is nothing to install on your site."
+msgstr "Jawab soalan lazim sekali sahaja, secara bertulis. Setiap produk mendapat pusat bantuan sendiri dengan artikel, koleksi dan laporan tentang apa yang dicari orang. Halaman dihoskan oleh Yuva, jadi tiada apa-apa untuk dipasang di tapak anda."
 
 #: src/features/help/pages.tsx
 msgid "Answer common questions once, in writing. Pick an inbox’s help center to write articles, group them in collections and see what customers search for."
@@ -162,6 +162,7 @@ msgstr "Senarai berpeluru"
 msgid "Cancel"
 msgstr "Batal"
 
+#: src/features/help/ArticleEditor.tsx
 #: src/features/help/ArticlesTab.tsx
 msgid "Changed"
 msgstr "Diubah"
@@ -226,11 +227,6 @@ msgstr "Cipta pusat bantuan"
 #: src/features/help/HelpColumn.tsx
 msgid "Create help center ({newKey})"
 msgstr "Cipta pusat bantuan ({newKey})"
-
-#. placeholder {0}: inbox.name
-#: src/features/help/pages.tsx
-msgid "Create one for {0}"
-msgstr "Cipta satu untuk {0}"
 
 #: src/features/help/CollectionsTab.tsx
 #: src/features/help/SettingsTab.tsx
@@ -342,11 +338,16 @@ msgstr "Kumpulkan artikel supaya pengunjung boleh menyemak imbas. Satu koleksi b
 msgid "Heading"
 msgstr "Tajuk"
 
+#: src/features/help/CenterBar.tsx
 #: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 #: src/features/help/SettingsTab.tsx
 msgid "Help center"
 msgstr "Pusat bantuan"
+
+#: src/features/help/pages.tsx
+msgid "Help center created. Write the first article, then publish it."
+msgstr "Pusat bantuan dicipta. Tulis artikel pertama, kemudian terbitkannya."
 
 #: src/features/help/SettingsTab.tsx
 msgid "Help center deleted"
@@ -445,7 +446,10 @@ msgid "Main language"
 msgstr "Bahasa utama"
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+msgid "Mark up to date"
+msgstr "Tandakan terkini"
+
+#: src/features/help/ArticleEditor.tsx
 msgid "More"
 msgstr "Lagi"
 
@@ -522,6 +526,11 @@ msgstr "Tiada draf. Semua yang ditulis telah diterbitkan."
 msgid "No earlier versions yet."
 msgstr "Belum ada versi terdahulu."
 
+#. placeholder {0}: target.inbox.name
+#: src/features/help/pages.tsx
+msgid "No help center for {0} yet"
+msgstr "Belum ada pusat bantuan untuk {0}"
+
 #: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 msgid "No help center yet. Owners and admins create it."
@@ -540,6 +549,7 @@ msgstr "Tiada"
 msgid "not named"
 msgstr "tiada nama"
 
+#: src/features/help/ArticleEditor.tsx
 #: src/features/help/ArticlesTab.tsx
 msgid "Not written"
 msgstr "Belum ditulis"
@@ -555,6 +565,10 @@ msgstr "daripada {answers} jawapan"
 #: src/features/help/SettingsTab.tsx
 msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish and unpublish too."
 msgstr "Mati: ejen menulis draf dan menghantarnya, pemilik dan pentadbir menerbitkan. Hidup: ejen yang mempunyai akses ke peti masuk juga menerbitkan dan membatalkan penerbitan."
+
+#: src/features/help/SettingsTab.tsx
+msgid "On: anyone with the address can read the help center. Off: only your team can preview it."
+msgstr "Hidup: sesiapa yang ada alamat boleh membaca pusat bantuan. Mati: hanya pasukan anda boleh pratonton."
 
 #: src/features/help/ArticleEditor.tsx
 msgid "One path per line, such as /billing/*. The chat widget suggests this article on matching pages."
@@ -618,6 +632,10 @@ msgstr "Pratonton"
 msgid "Preview ({alt} P)"
 msgstr "Pratonton ({alt} P)"
 
+#: src/features/help/pages.tsx
+msgid "Preview ({previewKey})"
+msgstr "Pratonton ({previewKey})"
+
 #. placeholder {0}: center.name
 #: src/features/help/pages.tsx
 msgid "Preview of {0}"
@@ -632,22 +650,27 @@ msgid "Public address"
 msgstr "Alamat awam"
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "Publish"
 msgstr "Terbitkan"
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "Publish ({publishKey})"
 msgstr "Terbitkan ({publishKey})"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/CenterBar.tsx
 #: src/features/help/HelpColumn.tsx
-#: src/features/help/pages.tsx
 #: src/features/help/Revisions.tsx
+#: src/features/help/SettingsTab.tsx
 #: src/features/help/text.tsx
 msgid "Published"
 msgstr "Diterbitkan"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Publishing"
+msgstr "Penerbitan"
 
 #: src/features/help/text.tsx
 msgid "Question mark"
@@ -758,6 +781,10 @@ msgstr "Perisai"
 msgid "Show"
 msgstr "Tunjukkan"
 
+#: src/features/help/ArticleEditor.tsx
+msgid "Show original"
+msgstr "Tunjuk asal"
+
 #: src/features/help/SettingsTab.tsx
 msgid "Shown under the name on the home page."
 msgstr "Dipaparkan di bawah nama pada halaman utama."
@@ -831,6 +858,10 @@ msgid "The main language has no text for this article yet."
 msgstr "Bahasa utama belum mempunyai teks untuk artikel ini."
 
 #: src/features/help/ArticleEditor.tsx
+msgid "The original changed after this translation was written. Compare them, then mark it up to date."
+msgstr "Teks asal berubah selepas terjemahan ini ditulis. Bandingkan kedua-duanya, kemudian tandakan sebagai terkini."
+
+#: src/features/help/ArticleEditor.tsx
 msgid "The page stops working for visitors. The draft stays, and you can publish it again."
 msgstr "Halaman berhenti berfungsi untuk pengunjung. Draf kekal, dan anda boleh menerbitkannya semula."
 
@@ -880,15 +911,24 @@ msgid "Type a word to search for."
 msgstr "Taip perkataan untuk dicari."
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "Unpublish"
 msgstr "Batalkan penerbitan"
+
+#: src/features/help/CenterBar.tsx
+msgid "Unpublish ({publishKey})"
+msgstr "Batalkan penerbitan ({publishKey})"
+
+#: src/features/help/CenterBar.tsx
+msgid "Unpublish this help center?"
+msgstr "Batalkan penerbitan pusat bantuan ini?"
 
 #: src/features/help/ArticleEditor.tsx
 msgid "Unpublish this translation?"
 msgstr "Batalkan penerbitan terjemahan ini?"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/CenterBar.tsx
 #: src/features/help/HelpColumn.tsx
 msgid "Unpublished"
 msgstr "Belum diterbitkan"
@@ -896,10 +936,6 @@ msgstr "Belum diterbitkan"
 #: src/features/help/text.tsx
 msgid "Unpublished changes"
 msgstr "Perubahan belum diterbitkan"
-
-#: src/features/help/pages.tsx
-msgid "Unpublished, only your team can preview it"
-msgstr "Belum diterbitkan, hanya pasukan anda boleh melihat pratonton"
 
 #: src/features/help/ArticleEditor.tsx
 msgid "Unsaved changes"
@@ -929,11 +965,11 @@ msgstr "Versi dipulihkan ke draf"
 msgid "View"
 msgstr "Lihat"
 
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "View site"
 msgstr "Lihat tapak"
 
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "View site ({openKey})"
 msgstr "Lihat tapak ({openKey})"
 
@@ -945,13 +981,13 @@ msgstr "Paparan"
 msgid "Views · 7 days"
 msgstr "Paparan · 7 hari"
 
+#: src/features/help/CenterBar.tsx
+msgid "Visitors can no longer open it and the chat widget stops suggesting its articles. Your articles stay as they are."
+msgstr "Pelawat tidak lagi dapat membukanya dan widget sembang berhenti mencadangkan artikelnya. Artikel anda kekal seperti sedia ada."
+
 #: src/features/help/ReportTab.tsx
 msgid "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
 msgstr "Apa yang dibaca dan dicari pengunjung. Paparan adalah anggaran, dan angka sampai ke halaman ini dalam masa seminit."
-
-#: src/features/help/SettingsTab.tsx
-msgid "Who can publish"
-msgstr "Siapa boleh menerbitkan"
 
 #: src/features/help/ReportTab.tsx
 msgid "Words visitors typed that found nothing. A new article for each is the fastest fix."
@@ -965,6 +1001,10 @@ msgstr "Tulis"
 #: src/features/help/ArticleEditor.tsx
 msgid "Write the answer in Markdown…"
 msgstr "Tulis jawapan dalam Markdown…"
+
+#: src/features/help/CenterBar.tsx
+msgid "Written here, shown on pages Yuva hosts, searched from the chat widget and the reply box. Documentation pages on your own site live under <0>Docs</0>."
+msgstr "Ditulis di sini, dipaparkan pada halaman yang dihoskan Yuva, dan dicari daripada widget sembang dan kotak balasan. Halaman dokumentasi di tapak anda sendiri berada di bawah <0>Docs</0>."
 
 #: src/features/help/SettingsTab.tsx
 msgid "Your product."

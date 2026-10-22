@@ -7,6 +7,10 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: bn\n"
 
+#: src/features/roadmap/CreateBoardDialog.tsx
+msgid "{inboxName} has no web chat channel. Add one first, because the public board embeds it."
+msgstr "{inboxName}-এর কোনো ওয়েব চ্যাট চ্যানেল নেই। আগে একটি যোগ করুন, কারণ পাবলিক বোর্ড এটি এমবেড করে।"
+
 #: src/features/roadmap/Board.tsx
 msgid "{linked, plural, one {# feedback} other {# feedback}}"
 msgstr "{linked, plural, one {#টি ফিডব্যাক} other {#টি ফিডব্যাক}}"
@@ -29,9 +33,25 @@ msgid "A reader's posts wait for a member until one of theirs is approved. Signe
 msgstr "পাঠকের একটি পোস্ট অনুমোদিত না হওয়া পর্যন্ত তার পোস্ট একজন সদস্যের অপেক্ষায় থাকে। আপনার অ্যাপের সাইন-ইন করা ব্যবহারকারীরা সঙ্গে সঙ্গে প্রকাশ করে।"
 
 #: src/features/roadmap/CreateBoardDialog.tsx
+msgid "Add a web chat channel"
+msgstr "ওয়েব চ্যাট চ্যানেল যোগ করুন"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
 #: src/features/roadmap/Settings.tsx
 msgid "Address"
 msgstr "ঠিকানা"
+
+#: src/features/roadmap/BoardBar.tsx
+msgid "All boards"
+msgstr "সব বোর্ড"
+
+#: src/features/roadmap/Settings.tsx
+msgid "All changes saved."
+msgstr "সব পরিবর্তন সংরক্ষিত হয়েছে।"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "All feedback from {inboxName} that fits is already linked."
+msgstr "{inboxName}-এর যে সব ফিডব্যাক মানায় তা ইতিমধ্যে যুক্ত।"
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Already linked"
@@ -89,13 +109,16 @@ msgstr "কুকি ছাড়াই পাবলিক বোর্ডের
 
 #: src/features/roadmap/CreateBoardDialog.tsx
 #: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
 msgid "Create board"
 msgstr "বোর্ড তৈরি করুন"
 
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Create board ({newKey})"
 msgstr "বোর্ড তৈরি করুন ({newKey})"
+
+#: src/features/roadmap/BoardBar.tsx
+msgid "Create board for {name}"
+msgstr "{name}-এর জন্য বোর্ড তৈরি করুন"
 
 #: src/features/roadmap/NewIdeaDialog.tsx
 msgid "Create idea"
@@ -123,17 +146,21 @@ msgstr "বোর্ডটি তার আইডিয়া, ভোট, উত
 msgid "Description"
 msgstr "বিবরণ"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Dismiss"
+msgstr "বন্ধ করুন"
+
 #: src/features/roadmap/Board.tsx
 msgid "Done"
 msgstr "হয়ে গেছে"
 
-#: src/features/roadmap/MoveDialog.tsx
-msgid "Every linked feedback that does not have it yet gets the progress {progress}. Linked feedback: {linked}"
-msgstr "প্রতিটি যুক্ত ফিডব্যাকের অগ্রগতি, আগে থেকে তেমন না থাকলে, {progress} হয়ে যাবে। যুক্ত ফিডব্যাক: {linked}"
-
 #: src/features/roadmap/Settings.tsx
 msgid "Everyone's posts are published at once, except those of authors you marked as spam."
 msgstr "সবার পোস্ট সঙ্গে সঙ্গে প্রকাশিত হয়, আপনি যাদের স্প্যাম চিহ্নিত করেছেন সেই লেখকরা ছাড়া।"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Good news: “{title}” has shipped. Thank you for asking for it."
+msgstr "সুখবর: “{title}” রিলিজ হয়েছে। এটি চাওয়ার জন্য ধন্যবাদ।"
 
 #: src/features/roadmap/Board.tsx
 msgid "Hidden"
@@ -155,21 +182,30 @@ msgstr "আইডিয়া যেগুলোতে আপনার গ্র
 msgid "Ideas, votes and stages for {inboxName}, with the feedback behind each idea. It stays private until you make it public."
 msgstr "{inboxName}-এর আইডিয়া, ভোট ও ধাপ, প্রতিটি আইডিয়ার পেছনের ফিডব্যাকসহ। আপনি পাবলিক না করা পর্যন্ত এটি ব্যক্তিগত থাকে।"
 
-#: src/features/roadmap/RoadmapColumn.tsx
-msgid "Ideas: {ideas}"
-msgstr "আইডিয়া: {ideas}"
-
 #: src/features/roadmap/NewIdeaDialog.tsx
 msgid "It goes into Ideas on the board, where customers can vote on it."
 msgstr "এটি বোর্ডের আইডিয়ায় যায়, যেখানে গ্রাহকরা ভোট দিতে পারেন।"
 
-#: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/NewIdeaDialog.tsx
+msgid "It goes into Ideas on the board. The board is private, so only your team sees it."
+msgstr "এটি বোর্ডের আইডিয়া ধাপে যায়। বোর্ডটি প্রাইভেট, তাই শুধু আপনার টিম দেখে।"
+
+#: src/features/roadmap/IdeaFeedback.tsx
 msgid "It was unlinked from the idea."
 msgstr "এটি আইডিয়া থেকে বিচ্ছিন্ন করা হয়েছে।"
 
 #: src/features/roadmap/Settings.tsx
 msgid "Its ideas, votes, replies and stage history are deleted with it."
 msgstr "এর আইডিয়া, ভোট, উত্তর ও ধাপের ইতিহাসও এর সঙ্গে মুছে যায়।"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgctxt "link feedback to the idea"
+msgid "Link"
+msgstr "যুক্ত করুন"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Link feedback"
+msgstr "ফিডব্যাক যুক্ত করুন"
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Link this feedback to an idea…"
@@ -179,13 +215,21 @@ msgstr "এই ফিডব্যাক কোনো আইডিয়ার �
 msgid "Link to an idea"
 msgstr "কোনো আইডিয়ার সঙ্গে যুক্ত করুন"
 
-#: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Linked"
+msgstr "যুক্ত"
+
+#: src/features/roadmap/IdeaFeedback.tsx
 msgid "Linked feedback"
 msgstr "যুক্ত ফিডব্যাক"
 
 #: src/features/roadmap/IdeaPane.tsx
 msgid "Linked feedback set to {progress}: {set}"
 msgstr "যুক্ত ফিডব্যাকের অগ্রগতি {progress} করা হয়েছে: {set}"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Linked feedback that gets the progress {progress}: {gets} of {linked}."
+msgstr "{progress} অগ্রগতি পাবে এমন যুক্ত ফিডব্যাক: {linked}-এর মধ্যে {gets}।"
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Linked to {title}"
@@ -195,19 +239,19 @@ msgstr "{title}-এর সঙ্গে যুক্ত হয়েছে"
 msgid "Load more"
 msgstr "আরও লোড করুন"
 
-#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Make private"
 msgstr "ব্যক্তিগত করুন"
 
-#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Make private ({publicKey})"
 msgstr "ব্যক্তিগত করুন ({publicKey})"
 
-#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Make public"
 msgstr "পাবলিক করুন"
 
-#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Make public ({publicKey})"
 msgstr "পাবলিক করুন ({publicKey})"
 
@@ -254,25 +298,37 @@ msgstr "নতুন আইডিয়া"
 msgid "New idea from this feedback"
 msgstr "এই ফিডব্যাক থেকে নতুন আইডিয়া"
 
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/pages.tsx
+msgid "No board is public yet. Make one public under Settings."
+msgstr "এখনও কোনো বোর্ড পাবলিক নয়। সেটিংসে গিয়ে একটি পাবলিক করুন।"
+
+#: src/features/roadmap/pages.tsx
 msgid "No board yet. Owners and admins create it."
 msgstr "এখনও কোনো বোর্ড নেই। মালিক ও অ্যাডমিনরা এটি তৈরি করেন।"
 
-#: src/features/roadmap/IdeaPane.tsx
-msgid "No feedback is linked yet. Open a piece of feedback and use Link to an idea."
-msgstr "এখনও কোনো ফিডব্যাক যুক্ত নেই। একটি ফিডব্যাক খুলে “কোনো আইডিয়ার সঙ্গে যুক্ত করুন” ব্যবহার করুন।"
+#: src/features/roadmap/MoveDialog.tsx
+msgid "No feedback is linked to this idea yet."
+msgstr "এই আইডিয়ার সঙ্গে এখনও কোনো ফিডব্যাক যুক্ত নেই।"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "No feedback is linked yet. Use Link feedback, or open a piece of feedback and choose Link to an idea."
+msgstr "এখনও কোনো ফিডব্যাক যুক্ত নেই। “ফিডব্যাক যুক্ত করুন” ব্যবহার করুন, অথবা একটি ফিডব্যাক খুলে “কোনো আইডিয়ার সঙ্গে যুক্ত করুন” বেছে নিন।"
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "No idea matches."
 msgstr "কোনো আইডিয়া মেলেনি।"
 
-#: src/features/roadmap/RoadmapColumn.tsx
-msgid "No inbox to show a board for."
-msgstr "বোর্ড দেখানোর মতো কোনো ইনবক্স নেই।"
+#: src/features/roadmap/Board.tsx
+msgid "No ideas yet. New ones land here."
+msgstr "এখনও কোনো আইডিয়া নেই। নতুনগুলো এখানে আসবে।"
 
 #: src/features/roadmap/Settings.tsx
 msgid "None"
 msgstr "নেই"
+
+#: src/features/roadmap/Board.tsx
+msgid "Nothing here yet."
+msgstr "এখানে এখনও কিছু নেই।"
 
 #: src/features/roadmap/Settings.tsx
 msgid "Off"
@@ -282,7 +338,7 @@ msgstr "বন্ধ"
 msgid "On: anyone with the address reads the board, and signed-in readers vote and suggest ideas. Off: only your team sees it, as a tool to sort feedback."
 msgstr "চালু: ঠিকানা জানা যে কেউ বোর্ড পড়তে পারেন, আর সাইন-ইন করা পাঠকেরা ভোট দেন ও আইডিয়া প্রস্তাব করেন। বন্ধ: শুধু আপনার টিম এটি দেখে, ফিডব্যাক বাছাইয়ের একটি টুল হিসেবে।"
 
-#: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/IdeaFeedback.tsx
 msgid "One reply, written once, goes to every open feedback conversation linked to this idea, as you, on each conversation’s own channel."
 msgstr "একবার লেখা একটি উত্তর এই আইডিয়ার সঙ্গে যুক্ত প্রতিটি খোলা ফিডব্যাক কথোপকথনে, আপনার নামে, প্রতিটি কথোপকথনের নিজস্ব চ্যানেলে যায়।"
 
@@ -290,9 +346,22 @@ msgstr "একবার লেখা একটি উত্তর এই আই�
 msgid "Open"
 msgstr "খুলুন"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgctxt "open the feedback"
+msgid "Open"
+msgstr "খুলুন"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Open Analytics"
+msgstr "অ্যানালিটিক্স খুলুন"
+
 #: src/features/roadmap/IdeaPane.tsx
 msgid "Open on the public board"
 msgstr "পাবলিক বোর্ডে খুলুন"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Open Roadmap"
+msgstr "রোডম্যাপ খুলুন"
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Pick an idea of this inbox’s board"
@@ -302,17 +371,11 @@ msgstr "এই ইনবক্সের বোর্ড থেকে একট�
 msgid "Posted as your public reply on the idea. Markdown works."
 msgstr "আইডিয়ায় আপনার পাবলিক উত্তর হিসেবে পোস্ট হয়। Markdown কাজ করে।"
 
-#: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Private"
 msgstr "ব্যক্তিগত"
 
-#: src/features/roadmap/pages.tsx
-msgid "Private, only your team sees it"
-msgstr "ব্যক্তিগত, শুধু আপনার টিম দেখে"
-
-#: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/BoardBar.tsx
 #: src/features/roadmap/Settings.tsx
 msgid "Public"
 msgstr "পাবলিক"
@@ -329,19 +392,37 @@ msgstr "পাঠকেরা আইডিয়া প্রস্তাব ক
 msgid "Readers suggested new ideas. Review them before they show on the public board."
 msgstr "পাঠকরা নতুন আইডিয়া প্রস্তাব করেছেন। পাবলিক বোর্ডে দেখানোর আগে সেগুলো পর্যালোচনা করুন।"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Reply to everyone"
+msgstr "সবাইকে উত্তর দিন"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Reply to linked ({key})"
+msgstr "যুক্তগুলোতে উত্তর দিন ({key})"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Resolved feedback does not get it: {closed}"
+msgstr "সমাধান হয়ে যাওয়া ফিডব্যাক এটি পায় না: {closed}"
+
 #: src/features/roadmap/Board.tsx
 msgid "Review"
 msgstr "পর্যালোচনা করুন"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Review the reply"
+msgstr "উত্তর দেখে নিন"
+
 #: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
 msgid "Roadmap"
 msgstr "রোডম্যাপ"
 
-#: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Roadmap boards"
 msgstr "রোডম্যাপ বোর্ড"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Save"
+msgstr "সংরক্ষণ করুন"
 
 #: src/features/roadmap/Settings.tsx
 msgid "Saved"
@@ -355,9 +436,13 @@ msgstr "আইডিয়া খুঁজুন"
 msgid "Settings"
 msgstr "সেটিংস"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Shipped. Open feedback linked to it: {open}. A reply is ready to send."
+msgstr "রিলিজ হয়েছে। এর সঙ্গে যুক্ত খোলা ফিডব্যাক: {open}। পাঠানোর জন্য একটি উত্তর তৈরি আছে।"
+
 #: src/features/roadmap/pages.tsx
-msgid "Show your customers what you are building, and link the feedback behind each idea. Create a board for an inbox to sort ideas into stages."
-msgstr "আপনি কী বানাচ্ছেন তা গ্রাহকদের দেখান এবং প্রতিটি আইডিয়ার পিছনের ফিডব্যাক লিঙ্ক করুন। আইডিয়া ধাপে ধাপে সাজাতে একটি ইনবক্সের জন্য বোর্ড তৈরি করুন।"
+msgid "Show your customers what you are building, and link the feedback behind each idea. Create a board for {missingName} to sort ideas into stages."
+msgstr "আপনি কী বানাচ্ছেন তা গ্রাহকদের দেখান এবং প্রতিটি আইডিয়ার পেছনের ফিডব্যাক যুক্ত করুন। আইডিয়াগুলো ধাপে সাজাতে {missingName}-এর জন্য একটি বোর্ড তৈরি করুন।"
 
 #: src/features/roadmap/Settings.tsx
 msgid "Shown under the name on the public board."
@@ -404,6 +489,10 @@ msgstr "যুক্ত ফিডব্যাকের অগ্রগতি ব
 msgid "The public board embeds this chat, and ideas your team starts are filed on it."
 msgstr "পাবলিক বোর্ড এই চ্যাট এমবেড করে, এবং আপনার টিমের শুরু করা আইডিয়া তাতে জমা হয়।"
 
+#: src/features/roadmap/MoveDialog.tsx
+msgid "The rest already have it."
+msgstr "বাকিদের কাছে এটি আগেই আছে।"
+
 #: src/features/roadmap/pages.tsx
 msgid "This board no longer exists or you cannot see it."
 msgstr "এই বোর্ডটি আর নেই, অথবা আপনি এটি দেখতে পারছেন না।"
@@ -412,14 +501,18 @@ msgstr "এই বোর্ডটি আর নেই, অথবা আপনি
 msgid "This inbox has no roadmap board. Create one under Roadmap first."
 msgstr "এই ইনবক্সের কোনো রোডম্যাপ বোর্ড নেই। আগে রোডম্যাপে একটি তৈরি করুন।"
 
-#: src/features/roadmap/CreateBoardDialog.tsx
-msgid "This inbox has no web chat channel. Add one first, because the public board embeds it."
-msgstr "এই ইনবক্সের কোনো ওয়েব চ্যাট চ্যানেল নেই। আগে একটি যোগ করুন, কারণ পাবলিক বোর্ড সেটি এমবেড করে।"
-
 #: src/features/roadmap/LinkIdeaDialog.tsx
 #: src/features/roadmap/NewIdeaDialog.tsx
 msgid "Title"
 msgstr "শিরোনাম"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Unlink"
+msgstr "সংযোগ সরান"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Unlinked feedback from {inboxName}"
+msgstr "{inboxName}-এর যুক্ত না-হওয়া ফিডব্যাক"
 
 #: src/features/roadmap/Settings.tsx
 msgid "Use 3 to 48 letters, numbers and inner hyphens."
@@ -437,6 +530,6 @@ msgstr "দৃশ্যমানতা"
 msgid "Waiting for approval"
 msgstr "অনুমোদনের অপেক্ষায়"
 
-#: src/features/roadmap/RoadmapColumn.tsx
-msgid "Waiting for approval: {pending}"
-msgstr "অনুমোদনের অপেক্ষায়: {pending}"
+#: src/features/roadmap/Settings.tsx
+msgid "You have unsaved changes."
+msgstr "আপনার অসংরক্ষিত পরিবর্তন আছে।"

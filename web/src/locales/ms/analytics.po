@@ -409,6 +409,7 @@ msgid "Break down by prop"
 msgstr "Pecahkan mengikut prop"
 
 #: src/features/analytics/Goals.tsx
+#: src/features/analytics/Overview.tsx
 msgid "Breakdown"
 msgstr "Pecahan"
 
@@ -1360,6 +1361,7 @@ msgstr "Pangkalan data lokasi"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
 #: src/features/analytics/Sharing.tsx
 msgid "Locations"
 msgstr "Lokasi"
@@ -1469,6 +1471,10 @@ msgstr "{kind} baharu: {value} dengan {count}, tiada pada hari yang dibandingkan
 msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."
 msgstr "{kind} baharu: {value}. {metric}: {now}, tiada pada hari yang dibandingkan."
 
+#: src/features/analytics/Overview.tsx
+msgid "New and returning"
+msgstr "Baharu dan kembali"
+
 #: src/features/analytics/Funnels.tsx
 msgid "New funnel"
 msgstr "Corong baharu"
@@ -1509,6 +1515,10 @@ msgstr "Tiada perbandingan"
 #: src/features/analytics/Settings.tsx
 msgid "No consent features are offered."
 msgstr "Tiada ciri persetujuan ditawarkan."
+
+#: src/features/analytics/Overview.tsx
+msgid "No consented visitors in this range."
+msgstr "Tiada pelawat bersetuju dalam julat ini."
 
 #: src/features/analytics/Retention.tsx
 msgid "No consented visitors yet"
@@ -2086,6 +2096,7 @@ msgid "Requests with Do Not Track or Global Privacy Control, and events without 
 msgstr "Permintaan dengan Do Not Track atau Global Privacy Control, dan peristiwa tanpa persetujuan pada properti yang memerlukannya, diterima tetapi tidak disimpan mahupun dikira di sini."
 
 #: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Overview.tsx
 msgid "Retention"
 msgstr "Pengekalan"
 

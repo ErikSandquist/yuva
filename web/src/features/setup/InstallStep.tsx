@@ -120,9 +120,9 @@ function ChatInstallSteps({ channel, secret }: { channel: Channel; secret?: stri
   )
 }
 
-type DocsStack = "html" | "nuxt" | "react"
+export type DocsStack = "html" | "nuxt" | "react"
 
-function docsLines(stack: DocsStack, server: string, key: string) {
+export function docsLines(stack: DocsStack, server: string, key: string) {
   if (stack === "nuxt") {
     return [
       `// npm install useyuva`,

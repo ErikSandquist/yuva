@@ -1,29 +1,34 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro"
-import { CircleAlertIcon, CircleCheckIcon, LoaderIcon, SendIcon, TriangleAlertIcon } from "lucide-react"
+import { LoaderIcon, TriangleAlertIcon } from "lucide-react"
 import { useState } from "react"
 import { Link } from "react-router"
 
 import { ErrorLine, Notice, Segmented } from "@/components/common"
-import { BROADCAST_KEYS, keyLabel } from "@/components/common/ShortcutSheet"
+import { BROADCAST_KEYS } from "@/components/common/ShortcutSheet"
 import { formatBytes, formatDateTime } from "@/components/common/text"
-import {
-  AlertDialog,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Skeleton } from "@/components/ui/skeleton"
 import { problemOf, useSchedule } from "@/features/broadcasts/broadcastQueries"
-import { paceGap } from "@/features/broadcasts/Pace"
-import { useBroadcastsStatus, useNumber, utcLine } from "@/features/broadcasts/BroadcastParts"
+import { paceGap, usePaceSummary } from "@/features/broadcasts/Pace"
+import { keyHint, useBroadcastsStatus, useNumber, utcLine } from "@/features/broadcasts/BroadcastParts"
 import { designLink } from "@/features/designs/queries"
 import { channelLink, isChecking, useDeliverability } from "@/features/settings/channels/email/deliverability"
-import type { Broadcast, BroadcastReview, BroadcastReviewItem, BroadcastReviewKey } from "@/lib/api"
+import type {
+  Broadcast,
+  BroadcastReview,
+  BroadcastReviewItem,
+  BroadcastReviewKey,
+  BroadcastReviewStatus,
+} from "@/lib/api"
 import { ApiError } from "@/lib/api"
 import { useInboxes } from "@/lib/workspace"
 import { cn } from "@/lib/utils"
@@ -75,7 +80,7 @@ function useDeliverabilityText(b: Broadcast, review: BroadcastReview) {
   return found.length ? found.join(" ") : t`The last deliverability check found something to fix.`
 }
 
-function useItemText(b: Broadcast, review: BroadcastReview) {
+export function useItemText(b: Broadcast, review: BroadcastReview) {
   const { t, i18n } = useLingui()
   const deliverability = useDeliverabilityText(b, review)
   const status = useBroadcastsStatus()
@@ -155,7 +160,7 @@ function useItemText(b: Broadcast, review: BroadcastReview) {
   return { titles, problem }
 }
 
-function fixOf(b: Broadcast, key: BroadcastReviewKey): Fix | null {
+export function fixOf(b: Broadcast, key: BroadcastReviewKey): Fix | null {
   switch (key) {
     case "sender_identity":
       return { to: `/settings/inboxes/${b.inbox_id}` }
@@ -188,10 +193,48 @@ function fixOf(b: Broadcast, key: BroadcastReviewKey): Fix | null {
   }
 }
 
-const icons = {
-  ok: <CircleCheckIcon className="mt-0.5 size-4 shrink-0 text-success" />,
-  warning: <TriangleAlertIcon className="mt-0.5 size-4 shrink-0 text-warning" />,
-  blocking: <CircleAlertIcon className="mt-0.5 size-4 shrink-0 text-destructive" />,
+export type Part = "sender" | "audience" | "content" | "subject"
+
+export const PART_OF: Partial<Record<BroadcastReviewKey, Part>> = {
+  approval: "sender",
+  sender_identity: "sender",
+  sender_ready: "sender",
+  deliverability: "sender",
+  ses_tenant: "sender",
+  audience_nonempty: "audience",
+  design: "content",
+  merge_fields: "content",
+  html_size: "content",
+  links: "content",
+  images_alt: "content",
+  subject: "subject",
+}
+
+const RANK = { blocking: 0, warning: 1, ok: 2 } as const
+
+export function worstOf(items: BroadcastReviewItem[]): BroadcastReviewStatus {
+  return items.reduce<BroadcastReviewStatus>((w, it) => (RANK[it.status] < RANK[w] ? it.status : w), "ok")
+}
+
+const stateTone = {
+  ok: "border-success/35 text-success",
+  warning: "border-warning/40 text-warning",
+  blocking: "border-destructive/35 text-destructive",
+}
+
+export function CheckState({ status, className }: { status: BroadcastReviewStatus; className?: string }) {
+  return (
+    <span
+      className={cn(
+        "inline-flex min-w-14 shrink-0 items-center justify-center whitespace-nowrap rounded-full border px-2 py-px text-caption font-medium",
+        stateTone[status],
+        className
+      )}
+      data-status={status}
+    >
+      {status === "ok" ? <Trans>Ready</Trans> : status === "warning" ? <Trans>Check</Trans> : <Trans>Fix</Trans>}
+    </span>
+  )
 }
 
 function Checklist({
@@ -207,23 +250,23 @@ function Checklist({
 }) {
   const { t } = useLingui()
   const { titles, problem } = useItemText(b, review)
-  const items = [...review.items].sort((x, y) => ORDER.indexOf(x.key) - ORDER.indexOf(y.key))
-  const rank = { blocking: 0, warning: 1, ok: 2 }
-  items.sort((x, y) => rank[x.status] - rank[y.status])
+  const items = [...review.items].sort(
+    (x, y) => RANK[x.status] - RANK[y.status] || ORDER.indexOf(x.key) - ORDER.indexOf(y.key)
+  )
   return (
-    <ul className="flex flex-col divide-y" data-testid="review-items">
+    <ul className="flex flex-col divide-y rounded-xl border" data-testid="review-items">
       {items.map((it) => {
         const text = it.status === "ok" ? null : problem(it)
         const fix = it.status === "ok" || readOnly ? null : fixOf(b, it.key)
         return (
           <li
             key={it.key}
-            className="flex gap-2.5 py-2.5"
+            className="flex items-start gap-3 px-3.5 py-2.5"
             data-testid="review-item"
             data-key={it.key}
             data-status={it.status}
           >
-            {icons[it.status]}
+            <CheckState status={it.status} className="mt-0.5" />
             <div className="flex min-w-0 flex-1 flex-col gap-0.5">
               <span className={cn("text-body", it.status === "ok" ? "text-muted-foreground" : "font-medium")}>
                 {titles[it.key]}
@@ -256,25 +299,25 @@ function toLocalInput(d: Date) {
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`
 }
 
-export function ReviewPanel({
+export function ReviewDialog({
   b,
   review,
   reviewError,
+  from,
   onFix,
-  readOnly,
-  confirming,
-  setConfirming,
+  onClose,
 }: {
   b: Broadcast
   review: BroadcastReview | undefined
   reviewError: unknown
+  from: string
   onFix: (spot: Spot) => void
-  readOnly: boolean
-  confirming: boolean
-  setConfirming: (on: boolean) => void
+  onClose: () => void
 }) {
   const { t, i18n } = useLingui()
   const num = useNumber()
+  const paceSummary = usePaceSummary()
+  const [step, setStep] = useState<1 | 2>(1)
   const [mode, setMode] = useState<"now" | "later">("now")
   const [now] = useState(() => Date.now())
   const [at, setAt] = useState(() => toLocalInput(new Date(now + 60 * 60_000)))
@@ -291,149 +334,174 @@ export function ReviewPanel({
   const name = b.name
   const when = sendAt && atValid ? formatDateTime(sendAt.toISOString(), i18n.locale) : ""
   const utc = sendAt && atValid ? utcLine(sendAt.toISOString(), i18n.locale) : ""
+  const pace = paceSummary(b.pace)
   const problem = problemOf(schedule.error)
   const changed = schedule.error instanceof ApiError && problem?.code === "audience_changed"
-  const key = keyLabel(BROADCAST_KEYS.send).join("")
+  const sendTitle = keyHint(t`Review, then send or schedule`, BROADCAST_KEYS.send)
   const submit = () => {
     schedule.mutate(
       { send_at: mode === "later" && sendAt ? sendAt.toISOString() : undefined, confirm_recipients: count },
       {
-        onSuccess: () => setConfirming(false),
+        onSuccess: onClose,
         onError: (err) => {
           const p = problemOf(err)
           if (p?.code === "audience_changed" && p.recipients !== undefined) setConfirmed(p.recipients)
-          else setConfirming(false)
         },
       }
     )
   }
   return (
-    <aside className="flex flex-col gap-4 rounded-2xl border bg-card p-4" data-testid="review-panel">
-      <div className="flex items-center gap-2">
-        <h2 className="min-w-0 flex-1 text-body font-semibold">
-          <Trans>Review and send</Trans>
-        </h2>
-        {review && (
-          <span
-            className={cn("text-caption font-medium", ready ? "text-success" : "text-destructive")}
-            data-testid="review-ready"
-          >
-            {ready ? <Trans>Ready</Trans> : <Trans>Not ready</Trans>}
-          </span>
-        )}
-      </div>
-      {review ? (
-        <Checklist b={b} review={review} onFix={onFix} readOnly={readOnly} />
-      ) : reviewError ? (
-        <ErrorLine error={reviewError} />
-      ) : (
-        <div className="flex flex-col gap-2">
-          <Skeleton className="h-8 w-full" />
-          <Skeleton className="h-8 w-full" />
-          <Skeleton className="h-8 w-full" />
-        </div>
-      )}
-      {!readOnly && (
-        <div className="flex flex-col gap-3 border-t pt-4">
-          <Segmented
-            value={mode}
-            onChange={setMode}
-            label={t`When`}
-            className="w-full"
-            itemClassName="flex-1"
-            items={[
-              { value: "now", label: t`Send now`, testId: "send-mode-now" },
-              { value: "later", label: t`Schedule`, testId: "send-mode-later" },
-            ]}
-          />
-          {mode === "later" && (
-            <div className="flex flex-col gap-1.5">
-              <Input
-                type="datetime-local"
-                value={at}
-                min={toLocalInput(new Date(now))}
-                onChange={(e) => setAt(e.target.value)}
-                aria-label={t`Send on`}
-                aria-invalid={!atValid || undefined}
-                data-testid="send-at"
-              />
-              <p className="text-small text-faint" data-testid="send-zone">
-                {utc ? (
-                  <Trans>
-                    Your time zone, {zone}. That is {utc} UTC.
-                  </Trans>
-                ) : (
-                  <Trans>Pick a time in the next 90 days, in your time zone, {zone}.</Trans>
+    <Dialog open onOpenChange={(o) => !o && !schedule.isPending && onClose()}>
+      <DialogContent className="max-h-[90svh] gap-4 overflow-y-auto sm:max-w-xl" data-testid="review-dialog">
+        {step === 1 ? (
+          <>
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-3 pe-8">
+                <span className="min-w-0 flex-1">
+                  <Trans>Review and send</Trans>
+                </span>
+                {review && (
+                  <span
+                    className={cn("text-caption font-medium", ready ? "text-success" : "text-destructive")}
+                    data-testid="review-ready"
+                  >
+                    {ready ? <Trans>Ready</Trans> : <Trans>Not ready</Trans>}
+                  </span>
                 )}
-              </p>
-            </div>
-          )}
-          <Button
-            onClick={() => {
-              schedule.reset()
-              setConfirmed(null)
-              setConfirming(true)
-            }}
-            disabled={!ready || !atValid || count === 0}
-            title={t`Review, then send or schedule (${key})`}
-            data-testid="open-send"
-          >
-            <SendIcon />
-            {mode === "now" ? (
-              <Plural value={count} one="Send to # recipient" other="Send to # recipients" />
+              </DialogTitle>
+              <DialogDescription className="sr-only">
+                <Trans>Review and send</Trans>
+              </DialogDescription>
+            </DialogHeader>
+            {review ? (
+              <Checklist
+                b={b}
+                review={review}
+                onFix={(spot) => {
+                  onClose()
+                  onFix(spot)
+                }}
+                readOnly={false}
+              />
+            ) : reviewError ? (
+              <ErrorLine error={reviewError} />
             ) : (
-              <Plural value={count} one="Schedule for # recipient" other="Schedule for # recipients" />
+              <div className="flex flex-col gap-2">
+                <Skeleton className="h-8 w-full" />
+                <Skeleton className="h-8 w-full" />
+                <Skeleton className="h-8 w-full" />
+              </div>
             )}
-          </Button>
-          {!confirming && schedule.error && !changed && <ErrorLine error={schedule.error} />}
-        </div>
-      )}
-      <AlertDialog open={confirming && atValid && ready} onOpenChange={(o) => !schedule.isPending && setConfirming(o)}>
-        <AlertDialogContent data-testid="send-confirm">
-          <AlertDialogHeader>
-            <AlertDialogTitle>
-              {mode === "now" ? (
-                <Trans>Send “{name}” now?</Trans>
-              ) : (
-                <Trans>
-                  Send “{name}” on {when}?
-                </Trans>
+            <div className="flex flex-col gap-3 border-t pt-4">
+              <Segmented
+                value={mode}
+                onChange={setMode}
+                label={t`When`}
+                className="w-full"
+                itemClassName="flex-1"
+                items={[
+                  { value: "now", label: t`Send now`, testId: "send-mode-now" },
+                  { value: "later", label: t`Schedule`, testId: "send-mode-later" },
+                ]}
+              />
+              {mode === "later" && (
+                <div className="flex flex-col gap-1.5">
+                  <Input
+                    type="datetime-local"
+                    value={at}
+                    min={toLocalInput(new Date(now))}
+                    onChange={(e) => setAt(e.target.value)}
+                    aria-label={t`Send on`}
+                    aria-invalid={!atValid || undefined}
+                    data-testid="send-at"
+                  />
+                  <p className="text-small text-faint" data-testid="send-zone">
+                    {utc ? (
+                      <Trans>
+                        Your time zone, {zone}. That is {utc} UTC.
+                      </Trans>
+                    ) : (
+                      <Trans>Pick a time in the next 90 days, in your time zone, {zone}.</Trans>
+                    )}
+                  </p>
+                </div>
               )}
-            </AlertDialogTitle>
-            <AlertDialogDescription className="flex flex-col gap-2">
-              <span className="font-medium text-foreground" data-testid="confirm-recipients">
-                <Plural value={count} one="It goes to # recipient." other="It goes to # recipients." />
-              </span>
-              <span>
-                <Trans>
-                  The recipients are taken when sending starts: people who subscribe later do not get it, and anyone who
-                  unsubscribes before their mail goes out is skipped. You can pause or cancel while it sends.
-                </Trans>
-              </span>
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          {changed && (
-            <Notice tone="warning" icon={TriangleAlertIcon} data-testid="audience-changed">
-              <p>
-                <Trans>
-                  The number of recipients changed while you looked. It is {recipients} now. Confirm again to send to
-                  them.
-                </Trans>
-              </p>
-            </Notice>
-          )}
-          {schedule.error && !changed && <ErrorLine error={schedule.error} />}
-          <AlertDialogFooter>
-            <AlertDialogCancel>
-              <Trans>Cancel</Trans>
-            </AlertDialogCancel>
-            <Button onClick={submit} disabled={schedule.isPending} data-testid="confirm-send">
-              {schedule.isPending && <LoaderIcon className="animate-spin" />}
-              {mode === "now" ? <Trans>Send now</Trans> : <Trans>Schedule</Trans>}
-            </Button>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
-    </aside>
+            </div>
+            <DialogFooter className="sticky -bottom-6 -mx-6 -mb-6 border-t bg-card px-6 py-4">
+              <Button variant="ghost" onClick={onClose}>
+                <Trans>Cancel</Trans>
+              </Button>
+              <Button
+                onClick={() => {
+                  schedule.reset()
+                  setConfirmed(null)
+                  setStep(2)
+                }}
+                disabled={!ready || !atValid || count === 0}
+                title={sendTitle}
+                data-testid="open-send"
+              >
+                <Trans>Continue</Trans>
+              </Button>
+            </DialogFooter>
+          </>
+        ) : (
+          <div data-testid="send-confirm" className="flex flex-col gap-4">
+            <DialogHeader>
+              <DialogTitle>
+                {mode === "now" ? (
+                  <Trans>Send “{name}” now?</Trans>
+                ) : (
+                  <Trans>
+                    Send “{name}” on {when}?
+                  </Trans>
+                )}
+              </DialogTitle>
+              <DialogDescription className="flex flex-col gap-2">
+                <span className="font-medium text-foreground" data-testid="confirm-recipients">
+                  <Plural value={count} one="It goes to # recipient." other="It goes to # recipients." />
+                </span>
+                <span>
+                  {from ? <Trans>From {from}</Trans> : null}
+                  {from ? " · " : null}
+                  {pace}
+                </span>
+                <span>
+                  <Trans>
+                    The recipients are taken when sending starts: people who subscribe later do not get it, and anyone
+                    who unsubscribes before their mail goes out is skipped. You can pause or cancel while it sends.
+                  </Trans>
+                </span>
+                {mode === "later" && (
+                  <span>
+                    <Trans>Until it starts you can go back to a draft.</Trans>
+                  </span>
+                )}
+              </DialogDescription>
+            </DialogHeader>
+            {changed && (
+              <Notice tone="warning" icon={TriangleAlertIcon} data-testid="audience-changed">
+                <p>
+                  <Trans>
+                    The number of recipients changed while you looked. It is {recipients} now. Confirm again to send to
+                    them.
+                  </Trans>
+                </p>
+              </Notice>
+            )}
+            {schedule.error && !changed && <ErrorLine error={schedule.error} />}
+            <DialogFooter>
+              <Button variant="ghost" onClick={() => setStep(1)} disabled={schedule.isPending}>
+                <Trans>Back</Trans>
+              </Button>
+              <Button onClick={submit} disabled={schedule.isPending} data-testid="confirm-send">
+                {schedule.isPending && <LoaderIcon className="animate-spin" />}
+                {mode === "now" ? <Trans>Send now</Trans> : <Trans>Schedule</Trans>}
+              </Button>
+            </DialogFooter>
+          </div>
+        )}
+      </DialogContent>
+    </Dialog>
   )
 }

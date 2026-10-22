@@ -77,8 +77,8 @@ msgid "Another help center already uses this address, now or before."
 msgstr "別のヘルプセンターがこのアドレスを現在または過去に使用しています。"
 
 #: src/features/help/pages.tsx
-msgid "Answer common questions once, in writing. Each product gets its own help center with articles, collections and a report of what people search for."
-msgstr "よくある質問には一度だけ、文章で答えましょう。製品ごとに、記事、コレクション、検索されている内容のレポートを備えた専用のヘルプセンターが用意されます。"
+msgid "Answer common questions once, in writing. Each product gets its own help center with articles, collections and a report of what people search for. Pages are hosted by Yuva, so there is nothing to install on your site."
+msgstr "よくある質問には一度だけ、文章で答えましょう。製品ごとに、記事、コレクション、検索されている内容のレポートを備えた専用のヘルプセンターができます。ページは Yuva がホストするので、サイトに何かをインストールする必要はありません。"
 
 #: src/features/help/pages.tsx
 msgid "Answer common questions once, in writing. Pick an inbox’s help center to write articles, group them in collections and see what customers search for."
@@ -162,6 +162,7 @@ msgstr "箇条書き"
 msgid "Cancel"
 msgstr "キャンセル"
 
+#: src/features/help/ArticleEditor.tsx
 #: src/features/help/ArticlesTab.tsx
 msgid "Changed"
 msgstr "変更あり"
@@ -226,11 +227,6 @@ msgstr "ヘルプセンターを作成"
 #: src/features/help/HelpColumn.tsx
 msgid "Create help center ({newKey})"
 msgstr "ヘルプセンターを作成 ({newKey})"
-
-#. placeholder {0}: inbox.name
-#: src/features/help/pages.tsx
-msgid "Create one for {0}"
-msgstr "{0} 用を作成"
 
 #: src/features/help/CollectionsTab.tsx
 #: src/features/help/SettingsTab.tsx
@@ -342,11 +338,16 @@ msgstr "訪問者が閲覧しやすいように記事をグループ化します
 msgid "Heading"
 msgstr "見出し"
 
+#: src/features/help/CenterBar.tsx
 #: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 #: src/features/help/SettingsTab.tsx
 msgid "Help center"
 msgstr "ヘルプセンター"
+
+#: src/features/help/pages.tsx
+msgid "Help center created. Write the first article, then publish it."
+msgstr "ヘルプセンターを作成しました。最初の記事を書いて公開しましょう。"
 
 #: src/features/help/SettingsTab.tsx
 msgid "Help center deleted"
@@ -445,7 +446,10 @@ msgid "Main language"
 msgstr "メイン言語"
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+msgid "Mark up to date"
+msgstr "最新としてマーク"
+
+#: src/features/help/ArticleEditor.tsx
 msgid "More"
 msgstr "その他"
 
@@ -522,6 +526,11 @@ msgstr "下書きはありません。書いたものはすべて公開済みで
 msgid "No earlier versions yet."
 msgstr "以前のバージョンはまだありません。"
 
+#. placeholder {0}: target.inbox.name
+#: src/features/help/pages.tsx
+msgid "No help center for {0} yet"
+msgstr "{0} のヘルプセンターはまだありません"
+
 #: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 msgid "No help center yet. Owners and admins create it."
@@ -540,6 +549,7 @@ msgstr "なし"
 msgid "not named"
 msgstr "名前なし"
 
+#: src/features/help/ArticleEditor.tsx
 #: src/features/help/ArticlesTab.tsx
 msgid "Not written"
 msgstr "未作成"
@@ -555,6 +565,10 @@ msgstr "{answers} 件の回答のうち"
 #: src/features/help/SettingsTab.tsx
 msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish and unpublish too."
 msgstr "オフ: エージェントは下書きを書いて提出し、オーナーと管理者が公開します。オン: 受信トレイにアクセスできるエージェントも公開と非公開を行えます。"
+
+#: src/features/help/SettingsTab.tsx
+msgid "On: anyone with the address can read the help center. Off: only your team can preview it."
+msgstr "オン: アドレスを知っていれば誰でもヘルプセンターを読めます。オフ: チームだけがプレビューできます。"
 
 #: src/features/help/ArticleEditor.tsx
 msgid "One path per line, such as /billing/*. The chat widget suggests this article on matching pages."
@@ -618,6 +632,10 @@ msgstr "プレビュー"
 msgid "Preview ({alt} P)"
 msgstr "プレビュー ({alt} P)"
 
+#: src/features/help/pages.tsx
+msgid "Preview ({previewKey})"
+msgstr "プレビュー ({previewKey})"
+
 #. placeholder {0}: center.name
 #: src/features/help/pages.tsx
 msgid "Preview of {0}"
@@ -632,22 +650,27 @@ msgid "Public address"
 msgstr "公開アドレス"
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "Publish"
 msgstr "公開"
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "Publish ({publishKey})"
 msgstr "公開 ({publishKey})"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/CenterBar.tsx
 #: src/features/help/HelpColumn.tsx
-#: src/features/help/pages.tsx
 #: src/features/help/Revisions.tsx
+#: src/features/help/SettingsTab.tsx
 #: src/features/help/text.tsx
 msgid "Published"
 msgstr "公開済み"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Publishing"
+msgstr "公開"
 
 #: src/features/help/text.tsx
 msgid "Question mark"
@@ -758,6 +781,10 @@ msgstr "シールド"
 msgid "Show"
 msgstr "表示"
 
+#: src/features/help/ArticleEditor.tsx
+msgid "Show original"
+msgstr "元のメールを表示"
+
 #: src/features/help/SettingsTab.tsx
 msgid "Shown under the name on the home page."
 msgstr "ホームページの名前の下に表示されます。"
@@ -831,6 +858,10 @@ msgid "The main language has no text for this article yet."
 msgstr "メイン言語には、この記事のテキストがまだありません。"
 
 #: src/features/help/ArticleEditor.tsx
+msgid "The original changed after this translation was written. Compare them, then mark it up to date."
+msgstr "この翻訳が書かれた後に原文が変更されました。見比べてから、最新としてマークしてください。"
+
+#: src/features/help/ArticleEditor.tsx
 msgid "The page stops working for visitors. The draft stays, and you can publish it again."
 msgstr "ページは訪問者には使えなくなります。下書きは残り、再び公開できます。"
 
@@ -880,15 +911,24 @@ msgid "Type a word to search for."
 msgstr "検索する言葉を入力してください。"
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "Unpublish"
 msgstr "非公開にする"
+
+#: src/features/help/CenterBar.tsx
+msgid "Unpublish ({publishKey})"
+msgstr "非公開にする ({publishKey})"
+
+#: src/features/help/CenterBar.tsx
+msgid "Unpublish this help center?"
+msgstr "このヘルプセンターの公開を停止しますか？"
 
 #: src/features/help/ArticleEditor.tsx
 msgid "Unpublish this translation?"
 msgstr "この翻訳を非公開にしますか?"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/CenterBar.tsx
 #: src/features/help/HelpColumn.tsx
 msgid "Unpublished"
 msgstr "未公開"
@@ -896,10 +936,6 @@ msgstr "未公開"
 #: src/features/help/text.tsx
 msgid "Unpublished changes"
 msgstr "未公開の変更"
-
-#: src/features/help/pages.tsx
-msgid "Unpublished, only your team can preview it"
-msgstr "未公開。プレビューできるのはチームだけです"
 
 #: src/features/help/ArticleEditor.tsx
 msgid "Unsaved changes"
@@ -929,11 +965,11 @@ msgstr "バージョンを下書きに復元しました"
 msgid "View"
 msgstr "表示"
 
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "View site"
 msgstr "サイトを表示"
 
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "View site ({openKey})"
 msgstr "サイトを表示 ({openKey})"
 
@@ -945,13 +981,13 @@ msgstr "閲覧数"
 msgid "Views · 7 days"
 msgstr "閲覧 · 7 日間"
 
+#: src/features/help/CenterBar.tsx
+msgid "Visitors can no longer open it and the chat widget stops suggesting its articles. Your articles stay as they are."
+msgstr "訪問者は開けなくなり、チャットウィジェットも記事を提案しなくなります。記事はそのまま残ります。"
+
 #: src/features/help/ReportTab.tsx
 msgid "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
 msgstr "訪問者が読んだものと検索したもの。閲覧数は概算で、数は 1 分以内にこのページに反映されます。"
-
-#: src/features/help/SettingsTab.tsx
-msgid "Who can publish"
-msgstr "公開できる人"
 
 #: src/features/help/ReportTab.tsx
 msgid "Words visitors typed that found nothing. A new article for each is the fastest fix."
@@ -965,6 +1001,10 @@ msgstr "書く"
 #: src/features/help/ArticleEditor.tsx
 msgid "Write the answer in Markdown…"
 msgstr "回答を Markdown で書く…"
+
+#: src/features/help/CenterBar.tsx
+msgid "Written here, shown on pages Yuva hosts, searched from the chat widget and the reply box. Documentation pages on your own site live under <0>Docs</0>."
+msgstr "ここで書き、Yuva がホストするページに表示され、チャットウィジェットと返信ボックスから検索されます。自社サイト上のドキュメントページは <0>Docs</0> にあります。"
 
 #: src/features/help/SettingsTab.tsx
 msgid "Your product."

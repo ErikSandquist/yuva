@@ -77,8 +77,8 @@ msgid "Another help center already uses this address, now or before."
 msgstr "מרכז עזרה אחר משתמש בכתובת הזו, עכשיו או בעבר."
 
 #: src/features/help/pages.tsx
-msgid "Answer common questions once, in writing. Each product gets its own help center with articles, collections and a report of what people search for."
-msgstr "ענה על שאלות נפוצות פעם אחת, בכתב. לכל מוצר יש מרכז עזרה משלו עם מאמרים, אוספים ודוח על מה שאנשים מחפשים."
+msgid "Answer common questions once, in writing. Each product gets its own help center with articles, collections and a report of what people search for. Pages are hosted by Yuva, so there is nothing to install on your site."
+msgstr "ענו על שאלות נפוצות פעם אחת, בכתב. לכל מוצר יש מרכז עזרה משלו עם מאמרים, אוספים ודוח על מה שאנשים מחפשים. הדפים מתארחים אצל Yuva, אין מה להתקין באתר שלכם."
 
 #: src/features/help/pages.tsx
 msgid "Answer common questions once, in writing. Pick an inbox’s help center to write articles, group them in collections and see what customers search for."
@@ -162,6 +162,7 @@ msgstr "רשימת תבליטים"
 msgid "Cancel"
 msgstr "ביטול"
 
+#: src/features/help/ArticleEditor.tsx
 #: src/features/help/ArticlesTab.tsx
 msgid "Changed"
 msgstr "שונה"
@@ -226,11 +227,6 @@ msgstr "יצירת מרכז עזרה"
 #: src/features/help/HelpColumn.tsx
 msgid "Create help center ({newKey})"
 msgstr "יצירת מרכז עזרה ({newKey})"
-
-#. placeholder {0}: inbox.name
-#: src/features/help/pages.tsx
-msgid "Create one for {0}"
-msgstr "יצירת אחד עבור {0}"
 
 #: src/features/help/CollectionsTab.tsx
 #: src/features/help/SettingsTab.tsx
@@ -342,11 +338,16 @@ msgstr "קבצו מאמרים כדי שמבקרים יוכלו לדפדף. או�
 msgid "Heading"
 msgstr "כותרת"
 
+#: src/features/help/CenterBar.tsx
 #: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 #: src/features/help/SettingsTab.tsx
 msgid "Help center"
 msgstr "מרכז עזרה"
+
+#: src/features/help/pages.tsx
+msgid "Help center created. Write the first article, then publish it."
+msgstr "מרכז העזרה נוצר. כתבו את המאמר הראשון ואז פרסמו אותו."
 
 #: src/features/help/SettingsTab.tsx
 msgid "Help center deleted"
@@ -445,7 +446,10 @@ msgid "Main language"
 msgstr "שפה ראשית"
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+msgid "Mark up to date"
+msgstr "סמן כמעודכן"
+
+#: src/features/help/ArticleEditor.tsx
 msgid "More"
 msgstr "עוד"
 
@@ -522,6 +526,11 @@ msgstr "אין טיוטות. כל מה שנכתב פורסם."
 msgid "No earlier versions yet."
 msgstr "עדיין אין גרסאות קודמות."
 
+#. placeholder {0}: target.inbox.name
+#: src/features/help/pages.tsx
+msgid "No help center for {0} yet"
+msgstr "עדיין אין מרכז עזרה עבור {0}"
+
 #: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 msgid "No help center yet. Owners and admins create it."
@@ -540,6 +549,7 @@ msgstr "ללא"
 msgid "not named"
 msgstr "בלי שם"
 
+#: src/features/help/ArticleEditor.tsx
 #: src/features/help/ArticlesTab.tsx
 msgid "Not written"
 msgstr "לא נכתב"
@@ -555,6 +565,10 @@ msgstr "מתוך {answers} תשובות"
 #: src/features/help/SettingsTab.tsx
 msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish and unpublish too."
 msgstr "כבוי: נציגים כותבים טיוטות ושולחים אותן, ובעלים ומנהלים מפרסמים. פעיל: גם נציגים עם גישה לתיבה מפרסמים ומבטלים פרסום."
+
+#: src/features/help/SettingsTab.tsx
+msgid "On: anyone with the address can read the help center. Off: only your team can preview it."
+msgstr "פעיל: כל מי שיש לו את הכתובת יכול לקרוא את מרכז העזרה. כבוי: רק הצוות שלכם יכול לצפות בתצוגה מקדימה."
 
 #: src/features/help/ArticleEditor.tsx
 msgid "One path per line, such as /billing/*. The chat widget suggests this article on matching pages."
@@ -618,6 +632,10 @@ msgstr "תצוגה מקדימה"
 msgid "Preview ({alt} P)"
 msgstr "תצוגה מקדימה ({alt} P)"
 
+#: src/features/help/pages.tsx
+msgid "Preview ({previewKey})"
+msgstr "תצוגה מקדימה ({previewKey})"
+
 #. placeholder {0}: center.name
 #: src/features/help/pages.tsx
 msgid "Preview of {0}"
@@ -632,22 +650,27 @@ msgid "Public address"
 msgstr "כתובת ציבורית"
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "Publish"
 msgstr "פרסום"
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "Publish ({publishKey})"
 msgstr "פרסום ({publishKey})"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/CenterBar.tsx
 #: src/features/help/HelpColumn.tsx
-#: src/features/help/pages.tsx
 #: src/features/help/Revisions.tsx
+#: src/features/help/SettingsTab.tsx
 #: src/features/help/text.tsx
 msgid "Published"
 msgstr "פורסם"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Publishing"
+msgstr "פרסום"
 
 #: src/features/help/text.tsx
 msgid "Question mark"
@@ -758,6 +781,10 @@ msgstr "מגן"
 msgid "Show"
 msgstr "הצגה"
 
+#: src/features/help/ArticleEditor.tsx
+msgid "Show original"
+msgstr "הצגת המקור"
+
 #: src/features/help/SettingsTab.tsx
 msgid "Shown under the name on the home page."
 msgstr "מוצג מתחת לשם בדף הבית."
@@ -831,6 +858,10 @@ msgid "The main language has no text for this article yet."
 msgstr "לשפה הראשית עדיין אין טקסט למאמר הזה."
 
 #: src/features/help/ArticleEditor.tsx
+msgid "The original changed after this translation was written. Compare them, then mark it up to date."
+msgstr "המקור השתנה לאחר שהתרגום הזה נכתב. השוו ביניהם ואז סמנו כמעודכן."
+
+#: src/features/help/ArticleEditor.tsx
 msgid "The page stops working for visitors. The draft stays, and you can publish it again."
 msgstr "הדף מפסיק לעבוד עבור מבקרים. הטיוטה נשארת ואפשר לפרסם אותה שוב."
 
@@ -880,15 +911,24 @@ msgid "Type a word to search for."
 msgstr "הקלידו מילה לחיפוש."
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "Unpublish"
 msgstr "ביטול פרסום"
+
+#: src/features/help/CenterBar.tsx
+msgid "Unpublish ({publishKey})"
+msgstr "ביטול פרסום ({publishKey})"
+
+#: src/features/help/CenterBar.tsx
+msgid "Unpublish this help center?"
+msgstr "לבטל את הפרסום של מרכז העזרה הזה?"
 
 #: src/features/help/ArticleEditor.tsx
 msgid "Unpublish this translation?"
 msgstr "לבטל את הפרסום של התרגום הזה?"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/CenterBar.tsx
 #: src/features/help/HelpColumn.tsx
 msgid "Unpublished"
 msgstr "לא פורסם"
@@ -896,10 +936,6 @@ msgstr "לא פורסם"
 #: src/features/help/text.tsx
 msgid "Unpublished changes"
 msgstr "שינויים שלא פורסמו"
-
-#: src/features/help/pages.tsx
-msgid "Unpublished, only your team can preview it"
-msgstr "לא פורסם, רק הצוות שלכם יכול לראות תצוגה מקדימה"
 
 #: src/features/help/ArticleEditor.tsx
 msgid "Unsaved changes"
@@ -929,11 +965,11 @@ msgstr "הגרסה שוחזרה לטיוטה"
 msgid "View"
 msgstr "צפייה"
 
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "View site"
 msgstr "הצגת האתר"
 
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "View site ({openKey})"
 msgstr "הצגת האתר ({openKey})"
 
@@ -945,13 +981,13 @@ msgstr "צפיות"
 msgid "Views · 7 days"
 msgstr "צפיות · 7 ימים"
 
+#: src/features/help/CenterBar.tsx
+msgid "Visitors can no longer open it and the chat widget stops suggesting its articles. Your articles stay as they are."
+msgstr "מבקרים לא יוכלו לפתוח אותו עוד, וווידג׳ט הצ׳אט יפסיק להציע את המאמרים שלו. המאמרים שלכם נשארים כפי שהם."
+
 #: src/features/help/ReportTab.tsx
 msgid "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
 msgstr "מה מבקרים קוראים ומחפשים. הצפיות משוערות, והמספרים מגיעים לדף הזה תוך דקה."
-
-#: src/features/help/SettingsTab.tsx
-msgid "Who can publish"
-msgstr "מי יכול לפרסם"
 
 #: src/features/help/ReportTab.tsx
 msgid "Words visitors typed that found nothing. A new article for each is the fastest fix."
@@ -965,6 +1001,10 @@ msgstr "כתיבה"
 #: src/features/help/ArticleEditor.tsx
 msgid "Write the answer in Markdown…"
 msgstr "כתבו את התשובה ב-Markdown…"
+
+#: src/features/help/CenterBar.tsx
+msgid "Written here, shown on pages Yuva hosts, searched from the chat widget and the reply box. Documentation pages on your own site live under <0>Docs</0>."
+msgstr "נכתב כאן, מוצג בדפים ש-Yuva מארחת, ומחופש מווידג׳ט הצ׳אט ומתיבת התשובה. דפי התיעוד באתר שלכם נמצאים תחת <0>Docs</0>."
 
 #: src/features/help/SettingsTab.tsx
 msgid "Your product."

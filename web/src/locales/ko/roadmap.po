@@ -7,6 +7,10 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: ko\n"
 
+#: src/features/roadmap/CreateBoardDialog.tsx
+msgid "{inboxName} has no web chat channel. Add one first, because the public board embeds it."
+msgstr "{inboxName}에는 웹 채팅 채널이 없습니다. 공개 보드가 채널을 삽입하므로 먼저 하나 추가하세요."
+
 #: src/features/roadmap/Board.tsx
 msgid "{linked, plural, one {# feedback} other {# feedback}}"
 msgstr "{linked, plural, other {의견 #건}}"
@@ -29,9 +33,25 @@ msgid "A reader's posts wait for a member until one of theirs is approved. Signe
 msgstr "독자의 게시물은 그중 하나가 승인될 때까지 멤버의 확인을 기다립니다. 앱에 로그인한 사용자는 바로 게시됩니다."
 
 #: src/features/roadmap/CreateBoardDialog.tsx
+msgid "Add a web chat channel"
+msgstr "웹 채팅 채널 추가"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
 #: src/features/roadmap/Settings.tsx
 msgid "Address"
 msgstr "주소"
+
+#: src/features/roadmap/BoardBar.tsx
+msgid "All boards"
+msgstr "모든 보드"
+
+#: src/features/roadmap/Settings.tsx
+msgid "All changes saved."
+msgstr "모든 변경 사항이 저장되었습니다."
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "All feedback from {inboxName} that fits is already linked."
+msgstr "{inboxName}의 해당하는 의견은 모두 이미 연결되어 있습니다."
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Already linked"
@@ -89,13 +109,16 @@ msgstr "쿠키 없이 공개 보드의 페이지 조회수를 집계합니다."
 
 #: src/features/roadmap/CreateBoardDialog.tsx
 #: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
 msgid "Create board"
 msgstr "보드 만들기"
 
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Create board ({newKey})"
 msgstr "보드 만들기({newKey})"
+
+#: src/features/roadmap/BoardBar.tsx
+msgid "Create board for {name}"
+msgstr "{name} 보드 만들기"
 
 #: src/features/roadmap/NewIdeaDialog.tsx
 msgid "Create idea"
@@ -123,17 +146,21 @@ msgstr "보드를 아이디어, 투표, 답글, 단계 기록과 함께 삭제�
 msgid "Description"
 msgstr "설명"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Dismiss"
+msgstr "닫기"
+
 #: src/features/roadmap/Board.tsx
 msgid "Done"
 msgstr "완료"
 
-#: src/features/roadmap/MoveDialog.tsx
-msgid "Every linked feedback that does not have it yet gets the progress {progress}. Linked feedback: {linked}"
-msgstr "진행 상태가 “{progress}”가 아닌 연결된 의견은 모두 해당 진행 상태로 설정됩니다. 연결된 의견: {linked}"
-
 #: src/features/roadmap/Settings.tsx
 msgid "Everyone's posts are published at once, except those of authors you marked as spam."
 msgstr "스팸으로 표시한 작성자를 제외하고 모두의 게시물이 즉시 게시됩니다."
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Good news: “{title}” has shipped. Thank you for asking for it."
+msgstr "좋은 소식입니다. “{title}”이(가) 출시되었습니다. 요청해 주셔서 감사합니다."
 
 #: src/features/roadmap/Board.tsx
 msgid "Hidden"
@@ -155,21 +182,30 @@ msgstr "고객이 투표하는 아이디어와 그 바탕이 된 피드백"
 msgid "Ideas, votes and stages for {inboxName}, with the feedback behind each idea. It stays private until you make it public."
 msgstr "{inboxName}의 아이디어, 투표, 단계와 각 아이디어 뒤에 있는 의견입니다. 공개로 바꾸기 전까지는 비공개로 유지됩니다."
 
-#: src/features/roadmap/RoadmapColumn.tsx
-msgid "Ideas: {ideas}"
-msgstr "아이디어: {ideas}"
-
 #: src/features/roadmap/NewIdeaDialog.tsx
 msgid "It goes into Ideas on the board, where customers can vote on it."
 msgstr "보드의 아이디어에 들어가며, 고객이 투표할 수 있습니다."
 
-#: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/NewIdeaDialog.tsx
+msgid "It goes into Ideas on the board. The board is private, so only your team sees it."
+msgstr "보드의 아이디어 단계로 들어갑니다. 보드가 비공개이므로 팀만 볼 수 있습니다."
+
+#: src/features/roadmap/IdeaFeedback.tsx
 msgid "It was unlinked from the idea."
 msgstr "아이디어와의 연결을 해제했습니다."
 
 #: src/features/roadmap/Settings.tsx
 msgid "Its ideas, votes, replies and stage history are deleted with it."
 msgstr "아이디어, 투표, 답글, 단계 기록도 함께 삭제됩니다."
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgctxt "link feedback to the idea"
+msgid "Link"
+msgstr "연결"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Link feedback"
+msgstr "의견 연결"
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Link this feedback to an idea…"
@@ -179,13 +215,21 @@ msgstr "이 의견을 아이디어에 연결…"
 msgid "Link to an idea"
 msgstr "아이디어에 연결"
 
-#: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Linked"
+msgstr "연결됨"
+
+#: src/features/roadmap/IdeaFeedback.tsx
 msgid "Linked feedback"
 msgstr "연결된 의견"
 
 #: src/features/roadmap/IdeaPane.tsx
 msgid "Linked feedback set to {progress}: {set}"
 msgstr "연결된 의견을 “{progress}”(으)로 설정했습니다: {set}"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Linked feedback that gets the progress {progress}: {gets} of {linked}."
+msgstr "진행 상태 {progress}이(가) 적용되는 연결된 의견: {linked}개 중 {gets}개."
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Linked to {title}"
@@ -195,19 +239,19 @@ msgstr "{title}에 연결했습니다"
 msgid "Load more"
 msgstr "더 보기"
 
-#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Make private"
 msgstr "비공개로 설정"
 
-#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Make private ({publicKey})"
 msgstr "비공개로 설정({publicKey})"
 
-#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Make public"
 msgstr "공개로 설정"
 
-#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Make public ({publicKey})"
 msgstr "공개로 설정({publicKey})"
 
@@ -254,25 +298,37 @@ msgstr "새 아이디어"
 msgid "New idea from this feedback"
 msgstr "이 의견으로 새 아이디어 만들기"
 
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/pages.tsx
+msgid "No board is public yet. Make one public under Settings."
+msgstr "공개된 보드가 아직 없습니다. 설정에서 하나를 공개하세요."
+
+#: src/features/roadmap/pages.tsx
 msgid "No board yet. Owners and admins create it."
 msgstr "아직 보드가 없습니다. 소유자와 관리자가 만듭니다."
 
-#: src/features/roadmap/IdeaPane.tsx
-msgid "No feedback is linked yet. Open a piece of feedback and use Link to an idea."
-msgstr "아직 연결된 의견이 없습니다. 의견을 열고 “아이디어에 연결”을 사용하세요."
+#: src/features/roadmap/MoveDialog.tsx
+msgid "No feedback is linked to this idea yet."
+msgstr "이 아이디어에 연결된 의견이 아직 없습니다."
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "No feedback is linked yet. Use Link feedback, or open a piece of feedback and choose Link to an idea."
+msgstr "연결된 의견이 아직 없습니다. 의견 연결을 사용하거나 의견을 열어 아이디어에 연결을 선택하세요."
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "No idea matches."
 msgstr "일치하는 아이디어가 없습니다."
 
-#: src/features/roadmap/RoadmapColumn.tsx
-msgid "No inbox to show a board for."
-msgstr "보드를 표시할 받은편지함이 없습니다."
+#: src/features/roadmap/Board.tsx
+msgid "No ideas yet. New ones land here."
+msgstr "아직 아이디어가 없습니다. 새 아이디어는 여기에 표시됩니다."
 
 #: src/features/roadmap/Settings.tsx
 msgid "None"
 msgstr "없음"
+
+#: src/features/roadmap/Board.tsx
+msgid "Nothing here yet."
+msgstr "아직 아무것도 없습니다."
 
 #: src/features/roadmap/Settings.tsx
 msgid "Off"
@@ -282,7 +338,7 @@ msgstr "끔"
 msgid "On: anyone with the address reads the board, and signed-in readers vote and suggest ideas. Off: only your team sees it, as a tool to sort feedback."
 msgstr "켜짐: 주소를 아는 누구나 보드를 읽을 수 있고, 로그인한 독자는 투표하고 아이디어를 제안할 수 있습니다. 꺼짐: 팀만 볼 수 있으며, 의견을 분류하는 도구로 쓰입니다."
 
-#: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/IdeaFeedback.tsx
 msgid "One reply, written once, goes to every open feedback conversation linked to this idea, as you, on each conversation’s own channel."
 msgstr "한 번 작성한 답장이 이 아이디어에 연결된 열려 있는 모든 의견 대화에, 내 이름으로, 각 대화의 채널을 통해 전송됩니다."
 
@@ -290,9 +346,22 @@ msgstr "한 번 작성한 답장이 이 아이디어에 연결된 열려 있는 
 msgid "Open"
 msgstr "열림"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgctxt "open the feedback"
+msgid "Open"
+msgstr "열기"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Open Analytics"
+msgstr "분석 열기"
+
 #: src/features/roadmap/IdeaPane.tsx
 msgid "Open on the public board"
 msgstr "공개 보드에서 열기"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Open Roadmap"
+msgstr "로드맵 열기"
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Pick an idea of this inbox’s board"
@@ -302,17 +371,11 @@ msgstr "이 받은편지함의 보드에서 아이디어 선택"
 msgid "Posted as your public reply on the idea. Markdown works."
 msgstr "아이디어에 대한 내 공개 답글로 게시됩니다. Markdown을 사용할 수 있습니다."
 
-#: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Private"
 msgstr "비공개"
 
-#: src/features/roadmap/pages.tsx
-msgid "Private, only your team sees it"
-msgstr "비공개, 팀만 볼 수 있음"
-
-#: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/BoardBar.tsx
 #: src/features/roadmap/Settings.tsx
 msgid "Public"
 msgstr "공개"
@@ -329,19 +392,37 @@ msgstr "독자는 아이디어를 제안할 수 없습니다. 투표와 답글�
 msgid "Readers suggested new ideas. Review them before they show on the public board."
 msgstr "독자가 새 아이디어를 제안했습니다. 공개 보드에 표시되기 전에 검토하세요."
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Reply to everyone"
+msgstr "모두에게 답장"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Reply to linked ({key})"
+msgstr "연결된 대화에 답장 ({key})"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Resolved feedback does not get it: {closed}"
+msgstr "해결된 의견은 받지 않습니다: {closed}"
+
 #: src/features/roadmap/Board.tsx
 msgid "Review"
 msgstr "검토"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Review the reply"
+msgstr "답장 검토"
+
 #: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
 msgid "Roadmap"
 msgstr "로드맵"
 
-#: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Roadmap boards"
 msgstr "로드맵 보드"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Save"
+msgstr "저장"
 
 #: src/features/roadmap/Settings.tsx
 msgid "Saved"
@@ -355,9 +436,13 @@ msgstr "아이디어 검색"
 msgid "Settings"
 msgstr "설정"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Shipped. Open feedback linked to it: {open}. A reply is ready to send."
+msgstr "출시됨. 연결된 열린 의견: {open}. 보낼 답장이 준비되었습니다."
+
 #: src/features/roadmap/pages.tsx
-msgid "Show your customers what you are building, and link the feedback behind each idea. Create a board for an inbox to sort ideas into stages."
-msgstr "무엇을 만들고 있는지 고객에게 보여 주고, 각 아이디어 뒤의 의견을 연결하세요. 받은 편지함용 보드를 만들면 아이디어를 단계별로 정리할 수 있습니다."
+msgid "Show your customers what you are building, and link the feedback behind each idea. Create a board for {missingName} to sort ideas into stages."
+msgstr "무엇을 만들고 있는지 고객에게 보여 주고, 각 아이디어 뒤에 있는 의견을 연결하세요. 아이디어를 단계별로 정리하려면 {missingName}의 보드를 만드세요."
 
 #: src/features/roadmap/Settings.tsx
 msgid "Shown under the name on the public board."
@@ -404,6 +489,10 @@ msgstr "연결된 의견의 진행 상태는 바뀌지 않습니다. 연결된 �
 msgid "The public board embeds this chat, and ideas your team starts are filed on it."
 msgstr "공개 보드는 이 채팅을 삽입하고, 팀이 시작한 아이디어는 여기에 저장됩니다."
 
+#: src/features/roadmap/MoveDialog.tsx
+msgid "The rest already have it."
+msgstr "나머지는 이미 가지고 있습니다."
+
 #: src/features/roadmap/pages.tsx
 msgid "This board no longer exists or you cannot see it."
 msgstr "이 보드가 더 이상 없거나 볼 수 없습니다."
@@ -412,14 +501,18 @@ msgstr "이 보드가 더 이상 없거나 볼 수 없습니다."
 msgid "This inbox has no roadmap board. Create one under Roadmap first."
 msgstr "이 받은편지함에는 로드맵 보드가 없습니다. 먼저 로드맵에서 만드세요."
 
-#: src/features/roadmap/CreateBoardDialog.tsx
-msgid "This inbox has no web chat channel. Add one first, because the public board embeds it."
-msgstr "이 받은편지함에는 웹 채팅 채널이 없습니다. 공개 보드가 삽입하므로 먼저 추가하세요."
-
 #: src/features/roadmap/LinkIdeaDialog.tsx
 #: src/features/roadmap/NewIdeaDialog.tsx
 msgid "Title"
 msgstr "제목"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Unlink"
+msgstr "연결 해제"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Unlinked feedback from {inboxName}"
+msgstr "{inboxName}의 연결되지 않은 의견"
 
 #: src/features/roadmap/Settings.tsx
 msgid "Use 3 to 48 letters, numbers and inner hyphens."
@@ -437,6 +530,6 @@ msgstr "공개 범위"
 msgid "Waiting for approval"
 msgstr "승인 대기 중"
 
-#: src/features/roadmap/RoadmapColumn.tsx
-msgid "Waiting for approval: {pending}"
-msgstr "승인 대기 중: {pending}"
+#: src/features/roadmap/Settings.tsx
+msgid "You have unsaved changes."
+msgstr "저장되지 않은 변경 사항이 있습니다."

@@ -154,7 +154,7 @@ function Upload({
 }: {
   list: MailingList
   onCreated: (i: ListImport) => void
-  onBack: () => void
+  onBack?: () => void
 }) {
   const { t, i18n } = useLingui()
   const inbox = (useInboxes().data ?? []).find((i) => i.id === list.inbox_id)
@@ -346,9 +346,11 @@ function Upload({
         )}
       </Card>
       <div className="flex flex-wrap justify-end gap-2">
-        <Button type="button" variant="ghost" onClick={onBack}>
-          <Trans>Cancel</Trans>
-        </Button>
+        {onBack && (
+          <Button type="button" variant="ghost" onClick={onBack}>
+            <Trans>Cancel</Trans>
+          </Button>
+        )}
         <Button type="submit" disabled={upload.isPending} data-testid="import-upload-submit">
           {upload.isPending && <LoaderIcon className="animate-spin" />}
           {upload.isPending ? <Trans>Uploading…</Trans> : <Trans>Upload and check</Trans>}
@@ -954,71 +956,87 @@ function History({ list, onOpen }: { list: MailingList; onOpen: (id: string) => 
   const num = useNumber()
   const imports = useListImports(list.id)
   const items = imports.data?.pages.flatMap((p) => p.items) ?? []
+  const [shown, setShown] = useState(true)
   return (
-    <Section title={<Trans>Imports</Trans>}>
-      <Card flush>
-        {imports.isPending ? (
-          <div className="flex flex-col gap-2 p-4">
-            <Skeleton className="h-10 w-full" />
-            <Skeleton className="h-10 w-full" />
-          </div>
-        ) : items.length === 0 ? (
-          <EmptyRow>
-            <Trans>No imports yet.</Trans>
-          </EmptyRow>
-        ) : (
-          <Rows data-testid="import-history">
-            {items.map((i) => {
-              const added = num(i.counts.added)
-              const out = num(refused(i.counts))
-              return (
-                <li key={i.id}>
-                  <Item
-                    render={<button type="button" />}
-                    className="flex-nowrap gap-3 rounded-none px-4 py-2.5 [button]:hover:bg-muted"
-                    onClick={() => onOpen(i.id)}
-                    data-testid="import-row"
-                  >
-                    <FileSpreadsheetIcon className="size-4 shrink-0 text-faint" />
-                    <span className="flex min-w-0 flex-1 flex-col text-start">
-                      <span className="truncate text-body font-medium" dir="auto">
-                        {i.filename}
+    <Section
+      title={
+        <button
+          type="button"
+          onClick={() => setShown((v) => !v)}
+          aria-expanded={shown}
+          className="inline-flex items-center gap-1 outline-none hover:text-foreground focus-visible:underline"
+          data-testid="import-history-toggle"
+        >
+          <ChevronRightIcon className={cn("size-3.5 rtl:rotate-180", shown && "rotate-90 rtl:rotate-90")} />
+          <Trans>All imports</Trans>
+        </button>
+      }
+    >
+      {shown && (
+        <Card flush>
+          {imports.isPending ? (
+            <div className="flex flex-col gap-2 p-4">
+              <Skeleton className="h-10 w-full" />
+              <Skeleton className="h-10 w-full" />
+            </div>
+          ) : items.length === 0 ? (
+            <EmptyRow>
+              <Trans>No imports yet.</Trans>
+            </EmptyRow>
+          ) : (
+            <Rows data-testid="import-history">
+              {items.map((i) => {
+                const added = num(i.counts.added)
+                const out = num(refused(i.counts))
+                return (
+                  <li key={i.id}>
+                    <Item
+                      render={<button type="button" />}
+                      className="flex-nowrap gap-3 rounded-none px-4 py-2.5 [button]:hover:bg-muted"
+                      onClick={() => onOpen(i.id)}
+                      data-testid="import-row"
+                    >
+                      <FileSpreadsheetIcon className="size-4 shrink-0 text-faint" />
+                      <span className="flex min-w-0 flex-1 flex-col text-start">
+                        <span className="truncate text-body font-medium" dir="auto">
+                          {i.filename}
+                        </span>
+                        <span className="flex flex-wrap items-center gap-x-2 text-small text-faint">
+                          <time dateTime={i.created_at} title={formatDateTime(i.created_at, i18n.locale)}>
+                            {formatDate(i.created_at, i18n.locale)}
+                          </time>
+                          {(i.state === "done" || i.state === "cancelled" || i.state === "importing") && (
+                            <span>
+                              <Trans>
+                                {added} added · {out} left out
+                              </Trans>
+                            </span>
+                          )}
+                        </span>
                       </span>
-                      <span className="flex flex-wrap items-center gap-x-2 text-small text-faint">
-                        <time dateTime={i.created_at} title={formatDateTime(i.created_at, i18n.locale)}>
-                          {formatDate(i.created_at, i18n.locale)}
-                        </time>
-                        {(i.state === "done" || i.state === "cancelled" || i.state === "importing") && (
-                          <span>
-                            <Trans>
-                              {added} added · {out} left out
-                            </Trans>
-                          </span>
-                        )}
-                      </span>
-                    </span>
-                    <ImportState state={i.state} />
-                    <ChevronRightIcon className="size-4 shrink-0 text-faint rtl:rotate-180" />
-                  </Item>
-                </li>
-              )
-            })}
-          </Rows>
-        )}
-        {imports.hasNextPage && (
-          <div className="flex justify-center border-t p-2">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => void imports.fetchNextPage()}
-              disabled={imports.isFetchingNextPage}
-            >
-              <Trans>Load more</Trans>
-            </Button>
-          </div>
-        )}
-        <ErrorLine error={imports.error} className="px-4 pb-3" />
-      </Card>
+                      <ImportState state={i.state} />
+                      <ChevronRightIcon className="size-4 shrink-0 text-faint rtl:rotate-180" />
+                    </Item>
+                  </li>
+                )
+              })}
+            </Rows>
+          )}
+          {imports.hasNextPage && (
+            <div className="flex justify-center border-t p-2">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => void imports.fetchNextPage()}
+                disabled={imports.isFetchingNextPage}
+              >
+                <Trans>Load more</Trans>
+              </Button>
+            </div>
+          )}
+          <ErrorLine error={imports.error} className="px-4 pb-3" />
+        </Card>
+      )}
     </Section>
   )
 }
@@ -1027,32 +1045,21 @@ export function ListImports({ list }: { list: MailingList }) {
   const { canManage } = useSession()
   const [current, go] = useImportParam()
   const canImport = canManage && !list.archived_at
-  if (current === "new" && canImport) {
-    return <Upload list={list} onCreated={(i) => go(i.id)} onBack={() => go(null)} />
-  }
   if (current && current !== "new") {
-    return <ImportView key={current} list={list} id={current} onDone={() => go(null)} onNew={() => go("new")} />
+    return <ImportView key={current} list={list} id={current} onDone={() => go(null)} onNew={() => go(null)} />
   }
   return (
     <>
-      <Section
-        title={<Trans>Import from a CSV file</Trans>}
-        action={
-          canImport && (
-            <Button size="sm" onClick={() => go("new")} data-testid="import-new">
-              <FileUpIcon />
-              <Trans>Import a CSV file</Trans>
-            </Button>
-          )
-        }
-        description={
+      <Section title={<Trans>Import from a CSV file</Trans>}>
+        <p className="mx-1 max-w-2xl text-small text-faint">
           <Trans>
             Bring subscribers who already agreed elsewhere. Each address is checked first and nothing is added until you
             start: invalid addresses, domains that take no mail, role addresses, duplicates and anyone who left or
             objected are left out.
           </Trans>
-        }
-      />
+        </p>
+        {canImport && <Upload list={list} onCreated={(i) => go(i.id)} />}
+      </Section>
       <History list={list} onOpen={go} />
     </>
   )

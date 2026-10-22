@@ -16,7 +16,6 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useClearUndeliverable, useCreateConversation, useUpdateContact } from "@/features/contact/queries"
 import { attrValue } from "@/features/contact/Section"
@@ -380,14 +379,48 @@ export function sinceText(contact: Contact, locale: string) {
   return formatDate(contact.created_at, locale)
 }
 
+function ChoiceChips({
+  label,
+  items,
+  value,
+  onChange,
+  testId,
+}: {
+  label: string
+  items: { value: string; label: React.ReactNode }[]
+  value: string
+  onChange: (v: string) => void
+  testId: string
+}) {
+  return (
+    <div role="group" aria-label={label} className="flex flex-wrap gap-1.5" data-testid={testId}>
+      {items.map((o) => (
+        <Button
+          key={o.value}
+          type="button"
+          variant="outline"
+          size="sm"
+          aria-pressed={o.value === value}
+          className={cn("rounded-lg px-3 font-normal", o.value === value && "border-foreground bg-muted font-medium")}
+          onClick={() => onChange(o.value)}
+        >
+          {o.label}
+        </Button>
+      ))}
+    </div>
+  )
+}
+
 export function NewConversationDialog({
   contact,
   open,
   onOpenChange,
+  onCreated,
 }: {
   contact: Contact
   open: boolean
   onOpenChange: (open: boolean) => void
+  onCreated?: (conversationId: string) => void
 }) {
   const { t } = useLingui()
   const errorText = useErrorText()
@@ -399,12 +432,26 @@ export function NewConversationDialog({
   const [channelId, setChannelId] = useState("")
   const [subject, setSubject] = useState("")
   const create = useCreateConversation()
-  const inbox = inboxId || inboxes[0]?.id || ""
+  const text = useEnumText()
+  const own = contact.inboxes.find((i) => inboxes.some((x) => x.id === i.id))?.id
+  const inbox = inboxId || own || inboxes[0]?.id || ""
   const channels = [...channelMap.values()].filter((c) => c.inbox_id === inbox)
   const preferred =
     channels.find((c) => (contact.emails.length ? c.kind === "email" : c.kind !== "email")) ?? channels[0]
   const channel = channels.some((c) => c.id === channelId) ? channelId : (preferred?.id ?? "")
-  const text = useEnumText()
+  const kind = channels.find((c) => c.id === channel)?.kind
+  const deliverable = contact.emails.filter((e) => !contact.undeliverable.some((u) => u.email === e))
+  const inboxName = inboxes.find((i) => i.id === inbox)?.name ?? ""
+  const warning =
+    kind === "email"
+      ? contact.emails.length === 0
+        ? t`This contact has no e-mail address yet. Add one under Contact and identities first.`
+        : deliverable.length === 0
+          ? t`Every address of this contact is undeliverable. Clear one first, or write in another channel.`
+          : ""
+      : kind && !contact.external_ids.some((x) => x.inbox_id === inbox)
+        ? t`No ${inboxName} id on file. They can only be reached by e-mail until they sign in.`
+        : ""
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent data-testid="new-conversation">
@@ -421,7 +468,7 @@ export function NewConversationDialog({
           className="flex flex-col gap-4"
           onSubmit={(e) => {
             e.preventDefault()
-            if (!inbox) return
+            if (!inbox || warning) return
             create.mutate(
               {
                 inbox_id: inbox,
@@ -433,53 +480,50 @@ export function NewConversationDialog({
               {
                 onSuccess: (c) => {
                   onOpenChange(false)
-                  navigate(`/conversations/${c.id}`)
+                  setSubject("")
+                  if (onCreated) onCreated(c.id)
+                  else navigate(`/conversations/${c.id}`)
                 },
                 onError: (err) => toast(errorText(err)),
               }
             )
           }}
         >
-          <div className="grid grid-cols-2 gap-3 phone:grid-cols-1">
-            <div className="flex min-w-0 flex-col gap-1.5">
-              <Label>
-                <Trans>Inbox</Trans>
-              </Label>
-              <Select value={inbox} onValueChange={(v) => (setInboxId(String(v)), setChannelId(""))}>
-                <SelectTrigger aria-label={t`Inbox`} className="w-full">
-                  <SelectValue>{inboxes.find((i) => i.id === inbox)?.name}</SelectValue>
-                </SelectTrigger>
-                <SelectContent>
-                  {inboxes.map((i) => (
-                    <SelectItem key={i.id} value={i.id}>
-                      {i.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="flex min-w-0 flex-col gap-1.5">
-              <Label>
-                <Trans>Channel</Trans>
-              </Label>
-              <Select value={channel} onValueChange={(v) => setChannelId(String(v))} disabled={channels.length === 0}>
-                <SelectTrigger aria-label={t`Channel`} className="w-full">
-                  <SelectValue>
-                    {(() => {
-                      const c = channels.find((x) => x.id === channel)
-                      return c ? `${c.name} · ${text.channel[c.kind]}` : t`No channel`
-                    })()}
-                  </SelectValue>
-                </SelectTrigger>
-                <SelectContent>
-                  {channels.map((c) => (
-                    <SelectItem key={c.id} value={c.id}>
-                      {c.name} · {text.channel[c.kind]}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+          <div className="flex min-w-0 flex-col gap-1.5">
+            <Label>
+              <Trans>Inbox</Trans>
+            </Label>
+            <ChoiceChips
+              label={t`Inbox`}
+              testId="new-conversation-inbox"
+              value={inbox}
+              onChange={(v) => (setInboxId(v), setChannelId(""))}
+              items={inboxes.map((i) => ({
+                value: i.id,
+                label: (
+                  <>
+                    <Dot color={i.branding.color} />
+                    {i.name}
+                  </>
+                ),
+              }))}
+            />
+          </div>
+          <div className="flex min-w-0 flex-col gap-1.5">
+            <Label>
+              <Trans>Channel</Trans>
+            </Label>
+            {channels.length === 0 ? (
+              <span className="text-body text-muted-foreground">{t`No channel`}</span>
+            ) : (
+              <ChoiceChips
+                label={t`Channel`}
+                testId="new-conversation-channel"
+                value={channel}
+                onChange={setChannelId}
+                items={channels.map((c) => ({ value: c.id, label: `${c.name} · ${text.channel[c.kind]}` }))}
+              />
+            )}
           </div>
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="new-conversation-subject">
@@ -493,6 +537,15 @@ export function NewConversationDialog({
               className="h-9"
             />
           </div>
+          {warning && (
+            <p
+              className="rounded-lg bg-warning/10 px-3 py-2 text-small text-foreground"
+              role="status"
+              data-testid="new-conversation-warning"
+            >
+              {warning}
+            </p>
+          )}
         </form>
         <DialogFooter>
           <Button variant="outline" onClick={() => onOpenChange(false)}>
@@ -501,7 +554,7 @@ export function NewConversationDialog({
           <Button
             type="submit"
             form="new-conversation-form"
-            disabled={!inbox || create.isPending}
+            disabled={!inbox || !!warning || create.isPending}
             data-testid="new-conversation-create"
           >
             <Trans>Start conversation</Trans>

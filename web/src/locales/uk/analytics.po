@@ -409,6 +409,7 @@ msgid "Break down by prop"
 msgstr "Розбити за параметром"
 
 #: src/features/analytics/Goals.tsx
+#: src/features/analytics/Overview.tsx
 msgid "Breakdown"
 msgstr "Розбивка"
 
@@ -1360,6 +1361,7 @@ msgstr "База місцезнаходжень"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
 #: src/features/analytics/Sharing.tsx
 msgid "Locations"
 msgstr "Місця"
@@ -1469,6 +1471,10 @@ msgstr "Нове {kind}: {value}, {count}, у порівнюваних днях 
 msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."
 msgstr "Нове {kind}: {value}. {metric}: {now}, у порівнюваних днях немає."
 
+#: src/features/analytics/Overview.tsx
+msgid "New and returning"
+msgstr "Нові та ті, що повернулися"
+
 #: src/features/analytics/Funnels.tsx
 msgid "New funnel"
 msgstr "Нова воронка"
@@ -1509,6 +1515,10 @@ msgstr "Без порівняння"
 #: src/features/analytics/Settings.tsx
 msgid "No consent features are offered."
 msgstr "Функції згоди не пропонуються."
+
+#: src/features/analytics/Overview.tsx
+msgid "No consented visitors in this range."
+msgstr "У цьому періоді немає відвідувачів, що дали згоду."
 
 #: src/features/analytics/Retention.tsx
 msgid "No consented visitors yet"
@@ -2086,6 +2096,7 @@ msgid "Requests with Do Not Track or Global Privacy Control, and events without 
 msgstr "Запити з Do Not Track чи Global Privacy Control і події без згоди для ресурсу, якому вона потрібна, приймаються, але тут не зберігаються й не рахуються."
 
 #: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Overview.tsx
 msgid "Retention"
 msgstr "Утримання"
 

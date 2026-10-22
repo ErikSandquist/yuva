@@ -1,6 +1,7 @@
 import "@/features/analytics/i18n"
 
 import { Trans, useLingui } from "@lingui/react/macro"
+import { useEffect, useRef } from "react"
 import { ChartLineIcon, ChevronsUpDownIcon, EllipsisIcon, PlusIcon } from "lucide-react"
 import {
   Link,
@@ -34,6 +35,7 @@ import { SettingsView } from "@/features/analytics/Settings"
 import { SupportView } from "@/features/analytics/Support"
 import { useViewSearch } from "@/features/analytics/state"
 import { useAnalyticsText } from "@/features/analytics/text"
+import { useInboxFilter } from "@/features/inbox/inboxFilter"
 import { useIsPhone } from "@/hooks/use-media-query"
 import { PagesView } from "@/features/analytics/Pages"
 import { headButton, Page, PageHeader } from "@/features/settings/ui"
@@ -61,8 +63,9 @@ type ViewKey = (typeof VIEWS)[number]
 function AnalyticsHome() {
   const { canManage } = useSession()
   const phone = useIsPhone()
+  const [inboxId] = useInboxFilter()
   const list = useAnalyticsProperties()
-  const first = list.data?.items[0]
+  const first = list.data?.items.find((p) => !inboxId || p.inbox_id === inboxId)
   if (first && !phone) return <Navigate to={`/analytics/${first.id}`} replace />
   return (
     <Page testId="analytics-home">
@@ -106,10 +109,11 @@ function PropertyLayout() {
   const { canManage } = useSession()
   const search = useViewSearch(true)
   const [params] = useSearchParams()
+  const [inboxId] = useInboxFilter()
   const property = useProperty(propertyId)
   const list = useAnalyticsProperties().data
   const usage = list?.usage
-  const others = list?.items ?? []
+  const others = (list?.items ?? []).filter((o) => !inboxId || o.inbox_id === inboxId)
   const inbox = (useInboxes().data ?? []).find((i) => i.id === property.data?.inbox_id)
   const last = pathname.split("/")[3] as ViewKey | undefined
   const current: ViewKey = last && VIEWS.includes(last) ? last : "overview"
@@ -128,6 +132,15 @@ function PropertyLayout() {
     settings: t`Settings`,
   }
   const p = property.data
+  const seenInbox = useRef(inboxId)
+  useEffect(() => {
+    if (seenInbox.current === inboxId || !p || !list) return
+    seenInbox.current = inboxId
+    if (!inboxId || p.inbox_id === inboxId) return
+    const next = list.items.find((o) => o.inbox_id === inboxId)
+    const view = current === "settings" ? "" : current === "overview" ? "" : `/${current}`
+    navigate(next ? `/analytics/${next.id}${view}${search}` : "/analytics")
+  }, [inboxId, p, list, current, search, navigate])
   if (!p) {
     return (
       <Page>

@@ -9,12 +9,14 @@ import {
   type RoadmapBoardCreate,
   type RoadmapBoardUpdate,
 } from "@/lib/api"
+import { useConversations } from "@/features/inbox/queries"
 import { keys, type IdeaFilters } from "@/lib/keys"
 import { useSession } from "@/lib/session"
 
 export const boardLink = (boardId: string, tab?: string) => `/board/${boardId}${tab ? `?tab=${tab}` : ""}`
 
-export const ideaLink = (boardId: string, ideaId: string) => `/board/${boardId}/ideas/${ideaId}`
+export const ideaLink = (boardId: string, ideaId: string, all = false) =>
+  `/board/${boardId}/ideas/${ideaId}${all ? "?scope=all" : ""}`
 
 export const progressOf = {
   planned: "planned",
@@ -231,6 +233,10 @@ export function useLinkedFeedback(ideaId: string) {
     getNextPageParam: (last) => last.next_cursor,
     enabled: !!ideaId,
   })
+}
+
+export function useUnlinkedFeedback(inboxId: string, enabled: boolean) {
+  return useConversations({ kind: ["feedback"], inbox_id: inboxId, idea: "none" }, enabled)
 }
 
 export function useReplyToLinked(ideaId: string) {

@@ -1,17 +1,19 @@
 import { Trans, useLingui } from "@lingui/react/macro"
-import { LoaderIcon } from "lucide-react"
+import { ChevronDownIcon, LoaderIcon } from "lucide-react"
 import { useState } from "react"
 
-import { ErrorLine, Segmented } from "@/components/common"
+import { ErrorLine } from "@/components/common"
 import { formatDuration } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Switch } from "@/components/ui/switch"
-import { MonitorHttpFields, newHeaderKey, type HttpForm } from "@/features/status/MonitorHttpFields"
+import { look } from "@/features/inbox/PageFrame"
+import { Field, ToggleRow } from "@/features/settings/ui"
+import { ChoiceChips } from "@/features/status/Choice"
+import { HttpDetails, HttpUrlField, newHeaderKey, type HttpForm } from "@/features/status/MonitorHttpFields"
 import { useMonitorFieldErrors } from "@/features/status/monitorErrors"
-import { ChoiceSelect, Field, ToggleRow } from "@/features/settings/ui"
-import { useMonitorMutations, useStatusComponents } from "@/features/status/queries"
+import { useMonitorMutations, usePagesComponents } from "@/features/status/queries"
 import { FAILURE_STATES, MONITOR_KINDS, ON_FAILURE, useStatusText } from "@/features/status/text"
 import type {
   StatusMonitor,
@@ -19,7 +21,10 @@ import type {
   StatusMonitorKind,
   StatusMonitorOnFailure,
   StatusMonitorWithToken,
+  StatusPage,
 } from "@/lib/api"
+import { cn } from "@/lib/utils"
+import { useInboxes } from "@/lib/workspace"
 
 const INTERVALS = [30, 60, 300, 600, 900, 1800, 3600, 21600, 43200, 86400, 604800]
 const OUTSIDE_INTERVALS = [60, 120, 300, 600, 900, 1800, 3600, 21600, 43200, 86400]
@@ -30,29 +35,43 @@ function withCurrent(list: number[], current: number) {
 }
 
 export function MonitorDialog({
+  pages,
   pageId,
   edit,
   onClose,
   onCreated,
 }: {
-  pageId: string
+  pages: StatusPage[]
+  pageId?: string
   edit?: StatusMonitor
   onClose: () => void
   onCreated: (m: StatusMonitorWithToken) => void
 }) {
   const { t, i18n } = useLingui()
   const text = useStatusText()
-  const m = useMonitorMutations(pageId)
-  const components = useStatusComponents(pageId)
-  const [kind, setKind] = useState<StatusMonitorKind>(edit?.kind ?? "heartbeat")
+  const inboxes = useInboxes().data ?? []
+  const scoped = edit ? pages.filter((p) => p.id === edit.page_id) : pages
+  const all = usePagesComponents(scoped.map((p) => p.id))
+  const groups = scoped
+    .map((p) => ({
+      page: p,
+      name: inboxes.find((i) => i.id === p.inbox_id)?.name ?? p.name,
+      items: all.filter((c) => c.page_id === p.id),
+    }))
+    .filter((g) => g.items.length > 0)
+  const [kind, setKind] = useState<StatusMonitorKind>(edit?.kind ?? "http")
   const [name, setName] = useState(edit?.name ?? "")
   const [componentId, setComponentId] = useState(edit?.component_id ?? "")
+  const picked = componentId || (groups.find((g) => g.page.id === pageId) ?? groups[0])?.items[0]?.id || ""
+  const targetPage = all.find((c) => c.id === picked)?.page_id ?? edit?.page_id ?? ""
+  const m = useMonitorMutations(targetPage)
   const [interval, setInterval_] = useState(edit?.interval ?? 300)
   const [grace, setGrace] = useState(edit?.grace ?? 60)
   const [outsideInterval, setOutsideInterval] = useState(edit?.interval ? String(edit.interval) : "")
   const [timeout, setTimeout_] = useState(edit?.timeout ?? 10)
   const [tcpHost, setTcpHost] = useState(edit?.tcp?.host ?? "")
   const [tcpPort, setTcpPort] = useState(edit?.tcp?.port ? String(edit.tcp.port) : "")
+  const [more, setMore] = useState(false)
   const [http, setHttp] = useState<HttpForm>(() => ({
     url: edit?.http?.url ?? "",
     method: edit?.http?.method ?? "GET",
@@ -76,8 +95,6 @@ export function MonitorDialog({
   const [onFailure, setOnFailure] = useState<StatusMonitorOnFailure>(edit?.on_failure ?? "draft")
   const [paused, setPaused] = useState(edit?.paused ?? false)
   const pending = m.create.isPending || m.update.isPending
-  const cs = components.data ?? []
-  const picked = componentId || cs[0]?.id || ""
   const heartbeat = kind === "heartbeat"
   const outside = kind === "http" || kind === "tcp"
   const failureThreshold = failureThresholdSet ?? (outside ? 3 : 1)
@@ -112,7 +129,7 @@ export function MonitorDialog({
   }
 
   const submit = () => {
-    if (!name.trim() || !picked) return
+    if (!name.trim() || !picked || !targetPage) return
     const common = {
       name: name.trim(),
       component_id: picked,
@@ -129,9 +146,16 @@ export function MonitorDialog({
       m.create.mutate({ kind, ...common }, { onSuccess: (created) => (created.url ? onCreated(created) : onClose()) })
   }
 
+  const dur = (s: number) => formatDuration(s, i18n.locale)
+  const failHint: Record<StatusMonitorOnFailure, string> = {
+    none: t`Nothing opens by itself. Open an incident from the monitor when you want one.`,
+    draft: t`A draft incident opens for your team to review. Customers see nothing until a member publishes it.`,
+    publish: t`An incident is published at once, so customers see it on the page.`,
+  }
+
   return (
     <Dialog open onOpenChange={(o) => !o && onClose()}>
-      <DialogContent data-testid="status-monitor-dialog" className="sm:max-w-lg">
+      <DialogContent data-testid="status-monitor-dialog" className="max-h-[92vh] overflow-y-auto sm:max-w-xl">
         <form
           className="flex flex-col gap-5"
           onSubmit={(e) => {
@@ -142,18 +166,6 @@ export function MonitorDialog({
           <DialogHeader>
             <DialogTitle>{edit ? <Trans>Edit monitor</Trans> : <Trans>Add monitor</Trans>}</DialogTitle>
           </DialogHeader>
-          <Field label={<Trans>Name</Trans>} htmlFor="status-monitor-name">
-            <Input
-              id="status-monitor-name"
-              value={name}
-              maxLength={100}
-              autoFocus
-              required
-              placeholder={t`Nightly backup`}
-              onChange={(e) => setName(e.target.value)}
-              data-testid="status-monitor-name"
-            />
-          </Field>
           {!edit && (
             <Field
               label={<Trans>Kind</Trans>}
@@ -169,30 +181,53 @@ export function MonitorDialog({
                 )
               }
             >
-              <Segmented
+              <ChoiceChips
                 value={kind}
                 onChange={setKind}
                 label={t`Kind`}
-                items={MONITOR_KINDS.map((k) => ({
-                  value: k,
-                  label: text.monitorKind[k],
-                  testId: `status-monitor-kind-${k}`,
-                }))}
+                options={MONITOR_KINDS.map((k) => [k, text.monitorKind[k]] as const)}
               />
             </Field>
           )}
-          <Field label={<Trans>Component</Trans>} hint={<Trans>The component whose state this monitor sets.</Trans>}>
-            <ChoiceSelect
-              value={picked}
-              onChange={setComponentId}
-              options={cs.map((c) => [c.id, c.name] as const)}
-              label={t`Component`}
-              placeholder={t`Choose a component`}
-              className="w-full"
+          <Field label={<Trans>Name</Trans>} htmlFor="status-monitor-name">
+            <Input
+              id="status-monitor-name"
+              value={name}
+              maxLength={100}
+              autoFocus
+              required
+              placeholder={t`Nightly backup`}
+              onChange={(e) => setName(e.target.value)}
+              data-testid="status-monitor-name"
             />
           </Field>
+          <Field label={<Trans>Component</Trans>} hint={<Trans>The component whose state this monitor sets.</Trans>}>
+            <div className="flex flex-col gap-2" role="group" aria-label={t`Component`}>
+              {groups.length === 0 && (
+                <p className="text-small text-faint">
+                  <Trans>No components yet. Add one to a status page first.</Trans>
+                </p>
+              )}
+              {groups.map((g) => (
+                <div key={g.page.id} className="flex flex-wrap items-center gap-1.5">
+                  {groups.length > 1 && <span className="me-1 min-w-14 text-caption text-faint">{g.name}</span>}
+                  {g.items.map((c) => (
+                    <button
+                      key={c.id}
+                      type="button"
+                      aria-pressed={c.id === picked}
+                      onClick={() => setComponentId(c.id)}
+                      className={c.id === picked ? look.chipOn : look.chip}
+                    >
+                      {c.name}
+                    </button>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </Field>
           {kind === "http" && (
-            <MonitorHttpFields value={http} onChange={(p) => setHttp((h) => ({ ...h, ...p }))} errors={fields} />
+            <HttpUrlField value={http} onChange={(p) => setHttp((h) => ({ ...h, ...p }))} errors={fields} />
           )}
           {kind === "tcp" && (
             <div className="grid grid-cols-[1fr_8rem] gap-4 phone:grid-cols-1">
@@ -226,19 +261,18 @@ export function MonitorDialog({
             </div>
           )}
           {outside && (
-            <div className="grid grid-cols-2 gap-4 phone:grid-cols-1">
+            <>
               <Field label={<Trans>Check every</Trans>} error={fields.interval}>
-                <ChoiceSelect
+                <ChoiceChips
                   value={outsideInterval}
                   onChange={setOutsideInterval}
                   options={[
                     ["", t`As often as allowed`] as const,
                     ...withCurrent(OUTSIDE_INTERVALS, Number(outsideInterval) || 0)
                       .filter((s) => s > 0)
-                      .map((s) => [String(s), formatDuration(s, i18n.locale)] as const),
+                      .map((s) => [String(s), dur(s)] as const),
                   ]}
                   label={t`Check every`}
-                  className="w-full"
                 />
               </Field>
               <Field
@@ -246,6 +280,7 @@ export function MonitorDialog({
                 htmlFor="status-monitor-timeout"
                 error={fields.timeout}
                 hint={<Trans>Seconds, 1 to 30.</Trans>}
+                className="max-w-40"
               >
                 <Input
                   id="status-monitor-timeout"
@@ -257,32 +292,53 @@ export function MonitorDialog({
                   onChange={(e) => setTimeout_(Math.min(30, Math.max(1, Number(e.target.value) || 1)))}
                 />
               </Field>
-            </div>
+            </>
           )}
           {heartbeat && (
-            <div className="grid grid-cols-2 gap-4 phone:grid-cols-1">
+            <>
               <Field label={<Trans>Expected every</Trans>}>
-                <ChoiceSelect
+                <ChoiceChips
                   value={String(interval)}
                   onChange={(v) => setInterval_(Number(v))}
-                  options={withCurrent(INTERVALS, interval).map(
-                    (s) => [String(s), formatDuration(s, i18n.locale)] as const
-                  )}
+                  options={withCurrent(INTERVALS, interval).map((s) => [String(s), dur(s)] as const)}
                   label={t`Expected every`}
-                  className="w-full"
                 />
               </Field>
               <Field label={<Trans>Grace</Trans>} hint={<Trans>How late a beat may be.</Trans>}>
-                <ChoiceSelect
+                <ChoiceChips
                   value={String(grace)}
                   onChange={(v) => setGrace(Number(v))}
-                  options={withCurrent(GRACES, grace).map(
-                    (s) => [String(s), s === 0 ? t`None` : formatDuration(s, i18n.locale)] as const
-                  )}
+                  options={withCurrent(GRACES, grace).map((s) => [String(s), s === 0 ? t`None` : dur(s)] as const)}
                   label={t`Grace`}
-                  className="w-full"
                 />
               </Field>
+              {!edit && (
+                <p className="text-small text-faint">
+                  <Trans>You get the address to call when you save. It is shown only once.</Trans>
+                </p>
+              )}
+            </>
+          )}
+          {kind === "push" && !edit && (
+            <p className="text-small text-faint">
+              <Trans>
+                You get the address your alerting calls when you save, for Alertmanager, Grafana or your own script. It
+                is shown only once.
+              </Trans>
+            </p>
+          )}
+          {kind === "http" && (
+            <div className="flex flex-col gap-3">
+              <button
+                type="button"
+                aria-expanded={more}
+                onClick={() => setMore((v) => !v)}
+                className="inline-flex w-fit items-center gap-1 text-body text-muted-foreground outline-none hover:text-foreground focus-visible:text-foreground"
+              >
+                <ChevronDownIcon className={cn("size-4 transition-transform", more && "rotate-180")} />
+                {more ? <Trans>Hide HTTP details</Trans> : <Trans>Show HTTP details</Trans>}
+              </button>
+              {more && <HttpDetails value={http} onChange={(p) => setHttp((h) => ({ ...h, ...p }))} errors={fields} />}
             </div>
           )}
           <div className="grid grid-cols-2 gap-4 phone:grid-cols-1">
@@ -321,21 +377,19 @@ export function MonitorDialog({
             label={<Trans>State while down</Trans>}
             hint={heartbeat || outside ? undefined : <Trans>A pushed state that names its own state keeps it.</Trans>}
           >
-            <ChoiceSelect
+            <ChoiceChips
               value={failureState}
               onChange={setFailureState}
               options={FAILURE_STATES.map((s) => [s, text.component[s]] as const)}
               label={t`State while down`}
-              className="w-full"
             />
           </Field>
-          <Field label={<Trans>When it goes down</Trans>}>
-            <ChoiceSelect
+          <Field label={<Trans>When it goes down</Trans>} hint={failHint[onFailure]}>
+            <ChoiceChips
               value={onFailure}
               onChange={setOnFailure}
               options={ON_FAILURE.map((s) => [s, text.onFailure[s]] as const)}
               label={t`When it goes down`}
-              className="w-full"
             />
           </Field>
           <ToggleRow

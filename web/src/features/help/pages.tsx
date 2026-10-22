@@ -1,34 +1,20 @@
 import "@/features/help/i18n"
 import { Trans, useLingui } from "@lingui/react/macro"
-import { ArrowUpRightIcon, ChevronDownIcon, EllipsisIcon, LifeBuoyIcon, LoaderIcon, SearchIcon } from "lucide-react"
+import { LifeBuoyIcon, LoaderIcon, SearchIcon } from "lucide-react"
 import { useRef, useState } from "react"
 import { Navigate, useNavigate, useParams, useSearchParams } from "react-router"
 
 import { PaneEmpty } from "@/components/common/Column"
+import { toast } from "@/components/common/Toast"
 import { HELP_KEYS, keyLabel } from "@/components/common/ShortcutSheet"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 import { Skeleton } from "@/components/ui/skeleton"
 import { ArticlesTab, NewArticleDialog } from "@/features/help/ArticlesTab"
+import { CenterBar, DocsNote, ProductChips, usePublishToggle } from "@/features/help/CenterBar"
 import { CollectionsTab } from "@/features/help/CollectionsTab"
 import { CreateCenterDialog } from "@/features/help/CreateCenterDialog"
-import {
-  centerLink,
-  useHelpCenter,
-  useHelpCenters,
-  useHelpCollections,
-  useHelpPreview,
-  useUpdateHelpCenter,
-} from "@/features/help/queries"
+import { centerLink, useHelpCenter, useHelpCenters, useHelpCollections, useHelpPreview } from "@/features/help/queries"
 import { ReportTab } from "@/features/help/ReportTab"
 import { SettingsTab } from "@/features/help/SettingsTab"
 import { ErrorLine } from "@/features/help/text"
@@ -49,63 +35,39 @@ function useCenterChoice() {
   const [inboxId] = useInboxFilter()
   const inboxes = useInboxes()
   const centers = useHelpCenters()
-  const shown = (inboxes.data ?? []).filter((i) => !inboxId || i.id === inboxId)
-  const groups = shown.map((inbox) => ({ inbox, center: centers.data?.find((c) => c.inbox_id === inbox.id) }))
-  return { groups, pending: inboxes.isPending || centers.isPending, error: centers.error }
+  const all = (inboxes.data ?? []).map((inbox) => ({
+    inbox,
+    center: centers.data?.find((c) => c.inbox_id === inbox.id),
+  }))
+  const groups = all.filter((g) => !inboxId || g.inbox.id === inboxId)
+  return { all, groups, pending: inboxes.isPending || centers.isPending, error: centers.error }
 }
 
-function CreateList({ groups }: { groups: { inbox: Inbox; center?: HelpCenter }[] }) {
+function useCreateCenter() {
+  const { t } = useLingui()
   const navigate = useNavigate()
-  const { canManage } = useSession()
   const [creating, setCreating] = useState<Inbox | null>(null)
-  const missing = groups.filter((g) => !g.center)
-  return (
-    <div className={look.card} data-testid="help-panel">
-      {missing.length === 0 ? (
-        <p className="px-4 py-8 text-center text-faint" data-testid="help-empty">
-          <Trans>No inbox to show a help center for.</Trans>
-        </p>
-      ) : (
-        <ul className="flex flex-col">
-          {missing.map(({ inbox }) => (
-            <li key={inbox.id} className="flex items-center gap-3 border-t px-4 py-3 first:border-t-0">
-              <span className="min-w-0 flex-1 truncate font-medium">{inbox.name}</span>
-              {canManage ? (
-                <Button
-                  variant="outline"
-                  className={look.btnSm}
-                  onClick={() => setCreating(inbox)}
-                  data-testid="create-help-center-open"
-                >
-                  <Trans>Create help center</Trans>
-                </Button>
-              ) : (
-                <span className="text-caption text-faint" data-testid="help-none">
-                  <Trans>No help center yet. Owners and admins create it.</Trans>
-                </span>
-              )}
-            </li>
-          ))}
-        </ul>
-      )}
-      {creating && (
-        <CreateCenterDialog
-          inboxId={creating.id}
-          inboxName={creating.name}
-          onClose={() => setCreating(null)}
-          onCreated={(c) => {
-            setCreating(null)
-            navigate(centerLink(c.id, "settings"))
-          }}
-        />
-      )}
-    </div>
+  const dialog = creating && (
+    <CreateCenterDialog
+      inboxId={creating.id}
+      inboxName={creating.name}
+      onClose={() => setCreating(null)}
+      onCreated={(c) => {
+        setCreating(null)
+        toast(t`Help center created. Write the first article, then publish it.`)
+        navigate(centerLink(c.id))
+      }}
+    />
   )
+  return [setCreating, dialog] as const
 }
 
 export function HelpHome() {
   const phone = useIsPhone()
-  const { groups, pending, error } = useCenterChoice()
+  const { canManage } = useSession()
+  const { all, groups, pending, error } = useCenterChoice()
+  const [create, dialog] = useCreateCenter()
+  const [picked, setPicked] = useState("")
   if (phone) {
     return (
       <PaneEmpty icon={LifeBuoyIcon} title={<Trans>Help centers</Trans>} testId="help-home">
@@ -118,91 +80,67 @@ export function HelpHome() {
   }
   const first = groups.find((g) => g.center)?.center
   if (first) return <Navigate to={centerLink(first.id)} replace />
+  const target =
+    all.find((g) => g.inbox.id === picked && !g.center) ?? groups.find((g) => !g.center) ?? all.find((g) => !g.center)
   return (
     <main className="flex min-h-0 flex-1 flex-col" data-testid="help-home">
       <PageTop title={<Trans>Help center</Trans>} sub={<Trans>Articles people read before they write to you</Trans>} />
-      <div className="min-h-0 flex-1 overflow-y-auto px-6 py-5">
-        <div className="flex max-w-[640px] flex-col gap-3">
-          <p className="text-muted-foreground">
-            <Trans>
-              Answer common questions once, in writing. Each product gets its own help center with articles, collections
-              and a report of what people search for.
-            </Trans>
-          </p>
+      <div className="min-h-0 flex-1 overflow-y-auto px-6 py-5 phone:px-4">
+        <div className="flex max-w-[720px] flex-col gap-4">
           {pending ? (
-            <Skeleton className="h-24 w-full rounded-xl" />
+            <Skeleton className="h-40 w-full rounded-xl" />
           ) : error ? (
             <ErrorLine error={error} />
           ) : (
-            <CreateList groups={groups} />
+            <>
+              <ProductChips
+                groups={all}
+                currentInboxId={target?.inbox.id}
+                canManage={canManage}
+                onCreate={(i) => setPicked(i.id)}
+              />
+              <div className={`${look.card} flex flex-col gap-3 p-7`} data-testid="help-panel">
+                {target ? (
+                  <>
+                    <h2 className="text-[18px] font-semibold">
+                      <Trans>No help center for {target.inbox.name} yet</Trans>
+                    </h2>
+                    <p className="text-muted-foreground">
+                      <Trans>
+                        Answer common questions once, in writing. Each product gets its own help center with articles,
+                        collections and a report of what people search for. Pages are hosted by Yuva, so there is
+                        nothing to install on your site.
+                      </Trans>
+                    </p>
+                    <div className="flex items-center gap-3">
+                      {canManage ? (
+                        <Button
+                          className={look.btnInk}
+                          onClick={() => create(target.inbox)}
+                          data-testid="create-help-center-open"
+                        >
+                          <Trans>Create help center</Trans>
+                        </Button>
+                      ) : (
+                        <span className="text-caption text-faint" data-testid="help-none">
+                          <Trans>No help center yet. Owners and admins create it.</Trans>
+                        </span>
+                      )}
+                    </div>
+                  </>
+                ) : (
+                  <p className="text-center text-faint" data-testid="help-empty">
+                    <Trans>No inbox to show a help center for.</Trans>
+                  </p>
+                )}
+              </div>
+              <DocsNote />
+            </>
           )}
         </div>
       </div>
+      {dialog}
     </main>
-  )
-}
-
-function CenterPicker({ center }: { center: HelpCenter }) {
-  const { t } = useLingui()
-  const navigate = useNavigate()
-  const { canManage } = useSession()
-  const { groups } = useCenterChoice()
-  const [creating, setCreating] = useState<Inbox | null>(null)
-  const others = groups.filter((g) => g.center?.id !== center.id)
-  if (others.length === 0) return null
-  return (
-    <>
-      <DropdownMenu>
-        <DropdownMenuTrigger
-          render={<button type="button" className={look.chip} />}
-          aria-label={t`Help center`}
-          data-testid="help-center-picker"
-        >
-          <span className="max-w-36 truncate">{center.name}</span>
-          <ChevronDownIcon className="size-3.5 text-faint" />
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="min-w-52">
-          <DropdownMenuRadioGroup value={center.id} onValueChange={(v) => navigate(centerLink(String(v)))}>
-            {groups.flatMap(({ center: c }) =>
-              c
-                ? [
-                    <DropdownMenuRadioItem key={c.id} value={c.id} data-testid="help-row">
-                      <span className="truncate">{c.name}</span>
-                    </DropdownMenuRadioItem>,
-                  ]
-                : []
-            )}
-          </DropdownMenuRadioGroup>
-          {canManage && groups.some((g) => !g.center) && (
-            <>
-              <DropdownMenuSeparator />
-              {groups
-                .filter((g) => !g.center)
-                .map(({ inbox }) => (
-                  <DropdownMenuItem
-                    key={inbox.id}
-                    onClick={() => setCreating(inbox)}
-                    data-testid="create-help-center-open"
-                  >
-                    <Trans>Create one for {inbox.name}</Trans>
-                  </DropdownMenuItem>
-                ))}
-            </>
-          )}
-        </DropdownMenuContent>
-      </DropdownMenu>
-      {creating && (
-        <CreateCenterDialog
-          inboxId={creating.id}
-          inboxName={creating.name}
-          onClose={() => setCreating(null)}
-          onCreated={(c) => {
-            setCreating(null)
-            navigate(centerLink(c.id, "settings"))
-          }}
-        />
-      )}
-    </>
   )
 }
 
@@ -256,10 +194,10 @@ export function CenterPane() {
   const [params] = useSearchParams()
   const navigate = useNavigate()
   const center = useHelpCenter(centerId)
-  const patch = useUpdateHelpCenter(centerId)
   const { canManage } = useSession()
-  const inbox = (useInboxes().data ?? []).find((i) => i.id === center.data?.inbox_id)
+  const { all } = useCenterChoice()
   const [inboxFilter] = useInboxFilter()
+  const [create, createDialog] = useCreateCenter()
   const centers = useHelpCenters().data
   const collections = useHelpCollections(centerId).data ?? []
   const [preview, setPreview] = useState(false)
@@ -271,6 +209,8 @@ export function CenterPane() {
   const setTab = (v: Tab) => navigate(centerLink(centerId, v === "articles" ? undefined : v), { replace: true })
   const c = center.data
   const listing = tab === "articles" || tab === "drafts"
+  const pub = usePublishToggle(centerId, c?.published)
+  const togglePublish = pub.toggle
 
   useHotkeys(
     {
@@ -286,7 +226,7 @@ export function CenterPane() {
           }
         : {}),
       ...(c?.published ? { [HELP_KEYS.openPage]: () => window.open(c.url, "_blank", "noopener,noreferrer") } : {}),
-      ...(canManage && c ? { [HELP_KEYS.publishCenter]: () => patch.mutate({ published: !c.published }) } : {}),
+      ...(canManage && c ? { [HELP_KEYS.publishCenter]: togglePublish } : {}),
     },
     !!c
   )
@@ -323,74 +263,24 @@ export function CenterPane() {
     settings: HELP_KEYS.settings,
   }
   const previewKey = keyLabel(HELP_KEYS.preview).join("")
-  const publishKey = keyLabel(HELP_KEYS.publishCenter).join("")
   const newKey = keyLabel(HELP_KEYS.newArticle).join("")
   const findKey = keyLabel(HELP_KEYS.search).join("")
-  const openKey = keyLabel(HELP_KEYS.openPage).join("")
   return (
     <main className="flex min-h-0 flex-1 flex-col" data-testid="help-center" key={c.id}>
       <PageTop
         title={<Trans>Help center</Trans>}
-        sub={
-          <span data-testid="help-published">
-            <span data-testid="help-center-name">{c.name}</span>
-            {inbox && inbox.name !== c.name ? ` · ${inbox.name}` : ""}
-            {" · "}
-            {c.published ? <Trans>Published</Trans> : <Trans>Unpublished, only your team can preview it</Trans>}
-          </span>
-        }
+        sub={<Trans>Articles people read before they write to you</Trans>}
         actions={
           <>
-            <DropdownMenu>
-              <DropdownMenuTrigger
-                render={<Button variant="ghost" size="icon-sm" className="text-faint" />}
-                aria-label={t`More`}
-                data-testid="help-more"
-              >
-                <EllipsisIcon />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="min-w-52">
-                <DropdownMenuItem onClick={() => setPreview(true)} data-testid="help-preview">
-                  <Trans>Preview</Trans>
-                  <span className="ms-auto text-caption text-faint">{previewKey}</span>
-                </DropdownMenuItem>
-                {canManage && c.published && (
-                  <DropdownMenuItem
-                    onClick={() => patch.mutate({ published: false })}
-                    disabled={patch.isPending}
-                    data-testid="help-publish"
-                  >
-                    <Trans>Unpublish</Trans>
-                    <span className="ms-auto text-caption text-faint">{publishKey}</span>
-                  </DropdownMenuItem>
-                )}
-              </DropdownMenuContent>
-            </DropdownMenu>
-            {c.published ? (
-              <Button
-                variant="outline"
-                className={look.btn}
-                render={<a href={c.url} target="_blank" rel="noreferrer noopener" />}
-                title={t`View site (${openKey})`}
-                data-testid="help-open-public"
-              >
-                <Trans>View site</Trans>
-                <ArrowUpRightIcon className="text-faint" />
-              </Button>
-            ) : (
-              canManage && (
-                <Button
-                  variant="outline"
-                  className={look.btn}
-                  disabled={patch.isPending}
-                  onClick={() => patch.mutate({ published: true })}
-                  title={t`Publish (${publishKey})`}
-                  data-testid="help-publish"
-                >
-                  <Trans>Publish</Trans>
-                </Button>
-              )
-            )}
+            <Button
+              variant="outline"
+              className={look.btn}
+              onClick={() => setPreview(true)}
+              title={t`Preview (${previewKey})`}
+              data-testid="help-preview"
+            >
+              <Trans>Preview</Trans>
+            </Button>
             <Button
               className={look.btnInk}
               onClick={() => setCreating({ title: "", collectionId: "" })}
@@ -416,7 +306,6 @@ export function CenterPane() {
         }
         aside={
           <>
-            <CenterPicker center={c} />
             {listing && (
               <label className="relative flex h-[30px] w-56 items-center">
                 <SearchIcon className="pointer-events-none absolute start-2.5 size-3.5 text-faint" aria-hidden />
@@ -435,7 +324,18 @@ export function CenterPane() {
           </>
         }
       />
-      <ErrorLine error={patch.error} className="px-6 pt-2" />
+      <CenterBar
+        center={c}
+        groups={all}
+        canManage={canManage}
+        busy={pub.pending}
+        onCreate={create}
+        onTogglePublish={togglePublish}
+      />
+      <div className="shrink-0 px-6 pt-3 phone:px-4">
+        <DocsNote />
+      </div>
+      <ErrorLine error={pub.error} className="px-6 pt-2" />
       <div className="min-h-0 flex-1 overflow-y-auto px-6 py-5 phone:px-4">
         {listing && (
           <ArticlesTab
@@ -450,6 +350,8 @@ export function CenterPane() {
         {tab === "report" && <ReportTab center={c} />}
         {tab === "settings" && canManage && <SettingsTab center={c} />}
       </div>
+      {createDialog}
+      {pub.dialog}
       {preview && <PreviewDialog center={c} onClose={() => setPreview(false)} />}
       {creating && (
         <NewArticleDialog

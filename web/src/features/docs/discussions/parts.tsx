@@ -167,11 +167,15 @@ export function ThreadRow({
   cursor,
   showPage,
   from,
+  to,
+  current,
 }: {
   d: Discussion
   cursor: boolean
   showPage: boolean
   from?: string
+  to?: string
+  current?: boolean
 }) {
   const { t, i18n } = useLingui()
   const authorName = useAuthorName()(d.author)
@@ -183,10 +187,12 @@ export function ThreadRow({
   return (
     <li>
       <Link
-        to={threadLink(d.id)}
+        to={to ?? threadLink(d.id)}
         state={from ? { from } : undefined}
+        aria-current={current ? "page" : undefined}
         className={cn(
           "flex items-start gap-3 px-4 py-3 outline-none transition-colors hover:bg-muted focus-visible:bg-muted",
+          current && "bg-muted",
           cursor && "bg-muted ring-2 ring-ring ring-inset"
         )}
         data-testid="thread-row"

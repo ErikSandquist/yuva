@@ -18,11 +18,15 @@ import { keys } from "@/lib/keys"
 import { useSession } from "@/lib/session"
 
 export function statusLink(pageId: string, tab?: string) {
-  return `/status-pages/${pageId}${tab ? `?tab=${tab}` : ""}`
+  return `/status?page=${pageId}${tab ? `&tab=${tab}` : ""}`
 }
 
-export function incidentLink(pageId: string, incidentId: string) {
-  return `/status-pages/${pageId}/incidents/${incidentId}`
+export function incidentLink(pageId: string, incidentId: string, view?: string) {
+  return `/incidents/${pageId}/${incidentId}${view && view !== "active" ? `?view=${view}` : ""}`
+}
+
+export function monitorLink(monitorId: string) {
+  return `/monitors/${monitorId}`
 }
 
 function useRefresh() {

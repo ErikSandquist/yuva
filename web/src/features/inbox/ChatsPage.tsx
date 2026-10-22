@@ -14,7 +14,6 @@ import { FeedbackPage } from "@/features/feedback/FeedbackPage"
 import {
   ChatList,
   isWaiting,
-  ListMenu,
   PAGE_CHIPS,
   rememberChip,
   rememberedChip,
@@ -23,7 +22,6 @@ import {
   type Chip,
 } from "@/features/inbox/ChatList"
 import { useInboxFilter } from "@/features/inbox/inboxFilter"
-import { requestSelect } from "@/features/inbox/listSearch"
 import { FrameTabs, look, PageTop } from "@/features/inbox/PageFrame"
 import { AssistantsPage, MentionsPage } from "@/features/inbox/SidePanels"
 import { useCounts, useLoadedCount, useStats } from "@/features/inbox/queries"
@@ -146,30 +144,19 @@ function InboxPage({ id }: { id: string | null }) {
   const [panel, setPanel] = usePanel()
   const [chip, setChip] = useState<Chip>(rememberedChip)
   const [starting, setStarting] = useState(false)
-  const [inboxId] = useInboxFilter()
-  const product = useInboxes().data?.find((i) => i.id === inboxId)?.name
+  const [sidebarInbox] = useInboxFilter()
+  const [chipInbox, setChipInbox] = useState("")
+  const inboxId = sidebarInbox || chipInbox
+  const product = useInboxes().data?.find((i) => i.id === sidebarInbox)?.name
   const counts = useCounts(["conversation"]).data
   const scope = { kind: ["conversation" as const], inbox_id: inboxId || undefined }
   const waiting = useLoadedCount({ ...scope, status: ["open"] }, isWaiting)
-  const snoozed = useLoadedCount({ ...scope, status: ["snoozed"] })
-  const closed = useLoadedCount({ ...scope, status: ["closed"] })
+  const unassigned = useLoadedCount({ ...scope, status: ["open"], assignee: "unassigned" })
   const labels = useChipLabels()
   const contactId = useConversation(id ?? undefined).data?.contact_id
   const open = useCallback((next: string) => navigate(`/conversations/${next}`), [navigate])
   const count = (k: Chip) =>
-    k === "waiting"
-      ? waiting
-      : k === "snoozed"
-        ? snoozed
-        : k === "done"
-          ? closed
-          : inboxId
-            ? undefined
-            : k === "mine"
-              ? counts?.mine
-              : k === "unassigned"
-                ? counts?.unassigned
-                : undefined
+    k === "waiting" ? waiting : k === "unassigned" ? (inboxId ? unassigned : counts?.unassigned) : undefined
   const inline = roomy && panel && !!contactId && !!id
   const layout = useDefaultLayout({
     id: "inbox-panes",
@@ -179,19 +166,16 @@ function InboxPage({ id }: { id: string | null }) {
     <main className="flex min-h-0 flex-1 flex-col" data-testid={id ? "chats" : "inbox-page"}>
       <PageTop
         title={<Trans>Inbox</Trans>}
-        sub={product ? <Trans>Conversations in {product}</Trans> : <Trans>Conversations from every product</Trans>}
+        sub={product ? <Trans>{product}’s conversations</Trans> : <Trans>Conversations from every product</Trans>}
         actions={
-          <>
-            <ListMenu onSelect={requestSelect} className="text-faint" />
-            <Button
-              className={look.btnInk}
-              onClick={() => setStarting(true)}
-              title={t`New conversation`}
-              data-testid="new-conversation"
-            >
-              <Trans>New conversation</Trans>
-            </Button>
-          </>
+          <Button
+            className={look.btnInk}
+            onClick={() => setStarting(true)}
+            title={t`New conversation`}
+            data-testid="new-conversation"
+          >
+            <Trans>New conversation</Trans>
+          </Button>
         }
         tabs={
           <FrameTabs
@@ -221,7 +205,15 @@ function InboxPage({ id }: { id: string | null }) {
           maxSize={560}
           groupResizeBehavior="preserve-pixel-size"
         >
-          <ChatList currentId={id} onOpen={open} chip={chip} onChip={setChip} embedded />
+          <ChatList
+            currentId={id}
+            onOpen={open}
+            chip={chip}
+            onChip={setChip}
+            inbox={chipInbox}
+            onInbox={setChipInbox}
+            embedded
+          />
         </ResizablePanel>
         <ResizableHandle withHandle className={handle} />
         <ResizablePanel id="chat" className="flex flex-col" minSize={440}>

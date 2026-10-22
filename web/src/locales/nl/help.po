@@ -77,8 +77,8 @@ msgid "Another help center already uses this address, now or before."
 msgstr "Een ander helpcentrum gebruikt dit adres, nu of eerder."
 
 #: src/features/help/pages.tsx
-msgid "Answer common questions once, in writing. Each product gets its own help center with articles, collections and a report of what people search for."
-msgstr "Beantwoord veelgestelde vragen één keer, schriftelijk. Elk product krijgt een eigen helpcentrum met artikelen, collecties en een rapport over waar mensen naar zoeken."
+msgid "Answer common questions once, in writing. Each product gets its own help center with articles, collections and a report of what people search for. Pages are hosted by Yuva, so there is nothing to install on your site."
+msgstr "Beantwoord veelgestelde vragen één keer, schriftelijk. Elk product krijgt een eigen helpcentrum met artikelen, collecties en een rapport van wat mensen zoeken. De pagina’s worden door Yuva gehost, op je site hoeft niets te worden geïnstalleerd."
 
 #: src/features/help/pages.tsx
 msgid "Answer common questions once, in writing. Pick an inbox’s help center to write articles, group them in collections and see what customers search for."
@@ -162,6 +162,7 @@ msgstr "Lijst met opsommingstekens"
 msgid "Cancel"
 msgstr "Annuleren"
 
+#: src/features/help/ArticleEditor.tsx
 #: src/features/help/ArticlesTab.tsx
 msgid "Changed"
 msgstr "Gewijzigd"
@@ -226,11 +227,6 @@ msgstr "Helpcentrum maken"
 #: src/features/help/HelpColumn.tsx
 msgid "Create help center ({newKey})"
 msgstr "Helpcentrum maken ({newKey})"
-
-#. placeholder {0}: inbox.name
-#: src/features/help/pages.tsx
-msgid "Create one for {0}"
-msgstr "Maak er een voor {0}"
 
 #: src/features/help/CollectionsTab.tsx
 #: src/features/help/SettingsTab.tsx
@@ -342,11 +338,16 @@ msgstr "Groepeer artikelen zodat bezoekers kunnen bladeren. Een collectie kan é
 msgid "Heading"
 msgstr "Kop"
 
+#: src/features/help/CenterBar.tsx
 #: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 #: src/features/help/SettingsTab.tsx
 msgid "Help center"
 msgstr "Helpcentrum"
+
+#: src/features/help/pages.tsx
+msgid "Help center created. Write the first article, then publish it."
+msgstr "Helpcentrum aangemaakt. Schrijf het eerste artikel en publiceer het daarna."
 
 #: src/features/help/SettingsTab.tsx
 msgid "Help center deleted"
@@ -445,7 +446,10 @@ msgid "Main language"
 msgstr "Hoofdtaal"
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+msgid "Mark up to date"
+msgstr "Markeren als bijgewerkt"
+
+#: src/features/help/ArticleEditor.tsx
 msgid "More"
 msgstr "Meer"
 
@@ -522,6 +526,11 @@ msgstr "Geen concepten. Alles wat geschreven is, is gepubliceerd."
 msgid "No earlier versions yet."
 msgstr "Nog geen eerdere versies."
 
+#. placeholder {0}: target.inbox.name
+#: src/features/help/pages.tsx
+msgid "No help center for {0} yet"
+msgstr "Nog geen helpcentrum voor {0}"
+
 #: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 msgid "No help center yet. Owners and admins create it."
@@ -540,6 +549,7 @@ msgstr "Geen"
 msgid "not named"
 msgstr "niet benoemd"
 
+#: src/features/help/ArticleEditor.tsx
 #: src/features/help/ArticlesTab.tsx
 msgid "Not written"
 msgstr "Niet geschreven"
@@ -555,6 +565,10 @@ msgstr "van {answers} antwoorden"
 #: src/features/help/SettingsTab.tsx
 msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish and unpublish too."
 msgstr "Uit: agenten schrijven concepten en dienen ze in, eigenaren en beheerders publiceren. Aan: agenten met toegang tot de inbox publiceren en depubliceren ook."
+
+#: src/features/help/SettingsTab.tsx
+msgid "On: anyone with the address can read the help center. Off: only your team can preview it."
+msgstr "Aan: iedereen met het adres kan het helpcentrum lezen. Uit: alleen je team kan het bekijken in de voorvertoning."
 
 #: src/features/help/ArticleEditor.tsx
 msgid "One path per line, such as /billing/*. The chat widget suggests this article on matching pages."
@@ -618,6 +632,10 @@ msgstr "Voorbeeld"
 msgid "Preview ({alt} P)"
 msgstr "Voorbeeld ({alt} P)"
 
+#: src/features/help/pages.tsx
+msgid "Preview ({previewKey})"
+msgstr "Voorbeeld ({previewKey})"
+
 #. placeholder {0}: center.name
 #: src/features/help/pages.tsx
 msgid "Preview of {0}"
@@ -632,22 +650,27 @@ msgid "Public address"
 msgstr "Openbaar adres"
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "Publish"
 msgstr "Publiceren"
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "Publish ({publishKey})"
 msgstr "Publiceren ({publishKey})"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/CenterBar.tsx
 #: src/features/help/HelpColumn.tsx
-#: src/features/help/pages.tsx
 #: src/features/help/Revisions.tsx
+#: src/features/help/SettingsTab.tsx
 #: src/features/help/text.tsx
 msgid "Published"
 msgstr "Gepubliceerd"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Publishing"
+msgstr "Publicatie"
 
 #: src/features/help/text.tsx
 msgid "Question mark"
@@ -758,6 +781,10 @@ msgstr "Schild"
 msgid "Show"
 msgstr "Tonen"
 
+#: src/features/help/ArticleEditor.tsx
+msgid "Show original"
+msgstr "Origineel tonen"
+
 #: src/features/help/SettingsTab.tsx
 msgid "Shown under the name on the home page."
 msgstr "Getoond onder de naam op de startpagina."
@@ -831,6 +858,10 @@ msgid "The main language has no text for this article yet."
 msgstr "De hoofdtaal heeft nog geen tekst voor dit artikel."
 
 #: src/features/help/ArticleEditor.tsx
+msgid "The original changed after this translation was written. Compare them, then mark it up to date."
+msgstr "Het origineel is gewijzigd nadat deze vertaling is geschreven. Vergelijk ze en markeer de vertaling dan als bijgewerkt."
+
+#: src/features/help/ArticleEditor.tsx
 msgid "The page stops working for visitors. The draft stays, and you can publish it again."
 msgstr "De pagina werkt niet meer voor bezoekers. Het concept blijft, en je kunt het opnieuw publiceren."
 
@@ -880,15 +911,24 @@ msgid "Type a word to search for."
 msgstr "Typ een woord om te zoeken."
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "Unpublish"
 msgstr "Depubliceren"
+
+#: src/features/help/CenterBar.tsx
+msgid "Unpublish ({publishKey})"
+msgstr "Depubliceren ({publishKey})"
+
+#: src/features/help/CenterBar.tsx
+msgid "Unpublish this help center?"
+msgstr "Dit helpcentrum depubliceren?"
 
 #: src/features/help/ArticleEditor.tsx
 msgid "Unpublish this translation?"
 msgstr "Deze vertaling depubliceren?"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/CenterBar.tsx
 #: src/features/help/HelpColumn.tsx
 msgid "Unpublished"
 msgstr "Niet gepubliceerd"
@@ -896,10 +936,6 @@ msgstr "Niet gepubliceerd"
 #: src/features/help/text.tsx
 msgid "Unpublished changes"
 msgstr "Niet-gepubliceerde wijzigingen"
-
-#: src/features/help/pages.tsx
-msgid "Unpublished, only your team can preview it"
-msgstr "Niet gepubliceerd, alleen je team kan het bekijken"
 
 #: src/features/help/ArticleEditor.tsx
 msgid "Unsaved changes"
@@ -929,11 +965,11 @@ msgstr "Versie hersteld in het concept"
 msgid "View"
 msgstr "Bekijken"
 
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "View site"
 msgstr "Site bekijken"
 
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "View site ({openKey})"
 msgstr "Site bekijken ({openKey})"
 
@@ -945,13 +981,13 @@ msgstr "Weergaven"
 msgid "Views · 7 days"
 msgstr "Weergaven · 7 dagen"
 
+#: src/features/help/CenterBar.tsx
+msgid "Visitors can no longer open it and the chat widget stops suggesting its articles. Your articles stay as they are."
+msgstr "Bezoekers kunnen het niet meer openen en de chatwidget stopt met het voorstellen van de artikelen. Je artikelen blijven zoals ze zijn."
+
 #: src/features/help/ReportTab.tsx
 msgid "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
 msgstr "Wat bezoekers lezen en zoeken. Weergaven zijn bij benadering, en aantallen bereiken deze pagina binnen een minuut."
-
-#: src/features/help/SettingsTab.tsx
-msgid "Who can publish"
-msgstr "Wie mag publiceren"
 
 #: src/features/help/ReportTab.tsx
 msgid "Words visitors typed that found nothing. A new article for each is the fastest fix."
@@ -965,6 +1001,10 @@ msgstr "Schrijven"
 #: src/features/help/ArticleEditor.tsx
 msgid "Write the answer in Markdown…"
 msgstr "Schrijf het antwoord in Markdown…"
+
+#: src/features/help/CenterBar.tsx
+msgid "Written here, shown on pages Yuva hosts, searched from the chat widget and the reply box. Documentation pages on your own site live under <0>Docs</0>."
+msgstr "Hier geschreven, getoond op pagina’s die Yuva host en doorzocht vanuit de chatwidget en het antwoordvak. Documentatiepagina’s op je eigen site staan onder <0>Docs</0>."
 
 #: src/features/help/SettingsTab.tsx
 msgid "Your product."

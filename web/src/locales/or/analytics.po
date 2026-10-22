@@ -409,6 +409,7 @@ msgid "Break down by prop"
 msgstr "ପ୍ରପ୍ ଅନୁସାରେ ଭାଗ କରନ୍ତୁ"
 
 #: src/features/analytics/Goals.tsx
+#: src/features/analytics/Overview.tsx
 msgid "Breakdown"
 msgstr "ବିଭାଜନ"
 
@@ -1360,6 +1361,7 @@ msgstr "ସ୍ଥାନ ଡାଟାବେସ୍"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
 #: src/features/analytics/Sharing.tsx
 msgid "Locations"
 msgstr "ସ୍ଥାନ"
@@ -1469,6 +1471,10 @@ msgstr "ନୂଆ {kind}: {value}, {count} ସହ, ତୁଳନା କରାଯ�
 msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."
 msgstr "ନୂଆ {kind}: {value}। {metric}: {now}, ତୁଳନା କରାଯାଇଥିବା ଦିନରେ କିଛି ନାହିଁ।"
 
+#: src/features/analytics/Overview.tsx
+msgid "New and returning"
+msgstr "ନୂଆ ଓ ଫେରୁଥିବା"
+
 #: src/features/analytics/Funnels.tsx
 msgid "New funnel"
 msgstr "ନୂଆ ଫନେଲ୍"
@@ -1509,6 +1515,10 @@ msgstr "ତୁଳନା ନାହିଁ"
 #: src/features/analytics/Settings.tsx
 msgid "No consent features are offered."
 msgstr "କୌଣସି ସମ୍ମତି ସୁବିଧା ଦିଆଯାଇନାହିଁ।"
+
+#: src/features/analytics/Overview.tsx
+msgid "No consented visitors in this range."
+msgstr "ଏହି ସୀମାରେ ସମ୍ମତି ଦେଇଥିବା ପରିଦର୍ଶକ ନାହାଁନ୍ତି।"
 
 #: src/features/analytics/Retention.tsx
 msgid "No consented visitors yet"
@@ -2086,6 +2096,7 @@ msgid "Requests with Do Not Track or Global Privacy Control, and events without 
 msgstr "Do Not Track କିମ୍ବା Global Privacy Control ଥିବା ଅନୁରୋଧ, ଏବଂ ସମ୍ମତି ଦରକାର ଥିବା ପ୍ରପର୍ଟିରେ ସମ୍ମତି ବିନା ଇଭେଣ୍ଟ, ନିଆଯାଏ କିନ୍ତୁ ଏଠାରେ ସଂରକ୍ଷିତ କିମ୍ବା ଗଣାଯାଏ ନାହିଁ।"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Overview.tsx
 msgid "Retention"
 msgstr "ରିଟେନସନ୍"
 

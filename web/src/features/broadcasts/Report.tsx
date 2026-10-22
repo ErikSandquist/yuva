@@ -283,13 +283,19 @@ function Replies({ report }: { report: BroadcastReport }) {
   )
 }
 
+export function ReportStats({ b }: { b: Broadcast }) {
+  const report = useReport(b.id)
+  if (report.isPending) return <Skeleton className="h-28 rounded-2xl" />
+  if (!report.data) return <ErrorLine error={report.error} />
+  return <Tiles b={b} report={report.data} />
+}
+
 export function Report({ b }: { b: Broadcast }) {
   const report = useReport(b.id)
   if (report.isPending) return <Skeleton className="h-64 rounded-2xl" />
-  if (!report.data) return <ErrorLine error={report.error} />
+  if (!report.data) return null
   return (
     <>
-      <Tiles b={b} report={report.data} />
       <Timeline b={b} report={report.data} />
       {b.click_tracking && <Links report={report.data} />}
       <CampaignVisits b={b} report={report.data} />

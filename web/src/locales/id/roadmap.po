@@ -7,6 +7,10 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: id\n"
 
+#: src/features/roadmap/CreateBoardDialog.tsx
+msgid "{inboxName} has no web chat channel. Add one first, because the public board embeds it."
+msgstr "{inboxName} tidak punya saluran obrolan web. Tambahkan satu dulu, karena papan publik menyematkannya."
+
 #: src/features/roadmap/Board.tsx
 msgid "{linked, plural, one {# feedback} other {# feedback}}"
 msgstr "{linked, plural, other {# masukan}}"
@@ -29,9 +33,25 @@ msgid "A reader's posts wait for a member until one of theirs is approved. Signe
 msgstr "Kiriman pembaca menunggu anggota sampai salah satu kirimannya disetujui. Pengguna aplikasi Anda yang sudah masuk langsung memublikasikan."
 
 #: src/features/roadmap/CreateBoardDialog.tsx
+msgid "Add a web chat channel"
+msgstr "Tambah saluran obrolan web"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
 #: src/features/roadmap/Settings.tsx
 msgid "Address"
 msgstr "Alamat"
+
+#: src/features/roadmap/BoardBar.tsx
+msgid "All boards"
+msgstr "Semua papan"
+
+#: src/features/roadmap/Settings.tsx
+msgid "All changes saved."
+msgstr "Semua perubahan tersimpan."
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "All feedback from {inboxName} that fits is already linked."
+msgstr "Semua masukan dari {inboxName} yang cocok sudah terhubung."
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Already linked"
@@ -89,13 +109,16 @@ msgstr "Menghitung tampilan halaman papan publik tanpa cookie."
 
 #: src/features/roadmap/CreateBoardDialog.tsx
 #: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
 msgid "Create board"
 msgstr "Buat papan"
 
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Create board ({newKey})"
 msgstr "Buat papan ({newKey})"
+
+#: src/features/roadmap/BoardBar.tsx
+msgid "Create board for {name}"
+msgstr "Buat papan untuk {name}"
 
 #: src/features/roadmap/NewIdeaDialog.tsx
 msgid "Create idea"
@@ -123,17 +146,21 @@ msgstr "Menghapus papan beserta ide, suara, balasan, dan riwayat tahapnya. Masuk
 msgid "Description"
 msgstr "Deskripsi"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Dismiss"
+msgstr "Tutup"
+
 #: src/features/roadmap/Board.tsx
 msgid "Done"
 msgstr "Selesai"
 
-#: src/features/roadmap/MoveDialog.tsx
-msgid "Every linked feedback that does not have it yet gets the progress {progress}. Linked feedback: {linked}"
-msgstr "Setiap masukan terhubung yang belum memiliki progres {progress} akan mendapatkannya. Masukan terhubung: {linked}"
-
 #: src/features/roadmap/Settings.tsx
 msgid "Everyone's posts are published at once, except those of authors you marked as spam."
 msgstr "Kiriman semua orang langsung dipublikasikan, kecuali penulis yang Anda tandai sebagai spam."
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Good news: “{title}” has shipped. Thank you for asking for it."
+msgstr "Kabar baik: “{title}” sudah dirilis. Terima kasih sudah memintanya."
 
 #: src/features/roadmap/Board.tsx
 msgid "Hidden"
@@ -155,21 +182,30 @@ msgstr "Ide yang dipilih pelanggan Anda, dengan masukan di baliknya"
 msgid "Ideas, votes and stages for {inboxName}, with the feedback behind each idea. It stays private until you make it public."
 msgstr "Ide, suara, dan tahap untuk {inboxName}, beserta masukan di balik setiap ide. Tetap privat sampai Anda menjadikannya publik."
 
-#: src/features/roadmap/RoadmapColumn.tsx
-msgid "Ideas: {ideas}"
-msgstr "Ide: {ideas}"
-
 #: src/features/roadmap/NewIdeaDialog.tsx
 msgid "It goes into Ideas on the board, where customers can vote on it."
 msgstr "Masuk ke Ide di papan, tempat pelanggan dapat memberikan suara."
 
-#: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/NewIdeaDialog.tsx
+msgid "It goes into Ideas on the board. The board is private, so only your team sees it."
+msgstr "Masuk ke Ide di papan. Papan ini privat, jadi hanya tim Anda yang melihatnya."
+
+#: src/features/roadmap/IdeaFeedback.tsx
 msgid "It was unlinked from the idea."
 msgstr "Sudah dilepas dari ide."
 
 #: src/features/roadmap/Settings.tsx
 msgid "Its ideas, votes, replies and stage history are deleted with it."
 msgstr "Ide, suara, balasan, dan riwayat tahapnya ikut dihapus."
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgctxt "link feedback to the idea"
+msgid "Link"
+msgstr "Hubungkan"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Link feedback"
+msgstr "Hubungkan masukan"
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Link this feedback to an idea…"
@@ -179,13 +215,21 @@ msgstr "Hubungkan masukan ini ke sebuah ide…"
 msgid "Link to an idea"
 msgstr "Hubungkan ke ide"
 
-#: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Linked"
+msgstr "Terhubung"
+
+#: src/features/roadmap/IdeaFeedback.tsx
 msgid "Linked feedback"
 msgstr "Masukan terhubung"
 
 #: src/features/roadmap/IdeaPane.tsx
 msgid "Linked feedback set to {progress}: {set}"
 msgstr "Masukan terhubung diatur ke {progress}: {set}"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Linked feedback that gets the progress {progress}: {gets} of {linked}."
+msgstr "Masukan terhubung yang mendapat kemajuan {progress}: {gets} dari {linked}."
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Linked to {title}"
@@ -195,19 +239,19 @@ msgstr "Dihubungkan ke {title}"
 msgid "Load more"
 msgstr "Muat lebih banyak"
 
-#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Make private"
 msgstr "Jadikan privat"
 
-#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Make private ({publicKey})"
 msgstr "Jadikan privat ({publicKey})"
 
-#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Make public"
 msgstr "Jadikan publik"
 
-#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Make public ({publicKey})"
 msgstr "Jadikan publik ({publicKey})"
 
@@ -254,25 +298,37 @@ msgstr "Ide baru"
 msgid "New idea from this feedback"
 msgstr "Ide baru dari masukan ini"
 
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/pages.tsx
+msgid "No board is public yet. Make one public under Settings."
+msgstr "Belum ada papan yang publik. Jadikan satu publik di Pengaturan."
+
+#: src/features/roadmap/pages.tsx
 msgid "No board yet. Owners and admins create it."
 msgstr "Belum ada papan. Pemilik dan admin yang membuatnya."
 
-#: src/features/roadmap/IdeaPane.tsx
-msgid "No feedback is linked yet. Open a piece of feedback and use Link to an idea."
-msgstr "Belum ada masukan yang terhubung. Buka sebuah masukan dan gunakan “Hubungkan ke ide”."
+#: src/features/roadmap/MoveDialog.tsx
+msgid "No feedback is linked to this idea yet."
+msgstr "Belum ada masukan yang terhubung ke ide ini."
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "No feedback is linked yet. Use Link feedback, or open a piece of feedback and choose Link to an idea."
+msgstr "Belum ada masukan yang terhubung. Gunakan Hubungkan masukan, atau buka sebuah masukan dan pilih Hubungkan ke ide."
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "No idea matches."
 msgstr "Tidak ada ide yang cocok."
 
-#: src/features/roadmap/RoadmapColumn.tsx
-msgid "No inbox to show a board for."
-msgstr "Tidak ada kotak masuk untuk menampilkan papan."
+#: src/features/roadmap/Board.tsx
+msgid "No ideas yet. New ones land here."
+msgstr "Belum ada ide. Ide baru muncul di sini."
 
 #: src/features/roadmap/Settings.tsx
 msgid "None"
 msgstr "Tidak ada"
+
+#: src/features/roadmap/Board.tsx
+msgid "Nothing here yet."
+msgstr "Belum ada apa pun di sini."
 
 #: src/features/roadmap/Settings.tsx
 msgid "Off"
@@ -282,7 +338,7 @@ msgstr "Nonaktif"
 msgid "On: anyone with the address reads the board, and signed-in readers vote and suggest ideas. Off: only your team sees it, as a tool to sort feedback."
 msgstr "Aktif: siapa pun yang memiliki alamatnya membaca papan, dan pembaca yang masuk memberi suara serta mengusulkan ide. Nonaktif: hanya tim Anda yang melihatnya, sebagai alat untuk memilah masukan."
 
-#: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/IdeaFeedback.tsx
 msgid "One reply, written once, goes to every open feedback conversation linked to this idea, as you, on each conversation’s own channel."
 msgstr "Satu balasan, ditulis sekali, dikirim ke setiap percakapan masukan terbuka yang terhubung ke ide ini, atas nama Anda, lewat saluran masing-masing percakapan."
 
@@ -290,9 +346,22 @@ msgstr "Satu balasan, ditulis sekali, dikirim ke setiap percakapan masukan terbu
 msgid "Open"
 msgstr "Terbuka"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgctxt "open the feedback"
+msgid "Open"
+msgstr "Buka"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Open Analytics"
+msgstr "Buka analitik"
+
 #: src/features/roadmap/IdeaPane.tsx
 msgid "Open on the public board"
 msgstr "Buka di papan publik"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Open Roadmap"
+msgstr "Buka peta jalan"
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Pick an idea of this inbox’s board"
@@ -302,17 +371,11 @@ msgstr "Pilih ide dari papan kotak masuk ini"
 msgid "Posted as your public reply on the idea. Markdown works."
 msgstr "Diposting sebagai balasan publik Anda pada ide. Markdown didukung."
 
-#: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Private"
 msgstr "Privat"
 
-#: src/features/roadmap/pages.tsx
-msgid "Private, only your team sees it"
-msgstr "Privat, hanya tim Anda yang melihatnya"
-
-#: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/BoardBar.tsx
 #: src/features/roadmap/Settings.tsx
 msgid "Public"
 msgstr "Publik"
@@ -329,19 +392,37 @@ msgstr "Pembaca tidak dapat mengusulkan ide. Suara dan balasan tetap berfungsi."
 msgid "Readers suggested new ideas. Review them before they show on the public board."
 msgstr "Pembaca mengusulkan ide baru. Tinjau sebelum muncul di papan publik."
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Reply to everyone"
+msgstr "Balas ke semua"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Reply to linked ({key})"
+msgstr "Balas yang terhubung ({key})"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Resolved feedback does not get it: {closed}"
+msgstr "Masukan yang sudah terselesaikan tidak menerimanya: {closed}"
+
 #: src/features/roadmap/Board.tsx
 msgid "Review"
 msgstr "Tinjau"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Review the reply"
+msgstr "Tinjau balasan"
+
 #: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
 msgid "Roadmap"
 msgstr "Peta jalan"
 
-#: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Roadmap boards"
 msgstr "Papan peta jalan"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Save"
+msgstr "Simpan"
 
 #: src/features/roadmap/Settings.tsx
 msgid "Saved"
@@ -355,9 +436,13 @@ msgstr "Cari ide"
 msgid "Settings"
 msgstr "Pengaturan"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Shipped. Open feedback linked to it: {open}. A reply is ready to send."
+msgstr "Dirilis. Masukan terbuka yang terhubung ke ide ini: {open}. Balasan siap dikirim."
+
 #: src/features/roadmap/pages.tsx
-msgid "Show your customers what you are building, and link the feedback behind each idea. Create a board for an inbox to sort ideas into stages."
-msgstr "Tunjukkan kepada pelanggan apa yang sedang Anda bangun, dan tautkan masukan di balik setiap ide. Buat papan untuk sebuah kotak masuk guna mengurutkan ide ke dalam tahap."
+msgid "Show your customers what you are building, and link the feedback behind each idea. Create a board for {missingName} to sort ideas into stages."
+msgstr "Tunjukkan kepada pelanggan Anda apa yang sedang Anda bangun, dan hubungkan masukan di balik setiap ide. Buat papan untuk {missingName} untuk memilah ide ke dalam tahap."
 
 #: src/features/roadmap/Settings.tsx
 msgid "Shown under the name on the public board."
@@ -404,6 +489,10 @@ msgstr "Progres masukan yang terhubung tidak berubah. Masukan terhubung: {linked
 msgid "The public board embeds this chat, and ideas your team starts are filed on it."
 msgstr "Papan publik menyematkan chat ini, dan ide yang dimulai tim Anda disimpan di dalamnya."
 
+#: src/features/roadmap/MoveDialog.tsx
+msgid "The rest already have it."
+msgstr "Sisanya sudah memilikinya."
+
 #: src/features/roadmap/pages.tsx
 msgid "This board no longer exists or you cannot see it."
 msgstr "Papan ini sudah tidak ada atau Anda tidak dapat melihatnya."
@@ -412,14 +501,18 @@ msgstr "Papan ini sudah tidak ada atau Anda tidak dapat melihatnya."
 msgid "This inbox has no roadmap board. Create one under Roadmap first."
 msgstr "Kotak masuk ini tidak punya papan peta jalan. Buat dulu di Peta jalan."
 
-#: src/features/roadmap/CreateBoardDialog.tsx
-msgid "This inbox has no web chat channel. Add one first, because the public board embeds it."
-msgstr "Kotak masuk ini tidak punya saluran chat web. Tambahkan dulu satu, karena papan publik menyematkannya."
-
 #: src/features/roadmap/LinkIdeaDialog.tsx
 #: src/features/roadmap/NewIdeaDialog.tsx
 msgid "Title"
 msgstr "Judul"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Unlink"
+msgstr "Lepas tautan"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Unlinked feedback from {inboxName}"
+msgstr "Masukan {inboxName} yang belum terhubung"
 
 #: src/features/roadmap/Settings.tsx
 msgid "Use 3 to 48 letters, numbers and inner hyphens."
@@ -437,6 +530,6 @@ msgstr "Visibilitas"
 msgid "Waiting for approval"
 msgstr "Menunggu persetujuan"
 
-#: src/features/roadmap/RoadmapColumn.tsx
-msgid "Waiting for approval: {pending}"
-msgstr "Menunggu persetujuan: {pending}"
+#: src/features/roadmap/Settings.tsx
+msgid "You have unsaved changes."
+msgstr "Anda punya perubahan yang belum disimpan."

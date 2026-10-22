@@ -89,19 +89,25 @@ export function MailDialog({
                 className="flex max-h-56 flex-col divide-y overflow-y-auto rounded-xl border"
                 data-testid="mail-lists"
               >
-                {mailable.map((l) => (
-                  <li key={l.id}>
-                    <Label className="items-center gap-3 px-3 py-2.5 font-normal">
-                      <Checkbox
-                        checked={chosen.includes(l.id)}
-                        disabled={!chosen.includes(l.id) && chosen.length >= MAX_LISTS}
-                        onCheckedChange={() => toggle(l.id)}
-                        data-testid="mail-list"
-                      />
-                      <span className="min-w-0 flex-1 truncate">{l.name}</span>
-                    </Label>
-                  </li>
-                ))}
+                {mailable.map((l) => {
+                  const subscribed = l.counts.subscribed
+                  return (
+                    <li key={l.id}>
+                      <Label className="items-center gap-3 px-3 py-2.5 font-normal">
+                        <Checkbox
+                          checked={chosen.includes(l.id)}
+                          disabled={!chosen.includes(l.id) && chosen.length >= MAX_LISTS}
+                          onCheckedChange={() => toggle(l.id)}
+                          data-testid="mail-list"
+                        />
+                        <span className="min-w-0 flex-1 truncate">{l.name}</span>
+                        <span className="text-caption text-faint tabular-nums">
+                          <Trans>Subscribed: {subscribed}</Trans>
+                        </span>
+                      </Label>
+                    </li>
+                  )
+                })}
               </ul>
             )}
           </Field>

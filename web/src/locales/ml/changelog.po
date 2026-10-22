@@ -7,7 +7,7 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: ml\n"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 msgid "{published} of {total} entries published"
 msgstr "{total}-ൽ {published} എൻട്രികൾ പ്രസിദ്ധീകരിച്ചു"
 
@@ -41,8 +41,13 @@ msgid "All"
 msgstr "എല്ലാം"
 
 #: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/pages.tsx
 msgid "All labels"
 msgstr "എല്ലാ ലേബലുകളും"
+
+#: src/features/changelog/pages.tsx
+msgid "All languages"
+msgstr "എല്ലാ ഭാഷകളും"
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "Analytics property"
@@ -80,6 +85,7 @@ msgstr "സമയം മാറ്റുക"
 msgid "Changelog"
 msgstr "ചേഞ്ച്‌ലോഗ്"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "Changelogs"
 msgstr "ചേഞ്ച്‌ലോഗുകൾ"
@@ -88,16 +94,21 @@ msgstr "ചേഞ്ച്‌ലോഗുകൾ"
 msgid "Choose a picture"
 msgstr "ചിത്രം തിരഞ്ഞെടുക്കുക"
 
+#: src/features/changelog/pages.tsx
+msgid "Clear filters"
+msgstr "ഫിൽട്ടറുകൾ മായ്ക്കുക"
+
 #: src/features/changelog/SettingsTab.tsx
 msgid "Counts page views of the changelog without cookies."
 msgstr "കുക്കികളില്ലാതെ ചേഞ്ച്‌ലോഗിന്റെ പേജ് കാഴ്ചകൾ എണ്ണുന്നു."
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/CreateChangelogDialog.tsx
 #: src/features/changelog/pages.tsx
 msgid "Create changelog"
 msgstr "ചേഞ്ച്‌ലോഗ് ഉണ്ടാക്കുക"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "Create changelog ({createKey})"
 msgstr "ചേഞ്ച്‌ലോഗ് സൃഷ്ടിക്കുക ({createKey})"
@@ -162,6 +173,11 @@ msgstr "കരട് സമർപ്പിച്ചു. ഉടമയ്ക്ക
 msgid "Drafts"
 msgstr "ഡ്രാഫ്റ്റുകൾ"
 
+#: src/features/changelog/ChangelogsPage.tsx
+msgid "Each product has one changelog. Owners and admins create and publish them."
+msgstr "ഓരോ ഉൽപ്പന്നത്തിനും ഒരു ചേഞ്ച്‌ലോഗ് ഉണ്ട്. ഉടമകളും അഡ്മിൻമാരും അത് സൃഷ്ടിച്ച് പ്രസിദ്ധീകരിക്കുന്നു."
+
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "Entries"
 msgstr "എൻട്രികൾ"
@@ -173,6 +189,14 @@ msgstr "എൻട്രികളും വിവർത്തനങ്ങളു�
 #: src/features/changelog/SettingsTab.tsx
 msgid "Entries can be written and published in these languages. Visitors see their own when it exists."
 msgstr "ഈ ഭാഷകളിൽ എൻട്രികൾ എഴുതാനും പ്രസിദ്ധീകരിക്കാനും കഴിയും. സന്ദർശകർ അവരുടെ സ്വന്തം ഭാഷ കാണും, ഉണ്ടെങ്കിൽ."
+
+#: src/features/changelog/pages.tsx
+msgid "Entries show on the public page once they are published."
+msgstr "എൻട്രികൾ പ്രസിദ്ധീകരിച്ചാൽ പൊതു പേജിൽ കാണിക്കും."
+
+#: src/features/changelog/pages.tsx
+msgid "Entries you have not published yet show up here."
+msgstr "നിങ്ങൾ ഇതുവരെ പ്രസിദ്ധീകരിക്കാത്ത എൻട്രികൾ ഇവിടെ കാണിക്കും."
 
 #: src/features/changelog/EntryEditor.tsx
 msgid "Every translation is deleted. Broadcasts made from it stay."
@@ -208,6 +232,7 @@ msgid "Keep mine"
 msgstr "എന്റേത് സൂക്ഷിക്കുക"
 
 #: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/pages.tsx
 msgid "Label"
 msgstr "ലേബൽ"
 
@@ -219,9 +244,11 @@ msgstr "ലേബലുകൾ"
 #: src/features/changelog/EntriesTab.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/MailDialog.tsx
+#: src/features/changelog/pages.tsx
 msgid "Language"
 msgstr "ഭാഷ"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/SettingsTab.tsx
 msgid "Languages"
 msgstr "ഭാഷകൾ"
@@ -248,6 +275,10 @@ msgid "Main language"
 msgstr "പ്രധാന ഭാഷ"
 
 #: src/features/changelog/EntryEditor.tsx
+msgid "Mark up to date"
+msgstr "കാലികമെന്ന് അടയാളപ്പെടുത്തുക"
+
+#: src/features/changelog/EntryEditor.tsx
 msgid "More"
 msgstr "കൂടുതൽ"
 
@@ -272,7 +303,7 @@ msgstr "പുതിയ പോസ്റ്റ്"
 msgid "New post ({newKey})"
 msgstr "പുതിയ പോസ്റ്റ് ({newKey})"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 msgid "No changelog yet. Owners and admins create it."
 msgstr "ഇതുവരെ ചേഞ്ച്‌ലോഗ് ഇല്ല. ഉടമകളും അഡ്മിനുകളും ഇത് ഉണ്ടാക്കുന്നു."
 
@@ -281,12 +312,9 @@ msgid "No entries yet. Tell your customers what changed in your latest release."
 msgstr "ഇതുവരെ എൻട്രികൾ ഇല്ല. നിങ്ങളുടെ ഏറ്റവും പുതിയ റിലീസിൽ എന്താണ് മാറിയതെന്ന് ഉപഭോക്താക്കളോട് പറയുക."
 
 #: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/pages.tsx
 msgid "No entry matches."
 msgstr "ഒരു എൻട്രിയും യോജിക്കുന്നില്ല."
-
-#: src/features/changelog/ChangelogColumn.tsx
-msgid "No inbox to show a changelog for."
-msgstr "ചേഞ്ച്‌ലോഗ് കാണിക്കാൻ ഇൻബോക്സ് ഒന്നുമില്ല."
 
 #: src/features/changelog/EntriesTab.tsx
 msgid "No text yet."
@@ -340,6 +368,10 @@ msgstr "ഈ വിവർത്തനത്തിന്റെ വെബ് വി
 msgid "Pick a time in the next year, in your time zone, {zone}."
 msgstr "അടുത്ത ഒരു വർഷത്തിനുള്ളിൽ ഒരു സമയം തിരഞ്ഞെടുക്കുക, നിങ്ങളുടെ സമയമേഖല, {zone}, യിൽ."
 
+#: src/features/changelog/pages.tsx
+msgid "Pick a time when you write an entry and it goes public by itself."
+msgstr "എൻട്രി എഴുതുമ്പോൾ ഒരു സമയം തിരഞ്ഞെടുക്കൂ, അത് സ്വയം പ്രസിദ്ധീകരിക്കും."
+
 #: src/features/changelog/MailDialog.tsx
 msgid "Pick up to 10 lists of this inbox."
 msgstr "ഈ ഇൻബോക്സിലെ പരമാവധി 10 ലിസ്റ്റുകൾ തിരഞ്ഞെടുക്കുക."
@@ -348,6 +380,7 @@ msgstr "ഈ ഇൻബോക്സിലെ പരമാവധി 10 ലിസ്
 msgid "Picture"
 msgstr "ചിത്രം"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 #: src/features/changelog/PreviewDialog.tsx
@@ -370,6 +403,7 @@ msgstr "എൻട്രിയുടെ പ്രിവ്യൂ"
 msgid "Public address"
 msgstr "പൊതു വിലാസം"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 msgid "Publish"
@@ -380,11 +414,19 @@ msgstr "പ്രസിദ്ധീകരിക്കുക"
 msgid "Publish ({publishKey})"
 msgstr "പ്രസിദ്ധീകരിക്കുക ({publishKey})"
 
+#: src/features/changelog/pages.tsx
+msgid "Publish it now or schedule it again."
+msgstr "ഇത് ഇപ്പോൾ പ്രസിദ്ധീകരിക്കുക അല്ലെങ്കിൽ വീണ്ടും ഷെഡ്യൂൾ ചെയ്യുക."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Publish now"
+msgstr "ഇപ്പോൾ പ്രസിദ്ധീകരിക്കുക"
+
 #: src/features/changelog/ScheduleDialog.tsx
 msgid "Publish on"
 msgstr "പ്രസിദ്ധീകരിക്കുന്ന തീയതി"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 #: src/features/changelog/text.tsx
@@ -393,6 +435,7 @@ msgstr "പ്രസിദ്ധീകരിച്ചത്"
 
 #: src/features/changelog/EntriesTab.tsx
 #: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
 msgid "Publishing on schedule failed."
 msgstr "ഷെഡ്യൂൾ ചെയ്ത പ്രസിദ്ധീകരണം പരാജയപ്പെട്ടു."
 
@@ -403,6 +446,10 @@ msgstr "നിങ്ങളുടെ ഉൽപ്പന്നങ്ങളില�
 #: src/features/changelog/EntryEditor.tsx
 msgid "Remove"
 msgstr "നീക്കം ചെയ്യുക"
+
+#: src/features/changelog/pages.tsx
+msgid "Review"
+msgstr "അവലോകനം ചെയ്യുക"
 
 #: src/features/changelog/EntryEditor.tsx
 msgid "Save now"
@@ -422,23 +469,33 @@ msgstr "സേവ് ചെയ്യുന്നു…"
 msgid "Schedule"
 msgstr "ഷെഡ്യൂൾ"
 
+#: src/features/changelog/EntryEditor.tsx
+msgid "Schedule again"
+msgstr "വീണ്ടും ഷെഡ്യൂൾ ചെയ്യുക"
+
 #: src/features/changelog/ScheduleDialog.tsx
 msgid "Schedule this entry"
 msgstr "ഈ എൻട്രി ഷെഡ്യൂൾ ചെയ്യുക"
 
 #: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
 #: src/features/changelog/text.tsx
 msgid "Scheduled"
 msgstr "ഷെഡ്യൂൾ ചെയ്തു"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 msgid "Scheduled: {scheduled}"
 msgstr "ഷെഡ്യൂൾ ചെയ്തവ: {scheduled}"
+
+#: src/features/changelog/pages.tsx
+msgid "Search entries"
+msgstr "എൻട്രികൾ തിരയുക"
 
 #: src/features/changelog/MailDialog.tsx
 msgid "Send through"
 msgstr "ഇതിലൂടെ അയയ്ക്കുക"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "Settings"
 msgstr "ക്രമീകരണങ്ങൾ"
@@ -446,6 +503,10 @@ msgstr "ക്രമീകരണങ്ങൾ"
 #: src/features/changelog/EntryEditor.tsx
 msgid "Show"
 msgstr "കാണിക്കുക"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Show the original"
+msgstr "യഥാർത്ഥം കാണിക്കുക"
 
 #: src/features/changelog/EntriesTab.tsx
 msgid "Shown in the chat bubble, the apps and on {host}."
@@ -482,6 +543,10 @@ msgstr "കരട് സമർപ്പിക്കുക"
 #: src/features/changelog/EntryEditor.tsx
 msgid "Submit draft ({publishKey})"
 msgstr "കരട് സമർപ്പിക്കുക ({publishKey})"
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Subscribed: {subscribed}"
+msgstr "സബ്സ്ക്രൈബർമാർ: {subscribed}"
 
 #: src/features/changelog/CreateChangelogDialog.tsx
 msgid "Tell the customers of {inboxName} what is new, improved and fixed. It stays unpublished until you publish it."
@@ -527,6 +592,10 @@ msgstr "പ്രധാന ഭാഷയിൽ ഈ എൻട്രിക്ക്
 msgid "The member who scheduled it may no longer publish."
 msgstr "ഇത് ഷെഡ്യൂൾ ചെയ്ത അംഗത്തിന് ഇനി പ്രസിദ്ധീകരിക്കാൻ കഴിഞ്ഞേക്കില്ല."
 
+#: src/features/changelog/EntryEditor.tsx
+msgid "The original changed after this translation was saved."
+msgstr "ഈ വിവർത്തനം സേവ് ചെയ്തതിനുശേഷം യഥാർത്ഥ പാഠം മാറി."
+
 #: src/features/changelog/PreviewDialog.tsx
 msgid "The page as visitors would see it, drafts included. Only your team sees this."
 msgstr "സന്ദർശകർ കാണുന്നതുപോലെ പേജ്, ഡ്രാഫ്റ്റുകൾ ഉൾപ്പെടെ. ഇത് നിങ്ങളുടെ ടീമിന് മാത്രമേ കാണാൻ കഴിയൂ."
@@ -534,6 +603,11 @@ msgstr "സന്ദർശകർ കാണുന്നതുപോലെ പേ�
 #: src/features/changelog/EntryEditor.tsx
 msgid "The title needs at least 3 characters"
 msgstr "തലക്കെട്ടിന് കുറഞ്ഞത് 3 അക്ഷരങ്ങൾ വേണം"
+
+#. placeholder {0}: formatDateTime(entry.publish_at, i18n.locale)
+#: src/features/changelog/EntryEditor.tsx
+msgid "This entry is scheduled for {0}."
+msgstr "ഈ എൻട്രി {0}-ന് ഷെഡ്യൂൾ ചെയ്തിരിക്കുന്നു."
 
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/text.tsx
@@ -569,6 +643,11 @@ msgstr "ശീർഷകം"
 msgid "Translation deleted"
 msgstr "വിവർത്തനം ഇല്ലാതാക്കി"
 
+#: src/features/changelog/pages.tsx
+msgid "Try another word, label or language."
+msgstr "മറ്റൊരു വാക്കോ ലേബലോ ഭാഷയോ പരീക്ഷിക്കുക."
+
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 msgid "Unpublish"
@@ -582,9 +661,8 @@ msgstr "പ്രസിദ്ധീകരണം പിൻവലിക്കു�
 msgid "Unpublish this entry?"
 msgstr "ഈ എൻട്രിയുടെ പ്രസിദ്ധീകരണം പിൻവലിക്കണോ?"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
-#: src/features/changelog/pages.tsx
 msgid "Unpublished"
 msgstr "പ്രസിദ്ധീകരിച്ചിട്ടില്ല"
 
@@ -616,11 +694,12 @@ msgstr "അവരുടെ പതിപ്പ് ഉപയോഗിക്കു�
 msgid "View"
 msgstr "കാണുക"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "View changelog"
 msgstr "ചേഞ്ച്‌ലോഗ് കാണുക"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntriesTab.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
@@ -638,6 +717,10 @@ msgstr "എഴുതുക"
 #: src/features/changelog/text.tsx
 msgid "Write the entry in the main language before publishing."
 msgstr "പ്രസിദ്ധീകരിക്കുന്നതിന് മുമ്പ് എൻട്രി പ്രധാന ഭാഷയിൽ എഴുതുക."
+
+#: src/features/changelog/pages.tsx
+msgid "Write the first entry with New post."
+msgstr "പുതിയ പോസ്റ്റ് ഉപയോഗിച്ച് ആദ്യ എൻട്രി എഴുതുക."
 
 #: src/features/changelog/EntryEditor.tsx
 msgid "Write what changed in Markdown…"

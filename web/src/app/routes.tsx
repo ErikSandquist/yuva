@@ -11,10 +11,7 @@ import { BroadcastPage, BroadcastsHome } from "@/features/broadcasts/BroadcastPa
 import { ListPage, ListsHome } from "@/features/broadcasts/ListPage"
 import { ContactPage } from "@/features/contact/ContactPage"
 import { ContactsHome } from "@/features/contact/ContactsColumn"
-import { DocsHome, DocsOverview, DocsPagePane } from "@/features/docs/DocsPages"
-import { DiscussionsPane } from "@/features/docs/discussions/DiscussionsPane"
-import { QueuePane } from "@/features/docs/discussions/QueuePane"
-import { ThreadPane } from "@/features/docs/discussions/ThreadPane"
+import { DocsPage } from "@/features/docs/DocsPage"
 import { HomePage } from "@/features/home/HomePage"
 import { ChatsPage } from "@/features/inbox/ChatsPage"
 import { MigrationsPage } from "@/features/migrations/MigrationsPage"
@@ -35,7 +32,6 @@ import {
 } from "@/features/settings/api-keys/ApiKeyWizard"
 import { InboxWebhooksPage } from "@/features/settings/inboxes/InboxWebhooksPage"
 import { LabelsPage } from "@/features/settings/labels/LabelsPage"
-import { MembersPage } from "@/features/settings/members/MembersPage"
 import { NotificationsPage } from "@/features/settings/notifications/NotificationsPage"
 import { ProfilePage } from "@/features/settings/profile/ProfilePage"
 import { MembersReport, RatingsReport, ReportsPane, TodayReport } from "@/features/reports/ReportPages"
@@ -46,10 +42,11 @@ import { NewsletterRulesStep, NewsletterSenderStep } from "@/features/setup/News
 import { WebhooksPage } from "@/features/settings/webhooks/WebhooksPage"
 import { WorkspacePage } from "@/features/settings/workspace/WorkspacePage"
 import { SetupPage } from "@/features/setup/SetupPage"
-import { MemberPage } from "@/features/team/MemberPage"
-import { TeamHome } from "@/features/team/TeamColumn"
-import { IncidentPane } from "@/features/status/IncidentPane"
-import { StatusHome, StatusPagePane } from "@/features/status/StatusPagePane"
+import { TeamPage } from "@/features/team/TeamPage"
+import { IncidentsPage } from "@/features/status/IncidentsPage"
+import { MonitorsPage } from "@/features/status/MonitorsPage"
+import { StatusRedirect } from "@/features/status/StatusRedirect"
+import { StatusHome } from "@/features/status/StatusPages"
 import { useSession } from "@/lib/session"
 
 const GalleryPage = lazy(() => import("@/features/designs/GalleryPage"))
@@ -57,10 +54,12 @@ const DesignerPage = lazy(() => import("@/features/designs/designer/DesignerPage
 const HelpHome = lazy(() => import("@/features/help/pages").then((m) => ({ default: m.HelpHome })))
 const HelpCenterPane = lazy(() => import("@/features/help/pages").then((m) => ({ default: m.CenterPane })))
 const HelpArticlePane = lazy(() => import("@/features/help/pages").then((m) => ({ default: m.ArticleEditorPage })))
-const RoadmapHome = lazy(() => import("@/features/roadmap/pages").then((m) => ({ default: m.RoadmapHome })))
+const RoadmapPage = lazy(() => import("@/features/roadmap/pages").then((m) => ({ default: m.RoadmapPage })))
 const RoadmapIdeaRedirect = lazy(() => import("@/features/roadmap/pages").then((m) => ({ default: m.IdeaRedirect })))
-const RoadmapBoardPane = lazy(() => import("@/features/roadmap/pages").then((m) => ({ default: m.BoardPane })))
 const ChangelogHome = lazy(() => import("@/features/changelog/pages").then((m) => ({ default: m.ChangelogHome })))
+const ChangelogsScreen = lazy(() =>
+  import("@/features/changelog/ChangelogsPage").then((m) => ({ default: m.ChangelogsPage }))
+)
 const ChangelogPane = lazy(() => import("@/features/changelog/pages").then((m) => ({ default: m.ChangelogPane })))
 const ChangelogEntryPane = lazy(() =>
   import("@/features/changelog/pages").then((m) => ({ default: m.EntryEditorPage }))
@@ -151,8 +150,9 @@ export function AppRoutes() {
           <Route path="feedback/:conversationId" element={<ChatsPage section="feedback" />} />
           <Route path="contacts" element={<ContactsHome />} />
           <Route path="contacts/:contactId" element={<ContactPage />} />
-          <Route path="team" element={<TeamHome />} />
-          <Route path="team/:memberId" element={<MemberPage />} />
+          <Route path="team" element={<TeamPage />} />
+          <Route path="team/invites" element={<TeamPage tab="invites" />} />
+          <Route path="team/:memberId" element={<TeamPage />} />
           <Route path="reports" element={<ReportsPane />}>
             <Route index element={<Navigate to="today" replace />} />
             <Route path="today" element={<TodayReport />} />
@@ -160,12 +160,12 @@ export function AppRoutes() {
             <Route path="members" element={<MembersReport />} />
             <Route path="*" element={<Navigate to="/reports" replace />} />
           </Route>
-          <Route path="docs" element={<DocsHome />} />
-          <Route path="docs/overview" element={<DocsOverview />} />
-          <Route path="docs/page" element={<DocsPagePane />} />
-          <Route path="docs/discussions" element={<DiscussionsPane />} />
-          <Route path="docs/discussions/queue" element={<QueuePane />} />
-          <Route path="docs/discussions/:discussionId" element={<ThreadPane />} />
+          <Route path="docs" element={<DocsPage tab="pages" />} />
+          <Route path="docs/overview" element={<Navigate to="/docs" replace />} />
+          <Route path="docs/page" element={<DocsPage tab="pages" />} />
+          <Route path="docs/discussions" element={<DocsPage tab="discussions" />} />
+          <Route path="docs/discussions/queue" element={<DocsPage tab="queue" />} />
+          <Route path="docs/discussions/:discussionId" element={<DocsPage tab="discussions" />} />
           <Route path="broadcasts" element={<BroadcastsHome />} />
           <Route path="broadcasts/lists" element={<ListsHome />} />
           <Route path="broadcasts/lists/:listId" element={<ListPage />} />
@@ -182,9 +182,13 @@ export function AppRoutes() {
           ))}
           <Route path="broadcasts/:broadcastId" element={<BroadcastPage />} />
           <Route path="status" element={<StatusHome />} />
-          <Route path="status-pages/:pageId" element={<StatusPagePane />} />
-          <Route path="status-pages/:pageId/monitors" element={<StatusPagePane />} />
-          <Route path="status-pages/:pageId/incidents/:incidentId" element={<IncidentPane />} />
+          <Route path="incidents" element={<IncidentsPage />} />
+          <Route path="incidents/:pageId/:incidentId" element={<IncidentsPage />} />
+          <Route path="monitors" element={<MonitorsPage />} />
+          <Route path="monitors/:monitorId" element={<MonitorsPage />} />
+          <Route path="status-pages/:pageId" element={<StatusRedirect />} />
+          <Route path="status-pages/:pageId/monitors" element={<StatusRedirect />} />
+          <Route path="status-pages/:pageId/incidents/:incidentId" element={<StatusRedirect />} />
           <Route
             path="knowledge"
             element={
@@ -210,14 +214,6 @@ export function AppRoutes() {
             }
           />
           <Route
-            path="board"
-            element={
-              <Suspense fallback={<Loading />}>
-                <RoadmapHome />
-              </Suspense>
-            }
-          />
-          <Route
             path="board/ideas/:ideaId"
             element={
               <Suspense fallback={<Loading />}>
@@ -225,22 +221,27 @@ export function AppRoutes() {
               </Suspense>
             }
           />
-          {["board/:boardId", "board/:boardId/ideas/:ideaId"].map((path) => (
-            <Route
-              key={path}
-              path={path}
-              element={
-                <Suspense fallback={<Loading />}>
-                  <RoadmapBoardPane />
-                </Suspense>
-              }
-            />
-          ))}
+          <Route
+            path="board/*"
+            element={
+              <Suspense fallback={<Loading />}>
+                <RoadmapPage />
+              </Suspense>
+            }
+          />
           <Route
             path="updates"
             element={
               <Suspense fallback={<Loading />}>
                 <ChangelogHome />
+              </Suspense>
+            }
+          />
+          <Route
+            path="updates/changelogs"
+            element={
+              <Suspense fallback={<Loading />}>
+                <ChangelogsScreen />
               </Suspense>
             }
           />
@@ -275,7 +276,7 @@ export function AppRoutes() {
               <Route path="notifications" element={<NotificationsPage />} />
               <Route path="appearance" element={<AppearancePage />} />
               <Route path="workspace" element={<WorkspacePage />} />
-              <Route path="members" element={<MembersPage />} />
+              <Route path="members" element={<Navigate to="/team" replace />} />
               <Route path="inboxes/:inboxId" element={<InboxPage />} />
               <Route path="inboxes/:inboxId/webhooks" element={<InboxWebhooksPage />} />
               <Route path="inboxes/:inboxId/channels/:channelId" element={<ChannelPage />} />

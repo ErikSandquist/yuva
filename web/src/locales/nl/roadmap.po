@@ -7,6 +7,10 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: nl\n"
 
+#: src/features/roadmap/CreateBoardDialog.tsx
+msgid "{inboxName} has no web chat channel. Add one first, because the public board embeds it."
+msgstr "{inboxName} heeft geen webchatkanaal. Voeg er eerst een toe, want het openbare bord sluit het in."
+
 #: src/features/roadmap/Board.tsx
 msgid "{linked, plural, one {# feedback} other {# feedback}}"
 msgstr "{linked, plural, one {# feedback} other {# feedback}}"
@@ -29,9 +33,25 @@ msgid "A reader's posts wait for a member until one of theirs is approved. Signe
 msgstr "De berichten van een lezer wachten op een lid tot een van zijn berichten is goedgekeurd. Ingelogde gebruikers van je app publiceren direct."
 
 #: src/features/roadmap/CreateBoardDialog.tsx
+msgid "Add a web chat channel"
+msgstr "Webchatkanaal toevoegen"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
 #: src/features/roadmap/Settings.tsx
 msgid "Address"
 msgstr "Adres"
+
+#: src/features/roadmap/BoardBar.tsx
+msgid "All boards"
+msgstr "Alle borden"
+
+#: src/features/roadmap/Settings.tsx
+msgid "All changes saved."
+msgstr "Alle wijzigingen opgeslagen."
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "All feedback from {inboxName} that fits is already linked."
+msgstr "Alle passende feedback van {inboxName} is al gekoppeld."
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Already linked"
@@ -89,13 +109,16 @@ msgstr "Telt paginaweergaven van het openbare bord zonder cookies."
 
 #: src/features/roadmap/CreateBoardDialog.tsx
 #: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
 msgid "Create board"
 msgstr "Bord aanmaken"
 
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Create board ({newKey})"
 msgstr "Bord aanmaken ({newKey})"
+
+#: src/features/roadmap/BoardBar.tsx
+msgid "Create board for {name}"
+msgstr "Bord maken voor {name}"
 
 #: src/features/roadmap/NewIdeaDialog.tsx
 msgid "Create idea"
@@ -123,17 +146,21 @@ msgstr "Verwijdert het bord met zijn ideeën, stemmen, antwoorden en fasegeschie
 msgid "Description"
 msgstr "Beschrijving"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Dismiss"
+msgstr "Sluiten"
+
 #: src/features/roadmap/Board.tsx
 msgid "Done"
 msgstr "Klaar"
 
-#: src/features/roadmap/MoveDialog.tsx
-msgid "Every linked feedback that does not have it yet gets the progress {progress}. Linked feedback: {linked}"
-msgstr "Elke gekoppelde feedback die de voortgang {progress} nog niet heeft, krijgt die. Gekoppelde feedback: {linked}"
-
 #: src/features/roadmap/Settings.tsx
 msgid "Everyone's posts are published at once, except those of authors you marked as spam."
 msgstr "De berichten van iedereen worden direct gepubliceerd, behalve die van auteurs die je als spam hebt gemarkeerd."
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Good news: “{title}” has shipped. Thank you for asking for it."
+msgstr "Goed nieuws: “{title}” is opgeleverd. Bedankt voor je verzoek."
 
 #: src/features/roadmap/Board.tsx
 msgid "Hidden"
@@ -155,21 +182,30 @@ msgstr "Ideeën waarop je klanten stemmen, met de feedback erachter"
 msgid "Ideas, votes and stages for {inboxName}, with the feedback behind each idea. It stays private until you make it public."
 msgstr "Ideeën, stemmen en fasen voor {inboxName}, met de feedback achter elk idee. Het blijft privé tot u het openbaar maakt."
 
-#: src/features/roadmap/RoadmapColumn.tsx
-msgid "Ideas: {ideas}"
-msgstr "Ideeën: {ideas}"
-
 #: src/features/roadmap/NewIdeaDialog.tsx
 msgid "It goes into Ideas on the board, where customers can vote on it."
 msgstr "Het komt onder Ideeën op het bord, waar klanten erop kunnen stemmen."
 
-#: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/NewIdeaDialog.tsx
+msgid "It goes into Ideas on the board. The board is private, so only your team sees it."
+msgstr "Het komt in Ideeën op het bord. Het bord is privé, dus alleen je team ziet het."
+
+#: src/features/roadmap/IdeaFeedback.tsx
 msgid "It was unlinked from the idea."
 msgstr "De koppeling met het idee is verwijderd."
 
 #: src/features/roadmap/Settings.tsx
 msgid "Its ideas, votes, replies and stage history are deleted with it."
 msgstr "De ideeën, stemmen, antwoorden en fasegeschiedenis ervan worden mee verwijderd."
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgctxt "link feedback to the idea"
+msgid "Link"
+msgstr "Koppelen"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Link feedback"
+msgstr "Feedback koppelen"
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Link this feedback to an idea…"
@@ -179,13 +215,21 @@ msgstr "Koppel deze feedback aan een idee…"
 msgid "Link to an idea"
 msgstr "Koppelen aan een idee"
 
-#: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Linked"
+msgstr "Gekoppeld"
+
+#: src/features/roadmap/IdeaFeedback.tsx
 msgid "Linked feedback"
 msgstr "Gekoppelde feedback"
 
 #: src/features/roadmap/IdeaPane.tsx
 msgid "Linked feedback set to {progress}: {set}"
 msgstr "Gekoppelde feedback gezet op {progress}: {set}"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Linked feedback that gets the progress {progress}: {gets} of {linked}."
+msgstr "Gekoppelde feedback die de voortgang {progress} krijgt: {gets} van {linked}."
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Linked to {title}"
@@ -195,19 +239,19 @@ msgstr "Gekoppeld aan {title}"
 msgid "Load more"
 msgstr "Meer laden"
 
-#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Make private"
 msgstr "Privé maken"
 
-#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Make private ({publicKey})"
 msgstr "Privé maken ({publicKey})"
 
-#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Make public"
 msgstr "Openbaar maken"
 
-#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Make public ({publicKey})"
 msgstr "Openbaar maken ({publicKey})"
 
@@ -254,25 +298,37 @@ msgstr "Nieuw idee"
 msgid "New idea from this feedback"
 msgstr "Nieuw idee uit deze feedback"
 
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/pages.tsx
+msgid "No board is public yet. Make one public under Settings."
+msgstr "Nog geen bord is openbaar. Maak er een openbaar onder Instellingen."
+
+#: src/features/roadmap/pages.tsx
 msgid "No board yet. Owners and admins create it."
 msgstr "Nog geen bord. Eigenaren en beheerders maken het aan."
 
-#: src/features/roadmap/IdeaPane.tsx
-msgid "No feedback is linked yet. Open a piece of feedback and use Link to an idea."
-msgstr "Er is nog geen feedback gekoppeld. Open een feedback en kies ‘Koppelen aan een idee’."
+#: src/features/roadmap/MoveDialog.tsx
+msgid "No feedback is linked to this idea yet."
+msgstr "Er is nog geen feedback gekoppeld aan dit idee."
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "No feedback is linked yet. Use Link feedback, or open a piece of feedback and choose Link to an idea."
+msgstr "Er is nog geen feedback gekoppeld. Gebruik Feedback koppelen, of open een feedbackitem en kies Koppelen aan een idee."
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "No idea matches."
 msgstr "Geen idee komt overeen."
 
-#: src/features/roadmap/RoadmapColumn.tsx
-msgid "No inbox to show a board for."
-msgstr "Geen inbox om een bord voor te tonen."
+#: src/features/roadmap/Board.tsx
+msgid "No ideas yet. New ones land here."
+msgstr "Nog geen ideeën. Nieuwe komen hier binnen."
 
 #: src/features/roadmap/Settings.tsx
 msgid "None"
 msgstr "Geen"
+
+#: src/features/roadmap/Board.tsx
+msgid "Nothing here yet."
+msgstr "Hier staat nog niets."
 
 #: src/features/roadmap/Settings.tsx
 msgid "Off"
@@ -282,7 +338,7 @@ msgstr "Uit"
 msgid "On: anyone with the address reads the board, and signed-in readers vote and suggest ideas. Off: only your team sees it, as a tool to sort feedback."
 msgstr "Aan: iedereen met het adres leest het bord, en ingelogde lezers stemmen en stellen ideeën voor. Uit: alleen uw team ziet het, als hulpmiddel om feedback te sorteren."
 
-#: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/IdeaFeedback.tsx
 msgid "One reply, written once, goes to every open feedback conversation linked to this idea, as you, on each conversation’s own channel."
 msgstr "Eén antwoord, één keer geschreven, gaat naar elk open feedbackgesprek dat aan dit idee is gekoppeld, als uzelf, via het eigen kanaal van elk gesprek."
 
@@ -290,9 +346,22 @@ msgstr "Eén antwoord, één keer geschreven, gaat naar elk open feedbackgesprek
 msgid "Open"
 msgstr "Open"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgctxt "open the feedback"
+msgid "Open"
+msgstr "Openen"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Open Analytics"
+msgstr "Analytics openen"
+
 #: src/features/roadmap/IdeaPane.tsx
 msgid "Open on the public board"
 msgstr "Openen op het openbare bord"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Open Roadmap"
+msgstr "Roadmap openen"
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Pick an idea of this inbox’s board"
@@ -302,17 +371,11 @@ msgstr "Kies een idee van het bord van deze inbox"
 msgid "Posted as your public reply on the idea. Markdown works."
 msgstr "Geplaatst als uw openbare antwoord op het idee. Markdown werkt."
 
-#: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Private"
 msgstr "Privé"
 
-#: src/features/roadmap/pages.tsx
-msgid "Private, only your team sees it"
-msgstr "Privé, alleen uw team ziet het"
-
-#: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/BoardBar.tsx
 #: src/features/roadmap/Settings.tsx
 msgid "Public"
 msgstr "Openbaar"
@@ -329,19 +392,37 @@ msgstr "Lezers kunnen geen ideeën voorstellen. Stemmen en antwoorden werken nog
 msgid "Readers suggested new ideas. Review them before they show on the public board."
 msgstr "Lezers hebben nieuwe ideeën voorgesteld. Bekijk ze voordat ze op het openbare bord verschijnen."
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Reply to everyone"
+msgstr "Iedereen antwoorden"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Reply to linked ({key})"
+msgstr "Antwoord aan gekoppelde ({key})"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Resolved feedback does not get it: {closed}"
+msgstr "Opgeloste feedback krijgt het niet: {closed}"
+
 #: src/features/roadmap/Board.tsx
 msgid "Review"
 msgstr "Controle"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Review the reply"
+msgstr "Antwoord controleren"
+
 #: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
 msgid "Roadmap"
 msgstr "Roadmap"
 
-#: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Roadmap boards"
 msgstr "Roadmapborden"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Save"
+msgstr "Opslaan"
 
 #: src/features/roadmap/Settings.tsx
 msgid "Saved"
@@ -355,9 +436,13 @@ msgstr "Ideeën zoeken"
 msgid "Settings"
 msgstr "Instellingen"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Shipped. Open feedback linked to it: {open}. A reply is ready to send."
+msgstr "Opgeleverd. Open feedback die eraan gekoppeld is: {open}. Er staat een antwoord klaar om te versturen."
+
 #: src/features/roadmap/pages.tsx
-msgid "Show your customers what you are building, and link the feedback behind each idea. Create a board for an inbox to sort ideas into stages."
-msgstr "Laat je klanten zien waar je aan werkt en koppel de feedback achter elk idee. Maak een bord voor een mailbox om ideeën in fases te sorteren."
+msgid "Show your customers what you are building, and link the feedback behind each idea. Create a board for {missingName} to sort ideas into stages."
+msgstr "Laat je klanten zien waar je aan bouwt en koppel de feedback achter elk idee. Maak een bord voor {missingName} om ideeën in fasen te ordenen."
 
 #: src/features/roadmap/Settings.tsx
 msgid "Shown under the name on the public board."
@@ -404,6 +489,10 @@ msgstr "De voortgang van de gekoppelde feedback verandert niet. Gekoppelde feedb
 msgid "The public board embeds this chat, and ideas your team starts are filed on it."
 msgstr "Het openbare bord sluit deze chat in, en ideeën die uw team start worden erop geplaatst."
 
+#: src/features/roadmap/MoveDialog.tsx
+msgid "The rest already have it."
+msgstr "De rest heeft het al."
+
 #: src/features/roadmap/pages.tsx
 msgid "This board no longer exists or you cannot see it."
 msgstr "Dit bord bestaat niet meer of u kunt het niet zien."
@@ -412,14 +501,18 @@ msgstr "Dit bord bestaat niet meer of u kunt het niet zien."
 msgid "This inbox has no roadmap board. Create one under Roadmap first."
 msgstr "Deze inbox heeft geen roadmapbord. Maak er eerst een aan onder Roadmap."
 
-#: src/features/roadmap/CreateBoardDialog.tsx
-msgid "This inbox has no web chat channel. Add one first, because the public board embeds it."
-msgstr "Deze inbox heeft geen webchatkanaal. Voeg er eerst een toe, want het openbare bord sluit het in."
-
 #: src/features/roadmap/LinkIdeaDialog.tsx
 #: src/features/roadmap/NewIdeaDialog.tsx
 msgid "Title"
 msgstr "Titel"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Unlink"
+msgstr "Ontkoppelen"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Unlinked feedback from {inboxName}"
+msgstr "Niet-gekoppelde feedback van {inboxName}"
 
 #: src/features/roadmap/Settings.tsx
 msgid "Use 3 to 48 letters, numbers and inner hyphens."
@@ -437,6 +530,6 @@ msgstr "Zichtbaarheid"
 msgid "Waiting for approval"
 msgstr "Wacht op goedkeuring"
 
-#: src/features/roadmap/RoadmapColumn.tsx
-msgid "Waiting for approval: {pending}"
-msgstr "Wacht op goedkeuring: {pending}"
+#: src/features/roadmap/Settings.tsx
+msgid "You have unsaved changes."
+msgstr "Je hebt niet-opgeslagen wijzigingen."

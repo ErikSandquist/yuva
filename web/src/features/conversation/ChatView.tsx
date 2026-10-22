@@ -18,9 +18,7 @@ import {
   EmptyState,
   ImportedChip,
   isVisitor,
-  MemberAvatar,
   placeOf,
-  SourceBadge,
   sourceOf,
   toast,
   useContactName,
@@ -28,7 +26,7 @@ import {
   VisitorAvatar,
 } from "@/components/common"
 import { inboxRoot } from "@/app/shell"
-import { keyLabel, SHORTCUTS } from "@/components/common/ShortcutSheet"
+import { SHORTCUTS } from "@/components/common/ShortcutSheet"
 import { useEnumText, useErrorText } from "@/components/common/text"
 import { Alert } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
@@ -39,7 +37,7 @@ import { readDraft, useConversationActions, useDraftRevision, usePendingReplies 
 import { Beaten, TypingCollision } from "@/features/conversation/Collision"
 import { useCommandHandlers } from "@/features/conversation/commands"
 import { ReplyBox, type ReplyHandle } from "@/features/conversation/composer/ReplyBox"
-import { ConversationMenu } from "@/features/conversation/ConversationMenu"
+import { ConversationMenu, type MenuView } from "@/features/conversation/ConversationMenu"
 import { CategoryChip, ProgressStrip } from "@/features/conversation/Feedback"
 import { IdeaChip } from "@/features/conversation/IdeaChip"
 import { IncidentChips } from "@/features/status/IncidentChips"
@@ -47,14 +45,7 @@ import { LinkIncidentDialog } from "@/features/status/LinkIncidentDialog"
 import { useConversationIncidents } from "@/features/status/linked"
 import { FromConversationDialog } from "@/features/docs/discussions/FromConversation"
 import { conversationPage, PageLine } from "@/features/docs/PageContext"
-import {
-  CloseButton,
-  HandMenu,
-  LabelsMenu,
-  ProgressMenu,
-  SnoozeMenu,
-  type HeaderMenu,
-} from "@/features/conversation/HeaderActions"
+import { CloseButton, HandMenu, ProgressMenu, SnoozeMenu, type HeaderMenu } from "@/features/conversation/HeaderActions"
 import { History } from "@/features/conversation/History"
 import type { ThreadContext } from "@/features/conversation/messages/context"
 import { foldText, quoteOf } from "@/features/conversation/messages/MessageActions"
@@ -69,6 +60,7 @@ import {
 } from "@/features/conversation/queries"
 import { BroadcastLine } from "@/features/conversation/BroadcastLine"
 import { RelatedLine } from "@/features/conversation/RelatedLine"
+import { look } from "@/features/inbox/PageFrame"
 import { useListActions, usePinnedIds } from "@/features/inbox/memberState"
 import { useConversations } from "@/features/inbox/queries"
 import { useHotkeys } from "@/hooks/use-hotkeys"
@@ -197,6 +189,7 @@ function Loaded({
   const reply = useRef<ReplyHandle>(null)
   const [menu, setMenu] = useState<HeaderMenu>(null)
   const [moreOpen, setMoreOpen] = useState(false)
+  const [moreView, setMoreView] = useState<MenuView>("root")
   const [historyOpen, setHistoryOpen] = useState(false)
   const [expandQuoted, setExpandQuoted] = useState(false)
   const [claimedFrom, setClaimedFrom] = useState<string | null>(null)
@@ -314,8 +307,32 @@ function Loaded({
   }, [lastId, mark])
 
   const fail = (err: unknown) => toast(errorText(err))
-  const update = (body: ConversationUpdate) => updater.mutate(body, { onError: fail })
-  const move = (inboxId: string) => mover.mutate(inboxId, { onError: fail })
+  const changed = (body: ConversationUpdate): { done: string; revert: ConversationUpdate } | undefined => {
+    if (body.priority) {
+      const level = text.priority[body.priority]
+      return { done: t`Priority set to ${level}`, revert: { priority: c.priority } }
+    }
+    if (body.labels) return { done: t`Labels changed`, revert: { labels: c.labels } }
+    if (body.spam !== undefined) return { done: body.spam ? t`Marked as spam` : t`Not spam`, revert: { spam: c.spam } }
+    if (body.status === "open" && (c.status === "closed" || c.status === "pending"))
+      return { done: t`Conversation reopened`, revert: { status: c.status } }
+    return undefined
+  }
+  const update = (body: ConversationUpdate) => {
+    const note = changed(body)
+    updater.mutate(body, {
+      onSuccess: () => note && toast(note.done, () => updater.mutate(note.revert, { onError: fail })),
+      onError: fail,
+    })
+  }
+  const move = (inboxId: string) => {
+    const from = c.inbox_id
+    const to = inboxes.find((i) => i.id === inboxId)?.name ?? ""
+    mover.mutate(inboxId, {
+      onSuccess: () => toast(t`Moved to ${to}`, () => mover.mutate(from, { onError: fail })),
+      onError: fail,
+    })
+  }
   const claim = () => {
     if (mate?.member_id) setClaimedFrom(mate.member_id)
     if (c.assignee_id !== me) actions.claim()
@@ -323,7 +340,10 @@ function Loaded({
   }
   const leaveTo = () => {
     const m = mate?.member_id ? members.get(mate.member_id) : undefined
-    if (m) actions.hand(m, "")
+    if (m) {
+      setClaimedFrom(m.id)
+      actions.hand(m, "")
+    }
   }
   const togglePanel = () => setPanel(!shownPanel)
   const listActions = useListActions()
@@ -351,7 +371,10 @@ function Loaded({
     note: () => reply.current?.focus("note"),
     snooze: () => setMenu("snooze"),
     hand: () => setMenu("hand"),
-    labels: () => setMenu("labels"),
+    labels: () => {
+      setMoreView("labels")
+      setMoreOpen(true)
+    },
     progress: () => c.kind === "feedback" && setMenu("progress"),
     close: () => (c.status === "closed" ? actions.reopen() : actions.close()),
     contact: togglePanel,
@@ -426,249 +449,122 @@ function Loaded({
           </span>
         </div>
       )}
-      {phone ? (
-        <header
-          className="@container/person flex h-15 shrink-0 items-center gap-2 border-b bg-background ps-2 pe-2 phone:h-auto phone:min-h-15 phone:gap-1 phone:py-1.5 phone:ps-1"
-          data-testid="person"
-        >
+      <header
+        className="@container/person flex shrink-0 flex-col gap-2 border-b bg-background px-5 pt-3 pb-2.5 phone:px-3 phone:pt-2 phone:pb-2"
+        data-testid="person"
+      >
+        <div className="flex min-w-0 items-center gap-2">
           <BackButton onBack={onBack} />
           <button
             type="button"
             onClick={togglePanel}
-            className="flex min-w-0 flex-1 items-center gap-3 rounded-lg py-1 ps-1.5 pe-2 text-start hover:bg-muted phone:gap-2.5 phone:ps-1 phone:pe-1"
+            className="flex min-w-0 flex-1 items-center gap-2.5 rounded-md text-start leading-[1.3] outline-none focus-visible:ring-2 focus-visible:ring-ring"
             title={t`Contact details (C)`}
           >
-            <span className="relative shrink-0">
-              {visitor ? (
-                <VisitorAvatar className="size-10" />
-              ) : (
-                <ContactAvatar id={c.contact_id} name={name} className="size-10" />
-              )}
-              {actions.live && (
-                <span
-                  className="absolute -end-px -bottom-px size-3 rounded-full border-2 border-background bg-success"
-                  data-testid="contact-live"
-                />
-              )}
-            </span>
-            <span className="min-w-0 flex-1">
-              {subject ? (
-                <span className="block truncate text-reading font-semibold" data-testid="header-subject">
-                  {subject}
-                </span>
-              ) : (
-                <span className="block truncate text-reading font-semibold" data-testid="person-name">
-                  {name}
-                </span>
-              )}
+            {phone && (
+              <span className="relative shrink-0">
+                {visitor ? (
+                  <VisitorAvatar className="size-9" />
+                ) : (
+                  <ContactAvatar id={c.contact_id} name={name} className="size-9" />
+                )}
+                {actions.live && (
+                  <span
+                    className="absolute -end-px -bottom-px size-3 rounded-full border-2 border-background bg-success"
+                    data-testid="contact-live"
+                  />
+                )}
+              </span>
+            )}
+            <span className="flex min-w-0 flex-1 flex-col">
+              <span className="truncate text-[16px] font-semibold" data-testid={subject ? "header-subject" : undefined}>
+                {subject || name}
+              </span>
               <span
                 className={cn(
                   "flex min-w-0 items-center gap-x-1.5 truncate text-caption text-faint",
                   phone && "flex-wrap gap-y-0.5 whitespace-normal"
                 )}
               >
-                {subject && (
+                {!phone && actions.live && (
+                  <span className="size-2 shrink-0 rounded-full bg-success" data-testid="contact-live" aria-hidden />
+                )}
+                <span className="max-w-[60%] shrink-0 truncate" data-testid="person-name">
+                  {name}
+                </span>
+                {inbox && (
                   <>
-                    <span
-                      className="max-w-[60%] shrink-0 truncate font-medium text-muted-foreground"
-                      data-testid="person-name"
-                    >
-                      {name}
+                    {sep}
+                    <span className="inline-flex min-w-0 items-center gap-1 truncate">
+                      <Dot color={inbox.branding.color} className="size-[7px] rounded-[2px]" />
+                      <span className="truncate">{inbox.name}</span>
                     </span>
-                    <span aria-hidden>·</span>
                   </>
                 )}
-                {source && <SourceBadge source={source} />}
-                {place && (
-                  <span
-                    className={cn("min-w-0 truncate", !phone && "@max-xl/person:hidden")}
-                    data-testid="header-place"
-                  >
-                    {place}
-                  </span>
+                {source && (
+                  <>
+                    {sep}
+                    <span className="shrink-0">{sourceText[source]}</span>
+                  </>
                 )}
                 {place && (
-                  <span aria-hidden className="phone:hidden @max-xl/person:hidden">
-                    ·
-                  </span>
+                  <>
+                    {sep}
+                    <span className="min-w-0 truncate" data-testid="header-place">
+                      {place}
+                    </span>
+                  </>
                 )}
-                {inbox && (
-                  <span className="inline-flex min-w-0 items-center gap-1 truncate phone:hidden @max-xl/person:hidden">
-                    <Dot color={inbox.branding.color} className="size-[7px] rounded-[2px]" />
-                    <span className="truncate">{inbox.name}</span>
-                  </span>
-                )}
-                {inbox && (
-                  <span aria-hidden className="phone:hidden @max-xl/person:hidden">
-                    ·
-                  </span>
-                )}
-                <span className={cn("truncate", phone && place && "basis-full")} data-testid="header-status">
+                {sep}
+                <span className="truncate" data-testid="header-status">
                   <Status c={c} lastInbound={lastInbound} />
                 </span>
               </span>
             </span>
           </button>
-          {assignee && (
-            <span
-              title={t`Assigned to ${assignee.name || assignee.email}`}
-              className="phone:hidden @max-xl/person:hidden"
-              data-testid="header-assignee"
-            >
-              <MemberAvatar
-                name={assignee.name || assignee.email}
-                online={assignee.online}
-                away={assignee.availability === "away"}
-                className="size-7"
-              />
-            </span>
-          )}
-          <div ref={actionsRef} className="flex shrink-0 items-center gap-0.5">
-            <span className="phone:hidden">
-              <HandMenu
-                c={c}
-                actions={actions}
-                open={menu === "hand"}
-                onOpenChange={openMenu("hand")}
-                anchor={phone ? actionsRef : undefined}
-              />
-            </span>
-            <span className="phone:hidden">
-              <SnoozeMenu
-                name={name}
-                actions={actions}
-                open={menu === "snooze"}
-                onOpenChange={openMenu("snooze")}
-                anchor={phone ? actionsRef : undefined}
-              />
-            </span>
-            <span className="phone:hidden @max-xl/person:hidden">
-              <LabelsMenu c={c} update={update} open={menu === "labels"} onOpenChange={openMenu("labels")} />
-            </span>
-            {c.kind === "feedback" && (
-              <ProgressMenu c={c} update={update} open={menu === "progress"} onOpenChange={openMenu("progress")} />
-            )}
-            <CloseButton c={c} actions={actions} />
+        </div>
+        <div
+          ref={actionsRef}
+          role="toolbar"
+          aria-label={t`Conversation actions`}
+          className="flex flex-wrap items-center gap-1.5"
+          data-testid="conversation-actions"
+        >
+          <HandMenu
+            c={c}
+            actions={actions}
+            open={menu === "hand"}
+            onOpenChange={openMenu("hand")}
+            label={
+              <span data-testid={assignee ? "header-assignee" : undefined}>
+                {assignee ? assignee.name || assignee.email : <Trans>Unassigned</Trans>}
+              </span>
+            }
+          />
+          {!c.assignee_id && (
             <Button
-              variant="ghost"
-              size="icon-sm"
-              onClick={() => (finding ? closeFind() : openFind())}
-              aria-pressed={finding}
-              className={cn("phone:hidden", finding && "bg-muted text-foreground")}
-              aria-label={t`Search in this conversation`}
-              title={t`Search in this conversation (${keyLabel(SHORTCUTS.find).join("")})`}
-              data-testid="find-toggle"
+              variant="outline"
+              className={look.btnSm}
+              onClick={actions.claim}
+              title={t`Assign to me`}
+              data-testid="assign-me-button"
             >
-              <SearchIcon />
+              <Trans>Assign to me</Trans>
             </Button>
-            {inlinePanel && (
-              <Button
-                variant="ghost"
-                size="icon-sm"
-                onClick={togglePanel}
-                aria-pressed={shownPanel}
-                className={cn(shownPanel && "bg-muted text-foreground")}
-                aria-label={t`Contact details (C)`}
-                title={t`Contact details (C)`}
-                data-testid="toggle-contact-panel"
-              >
-                <PanelRightIcon className="rtl:-scale-x-100" />
-              </Button>
-            )}
+          )}
+          <SnoozeMenu name={name} actions={actions} open={menu === "snooze"} onOpenChange={openMenu("snooze")} />
+          {c.kind === "feedback" && (
+            <ProgressMenu c={c} update={update} open={menu === "progress"} onOpenChange={openMenu("progress")} />
+          )}
+          <div className="ms-auto flex items-center gap-1.5">
             <ConversationMenu
               c={c}
               open={moreOpen}
               onOpenChange={setMoreOpen}
+              view={moreView}
+              onView={setMoreView}
               update={update}
               move={move}
-              onContact={() => setPanel(true)}
-              pinned={pinned}
-              onPin={togglePin}
-              onUnread={markUnread}
-              onDiscussion={handlers.discussion}
-              onIncident={handlers.incident}
-              onIdea={handlers.idea}
-              folded={phone ? { hand: handlers.hand, snooze: handlers.snooze, find: openFind } : undefined}
-            />
-          </div>
-        </header>
-      ) : (
-        <header className="flex shrink-0 items-center gap-2 border-b bg-background px-5 py-3" data-testid="person">
-          <BackButton onBack={onBack} />
-          <button
-            type="button"
-            onClick={togglePanel}
-            className="flex min-w-0 flex-1 flex-col rounded-md text-start leading-[1.3] outline-none focus-visible:ring-2 focus-visible:ring-ring"
-            title={t`Contact details (C)`}
-          >
-            <span className="truncate text-[16px] font-semibold" data-testid={subject ? "header-subject" : undefined}>
-              {subject || name}
-            </span>
-            <span className="flex min-w-0 items-center gap-1.5 truncate text-caption text-faint">
-              {actions.live && (
-                <span className="size-2 shrink-0 rounded-full bg-success" data-testid="contact-live" aria-hidden />
-              )}
-              <span className="shrink-0 truncate" data-testid="person-name">
-                {name}
-              </span>
-              {inbox && (
-                <>
-                  {sep}
-                  <span className="shrink-0 truncate">{inbox.name}</span>
-                </>
-              )}
-              {source && (
-                <>
-                  {sep}
-                  <span className="shrink-0">{sourceText[source]}</span>
-                </>
-              )}
-              {place && (
-                <>
-                  {sep}
-                  <span className="min-w-0 truncate" data-testid="header-place">
-                    {place}
-                  </span>
-                </>
-              )}
-              {sep}
-              <span className="truncate" data-testid="header-status">
-                <Status c={c} lastInbound={lastInbound} />
-              </span>
-            </span>
-          </button>
-          <div ref={actionsRef} className="flex shrink-0 items-center gap-2">
-            <HandMenu
-              c={c}
-              actions={actions}
-              open={menu === "hand"}
-              onOpenChange={openMenu("hand")}
-              labelled={
-                <span data-testid={assignee ? "header-assignee" : undefined}>
-                  {assignee ? assignee.name || assignee.email : <Trans>Unassigned</Trans>}
-                </span>
-              }
-            />
-            <SnoozeMenu
-              name={name}
-              actions={actions}
-              open={menu === "snooze"}
-              onOpenChange={openMenu("snooze")}
-              labelled
-            />
-            {c.kind === "feedback" && (
-              <ProgressMenu c={c} update={update} open={menu === "progress"} onOpenChange={openMenu("progress")} />
-            )}
-            <span className="invisible -ms-2 inline-flex w-0 overflow-hidden" aria-hidden>
-              <LabelsMenu c={c} update={update} open={menu === "labels"} onOpenChange={openMenu("labels")} />
-            </span>
-            <ConversationMenu
-              c={c}
-              open={moreOpen}
-              onOpenChange={setMoreOpen}
-              update={update}
-              move={move}
-              onContact={togglePanel}
               pinned={pinned}
               onPin={togglePin}
               onUnread={markUnread}
@@ -676,12 +572,22 @@ function Loaded({
               onIncident={handlers.incident}
               onIdea={handlers.idea}
               onFind={() => (finding ? closeFind() : openFind())}
-              outlined
             />
-            <CloseButton c={c} actions={actions} ink />
+            <Button
+              variant="outline"
+              className={cn(look.btnSm, "w-[30px] px-0", shownPanel && "bg-muted")}
+              onClick={togglePanel}
+              aria-pressed={shownPanel}
+              aria-label={t`Contact details (C)`}
+              title={t`Contact details (C)`}
+              data-testid="toggle-contact-panel"
+            >
+              <PanelRightIcon className="rtl:-scale-x-100" />
+            </Button>
+            <CloseButton c={c} actions={actions} />
           </div>
-        </header>
-      )}
+        </div>
+      </header>
       {(chipLabels.length > 0 ||
         (c.kind === "feedback" && c.feedback) ||
         pageLine ||

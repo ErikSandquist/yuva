@@ -7,6 +7,10 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: pt-BR\n"
 
+#: src/features/roadmap/CreateBoardDialog.tsx
+msgid "{inboxName} has no web chat channel. Add one first, because the public board embeds it."
+msgstr "{inboxName} não tem um canal de chat da web. Adicione um primeiro, porque o quadro público o incorpora."
+
 #: src/features/roadmap/Board.tsx
 msgid "{linked, plural, one {# feedback} other {# feedback}}"
 msgstr "{linked, plural, one {# feedback} other {# feedbacks}}"
@@ -29,9 +33,25 @@ msgid "A reader's posts wait for a member until one of theirs is approved. Signe
 msgstr "As publicações de um leitor aguardam um membro até que uma delas seja aprovada. Usuários conectados do seu app publicam na hora."
 
 #: src/features/roadmap/CreateBoardDialog.tsx
+msgid "Add a web chat channel"
+msgstr "Adicionar um canal de chat da web"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
 #: src/features/roadmap/Settings.tsx
 msgid "Address"
 msgstr "Endereço"
+
+#: src/features/roadmap/BoardBar.tsx
+msgid "All boards"
+msgstr "Todos os quadros"
+
+#: src/features/roadmap/Settings.tsx
+msgid "All changes saved."
+msgstr "Todas as alterações foram salvas."
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "All feedback from {inboxName} that fits is already linked."
+msgstr "Todos os feedbacks de {inboxName} que se encaixam já estão vinculados."
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Already linked"
@@ -89,13 +109,16 @@ msgstr "Conta as visualizações de página do quadro público sem cookies."
 
 #: src/features/roadmap/CreateBoardDialog.tsx
 #: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
 msgid "Create board"
 msgstr "Criar quadro"
 
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Create board ({newKey})"
 msgstr "Criar quadro ({newKey})"
+
+#: src/features/roadmap/BoardBar.tsx
+msgid "Create board for {name}"
+msgstr "Criar quadro para {name}"
 
 #: src/features/roadmap/NewIdeaDialog.tsx
 msgid "Create idea"
@@ -123,17 +146,21 @@ msgstr "Exclui o quadro com suas ideias, votos, respostas e histórico de etapas
 msgid "Description"
 msgstr "Descrição"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Dismiss"
+msgstr "Dispensar"
+
 #: src/features/roadmap/Board.tsx
 msgid "Done"
 msgstr "Pronto"
 
-#: src/features/roadmap/MoveDialog.tsx
-msgid "Every linked feedback that does not have it yet gets the progress {progress}. Linked feedback: {linked}"
-msgstr "Todo feedback vinculado que ainda não tem o andamento {progress} passa a tê-lo. Feedbacks vinculados: {linked}"
-
 #: src/features/roadmap/Settings.tsx
 msgid "Everyone's posts are published at once, except those of authors you marked as spam."
 msgstr "As publicações de todos são publicadas na hora, exceto as de autores que você marcou como spam."
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Good news: “{title}” has shipped. Thank you for asking for it."
+msgstr "Boas notícias: “{title}” foi lançada. Obrigado por pedir."
 
 #: src/features/roadmap/Board.tsx
 msgid "Hidden"
@@ -155,21 +182,30 @@ msgstr "Ideias em que seus clientes votam, com o feedback por trás delas"
 msgid "Ideas, votes and stages for {inboxName}, with the feedback behind each idea. It stays private until you make it public."
 msgstr "Ideias, votos e etapas de {inboxName}, com os feedbacks por trás de cada ideia. Ele continua privado até você torná-lo público."
 
-#: src/features/roadmap/RoadmapColumn.tsx
-msgid "Ideas: {ideas}"
-msgstr "Ideias: {ideas}"
-
 #: src/features/roadmap/NewIdeaDialog.tsx
 msgid "It goes into Ideas on the board, where customers can vote on it."
 msgstr "Ela vai para Ideias no quadro, onde os clientes podem votar."
 
-#: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/NewIdeaDialog.tsx
+msgid "It goes into Ideas on the board. The board is private, so only your team sees it."
+msgstr "Ela entra em Ideias no quadro. O quadro é privado, então só a sua equipe o vê."
+
+#: src/features/roadmap/IdeaFeedback.tsx
 msgid "It was unlinked from the idea."
 msgstr "Foi desvinculado da ideia."
 
 #: src/features/roadmap/Settings.tsx
 msgid "Its ideas, votes, replies and stage history are deleted with it."
 msgstr "Suas ideias, votos, respostas e histórico de etapas são excluídos junto com ele."
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgctxt "link feedback to the idea"
+msgid "Link"
+msgstr "Vincular"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Link feedback"
+msgstr "Vincular feedbacks"
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Link this feedback to an idea…"
@@ -179,13 +215,21 @@ msgstr "Vincular este feedback a uma ideia…"
 msgid "Link to an idea"
 msgstr "Vincular a uma ideia"
 
-#: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Linked"
+msgstr "Vinculada"
+
+#: src/features/roadmap/IdeaFeedback.tsx
 msgid "Linked feedback"
 msgstr "Feedbacks vinculados"
 
 #: src/features/roadmap/IdeaPane.tsx
 msgid "Linked feedback set to {progress}: {set}"
 msgstr "Feedbacks vinculados definidos como {progress}: {set}"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Linked feedback that gets the progress {progress}: {gets} of {linked}."
+msgstr "Feedbacks vinculados que recebem o progresso {progress}: {gets} de {linked}."
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Linked to {title}"
@@ -195,19 +239,19 @@ msgstr "Vinculada a {title}"
 msgid "Load more"
 msgstr "Carregar mais"
 
-#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Make private"
 msgstr "Tornar privado"
 
-#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Make private ({publicKey})"
 msgstr "Tornar privado ({publicKey})"
 
-#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Make public"
 msgstr "Tornar público"
 
-#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Make public ({publicKey})"
 msgstr "Tornar público ({publicKey})"
 
@@ -254,25 +298,37 @@ msgstr "Nova ideia"
 msgid "New idea from this feedback"
 msgstr "Nova ideia a partir deste feedback"
 
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/pages.tsx
+msgid "No board is public yet. Make one public under Settings."
+msgstr "Nenhum quadro é público ainda. Torne um público em Configurações."
+
+#: src/features/roadmap/pages.tsx
 msgid "No board yet. Owners and admins create it."
 msgstr "Ainda não há quadro. Proprietários e administradores o criam."
 
-#: src/features/roadmap/IdeaPane.tsx
-msgid "No feedback is linked yet. Open a piece of feedback and use Link to an idea."
-msgstr "Nenhum feedback vinculado ainda. Abra um feedback e use “Vincular a uma ideia”."
+#: src/features/roadmap/MoveDialog.tsx
+msgid "No feedback is linked to this idea yet."
+msgstr "Nenhum feedback está vinculado a esta ideia ainda."
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "No feedback is linked yet. Use Link feedback, or open a piece of feedback and choose Link to an idea."
+msgstr "Nenhum feedback está vinculado ainda. Use Vincular feedbacks ou abra um feedback e escolha Vincular a uma ideia."
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "No idea matches."
 msgstr "Nenhuma ideia corresponde."
 
-#: src/features/roadmap/RoadmapColumn.tsx
-msgid "No inbox to show a board for."
-msgstr "Nenhuma caixa de entrada para mostrar um quadro."
+#: src/features/roadmap/Board.tsx
+msgid "No ideas yet. New ones land here."
+msgstr "Ainda não há ideias. As novas chegam aqui."
 
 #: src/features/roadmap/Settings.tsx
 msgid "None"
 msgstr "Nenhum"
+
+#: src/features/roadmap/Board.tsx
+msgid "Nothing here yet."
+msgstr "Ainda não há nada aqui."
 
 #: src/features/roadmap/Settings.tsx
 msgid "Off"
@@ -282,7 +338,7 @@ msgstr "Desativado"
 msgid "On: anyone with the address reads the board, and signed-in readers vote and suggest ideas. Off: only your team sees it, as a tool to sort feedback."
 msgstr "Ativado: qualquer pessoa com o endereço lê o quadro, e leitores conectados votam e sugerem ideias. Desativado: só sua equipe o vê, como ferramenta para organizar feedbacks."
 
-#: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/IdeaFeedback.tsx
 msgid "One reply, written once, goes to every open feedback conversation linked to this idea, as you, on each conversation’s own channel."
 msgstr "Uma resposta, escrita uma única vez, vai para cada conversa de feedback aberta e vinculada a esta ideia, como você, no canal próprio de cada conversa."
 
@@ -290,9 +346,22 @@ msgstr "Uma resposta, escrita uma única vez, vai para cada conversa de feedback
 msgid "Open"
 msgstr "Abertas"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgctxt "open the feedback"
+msgid "Open"
+msgstr "Abrir"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Open Analytics"
+msgstr "Abrir o Analytics"
+
 #: src/features/roadmap/IdeaPane.tsx
 msgid "Open on the public board"
 msgstr "Abrir no quadro público"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Open Roadmap"
+msgstr "Abrir roadmap"
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Pick an idea of this inbox’s board"
@@ -302,17 +371,11 @@ msgstr "Escolha uma ideia do quadro desta caixa de entrada"
 msgid "Posted as your public reply on the idea. Markdown works."
 msgstr "Publicado como sua resposta pública na ideia. Markdown funciona."
 
-#: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Private"
 msgstr "Privada"
 
-#: src/features/roadmap/pages.tsx
-msgid "Private, only your team sees it"
-msgstr "Privado, só sua equipe o vê"
-
-#: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/BoardBar.tsx
 #: src/features/roadmap/Settings.tsx
 msgid "Public"
 msgstr "Pública"
@@ -329,19 +392,37 @@ msgstr "Os leitores não podem sugerir ideias. Votos e respostas continuam funci
 msgid "Readers suggested new ideas. Review them before they show on the public board."
 msgstr "Leitores sugeriram novas ideias. Revise-as antes que apareçam no quadro público."
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Reply to everyone"
+msgstr "Responder a todos"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Reply to linked ({key})"
+msgstr "Responder às vinculadas ({key})"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Resolved feedback does not get it: {closed}"
+msgstr "Feedbacks resolvidos não a recebem: {closed}"
+
 #: src/features/roadmap/Board.tsx
 msgid "Review"
 msgstr "Revisão"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Review the reply"
+msgstr "Revisar a resposta"
+
 #: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
 msgid "Roadmap"
 msgstr "Roadmap"
 
-#: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Roadmap boards"
 msgstr "Quadros de roadmap"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Save"
+msgstr "Salvar"
 
 #: src/features/roadmap/Settings.tsx
 msgid "Saved"
@@ -355,9 +436,13 @@ msgstr "Pesquisar ideias"
 msgid "Settings"
 msgstr "Configurações"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Shipped. Open feedback linked to it: {open}. A reply is ready to send."
+msgstr "Lançado. Feedbacks abertos vinculados a ela: {open}. Uma resposta está pronta para enviar."
+
 #: src/features/roadmap/pages.tsx
-msgid "Show your customers what you are building, and link the feedback behind each idea. Create a board for an inbox to sort ideas into stages."
-msgstr "Mostre aos seus clientes o que você está construindo e vincule o feedback por trás de cada ideia. Crie um quadro para uma caixa para organizar as ideias em etapas."
+msgid "Show your customers what you are building, and link the feedback behind each idea. Create a board for {missingName} to sort ideas into stages."
+msgstr "Mostre aos seus clientes o que você está construindo e vincule os feedbacks por trás de cada ideia. Crie um quadro para {missingName} para organizar as ideias em etapas."
 
 #: src/features/roadmap/Settings.tsx
 msgid "Shown under the name on the public board."
@@ -404,6 +489,10 @@ msgstr "O andamento dos feedbacks vinculados não muda. Feedbacks vinculados: {l
 msgid "The public board embeds this chat, and ideas your team starts are filed on it."
 msgstr "O quadro público incorpora este chat, e as ideias que sua equipe cria são arquivadas nele."
 
+#: src/features/roadmap/MoveDialog.tsx
+msgid "The rest already have it."
+msgstr "Os demais já a têm."
+
 #: src/features/roadmap/pages.tsx
 msgid "This board no longer exists or you cannot see it."
 msgstr "Este quadro não existe mais ou você não pode vê-lo."
@@ -412,14 +501,18 @@ msgstr "Este quadro não existe mais ou você não pode vê-lo."
 msgid "This inbox has no roadmap board. Create one under Roadmap first."
 msgstr "Esta caixa de entrada não tem quadro de roadmap. Crie um antes em Roadmap."
 
-#: src/features/roadmap/CreateBoardDialog.tsx
-msgid "This inbox has no web chat channel. Add one first, because the public board embeds it."
-msgstr "Esta caixa de entrada não tem canal de chat web. Adicione um primeiro, porque o quadro público o incorpora."
-
 #: src/features/roadmap/LinkIdeaDialog.tsx
 #: src/features/roadmap/NewIdeaDialog.tsx
 msgid "Title"
 msgstr "Título"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Unlink"
+msgstr "Desvincular"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Unlinked feedback from {inboxName}"
+msgstr "Feedbacks de {inboxName} sem vínculo"
 
 #: src/features/roadmap/Settings.tsx
 msgid "Use 3 to 48 letters, numbers and inner hyphens."
@@ -437,6 +530,6 @@ msgstr "Visibilidade"
 msgid "Waiting for approval"
 msgstr "Aguardando aprovação"
 
-#: src/features/roadmap/RoadmapColumn.tsx
-msgid "Waiting for approval: {pending}"
-msgstr "Aguardando aprovação: {pending}"
+#: src/features/roadmap/Settings.tsx
+msgid "You have unsaved changes."
+msgstr "Você tem alterações não salvas."

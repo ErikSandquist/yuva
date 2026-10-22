@@ -1,6 +1,6 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro"
 import type { InfiniteData, UseInfiniteQueryResult, UseMutationResult, UseQueryResult } from "@tanstack/react-query"
-import { CornerUpLeftIcon, Link2OffIcon, ReplyAllIcon, XIcon } from "lucide-react"
+import { CornerUpLeftIcon, Link2OffIcon, LinkIcon, ReplyAllIcon, XIcon } from "lucide-react"
 import { useEffect, useState } from "react"
 import { Link } from "react-router"
 
@@ -113,22 +113,24 @@ function LinkedRow({
   )
 }
 
-function ReplyDialog({
+export function ReplyDialog({
   hooks,
   description,
   open,
+  initialBody = "",
   onClose,
   onSent,
 }: {
   hooks: LinkedReplyHooks
   description: React.ReactNode
   open: number
+  initialBody?: string
   onClose: () => void
   onSent: (id: string) => void
 }) {
   const { t } = useLingui()
   const send = hooks.useSend()
-  const [body, setBody] = useState("")
+  const [body, setBody] = useState(initialBody)
   const [close, setClose] = useState(false)
   const [confirming, setConfirming] = useState(false)
   return (
@@ -256,7 +258,7 @@ function OutcomeRow({
   )
 }
 
-function ReplyOutcome({
+export function ReplyOutcome({
   hooks,
   replyId,
   unlinked,
@@ -375,6 +377,7 @@ export function LinkedConversations({
   rowLink,
   busy,
   openReply,
+  onLink,
   onUnlink,
   onReply,
   onDismissReply,
@@ -390,6 +393,7 @@ export function LinkedConversations({
   rowLink?: (c: LinkedConversation) => string
   busy: boolean
   openReply?: number
+  onLink?: () => void
   onUnlink: (c: LinkedConversation) => void
   onReply: (id: string) => void
   onDismissReply: () => void
@@ -419,18 +423,26 @@ export function LinkedConversations({
       <Section
         title={title}
         action={
-          <Button
-            variant="outline"
-            size="sm"
-            disabled={!canReply}
-            onClick={() => setReplying(true)}
-            title={t`Reply to linked (${key})`}
-            data-testid="linked-reply"
-          >
-            <CornerUpLeftIcon />
-            <Trans>Reply to linked</Trans>
-            <Kbd className="phone:hidden">{key}</Kbd>
-          </Button>
+          <span className="flex flex-wrap items-center gap-2">
+            {onLink && (
+              <Button variant="outline" size="sm" onClick={onLink} data-testid="linked-link">
+                <LinkIcon />
+                <Trans>Link</Trans>
+              </Button>
+            )}
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={!canReply}
+              onClick={() => setReplying(true)}
+              title={t`Reply to linked (${key})`}
+              data-testid="linked-reply"
+            >
+              <CornerUpLeftIcon />
+              <Trans>Reply to linked</Trans>
+              <Kbd className="phone:hidden">{key}</Kbd>
+            </Button>
+          </span>
         }
       >
         <Card flush data-testid="linked-conversations">

@@ -22,7 +22,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { STATUS_KEYS } from "@/components/common/ShortcutSheet"
 import { Skeleton } from "@/components/ui/skeleton"
+import { useHotkeys } from "@/hooks/use-hotkeys"
 import { ComponentDialog, GroupDialog } from "@/features/status/ComponentDialogs"
 import {
   useComponentMutations,
@@ -31,7 +33,7 @@ import {
   useStatusComponents,
   useStatusGroups,
 } from "@/features/status/queries"
-import { StateSelect } from "@/features/status/StateSelect"
+import { StatePill } from "@/features/status/StateSelect"
 import { UptimeBars, usePercent } from "@/features/status/UptimeBars"
 import { Card, EmptyRow, Rows } from "@/features/settings/ui"
 import { useSession } from "@/lib/session"
@@ -95,12 +97,11 @@ function Row({
             <Trans>{share} uptime</Trans>
           </span>
         )}
-        <StateSelect
+        <StatePill
           value={c.state}
           label={t`State of ${c.name}`}
           disabled={m.setState.isPending}
           onChange={(state) => m.setState.mutate({ id: c.id, state })}
-          className="w-52 phone:flex-1"
           testId="status-component-state"
         />
         {canManage && (
@@ -175,8 +176,8 @@ export function ComponentsTab({ page }: { page: StatusPage }) {
   const gs = groups.data ?? []
   const cs = components.data ?? []
   const sections: Section[] = [
-    ...(cs.some((c) => !c.group_id) ? [{ group: null, items: cs.filter((c) => !c.group_id) }] : []),
     ...gs.map((g) => ({ group: g, items: cs.filter((c) => c.group_id === g.id) })),
+    ...(cs.some((c) => !c.group_id) ? [{ group: null, items: cs.filter((c) => !c.group_id) }] : []),
   ]
 
   const moveComponent = (items: StatusComponent[], from: number, dir: -1 | 1) => {
@@ -192,13 +193,15 @@ export function ComponentsTab({ page }: { page: StatusPage }) {
     next.forEach((g, i) => g.position !== i && gm.update.mutate({ id: g.id, position: i }))
   }
 
+  useHotkeys(canManage ? { [STATUS_KEYS.addComponent]: () => setDialog({ kind: "component" }) } : {}, !dialogState)
+
   if (components.isPending || groups.isPending) return <Skeleton className="h-40 w-full rounded-2xl" />
   return (
     <div className="flex flex-col gap-4" data-testid="status-components">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="min-w-60 flex-1">
           <p className="text-body text-muted-foreground">
-            <Trans>The parts of your product. Set a state by hand, or let an incident do it.</Trans>
+            <Trans>The parts of your product. Set a state by hand, or let an incident or a monitor do it.</Trans>
           </p>
           <p className="mt-0.5 text-small text-faint" data-testid="status-uptime-note">
             {!page.show_uptime ? (
@@ -240,56 +243,56 @@ export function ComponentsTab({ page }: { page: StatusPage }) {
         const gi = s.group ? gs.findIndex((g) => g.id === s.group!.id) : -1
         return (
           <section key={s.group?.id ?? "none"} className="flex flex-col gap-2" data-testid="status-group">
-            {(s.group || gs.length > 0) && (
-              <div className="mx-1 flex items-center gap-2">
-                <h2 className="min-w-0 flex-1 truncate text-small font-medium text-faint">
-                  {s.group ? s.group.name : <Trans>No group</Trans>}
-                </h2>
-                {s.group && canManage && (
-                  <DropdownMenu>
-                    <DropdownMenuTrigger
-                      render={<Button variant="ghost" size="icon-xs" aria-label={t`More for ${s.group.name}`} />}
-                    >
-                      <MoreHorizontalIcon />
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuItem onClick={() => setDialog({ kind: "component", group: s.group!.id })}>
-                        <PlusIcon />
-                        <Trans>Add component</Trans>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => setDialog({ kind: "group", edit: s.group! })}>
-                        <PencilIcon />
-                        <Trans>Rename</Trans>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem disabled={gi <= 0} onClick={() => moveGroup(gi, -1)}>
-                        <ArrowUpIcon />
-                        <Trans>Move up</Trans>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem disabled={gi >= gs.length - 1} onClick={() => moveGroup(gi, 1)}>
-                        <ArrowDownIcon />
-                        <Trans>Move down</Trans>
-                      </DropdownMenuItem>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem
-                        variant="destructive"
-                        onClick={() =>
-                          confirm({
-                            title: <Trans>Delete {s.group!.name}?</Trans>,
-                            description: <Trans>Its components stay, without a group.</Trans>,
-                            confirm: <Trans>Delete group</Trans>,
-                            run: () => gm.remove.mutate(s.group!.id),
-                          })
-                        }
-                      >
-                        <Trash2Icon />
-                        <Trans>Delete group</Trans>
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                )}
-              </div>
-            )}
             <Card flush>
+              {(s.group || gs.length > 0) && (
+                <div className="flex items-center gap-2 border-b bg-surface px-4 py-2">
+                  <h2 className="min-w-0 flex-1 truncate text-small font-medium text-muted-foreground">
+                    {s.group ? s.group.name : <Trans>No group</Trans>}
+                  </h2>
+                  {s.group && canManage && (
+                    <DropdownMenu>
+                      <DropdownMenuTrigger
+                        render={<Button variant="ghost" size="icon-xs" aria-label={t`More for ${s.group.name}`} />}
+                      >
+                        <MoreHorizontalIcon />
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem onClick={() => setDialog({ kind: "component", group: s.group!.id })}>
+                          <PlusIcon />
+                          <Trans>Add component</Trans>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => setDialog({ kind: "group", edit: s.group! })}>
+                          <PencilIcon />
+                          <Trans>Rename</Trans>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem disabled={gi <= 0} onClick={() => moveGroup(gi, -1)}>
+                          <ArrowUpIcon />
+                          <Trans>Move up</Trans>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem disabled={gi >= gs.length - 1} onClick={() => moveGroup(gi, 1)}>
+                          <ArrowDownIcon />
+                          <Trans>Move down</Trans>
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem
+                          variant="destructive"
+                          onClick={() =>
+                            confirm({
+                              title: <Trans>Delete {s.group!.name}?</Trans>,
+                              description: <Trans>Its components stay, without a group.</Trans>,
+                              confirm: <Trans>Delete group</Trans>,
+                              run: () => gm.remove.mutate(s.group!.id),
+                            })
+                          }
+                        >
+                          <Trash2Icon />
+                          <Trans>Delete group</Trans>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  )}
+                </div>
+              )}
               {s.items.length === 0 ? (
                 <EmptyRow>
                   <Trans>No components in this group.</Trans>

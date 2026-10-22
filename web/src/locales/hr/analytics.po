@@ -409,6 +409,7 @@ msgid "Break down by prop"
 msgstr "Raščlani po propu"
 
 #: src/features/analytics/Goals.tsx
+#: src/features/analytics/Overview.tsx
 msgid "Breakdown"
 msgstr "Raščlamba"
 
@@ -1360,6 +1361,7 @@ msgstr "Baza lokacija"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
 #: src/features/analytics/Sharing.tsx
 msgid "Locations"
 msgstr "Lokacije"
@@ -1469,6 +1471,10 @@ msgstr "Novi {kind}: {value} s {count}, nijedan u uspoređenim danima."
 msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."
 msgstr "Novi {kind}: {value}. {metric}: {now}, nijedan u uspoređenim danima."
 
+#: src/features/analytics/Overview.tsx
+msgid "New and returning"
+msgstr "Novi i povratnici"
+
 #: src/features/analytics/Funnels.tsx
 msgid "New funnel"
 msgstr "Novi lijevak"
@@ -1509,6 +1515,10 @@ msgstr "Bez usporedbe"
 #: src/features/analytics/Settings.tsx
 msgid "No consent features are offered."
 msgstr "Funkcije privole se ne nude."
+
+#: src/features/analytics/Overview.tsx
+msgid "No consented visitors in this range."
+msgstr "U ovom rasponu nema posjetitelja koji su pristali."
 
 #: src/features/analytics/Retention.tsx
 msgid "No consented visitors yet"
@@ -2086,6 +2096,7 @@ msgid "Requests with Do Not Track or Global Privacy Control, and events without 
 msgstr "Zahtjevi s Do Not Track ili Global Privacy Control i događaji bez privole na svojstvu koje je zahtijeva primaju se, ali se ovdje ne pohranjuju niti broje."
 
 #: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Overview.tsx
 msgid "Retention"
 msgstr "Zadržavanje"
 

@@ -18,11 +18,14 @@ import { useMergeContact } from "@/features/contact/queries"
 import { contactName } from "@/features/contact/Section"
 import type { Contact } from "@/lib/api"
 
-function Who({ name }: { name: string }) {
+function Who({ name, note }: { name: string; note: React.ReactNode }) {
   return (
     <span className="flex max-w-[calc(50%-1rem)] min-w-0 items-center gap-2">
-      <PersonAvatar name={name} className="size-6" />
-      <span className="min-w-0 truncate font-medium">{name}</span>
+      <PersonAvatar name={name} className="size-7 shrink-0" />
+      <span className="flex min-w-0 flex-col leading-[1.3]">
+        <span className="truncate font-medium">{name}</span>
+        <span className="text-caption text-faint">{note}</span>
+      </span>
     </span>
   )
 }
@@ -79,9 +82,9 @@ export function MergeContactDialog({
         {source && (
           <>
             <div className="flex min-w-0 items-center gap-3 text-body">
-              <Who name={sourceName} />
+              <Who name={sourceName} note={<Trans>deleted afterwards</Trans>} />
               <ArrowRightIcon className="size-4 shrink-0 text-faint rtl:rotate-180" />
-              <Who name={targetName} />
+              <Who name={targetName} note={<Trans>kept</Trans>} />
             </div>
             <MergePreview source={source} target={target} />
             <ErrorLine error={merge.error} />

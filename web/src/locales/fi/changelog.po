@@ -7,7 +7,7 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: fi\n"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 msgid "{published} of {total} entries published"
 msgstr "{published} / {total} merkintää julkaistu"
 
@@ -41,8 +41,13 @@ msgid "All"
 msgstr "Kaikki"
 
 #: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/pages.tsx
 msgid "All labels"
 msgstr "Kaikki tunnisteet"
+
+#: src/features/changelog/pages.tsx
+msgid "All languages"
+msgstr "Kaikki kielet"
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "Analytics property"
@@ -80,6 +85,7 @@ msgstr "Muuta ajankohtaa"
 msgid "Changelog"
 msgstr "Muutosloki"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "Changelogs"
 msgstr "Muutoslokit"
@@ -88,16 +94,21 @@ msgstr "Muutoslokit"
 msgid "Choose a picture"
 msgstr "Valitse kuva"
 
+#: src/features/changelog/pages.tsx
+msgid "Clear filters"
+msgstr "Tyhjennä suodattimet"
+
 #: src/features/changelog/SettingsTab.tsx
 msgid "Counts page views of the changelog without cookies."
 msgstr "Laskee muutoslokin sivunäytöt ilman evästeitä."
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/CreateChangelogDialog.tsx
 #: src/features/changelog/pages.tsx
 msgid "Create changelog"
 msgstr "Luo muutosloki"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "Create changelog ({createKey})"
 msgstr "Luo muutosloki ({createKey})"
@@ -162,6 +173,11 @@ msgstr "Luonnos lähetetty. Omistaja tai ylläpitäjä voi julkaista sen."
 msgid "Drafts"
 msgstr "Luonnokset"
 
+#: src/features/changelog/ChangelogsPage.tsx
+msgid "Each product has one changelog. Owners and admins create and publish them."
+msgstr "Jokaisella tuotteella on muutosloki. Omistajat ja ylläpitäjät luovat ja julkaisevat sen."
+
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "Entries"
 msgstr "Merkinnät"
@@ -173,6 +189,14 @@ msgstr "Merkinnät ja käännökset poistetaan sen mukana."
 #: src/features/changelog/SettingsTab.tsx
 msgid "Entries can be written and published in these languages. Visitors see their own when it exists."
 msgstr "Merkintöjä voi kirjoittaa ja julkaista näillä kielillä. Kävijät näkevät oman kielensä, jos se on olemassa."
+
+#: src/features/changelog/pages.tsx
+msgid "Entries show on the public page once they are published."
+msgstr "Merkinnät näkyvät julkisella sivulla, kun ne on julkaistu."
+
+#: src/features/changelog/pages.tsx
+msgid "Entries you have not published yet show up here."
+msgstr "Merkinnät, joita et ole vielä julkaissut, näkyvät tässä."
 
 #: src/features/changelog/EntryEditor.tsx
 msgid "Every translation is deleted. Broadcasts made from it stay."
@@ -208,6 +232,7 @@ msgid "Keep mine"
 msgstr "Säilytä omani"
 
 #: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/pages.tsx
 msgid "Label"
 msgstr "Tunniste"
 
@@ -219,9 +244,11 @@ msgstr "Tunnisteet"
 #: src/features/changelog/EntriesTab.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/MailDialog.tsx
+#: src/features/changelog/pages.tsx
 msgid "Language"
 msgstr "Kieli"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/SettingsTab.tsx
 msgid "Languages"
 msgstr "Kielet"
@@ -248,6 +275,10 @@ msgid "Main language"
 msgstr "Pääkieli"
 
 #: src/features/changelog/EntryEditor.tsx
+msgid "Mark up to date"
+msgstr "Merkitse ajan tasalle"
+
+#: src/features/changelog/EntryEditor.tsx
 msgid "More"
 msgstr "Lisää"
 
@@ -272,7 +303,7 @@ msgstr "Uusi julkaisu"
 msgid "New post ({newKey})"
 msgstr "Uusi julkaisu ({newKey})"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 msgid "No changelog yet. Owners and admins create it."
 msgstr "Muutoslokia ei ole vielä. Omistajat ja ylläpitäjät luovat sen."
 
@@ -281,12 +312,9 @@ msgid "No entries yet. Tell your customers what changed in your latest release."
 msgstr "Merkintöjä ei ole vielä. Kerro asiakkaillesi, mikä muuttui viimeisimmässä versiossa."
 
 #: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/pages.tsx
 msgid "No entry matches."
 msgstr "Mikään merkintä ei täsmää."
-
-#: src/features/changelog/ChangelogColumn.tsx
-msgid "No inbox to show a changelog for."
-msgstr "Ei saapuneet-kansiota, jolle muutosloki voitaisiin näyttää."
 
 #: src/features/changelog/EntriesTab.tsx
 msgid "No text yet."
@@ -340,6 +368,10 @@ msgstr "Osa tämän käännöksen verkko-osoitetta. Muodostetaan otsikosta, jos 
 msgid "Pick a time in the next year, in your time zone, {zone}."
 msgstr "Valitse ajankohta seuraavan vuoden ajalta, omassa aikavyöhykkeessäsi, {zone}."
 
+#: src/features/changelog/pages.tsx
+msgid "Pick a time when you write an entry and it goes public by itself."
+msgstr "Valitse aika merkintää kirjoittaessasi, niin se julkaistaan itsestään."
+
 #: src/features/changelog/MailDialog.tsx
 msgid "Pick up to 10 lists of this inbox."
 msgstr "Valitse enintään 10 tämän postilaatikon listaa."
@@ -348,6 +380,7 @@ msgstr "Valitse enintään 10 tämän postilaatikon listaa."
 msgid "Picture"
 msgstr "Kuva"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 #: src/features/changelog/PreviewDialog.tsx
@@ -370,6 +403,7 @@ msgstr "Merkinnän esikatselu"
 msgid "Public address"
 msgstr "Julkinen osoite"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 msgid "Publish"
@@ -380,11 +414,19 @@ msgstr "Julkaise"
 msgid "Publish ({publishKey})"
 msgstr "Julkaise ({publishKey})"
 
+#: src/features/changelog/pages.tsx
+msgid "Publish it now or schedule it again."
+msgstr "Julkaise se nyt tai ajasta uudelleen."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Publish now"
+msgstr "Julkaise nyt"
+
 #: src/features/changelog/ScheduleDialog.tsx
 msgid "Publish on"
 msgstr "Julkaise"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 #: src/features/changelog/text.tsx
@@ -393,6 +435,7 @@ msgstr "Julkaistu"
 
 #: src/features/changelog/EntriesTab.tsx
 #: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
 msgid "Publishing on schedule failed."
 msgstr "Ajastettu julkaisu epäonnistui."
 
@@ -403,6 +446,10 @@ msgstr "Julkaisutiedot, jotka näytetään tuotteissasi ja verkossa"
 #: src/features/changelog/EntryEditor.tsx
 msgid "Remove"
 msgstr "Poista"
+
+#: src/features/changelog/pages.tsx
+msgid "Review"
+msgstr "Tarkista"
 
 #: src/features/changelog/EntryEditor.tsx
 msgid "Save now"
@@ -422,23 +469,33 @@ msgstr "Tallennetaan …"
 msgid "Schedule"
 msgstr "Ajasta"
 
+#: src/features/changelog/EntryEditor.tsx
+msgid "Schedule again"
+msgstr "Ajasta uudelleen"
+
 #: src/features/changelog/ScheduleDialog.tsx
 msgid "Schedule this entry"
 msgstr "Ajasta tämä merkintä"
 
 #: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
 #: src/features/changelog/text.tsx
 msgid "Scheduled"
 msgstr "Ajastettu"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 msgid "Scheduled: {scheduled}"
 msgstr "Ajastettu: {scheduled}"
+
+#: src/features/changelog/pages.tsx
+msgid "Search entries"
+msgstr "Hae merkintöjä"
 
 #: src/features/changelog/MailDialog.tsx
 msgid "Send through"
 msgstr "Lähetä kautta"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "Settings"
 msgstr "Asetukset"
@@ -446,6 +503,10 @@ msgstr "Asetukset"
 #: src/features/changelog/EntryEditor.tsx
 msgid "Show"
 msgstr "Näytä"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Show the original"
+msgstr "Näytä alkuperäinen"
 
 #: src/features/changelog/EntriesTab.tsx
 msgid "Shown in the chat bubble, the apps and on {host}."
@@ -482,6 +543,10 @@ msgstr "Lähetä luonnos"
 #: src/features/changelog/EntryEditor.tsx
 msgid "Submit draft ({publishKey})"
 msgstr "Lähetä luonnos ({publishKey})"
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Subscribed: {subscribed}"
+msgstr "Tilaajia: {subscribed}"
 
 #: src/features/changelog/CreateChangelogDialog.tsx
 msgid "Tell the customers of {inboxName} what is new, improved and fixed. It stays unpublished until you publish it."
@@ -527,6 +592,10 @@ msgstr "Pääkielellä ei ole vielä tekstiä tälle merkinnälle."
 msgid "The member who scheduled it may no longer publish."
 msgstr "Sen ajastanut jäsen ei ehkä enää saa julkaista."
 
+#: src/features/changelog/EntryEditor.tsx
+msgid "The original changed after this translation was saved."
+msgstr "Alkuperäinen muuttui tämän käännöksen tallentamisen jälkeen."
+
 #: src/features/changelog/PreviewDialog.tsx
 msgid "The page as visitors would see it, drafts included. Only your team sees this."
 msgstr "Sivu sellaisena kuin kävijät sen näkisivät, luonnokset mukaan lukien. Vain tiimisi näkee tämän."
@@ -534,6 +603,11 @@ msgstr "Sivu sellaisena kuin kävijät sen näkisivät, luonnokset mukaan lukien
 #: src/features/changelog/EntryEditor.tsx
 msgid "The title needs at least 3 characters"
 msgstr "Otsikossa on oltava vähintään 3 merkkiä"
+
+#. placeholder {0}: formatDateTime(entry.publish_at, i18n.locale)
+#: src/features/changelog/EntryEditor.tsx
+msgid "This entry is scheduled for {0}."
+msgstr "Tämä merkintä on ajastettu: {0}."
 
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/text.tsx
@@ -569,6 +643,11 @@ msgstr "Otsikko"
 msgid "Translation deleted"
 msgstr "Käännös poistettu"
 
+#: src/features/changelog/pages.tsx
+msgid "Try another word, label or language."
+msgstr "Kokeile toista sanaa, tunnistetta tai kieltä."
+
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 msgid "Unpublish"
@@ -582,9 +661,8 @@ msgstr "Poista julkaisusta ({publishKey})"
 msgid "Unpublish this entry?"
 msgstr "Poistetaanko tämä merkintä julkaisusta?"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
-#: src/features/changelog/pages.tsx
 msgid "Unpublished"
 msgstr "Julkaisematon"
 
@@ -616,11 +694,12 @@ msgstr "Käytä heidän versiotaan"
 msgid "View"
 msgstr "Näytä"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "View changelog"
 msgstr "Näytä muutosloki"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntriesTab.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
@@ -638,6 +717,10 @@ msgstr "Kirjoita"
 #: src/features/changelog/text.tsx
 msgid "Write the entry in the main language before publishing."
 msgstr "Kirjoita merkintä pääkielellä ennen julkaisua."
+
+#: src/features/changelog/pages.tsx
+msgid "Write the first entry with New post."
+msgstr "Kirjoita ensimmäinen merkintä Uusi julkaisu -painikkeella."
 
 #: src/features/changelog/EntryEditor.tsx
 msgid "Write what changed in Markdown…"

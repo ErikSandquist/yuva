@@ -7,7 +7,7 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: th\n"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 msgid "{published} of {total} entries published"
 msgstr "เผยแพร่แล้ว {published} จาก {total} รายการ"
 
@@ -41,8 +41,13 @@ msgid "All"
 msgstr "ทั้งหมด"
 
 #: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/pages.tsx
 msgid "All labels"
 msgstr "ป้ายกำกับทั้งหมด"
+
+#: src/features/changelog/pages.tsx
+msgid "All languages"
+msgstr "ทุกภาษา"
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "Analytics property"
@@ -80,6 +85,7 @@ msgstr "เปลี่ยนเวลา"
 msgid "Changelog"
 msgstr "บันทึกการเปลี่ยนแปลง"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "Changelogs"
 msgstr "บันทึกการเปลี่ยนแปลง"
@@ -88,16 +94,21 @@ msgstr "บันทึกการเปลี่ยนแปลง"
 msgid "Choose a picture"
 msgstr "เลือกรูปภาพ"
 
+#: src/features/changelog/pages.tsx
+msgid "Clear filters"
+msgstr "ล้างตัวกรอง"
+
 #: src/features/changelog/SettingsTab.tsx
 msgid "Counts page views of the changelog without cookies."
 msgstr "นับการเข้าชมหน้าของบันทึกการเปลี่ยนแปลงโดยไม่ใช้คุกกี้"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/CreateChangelogDialog.tsx
 #: src/features/changelog/pages.tsx
 msgid "Create changelog"
 msgstr "สร้างบันทึกการเปลี่ยนแปลง"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "Create changelog ({createKey})"
 msgstr "สร้างบันทึกการเปลี่ยนแปลง ({createKey})"
@@ -162,6 +173,11 @@ msgstr "ส่งฉบับร่างแล้ว เจ้าของห�
 msgid "Drafts"
 msgstr "ฉบับร่าง"
 
+#: src/features/changelog/ChangelogsPage.tsx
+msgid "Each product has one changelog. Owners and admins create and publish them."
+msgstr "ผลิตภัณฑ์แต่ละรายการมีบันทึกการเปลี่ยนแปลงหนึ่งรายการ เจ้าของและผู้ดูแลเป็นผู้สร้างและเผยแพร่"
+
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "Entries"
 msgstr "รายการ"
@@ -173,6 +189,14 @@ msgstr "รายการและคำแปลจะถูกลบไปด
 #: src/features/changelog/SettingsTab.tsx
 msgid "Entries can be written and published in these languages. Visitors see their own when it exists."
 msgstr "เขียนและเผยแพร่รายการได้ในภาษาเหล่านี้ ผู้เข้าชมจะเห็นภาษาของตนเองหากมี"
+
+#: src/features/changelog/pages.tsx
+msgid "Entries show on the public page once they are published."
+msgstr "รายการจะแสดงบนหน้าสาธารณะเมื่อเผยแพร่แล้ว"
+
+#: src/features/changelog/pages.tsx
+msgid "Entries you have not published yet show up here."
+msgstr "รายการที่คุณยังไม่ได้เผยแพร่จะแสดงที่นี่"
 
 #: src/features/changelog/EntryEditor.tsx
 msgid "Every translation is deleted. Broadcasts made from it stay."
@@ -208,6 +232,7 @@ msgid "Keep mine"
 msgstr "เก็บของฉัน"
 
 #: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/pages.tsx
 msgid "Label"
 msgstr "ป้ายกำกับ"
 
@@ -219,9 +244,11 @@ msgstr "ป้ายกำกับ"
 #: src/features/changelog/EntriesTab.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/MailDialog.tsx
+#: src/features/changelog/pages.tsx
 msgid "Language"
 msgstr "ภาษา"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/SettingsTab.tsx
 msgid "Languages"
 msgstr "ภาษา"
@@ -248,6 +275,10 @@ msgid "Main language"
 msgstr "ภาษาหลัก"
 
 #: src/features/changelog/EntryEditor.tsx
+msgid "Mark up to date"
+msgstr "ทำเครื่องหมายว่าเป็นปัจจุบัน"
+
+#: src/features/changelog/EntryEditor.tsx
 msgid "More"
 msgstr "เพิ่มเติม"
 
@@ -272,7 +303,7 @@ msgstr "โพสต์ใหม่"
 msgid "New post ({newKey})"
 msgstr "โพสต์ใหม่ ({newKey})"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 msgid "No changelog yet. Owners and admins create it."
 msgstr "ยังไม่มีบันทึกการเปลี่ยนแปลง เจ้าของและผู้ดูแลเป็นผู้สร้าง"
 
@@ -281,12 +312,9 @@ msgid "No entries yet. Tell your customers what changed in your latest release."
 msgstr "ยังไม่มีรายการ บอกลูกค้าว่ามีอะไรเปลี่ยนในรุ่นล่าสุดของคุณ"
 
 #: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/pages.tsx
 msgid "No entry matches."
 msgstr "ไม่มีรายการที่ตรงกัน"
-
-#: src/features/changelog/ChangelogColumn.tsx
-msgid "No inbox to show a changelog for."
-msgstr "ไม่มีกล่องจดหมายที่จะแสดงบันทึกการเปลี่ยนแปลง"
 
 #: src/features/changelog/EntriesTab.tsx
 msgid "No text yet."
@@ -340,6 +368,10 @@ msgstr "ส่วนหนึ่งของที่อยู่เว็บข
 msgid "Pick a time in the next year, in your time zone, {zone}."
 msgstr "เลือกเวลาภายในหนึ่งปีข้างหน้า ในเขตเวลาของคุณ {zone}"
 
+#: src/features/changelog/pages.tsx
+msgid "Pick a time when you write an entry and it goes public by itself."
+msgstr "เลือกเวลาตอนเขียนรายการ แล้วรายการจะเผยแพร่เอง"
+
 #: src/features/changelog/MailDialog.tsx
 msgid "Pick up to 10 lists of this inbox."
 msgstr "เลือกได้สูงสุด 10 รายชื่อของกล่องจดหมายนี้"
@@ -348,6 +380,7 @@ msgstr "เลือกได้สูงสุด 10 รายชื่อข�
 msgid "Picture"
 msgstr "รูปภาพ"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 #: src/features/changelog/PreviewDialog.tsx
@@ -370,6 +403,7 @@ msgstr "ตัวอย่างของรายการ"
 msgid "Public address"
 msgstr "ที่อยู่สาธารณะ"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 msgid "Publish"
@@ -380,11 +414,19 @@ msgstr "เผยแพร่"
 msgid "Publish ({publishKey})"
 msgstr "เผยแพร่ ({publishKey})"
 
+#: src/features/changelog/pages.tsx
+msgid "Publish it now or schedule it again."
+msgstr "เผยแพร่ตอนนี้หรือตั้งเวลาใหม่"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Publish now"
+msgstr "เผยแพร่ตอนนี้"
+
 #: src/features/changelog/ScheduleDialog.tsx
 msgid "Publish on"
 msgstr "เผยแพร่เมื่อ"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 #: src/features/changelog/text.tsx
@@ -393,6 +435,7 @@ msgstr "เผยแพร่แล้ว"
 
 #: src/features/changelog/EntriesTab.tsx
 #: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
 msgid "Publishing on schedule failed."
 msgstr "การเผยแพร่ตามเวลาที่ตั้งไว้ไม่สำเร็จ"
 
@@ -403,6 +446,10 @@ msgstr "บันทึกการออกรุ่นที่แสดงใ
 #: src/features/changelog/EntryEditor.tsx
 msgid "Remove"
 msgstr "นำออก"
+
+#: src/features/changelog/pages.tsx
+msgid "Review"
+msgstr "ตรวจสอบ"
 
 #: src/features/changelog/EntryEditor.tsx
 msgid "Save now"
@@ -422,23 +469,33 @@ msgstr "กำลังบันทึก…"
 msgid "Schedule"
 msgstr "ตั้งเวลา"
 
+#: src/features/changelog/EntryEditor.tsx
+msgid "Schedule again"
+msgstr "ตั้งเวลาใหม่"
+
 #: src/features/changelog/ScheduleDialog.tsx
 msgid "Schedule this entry"
 msgstr "ตั้งเวลารายการนี้"
 
 #: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
 #: src/features/changelog/text.tsx
 msgid "Scheduled"
 msgstr "ตั้งเวลาแล้ว"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 msgid "Scheduled: {scheduled}"
 msgstr "ตั้งเวลาไว้: {scheduled}"
+
+#: src/features/changelog/pages.tsx
+msgid "Search entries"
+msgstr "ค้นหารายการ"
 
 #: src/features/changelog/MailDialog.tsx
 msgid "Send through"
 msgstr "ส่งผ่าน"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "Settings"
 msgstr "การตั้งค่า"
@@ -446,6 +503,10 @@ msgstr "การตั้งค่า"
 #: src/features/changelog/EntryEditor.tsx
 msgid "Show"
 msgstr "แสดง"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Show the original"
+msgstr "แสดงต้นฉบับ"
 
 #: src/features/changelog/EntriesTab.tsx
 msgid "Shown in the chat bubble, the apps and on {host}."
@@ -482,6 +543,10 @@ msgstr "ส่งฉบับร่าง"
 #: src/features/changelog/EntryEditor.tsx
 msgid "Submit draft ({publishKey})"
 msgstr "ส่งฉบับร่าง ({publishKey})"
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Subscribed: {subscribed}"
+msgstr "ผู้สมัครรับ: {subscribed}"
 
 #: src/features/changelog/CreateChangelogDialog.tsx
 msgid "Tell the customers of {inboxName} what is new, improved and fixed. It stays unpublished until you publish it."
@@ -527,6 +592,10 @@ msgstr "ภาษาหลักยังไม่มีข้อความข
 msgid "The member who scheduled it may no longer publish."
 msgstr "สมาชิกที่ตั้งเวลารายการนี้อาจเผยแพร่ไม่ได้อีกต่อไป"
 
+#: src/features/changelog/EntryEditor.tsx
+msgid "The original changed after this translation was saved."
+msgstr "ต้นฉบับเปลี่ยนไปหลังจากบันทึกคำแปลนี้"
+
 #: src/features/changelog/PreviewDialog.tsx
 msgid "The page as visitors would see it, drafts included. Only your team sees this."
 msgstr "หน้าตามที่ผู้เข้าชมจะเห็น รวมฉบับร่าง เฉพาะทีมของคุณเท่านั้นที่เห็น"
@@ -534,6 +603,11 @@ msgstr "หน้าตามที่ผู้เข้าชมจะเห็
 #: src/features/changelog/EntryEditor.tsx
 msgid "The title needs at least 3 characters"
 msgstr "ชื่อต้องมีอย่างน้อย 3 ตัวอักษร"
+
+#. placeholder {0}: formatDateTime(entry.publish_at, i18n.locale)
+#: src/features/changelog/EntryEditor.tsx
+msgid "This entry is scheduled for {0}."
+msgstr "รายการนี้ตั้งเวลาไว้ที่ {0}"
 
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/text.tsx
@@ -569,6 +643,11 @@ msgstr "ชื่อเรื่อง"
 msgid "Translation deleted"
 msgstr "ลบคำแปลแล้ว"
 
+#: src/features/changelog/pages.tsx
+msgid "Try another word, label or language."
+msgstr "ลองใช้คำ ป้ายกำกับ หรือภาษาอื่น"
+
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 msgid "Unpublish"
@@ -582,9 +661,8 @@ msgstr "ยกเลิกการเผยแพร่ ({publishKey})"
 msgid "Unpublish this entry?"
 msgstr "ยกเลิกการเผยแพร่รายการนี้หรือไม่"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
-#: src/features/changelog/pages.tsx
 msgid "Unpublished"
 msgstr "ยังไม่เผยแพร่"
 
@@ -616,11 +694,12 @@ msgstr "ใช้เวอร์ชันของเขา"
 msgid "View"
 msgstr "ดู"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "View changelog"
 msgstr "ดูบันทึกการเปลี่ยนแปลง"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntriesTab.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
@@ -638,6 +717,10 @@ msgstr "เขียน"
 #: src/features/changelog/text.tsx
 msgid "Write the entry in the main language before publishing."
 msgstr "เขียนรายการในภาษาหลักก่อนเผยแพร่"
+
+#: src/features/changelog/pages.tsx
+msgid "Write the first entry with New post."
+msgstr "เขียนรายการแรกด้วยโพสต์ใหม่"
 
 #: src/features/changelog/EntryEditor.tsx
 msgid "Write what changed in Markdown…"

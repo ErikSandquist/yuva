@@ -8,15 +8,19 @@ import { useLinkIdea } from "@/features/roadmap/queries"
 import type { IdeaRef } from "@/lib/api"
 import { cn } from "@/lib/utils"
 
-export function IdeaMark({ idea, className }: { idea: IdeaRef; className?: string }) {
+export function IdeaMark({ idea, className, pill }: { idea: IdeaRef; className?: string; pill?: boolean }) {
   const text = useEnumText()
   return (
     <span
-      className={cn("inline-flex min-w-0 shrink items-center gap-1 text-caption text-muted-foreground", className)}
+      className={cn(
+        "inline-flex min-w-0 shrink items-center gap-1 text-caption",
+        pill ? "min-w-16 rounded-full bg-brand-wash px-2 py-px font-medium text-brand" : "text-muted-foreground",
+        className
+      )}
       title={`${idea.title} · ${text.stage[idea.stage]}`}
       data-testid="idea-mark"
     >
-      <LightbulbIcon className="size-3.5 shrink-0 text-warning" />
+      <LightbulbIcon className={cn("size-3.5 shrink-0", !pill && "text-warning")} />
       <span className="truncate">{idea.title}</span>
     </span>
   )

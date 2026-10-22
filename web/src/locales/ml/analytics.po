@@ -409,6 +409,7 @@ msgid "Break down by prop"
 msgstr "പ്രോപ്പ് അനുസരിച്ച് വിഭജിക്കുക"
 
 #: src/features/analytics/Goals.tsx
+#: src/features/analytics/Overview.tsx
 msgid "Breakdown"
 msgstr "വിഭജനം"
 
@@ -1360,6 +1361,7 @@ msgstr "ലൊക്കേഷൻ ഡാറ്റാബേസ്"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
 #: src/features/analytics/Sharing.tsx
 msgid "Locations"
 msgstr "ലൊക്കേഷനുകൾ"
@@ -1469,6 +1471,10 @@ msgstr "പുതിയ {kind}: {value}, {count} സഹിതം, താരത�
 msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."
 msgstr "പുതിയ {kind}: {value}. {metric}: {now}, താരതമ്യം ചെയ്ത ദിവസങ്ങളിൽ ഒന്നുമില്ല."
 
+#: src/features/analytics/Overview.tsx
+msgid "New and returning"
+msgstr "പുതിയതും തിരിച്ചുവരുന്നതും"
+
 #: src/features/analytics/Funnels.tsx
 msgid "New funnel"
 msgstr "പുതിയ ഫണൽ"
@@ -1509,6 +1515,10 @@ msgstr "താരതമ്യമില്ല"
 #: src/features/analytics/Settings.tsx
 msgid "No consent features are offered."
 msgstr "സമ്മത ഫീച്ചറുകളൊന്നും ലഭ്യമല്ല."
+
+#: src/features/analytics/Overview.tsx
+msgid "No consented visitors in this range."
+msgstr "ഈ ശ്രേണിയിൽ സമ്മതിച്ച സന്ദർശകരില്ല."
 
 #: src/features/analytics/Retention.tsx
 msgid "No consented visitors yet"
@@ -2086,6 +2096,7 @@ msgid "Requests with Do Not Track or Global Privacy Control, and events without 
 msgstr "Do Not Track അല്ലെങ്കിൽ Global Privacy Control ഉള്ള അഭ്യർത്ഥനകളും, അത് ആവശ്യമുള്ള പ്രോപ്പർട്ടിയിൽ സമ്മതമില്ലാത്ത ഇവന്റുകളും സ്വീകരിക്കുന്നു, പക്ഷേ ഇവിടെ സൂക്ഷിക്കുകയോ എണ്ണുകയോ ചെയ്യുന്നില്ല."
 
 #: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Overview.tsx
 msgid "Retention"
 msgstr "നിലനിർത്തൽ"
 

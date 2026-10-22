@@ -409,6 +409,7 @@ msgid "Break down by prop"
 msgstr "按属性细分"
 
 #: src/features/analytics/Goals.tsx
+#: src/features/analytics/Overview.tsx
 msgid "Breakdown"
 msgstr "明细"
 
@@ -1360,6 +1361,7 @@ msgstr "位置数据库"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
 #: src/features/analytics/Sharing.tsx
 msgid "Locations"
 msgstr "位置"
@@ -1469,6 +1471,10 @@ msgstr "新的{kind}:{value},{count} 次,对比的日子里没有。"
 msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."
 msgstr "新的{kind}:{value}。{metric}:{now},对比的日子里没有。"
 
+#: src/features/analytics/Overview.tsx
+msgid "New and returning"
+msgstr "新访客和回访访客"
+
 #: src/features/analytics/Funnels.tsx
 msgid "New funnel"
 msgstr "新建漏斗"
@@ -1509,6 +1515,10 @@ msgstr "不对比"
 #: src/features/analytics/Settings.tsx
 msgid "No consent features are offered."
 msgstr "未提供同意功能。"
+
+#: src/features/analytics/Overview.tsx
+msgid "No consented visitors in this range."
+msgstr "此范围内没有已同意的访客。"
 
 #: src/features/analytics/Retention.tsx
 msgid "No consented visitors yet"
@@ -2086,6 +2096,7 @@ msgid "Requests with Do Not Track or Global Privacy Control, and events without 
 msgstr "带有 Do Not Track 或 Global Privacy Control 的请求,以及在需要同意的属性上没有同意的事件,会被接收,但不会在此存储或统计。"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Overview.tsx
 msgid "Retention"
 msgstr "留存"
 

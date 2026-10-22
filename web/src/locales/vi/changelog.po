@@ -7,7 +7,7 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: vi\n"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 msgid "{published} of {total} entries published"
 msgstr "Đã xuất bản {published} trên {total} mục"
 
@@ -41,8 +41,13 @@ msgid "All"
 msgstr "Tất cả"
 
 #: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/pages.tsx
 msgid "All labels"
 msgstr "Tất cả nhãn"
+
+#: src/features/changelog/pages.tsx
+msgid "All languages"
+msgstr "Tất cả ngôn ngữ"
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "Analytics property"
@@ -80,6 +85,7 @@ msgstr "Đổi giờ"
 msgid "Changelog"
 msgstr "Nhật ký thay đổi"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "Changelogs"
 msgstr "Nhật ký thay đổi"
@@ -88,16 +94,21 @@ msgstr "Nhật ký thay đổi"
 msgid "Choose a picture"
 msgstr "Chọn ảnh"
 
+#: src/features/changelog/pages.tsx
+msgid "Clear filters"
+msgstr "Xóa bộ lọc"
+
 #: src/features/changelog/SettingsTab.tsx
 msgid "Counts page views of the changelog without cookies."
 msgstr "Đếm lượt xem trang của nhật ký thay đổi mà không dùng cookie."
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/CreateChangelogDialog.tsx
 #: src/features/changelog/pages.tsx
 msgid "Create changelog"
 msgstr "Tạo nhật ký thay đổi"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "Create changelog ({createKey})"
 msgstr "Tạo nhật ký thay đổi ({createKey})"
@@ -162,6 +173,11 @@ msgstr "Đã gửi bản nháp. Chủ sở hữu hoặc quản trị viên có t
 msgid "Drafts"
 msgstr "Bản nháp"
 
+#: src/features/changelog/ChangelogsPage.tsx
+msgid "Each product has one changelog. Owners and admins create and publish them."
+msgstr "Mỗi sản phẩm có một nhật ký thay đổi. Chủ sở hữu và quản trị viên tạo và đăng nó."
+
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "Entries"
 msgstr "Mục"
@@ -173,6 +189,14 @@ msgstr "Các mục và bản dịch bị xóa cùng với nó."
 #: src/features/changelog/SettingsTab.tsx
 msgid "Entries can be written and published in these languages. Visitors see their own when it exists."
 msgstr "Có thể viết và xuất bản các mục bằng những ngôn ngữ này. Khách truy cập thấy ngôn ngữ của mình nếu có."
+
+#: src/features/changelog/pages.tsx
+msgid "Entries show on the public page once they are published."
+msgstr "Mục xuất hiện trên trang công khai sau khi được đăng."
+
+#: src/features/changelog/pages.tsx
+msgid "Entries you have not published yet show up here."
+msgstr "Những mục bạn chưa đăng sẽ hiện ở đây."
 
 #: src/features/changelog/EntryEditor.tsx
 msgid "Every translation is deleted. Broadcasts made from it stay."
@@ -208,6 +232,7 @@ msgid "Keep mine"
 msgstr "Giữ của tôi"
 
 #: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/pages.tsx
 msgid "Label"
 msgstr "Nhãn"
 
@@ -219,9 +244,11 @@ msgstr "Nhãn"
 #: src/features/changelog/EntriesTab.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/MailDialog.tsx
+#: src/features/changelog/pages.tsx
 msgid "Language"
 msgstr "Ngôn ngữ"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/SettingsTab.tsx
 msgid "Languages"
 msgstr "Ngôn ngữ"
@@ -248,6 +275,10 @@ msgid "Main language"
 msgstr "Ngôn ngữ chính"
 
 #: src/features/changelog/EntryEditor.tsx
+msgid "Mark up to date"
+msgstr "Đánh dấu là mới nhất"
+
+#: src/features/changelog/EntryEditor.tsx
 msgid "More"
 msgstr "Thêm"
 
@@ -272,7 +303,7 @@ msgstr "Bài viết mới"
 msgid "New post ({newKey})"
 msgstr "Bài viết mới ({newKey})"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 msgid "No changelog yet. Owners and admins create it."
 msgstr "Chưa có nhật ký thay đổi. Chủ sở hữu và quản trị viên tạo nó."
 
@@ -281,12 +312,9 @@ msgid "No entries yet. Tell your customers what changed in your latest release."
 msgstr "Chưa có mục nào. Hãy cho khách hàng biết điều gì đã thay đổi trong bản phát hành mới nhất."
 
 #: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/pages.tsx
 msgid "No entry matches."
 msgstr "Không có mục nào khớp."
-
-#: src/features/changelog/ChangelogColumn.tsx
-msgid "No inbox to show a changelog for."
-msgstr "Không có hộp thư nào để hiển thị nhật ký thay đổi."
 
 #: src/features/changelog/EntriesTab.tsx
 msgid "No text yet."
@@ -340,6 +368,10 @@ msgstr "Một phần địa chỉ web của bản dịch này. Tạo từ tiêu 
 msgid "Pick a time in the next year, in your time zone, {zone}."
 msgstr "Chọn một thời điểm trong năm tới, theo múi giờ của bạn, {zone}."
 
+#: src/features/changelog/pages.tsx
+msgid "Pick a time when you write an entry and it goes public by itself."
+msgstr "Chọn thời điểm khi viết mục, mục sẽ tự động công khai."
+
 #: src/features/changelog/MailDialog.tsx
 msgid "Pick up to 10 lists of this inbox."
 msgstr "Chọn tối đa 10 danh sách của hộp thư này."
@@ -348,6 +380,7 @@ msgstr "Chọn tối đa 10 danh sách của hộp thư này."
 msgid "Picture"
 msgstr "Ảnh"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 #: src/features/changelog/PreviewDialog.tsx
@@ -370,6 +403,7 @@ msgstr "Xem trước mục"
 msgid "Public address"
 msgstr "Địa chỉ công khai"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 msgid "Publish"
@@ -380,11 +414,19 @@ msgstr "Xuất bản"
 msgid "Publish ({publishKey})"
 msgstr "Xuất bản ({publishKey})"
 
+#: src/features/changelog/pages.tsx
+msgid "Publish it now or schedule it again."
+msgstr "Đăng ngay hoặc lên lịch lại."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Publish now"
+msgstr "Đăng ngay"
+
 #: src/features/changelog/ScheduleDialog.tsx
 msgid "Publish on"
 msgstr "Xuất bản vào"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 #: src/features/changelog/text.tsx
@@ -393,6 +435,7 @@ msgstr "Đã xuất bản"
 
 #: src/features/changelog/EntriesTab.tsx
 #: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
 msgid "Publishing on schedule failed."
 msgstr "Việc xuất bản theo lịch không thành công."
 
@@ -403,6 +446,10 @@ msgstr "Ghi chú phát hành hiển thị trong sản phẩm của bạn và tr�
 #: src/features/changelog/EntryEditor.tsx
 msgid "Remove"
 msgstr "Gỡ"
+
+#: src/features/changelog/pages.tsx
+msgid "Review"
+msgstr "Xem lại"
 
 #: src/features/changelog/EntryEditor.tsx
 msgid "Save now"
@@ -422,23 +469,33 @@ msgstr "Đang lưu…"
 msgid "Schedule"
 msgstr "Lên lịch"
 
+#: src/features/changelog/EntryEditor.tsx
+msgid "Schedule again"
+msgstr "Lên lịch lại"
+
 #: src/features/changelog/ScheduleDialog.tsx
 msgid "Schedule this entry"
 msgstr "Lên lịch cho mục này"
 
 #: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
 #: src/features/changelog/text.tsx
 msgid "Scheduled"
 msgstr "Đã lên lịch"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 msgid "Scheduled: {scheduled}"
 msgstr "Đã lên lịch: {scheduled}"
+
+#: src/features/changelog/pages.tsx
+msgid "Search entries"
+msgstr "Tìm mục"
 
 #: src/features/changelog/MailDialog.tsx
 msgid "Send through"
 msgstr "Gửi qua"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "Settings"
 msgstr "Cài đặt"
@@ -446,6 +503,10 @@ msgstr "Cài đặt"
 #: src/features/changelog/EntryEditor.tsx
 msgid "Show"
 msgstr "Hiện"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Show the original"
+msgstr "Hiện bản gốc"
 
 #: src/features/changelog/EntriesTab.tsx
 msgid "Shown in the chat bubble, the apps and on {host}."
@@ -482,6 +543,10 @@ msgstr "Gửi bản nháp"
 #: src/features/changelog/EntryEditor.tsx
 msgid "Submit draft ({publishKey})"
 msgstr "Gửi bản nháp ({publishKey})"
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Subscribed: {subscribed}"
+msgstr "Người đăng ký: {subscribed}"
 
 #: src/features/changelog/CreateChangelogDialog.tsx
 msgid "Tell the customers of {inboxName} what is new, improved and fixed. It stays unpublished until you publish it."
@@ -527,6 +592,10 @@ msgstr "Ngôn ngữ chính chưa có nội dung cho mục này."
 msgid "The member who scheduled it may no longer publish."
 msgstr "Thành viên đã lên lịch có thể không còn quyền xuất bản."
 
+#: src/features/changelog/EntryEditor.tsx
+msgid "The original changed after this translation was saved."
+msgstr "Bản gốc đã thay đổi sau khi bản dịch này được lưu."
+
 #: src/features/changelog/PreviewDialog.tsx
 msgid "The page as visitors would see it, drafts included. Only your team sees this."
 msgstr "Trang như khách truy cập sẽ thấy, gồm cả bản nháp. Chỉ nhóm của bạn thấy điều này."
@@ -534,6 +603,11 @@ msgstr "Trang như khách truy cập sẽ thấy, gồm cả bản nháp. Chỉ 
 #: src/features/changelog/EntryEditor.tsx
 msgid "The title needs at least 3 characters"
 msgstr "Tiêu đề cần ít nhất 3 ký tự"
+
+#. placeholder {0}: formatDateTime(entry.publish_at, i18n.locale)
+#: src/features/changelog/EntryEditor.tsx
+msgid "This entry is scheduled for {0}."
+msgstr "Mục này được lên lịch vào {0}."
 
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/text.tsx
@@ -569,6 +643,11 @@ msgstr "Tiêu đề"
 msgid "Translation deleted"
 msgstr "Đã xóa bản dịch"
 
+#: src/features/changelog/pages.tsx
+msgid "Try another word, label or language."
+msgstr "Thử một từ, nhãn hoặc ngôn ngữ khác."
+
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 msgid "Unpublish"
@@ -582,9 +661,8 @@ msgstr "Gỡ xuất bản ({publishKey})"
 msgid "Unpublish this entry?"
 msgstr "Gỡ xuất bản mục này?"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
-#: src/features/changelog/pages.tsx
 msgid "Unpublished"
 msgstr "Chưa xuất bản"
 
@@ -616,11 +694,12 @@ msgstr "Dùng phiên bản của họ"
 msgid "View"
 msgstr "Xem"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "View changelog"
 msgstr "Xem nhật ký thay đổi"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntriesTab.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
@@ -638,6 +717,10 @@ msgstr "Viết"
 #: src/features/changelog/text.tsx
 msgid "Write the entry in the main language before publishing."
 msgstr "Hãy viết mục bằng ngôn ngữ chính trước khi xuất bản."
+
+#: src/features/changelog/pages.tsx
+msgid "Write the first entry with New post."
+msgstr "Viết mục đầu tiên bằng Bài đăng mới."
 
 #: src/features/changelog/EntryEditor.tsx
 msgid "Write what changed in Markdown…"

@@ -409,6 +409,7 @@ msgid "Break down by prop"
 msgstr "Phân tích theo prop"
 
 #: src/features/analytics/Goals.tsx
+#: src/features/analytics/Overview.tsx
 msgid "Breakdown"
 msgstr "Phân tích chi tiết"
 
@@ -1360,6 +1361,7 @@ msgstr "Cơ sở dữ liệu vị trí"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
 #: src/features/analytics/Sharing.tsx
 msgid "Locations"
 msgstr "Vị trí"
@@ -1469,6 +1471,10 @@ msgstr "{kind} mới: {value} với {count}, không có trong những ngày so s
 msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."
 msgstr "{kind} mới: {value}. {metric}: {now}, không có trong những ngày so sánh."
 
+#: src/features/analytics/Overview.tsx
+msgid "New and returning"
+msgstr "Mới và quay lại"
+
 #: src/features/analytics/Funnels.tsx
 msgid "New funnel"
 msgstr "Phễu mới"
@@ -1509,6 +1515,10 @@ msgstr "Không so sánh"
 #: src/features/analytics/Settings.tsx
 msgid "No consent features are offered."
 msgstr "Không có tính năng đồng ý nào được cung cấp."
+
+#: src/features/analytics/Overview.tsx
+msgid "No consented visitors in this range."
+msgstr "Không có khách truy cập đã đồng ý trong khoảng này."
 
 #: src/features/analytics/Retention.tsx
 msgid "No consented visitors yet"
@@ -2086,6 +2096,7 @@ msgid "Requests with Do Not Track or Global Privacy Control, and events without 
 msgstr "Yêu cầu có Do Not Track hoặc Global Privacy Control, và sự kiện không có đồng ý trên thuộc tính cần nó, được nhận nhưng không lưu cũng không đếm ở đây."
 
 #: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Overview.tsx
 msgid "Retention"
 msgstr "Lưu giữ khách"
 

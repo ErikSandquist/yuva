@@ -7,7 +7,7 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: el\n"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 msgid "{published} of {total} entries published"
 msgstr "{published} από {total} καταχωρίσεις δημοσιεύτηκαν"
 
@@ -41,8 +41,13 @@ msgid "All"
 msgstr "Όλα"
 
 #: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/pages.tsx
 msgid "All labels"
 msgstr "Όλες οι ετικέτες"
+
+#: src/features/changelog/pages.tsx
+msgid "All languages"
+msgstr "Όλες οι γλώσσες"
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "Analytics property"
@@ -80,6 +85,7 @@ msgstr "Αλλαγή ώρας"
 msgid "Changelog"
 msgstr "Αρχείο αλλαγών"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "Changelogs"
 msgstr "Αρχεία αλλαγών"
@@ -88,16 +94,21 @@ msgstr "Αρχεία αλλαγών"
 msgid "Choose a picture"
 msgstr "Επιλογή εικόνας"
 
+#: src/features/changelog/pages.tsx
+msgid "Clear filters"
+msgstr "Εκκαθάριση φίλτρων"
+
 #: src/features/changelog/SettingsTab.tsx
 msgid "Counts page views of the changelog without cookies."
 msgstr "Μετρά τις προβολές σελίδων του αρχείου αλλαγών χωρίς cookies."
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/CreateChangelogDialog.tsx
 #: src/features/changelog/pages.tsx
 msgid "Create changelog"
 msgstr "Δημιουργία αρχείου αλλαγών"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "Create changelog ({createKey})"
 msgstr "Δημιουργία αρχείου αλλαγών ({createKey})"
@@ -162,6 +173,11 @@ msgstr "Το πρόχειρο υποβλήθηκε. Ένας ιδιοκτήτη�
 msgid "Drafts"
 msgstr "Πρόχειρα"
 
+#: src/features/changelog/ChangelogsPage.tsx
+msgid "Each product has one changelog. Owners and admins create and publish them."
+msgstr "Κάθε προϊόν έχει ένα ημερολόγιο αλλαγών. Οι ιδιοκτήτες και οι διαχειριστές το δημιουργούν και το δημοσιεύουν."
+
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "Entries"
 msgstr "Καταχωρίσεις"
@@ -173,6 +189,14 @@ msgstr "Οι καταχωρίσεις και οι μεταφράσεις δια�
 #: src/features/changelog/SettingsTab.tsx
 msgid "Entries can be written and published in these languages. Visitors see their own when it exists."
 msgstr "Οι καταχωρίσεις μπορούν να γραφτούν και να δημοσιευτούν σε αυτές τις γλώσσες. Οι επισκέπτες βλέπουν τη δική τους, όταν υπάρχει."
+
+#: src/features/changelog/pages.tsx
+msgid "Entries show on the public page once they are published."
+msgstr "Οι καταχωρίσεις εμφανίζονται στη δημόσια σελίδα μόλις δημοσιευτούν."
+
+#: src/features/changelog/pages.tsx
+msgid "Entries you have not published yet show up here."
+msgstr "Οι καταχωρίσεις που δεν έχετε δημοσιεύσει ακόμη εμφανίζονται εδώ."
 
 #: src/features/changelog/EntryEditor.tsx
 msgid "Every translation is deleted. Broadcasts made from it stay."
@@ -208,6 +232,7 @@ msgid "Keep mine"
 msgstr "Κράτηση της δικής μου"
 
 #: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/pages.tsx
 msgid "Label"
 msgstr "Ετικέτα"
 
@@ -219,9 +244,11 @@ msgstr "Ετικέτες"
 #: src/features/changelog/EntriesTab.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/MailDialog.tsx
+#: src/features/changelog/pages.tsx
 msgid "Language"
 msgstr "Γλώσσα"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/SettingsTab.tsx
 msgid "Languages"
 msgstr "Γλώσσες"
@@ -248,6 +275,10 @@ msgid "Main language"
 msgstr "Κύρια γλώσσα"
 
 #: src/features/changelog/EntryEditor.tsx
+msgid "Mark up to date"
+msgstr "Σήμανση ως ενημερωμένη"
+
+#: src/features/changelog/EntryEditor.tsx
 msgid "More"
 msgstr "Περισσότερα"
 
@@ -272,7 +303,7 @@ msgstr "Νέα ανάρτηση"
 msgid "New post ({newKey})"
 msgstr "Νέα ανάρτηση ({newKey})"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 msgid "No changelog yet. Owners and admins create it."
 msgstr "Δεν υπάρχει ακόμη αρχείο αλλαγών. Το δημιουργούν οι ιδιοκτήτες και οι διαχειριστές."
 
@@ -281,12 +312,9 @@ msgid "No entries yet. Tell your customers what changed in your latest release."
 msgstr "Δεν υπάρχουν ακόμη καταχωρίσεις. Πείτε στους πελάτες σας τι άλλαξε στην τελευταία έκδοση."
 
 #: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/pages.tsx
 msgid "No entry matches."
 msgstr "Καμία καταχώριση δεν ταιριάζει."
-
-#: src/features/changelog/ChangelogColumn.tsx
-msgid "No inbox to show a changelog for."
-msgstr "Δεν υπάρχει εισερχόμενο για το οποίο να εμφανιστεί αρχείο αλλαγών."
 
 #: src/features/changelog/EntriesTab.tsx
 msgid "No text yet."
@@ -340,6 +368,10 @@ msgstr "Μέρος της διεύθυνσης web αυτής της μετάφ�
 msgid "Pick a time in the next year, in your time zone, {zone}."
 msgstr "Επιλέξτε μια στιγμή μέσα στον επόμενο χρόνο, στη ζώνη ώρας σας, {zone}."
 
+#: src/features/changelog/pages.tsx
+msgid "Pick a time when you write an entry and it goes public by itself."
+msgstr "Διαλέξτε ώρα όταν γράφετε μια καταχώριση και θα δημοσιευτεί μόνη της."
+
 #: src/features/changelog/MailDialog.tsx
 msgid "Pick up to 10 lists of this inbox."
 msgstr "Επιλέξτε έως 10 λίστες αυτών των εισερχομένων."
@@ -348,6 +380,7 @@ msgstr "Επιλέξτε έως 10 λίστες αυτών των εισερχο
 msgid "Picture"
 msgstr "Εικόνα"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 #: src/features/changelog/PreviewDialog.tsx
@@ -370,6 +403,7 @@ msgstr "Προεπισκόπηση της καταχώρισης"
 msgid "Public address"
 msgstr "Δημόσια διεύθυνση"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 msgid "Publish"
@@ -380,11 +414,19 @@ msgstr "Δημοσίευση"
 msgid "Publish ({publishKey})"
 msgstr "Δημοσίευση ({publishKey})"
 
+#: src/features/changelog/pages.tsx
+msgid "Publish it now or schedule it again."
+msgstr "Δημοσιεύστε την τώρα ή προγραμματίστε την ξανά."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Publish now"
+msgstr "Δημοσίευση τώρα"
+
 #: src/features/changelog/ScheduleDialog.tsx
 msgid "Publish on"
 msgstr "Δημοσίευση στις"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 #: src/features/changelog/text.tsx
@@ -393,6 +435,7 @@ msgstr "Δημοσιευμένη"
 
 #: src/features/changelog/EntriesTab.tsx
 #: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
 msgid "Publishing on schedule failed."
 msgstr "Η προγραμματισμένη δημοσίευση απέτυχε."
 
@@ -403,6 +446,10 @@ msgstr "Σημειώσεις έκδοσης που εμφανίζονται στ
 #: src/features/changelog/EntryEditor.tsx
 msgid "Remove"
 msgstr "Αφαίρεση"
+
+#: src/features/changelog/pages.tsx
+msgid "Review"
+msgstr "Έλεγχος"
 
 #: src/features/changelog/EntryEditor.tsx
 msgid "Save now"
@@ -422,23 +469,33 @@ msgstr "Αποθήκευση…"
 msgid "Schedule"
 msgstr "Προγραμματισμός"
 
+#: src/features/changelog/EntryEditor.tsx
+msgid "Schedule again"
+msgstr "Νέος προγραμματισμός"
+
 #: src/features/changelog/ScheduleDialog.tsx
 msgid "Schedule this entry"
 msgstr "Προγραμματισμός αυτής της καταχώρισης"
 
 #: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
 #: src/features/changelog/text.tsx
 msgid "Scheduled"
 msgstr "Προγραμματισμένη"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 msgid "Scheduled: {scheduled}"
 msgstr "Προγραμματισμένες: {scheduled}"
+
+#: src/features/changelog/pages.tsx
+msgid "Search entries"
+msgstr "Αναζήτηση καταχωρίσεων"
 
 #: src/features/changelog/MailDialog.tsx
 msgid "Send through"
 msgstr "Αποστολή μέσω"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "Settings"
 msgstr "Ρυθμίσεις"
@@ -446,6 +503,10 @@ msgstr "Ρυθμίσεις"
 #: src/features/changelog/EntryEditor.tsx
 msgid "Show"
 msgstr "Εμφάνιση"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Show the original"
+msgstr "Εμφάνιση του πρωτοτύπου"
 
 #: src/features/changelog/EntriesTab.tsx
 msgid "Shown in the chat bubble, the apps and on {host}."
@@ -482,6 +543,10 @@ msgstr "Υποβολή προχείρου"
 #: src/features/changelog/EntryEditor.tsx
 msgid "Submit draft ({publishKey})"
 msgstr "Υποβολή προχείρου ({publishKey})"
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Subscribed: {subscribed}"
+msgstr "Συνδρομητές: {subscribed}"
 
 #: src/features/changelog/CreateChangelogDialog.tsx
 msgid "Tell the customers of {inboxName} what is new, improved and fixed. It stays unpublished until you publish it."
@@ -527,6 +592,10 @@ msgstr "Η κύρια γλώσσα δεν έχει ακόμη κείμενο γ�
 msgid "The member who scheduled it may no longer publish."
 msgstr "Το μέλος που την προγραμμάτισε μπορεί να μην έχει πια δικαίωμα δημοσίευσης."
 
+#: src/features/changelog/EntryEditor.tsx
+msgid "The original changed after this translation was saved."
+msgstr "Το πρωτότυπο άλλαξε μετά την αποθήκευση αυτής της μετάφρασης."
+
 #: src/features/changelog/PreviewDialog.tsx
 msgid "The page as visitors would see it, drafts included. Only your team sees this."
 msgstr "Η σελίδα όπως θα την έβλεπαν οι επισκέπτες, με τα πρόχειρα. Μόνο η ομάδα σας το βλέπει."
@@ -534,6 +603,11 @@ msgstr "Η σελίδα όπως θα την έβλεπαν οι επισκέπ�
 #: src/features/changelog/EntryEditor.tsx
 msgid "The title needs at least 3 characters"
 msgstr "Ο τίτλος χρειάζεται τουλάχιστον 3 χαρακτήρες"
+
+#. placeholder {0}: formatDateTime(entry.publish_at, i18n.locale)
+#: src/features/changelog/EntryEditor.tsx
+msgid "This entry is scheduled for {0}."
+msgstr "Αυτή η καταχώριση είναι προγραμματισμένη για {0}."
 
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/text.tsx
@@ -569,6 +643,11 @@ msgstr "Τίτλος"
 msgid "Translation deleted"
 msgstr "Η μετάφραση διαγράφηκε"
 
+#: src/features/changelog/pages.tsx
+msgid "Try another word, label or language."
+msgstr "Δοκιμάστε άλλη λέξη, ετικέτα ή γλώσσα."
+
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 msgid "Unpublish"
@@ -582,9 +661,8 @@ msgstr "Απόσυρση ({publishKey})"
 msgid "Unpublish this entry?"
 msgstr "Απόσυρση αυτής της καταχώρισης;"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
-#: src/features/changelog/pages.tsx
 msgid "Unpublished"
 msgstr "Αδημοσίευτη"
 
@@ -616,11 +694,12 @@ msgstr "Χρήση της δικής τους έκδοσης"
 msgid "View"
 msgstr "Προβολή"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "View changelog"
 msgstr "Προβολή του αρχείου αλλαγών"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntriesTab.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
@@ -638,6 +717,10 @@ msgstr "Γραφή"
 #: src/features/changelog/text.tsx
 msgid "Write the entry in the main language before publishing."
 msgstr "Γράψτε την καταχώριση στην κύρια γλώσσα πριν δημοσιεύσετε."
+
+#: src/features/changelog/pages.tsx
+msgid "Write the first entry with New post."
+msgstr "Γράψτε την πρώτη καταχώριση με το Νέα ανάρτηση."
 
 #: src/features/changelog/EntryEditor.tsx
 msgid "Write what changed in Markdown…"

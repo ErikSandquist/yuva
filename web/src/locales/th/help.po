@@ -77,8 +77,8 @@ msgid "Another help center already uses this address, now or before."
 msgstr "ศูนย์ช่วยเหลืออื่นใช้ที่อยู่นี้อยู่หรือเคยใช้"
 
 #: src/features/help/pages.tsx
-msgid "Answer common questions once, in writing. Each product gets its own help center with articles, collections and a report of what people search for."
-msgstr "ตอบคำถามที่พบบ่อยครั้งเดียวเป็นลายลักษณ์อักษร ผลิตภัณฑ์แต่ละรายการมีศูนย์ช่วยเหลือของตัวเอง พร้อมบทความ คอลเลกชัน และรายงานสิ่งที่ผู้คนค้นหา"
+msgid "Answer common questions once, in writing. Each product gets its own help center with articles, collections and a report of what people search for. Pages are hosted by Yuva, so there is nothing to install on your site."
+msgstr "ตอบคำถามที่พบบ่อยเพียงครั้งเดียวเป็นลายลักษณ์อักษร ผลิตภัณฑ์แต่ละรายการมีศูนย์ช่วยเหลือของตัวเอง พร้อมบทความ คอลเลกชัน และรายงานสิ่งที่ผู้คนค้นหา หน้าต่าง ๆ โฮสต์โดย Yuva จึงไม่ต้องติดตั้งอะไรบนเว็บไซต์ของคุณ"
 
 #: src/features/help/pages.tsx
 msgid "Answer common questions once, in writing. Pick an inbox’s help center to write articles, group them in collections and see what customers search for."
@@ -162,6 +162,7 @@ msgstr "รายการแบบหัวข้อย่อย"
 msgid "Cancel"
 msgstr "ยกเลิก"
 
+#: src/features/help/ArticleEditor.tsx
 #: src/features/help/ArticlesTab.tsx
 msgid "Changed"
 msgstr "เปลี่ยนแปลงแล้ว"
@@ -226,11 +227,6 @@ msgstr "สร้างศูนย์ช่วยเหลือ"
 #: src/features/help/HelpColumn.tsx
 msgid "Create help center ({newKey})"
 msgstr "สร้างศูนย์ช่วยเหลือ ({newKey})"
-
-#. placeholder {0}: inbox.name
-#: src/features/help/pages.tsx
-msgid "Create one for {0}"
-msgstr "สร้างหนึ่งรายการสำหรับ {0}"
 
 #: src/features/help/CollectionsTab.tsx
 #: src/features/help/SettingsTab.tsx
@@ -342,11 +338,16 @@ msgstr "จัดกลุ่มบทความให้ผู้เข้า
 msgid "Heading"
 msgstr "หัวเรื่อง"
 
+#: src/features/help/CenterBar.tsx
 #: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 #: src/features/help/SettingsTab.tsx
 msgid "Help center"
 msgstr "ศูนย์ช่วยเหลือ"
+
+#: src/features/help/pages.tsx
+msgid "Help center created. Write the first article, then publish it."
+msgstr "สร้างศูนย์ช่วยเหลือแล้ว เขียนบทความแรก แล้วเผยแพร่"
 
 #: src/features/help/SettingsTab.tsx
 msgid "Help center deleted"
@@ -445,7 +446,10 @@ msgid "Main language"
 msgstr "ภาษาหลัก"
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+msgid "Mark up to date"
+msgstr "ทำเครื่องหมายว่าเป็นปัจจุบัน"
+
+#: src/features/help/ArticleEditor.tsx
 msgid "More"
 msgstr "เพิ่มเติม"
 
@@ -522,6 +526,11 @@ msgstr "ไม่มีฉบับร่าง ทุกอย่างที�
 msgid "No earlier versions yet."
 msgstr "ยังไม่มีเวอร์ชันก่อนหน้า"
 
+#. placeholder {0}: target.inbox.name
+#: src/features/help/pages.tsx
+msgid "No help center for {0} yet"
+msgstr "ยังไม่มีศูนย์ช่วยเหลือสำหรับ {0}"
+
 #: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 msgid "No help center yet. Owners and admins create it."
@@ -540,6 +549,7 @@ msgstr "ไม่มี"
 msgid "not named"
 msgstr "ไม่มีชื่อ"
 
+#: src/features/help/ArticleEditor.tsx
 #: src/features/help/ArticlesTab.tsx
 msgid "Not written"
 msgstr "ยังไม่ได้เขียน"
@@ -555,6 +565,10 @@ msgstr "จาก {answers} คำตอบ"
 #: src/features/help/SettingsTab.tsx
 msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish and unpublish too."
 msgstr "ปิด: เจ้าหน้าที่เขียนฉบับร่างแล้วส่ง เจ้าของและผู้ดูแลระบบเป็นผู้เผยแพร่ เปิด: เจ้าหน้าที่ที่เข้าถึงกล่องจดหมายได้ก็เผยแพร่และยกเลิกการเผยแพร่ได้เช่นกัน"
+
+#: src/features/help/SettingsTab.tsx
+msgid "On: anyone with the address can read the help center. Off: only your team can preview it."
+msgstr "เปิด: ทุกคนที่มีที่อยู่อ่านศูนย์ช่วยเหลือได้ ปิด: มีเพียงทีมของคุณที่ดูตัวอย่างได้"
 
 #: src/features/help/ArticleEditor.tsx
 msgid "One path per line, such as /billing/*. The chat widget suggests this article on matching pages."
@@ -618,6 +632,10 @@ msgstr "ตัวอย่าง"
 msgid "Preview ({alt} P)"
 msgstr "ตัวอย่าง ({alt} P)"
 
+#: src/features/help/pages.tsx
+msgid "Preview ({previewKey})"
+msgstr "ตัวอย่าง ({previewKey})"
+
 #. placeholder {0}: center.name
 #: src/features/help/pages.tsx
 msgid "Preview of {0}"
@@ -632,22 +650,27 @@ msgid "Public address"
 msgstr "ที่อยู่สาธารณะ"
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "Publish"
 msgstr "เผยแพร่"
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "Publish ({publishKey})"
 msgstr "เผยแพร่ ({publishKey})"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/CenterBar.tsx
 #: src/features/help/HelpColumn.tsx
-#: src/features/help/pages.tsx
 #: src/features/help/Revisions.tsx
+#: src/features/help/SettingsTab.tsx
 #: src/features/help/text.tsx
 msgid "Published"
 msgstr "เผยแพร่แล้ว"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Publishing"
+msgstr "การเผยแพร่"
 
 #: src/features/help/text.tsx
 msgid "Question mark"
@@ -758,6 +781,10 @@ msgstr "โล่"
 msgid "Show"
 msgstr "แสดง"
 
+#: src/features/help/ArticleEditor.tsx
+msgid "Show original"
+msgstr "แสดงต้นฉบับ"
+
 #: src/features/help/SettingsTab.tsx
 msgid "Shown under the name on the home page."
 msgstr "แสดงใต้ชื่อบนหน้าแรก"
@@ -831,6 +858,10 @@ msgid "The main language has no text for this article yet."
 msgstr "ภาษาหลักยังไม่มีข้อความสำหรับบทความนี้"
 
 #: src/features/help/ArticleEditor.tsx
+msgid "The original changed after this translation was written. Compare them, then mark it up to date."
+msgstr "ต้นฉบับเปลี่ยนไปหลังจากเขียนคำแปลนี้ เปรียบเทียบทั้งสองแล้วทำเครื่องหมายว่าเป็นปัจจุบัน"
+
+#: src/features/help/ArticleEditor.tsx
 msgid "The page stops working for visitors. The draft stays, and you can publish it again."
 msgstr "หน้าจะหยุดทำงานสำหรับผู้เข้าชม ฉบับร่างยังอยู่และคุณเผยแพร่ใหม่ได้"
 
@@ -880,15 +911,24 @@ msgid "Type a word to search for."
 msgstr "พิมพ์คำที่จะค้นหา"
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "Unpublish"
 msgstr "ยกเลิกการเผยแพร่"
+
+#: src/features/help/CenterBar.tsx
+msgid "Unpublish ({publishKey})"
+msgstr "ยกเลิกการเผยแพร่ ({publishKey})"
+
+#: src/features/help/CenterBar.tsx
+msgid "Unpublish this help center?"
+msgstr "ยกเลิกการเผยแพร่ศูนย์ช่วยเหลือนี้หรือไม่"
 
 #: src/features/help/ArticleEditor.tsx
 msgid "Unpublish this translation?"
 msgstr "ยกเลิกการเผยแพร่คำแปลนี้หรือไม่"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/CenterBar.tsx
 #: src/features/help/HelpColumn.tsx
 msgid "Unpublished"
 msgstr "ยังไม่เผยแพร่"
@@ -896,10 +936,6 @@ msgstr "ยังไม่เผยแพร่"
 #: src/features/help/text.tsx
 msgid "Unpublished changes"
 msgstr "การเปลี่ยนแปลงที่ยังไม่เผยแพร่"
-
-#: src/features/help/pages.tsx
-msgid "Unpublished, only your team can preview it"
-msgstr "ยังไม่เผยแพร่ มีเพียงทีมของคุณที่ดูตัวอย่างได้"
 
 #: src/features/help/ArticleEditor.tsx
 msgid "Unsaved changes"
@@ -929,11 +965,11 @@ msgstr "กู้คืนเวอร์ชันไปยังฉบับร
 msgid "View"
 msgstr "ดู"
 
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "View site"
 msgstr "ดูเว็บไซต์"
 
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "View site ({openKey})"
 msgstr "ดูเว็บไซต์ ({openKey})"
 
@@ -945,13 +981,13 @@ msgstr "การดู"
 msgid "Views · 7 days"
 msgstr "การดู · 7 วัน"
 
+#: src/features/help/CenterBar.tsx
+msgid "Visitors can no longer open it and the chat widget stops suggesting its articles. Your articles stay as they are."
+msgstr "ผู้เข้าชมจะเปิดไม่ได้อีก และวิดเจ็ตแชทจะหยุดแนะนำบทความของศูนย์นี้ บทความของคุณยังคงอยู่เหมือนเดิม"
+
 #: src/features/help/ReportTab.tsx
 msgid "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
 msgstr "สิ่งที่ผู้เข้าชมอ่านและค้นหา จำนวนการดูเป็นค่าโดยประมาณ และตัวเลขจะมาถึงหน้านี้ภายในหนึ่งนาที"
-
-#: src/features/help/SettingsTab.tsx
-msgid "Who can publish"
-msgstr "ใครเผยแพร่ได้"
 
 #: src/features/help/ReportTab.tsx
 msgid "Words visitors typed that found nothing. A new article for each is the fastest fix."
@@ -965,6 +1001,10 @@ msgstr "เขียน"
 #: src/features/help/ArticleEditor.tsx
 msgid "Write the answer in Markdown…"
 msgstr "เขียนคำตอบเป็น Markdown…"
+
+#: src/features/help/CenterBar.tsx
+msgid "Written here, shown on pages Yuva hosts, searched from the chat widget and the reply box. Documentation pages on your own site live under <0>Docs</0>."
+msgstr "เขียนที่นี่ แสดงบนหน้าที่ Yuva โฮสต์ และค้นหาได้จากวิดเจ็ตแชทและกล่องตอบกลับ หน้าเอกสารบนเว็บไซต์ของคุณอยู่ใน <0>Docs</0>"
 
 #: src/features/help/SettingsTab.tsx
 msgid "Your product."

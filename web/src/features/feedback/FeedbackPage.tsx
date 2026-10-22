@@ -1,5 +1,5 @@
 import { Trans, useLingui } from "@lingui/react/macro"
-import { ArrowUpRightIcon, CheckIcon, CopyIcon } from "lucide-react"
+import { CheckIcon, CopyIcon } from "lucide-react"
 import { lazy, Suspense, useCallback, useMemo, useRef, useState } from "react"
 import { Link, useNavigate, useSearchParams } from "react-router"
 
@@ -26,12 +26,15 @@ import { useInboxFilter } from "@/features/inbox/inboxFilter"
 import { Ago, FrameTabs, look, Overline, PageTop } from "@/features/inbox/PageFrame"
 import { ProductTag } from "@/features/inbox/ProductTag"
 import { useCounts, useLoadedCount } from "@/features/inbox/queries"
+import { Lightbox } from "@/features/feedback/Lightbox"
+import { RoadmapCard } from "@/features/feedback/RoadmapCard"
 import { useHotkeys } from "@/hooks/use-hotkeys"
 import { attachmentUrl, type Conversation, type FeedbackProgress } from "@/lib/api"
 import { useSession } from "@/lib/session"
 import { cn } from "@/lib/utils"
 
 const LinkIdeaDialog = lazy(() => import("@/features/roadmap/LinkIdeaDialog"))
+const FeedbackFormDialog = lazy(() => import("@/features/feedback/FeedbackFormDialog"))
 
 const STEPS = ["none", "planned", "in_progress", "done", "wont_do"] as const
 
@@ -84,38 +87,39 @@ function ProgressPicker({ c }: { c: Conversation }) {
 function Shots({ c }: { c: Conversation }) {
   const { workspaceId } = useSession()
   const messages = useMessages(c.id)
+  const [open, setOpen] = useState<number | null>(null)
   const first = (messages.data?.pages ?? [])
     .flatMap((p) => p.items)
     .filter((m) => m.kind === "message" && m.direction !== "out")
     .at(-1)
   const items = (first?.attachments ?? []).filter(isPreviewable)
   if (items.length === 0) return null
+  const shots = items.map((a) => ({ id: a.id, url: attachmentUrl(a, workspaceId), name: a.filename }))
   return (
     <div className="flex flex-wrap gap-2" data-testid="attachments">
-      {items.map((a) => (
-        <a
+      {shots.map((a, i) => (
+        <button
           key={a.id}
-          href={attachmentUrl(a, workspaceId)}
-          target="_blank"
-          rel="noreferrer"
+          type="button"
+          onClick={() => setOpen(i)}
           className="block h-32 w-[72px] overflow-hidden rounded-[10px] border bg-surface outline-none focus-visible:ring-2 focus-visible:ring-ring"
-          title={a.filename}
+          title={a.name}
           data-testid="attachment"
         >
-          <img src={attachmentUrl(a, workspaceId)} alt={a.filename} loading="lazy" className="size-full object-cover" />
-        </a>
+          <img src={a.url} alt={a.name} loading="lazy" className="size-full object-cover" />
+        </button>
       ))}
+      {open !== null && <Lightbox shots={shots} index={open} onIndex={setOpen} onClose={() => setOpen(null)} />}
     </div>
   )
 }
 
 function Detail({ id, onReply }: { id: string; onReply: () => void }) {
   const { t } = useLingui()
-  const text = useEnumText()
   const conversation = useConversation(id)
   const c = conversation.data
   const contact = useContact(c?.contact_id).data
-  const [ideaLinking, setIdeaLinking] = useState(false)
+  const [ideaLinking, setIdeaLinking] = useState<"link" | "new" | null>(null)
   const progress = useRef<HTMLDivElement>(null)
   if (conversation.isPending) {
     return (
@@ -170,6 +174,7 @@ function Detail({ id, onReply }: { id: string; onReply: () => void }) {
           </Link>
         )}
       </section>
+      <RoadmapCard c={c} onLink={() => setIdeaLinking("link")} onNew={() => setIdeaLinking("new")} />
       {f && <Meta c={c} />}
       <section ref={progress} className="flex flex-col gap-2.5 border-b px-5 py-4">
         <Overline>
@@ -177,23 +182,17 @@ function Detail({ id, onReply }: { id: string; onReply: () => void }) {
         </Overline>
         <ProgressPicker c={c} />
         {c.idea && (
-          <Button
-            variant="outline"
-            className={cn(look.btn, "justify-between")}
-            render={<Link to={`/board/ideas/${c.idea.id}`} />}
-            data-testid="idea-chip"
-          >
-            <span className="min-w-0 truncate">
-              <Trans>On the roadmap: {c.idea.title}</Trans>
-            </span>
-            <span className="shrink-0 text-faint">{text.stage[c.idea.stage]}</span>
-          </Button>
+          <p className={look.faint}>
+            <Trans>
+              Moving the idea to Planned, In progress or Shipped sets this for linked feedback that has no progress yet.
+            </Trans>
+          </p>
         )}
       </section>
-      <Actions c={c} name={name} onReply={onReply} onIdea={() => setIdeaLinking(true)} progress={progress} />
+      <Actions c={c} name={name} onReply={onReply} onIdea={() => setIdeaLinking("link")} progress={progress} />
       {ideaLinking && (
         <Suspense fallback={null}>
-          <LinkIdeaDialog c={c} onClose={() => setIdeaLinking(false)} />
+          <LinkIdeaDialog c={c} startNew={ideaLinking === "new"} onClose={() => setIdeaLinking(null)} />
         </Suspense>
       )}
     </div>
@@ -210,6 +209,9 @@ function Meta({ c }: { c: Conversation }) {
   useHotkeys({ [SHORTCUTS.copyDetails]: () => void copyAll() })
   return (
     <section className="relative border-b px-5 py-4" data-testid="feedback-details">
+      <Overline className="mb-2.5">
+        <Trans>Details</Trans>
+      </Overline>
       <dl className="grid grid-cols-2 gap-x-4 gap-y-2.5">
         {rows.map(([k, v, mono]) => (
           <div key={k} className="flex min-w-0 flex-col leading-[1.3]">
@@ -251,8 +253,18 @@ function Actions({
 }) {
   const { t } = useLingui()
   const actions = useConversationActions(c, name)
+  const errorText = useErrorText()
+  const updater = useUpdateConversation(c.id)
   const closed = c.status === "closed"
-  const toggle = closed ? actions.reopen : actions.close
+  const resolve = () =>
+    updater.mutate(
+      { status: "closed" },
+      {
+        onSuccess: () => toast(t`Resolved. It moved to the Resolved tab.`, () => updater.mutate({ status: "open" })),
+        onError: (e) => toast(errorText(e)),
+      }
+    )
+  const toggle = closed ? actions.reopen : resolve
   useHotkeys({
     [SHORTCUTS.reply]: onReply,
     [SHORTCUTS.close]: toggle,
@@ -278,17 +290,6 @@ function Actions({
       >
         {closed ? <Trans>Reopen</Trans> : <Trans>Resolve</Trans>}
       </Button>
-      {!c.idea && (
-        <Button
-          variant="outline"
-          className={look.btn}
-          onClick={onIdea}
-          title={t`Add to roadmap (B)`}
-          data-testid="header-idea"
-        >
-          <Trans>Add to roadmap</Trans>
-        </Button>
-      )}
     </div>
   )
 }
@@ -302,6 +303,7 @@ export function FeedbackPage({ id }: { id: string | null }) {
   const resolved = useLoadedCount({ kind: ["feedback"], status: ["closed"], inbox_id: inboxId || undefined })
   const [tab, setTab] = useState<FeedbackTab>(rememberedFeedbackTab)
   const [first, setFirst] = useState<string | null>(null)
+  const [form, setForm] = useState(false)
   const thread = !!id && params.get("thread") === "1"
   const shown = id ?? first
   const open = useCallback((next: string) => navigate(`/feedback/${next}`), [navigate])
@@ -324,14 +326,8 @@ export function FeedbackPage({ id }: { id: string | null }) {
         title={<Trans>Feedback</Trans>}
         sub={<Trans>Bugs, ideas and praise sent from your apps and pages</Trans>}
         actions={
-          <Button
-            variant="outline"
-            className={look.btn}
-            render={<Link to="/settings?view=channels" />}
-            data-testid="feedback-form"
-          >
+          <Button variant="outline" className={look.btn} onClick={() => setForm(true)} data-testid="feedback-form">
             <Trans>Feedback form</Trans>
-            <ArrowUpRightIcon className="text-faint" />
           </Button>
         }
         tabs={
@@ -367,6 +363,11 @@ export function FeedbackPage({ id }: { id: string | null }) {
           </aside>
         )}
       </div>
+      {form && (
+        <Suspense fallback={null}>
+          <FeedbackFormDialog onClose={() => setForm(false)} />
+        </Suspense>
+      )}
     </main>
   )
 }

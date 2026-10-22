@@ -77,8 +77,8 @@ msgid "Another help center already uses this address, now or before."
 msgstr "Un alt centru de ajutor folosește această adresă, acum sau înainte."
 
 #: src/features/help/pages.tsx
-msgid "Answer common questions once, in writing. Each product gets its own help center with articles, collections and a report of what people search for."
-msgstr "Răspunde o singură dată, în scris, la întrebările frecvente. Fiecare produs are propriul centru de ajutor, cu articole, colecții și un raport despre ce caută oamenii."
+msgid "Answer common questions once, in writing. Each product gets its own help center with articles, collections and a report of what people search for. Pages are hosted by Yuva, so there is nothing to install on your site."
+msgstr "Răspundeți o singură dată, în scris, la întrebările frecvente. Fiecare produs are propriul centru de ajutor cu articole, colecții și un raport despre ce caută oamenii. Paginile sunt găzduite de Yuva, nu trebuie să instalați nimic pe site-ul dvs."
 
 #: src/features/help/pages.tsx
 msgid "Answer common questions once, in writing. Pick an inbox’s help center to write articles, group them in collections and see what customers search for."
@@ -162,6 +162,7 @@ msgstr "Listă cu buline"
 msgid "Cancel"
 msgstr "Anulează"
 
+#: src/features/help/ArticleEditor.tsx
 #: src/features/help/ArticlesTab.tsx
 msgid "Changed"
 msgstr "Modificat"
@@ -226,11 +227,6 @@ msgstr "Creează centru de ajutor"
 #: src/features/help/HelpColumn.tsx
 msgid "Create help center ({newKey})"
 msgstr "Creează centru de ajutor ({newKey})"
-
-#. placeholder {0}: inbox.name
-#: src/features/help/pages.tsx
-msgid "Create one for {0}"
-msgstr "Creează unul pentru {0}"
 
 #: src/features/help/CollectionsTab.tsx
 #: src/features/help/SettingsTab.tsx
@@ -342,11 +338,16 @@ msgstr "Grupează articolele ca vizitatorii să poată răsfoi. O colecție poat
 msgid "Heading"
 msgstr "Titlu"
 
+#: src/features/help/CenterBar.tsx
 #: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 #: src/features/help/SettingsTab.tsx
 msgid "Help center"
 msgstr "Centru de ajutor"
+
+#: src/features/help/pages.tsx
+msgid "Help center created. Write the first article, then publish it."
+msgstr "Centrul de ajutor a fost creat. Scrieți primul articol, apoi publicați-l."
 
 #: src/features/help/SettingsTab.tsx
 msgid "Help center deleted"
@@ -445,7 +446,10 @@ msgid "Main language"
 msgstr "Limba principală"
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+msgid "Mark up to date"
+msgstr "Marchează ca actualizat"
+
+#: src/features/help/ArticleEditor.tsx
 msgid "More"
 msgstr "Mai mult"
 
@@ -522,6 +526,11 @@ msgstr "Fără ciorne. Tot ce s-a scris este publicat."
 msgid "No earlier versions yet."
 msgstr "Încă nu există versiuni anterioare."
 
+#. placeholder {0}: target.inbox.name
+#: src/features/help/pages.tsx
+msgid "No help center for {0} yet"
+msgstr "Încă nu există un centru de ajutor pentru {0}"
+
 #: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 msgid "No help center yet. Owners and admins create it."
@@ -540,6 +549,7 @@ msgstr "Niciuna"
 msgid "not named"
 msgstr "fără nume"
 
+#: src/features/help/ArticleEditor.tsx
 #: src/features/help/ArticlesTab.tsx
 msgid "Not written"
 msgstr "Nescris"
@@ -555,6 +565,10 @@ msgstr "din {answers} răspunsuri"
 #: src/features/help/SettingsTab.tsx
 msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish and unpublish too."
 msgstr "Dezactivat: agenții scriu ciorne și le trimit, iar proprietarii și administratorii publică. Activat: și agenții cu acces la căsuță publică și retrag publicarea."
+
+#: src/features/help/SettingsTab.tsx
+msgid "On: anyone with the address can read the help center. Off: only your team can preview it."
+msgstr "Activat: oricine are adresa poate citi centrul de ajutor. Dezactivat: doar echipa dvs. îl poate previzualiza."
 
 #: src/features/help/ArticleEditor.tsx
 msgid "One path per line, such as /billing/*. The chat widget suggests this article on matching pages."
@@ -618,6 +632,10 @@ msgstr "Previzualizare"
 msgid "Preview ({alt} P)"
 msgstr "Previzualizare ({alt} P)"
 
+#: src/features/help/pages.tsx
+msgid "Preview ({previewKey})"
+msgstr "Previzualizare ({previewKey})"
+
 #. placeholder {0}: center.name
 #: src/features/help/pages.tsx
 msgid "Preview of {0}"
@@ -632,22 +650,27 @@ msgid "Public address"
 msgstr "Adresă publică"
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "Publish"
 msgstr "Publică"
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "Publish ({publishKey})"
 msgstr "Publică ({publishKey})"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/CenterBar.tsx
 #: src/features/help/HelpColumn.tsx
-#: src/features/help/pages.tsx
 #: src/features/help/Revisions.tsx
+#: src/features/help/SettingsTab.tsx
 #: src/features/help/text.tsx
 msgid "Published"
 msgstr "Publicat"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Publishing"
+msgstr "Publicare"
 
 #: src/features/help/text.tsx
 msgid "Question mark"
@@ -758,6 +781,10 @@ msgstr "Scut"
 msgid "Show"
 msgstr "Arată"
 
+#: src/features/help/ArticleEditor.tsx
+msgid "Show original"
+msgstr "Arată originalul"
+
 #: src/features/help/SettingsTab.tsx
 msgid "Shown under the name on the home page."
 msgstr "Afișat sub nume pe pagina principală."
@@ -831,6 +858,10 @@ msgid "The main language has no text for this article yet."
 msgstr "Limba principală nu are încă text pentru acest articol."
 
 #: src/features/help/ArticleEditor.tsx
+msgid "The original changed after this translation was written. Compare them, then mark it up to date."
+msgstr "Originalul s-a schimbat după scrierea acestei traduceri. Comparați-le, apoi marcați traducerea ca actualizată."
+
+#: src/features/help/ArticleEditor.tsx
 msgid "The page stops working for visitors. The draft stays, and you can publish it again."
 msgstr "Pagina nu mai funcționează pentru vizitatori. Ciorna rămâne și o poți publica din nou."
 
@@ -880,15 +911,24 @@ msgid "Type a word to search for."
 msgstr "Scrie un cuvânt de căutat."
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "Unpublish"
 msgstr "Retrage publicarea"
+
+#: src/features/help/CenterBar.tsx
+msgid "Unpublish ({publishKey})"
+msgstr "Retrage publicarea ({publishKey})"
+
+#: src/features/help/CenterBar.tsx
+msgid "Unpublish this help center?"
+msgstr "Anulați publicarea acestui centru de ajutor?"
 
 #: src/features/help/ArticleEditor.tsx
 msgid "Unpublish this translation?"
 msgstr "Retragi publicarea acestei traduceri?"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/CenterBar.tsx
 #: src/features/help/HelpColumn.tsx
 msgid "Unpublished"
 msgstr "Nepublicat"
@@ -896,10 +936,6 @@ msgstr "Nepublicat"
 #: src/features/help/text.tsx
 msgid "Unpublished changes"
 msgstr "Modificări nepublicate"
-
-#: src/features/help/pages.tsx
-msgid "Unpublished, only your team can preview it"
-msgstr "Nepublicat, doar echipa ta îl poate previzualiza"
 
 #: src/features/help/ArticleEditor.tsx
 msgid "Unsaved changes"
@@ -929,11 +965,11 @@ msgstr "Versiune restaurată în ciornă"
 msgid "View"
 msgstr "Vezi"
 
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "View site"
 msgstr "Vezi site-ul"
 
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "View site ({openKey})"
 msgstr "Vezi site-ul ({openKey})"
 
@@ -945,13 +981,13 @@ msgstr "Vizualizări"
 msgid "Views · 7 days"
 msgstr "Vizualizări · 7 zile"
 
+#: src/features/help/CenterBar.tsx
+msgid "Visitors can no longer open it and the chat widget stops suggesting its articles. Your articles stay as they are."
+msgstr "Vizitatorii nu îl vor mai putea deschide, iar widgetul de chat nu va mai sugera articolele lui. Articolele dvs. rămân neschimbate."
+
 #: src/features/help/ReportTab.tsx
 msgid "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
 msgstr "Ce citesc și ce caută vizitatorii. Vizualizările sunt aproximative, iar cifrele ajung aici într-un minut."
-
-#: src/features/help/SettingsTab.tsx
-msgid "Who can publish"
-msgstr "Cine poate publica"
 
 #: src/features/help/ReportTab.tsx
 msgid "Words visitors typed that found nothing. A new article for each is the fastest fix."
@@ -965,6 +1001,10 @@ msgstr "Scrie"
 #: src/features/help/ArticleEditor.tsx
 msgid "Write the answer in Markdown…"
 msgstr "Scrie răspunsul în Markdown…"
+
+#: src/features/help/CenterBar.tsx
+msgid "Written here, shown on pages Yuva hosts, searched from the chat widget and the reply box. Documentation pages on your own site live under <0>Docs</0>."
+msgstr "Se scrie aici, apare pe pagini găzduite de Yuva și se caută din widgetul de chat și din caseta de răspuns. Paginile de documentație de pe site-ul dvs. sunt la <0>Docs</0>."
 
 #: src/features/help/SettingsTab.tsx
 msgid "Your product."

@@ -111,7 +111,7 @@ export function AddSubscriberDialog({
           onSubmit={(e) => {
             e.preventDefault()
             setTouched(true)
-            if (attested) add.mutate()
+            if (!agreed || attested) add.mutate()
           }}
         >
           <div className="flex flex-col gap-5 p-6">
@@ -235,32 +235,30 @@ export function AddSubscriberDialog({
                 onChange={(e) => setReference(e.target.value)}
               />
             </Field>
-            <div className="flex flex-col gap-1.5">
-              <Label className="items-start gap-3 font-normal">
-                <Checkbox
-                  checked={attested}
-                  onCheckedChange={setAttested}
-                  className="mt-0.5"
-                  aria-invalid={(touched && !attested) || undefined}
-                  data-testid="sub-attest"
-                />
-                <span className="text-body">
-                  {agreed ? (
+            {agreed && (
+              <div className="flex flex-col gap-1.5">
+                <Label className="items-start gap-3 font-normal">
+                  <Checkbox
+                    checked={attested}
+                    onCheckedChange={setAttested}
+                    className="mt-0.5"
+                    aria-invalid={(touched && !attested) || undefined}
+                    data-testid="sub-attest"
+                  />
+                  <span className="text-body">
                     <Trans>
                       I confirm that this person agreed to get e-mails from this list as described above, and that we
                       can show how and when if asked.
                     </Trans>
-                  ) : (
-                    <Trans>I confirm that this person asked to join this list.</Trans>
-                  )}
-                </span>
-              </Label>
-              {touched && !attested && (
-                <p role="alert" className="text-small text-destructive">
-                  <Trans>Confirm the consent to add them.</Trans>
-                </p>
-              )}
-            </div>
+                  </span>
+                </Label>
+                {touched && !attested && (
+                  <p role="alert" className="text-small text-destructive">
+                    <Trans>Confirm the consent to add them.</Trans>
+                  </p>
+                )}
+              </div>
+            )}
             {code !== "invalid_email" && <ErrorLine error={add.error} />}
           </div>
           <DialogFooter className="sticky bottom-0 border-t bg-card px-6 py-3">

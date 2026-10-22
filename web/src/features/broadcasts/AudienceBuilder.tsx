@@ -396,7 +396,15 @@ export function AudienceCount({
     )
   }
   const recipients = num(count.recipients)
-  const excluded = (Object.keys(names) as (keyof BroadcastAudienceExcluded)[]).filter((k) => count.excluded[k] > 0)
+  const always: (keyof BroadcastAudienceExcluded)[] = ["unsubscribed", "pending", "suppressed", "filtered"]
+  const excluded = (Object.keys(names) as (keyof BroadcastAudienceExcluded)[]).filter(
+    (k) => always.includes(k) || count.excluded[k] > 0
+  )
+  const people = (Object.keys(names) as (keyof BroadcastAudienceExcluded)[])
+    .filter((k) => k !== "duplicate")
+    .reduce((n, k) => n + count.excluded[k], 0)
+  const left = num(people)
+  const total = num(count.recipients + people)
   const missing = Object.entries(count.missing_merge_fields).filter(([, n]) => n > 0)
   return (
     <Card className="bg-surface" data-testid="audience-count">
@@ -421,21 +429,21 @@ export function AudienceCount({
           ))}
         </ul>
       )}
-      {excluded.length > 0 && (
-        <div className="flex flex-col gap-1">
-          <span className="text-small font-medium text-faint">
-            <Trans>Left out</Trans>
-          </span>
-          <ul className="flex flex-col gap-1 text-small" data-testid="audience-excluded">
-            {excluded.map((k) => (
-              <li key={k} className="flex justify-between gap-3" data-reason={k}>
-                <span className="min-w-0 text-muted-foreground">{names[k]}</span>
-                <span className="tabular-nums">{num(count.excluded[k])}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+      <div className="flex flex-col gap-1.5">
+        <span className="text-small font-medium text-faint" data-testid="audience-left-out">
+          <Trans>
+            Left out: {left} of {total} people on the lists
+          </Trans>
+        </span>
+        <ul className="flex flex-col gap-1 text-small" data-testid="audience-excluded">
+          {excluded.map((k) => (
+            <li key={k} className="flex justify-between gap-3" data-reason={k}>
+              <span className="min-w-0 text-muted-foreground">{names[k]}</span>
+              <span className="tabular-nums">{num(count.excluded[k])}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
       {missing.length > 0 && (
         <Notice tone="warning" icon={TriangleAlertIcon} className="px-3 py-2.5" data-testid="audience-missing-fields">
           <p>

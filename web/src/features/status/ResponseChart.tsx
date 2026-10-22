@@ -7,7 +7,8 @@ import { formatMs } from "@/components/common/text"
 import { Skeleton } from "@/components/ui/skeleton"
 import { ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig } from "@/components/ui/chart"
 import { useMonitorSummary } from "@/features/status/queries"
-import type { StatusCheckRange } from "@/lib/api"
+import { cn } from "@/lib/utils"
+import type { StatusCheckRange, StatusMonitorKind } from "@/lib/api"
 
 function Stat({ label, value, testId }: { label: React.ReactNode; value: string; testId?: string }) {
   return (
@@ -20,7 +21,15 @@ function Stat({ label, value, testId }: { label: React.ReactNode; value: string;
   )
 }
 
-export function ResponseChart({ pageId, monitorId }: { pageId: string; monitorId: string }) {
+export function ResponseChart({
+  pageId,
+  monitorId,
+  kind = "http",
+}: {
+  pageId: string
+  monitorId: string
+  kind?: StatusMonitorKind
+}) {
   const { t, i18n } = useLingui()
   const [range, setRange] = useState<StatusCheckRange>("24h")
   const q = useMonitorSummary(pageId, monitorId, range)
@@ -44,12 +53,11 @@ export function ResponseChart({ pageId, monitorId }: { pageId: string; monitorId
       ? none
       : new Intl.NumberFormat(i18n.locale, { style: "percent", maximumFractionDigits: 2 }).format(s.uptime / 100)
   const hasTimes = data.some((d) => d.p50 !== undefined)
+  const timed = kind === "http" || kind === "tcp"
   return (
     <section className="flex flex-col gap-3" data-testid="status-monitor-chart">
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <h3 className="text-body font-medium">
-          <Trans>Response time</Trans>
-        </h3>
+        <h3 className="text-body font-medium">{timed ? <Trans>Response time</Trans> : <Trans>Results</Trans>}</h3>
         <Segmented
           value={range}
           onChange={setRange}
@@ -68,16 +76,53 @@ export function ResponseChart({ pageId, monitorId }: { pageId: string; monitorId
           <dl className="grid grid-cols-2 gap-x-4 gap-y-3 sm:grid-cols-4">
             <Stat label={<Trans>Uptime</Trans>} value={uptime} testId="status-monitor-uptime" />
             <Stat label={<Trans>Checks</Trans>} value={new Intl.NumberFormat(i18n.locale).format(s.checks)} />
-            <Stat
-              label={<Trans>Median</Trans>}
-              value={s.p50_ms === undefined ? none : formatMs(s.p50_ms, i18n.locale)}
-            />
-            <Stat
-              label={<Trans>95th percentile</Trans>}
-              value={s.p95_ms === undefined ? none : formatMs(s.p95_ms, i18n.locale)}
-            />
+            {timed ? (
+              <>
+                <Stat
+                  label={<Trans>Median</Trans>}
+                  value={s.p50_ms === undefined ? none : formatMs(s.p50_ms, i18n.locale)}
+                />
+                <Stat
+                  label={<Trans>95th percentile</Trans>}
+                  value={s.p95_ms === undefined ? none : formatMs(s.p95_ms, i18n.locale)}
+                />
+              </>
+            ) : (
+              <Stat label={<Trans>Failed</Trans>} value={new Intl.NumberFormat(i18n.locale).format(s.failures)} />
+            )}
           </dl>
-          {hasTimes ? (
+          {!timed ? (
+            <>
+              <span
+                className="flex h-14 items-end gap-px"
+                role="img"
+                aria-label={t`Results`}
+                data-testid="status-monitor-results"
+              >
+                {(s.buckets.length > 0 ? s.buckets : Array.from({ length: 48 }, () => null)).map((b, n) => (
+                  <span
+                    key={n}
+                    title={b ? `${long.format(new Date(b.start))} · ${b.checks}` : undefined}
+                    className={cn(
+                      "min-w-px flex-1 rounded-[2px]",
+                      !b || b.checks === 0 ? "bg-muted" : b.failures > 0 ? "bg-destructive" : "bg-success/60"
+                    )}
+                    style={{ height: !b || b.checks === 0 ? 3 : "100%" }}
+                  />
+                ))}
+              </span>
+              <ul className="flex flex-wrap gap-x-4 gap-y-1 text-caption text-muted-foreground" aria-hidden>
+                <li className="flex items-center gap-1.5">
+                  <span className="size-2.5 rounded-[2px] bg-success/60" />
+                  <Trans>OK</Trans>
+                </li>
+                <li className="flex items-center gap-1.5">
+                  <span className="size-2.5 rounded-[2px] bg-destructive" />
+                  <Trans>Failed</Trans>
+                </li>
+              </ul>
+            </>
+          ) : hasTimes ? (
             <ChartContainer config={config} className="aspect-auto h-52 w-full">
               <ComposedChart data={data} margin={{ top: 8, right: 8, bottom: 0, left: 0 }}>
                 <CartesianGrid vertical={false} />
@@ -155,20 +200,22 @@ export function ResponseChart({ pageId, monitorId }: { pageId: string; monitorId
               <Trans>No response times in this range yet.</Trans>
             </p>
           )}
-          <ul className="flex flex-wrap gap-x-4 gap-y-1 text-caption text-muted-foreground" aria-hidden>
-            <li className="flex items-center gap-1.5">
-              <span className="size-2.5 rounded-[2px] bg-brand" />
-              <Trans>Median</Trans>
-            </li>
-            <li className="flex items-center gap-1.5">
-              <span className="h-0 w-3 border-t-2 border-dashed border-muted-foreground" />
-              <Trans>95th percentile</Trans>
-            </li>
-            <li className="flex items-center gap-1.5">
-              <span className="h-3 w-1 rounded-[1px] bg-destructive/45" />
-              <Trans>Failed checks</Trans>
-            </li>
-          </ul>
+          {timed && (
+            <ul className="flex flex-wrap gap-x-4 gap-y-1 text-caption text-muted-foreground" aria-hidden>
+              <li className="flex items-center gap-1.5">
+                <span className="size-2.5 rounded-[2px] bg-brand" />
+                <Trans>Median</Trans>
+              </li>
+              <li className="flex items-center gap-1.5">
+                <span className="h-0 w-3 border-t-2 border-dashed border-muted-foreground" />
+                <Trans>95th percentile</Trans>
+              </li>
+              <li className="flex items-center gap-1.5">
+                <span className="h-3 w-1 rounded-[1px] bg-destructive/45" />
+                <Trans>Failed checks</Trans>
+              </li>
+            </ul>
+          )}
         </>
       ) : null}
     </section>

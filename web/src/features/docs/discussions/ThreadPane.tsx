@@ -16,7 +16,7 @@ import {
   XIcon,
 } from "lucide-react"
 import { useEffect, useMemo, useRef, useState } from "react"
-import { Link, useLocation, useParams } from "react-router"
+import { Link } from "react-router"
 
 import { Dot, ErrorLine, Notice, toast } from "@/components/common"
 import { Pane, PaneBack } from "@/components/common/Column"
@@ -348,30 +348,19 @@ function Composer({
   )
 }
 
-export function ThreadPane() {
-  const { discussionId = "" } = useParams()
-  const location = useLocation()
-  const { t } = useLingui()
-  const from = (location.state as { from?: string } | null)?.from
-  const back = from?.startsWith("/docs/page")
-    ? { to: from, label: t`Page` }
-    : from === "/docs/discussions/queue"
-      ? { to: from, label: t`Waiting for approval` }
-      : { to: "/docs/discussions", label: t`Discussions` }
-  return <Thread discussionId={discussionId} back={back} />
-}
-
 export function Thread({
   discussionId,
   back,
   embedded,
   actions: extraActions,
+  before,
   after,
 }: {
   discussionId: string
   back?: { to: string; label: string }
   embedded?: boolean
   actions?: (d: Discussion) => React.ReactNode
+  before?: (d: Discussion) => React.ReactNode
   after?: (d: Discussion) => React.ReactNode
 }) {
   const { t, i18n } = useLingui()
@@ -545,6 +534,7 @@ export function Thread({
           </Button>
         </div>
       </header>
+      {before?.(d)}
       <div ref={list} className="flex flex-col gap-3">
         <PostCard post={flat[0]} selected={cursor === 0} actions={actions} idea={d.kind === "idea"} />
         <h2 className="mx-1 mt-3 inline-flex items-center gap-1.5 text-small font-medium text-faint">

@@ -1,30 +1,15 @@
-import { Trans, useLingui } from "@lingui/react/macro"
-import { GlobeIcon, HourglassIcon } from "lucide-react"
+import { useLingui } from "@lingui/react/macro"
 import { useEffect, useRef } from "react"
-import { Link, useNavigate } from "react-router"
+import { useNavigate } from "react-router"
 
-import { ErrorLine, hostOf } from "@/components/common"
-import { framePad } from "@/features/status/PageFrame"
+import { ErrorLine } from "@/components/common"
 import { DISCUSSION_KEYS } from "@/components/common/ShortcutSheet"
-import { Button } from "@/components/ui/button"
-import { DocsFrame, DocsSitePicker, usePickedSite } from "@/features/docs/DocsColumn"
-import { useDocsDays, useDocsSummary } from "@/features/docs/queries"
 import { ListSkeleton, LoadMore, ThreadRow } from "@/features/docs/discussions/parts"
-import {
-  THREAD_SORTS,
-  THREAD_VIEWS,
-  threadLink,
-  useDiscussions,
-  useThreadSort,
-  useThreadView,
-  viewFilters,
-  type ThreadView,
-} from "@/features/docs/discussions/queries"
-import { useInboxFilter } from "@/features/inbox/inboxFilter"
+import { threadLink, useDiscussions, type ThreadView } from "@/features/docs/discussions/queries"
 import { Card, EmptyRow } from "@/features/settings/ui"
 import { useHotkeys } from "@/hooks/use-hotkeys"
 import { useResetState } from "@/hooks/use-reset-state"
-import type { DiscussionTeamSort } from "@/lib/api"
+import type { Discussion } from "@/lib/api"
 import type { DiscussionFilters } from "@/lib/keys"
 import { cn } from "@/lib/utils"
 
@@ -34,12 +19,18 @@ export function ThreadList({
   from,
   keyboard,
   empty,
+  link,
+  currentId,
+  bare,
 }: {
   filters: DiscussionFilters
   showPage: boolean
   from?: string
   keyboard?: boolean
   empty: React.ReactNode
+  link?: (d: Discussion) => string
+  currentId?: string
+  bare?: boolean
 }) {
   const navigate = useNavigate()
   const list = useDiscussions(filters)
@@ -48,6 +39,7 @@ export function ThreadList({
   const ref = useRef<HTMLUListElement>(null)
   const down = () => setCursor((i) => Math.min(items.length - 1, i + 1))
   const up = () => setCursor((i) => Math.max(0, i - 1))
+  const hrefOf = (d: Discussion) => link?.(d) ?? threadLink(d.id)
   useHotkeys(
     {
       [DISCUSSION_KEYS.next]: down,
@@ -56,7 +48,7 @@ export function ThreadList({
       ArrowUp: up,
       Enter: () => {
         const d = items[cursor]
-        if (d) navigate(threadLink(d.id), { state: from ? { from } : undefined })
+        if (d) navigate(hrefOf(d), { state: from ? { from } : undefined })
       },
     },
     !!keyboard
@@ -65,8 +57,9 @@ export function ThreadList({
     if (cursor >= 0)
       ref.current?.querySelectorAll("[data-testid=thread-row]")[cursor]?.scrollIntoView({ block: "nearest" })
   }, [cursor])
+  const Frame = bare ? "div" : Card
   return (
-    <Card flush data-testid="thread-list">
+    <Frame {...(bare ? {} : { flush: true })} data-testid="thread-list">
       {list.isPending ? (
         <ListSkeleton />
       ) : list.error ? (
@@ -76,16 +69,24 @@ export function ThreadList({
       ) : (
         <ul ref={ref} className="divide-y">
           {items.map((d, i) => (
-            <ThreadRow key={d.id} d={d} cursor={i === cursor} showPage={showPage} from={from} />
+            <ThreadRow
+              key={d.id}
+              d={d}
+              cursor={i === cursor}
+              showPage={showPage}
+              from={from}
+              to={hrefOf(d)}
+              current={d.id === currentId}
+            />
           ))}
         </ul>
       )}
       <LoadMore list={list} />
-    </Card>
+    </Frame>
   )
 }
 
-function Chips<T extends string>({
+export function Chips<T extends string>({
   value,
   onChange,
   items,
@@ -94,7 +95,7 @@ function Chips<T extends string>({
 }: {
   value: T
   onChange: (v: T) => void
-  items: { value: T; label: string; title?: string }[]
+  items: { value: T; label: React.ReactNode; title?: string }[]
   label: string
   testId: string
 }) {
@@ -129,82 +130,4 @@ export function useViewText(): Record<ThreadView, string> {
     locked: t`Locked`,
     hidden: t`Hidden`,
   }
-}
-
-export function DiscussionsPane() {
-  const { t } = useLingui()
-  const [inboxId] = useInboxFilter()
-  const site = usePickedSite(inboxId)
-  const [days] = useDocsDays()
-  const [view, setView] = useThreadView()
-  const [sort, setSort] = useThreadSort()
-  const viewText = useViewText()
-  const pending = useDocsSummary(inboxId, site, days).data?.totals.pending_posts ?? 0
-  const sortText: Record<DiscussionTeamSort, string> = {
-    activity: t`Recent activity`,
-    new: t`Newest`,
-    top: t`Most votes`,
-    votes: t`Most votes`,
-  }
-  const empty: Record<ThreadView, React.ReactNode> = {
-    all: <Trans>No discussions yet. Readers start them under your documentation pages.</Trans>,
-    unanswered: <Trans>Every open discussion has an answer.</Trans>,
-    pending: <Trans>Nothing is waiting for approval.</Trans>,
-    locked: <Trans>No locked discussions.</Trans>,
-    hidden: <Trans>No hidden discussions.</Trans>,
-  }
-  const filters: DiscussionFilters = {
-    inbox_id: inboxId || undefined,
-    site: site || undefined,
-    sort,
-    ...viewFilters(view),
-  }
-  return (
-    <DocsFrame testId="discussions">
-      <div className={cn(framePad, "max-w-[900px]")}>
-        <header className="flex flex-col gap-0.5">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <p className="text-body text-muted-foreground">
-              <Trans>Public threads under your documentation pages, in every state.</Trans>
-            </p>
-            {pending > 0 && (
-              <Button
-                variant="outline"
-                size="sm"
-                render={<Link to="/docs/discussions/queue" />}
-                data-testid="queue-link"
-              >
-                <HourglassIcon className="text-warning" />
-                <Trans>{pending} waiting for approval</Trans>
-              </Button>
-            )}
-          </div>
-          {site && (
-            <p className="inline-flex items-center gap-1.5 text-body text-muted-foreground" data-testid="docs-site">
-              <GlobeIcon className="size-4 text-faint" />
-              <span dir="ltr">{hostOf(site)}</span>
-            </p>
-          )}
-        </header>
-        <DocsSitePicker className="hidden phone:flex" />
-        <div className="flex flex-col gap-2.5">
-          <Chips
-            value={view}
-            onChange={setView}
-            label={t`Show`}
-            testId="thread-view"
-            items={THREAD_VIEWS.map((v) => ({ value: v, label: viewText[v] }))}
-          />
-          <Chips
-            value={sort}
-            onChange={setSort}
-            label={t`Sort`}
-            testId="thread-sort"
-            items={THREAD_SORTS.map((s) => ({ value: s, label: sortText[s] }))}
-          />
-        </div>
-        <ThreadList filters={filters} showPage from="/docs/discussions" keyboard empty={empty[view]} />
-      </div>
-    </DocsFrame>
-  )
 }

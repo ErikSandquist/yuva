@@ -158,3 +158,28 @@ export function TestSend({
     </div>
   )
 }
+
+export function TestSendDialog({
+  b,
+  state,
+  disabled,
+  onClose,
+}: {
+  b: Broadcast
+  state: ReturnType<typeof useTestSend>
+  disabled: boolean
+  onClose: () => void
+}) {
+  return (
+    <Dialog open onOpenChange={(o) => !o && onClose()}>
+      <DialogContent data-testid="test-dialog">
+        <DialogHeader>
+          <DialogTitle>
+            <Trans>Send a test</Trans>
+          </DialogTitle>
+        </DialogHeader>
+        <TestSend b={b} state={state} disabled={disabled} />
+      </DialogContent>
+    </Dialog>
+  )
+}

@@ -1,22 +1,26 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro"
-import { cloneElement, useState } from "react"
+import { CalendarClockIcon, CheckCircle2Icon, FlameIcon } from "lucide-react"
+import { useState } from "react"
 import { Link, useNavigate, useParams, useSearchParams } from "react-router"
 
-import { ErrorLine, InboxMark } from "@/components/common"
-import { keyLabel, STATUS_KEYS } from "@/components/common/ShortcutSheet"
+import { ErrorLine } from "@/components/common"
+import { PaneBack } from "@/components/common/Column"
+import { INCIDENT_KEYS, keyLabel } from "@/components/common/ShortcutSheet"
 import { formatDuration, formatShort } from "@/components/common/text"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
-import { useInboxFilter } from "@/features/inbox/inboxFilter"
+import { FrameTabs, look, PageTop } from "@/features/inbox/PageFrame"
+import { IncidentDetail, incidentTone } from "@/features/status/IncidentDetail"
 import { IncidentDialog } from "@/features/status/IncidentDialog"
-import { FrameButton, FrameTabs, framePad, PageFrame, Pill, ProductTag } from "@/features/status/PageFrame"
-import { incidentLink, usePagesComponents, usePagesIncidents, useStatusPages } from "@/features/status/queries"
+import { Pill, ProductTag } from "@/features/status/PageFrame"
+import { incidentLink } from "@/features/status/queries"
+import { useScopeIncidents, useStatusScope } from "@/features/status/scope"
 import { isClosed, useStatusText } from "@/features/status/text"
 import { useHotkeys } from "@/hooks/use-hotkeys"
-import { useRowFocus } from "@/hooks/use-row-focus"
+import { useIsPhone } from "@/hooks/use-media-query"
 import type { Inbox, StatusIncident, StatusIncidentKind, StatusPage } from "@/lib/api"
+import { useSession } from "@/lib/session"
 import { cn } from "@/lib/utils"
-import { useInboxes } from "@/lib/workspace"
 
 export const VIEWS = ["active", "scheduled", "past"] as const
 export type View = (typeof VIEWS)[number]
@@ -26,146 +30,12 @@ export function viewOf(i: StatusIncident): View {
   return i.state === "scheduled" ? "scheduled" : "active"
 }
 
-export function viewLink(pageId: string, view: View) {
-  return `/status-pages/${pageId}${view === "active" ? "" : `?view=${view}`}`
-}
-
-export function useStatusScope() {
-  const [inboxId] = useInboxFilter()
-  const pages = useStatusPages(inboxId)
-  const inboxes = useInboxes().data ?? []
-  const byInbox = new Map(inboxes.map((i) => [i.id, i]))
-  const items = pages.data ?? []
-  return { pages, items, inboxOf: (p?: StatusPage) => (p ? byInbox.get(p.inbox_id) : undefined) }
-}
-
-export function useScopeIncidents(items: StatusPage[]) {
-  const ids = items.map((p) => p.id)
-  const open = usePagesIncidents(ids, true)
-  const all = usePagesIncidents(ids, false)
-  const seen = new Set<string>()
-  const merged = [...open.data, ...all.data].filter((i) => !seen.has(i.id) && !!seen.add(i.id))
-  return { data: merged, isPending: open.isPending || all.isPending, error: open.error ?? all.error }
-}
-
-export function PagePicker({
-  pages,
-  inboxOf,
-  onPick,
-  button,
-  children,
-}: {
-  pages: StatusPage[]
-  inboxOf: (p?: StatusPage) => Inbox | undefined
-  onPick: (p: StatusPage) => void
-  button: React.ReactElement<{ onClick?: () => void }>
-  children: React.ReactNode
-}) {
-  if (pages.length === 1) return cloneElement(button, { onClick: () => onPick(pages[0]) }, children)
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger render={button}>{children}</DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="min-w-52">
-        {pages.map((p) => {
-          const inbox = inboxOf(p)
-          return (
-            <DropdownMenuItem key={p.id} onClick={() => onPick(p)}>
-              <InboxMark name={inbox?.name ?? p.name} color={inbox?.branding.color} className="size-4 text-[9px]" />
-              {p.name}
-            </DropdownMenuItem>
-          )
-        })}
-      </DropdownMenuContent>
-    </DropdownMenu>
-  )
-}
-
-export function IncidentsFrame({
-  view,
-  pageId,
-  counts,
-  children,
-  back,
-}: {
-  view: View
-  pageId: string
-  counts: { active?: number; scheduled?: number }
-  children: React.ReactNode
-  back?: { to: string; label: string }
-}) {
-  const { t } = useLingui()
-  const navigate = useNavigate()
-  const { items, inboxOf } = useStatusScope()
-  const [creating, setCreating] = useState<{ pageId: string; kind: StatusIncidentKind } | null>(null)
-  const fallback = items.find((p) => p.id === pageId) ?? items[0]
-  const incidentKey = keyLabel(STATUS_KEYS.incident).join("")
-  const maintenanceKey = keyLabel(STATUS_KEYS.maintenance).join("")
-  useHotkeys(
-    fallback
-      ? {
-          [STATUS_KEYS.incident]: () => setCreating({ pageId: fallback.id, kind: "incident" }),
-          [STATUS_KEYS.maintenance]: () => setCreating({ pageId: fallback.id, kind: "maintenance" }),
-        }
-      : {},
-    !creating
-  )
-  const tabs = [
-    { key: "active", label: t`Active`, count: counts.active },
-    { key: "scheduled", label: t`Scheduled`, count: counts.scheduled },
-    { key: "past", label: t`Past` },
-  ].map((x) => ({ ...x, to: viewLink(pageId, x.key as View), testId: `status-incidents-${x.key}` }))
-  return (
-    <PageFrame
-      testId="status-incidents"
-      back={back}
-      title={<Trans>Incidents</Trans>}
-      description={<Trans>What went wrong and what you told people</Trans>}
-      actions={
-        items.length > 0 && (
-          <>
-            <PagePicker
-              pages={items}
-              inboxOf={inboxOf}
-              onPick={(p) => setCreating({ pageId: p.id, kind: "maintenance" })}
-              button={
-                <FrameButton title={t`Plan maintenance (${maintenanceKey})`} data-testid="status-new-maintenance" />
-              }
-            >
-              <Trans>Schedule maintenance</Trans>
-            </PagePicker>
-            <PagePicker
-              pages={items}
-              inboxOf={inboxOf}
-              onPick={(p) => setCreating({ pageId: p.id, kind: "incident" })}
-              button={<FrameButton ink title={t`New incident (${incidentKey})`} data-testid="status-new-incident" />}
-            >
-              <Trans>New incident</Trans>
-            </PagePicker>
-          </>
-        )
-      }
-      tabs={<FrameTabs label={t`Incidents`} items={tabs} current={view} />}
-    >
-      {children}
-      {creating && (
-        <IncidentDialog
-          pageId={creating.pageId}
-          kind={creating.kind}
-          onClose={() => setCreating(null)}
-          onDone={(i) => {
-            setCreating(null)
-            navigate(incidentLink(creating.pageId, i.id))
-          }}
-        />
-      )}
-    </PageFrame>
-  )
-}
+const dotTone = { success: "bg-success", info: "bg-blue-600 dark:bg-blue-400", warning: "bg-warning" }
 
 function useMeta() {
   const { i18n } = useLingui()
   const text = useStatusText()
-  return (i: StatusIncident, componentName: (id: string) => string | undefined) => {
+  return (i: StatusIncident) => {
     const parts: string[] = []
     if (i.kind === "maintenance" && i.scheduled_start && i.scheduled_end) {
       const time = new Intl.DateTimeFormat(i18n.locale, { timeStyle: "short" })
@@ -173,121 +43,284 @@ function useMeta() {
         `${formatShort(i.scheduled_start, i18n.locale)} · ${time.format(new Date(i.scheduled_start))}–${time.format(new Date(i.scheduled_end))}`
       )
     } else {
-      parts.push(formatShort(i.started_at ?? i.published_at ?? i.created_at, i18n.locale))
-      if (i.resolved_at) {
-        const from = Date.parse(i.started_at ?? i.published_at ?? i.created_at)
+      const from = Date.parse(i.started_at ?? i.published_at ?? i.created_at)
+      parts.push(formatShort(new Date(from).toISOString(), i18n.locale))
+      if (i.resolved_at)
         parts.push(formatDuration(Math.max(60, Math.round((Date.parse(i.resolved_at) - from) / 1000)), i18n.locale))
-      } else parts.push(text.incident[i.state])
+      else parts.push(text.incident[i.state])
     }
-    const names = i.components.map((c) => componentName(c.component_id)).filter((n): n is string => !!n)
-    if (names.length) parts.push(names.join(", "))
     return parts.join(" · ")
   }
 }
 
-function tone(i: StatusIncident) {
-  if (isClosed(i)) return "success" as const
-  if (i.state === "scheduled") return "info" as const
-  return "warning" as const
-}
-
-const dotTone = { success: "bg-success", info: "bg-blue-600 dark:bg-blue-400", warning: "bg-warning" }
-
-function IncidentRow({ i, page, inbox, meta }: { i: StatusIncident; page?: StatusPage; inbox?: Inbox; meta: string }) {
+function Row({
+  i,
+  page,
+  inbox,
+  meta,
+  current,
+  view,
+}: {
+  i: StatusIncident
+  page?: StatusPage
+  inbox?: Inbox
+  meta: string
+  current: boolean
+  view: View
+}) {
   const text = useStatusText()
   const updates = i.updates.length
   return (
     <li>
       <Link
-        to={incidentLink(i.page_id, i.id)}
-        className="flex items-center gap-3.5 rounded-xl border bg-card px-4 py-3.5 outline-none transition-colors hover:border-faint focus-visible:ring-2 focus-visible:ring-ring"
+        to={incidentLink(i.page_id, i.id, view)}
+        replace
+        aria-current={current ? "true" : undefined}
+        className={cn(
+          "flex flex-col gap-1 border-b px-4 py-3 outline-none transition-colors hover:bg-muted/60 focus-visible:bg-muted",
+          current && "bg-muted"
+        )}
         data-testid="status-incident-row"
       >
-        <span aria-hidden className={cn("size-2.5 shrink-0 rounded-full", dotTone[tone(i)])} />
-        <span className="flex min-w-0 flex-1 flex-col leading-[1.35]">
-          <span className="flex min-w-0 items-center gap-2">
-            <span className="truncate font-semibold">{i.title}</span>
-            {page && <ProductTag name={inbox?.name ?? page.name} color={inbox?.branding.color} />}
-            {!i.published_at && (
-              <Pill tone="muted" data-testid="status-incident-draft-badge">
-                <Trans>Draft</Trans>
-              </Pill>
-            )}
-          </span>
-          <span className="truncate text-muted-foreground">
+        <span className="flex min-w-0 items-center gap-2.5">
+          <span aria-hidden className={cn("size-2 shrink-0 rounded-full", dotTone[incidentTone(i)])} />
+          <span className="min-w-0 flex-1 truncate font-medium">{i.title}</span>
+          {!i.published_at && (
+            <Pill tone="muted" data-testid="status-incident-draft-badge">
+              <Trans>Draft</Trans>
+            </Pill>
+          )}
+          <Pill tone={incidentTone(i)}>{text.incident[i.state]}</Pill>
+        </span>
+        <span className="flex min-w-0 items-center gap-2 ps-[18px] text-caption text-muted-foreground">
+          {page && <ProductTag name={inbox?.name ?? page.name} color={inbox?.branding.color} />}
+          <span className="min-w-0 truncate">
             {meta} · <Plural value={updates} one="# update" other="# updates" />
           </span>
         </span>
-        <Pill tone={tone(i)} data-testid="status-incident-state">
-          {text.incident[i.state]}
-        </Pill>
       </Link>
     </li>
   )
 }
 
-export function IncidentList({ items }: { items: StatusIncident[] }) {
-  const { items: pages, inboxOf } = useStatusScope()
-  const byId = new Map(pages.map((p) => [p.id, p]))
-  const components = usePagesComponents(pages.map((p) => p.id))
-  const names = new Map(components.map((c) => [c.id, c.name]))
-  const meta = useMeta()
-  const list = useRowFocus<HTMLUListElement>()
-  return (
-    <div className={cn(framePad, "max-w-[1028px]")}>
-      {items.length === 0 ? (
-        <p className="py-12 text-center text-faint" data-testid="status-incidents-empty">
-          <Trans>Nothing here.</Trans>
-        </p>
-      ) : (
-        <ul ref={list} className="flex flex-col gap-4">
-          {items.map((i) => {
-            const page = byId.get(i.page_id)
-            return (
-              <IncidentRow key={i.id} i={i} page={page} inbox={inboxOf(page)} meta={meta(i, (id) => names.get(id))} />
-            )
-          })}
-        </ul>
-      )}
-    </div>
-  )
-}
-
-export function useIncidentCounts(all: StatusIncident[]) {
-  return {
-    active: all.filter((i) => viewOf(i) === "active").length,
-    scheduled: all.filter((i) => viewOf(i) === "scheduled").length,
-  }
-}
-
-export function IncidentsPage({ detail }: { detail: (i: StatusIncident) => React.ReactNode }) {
-  const { pageId = "" } = useParams()
+export function IncidentsPage() {
+  const { t } = useLingui()
+  const navigate = useNavigate()
+  const { incidentId = "" } = useParams()
   const [params] = useSearchParams()
+  const phone = useIsPhone()
+  const { canManage } = useSession()
+  const { items: pages, pages: pagesQuery, inboxOf } = useStatusScope()
+  const incidents = useScopeIncidents(pages)
+  const meta = useMeta()
+  const [creating, setCreating] = useState<{ kind: StatusIncidentKind } | null>(null)
+  const [kept, setKept] = useState<{ id: string; view: View } | null>(null)
+  const byPage = new Map(pages.map((p) => [p.id, p]))
+  const all = incidents.data.filter((i) => byPage.has(i.page_id))
+  const selected = all.find((i) => i.id === incidentId)
   const raw = params.get("view") as View | null
-  const view: View = raw && VIEWS.includes(raw) ? raw : "active"
-  const { items, pages } = useStatusScope()
-  const incidents = useScopeIncidents(items)
-  const shown = incidents.data
-    .filter((i) => viewOf(i) === view)
+  const view: View =
+    raw && VIEWS.includes(raw)
+      ? raw
+      : kept && kept.id === incidentId
+        ? kept.view
+        : selected
+          ? viewOf(selected)
+          : "active"
+  const counts = { active: 0, scheduled: 0 }
+  for (const i of all) {
+    const v = viewOf(i)
+    if (v !== "past") counts[v]++
+  }
+  const rows = all
+    .filter((i) => viewOf(i) === view || (kept?.view === view && kept.id === i.id))
     .sort((a, b) =>
       view === "scheduled"
         ? (a.scheduled_start ?? a.created_at).localeCompare(b.scheduled_start ?? b.created_at)
-        : (b.started_at ?? b.created_at).localeCompare(a.started_at ?? a.created_at)
+        : (b.started_at ?? b.published_at ?? b.created_at).localeCompare(a.started_at ?? a.published_at ?? a.created_at)
     )
-  const loading = pages.isPending || (items.length > 0 && incidents.isPending)
+  const shown = selected ?? (phone ? undefined : rows[0])
+  const shownPage = shown && byPage.get(shown.page_id)
+  const loading = pagesQuery.isPending || (pages.length > 0 && incidents.isPending)
+  const incidentKey = keyLabel(INCIDENT_KEYS.incident).join("")
+  const maintenanceKey = keyLabel(INCIDENT_KEYS.maintenance).join("")
+  const canCreate = pages.length > 0
+  const to = (v: View) => (v === "active" ? "/incidents" : `/incidents?view=${v}`)
+
+  const step = (by: number) => {
+    const at = shown ? rows.findIndex((i) => i.id === shown.id) : -1
+    const next = rows[Math.min(rows.length - 1, Math.max(0, at + by))]
+    if (next) navigate(incidentLink(next.page_id, next.id, view), { replace: true })
+  }
+  useHotkeys(
+    {
+      j: () => step(1),
+      k: () => step(-1),
+      ArrowDown: () => step(1),
+      ArrowUp: () => step(-1),
+      [INCIDENT_KEYS.active]: () => navigate(to("active")),
+      [INCIDENT_KEYS.scheduled]: () => navigate(to("scheduled")),
+      [INCIDENT_KEYS.past]: () => navigate(to("past")),
+      ...(canCreate
+        ? {
+            [INCIDENT_KEYS.incident]: () => setCreating({ kind: "incident" }),
+            [INCIDENT_KEYS.maintenance]: () => setCreating({ kind: "maintenance" }),
+          }
+        : {}),
+    },
+    !creating
+  )
+
+  const tabs = [
+    { key: "active" as const, label: t`Active`, count: counts.active },
+    { key: "scheduled" as const, label: t`Scheduled`, count: counts.scheduled },
+    { key: "past" as const, label: t`Past`, count: undefined },
+  ].map((x) => ({ ...x, to: to(x.key), testId: `status-incidents-${x.key}` }))
+
+  const emptyText = {
+    active: t`Nothing is wrong right now. Open an incident when something breaks.`,
+    scheduled: t`No maintenance is planned.`,
+    past: t`Nothing has been resolved yet.`,
+  }[view]
+
+  const detail = loading ? (
+    <div className="flex flex-col gap-4 p-6">
+      <Skeleton className="h-8 w-60" />
+      <Skeleton className="h-24 w-full rounded-xl" />
+    </div>
+  ) : shown && shownPage ? (
+    <IncidentDetail
+      key={shown.id}
+      page={shownPage}
+      i={shown}
+      justResolved={kept?.id === shown.id}
+      onClosed={(id) => setKept({ id, view })}
+      onDeleted={() => navigate("/incidents", { replace: true })}
+    />
+  ) : rows.length > 0 ? (
+    <p className="p-10 text-center text-faint">
+      <Trans>Pick an incident to read it.</Trans>
+    </p>
+  ) : null
+
   return (
-    <IncidentsFrame view={view} pageId={pageId} counts={useIncidentCounts(incidents.data)}>
-      <ErrorLine error={pages.error ?? incidents.error} className="m-6" />
-      {loading ? (
-        <div className={framePad}>
-          <Skeleton className="h-16 w-full max-w-[980px] rounded-xl" />
-          <Skeleton className="h-16 w-full max-w-[980px] rounded-xl" />
+    <main className="flex min-h-0 min-w-0 flex-1 flex-col bg-background" data-testid="status-incidents">
+      {phone && incidentId ? (
+        <div className="px-4 pt-3">
+          <PaneBack to={to(view)} label={t`Incidents`} always />
         </div>
-      ) : view === "active" && shown.length === 1 ? (
-        detail(shown[0])
       ) : (
-        <IncidentList items={shown} />
+        <PageTop
+          title={<Trans>Incidents</Trans>}
+          sub={<Trans>What went wrong and what you told people</Trans>}
+          actions={
+            canCreate && (
+              <>
+                <Button
+                  variant="outline"
+                  className={look.btn}
+                  onClick={() => setCreating({ kind: "maintenance" })}
+                  title={t`Plan maintenance (${maintenanceKey})`}
+                  data-testid="status-new-maintenance"
+                >
+                  <Trans>Plan maintenance</Trans>
+                </Button>
+                <Button
+                  className={look.btnInk}
+                  onClick={() => setCreating({ kind: "incident" })}
+                  title={t`New incident (${incidentKey})`}
+                  data-testid="status-new-incident"
+                >
+                  <Trans>New incident</Trans>
+                </Button>
+              </>
+            )
+          }
+          tabs={<FrameTabs label={t`Incidents`} value={view} items={tabs} />}
+        />
       )}
-    </IncidentsFrame>
+      <ErrorLine error={pagesQuery.error ?? incidents.error} className="m-6" />
+      <div className="flex min-h-0 flex-1 overflow-hidden">
+        <div
+          className={cn(
+            "flex w-[340px] shrink-0 flex-col overflow-y-auto border-e phone:w-full phone:border-e-0",
+            phone && incidentId && "hidden"
+          )}
+        >
+          {loading ? (
+            <div className="flex flex-col gap-2 p-4">
+              <Skeleton className="h-14 w-full rounded-xl" />
+              <Skeleton className="h-14 w-full rounded-xl" />
+            </div>
+          ) : pages.length === 0 ? (
+            <div className="m-4 flex flex-col items-center gap-2 rounded-xl border border-dashed px-6 py-10 text-center">
+              <p className="text-body text-muted-foreground">
+                <Trans>Incidents live on a status page. Create one first.</Trans>
+              </p>
+              {canManage && (
+                <Button variant="outline" className={look.btnSm} render={<Link to="/status" />}>
+                  <Trans>Status pages</Trans>
+                </Button>
+              )}
+            </div>
+          ) : rows.length === 0 ? (
+            <div
+              className="m-4 flex flex-col items-center gap-3 rounded-xl border border-dashed px-6 py-10 text-center"
+              data-testid="status-incidents-empty"
+            >
+              {view === "scheduled" ? (
+                <CalendarClockIcon className="size-5 text-faint" />
+              ) : view === "past" ? (
+                <CheckCircle2Icon className="size-5 text-faint" />
+              ) : (
+                <FlameIcon className="size-5 text-faint" />
+              )}
+              <p className="text-body text-muted-foreground">{emptyText}</p>
+              {view !== "past" && (
+                <Button
+                  variant="outline"
+                  className={look.btnSm}
+                  onClick={() => setCreating({ kind: view === "scheduled" ? "maintenance" : "incident" })}
+                >
+                  {view === "scheduled" ? <Trans>Plan maintenance</Trans> : <Trans>New incident</Trans>}
+                </Button>
+              )}
+            </div>
+          ) : (
+            <ul aria-label={t`Incidents`} data-testid="status-incident-list">
+              {rows.map((i) => {
+                const page = byPage.get(i.page_id)
+                return (
+                  <Row
+                    key={i.id}
+                    i={i}
+                    page={page}
+                    inbox={inboxOf(page)}
+                    meta={meta(i)}
+                    current={i.id === shown?.id}
+                    view={view}
+                  />
+                )
+              })}
+            </ul>
+          )}
+        </div>
+        <div className={cn("@container min-w-0 flex-1 overflow-y-auto", phone && !incidentId && "hidden")}>
+          {detail}
+        </div>
+      </div>
+      {creating && (
+        <IncidentDialog
+          pages={pages}
+          pageId={shown?.page_id}
+          kind={creating.kind}
+          onClose={() => setCreating(null)}
+          onDone={(i) => {
+            setCreating(null)
+            navigate(incidentLink(i.page_id, i.id, viewOf(i)))
+          }}
+        />
+      )}
+    </main>
   )
 }

@@ -1,13 +1,25 @@
 import { Trans, useLingui } from "@lingui/react/macro"
 import { ArrowDownRightIcon, ArrowUpRightIcon } from "lucide-react"
+import { useState } from "react"
 import { Link } from "react-router"
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
 
+import { Segmented } from "@/components/common"
 import { ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig } from "@/components/ui/chart"
 import { Skeleton } from "@/components/ui/skeleton"
 import { AddNoteButton, annotationMarks, AnnotationList } from "@/features/analytics/Annotations"
-import { deviceCard, RowLabel, type Group } from "@/features/analytics/Breakdown"
-import { Panel, PanelProblem, QueryProblem, useCurrentProperty } from "@/features/analytics/parts"
+import { deviceCard, groupDimensions, RowLabel, type Group } from "@/features/analytics/Breakdown"
+import { OverviewInsights } from "@/features/analytics/Insights"
+import {
+  Attribution,
+  BarList,
+  ConsentedOnly,
+  offersPersistent,
+  Panel,
+  PanelProblem,
+  QueryProblem,
+  useCurrentProperty,
+} from "@/features/analytics/parts"
 import { useAnalytics, useAnnotations, useRealtime, useShare } from "@/features/analytics/queries"
 import { grainFor, scopeOf, todayIso, useView, useViewSearch, type View } from "@/features/analytics/state"
 import {
@@ -403,22 +415,24 @@ function VisitorsChart() {
 function Box({
   group,
   title,
-  dim,
+  dims,
   mono,
   testId,
 }: {
   group: Group
   title: React.ReactNode
-  dim: AnalyticsFilterDimension
+  dims: AnalyticsFilterDimension[]
   mono?: boolean
   testId: string
 }) {
-  const { i18n } = useLingui()
+  const { t, i18n } = useLingui()
   const text = useAnalyticsText()
   const property = useCurrentProperty()
   const share = useShare()
   const search = useViewSearch()
   const { view, addFilter } = useView()
+  const [picked, setPicked] = useState(dims[0])
+  const dim = dims.includes(picked) ? picked : dims[0]
   const q = useAnalytics(property.id, {
     metrics: ["visitors"],
     dimensions: [dim],
@@ -438,7 +452,17 @@ function Box({
             {title}
           </Link>
         </h2>
-        <span className="text-caption text-faint">{text.metric.visitors.toLocaleLowerCase(i18n.locale)}</span>
+        {dims.length > 1 ? (
+          <Segmented
+            value={dim}
+            onChange={setPicked}
+            label={t`Breakdown`}
+            itemClassName="h-6 px-2 text-small"
+            items={dims.map((d) => ({ value: d, label: text.dimension[d] }))}
+          />
+        ) : (
+          <span className="text-caption text-faint">{text.metric.visitors.toLocaleLowerCase(i18n.locale)}</span>
+        )}
       </div>
       {q.isPending ? (
         <Skeleton className="m-4 h-36" />
@@ -491,7 +515,62 @@ function Box({
           })}
         </ul>
       )}
+      {group === "locations" && <Attribution propertyId={property.id} className="mt-auto border-t px-4 py-2" />}
     </section>
+  )
+}
+
+function VisitorTypeCard() {
+  const { i18n } = useLingui()
+  const text = useAnalyticsText()
+  const property = useCurrentProperty()
+  const { view, addFilter } = useView()
+  const q = useAnalytics(property.id, {
+    metrics: ["visitors"],
+    dimensions: ["visitor_type"],
+    range: view.range,
+    ...scopeOf(view),
+  })
+  const rows = (q.data?.rows ?? []).filter((r) => r.dimensions[0] === "new" || r.dimensions[0] === "returning")
+  return (
+    <Panel
+      title={<Trans>New and returning</Trans>}
+      action={<ConsentedOnly />}
+      testId="card-visitor-type"
+      footer={
+        <Link
+          to={`/analytics/${property.id}/retention`}
+          className="text-small text-brand underline-offset-4 hover:underline"
+        >
+          <Trans>Retention</Trans>
+        </Link>
+      }
+    >
+      {q.isPending ? (
+        <Skeleton className="h-16 w-full" />
+      ) : q.error ? (
+        <PanelProblem error={q.error} />
+      ) : rows.length === 0 ? (
+        <p className="px-2 py-6 text-center text-body text-faint">
+          <Trans>No consented visitors in this range.</Trans>
+        </p>
+      ) : (
+        <BarList
+          head={[text.dimension.visitor_type, text.metric.visitors]}
+          items={rows.map((r) => {
+            const value = r.dimensions[0] ?? ""
+            const v = num(r.metrics, "visitors") ?? 0
+            return {
+              key: value,
+              label: text.visitorType[value],
+              value: v,
+              display: formatCompact(v, i18n.locale),
+              onClick: () => addFilter("visitor_type", value),
+            }
+          })}
+        />
+      )}
+    </Panel>
   )
 }
 
@@ -499,16 +578,43 @@ export function Overview() {
   const property = useCurrentProperty()
   const text = useAnalyticsText()
   const share = useShare()
+  const { view } = useView()
   const shown = (g: Group) => !share || share.views.includes(g)
-  const devices = deviceCard(property)[0]
   return (
     <div className="flex flex-col gap-4" data-testid="analytics-overview">
       <Kpis />
+      {!share && <OverviewInsights property={property} view={view} />}
       <VisitorsChart />
-      <div className="grid grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)_minmax(0,1fr)] gap-4 max-lg:grid-cols-1">
-        {shown("pages") && <Box group="pages" title={text.title.top} dim="page" mono testId="card-pages" />}
-        {shown("sources") && <Box group="sources" title={<Trans>Sources</Trans>} dim="source" testId="card-sources" />}
-        {shown("devices") && <Box group="devices" title={<Trans>Devices</Trans>} dim={devices} testId="card-devices" />}
+      <div className="grid gap-4 md:grid-cols-2">
+        {shown("pages") && (
+          <Box
+            group="pages"
+            title={text.title.top}
+            dims={["page", "entry_page", "exit_page"]}
+            mono
+            testId="card-pages"
+          />
+        )}
+        {shown("sources") && (
+          <Box
+            group="sources"
+            title={<Trans>Sources</Trans>}
+            dims={["channel", "source", "utm_campaign"]}
+            testId="card-sources"
+          />
+        )}
+        {shown("locations") && (
+          <Box
+            group="locations"
+            title={<Trans>Locations</Trans>}
+            dims={groupDimensions("locations", property)}
+            testId="card-locations"
+          />
+        )}
+        {shown("devices") && (
+          <Box group="devices" title={<Trans>Devices</Trans>} dims={deviceCard(property)} testId="card-devices" />
+        )}
+        {!share && offersPersistent(property) && <VisitorTypeCard />}
       </div>
     </div>
   )

@@ -7,6 +7,10 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: zh-Hans\n"
 
+#: src/features/roadmap/CreateBoardDialog.tsx
+msgid "{inboxName} has no web chat channel. Add one first, because the public board embeds it."
+msgstr "{inboxName} 没有网页聊天渠道。请先添加一个，因为公开看板会嵌入它。"
+
 #: src/features/roadmap/Board.tsx
 msgid "{linked, plural, one {# feedback} other {# feedback}}"
 msgstr "{linked, plural, other {# 条反馈}}"
@@ -29,9 +33,25 @@ msgid "A reader's posts wait for a member until one of theirs is approved. Signe
 msgstr "读者的帖子会等待成员审核,直到其中一篇被批准。已登录你应用的用户会直接发布。"
 
 #: src/features/roadmap/CreateBoardDialog.tsx
+msgid "Add a web chat channel"
+msgstr "添加网页聊天渠道"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
 #: src/features/roadmap/Settings.tsx
 msgid "Address"
 msgstr "地址"
+
+#: src/features/roadmap/BoardBar.tsx
+msgid "All boards"
+msgstr "所有看板"
+
+#: src/features/roadmap/Settings.tsx
+msgid "All changes saved."
+msgstr "所有更改已保存。"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "All feedback from {inboxName} that fits is already linked."
+msgstr "{inboxName} 中所有合适的反馈都已关联。"
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Already linked"
@@ -89,13 +109,16 @@ msgstr "在不使用 Cookie 的情况下统计公开看板的页面浏览量。"
 
 #: src/features/roadmap/CreateBoardDialog.tsx
 #: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
 msgid "Create board"
 msgstr "创建看板"
 
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Create board ({newKey})"
 msgstr "创建看板（{newKey}）"
+
+#: src/features/roadmap/BoardBar.tsx
+msgid "Create board for {name}"
+msgstr "为 {name} 创建看板"
 
 #: src/features/roadmap/NewIdeaDialog.tsx
 msgid "Create idea"
@@ -123,17 +146,21 @@ msgstr "删除看板及其想法、投票、回复和阶段历史。已关联的
 msgid "Description"
 msgstr "描述"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Dismiss"
+msgstr "关闭"
+
 #: src/features/roadmap/Board.tsx
 msgid "Done"
 msgstr "完成"
 
-#: src/features/roadmap/MoveDialog.tsx
-msgid "Every linked feedback that does not have it yet gets the progress {progress}. Linked feedback: {linked}"
-msgstr "每条尚未处于“{progress}”进展的已关联反馈都会被设为该进展。已关联的反馈：{linked}"
-
 #: src/features/roadmap/Settings.tsx
 msgid "Everyone's posts are published at once, except those of authors you marked as spam."
 msgstr "所有人的帖子都会立即发布,但你标记为垃圾的作者除外。"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Good news: “{title}” has shipped. Thank you for asking for it."
+msgstr "好消息：“{title}”已发布。感谢你的提议。"
 
 #: src/features/roadmap/Board.tsx
 msgid "Hidden"
@@ -155,21 +182,30 @@ msgstr "客户投票的想法，以及背后的反馈"
 msgid "Ideas, votes and stages for {inboxName}, with the feedback behind each idea. It stays private until you make it public."
 msgstr "{inboxName} 的想法、投票和阶段，以及每个想法背后的反馈。在你将其设为公开之前，它保持私有。"
 
-#: src/features/roadmap/RoadmapColumn.tsx
-msgid "Ideas: {ideas}"
-msgstr "想法：{ideas}"
-
 #: src/features/roadmap/NewIdeaDialog.tsx
 msgid "It goes into Ideas on the board, where customers can vote on it."
 msgstr "它会进入看板上的“想法”，客户可以为它投票。"
 
-#: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/NewIdeaDialog.tsx
+msgid "It goes into Ideas on the board. The board is private, so only your team sees it."
+msgstr "它会进入看板的“想法”阶段。看板是私有的，只有你的团队能看到。"
+
+#: src/features/roadmap/IdeaFeedback.tsx
 msgid "It was unlinked from the idea."
 msgstr "已与该想法取消关联。"
 
 #: src/features/roadmap/Settings.tsx
 msgid "Its ideas, votes, replies and stage history are deleted with it."
 msgstr "其想法、投票、回复和阶段历史将一并删除。"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgctxt "link feedback to the idea"
+msgid "Link"
+msgstr "关联"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Link feedback"
+msgstr "关联反馈"
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Link this feedback to an idea…"
@@ -179,13 +215,21 @@ msgstr "将此反馈关联到某个想法…"
 msgid "Link to an idea"
 msgstr "关联到想法"
 
-#: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Linked"
+msgstr "已关联"
+
+#: src/features/roadmap/IdeaFeedback.tsx
 msgid "Linked feedback"
 msgstr "已关联的反馈"
 
 #: src/features/roadmap/IdeaPane.tsx
 msgid "Linked feedback set to {progress}: {set}"
 msgstr "已将关联的反馈设为“{progress}”：{set}"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Linked feedback that gets the progress {progress}: {gets} of {linked}."
+msgstr "将获得进度“{progress}”的已关联反馈：{linked} 条中的 {gets} 条。"
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Linked to {title}"
@@ -195,19 +239,19 @@ msgstr "已关联到 {title}"
 msgid "Load more"
 msgstr "加载更多"
 
-#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Make private"
 msgstr "设为私有"
 
-#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Make private ({publicKey})"
 msgstr "设为私有（{publicKey}）"
 
-#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Make public"
 msgstr "设为公开"
 
-#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Make public ({publicKey})"
 msgstr "设为公开（{publicKey}）"
 
@@ -254,25 +298,37 @@ msgstr "新想法"
 msgid "New idea from this feedback"
 msgstr "用此反馈创建新想法"
 
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/pages.tsx
+msgid "No board is public yet. Make one public under Settings."
+msgstr "还没有公开的看板。请在设置中公开一个。"
+
+#: src/features/roadmap/pages.tsx
 msgid "No board yet. Owners and admins create it."
 msgstr "还没有看板。由所有者和管理员创建。"
 
-#: src/features/roadmap/IdeaPane.tsx
-msgid "No feedback is linked yet. Open a piece of feedback and use Link to an idea."
-msgstr "还没有关联的反馈。打开一条反馈并使用“关联到想法”。"
+#: src/features/roadmap/MoveDialog.tsx
+msgid "No feedback is linked to this idea yet."
+msgstr "还没有反馈关联到这个想法。"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "No feedback is linked yet. Use Link feedback, or open a piece of feedback and choose Link to an idea."
+msgstr "还没有已关联的反馈。使用“关联反馈”，或打开一条反馈并选择“关联到想法”。"
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "No idea matches."
 msgstr "没有匹配的想法。"
 
-#: src/features/roadmap/RoadmapColumn.tsx
-msgid "No inbox to show a board for."
-msgstr "没有可显示看板的收件箱。"
+#: src/features/roadmap/Board.tsx
+msgid "No ideas yet. New ones land here."
+msgstr "还没有想法。新的想法会出现在这里。"
 
 #: src/features/roadmap/Settings.tsx
 msgid "None"
 msgstr "无"
+
+#: src/features/roadmap/Board.tsx
+msgid "Nothing here yet."
+msgstr "这里还没有内容。"
 
 #: src/features/roadmap/Settings.tsx
 msgid "Off"
@@ -282,7 +338,7 @@ msgstr "关"
 msgid "On: anyone with the address reads the board, and signed-in readers vote and suggest ideas. Off: only your team sees it, as a tool to sort feedback."
 msgstr "开启：任何知道地址的人都可以阅读看板，已登录的读者可以投票并提出想法。关闭：只有你的团队能看到，用作整理反馈的工具。"
 
-#: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/IdeaFeedback.tsx
 msgid "One reply, written once, goes to every open feedback conversation linked to this idea, as you, on each conversation’s own channel."
 msgstr "一条回复只需写一次，就会以你的名义，通过每个对话各自的渠道，发送给关联到此想法的每个未关闭的反馈对话。"
 
@@ -290,9 +346,22 @@ msgstr "一条回复只需写一次，就会以你的名义，通过每个对话
 msgid "Open"
 msgstr "未关闭"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgctxt "open the feedback"
+msgid "Open"
+msgstr "打开"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Open Analytics"
+msgstr "打开分析"
+
 #: src/features/roadmap/IdeaPane.tsx
 msgid "Open on the public board"
 msgstr "在公开看板上打开"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Open Roadmap"
+msgstr "打开路线图"
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Pick an idea of this inbox’s board"
@@ -302,17 +371,11 @@ msgstr "从此收件箱的看板中选择一个想法"
 msgid "Posted as your public reply on the idea. Markdown works."
 msgstr "将作为你对该想法的公开回复发布。支持 Markdown。"
 
-#: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Private"
 msgstr "私有"
 
-#: src/features/roadmap/pages.tsx
-msgid "Private, only your team sees it"
-msgstr "私有，只有你的团队能看到"
-
-#: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/BoardBar.tsx
 #: src/features/roadmap/Settings.tsx
 msgid "Public"
 msgstr "公开"
@@ -329,19 +392,37 @@ msgstr "读者无法提出想法。投票和回复仍然可用。"
 msgid "Readers suggested new ideas. Review them before they show on the public board."
 msgstr "读者提出了新想法。请在它们出现在公开看板之前审核。"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Reply to everyone"
+msgstr "回复所有人"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Reply to linked ({key})"
+msgstr "回复已关联的对话 ({key})"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Resolved feedback does not get it: {closed}"
+msgstr "已解决的反馈不会收到：{closed}"
+
 #: src/features/roadmap/Board.tsx
 msgid "Review"
 msgstr "审核"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Review the reply"
+msgstr "检查回复"
+
 #: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
 msgid "Roadmap"
 msgstr "路线图"
 
-#: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Roadmap boards"
 msgstr "路线图看板"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Save"
+msgstr "保存"
 
 #: src/features/roadmap/Settings.tsx
 msgid "Saved"
@@ -355,9 +436,13 @@ msgstr "搜索想法"
 msgid "Settings"
 msgstr "设置"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Shipped. Open feedback linked to it: {open}. A reply is ready to send."
+msgstr "已发布。与其关联的未关闭反馈：{open}。回复已准备好发送。"
+
 #: src/features/roadmap/pages.tsx
-msgid "Show your customers what you are building, and link the feedback behind each idea. Create a board for an inbox to sort ideas into stages."
-msgstr "向客户展示你在构建什么，并关联每个想法背后的反馈。为收件箱创建看板，把想法按阶段整理。"
+msgid "Show your customers what you are building, and link the feedback behind each idea. Create a board for {missingName} to sort ideas into stages."
+msgstr "向客户展示你正在构建什么，并关联每个想法背后的反馈。为 {missingName} 创建看板，把想法按阶段整理。"
 
 #: src/features/roadmap/Settings.tsx
 msgid "Shown under the name on the public board."
@@ -404,6 +489,10 @@ msgstr "已关联反馈的进展不会改变。已关联的反馈：{linked}"
 msgid "The public board embeds this chat, and ideas your team starts are filed on it."
 msgstr "公开看板会嵌入此聊天，你的团队创建的想法会归档到其中。"
 
+#: src/features/roadmap/MoveDialog.tsx
+msgid "The rest already have it."
+msgstr "其余的已有该进度。"
+
 #: src/features/roadmap/pages.tsx
 msgid "This board no longer exists or you cannot see it."
 msgstr "此看板已不存在，或你无法查看。"
@@ -412,14 +501,18 @@ msgstr "此看板已不存在，或你无法查看。"
 msgid "This inbox has no roadmap board. Create one under Roadmap first."
 msgstr "此收件箱没有路线图看板。请先在“路线图”中创建一个。"
 
-#: src/features/roadmap/CreateBoardDialog.tsx
-msgid "This inbox has no web chat channel. Add one first, because the public board embeds it."
-msgstr "此收件箱没有网页聊天渠道。请先添加一个，因为公开看板会嵌入它。"
-
 #: src/features/roadmap/LinkIdeaDialog.tsx
 #: src/features/roadmap/NewIdeaDialog.tsx
 msgid "Title"
 msgstr "标题"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Unlink"
+msgstr "取消关联"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Unlinked feedback from {inboxName}"
+msgstr "{inboxName} 中尚未关联的反馈"
 
 #: src/features/roadmap/Settings.tsx
 msgid "Use 3 to 48 letters, numbers and inner hyphens."
@@ -437,6 +530,6 @@ msgstr "可见性"
 msgid "Waiting for approval"
 msgstr "等待审核"
 
-#: src/features/roadmap/RoadmapColumn.tsx
-msgid "Waiting for approval: {pending}"
-msgstr "等待审核：{pending}"
+#: src/features/roadmap/Settings.tsx
+msgid "You have unsaved changes."
+msgstr "你有未保存的更改。"

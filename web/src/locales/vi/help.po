@@ -77,8 +77,8 @@ msgid "Another help center already uses this address, now or before."
 msgstr "Một trung tâm trợ giúp khác đang hoặc đã dùng địa chỉ này."
 
 #: src/features/help/pages.tsx
-msgid "Answer common questions once, in writing. Each product gets its own help center with articles, collections and a report of what people search for."
-msgstr "Trả lời các câu hỏi thường gặp một lần, bằng văn bản. Mỗi sản phẩm có trung tâm trợ giúp riêng với bài viết, bộ sưu tập và báo cáo về những gì mọi người tìm kiếm."
+msgid "Answer common questions once, in writing. Each product gets its own help center with articles, collections and a report of what people search for. Pages are hosted by Yuva, so there is nothing to install on your site."
+msgstr "Trả lời các câu hỏi thường gặp một lần, bằng văn bản. Mỗi sản phẩm có trung tâm trợ giúp riêng với bài viết, bộ sưu tập và báo cáo về những gì mọi người tìm kiếm. Trang do Yuva lưu trữ nên không cần cài gì trên trang web của bạn."
 
 #: src/features/help/pages.tsx
 msgid "Answer common questions once, in writing. Pick an inbox’s help center to write articles, group them in collections and see what customers search for."
@@ -162,6 +162,7 @@ msgstr "Danh sách dấu đầu dòng"
 msgid "Cancel"
 msgstr "Hủy"
 
+#: src/features/help/ArticleEditor.tsx
 #: src/features/help/ArticlesTab.tsx
 msgid "Changed"
 msgstr "Đã thay đổi"
@@ -226,11 +227,6 @@ msgstr "Tạo trung tâm trợ giúp"
 #: src/features/help/HelpColumn.tsx
 msgid "Create help center ({newKey})"
 msgstr "Tạo trung tâm trợ giúp ({newKey})"
-
-#. placeholder {0}: inbox.name
-#: src/features/help/pages.tsx
-msgid "Create one for {0}"
-msgstr "Tạo một cái cho {0}"
 
 #: src/features/help/CollectionsTab.tsx
 #: src/features/help/SettingsTab.tsx
@@ -342,11 +338,16 @@ msgstr "Nhóm các bài viết để khách truy cập có thể duyệt. Một 
 msgid "Heading"
 msgstr "Tiêu đề"
 
+#: src/features/help/CenterBar.tsx
 #: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 #: src/features/help/SettingsTab.tsx
 msgid "Help center"
 msgstr "Trung tâm trợ giúp"
+
+#: src/features/help/pages.tsx
+msgid "Help center created. Write the first article, then publish it."
+msgstr "Đã tạo trung tâm trợ giúp. Hãy viết bài đầu tiên rồi xuất bản."
 
 #: src/features/help/SettingsTab.tsx
 msgid "Help center deleted"
@@ -445,7 +446,10 @@ msgid "Main language"
 msgstr "Ngôn ngữ chính"
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+msgid "Mark up to date"
+msgstr "Đánh dấu là mới nhất"
+
+#: src/features/help/ArticleEditor.tsx
 msgid "More"
 msgstr "Thêm"
 
@@ -522,6 +526,11 @@ msgstr "Không có bản nháp. Mọi thứ đã viết đều được xuất b
 msgid "No earlier versions yet."
 msgstr "Chưa có phiên bản trước."
 
+#. placeholder {0}: target.inbox.name
+#: src/features/help/pages.tsx
+msgid "No help center for {0} yet"
+msgstr "Chưa có trung tâm trợ giúp cho {0}"
+
 #: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 msgid "No help center yet. Owners and admins create it."
@@ -540,6 +549,7 @@ msgstr "Không có"
 msgid "not named"
 msgstr "chưa đặt tên"
 
+#: src/features/help/ArticleEditor.tsx
 #: src/features/help/ArticlesTab.tsx
 msgid "Not written"
 msgstr "Chưa viết"
@@ -555,6 +565,10 @@ msgstr "trên {answers} câu trả lời"
 #: src/features/help/SettingsTab.tsx
 msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish and unpublish too."
 msgstr "Tắt: nhân viên viết bản nháp và gửi, chủ sở hữu và quản trị viên xuất bản. Bật: nhân viên có quyền vào hộp thư cũng xuất bản và hủy xuất bản."
+
+#: src/features/help/SettingsTab.tsx
+msgid "On: anyone with the address can read the help center. Off: only your team can preview it."
+msgstr "Bật: ai có địa chỉ đều có thể đọc trung tâm trợ giúp. Tắt: chỉ nhóm của bạn xem trước được."
 
 #: src/features/help/ArticleEditor.tsx
 msgid "One path per line, such as /billing/*. The chat widget suggests this article on matching pages."
@@ -618,6 +632,10 @@ msgstr "Xem trước"
 msgid "Preview ({alt} P)"
 msgstr "Xem trước ({alt} P)"
 
+#: src/features/help/pages.tsx
+msgid "Preview ({previewKey})"
+msgstr "Xem trước ({previewKey})"
+
 #. placeholder {0}: center.name
 #: src/features/help/pages.tsx
 msgid "Preview of {0}"
@@ -632,22 +650,27 @@ msgid "Public address"
 msgstr "Địa chỉ công khai"
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "Publish"
 msgstr "Xuất bản"
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "Publish ({publishKey})"
 msgstr "Xuất bản ({publishKey})"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/CenterBar.tsx
 #: src/features/help/HelpColumn.tsx
-#: src/features/help/pages.tsx
 #: src/features/help/Revisions.tsx
+#: src/features/help/SettingsTab.tsx
 #: src/features/help/text.tsx
 msgid "Published"
 msgstr "Đã xuất bản"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Publishing"
+msgstr "Xuất bản"
 
 #: src/features/help/text.tsx
 msgid "Question mark"
@@ -758,6 +781,10 @@ msgstr "Khiên"
 msgid "Show"
 msgstr "Hiện"
 
+#: src/features/help/ArticleEditor.tsx
+msgid "Show original"
+msgstr "Hiện bản gốc"
+
 #: src/features/help/SettingsTab.tsx
 msgid "Shown under the name on the home page."
 msgstr "Hiển thị dưới tên trên trang chủ."
@@ -831,6 +858,10 @@ msgid "The main language has no text for this article yet."
 msgstr "Ngôn ngữ chính chưa có nội dung cho bài viết này."
 
 #: src/features/help/ArticleEditor.tsx
+msgid "The original changed after this translation was written. Compare them, then mark it up to date."
+msgstr "Bản gốc đã thay đổi sau khi bản dịch này được viết. Hãy so sánh rồi đánh dấu là mới nhất."
+
+#: src/features/help/ArticleEditor.tsx
 msgid "The page stops working for visitors. The draft stays, and you can publish it again."
 msgstr "Trang ngừng hoạt động với khách truy cập. Bản nháp vẫn còn và bạn có thể xuất bản lại."
 
@@ -880,15 +911,24 @@ msgid "Type a word to search for."
 msgstr "Nhập một từ để tìm."
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "Unpublish"
 msgstr "Hủy xuất bản"
+
+#: src/features/help/CenterBar.tsx
+msgid "Unpublish ({publishKey})"
+msgstr "Hủy xuất bản ({publishKey})"
+
+#: src/features/help/CenterBar.tsx
+msgid "Unpublish this help center?"
+msgstr "Hủy xuất bản trung tâm trợ giúp này?"
 
 #: src/features/help/ArticleEditor.tsx
 msgid "Unpublish this translation?"
 msgstr "Hủy xuất bản bản dịch này?"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/CenterBar.tsx
 #: src/features/help/HelpColumn.tsx
 msgid "Unpublished"
 msgstr "Chưa xuất bản"
@@ -896,10 +936,6 @@ msgstr "Chưa xuất bản"
 #: src/features/help/text.tsx
 msgid "Unpublished changes"
 msgstr "Thay đổi chưa xuất bản"
-
-#: src/features/help/pages.tsx
-msgid "Unpublished, only your team can preview it"
-msgstr "Chưa xuất bản, chỉ nhóm của bạn xem trước được"
 
 #: src/features/help/ArticleEditor.tsx
 msgid "Unsaved changes"
@@ -929,11 +965,11 @@ msgstr "Đã khôi phục phiên bản vào bản nháp"
 msgid "View"
 msgstr "Xem"
 
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "View site"
 msgstr "Xem trang web"
 
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "View site ({openKey})"
 msgstr "Xem trang web ({openKey})"
 
@@ -945,13 +981,13 @@ msgstr "Lượt xem"
 msgid "Views · 7 days"
 msgstr "Lượt xem · 7 ngày"
 
+#: src/features/help/CenterBar.tsx
+msgid "Visitors can no longer open it and the chat widget stops suggesting its articles. Your articles stay as they are."
+msgstr "Khách truy cập sẽ không mở được nữa và tiện ích trò chuyện ngừng đề xuất các bài viết. Bài viết của bạn được giữ nguyên."
+
 #: src/features/help/ReportTab.tsx
 msgid "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
 msgstr "Những gì khách truy cập đọc và tìm. Lượt xem chỉ là ước tính, và số liệu đến trang này trong vòng một phút."
-
-#: src/features/help/SettingsTab.tsx
-msgid "Who can publish"
-msgstr "Ai có thể xuất bản"
 
 #: src/features/help/ReportTab.tsx
 msgid "Words visitors typed that found nothing. A new article for each is the fastest fix."
@@ -965,6 +1001,10 @@ msgstr "Viết"
 #: src/features/help/ArticleEditor.tsx
 msgid "Write the answer in Markdown…"
 msgstr "Viết câu trả lời bằng Markdown…"
+
+#: src/features/help/CenterBar.tsx
+msgid "Written here, shown on pages Yuva hosts, searched from the chat widget and the reply box. Documentation pages on your own site live under <0>Docs</0>."
+msgstr "Viết tại đây, hiển thị trên các trang do Yuva lưu trữ, và tìm kiếm từ tiện ích trò chuyện và hộp trả lời. Các trang tài liệu trên trang web của bạn nằm ở <0>Docs</0>."
 
 #: src/features/help/SettingsTab.tsx
 msgid "Your product."

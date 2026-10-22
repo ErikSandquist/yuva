@@ -23,7 +23,9 @@ import { Command, CommandEmpty, CommandItem, CommandList } from "@/components/ui
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Textarea } from "@/components/ui/textarea"
-import { Item } from "@/components/ui/item"
+import { look } from "@/features/inbox/PageFrame"
+
+const EmojiPanel = lazy(() => import("@/features/conversation/composer/EmojiPanel"))
 
 export type ReplyHandle = {
   focus: (mode?: "message" | "note") => void
@@ -35,8 +37,6 @@ export type ReplyHandle = {
 }
 
 const MAX_FILES = 10
-
-const EmojiPanel = lazy(() => import("@/features/conversation/composer/EmojiPanel"))
 
 function FileThumb({ file }: { file: File }) {
   const preview = useCallback(
@@ -64,43 +64,30 @@ function Suggestion({
   onUse: () => void
   onDiscard: () => void
 }) {
-  const { t } = useLingui()
   const author = useAuthorName(m, ctx)
   return (
     <div
-      className="mx-2.5 mb-2 flex items-start gap-2.5 rounded-xl border border-dashed border-brand/35 bg-brand-wash/60 py-2.5 ps-3 pe-1.5 text-small text-muted-foreground transition-colors hover:border-solid hover:text-foreground"
+      className="mx-2.5 mb-2 flex flex-col gap-2 rounded-xl border border-dashed border-brand/50 bg-brand-wash/60 px-3 py-2.5 text-small"
       data-testid="suggestion"
     >
-      <Item
-        render={<button type="button" />}
-        size="xs"
-        className="min-w-0 flex-1 flex-nowrap items-start p-0 text-small text-inherit [button]:hover:bg-transparent"
-        onClick={onUse}
-        title={t`Use this reply`}
-      >
+      <span className="flex items-center gap-1.5 text-caption font-semibold text-brand">
         {m.author.type === "bot" ? (
-          <BotAvatar name={author} url={m.author.avatar_url} className="mt-px size-4" />
+          <BotAvatar name={author} url={m.author.avatar_url} className="size-4" />
         ) : (
-          <SparklesIcon className="mt-0.5 size-3.5 shrink-0 text-brand" />
+          <SparklesIcon className="size-3.5 shrink-0" />
         )}
-        <span className="min-w-0 flex-1">
-          <span className="block text-caption text-faint">
-            <Trans>Suggested by {author}</Trans>
-          </span>
-          <span className="line-clamp-2">{m.body}</span>
-        </span>
-        <Kbd className="mt-0.5 bg-card">Tab</Kbd>
-      </Item>
-      <Button
-        variant="ghost"
-        size="icon-xs"
-        onClick={onDiscard}
-        className="text-faint hover:bg-muted"
-        aria-label={t`Discard the suggested reply`}
-        title={t`Discard the suggested reply`}
-      >
-        <XIcon />
-      </Button>
+        <Trans>Draft by {author}</Trans>
+      </span>
+      <span className="line-clamp-3 whitespace-pre-wrap text-foreground">{m.body}</span>
+      <span className="flex items-center gap-2">
+        <Button size="sm" className="h-[30px] rounded-lg px-3" onClick={onUse} data-testid="suggestion-use">
+          <Trans>Use this reply</Trans>
+          <Kbd className="bg-card text-foreground">Tab</Kbd>
+        </Button>
+        <Button variant="outline" size="sm" className={look.btnSm} onClick={onDiscard} data-testid="suggestion-discard">
+          <Trans>Discard</Trans>
+        </Button>
+      </span>
     </div>
   )
 }
@@ -147,6 +134,7 @@ export const ReplyBox = forwardRef<
   const canned = useCannedReplies().data ?? []
   const helpCenter = (useHelpCenters().data ?? []).find((h) => h.inbox_id === c.inbox_id)
   const note = mode === "note"
+  const blocked = !note && !!undeliverable
   const first = firstName(contactName)
   const articleKey = keyLabel(SHORTCUTS.article).join("")
 
@@ -163,7 +151,7 @@ export const ReplyBox = forwardRef<
     if (m) setMode(m)
     requestAnimationFrame(() => textarea.current?.focus())
   }
-  const showSuggestion = !!suggestion && !note && linked !== suggestion.id
+  const showSuggestion = !!suggestion && !note && !blocked && linked !== suggestion.id
   const applySuggestion = () => {
     if (!suggestion) return
     setBody(suggestion.body)
@@ -249,6 +237,10 @@ export const ReplyBox = forwardRef<
     addFiles,
   }))
   const hasContent = body.trim() !== "" || files.length > 0 || articles.length > 0
+  const notified = mentioned.filter((x) => body.includes(`@${x.label}`))
+  const names = new Intl.ListFormat(i18n.locale, { type: "conjunction" }).format(
+    notified.map((x) => firstName(x.label))
+  )
   const reset = () => {
     setBody("")
     setFiles([])
@@ -258,7 +250,7 @@ export const ReplyBox = forwardRef<
     setError(null)
   }
   const send = (close: boolean) => {
-    if (!hasContent || note) return
+    if (!hasContent || note || blocked) return
     typing.stop()
     const linkedDraft = suggestion && linked === suggestion.id ? suggestion : undefined
     const saved = { body, files, articles }
@@ -379,9 +371,9 @@ export const ReplyBox = forwardRef<
           {hint}
         </span>
       </div>
-      {!note && undeliverable && (
+      {blocked && (
         <p
-          className="mx-3 mt-2 rounded-lg bg-destructive/6 px-3 py-2 text-caption text-destructive"
+          className="mx-3 my-2 rounded-lg bg-destructive/6 px-3 py-2.5 text-small text-destructive"
           data-testid="composer-undeliverable"
         >
           <Trans>This address is undeliverable. Clear it in the contact details before you reply.</Trans>
@@ -389,33 +381,40 @@ export const ReplyBox = forwardRef<
       )}
       {menuOpen && <CannedMenu items={matches} active={pick} onPick={insertSlash} />}
       {mentionOpen && <MentionMenu items={mentionMatches} active={pick} onPick={insertMention} />}
-      <Textarea
-        ref={textarea}
-        name="reply-body"
-        value={body}
-        rows={2}
-        data-testid="composer-input"
-        aria-label={note ? t`Team note` : t`Reply`}
-        placeholder={note ? t`A note for the team… type @ to mention a teammate` : t`Write to ${first}…`}
-        className="max-h-[40vh] min-h-[64px] resize-none rounded-none border-0 bg-transparent px-4 py-2.5 text-reading shadow-none hover:border-0 focus-visible:ring-0 md:text-reading dark:bg-transparent"
-        onChange={(e) => {
-          setBody(e.target.value)
-          setCaret(e.target.selectionStart)
-          setPick(0)
-          if (note) return
-          if (e.target.value.trim() === "") typing.stop()
-          else typing.typed()
-        }}
-        onBlur={typing.stop}
-        onPaste={(e) => {
-          const pasted = Array.from(e.clipboardData.files)
-          if (pasted.length === 0) return
-          e.preventDefault()
-          addFiles(pasted)
-        }}
-        onSelect={(e) => setCaret(e.currentTarget.selectionStart)}
-        onKeyDown={onKeyDown}
-      />
+      {!blocked && (
+        <Textarea
+          ref={textarea}
+          name="reply-body"
+          value={body}
+          rows={2}
+          data-testid="composer-input"
+          aria-label={note ? t`Team note` : t`Reply`}
+          placeholder={note ? t`A note for the team… type @ to mention a teammate` : t`Write to ${first}…`}
+          className="max-h-[40vh] min-h-[64px] resize-none rounded-none border-0 bg-transparent px-4 py-2.5 text-reading shadow-none hover:border-0 focus-visible:ring-0 md:text-reading dark:bg-transparent"
+          onChange={(e) => {
+            setBody(e.target.value)
+            setCaret(e.target.selectionStart)
+            setPick(0)
+            if (note) return
+            if (e.target.value.trim() === "") typing.stop()
+            else typing.typed()
+          }}
+          onBlur={typing.stop}
+          onPaste={(e) => {
+            const pasted = Array.from(e.clipboardData.files)
+            if (pasted.length === 0) return
+            e.preventDefault()
+            addFiles(pasted)
+          }}
+          onSelect={(e) => setCaret(e.currentTarget.selectionStart)}
+          onKeyDown={onKeyDown}
+        />
+      )}
+      {note && notified.length > 0 && (
+        <p className="px-4 pb-1 text-caption text-note-ink" data-testid="composer-notify">
+          <Trans>{names} will be notified</Trans>
+        </p>
+      )}
       {showSuggestion && <Suggestion m={suggestion} ctx={ctx} onUse={applySuggestion} onDiscard={dropSuggestion} />}
       {files.length > 0 && (
         <ul className="flex flex-wrap gap-1.5 px-4 pb-2">
@@ -488,14 +487,14 @@ export const ReplyBox = forwardRef<
         </Button>
         <Popover open={emojiOpen} onOpenChange={setEmojiOpen}>
           <PopoverTrigger
-            render={
-              <Button variant="ghost" size="icon-sm" className="text-faint hover:bg-muted aria-expanded:bg-muted" />
-            }
-            aria-label={t`Emoji`}
+            render={<Button variant="ghost" size="sm" className="text-faint hover:bg-muted aria-expanded:bg-muted" />}
             title={t`Emoji`}
             data-testid="emoji-button"
           >
             <SmileIcon />
+            <span className="@max-md/composer:hidden">
+              <Trans>Emoji</Trans>
+            </span>
           </PopoverTrigger>
           <PopoverContent
             side="top"
@@ -583,7 +582,7 @@ export const ReplyBox = forwardRef<
             <Button
               variant={actions.chat ? "default" : "outline"}
               onClick={() => send(false)}
-              disabled={!hasContent}
+              disabled={!hasContent || blocked}
               data-testid="composer-send"
             >
               <Trans>Send</Trans>
@@ -591,7 +590,7 @@ export const ReplyBox = forwardRef<
             <Button
               variant={actions.chat ? "outline" : "default"}
               onClick={() => send(true)}
-              disabled={!hasContent}
+              disabled={!hasContent || blocked}
               data-testid="composer-send-close"
             >
               {c.kind === "feedback" ? <Trans>Reply and resolve</Trans> : <Trans>Send and close</Trans>}

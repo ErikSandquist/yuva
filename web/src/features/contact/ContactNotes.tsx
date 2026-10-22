@@ -2,7 +2,7 @@ import { Trans, useLingui } from "@lingui/react/macro"
 import { Trash2Icon } from "lucide-react"
 import { useState } from "react"
 
-import { ErrorLine, useConfirm } from "@/components/common"
+import { ErrorLine } from "@/components/common"
 import { mod } from "@/components/common/ShortcutSheet"
 import { formatDateTime, formatShort } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
@@ -20,8 +20,9 @@ export function useNoteCount(contactId: string) {
   return n === undefined ? undefined : `${n}${notes.hasNextPage ? "+" : ""}`
 }
 
-function Note({ note, onDelete }: { note: ContactNote; onDelete?: () => void }) {
+function Note({ note, onDelete, pending }: { note: ContactNote; onDelete?: () => void; pending?: boolean }) {
   const { t, i18n } = useLingui()
+  const [asking, setAsking] = useState(false)
   const members = useMemberMap()
   const a = note.author
   const m = a.member_id ? members.get(a.member_id) : undefined
@@ -38,18 +39,38 @@ function Note({ note, onDelete }: { note: ContactNote; onDelete?: () => void }) 
             {formatShort(note.created_at, i18n.locale)}
           </time>
         </span>
-        {onDelete && (
-          <Button
-            variant="ghost"
-            size="icon-xs"
-            className="-my-1 text-note-ink hover:bg-note-border/60"
-            onClick={onDelete}
-            aria-label={t`Delete this note`}
-            data-testid="delete-contact-note"
-          >
-            <Trash2Icon />
-          </Button>
-        )}
+        {onDelete &&
+          (asking ? (
+            <span className="flex shrink-0 items-center gap-1.5">
+              <span>
+                <Trans>Delete this note?</Trans>
+              </span>
+              <Button
+                variant="destructive"
+                size="sm"
+                className="h-6 px-2 text-caption"
+                onClick={onDelete}
+                disabled={pending}
+                data-testid="confirm-delete-contact-note"
+              >
+                <Trans>Delete</Trans>
+              </Button>
+              <Button variant="outline" size="sm" className="h-6 px-2 text-caption" onClick={() => setAsking(false)}>
+                <Trans>Cancel</Trans>
+              </Button>
+            </span>
+          ) : (
+            <Button
+              variant="ghost"
+              size="icon-xs"
+              className="-my-1 text-note-ink hover:bg-note-border/60"
+              onClick={() => setAsking(true)}
+              aria-label={t`Delete this note`}
+              data-testid="delete-contact-note"
+            >
+              <Trash2Icon />
+            </Button>
+          ))}
       </span>
       <p className="break-words whitespace-pre-wrap">{note.body}</p>
     </li>
@@ -62,7 +83,6 @@ export function ContactNotes({ contactId, form = "bottom" }: { contactId: string
   const notes = useContactNotes(contactId)
   const add = useAddContactNote(contactId)
   const del = useDeleteContactNote(contactId)
-  const [confirm, confirmDialog] = useConfirm()
   const [body, setBody] = useState("")
   const items = notes.data?.pages.flatMap((p) => p.items) ?? []
   const text = body.trim()
@@ -127,16 +147,8 @@ export function ContactNotes({ contactId, form = "bottom" }: { contactId: string
                 <Note
                   key={n.id}
                   note={n}
-                  onDelete={
-                    mine || canManage
-                      ? () =>
-                          confirm({
-                            title: <Trans>Delete this note?</Trans>,
-                            confirm: <Trans>Delete</Trans>,
-                            run: () => del.mutate(n.id),
-                          })
-                      : undefined
-                  }
+                  pending={del.isPending}
+                  onDelete={mine || canManage ? () => del.mutate(n.id) : undefined}
                 />
               )
             })}
@@ -156,7 +168,6 @@ export function ContactNotes({ contactId, form = "bottom" }: { contactId: string
       )}
       <ErrorLine error={del.error} />
       {form === "bottom" && editor}
-      {confirmDialog}
     </div>
   )
 }

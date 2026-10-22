@@ -1,10 +1,10 @@
 import { Trans, useLingui } from "@lingui/react/macro"
-import { ChevronDownIcon, EllipsisIcon, PlusIcon, SearchIcon, XIcon } from "lucide-react"
+import { ChevronDownIcon, PlusIcon, SearchIcon, XIcon } from "lucide-react"
 import { useEffect, useMemo, useRef, useState } from "react"
 import { Link, useNavigate, useSearchParams } from "react-router"
 
 import { ContactAvatar, ErrorLine, toast } from "@/components/common"
-import { formatDate, useErrorText } from "@/components/common/text"
+import { useErrorText } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -17,7 +17,6 @@ import {
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
@@ -25,14 +24,14 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Skeleton } from "@/components/ui/skeleton"
-import { BeforeRows, CardSection, DetailRows, ProductRows, Seen } from "@/features/contact/ContactCard"
-import { NewConversationDialog, useContactConversations } from "@/features/contact/ContactDetails"
+import { ContactDetail } from "@/features/contact/ContactDetail"
 import { MergeContactDialog } from "@/features/contact/MergeContactDialog"
-import { useContact, useContactDirectory, useCreateContact } from "@/features/contact/queries"
+import { useContactDirectory, useCreateContact } from "@/features/contact/queries"
 import { contactName } from "@/features/contact/Section"
 import { useInboxFilter } from "@/features/inbox/inboxFilter"
-import { Ago, FrameTabs, look, PageTop } from "@/features/inbox/PageFrame"
+import { Ago, look } from "@/features/inbox/PageFrame"
 import { ProductTag } from "@/features/inbox/ProductTag"
+import { headButton, Page, PageHeader, PageTabs } from "@/features/settings/ui"
 import { useDebounced } from "@/hooks/use-debounced"
 import { useHotkeys } from "@/hooks/use-hotkeys"
 import type { Contact } from "@/lib/api"
@@ -42,7 +41,8 @@ import { useInboxes } from "@/lib/workspace"
 
 type Tab = "all" | "recent" | "duplicates"
 
-const GRID = "grid grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)_90px_110px_minmax(0,90px)] items-center gap-3 px-4"
+const GRID =
+  "grid grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)_64px_92px_minmax(0,90px)] items-center gap-3 px-4 max-xl:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)_64px_92px]"
 
 export function countryOf(c: Contact, locale: string) {
   const attr = c.attributes?.country
@@ -94,43 +94,91 @@ function useDuplicates(items: Contact[], dismissed: string[]) {
   }, [items, dismissed, inboxes])
 }
 
-function ProductChip({ value, onChange }: { value: string; onChange: (id: string) => void }) {
-  const { t } = useLingui()
-  const inboxes = useInboxes().data ?? []
-  const current = inboxes.find((i) => i.id === value)
-  if (inboxes.length < 2) return null
+function FilterChip({
+  value,
+  onChange,
+  options,
+  placeholder,
+  anyLabel,
+  ariaLabel,
+  testId,
+}: {
+  value: string
+  onChange: (v: string) => void
+  options: { value: string; label: string }[]
+  placeholder: React.ReactNode
+  anyLabel: React.ReactNode
+  ariaLabel: string
+  testId: string
+}) {
+  const current = options.find((o) => o.value === value)
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
         render={<button type="button" className={current ? look.chipOn : look.chipDash} />}
-        aria-label={t`Filter by product`}
-        data-testid="contacts-product"
+        aria-label={ariaLabel}
+        data-testid={testId}
       >
         {current ? (
           <>
-            <span className="max-w-28 truncate">{current.name}</span>
+            <span className="max-w-28 truncate">{current.label}</span>
             <ChevronDownIcon className="size-3.5" />
           </>
         ) : (
           <>
             <PlusIcon className="size-3.5" />
-            <Trans>Product</Trans>
+            {placeholder}
           </>
         )}
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start" className="min-w-44">
         <DropdownMenuRadioGroup value={value} onValueChange={(v) => onChange(String(v))}>
-          <DropdownMenuRadioItem value="">
-            <Trans>Every product</Trans>
-          </DropdownMenuRadioItem>
-          {inboxes.map((i) => (
-            <DropdownMenuRadioItem key={i.id} value={i.id}>
-              <span className="truncate">{i.name}</span>
+          <DropdownMenuRadioItem value="">{anyLabel}</DropdownMenuRadioItem>
+          {options.map((o) => (
+            <DropdownMenuRadioItem key={o.value} value={o.value}>
+              <span className="truncate">{o.label}</span>
             </DropdownMenuRadioItem>
           ))}
         </DropdownMenuRadioGroup>
       </DropdownMenuContent>
     </DropdownMenu>
+  )
+}
+
+function ToggleChip({
+  on,
+  onClick,
+  testId,
+  children,
+}: {
+  on: boolean
+  onClick: () => void
+  testId: string
+  children: React.ReactNode
+}) {
+  return (
+    <button
+      type="button"
+      aria-pressed={on}
+      onClick={onClick}
+      className={on ? look.chipOn : look.chipDash}
+      data-testid={testId}
+    >
+      {children}
+    </button>
+  )
+}
+
+function Pill({ tone, children }: { tone: "danger" | "warn"; children: React.ReactNode }) {
+  return (
+    <span
+      className={cn(
+        "shrink-0 rounded-full border px-1.5 text-[11px] leading-4 font-medium",
+        tone === "danger" ? "border-destructive/35 text-destructive" : "border-warning/45 text-warning"
+      )}
+    >
+      {children}
+    </span>
   )
 }
 
@@ -155,14 +203,20 @@ function Row({ c, current, cursor, search }: { c: Contact; current: boolean; cur
         <span className="flex min-w-0 items-center gap-2.5">
           <ContactAvatar id={c.id} name={name} className="size-[30px] shrink-0 text-caption font-semibold" />
           <span className="flex min-w-0 flex-col leading-[1.3]">
-            <span className="truncate font-medium">{name}</span>
-            {sub ? (
-              <span className="truncate text-caption text-faint">{sub}</span>
-            ) : (
-              <span className="truncate text-caption text-faint">
-                <Trans>Visitor</Trans>
-              </span>
-            )}
+            <span className="flex min-w-0 items-center gap-1.5">
+              <span className="truncate font-medium">{name}</span>
+              {c.blocked && (
+                <Pill tone="danger">
+                  <Trans>Blocked</Trans>
+                </Pill>
+              )}
+              {c.undeliverable.length > 0 && (
+                <Pill tone="warn">
+                  <Trans>Undeliverable</Trans>
+                </Pill>
+              )}
+            </span>
+            <span className="truncate text-caption text-faint">{sub || <Trans>Visitor</Trans>}</span>
           </span>
         </span>
         <span className="flex min-w-0 flex-wrap gap-1 overflow-hidden">
@@ -174,105 +228,11 @@ function Row({ c, current, cursor, search }: { c: Contact; current: boolean; cur
           {c.activity ? new Intl.NumberFormat(i18n.locale).format(c.activity.conversations) : "—"}
         </span>
         <span className="truncate">{seen ? <Ago iso={seen} /> : <span className="text-faint">—</span>}</span>
-        <span className="truncate">{countryOf(c, i18n.locale) ?? <span className="text-faint">—</span>}</span>
+        <span className="truncate max-xl:hidden">
+          {countryOf(c, i18n.locale) ?? <span className="text-faint">—</span>}
+        </span>
       </Link>
     </li>
-  )
-}
-
-function Panel({ id }: { id: string }) {
-  const { t, i18n } = useLingui()
-  const { canManage } = useSession()
-  const contact = useContact(id)
-  const conversations = useContactConversations(id)
-  const [merging, setMerging] = useState(false)
-  const [starting, setStarting] = useState(false)
-  const c = contact.data
-  if (contact.isPending) {
-    return (
-      <div className="flex flex-col gap-3 p-5">
-        <Skeleton className="size-12 rounded-full" />
-        <Skeleton className="h-5 w-32" />
-      </div>
-    )
-  }
-  if (!c) return <ErrorLine error={contact.error} className="p-5" />
-  const name = contactName(c, t`Unnamed contact`)
-  return (
-    <div className="flex flex-col" data-testid="contact-panel">
-      <header className="flex flex-col items-start border-b px-5 pt-5 pb-4">
-        <ContactAvatar id={c.id} name={name} className="size-12 text-[15px] font-semibold" />
-        <h2 className="mt-3 max-w-full truncate text-[18px] leading-6 font-semibold" data-testid="contact-name">
-          {name}
-        </h2>
-        {c.emails[0] && c.emails[0] !== name && (
-          <span className="max-w-full truncate text-muted-foreground">{c.emails[0]}</span>
-        )}
-        <div className="mt-1">
-          <Seen contactId={c.id} />
-        </div>
-        {c.blocked && (
-          <span className="mt-1.5 rounded-md bg-destructive/10 px-2 py-0.5 text-caption text-destructive">
-            <Trans>Blocked</Trans>
-          </span>
-        )}
-        <div className="mt-3 flex gap-2">
-          <Button className={look.btnPSm} onClick={() => setStarting(true)} data-testid="new-conversation-open">
-            <Trans>Write</Trans>
-          </Button>
-          {canManage && (
-            <Button
-              variant="outline"
-              className={look.btnSm}
-              onClick={() => setMerging(true)}
-              data-testid="merge-contact"
-            >
-              <Trans>Merge…</Trans>
-            </Button>
-          )}
-          <DropdownMenu>
-            <DropdownMenuTrigger
-              render={<Button variant="outline" className={cn(look.btnSm, "w-[30px] px-0")} />}
-              aria-label={t`More`}
-              data-testid="contact-more"
-            >
-              <EllipsisIcon />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="min-w-48">
-              <DropdownMenuItem render={<Link to={`/contacts/${c.id}?view=page`} />} data-testid="open-contact-page">
-                <Trans>Open full page</Trans>
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => void navigator.clipboard?.writeText(c.id)}>
-                <Trans>Copy contact id</Trans>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-      </header>
-      {c.inboxes.length > 0 && (
-        <CardSection title={<Trans>Products</Trans>} className="px-5">
-          <ProductRows contact={c} />
-        </CardSection>
-      )}
-      <CardSection title={<Trans>Attributes</Trans>} className="px-5">
-        <DetailRows contact={c} />
-        <div className="mt-2 flex items-baseline gap-3">
-          <span className="text-muted-foreground">
-            <Trans>First seen</Trans>
-          </span>
-          <span className="min-w-0 flex-1 truncate text-end">{formatDate(c.created_at, i18n.locale)}</span>
-        </div>
-      </CardSection>
-      <CardSection title={<Trans>Conversations</Trans>} className="border-b-0 px-5">
-        {conversations.isPending ? (
-          <Skeleton className="h-10 w-full" />
-        ) : (
-          <BeforeRows items={conversations.items} dots limit={8} />
-        )}
-      </CardSection>
-      {canManage && <MergeContactDialog target={c} open={merging} onOpenChange={setMerging} />}
-      <NewConversationDialog contact={c} open={starting} onOpenChange={setStarting} />
-    </div>
   )
 }
 
@@ -304,21 +264,21 @@ function PairCard({ pair, onDismiss }: { pair: Pair; onDismiss: () => void }) {
   const shared = pair.inbox
   return (
     <li
-      className="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)_220px] overflow-hidden rounded-xl border"
+      className="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)_220px] overflow-hidden rounded-xl border phone:grid-cols-1"
       data-testid="duplicate-pair"
     >
       <Side c={pair.a} />
-      <div className="my-3 flex min-w-0 border-s border-dashed">
+      <div className="my-3 flex min-w-0 border-s border-dashed phone:my-0 phone:border-s-0 phone:border-t">
         <Side c={pair.b} />
       </div>
-      <div className="flex flex-col justify-center gap-2.5 border-s px-4 py-3.5">
+      <div className="flex flex-col justify-center gap-2.5 border-s px-4 py-3.5 phone:border-s-0 phone:border-t">
         <p className="text-caption text-muted-foreground">
           {shared ? <Trans>Same name, both wrote to {shared}.</Trans> : <Trans>Same name.</Trans>}
         </p>
         <div className="flex gap-2">
           {canManage && (
             <Button className={look.btnPSm} onClick={() => setMerging(true)} data-testid="duplicate-merge">
-              <Trans>Merge</Trans>
+              <Trans>Merge…</Trans>
             </Button>
           )}
           <Button variant="outline" className={look.btnSm} onClick={onDismiss} data-testid="duplicate-dismiss">
@@ -365,6 +325,7 @@ function AddContactDialog({ open, onOpenChange }: { open: boolean; onOpenChange:
                   setName("")
                   setEmail("")
                   navigate(`/contacts/${c.id}`)
+                  toast(<Trans>Contact added. Use New conversation to write to them.</Trans>)
                 },
                 onError: (err) => toast(errorText(err)),
               }
@@ -415,7 +376,7 @@ function AddContactDialog({ open, onOpenChange }: { open: boolean; onOpenChange:
 }
 
 export function ContactsPage({ contactId }: { contactId?: string }) {
-  const { t } = useLingui()
+  const { t, i18n } = useLingui()
   const navigate = useNavigate()
   const [params, setParams] = useSearchParams()
   const tabParam = params.get("tab")
@@ -427,20 +388,41 @@ export function ContactsPage({ contactId }: { contactId?: string }) {
   const inboxId = chosen || global
   const product = inboxes?.find((i) => i.id === inboxId)?.name
   const q = params.get("q") ?? ""
-  const setQ = (v: string) => set("q", v)
+  const country = params.get("country") ?? ""
+  const blockedOnly = params.get("blocked") === "1"
+  const undeliverableOnly = params.get("undeliverable") === "1"
+  const fullPage = params.get("view") === "page" && !!contactId && tab !== "duplicates"
   const query = useDebounced(q.trim(), 250)
   const directory = useContactDirectory(query, "all", inboxId, tab === "recent" ? "last_seen" : "created")
   const everyone = useContactDirectory("", "all", inboxId, "last_seen")
-  const items = useMemo(() => directory.data?.pages.flatMap((p) => p.items) ?? [], [directory.data])
+  const loaded = useMemo(() => directory.data?.pages.flatMap((p) => p.items) ?? [], [directory.data])
   const all = useMemo(() => everyone.data?.pages.flatMap((p) => p.items) ?? [], [everyone.data])
+  const countries = useMemo(
+    () => [...new Set(loaded.map((c) => countryOf(c, i18n.locale)).filter((x): x is string => !!x))].sort(),
+    [loaded, i18n.locale]
+  )
+  const items = useMemo(
+    () =>
+      loaded.filter(
+        (c) =>
+          (!country || countryOf(c, i18n.locale) === country) &&
+          (!blockedOnly || c.blocked) &&
+          (!undeliverableOnly || c.undeliverable.length > 0)
+      ),
+    [loaded, country, blockedOnly, undeliverableOnly, i18n.locale]
+  )
   const [dismissed, setDismissed] = useState(readDismissed)
   const pairs = useDuplicates(all, dismissed)
   const [cursor, setCursor] = useState(-1)
   const [adding, setAdding] = useState(false)
   const list = useRef<HTMLUListElement>(null)
   const search = useRef<HTMLInputElement>(null)
-  const suffix = params.toString() ? `?${params.toString()}` : ""
+  const listParams = new URLSearchParams(params)
+  listParams.delete("view")
+  const suffix = listParams.toString() ? `?${listParams.toString()}` : ""
   const shown = tab === "duplicates" ? undefined : (contactId ?? items[0]?.id)
+  const anyFilter = !!(q || chosen || country || blockedOnly || undeliverableOnly)
+  const shownCount = new Intl.NumberFormat(i18n.locale).format(items.length)
 
   const set = (key: string, value: string) =>
     setParams(
@@ -448,6 +430,22 @@ export function ContactsPage({ contactId }: { contactId?: string }) {
         const next = new URLSearchParams(prev)
         if (value) next.set(key, value)
         else next.delete(key)
+        return next
+      },
+      { replace: true }
+    )
+  const tabTo = (k: Tab) => {
+    const next = new URLSearchParams(params)
+    next.delete("view")
+    if (k === "all") next.delete("tab")
+    else next.set("tab", k)
+    return { search: next.toString() ? `?${next.toString()}` : "" }
+  }
+  const clearFilters = () =>
+    setParams(
+      (prev) => {
+        const next = new URLSearchParams(prev)
+        for (const k of ["q", "inbox", "country", "blocked", "undeliverable"]) next.delete(k)
         return next
       },
       { replace: true }
@@ -464,7 +462,7 @@ export function ContactsPage({ contactId }: { contactId?: string }) {
   }
 
   useHotkeys(
-    tab === "duplicates"
+    tab === "duplicates" || fullPage
       ? {}
       : {
           j: () => setCursor((i) => Math.min(items.length - 1, i + 1)),
@@ -480,186 +478,260 @@ export function ContactsPage({ contactId }: { contactId?: string }) {
       list.current?.querySelectorAll("[data-testid=contact-row]")[cursor]?.scrollIntoView({ block: "nearest" })
   }, [cursor])
 
-  return (
-    <main className="flex min-h-0 flex-1 flex-col" data-testid="contacts-page">
-      <PageTop
-        title={<Trans>Contacts</Trans>}
-        sub={
-          product ? (
-            <Trans>People who wrote to {product}</Trans>
-          ) : (
-            <Trans>Everyone who has written to your products</Trans>
-          )
-        }
-        actions={
-          <Button className={look.btnInk} onClick={() => setAdding(true)} data-testid="add-contact-open">
-            <Trans>Add contact</Trans>
-          </Button>
-        }
-        tabs={
-          <FrameTabs<Tab>
-            label={t`Show`}
-            value={tab}
-            onChange={(k) => set("tab", k === "all" ? "" : k)}
-            items={[
-              { key: "all", label: <Trans>All</Trans>, testId: "contacts-filter-all" },
-              { key: "recent", label: <Trans>Recently active</Trans>, testId: "contacts-filter-recent" },
-              {
-                key: "duplicates",
-                label: <Trans>Duplicates</Trans>,
-                count: everyone.data && !everyone.hasNextPage ? pairs.length : undefined,
-                testId: "contacts-filter-duplicates",
-              },
-            ]}
-          />
-        }
-      />
-      {tab === "duplicates" ? (
-        <div className="min-h-0 flex-1 overflow-y-auto px-6 py-5" data-testid="duplicates">
-          <p className="mb-3 text-muted-foreground">
-            <Trans>
-              These look like the same person. Merging keeps the left one and moves addresses, ids and conversations
-              into it.
-            </Trans>
-          </p>
-          {everyone.isPending ? (
-            <Skeleton className="h-24 w-full max-w-[980px] rounded-xl" />
-          ) : pairs.length === 0 ? (
-            <p className="max-w-[980px] rounded-xl border border-dashed px-4 py-10 text-center text-faint">
-              <Trans>No contacts look alike right now.</Trans>
-            </p>
-          ) : (
-            <ul className="flex max-w-[980px] flex-col gap-4">
-              {pairs.map((p) => (
-                <PairCard key={p.key} pair={p} onDismiss={() => dismiss(p.key)} />
-              ))}
-            </ul>
-          )}
-          {everyone.hasNextPage && (
-            <Button
-              variant="ghost"
-              size="sm"
-              className="mt-3"
-              onClick={() => void everyone.fetchNextPage()}
-              disabled={everyone.isFetchingNextPage}
-            >
-              <Trans>Look through more contacts</Trans>
-            </Button>
-          )}
-        </div>
+  const header = (
+    <PageHeader
+      back={false}
+      title={<Trans>Contacts</Trans>}
+      description={
+        product ? (
+          <Trans>People who wrote to {product}</Trans>
+        ) : (
+          <Trans>Everyone who has written to your products</Trans>
+        )
+      }
+      action={
+        <Button className={headButton.primary} onClick={() => setAdding(true)} data-testid="add-contact-open">
+          <Trans>Add contact</Trans>
+        </Button>
+      }
+      tabs={
+        <PageTabs
+          label={t`Show`}
+          current={tab}
+          items={[
+            { key: "all", to: tabTo("all"), label: <Trans>All</Trans>, testId: "contacts-filter-all" },
+            {
+              key: "recent",
+              to: tabTo("recent"),
+              label: <Trans>Recently active</Trans>,
+              testId: "contacts-filter-recent",
+            },
+            {
+              key: "duplicates",
+              to: tabTo("duplicates"),
+              label: <Trans>Duplicates</Trans>,
+              count: everyone.data && !everyone.hasNextPage ? pairs.length : undefined,
+              testId: "contacts-filter-duplicates",
+            },
+          ]}
+        />
+      }
+    />
+  )
+
+  const duplicates = (
+    <div className="flex flex-col gap-3" data-testid="duplicates">
+      <p className="max-w-3xl text-muted-foreground">
+        <Trans>
+          These look like the same person. Merging keeps the left one and moves addresses, ids and conversations into
+          it. Nothing is merged until you have seen what changes.
+        </Trans>
+      </p>
+      {everyone.isPending ? (
+        <Skeleton className="h-24 w-full max-w-[980px] rounded-xl" />
+      ) : pairs.length === 0 ? (
+        <p className="max-w-[980px] rounded-xl border border-dashed px-4 py-10 text-center text-faint">
+          <Trans>No contacts look alike right now.</Trans>
+        </p>
       ) : (
-        <div className="flex min-h-0 flex-1">
-          <div className="min-h-0 min-w-0 flex-1 overflow-y-auto px-6 py-4">
-            <div className="mb-3 flex flex-wrap items-center gap-2">
-              <label className="relative flex h-[34px] w-[280px] max-w-full items-center">
-                <SearchIcon className="pointer-events-none absolute start-2.5 size-3.5 text-faint" aria-hidden />
-                <input
-                  ref={search}
-                  value={q}
-                  onChange={(e) => {
-                    setQ(e.target.value)
-                    setCursor(-1)
-                  }}
-                  onKeyDown={(e) => {
-                    if (e.key === "Escape") {
-                      if (q) setQ("")
-                      else e.currentTarget.blur()
-                    }
-                    if (e.key === "ArrowDown") {
-                      e.preventDefault()
-                      e.currentTarget.blur()
-                      setCursor(0)
-                    }
-                    if (e.key === "Enter" && items[0]) {
-                      e.preventDefault()
-                      navigate(`/contacts/${items[cursor >= 0 ? cursor : 0].id}${suffix}`)
-                    }
-                  }}
-                  placeholder={t`Search name, e-mail or id…`}
-                  aria-label={t`Search contacts`}
-                  className="size-full rounded-lg border border-input bg-background ps-8 pe-8 text-body outline-none placeholder:text-faint focus-visible:border-faint"
-                  data-testid="contacts-search"
-                />
-                {q && (
-                  <button
-                    type="button"
-                    onClick={() => setQ("")}
-                    className="absolute end-2 text-faint hover:text-foreground"
-                    aria-label={t`Clear the search`}
-                  >
-                    <XIcon className="size-3.5" />
-                  </button>
-                )}
-              </label>
-              <ProductChip value={chosen} onChange={(id) => set("inbox", id)} />
-            </div>
-            <div className={look.card}>
-              <div className={cn(GRID, "h-[38px]", look.th)} aria-hidden>
-                <span>
-                  <Trans>Person</Trans>
-                </span>
-                <span>
-                  <Trans>Products</Trans>
-                </span>
-                <span>
-                  <Trans>Convers.</Trans>
-                </span>
-                <span>
-                  <Trans>Last seen</Trans>
-                </span>
-                <span>
-                  <Trans>Country</Trans>
-                </span>
-              </div>
-              {directory.isPending ? (
-                <div className="flex flex-col gap-2 border-t p-3">
-                  <Skeleton className="h-10 w-full" />
-                  <Skeleton className="h-10 w-full" />
-                </div>
-              ) : directory.error ? (
-                <ErrorLine error={directory.error} className="border-t p-4" />
-              ) : items.length === 0 ? (
-                <p className="border-t px-4 py-10 text-center text-faint">
-                  {query ? (
-                    <Trans>No contact matches “{query}”.</Trans>
-                  ) : inboxId ? (
-                    <Trans>No contacts in this view.</Trans>
-                  ) : (
-                    <Trans>No contacts yet. They appear when someone writes in.</Trans>
-                  )}
-                </p>
-              ) : (
-                <ul ref={list} className="flex flex-col">
-                  {items.map((c, i) => (
-                    <Row key={c.id} c={c} current={c.id === shown} cursor={i === cursor} search={suffix} />
-                  ))}
-                </ul>
-              )}
-            </div>
-            {directory.hasNextPage && (
-              <div className="mt-3 flex justify-center">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => void directory.fetchNextPage()}
-                  disabled={directory.isFetchingNextPage}
-                >
-                  <Trans>Load more</Trans>
-                </Button>
-              </div>
-            )}
+        <ul className="flex max-w-[980px] flex-col gap-4">
+          {pairs.map((p) => (
+            <PairCard key={p.key} pair={p} onDismiss={() => dismiss(p.key)} />
+          ))}
+        </ul>
+      )}
+      {everyone.hasNextPage && (
+        <Button
+          variant="ghost"
+          size="sm"
+          className="self-start"
+          onClick={() => void everyone.fetchNextPage()}
+          disabled={everyone.isFetchingNextPage}
+        >
+          <Trans>Look through more contacts</Trans>
+        </Button>
+      )}
+    </div>
+  )
+
+  const toolbar = (
+    <div className="flex flex-wrap items-center gap-2" data-testid="contacts-filters">
+      <label className="relative flex h-[34px] w-[280px] max-w-full items-center">
+        <SearchIcon className="pointer-events-none absolute start-2.5 size-3.5 text-faint" aria-hidden />
+        <input
+          ref={search}
+          value={q}
+          onChange={(e) => {
+            set("q", e.target.value)
+            setCursor(-1)
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "Escape") {
+              if (q) set("q", "")
+              else e.currentTarget.blur()
+            }
+            if (e.key === "ArrowDown") {
+              e.preventDefault()
+              e.currentTarget.blur()
+              setCursor(0)
+            }
+            if (e.key === "Enter" && items[0]) {
+              e.preventDefault()
+              navigate(`/contacts/${items[cursor >= 0 ? cursor : 0].id}${suffix}`)
+            }
+          }}
+          placeholder={t`Search name, e-mail or id…`}
+          aria-label={t`Search contacts`}
+          className="size-full rounded-lg border border-input bg-background ps-8 pe-8 text-body outline-none placeholder:text-faint focus-visible:border-faint"
+          data-testid="contacts-search"
+        />
+        {q && (
+          <button
+            type="button"
+            onClick={() => set("q", "")}
+            className="absolute end-2 text-faint hover:text-foreground"
+            aria-label={t`Clear the search`}
+          >
+            <XIcon className="size-3.5" />
+          </button>
+        )}
+      </label>
+      {!global && (inboxes?.length ?? 0) > 1 && (
+        <FilterChip
+          value={chosen}
+          onChange={(id) => set("inbox", id)}
+          options={(inboxes ?? []).map((i) => ({ value: i.id, label: i.name }))}
+          placeholder={<Trans>Product</Trans>}
+          anyLabel={<Trans>Every product</Trans>}
+          ariaLabel={t`Filter by product`}
+          testId="contacts-product"
+        />
+      )}
+      {(countries.length > 0 || country) && (
+        <FilterChip
+          value={country}
+          onChange={(v) => set("country", v)}
+          options={countries.map((x) => ({ value: x, label: x }))}
+          placeholder={<Trans>Country</Trans>}
+          anyLabel={<Trans>Any country</Trans>}
+          ariaLabel={t`Filter by country`}
+          testId="contacts-country"
+        />
+      )}
+      <ToggleChip on={blockedOnly} onClick={() => set("blocked", blockedOnly ? "" : "1")} testId="contacts-blocked">
+        <Trans>Blocked</Trans>
+      </ToggleChip>
+      <ToggleChip
+        on={undeliverableOnly}
+        onClick={() => set("undeliverable", undeliverableOnly ? "" : "1")}
+        testId="contacts-undeliverable"
+      >
+        <Trans>Undeliverable</Trans>
+      </ToggleChip>
+      {anyFilter && (
+        <Button variant="ghost" size="sm" onClick={clearFilters} data-testid="contacts-clear">
+          <Trans>Clear filters</Trans>
+        </Button>
+      )}
+      <span className="ms-auto text-caption text-faint tabular-nums" data-testid="contacts-count">
+        {directory.hasNextPage ? <Trans>People so far: {shownCount}</Trans> : <Trans>People: {shownCount}</Trans>}
+      </span>
+    </div>
+  )
+
+  const table = (
+    <div className={look.card}>
+      <div className={cn(GRID, "h-[38px]", look.th)} aria-hidden>
+        <span>
+          <Trans>Person</Trans>
+        </span>
+        <span>
+          <Trans>Products</Trans>
+        </span>
+        <span>
+          <Trans>Convers.</Trans>
+        </span>
+        <span>
+          <Trans>Last seen</Trans>
+        </span>
+        <span className="max-xl:hidden">
+          <Trans>Country</Trans>
+        </span>
+      </div>
+      {directory.isPending ? (
+        <div className="flex flex-col gap-2 border-t p-3">
+          <Skeleton className="h-10 w-full" />
+          <Skeleton className="h-10 w-full" />
+        </div>
+      ) : directory.error ? (
+        <ErrorLine error={directory.error} className="border-t p-4" />
+      ) : items.length === 0 ? (
+        <p className="border-t px-4 py-10 text-center text-faint">
+          {query ? (
+            <Trans>No contact matches “{query}”.</Trans>
+          ) : anyFilter ? (
+            <Trans>No contacts in this view.</Trans>
+          ) : (
+            <Trans>No contacts yet. They appear when someone writes in.</Trans>
+          )}
+        </p>
+      ) : (
+        <ul ref={list} className="flex flex-col">
+          {items.map((c, i) => (
+            <Row key={c.id} c={c} current={c.id === shown} cursor={i === cursor} search={suffix} />
+          ))}
+        </ul>
+      )}
+      {directory.hasNextPage && (
+        <div className="flex justify-center border-t py-2">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => void directory.fetchNextPage()}
+            disabled={directory.isFetchingNextPage}
+            data-testid="contacts-more"
+          >
+            <Trans>Load more</Trans>
+          </Button>
+        </div>
+      )}
+    </div>
+  )
+
+  return (
+    <Page testId="contacts-page">
+      {header}
+      {tab === "duplicates" ? (
+        duplicates
+      ) : fullPage ? (
+        <ContactDetail
+          key={contactId}
+          id={contactId}
+          page
+          back={{ to: `/contacts/${contactId}${suffix}`, label: t`Contacts` }}
+        />
+      ) : (
+        <div className="grid grid-cols-[minmax(0,1fr)_400px] items-start gap-6 max-xl:grid-cols-[minmax(0,1fr)_360px]">
+          <div className="flex min-w-0 flex-col gap-3">
+            {toolbar}
+            {table}
           </div>
           {shown && (
             <aside
-              className="flex w-[340px] shrink-0 flex-col overflow-y-auto border-s"
+              className="sticky top-48 max-h-[calc(100svh-13rem)] overflow-y-auto rounded-xl border bg-card"
               aria-label={t`Contact details`}
             >
-              <Panel key={shown} id={shown} />
+              <ContactDetail
+                key={shown}
+                id={shown}
+                page={false}
+                pageLink={`/contacts/${shown}${suffix}${suffix ? "&" : "?"}view=page`}
+              />
             </aside>
           )}
         </div>
       )}
       <AddContactDialog open={adding} onOpenChange={setAdding} />
-    </main>
+    </Page>
   )
 }

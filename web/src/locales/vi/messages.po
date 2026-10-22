@@ -19,10 +19,6 @@ msgstr "“Trang này có hữu ích không?”, phản hồi và thảo luận 
 msgid "(no subject)"
 msgstr "(không có chủ đề)"
 
-#: src/features/settings/members/MemberList.tsx
-msgid "(you)"
-msgstr "(bạn)"
-
 #. placeholder {0}: msg.attachments
 #: src/features/migrations/ReviewStep.tsx
 msgid "{0, plural, one {# attachment} other {# attachments}}"
@@ -78,6 +74,7 @@ msgid "{0} active today"
 msgstr "{0} hoạt động hôm nay"
 
 #. placeholder {0}: done.length
+#. placeholder {0}: done.size
 #: src/features/inbox/ChatList.tsx
 msgid "{0} closed"
 msgstr "{0} đã đóng"
@@ -88,6 +85,8 @@ msgid "{0} events"
 msgstr "{0} sự kiện"
 
 #. placeholder {0}: pct.format(good / mine.length)
+#. placeholder {0}: pct.format(good)
+#: src/features/home/HomePage.tsx
 #: src/features/reports/ReportPages.tsx
 msgid "{0} good"
 msgstr "{0} tốt"
@@ -206,6 +205,10 @@ msgstr "{attachmentsLeft} tệp đính kèm vượt quá giới hạn dung lư�
 msgid "{author}, sent by {by}"
 msgstr "{author}, gửi bởi {by}"
 
+#: src/features/team/TeamPage.tsx
+msgid "{available} of {total}"
+msgstr "{available} trên {total}"
+
 #: src/features/contact/ContactDetails.tsx
 msgid "{bad} bad"
 msgstr "{bad} không tốt"
@@ -227,6 +230,10 @@ msgstr "{clientName} đã được kết nối"
 msgid "{closed, plural, one {# closed} other {# closed}}"
 msgstr "{closed, plural, other {# đã đóng}}"
 
+#: src/features/status/MonitorsPage.tsx
+msgid "{comp} is not working"
+msgstr "{comp} không hoạt động"
+
 #: src/features/migrations/Wizard.tsx
 msgid "{conversations} conversations, {messages} messages"
 msgstr "{conversations} cuộc trò chuyện, {messages} tin nhắn"
@@ -243,10 +250,6 @@ msgstr "{count, plural, other {# thương hiệu}}"
 msgid "{count, plural, one {# folder} other {# folders}}"
 msgstr "{count, plural, other {# thư mục}}"
 
-#: src/features/status/StatusPages.tsx
-msgid "{count, plural, one {# linked conversation} other {# linked conversations}}"
-msgstr "{count, plural, other {# cuộc trò chuyện liên kết}}"
-
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "{count, plural, one {# mailbox} other {# mailboxes}}"
 msgstr "{count, plural, other {# hộp thư}}"
@@ -254,14 +257,6 @@ msgstr "{count, plural, other {# hộp thư}}"
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "{count, plural, one {It goes to # recipient.} other {It goes to # recipients.}}"
 msgstr "{count, plural, other {Gửi đến # người nhận.}}"
-
-#: src/features/broadcasts/ReviewPanel.tsx
-msgid "{count, plural, one {Schedule for # recipient} other {Schedule for # recipients}}"
-msgstr "{count, plural, other {Lên lịch cho # người nhận}}"
-
-#: src/features/broadcasts/ReviewPanel.tsx
-msgid "{count, plural, one {Send to # recipient} other {Send to # recipients}}"
-msgstr "{count, plural, other {Gửi cho # người nhận}}"
 
 #: src/features/settings/webhooks/WebhookList.tsx
 msgid "{count} events"
@@ -288,7 +283,7 @@ msgid "{created, plural, one {# new} other {# new}}"
 msgstr "{created, plural, other {# mới}}"
 
 #: src/features/broadcasts/Growth.tsx
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/Toolbar.tsx
 msgid "{d, plural, one {# day} other {# days}}"
 msgstr "{d, plural, other {# ngày}}"
 
@@ -303,10 +298,6 @@ msgstr "{days, plural, other {# ngày}}"
 #: src/features/home/HomePage.tsx
 msgid "{days, plural, one {median, last # day} other {median, last # days}}"
 msgstr "{days, plural, other {trung vị, # ngày qua}}"
-
-#: src/features/docs/DocsPages.tsx
-msgid "{days, plural, one {The last day, over the inboxes you can see.} other {The last # days, over the inboxes you can see.}}"
-msgstr "{days, plural, other {# ngày qua, trên các hộp thư bạn có thể xem.}}"
 
 #: src/features/conversation/ConversationStatus.tsx
 msgid "{days, plural, one {Waiting for # day} other {Waiting for # days}}"
@@ -325,12 +316,11 @@ msgstr "{doneParts} trên {totalParts} phần"
 msgid "{doneText} of {total}"
 msgstr "{doneText} trên {total}"
 
-#: src/features/status/IncidentsTab.tsx
 #: src/features/status/StatusPages.tsx
 msgid "{down, plural, one {# down} other {# down}}"
 msgstr "{down, plural, other {# ngừng hoạt động}}"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "{down} not helpful"
 msgstr "{down} không hữu ích"
 
@@ -342,7 +332,7 @@ msgstr "{existing} đã có trong Yuva"
 msgid "{feedback, plural, one {# feedback is not resolved yet} other {# feedback are not resolved yet}}"
 msgstr "{feedback, plural, other {# phản hồi chưa được giải quyết}}"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "{feedback} open feedback"
 msgstr "{feedback} phản hồi đang mở"
 
@@ -361,6 +351,10 @@ msgstr "{first} đã đánh giá cuộc trò chuyện 👍"
 #: src/features/conversation/messages/Thread.tsx
 msgid "{first} rated the conversation 👎"
 msgstr "{first} đã đánh giá cuộc trò chuyện 👎"
+
+#: src/features/home/HomePage.tsx
+msgid "{from} – today, {scope}"
+msgstr "{from} – hôm nay, {scope}"
 
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "{from} has an SPF record. Whether it passes is known once the test mail is read."
@@ -442,6 +436,10 @@ msgstr "{liveText} trong 30 phút qua"
 msgid "{minutes, plural, one {Waiting for # minute} other {Waiting for # minutes}}"
 msgstr "{minutes, plural, other {Đã chờ # phút}}"
 
+#: src/features/status/IncidentDetail.tsx
+msgid "{monitorName} answers normally again"
+msgstr "{monitorName} đã phản hồi bình thường trở lại"
+
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "{mxDomain} has no MX record, so replies to broadcasts cannot arrive. Publish the MX records of your mail service."
 msgstr "{mxDomain} không có bản ghi MX, nên các phản hồi cho thư hàng loạt không thể đến nơi. Hãy đăng các bản ghi MX của dịch vụ thư của bạn."
@@ -494,14 +492,25 @@ msgstr "{n} cuộc trò chuyện"
 msgid "{n} in 30 days"
 msgstr "{n} trong 30 ngày"
 
+#: src/features/inbox/ChatList.tsx
+msgid "{n} marked as read"
+msgstr "Đã đánh dấu {n} là đã đọc"
+
+#: src/features/inbox/ChatList.tsx
+msgid "{n} marked as unread"
+msgstr "Đã đánh dấu {n} là chưa đọc"
+
 #: src/app/UserMenu.tsx
 msgid "{name} · {statusText}"
 msgstr "{name} · {statusText}"
 
-#: src/features/team/MemberPage.tsx
-#: src/features/team/TeamColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "{name} (you)"
 msgstr "{name} (bạn)"
+
+#: src/features/contact/ContactDetail.tsx
+msgid "{name} blocked. Their mail is refused."
+msgstr "Đã chặn {name}. Email của họ sẽ bị từ chối."
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "{name} can reply"
@@ -552,6 +561,10 @@ msgstr "Tin tức {name}"
 msgid "{name} replied before you."
 msgstr "{name} nhận thư tại địa chỉ này. Đây là những gì bạn đã thiết lập."
 
+#: src/features/contact/ContactDetail.tsx
+msgid "{name} unblocked"
+msgstr "Đã bỏ chặn {name}"
+
 #: src/features/conversation/messages/context.ts
 #: src/features/inbox/SidePanels.tsx
 msgid "{name} via {via}"
@@ -569,21 +582,12 @@ msgstr "{names} sẽ được thông báo"
 msgid "{needs, plural, one {# thing needs you today.} other {# things need you today.}}"
 msgstr "{needs, plural, other {Hôm nay có # việc cần bạn.}}"
 
-#: src/features/status/IncidentsTab.tsx
-msgid "{notOk, plural, one {# not operational} other {# not operational}}"
-msgstr "{notOk, plural, other {# không hoạt động bình thường}}"
-
 #: src/features/home/HomePage.tsx
 msgid "{on} of {of} online"
 msgstr "{on}/{of} đang trực tuyến"
 
-#: src/features/team/TeamColumn.tsx
-msgid "{open, plural, one {# open now} other {# open now}}"
-msgstr "{open, plural, other {# đang mở}}"
-
 #: src/components/common/Linked.tsx
 #: src/features/home/HomePage.tsx
-#: src/features/team/TeamColumn.tsx
 msgid "{open, plural, one {# open} other {# open}}"
 msgstr "{open, plural, other {# đang mở}}"
 
@@ -599,27 +603,23 @@ msgstr "{out, plural, other {# dòng bị bỏ qua}}"
 msgid "{pct} satisfied"
 msgstr "{pct} hài lòng"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "{pending} posts waiting for approval"
 msgstr "{pending} bài đăng đang chờ duyệt"
 
-#: src/features/broadcasts/Overview.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "{pending} waiting · {unsubscribed} unsubscribed"
 msgstr "{pending} đang chờ · {unsubscribed} đã hủy đăng ký"
 
-#: src/features/docs/discussions/DiscussionsPane.tsx
 #: src/features/docs/discussions/parts.tsx
 msgid "{pending} waiting for approval"
 msgstr "{pending} đang chờ duyệt"
-
-#: src/features/broadcasts/BroadcastsColumn.tsx
-msgid "{pending} waiting for confirmation"
-msgstr "{pending} đang chờ xác nhận"
 
 #: src/features/broadcasts/ListSettings.tsx
 msgid "{people, plural, one {Its # subscription and its consent record are deleted.} other {Its # subscriptions and their consent records are deleted.}}"
 msgstr "{people, plural, other {# đăng ký và bản ghi đồng ý của nó sẽ bị xóa.}}"
 
+#: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/Overview.tsx
 msgid "{people} people"
 msgstr "{people} người"
@@ -647,6 +647,10 @@ msgstr "{percent}%, {doneText} trên {total}"
 #: src/features/migrations/UploadStep.tsx
 msgid "{percent}%, {sent} of {size}"
 msgstr "{percent}%, {sent} trên {size}"
+
+#: src/features/inbox/ChatsPage.tsx
+msgid "{product}’s conversations"
+msgstr "Cuộc trò chuyện của {product}"
 
 #: src/features/migrations/text.ts
 msgid "{provider} accepts no passwords over IMAP. This mailbox connects only with “Sign in with Microsoft”: go back and pick Outlook.com and Microsoft 365."
@@ -729,10 +733,6 @@ msgstr "{rated, plural, =0 {chưa có đánh giá} other {# đánh giá}}"
 msgid "{rated, plural, one {# rating} other {# ratings}}"
 msgstr "{rated, plural, other {# đánh giá}}"
 
-#: src/features/broadcasts/BroadcastList.tsx
-msgid "{recipients} recipients"
-msgstr "{recipients} người nhận"
-
 #: src/features/broadcasts/Report.tsx
 msgid "{recipients} recipients · {failed} refused by the mail server · {left} skipped · {auto} automatic replies, only counted"
 msgstr "{recipients} người nhận · {failed} bị máy chủ thư từ chối · {left} bỏ qua · {auto} phản hồi tự động, chỉ được đếm"
@@ -740,10 +740,6 @@ msgstr "{recipients} người nhận · {failed} bị máy chủ thư từ chố
 #: src/features/migrations/DoneStep.tsx
 msgid "{removable, plural, one {# imported conversation nobody wrote in since can be removed.} other {# imported conversations nobody wrote in since can be removed.}}"
 msgstr "{removable, plural, other {# cuộc trò chuyện đã nhập mà từ đó chưa ai viết thêm có thể được xóa.}}"
-
-#: src/features/team/TeamColumn.tsx
-msgid "{replies, plural, one {# reply today} other {# replies today}}"
-msgstr "{replies, plural, other {# phản hồi hôm nay}}"
 
 #: src/app/TeamMenu.tsx
 msgid "{replies, plural, one {# reply} other {# replies}}"
@@ -758,6 +754,10 @@ msgstr "{replies} phản hồi"
 msgid "{rest, plural, one {and # more page} other {and # more pages}}"
 msgstr "{rest, plural, other {và # trang nữa}}"
 
+#: src/features/team/TeamPage.tsx
+msgid "{role} · {language} · sent {sent} · expires {expires}"
+msgstr "{role} · {language} · đã gửi {sent} · hết hạn {expires}"
+
 #: src/features/broadcasts/Import.tsx
 msgid "{rows} rows, read as {encoding}, separated by {delimiter}."
 msgstr "{rows} dòng, đọc theo {encoding}, phân tách bằng {delimiter}."
@@ -770,15 +770,12 @@ msgstr "{rows} dòng."
 msgid "{satisfied} satisfied"
 msgstr "{satisfied} hài lòng"
 
-#: src/features/broadcasts/BroadcastList.tsx
-msgid "{sent} of {all}"
-msgstr "{sent} trên {all}"
-
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/broadcasts/Overview.tsx
 msgid "{sent} of {all} done"
 msgstr "{sent} trên {all} đã xong"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "{share} helpful"
 msgstr "{share} hữu ích"
 
@@ -795,34 +792,30 @@ msgid "{state} since {since}"
 msgstr "{state} từ {since}"
 
 #: src/features/broadcasts/AudienceBuilder.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
 msgid "{subscribed} subscribed"
 msgstr "{subscribed} đã đăng ký"
 
-#: src/features/status/StatusColumn.tsx
 #: src/features/status/StatusPages.tsx
 msgid "{subscribed} subscribers"
 msgstr "{subscribed} người đăng ký"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "{threads} open discussions"
 msgstr "{threads} cuộc thảo luận đang mở"
 
-#: src/features/broadcasts/Overview.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "{unsubscribed} unsubscribed"
 msgstr "{unsubscribed} đã hủy đăng ký"
 
-#: src/features/status/IncidentsTab.tsx
 #: src/features/status/StatusPages.tsx
 msgid "{up, plural, one {# up} other {# up}}"
 msgstr "{up, plural, other {# đang chạy}}"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "{up} helpful"
 msgstr "{up} hữu ích"
 
 #: src/features/status/IncidentsPage.tsx
-#: src/features/status/IncidentsTab.tsx
 msgid "{updates, plural, one {# update} other {# updates}}"
 msgstr "{updates, plural, other {# cập nhật}}"
 
@@ -837,8 +830,13 @@ msgstr "{views, plural, other {# lượt xem}}"
 #: src/features/account/AccountPage.tsx
 #: src/features/docs/discussions/parts.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/feedback/RoadmapCard.tsx
 msgid "{votes} votes"
 msgstr "{votes} lượt bình chọn"
+
+#: src/features/status/StatusPages.tsx
+msgid "{watching, plural, one {Watched by # monitor} other {Watched by # monitors}}"
+msgstr "{watching, plural, other {Được # trình giám sát theo dõi}}"
 
 #: src/features/reports/ReportPages.tsx
 msgid "{who} · answered by {name}"
@@ -870,7 +868,7 @@ msgstr "+ Thêm địa chỉ"
 msgid "+ Add channel"
 msgstr "+ Thêm kênh"
 
-#: src/features/broadcasts/Overview.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "+{added} this month"
 msgstr "+{added} tháng này"
 
@@ -1083,6 +1081,10 @@ msgstr "Một cuộc thảo luận có câu trả lời được chấp nhận"
 msgid "A discussion started"
 msgstr "Một cuộc thảo luận đã bắt đầu"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "A draft incident opens for your team to review. Customers see nothing until a member publishes it."
+msgstr "Một sự cố bản nháp được mở để nhóm của bạn xem xét. Khách hàng không thấy gì cho đến khi một thành viên xuất bản."
+
 #: src/features/status/IncidentDialog.tsx
 msgid "A draft is seen only by your team and changes no component until you publish it."
 msgstr "Bản nháp chỉ nhóm của bạn thấy và không thay đổi thành phần nào cho đến khi bạn xuất bản."
@@ -1131,7 +1133,11 @@ msgstr "Một tin nhắn sau đó từ liên hệ."
 msgid "A line that makes people open it"
 msgstr "Một dòng khiến mọi người muốn mở thư"
 
-#: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/features/broadcasts/ListsHome.tsx
+msgid "A list is who agreed to hear from you. Every subscriber keeps a consent record you can export."
+msgstr "Danh sách là những người đã đồng ý nhận tin từ bạn. Mỗi người đăng ký có một bản ghi sự đồng ý mà bạn có thể xuất."
+
+#: src/features/broadcasts/ListParts.tsx
 msgid "A mailing list holds the people who agreed to get your broadcasts. They join on a subscribe form on your site, or your team adds them and records how they agreed. Every step is kept as proof of consent, and everyone can leave with one click."
 msgstr "Danh sách gửi thư chứa những người đã đồng ý nhận thư hàng loạt của bạn. Họ tham gia qua biểu mẫu đăng ký trên trang web của bạn, hoặc nhóm của bạn thêm họ và ghi lại cách họ đã đồng ý. Mọi bước đều được lưu làm bằng chứng đồng ý, và ai cũng có thể rời đi chỉ với một lần nhấp."
 
@@ -1142,10 +1148,6 @@ msgstr "Danh sách gửi thư gửi với tên của một hộp thư, qua kênh
 #: src/features/setup/SetupHub.tsx
 msgid "A mailing list with subscribe forms, for your broadcasts"
 msgstr "Danh sách gửi thư có biểu mẫu đăng ký, cho thư hàng loạt của bạn"
-
-#: src/features/status/MonitorsTab.tsx
-msgid "A member set the component by hand later, so it stays as they left it."
-msgstr "Một thành viên đã đặt thành phần bằng tay sau đó, nên nó giữ nguyên như họ đã để."
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "A merge field without a fallback would be empty for some recipients. Give it a fallback."
@@ -1166,6 +1168,10 @@ msgstr "Một tên bạn kiểm soát, ví dụ status.example.com. Yuva sẽ ch
 #: src/features/setup/StartStep.tsx
 msgid "A new product"
 msgstr "Một sản phẩm mới"
+
+#: src/features/docs/PagesTab.tsx
+msgid "A new reader’s first post waits for your approval. You can change this in the inbox settings."
+msgstr "Bài đăng đầu tiên của người đọc mới đang chờ bạn duyệt. Bạn có thể đổi điều này trong cài đặt hộp thư."
 
 #: src/components/common/ServiceWorkerBridge.tsx
 msgid "A new version of Yuva is ready."
@@ -1362,10 +1368,15 @@ msgstr "Acme Support"
 msgid "Actions for {0}"
 msgstr "Thao tác cho {0}"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/status/DomainCard.tsx
 #: src/features/status/IncidentsPage.tsx
 msgid "Active"
 msgstr "Đang hoạt động"
+
+#: src/features/contact/ContactDetail.tsx
+msgid "Activity"
+msgstr "Hoạt động"
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/contact/ContactDetails.tsx
@@ -1376,6 +1387,10 @@ msgstr "Thêm"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Add a block"
 msgstr "Thêm một khối"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Add a component"
+msgstr "Thêm thành phần"
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Add a condition"
@@ -1492,7 +1507,7 @@ msgstr "Thêm header"
 msgid "Add monitor"
 msgstr "Thêm trình giám sát"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Add monitor ({addKey})"
 msgstr "Thêm trình giám sát ({addKey})"
 
@@ -1505,6 +1520,11 @@ msgstr "Thêm ghi chú"
 msgid "Add product"
 msgstr "Thêm sản phẩm"
 
+#: src/features/docs/InstallDialog.tsx
+msgid "Add ratings and discussions to your docs"
+msgstr "Thêm đánh giá và thảo luận vào tài liệu của bạn"
+
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 #: src/features/broadcasts/Subscribers.tsx
 msgid "Add subscriber"
@@ -1513,10 +1533,6 @@ msgstr "Thêm người đăng ký"
 #: src/features/setup/InstallStep.tsx
 msgid "Add the chat to your site"
 msgstr "Thêm chat vào trang web của bạn"
-
-#: src/features/docs/DocsColumn.tsx
-msgid "Add the page feedback and discussions elements to your documentation site, on one of the inbox's chat channels. Ratings, feedback and discussions then show up here per page."
-msgstr "Thêm các phần tử phản hồi trang và thảo luận vào trang tài liệu của bạn, trên một trong các kênh chat của hộp thư. Đánh giá, phản hồi và thảo luận sẽ hiện ở đây theo từng trang."
 
 #: src/features/setup/InstallStep.tsx
 msgid "Add the SDK and create one client"
@@ -1530,6 +1546,7 @@ msgstr "Thêm máy chủ trong terminal:"
 msgid "Add the site's address."
 msgstr "Thêm địa chỉ của trang web."
 
+#: src/features/docs/PagesTab.tsx
 #: src/features/setup/InstallStep.tsx
 msgid "Add the two elements under every docs page"
 msgstr "Thêm hai phần tử dưới mỗi trang tài liệu"
@@ -1537,14 +1554,6 @@ msgstr "Thêm hai phần tử dưới mỗi trang tài liệu"
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Add to Cursor"
 msgstr "Thêm vào Cursor"
-
-#: src/features/feedback/FeedbackPage.tsx
-msgid "Add to roadmap"
-msgstr "Thêm vào lộ trình"
-
-#: src/features/feedback/FeedbackPage.tsx
-msgid "Add to roadmap (B)"
-msgstr "Thêm vào lộ trình (B)"
 
 #: src/features/setup/InstallStep.tsx
 msgid "Add Yuva to your app"
@@ -1580,6 +1589,7 @@ msgstr "Do nhóm thêm"
 #: src/features/setup/email/EmailLayout.tsx
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/MonitorHttpFields.tsx
+#: src/features/status/MonitorsPage.tsx
 #: src/features/status/MonitorToken.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Address"
@@ -1598,11 +1608,11 @@ msgstr "Quản trị viên"
 msgid "Admin routing"
 msgstr "Định tuyến quản trị"
 
-#: src/features/status/IncidentPane.tsx
-msgid "Affected"
-msgstr "Bị ảnh hưởng"
+#: src/features/team/TeamPage.tsx
+msgid "Admins see every inbox and manage products, channels and members."
+msgstr "Quản trị viên thấy mọi hộp thư đến và quản lý sản phẩm, kênh và thành viên."
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Affects"
 msgstr "Ảnh hưởng"
 
@@ -1613,6 +1623,10 @@ msgstr "Nhân viên"
 #: src/features/migrations/MapStep.tsx
 msgid "Agents"
 msgstr "Nhân viên"
+
+#: src/features/team/TeamPage.tsx
+msgid "Agents see the inboxes they were given and answer in them."
+msgstr "Nhân viên hỗ trợ thấy các hộp thư đến được giao cho họ và trả lời trong đó."
 
 #: src/features/conversation/Collision.tsx
 msgid "Agree who replies."
@@ -1646,6 +1660,7 @@ msgstr "Alertmanager"
 #: src/features/inbox/ChatList.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "All"
 msgstr "Tất cả"
 
@@ -1654,7 +1669,7 @@ msgstr "Tất cả"
 msgid "All components"
 msgstr "Tất cả thành phần"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "All good"
 msgstr "Mọi thứ ổn"
 
@@ -1678,17 +1693,21 @@ msgstr "Tất cả thư"
 msgid "All marked as read"
 msgstr "Đã đánh dấu tất cả là đã đọc"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "All monitors"
+msgstr "Tất cả trình giám sát"
+
 #: src/features/settings/inboxes/InboxSecurity.tsx
 msgid "All of its conversations are deleted with it."
 msgstr "Mọi cuộc trò chuyện của nó sẽ bị xóa cùng với nó."
 
-#: src/features/status/IncidentsTab.tsx
-msgid "all operational"
-msgstr "tất cả hoạt động bình thường"
-
 #: src/features/migrations/UploadStep.tsx
 msgid "All parts arrived. Reading the file…"
 msgstr "Đã nhận đủ các phần. Đang đọc tệp…"
+
+#: src/features/home/HomePage.tsx
+msgid "all products"
+msgstr "tất cả sản phẩm"
 
 #: src/features/inbox/InboxPicker.tsx
 #: src/features/inbox/ProductSwitcher.tsx
@@ -1702,7 +1721,7 @@ msgstr "Tất cả sản phẩm"
 msgid "All scopes"
 msgstr "Tất cả phạm vi"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/Toolbar.tsx
 msgid "All sites"
 msgstr "Tất cả trang web"
 
@@ -1714,7 +1733,6 @@ msgstr "tất cả trang web và ứng dụng"
 msgid "All systems operational"
 msgstr "Mọi hệ thống đang hoạt động"
 
-#: src/features/status/IncidentsTab.tsx
 #: src/features/status/StatusPages.tsx
 msgid "all up"
 msgstr "tất cả đang chạy"
@@ -1758,6 +1776,7 @@ msgstr "Đã có ở phía trước trong tệp"
 msgid "Already in Yuva"
 msgstr "Đã có trong Yuva"
 
+#: src/features/status/LinkConversationsDialog.tsx
 #: src/features/status/LinkIncidentDialog.tsx
 msgid "Already linked"
 msgstr "Đã được liên kết"
@@ -1903,6 +1922,14 @@ msgstr "Một ảnh https."
 msgid "An inbox collects the conversations of one product or brand. Name it after the product your customers know."
 msgstr "Hộp thư tập hợp các cuộc trò chuyện của một sản phẩm hoặc thương hiệu. Hãy đặt tên theo sản phẩm mà khách hàng của bạn biết."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "An incident is published at once, so customers see it on the page."
+msgstr "Sự cố được xuất bản ngay nên khách hàng thấy nó trên trang."
+
+#: src/features/status/MonitorsPage.tsx
+msgid "An incident is still open. Post the all-clear."
+msgstr "Vẫn còn một sự cố đang mở. Hãy đăng thông báo mọi thứ đã bình thường."
+
 #: src/components/common/text.ts
 msgid "An incident or maintenance changed or got an update"
 msgstr "Một sự cố hoặc đợt bảo trì đã thay đổi hoặc có cập nhật"
@@ -1919,9 +1946,13 @@ msgstr "Một sự cố chỉ liên kết được tối đa 5.000 cuộc trò c
 msgid "An incident was resolved or maintenance completed"
 msgstr "Một sự cố đã được xử lý hoặc một đợt bảo trì đã hoàn tất"
 
-#: src/features/settings/members/Invites.tsx
+#: src/features/team/TeamPage.tsx
 msgid "An invite is accepted when the person signs in with a code sent to that address. It expires after 7 days."
 msgstr "Lời mời được chấp nhận khi người đó đăng nhập bằng mã gửi tới địa chỉ này. Lời mời hết hạn sau 7 ngày."
+
+#: src/features/team/TeamPage.tsx
+msgid "An owner cannot be removed. Change their role first."
+msgstr "Không thể xóa chủ sở hữu. Hãy đổi vai trò của họ trước."
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "An owner or admin can let assistants send on their own with Bots may send."
@@ -1993,6 +2024,10 @@ msgstr "hộp thư khác"
 msgid "Another page verified this domain first, and only a verified claim holds a name. Remove the domain, or start over once the other page lets it go."
 msgstr "Một trang khác đã xác minh tên miền này trước, và chỉ yêu cầu đã xác minh mới giữ được một tên. Hãy xóa tên miền, hoặc bắt đầu lại khi trang kia nhả nó ra."
 
+#: src/features/docs/discussions/FromConversation.tsx
+msgid "Another page…"
+msgstr "Trang khác…"
+
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "Another SMTP server"
 msgstr "Máy chủ SMTP khác"
@@ -2046,6 +2081,10 @@ msgstr "Bất kỳ client nào dùng MCP qua HTTP. Nó hành động với danh 
 msgid "Any conversation"
 msgstr "Bất kỳ cuộc trò chuyện nào"
 
+#: src/features/contact/ContactsPage.tsx
+msgid "Any country"
+msgstr "Mọi quốc gia"
+
 #: src/features/inbox/ChatList.tsx
 msgid "Any label"
 msgstr "Nhãn bất kỳ"
@@ -2078,7 +2117,7 @@ msgstr "API và MCP"
 msgid "API channel"
 msgstr "Kênh API"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "API key"
 msgstr "Khóa API"
 
@@ -2090,6 +2129,7 @@ msgstr "Khóa API"
 
 #: src/components/common/Source.tsx
 #: src/features/conversation/Feedback.tsx
+#: src/features/feedback/FeedbackFormDialog.tsx
 #: src/features/oauth/ConsentPage.tsx
 msgid "App"
 msgstr "Ứng dụng"
@@ -2155,9 +2195,19 @@ msgctxt "mail folder kind"
 msgid "Archive"
 msgstr "Lưu trữ"
 
+#: src/features/broadcasts/ListSettings.tsx
+msgid "Archive the list instead to keep the records."
+msgstr "Hãy lưu trữ danh sách thay vì xóa để giữ các bản ghi."
+
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "Archived"
 msgstr "Đã lưu trữ"
+
+#: src/features/broadcasts/ListsHome.tsx
+msgid "Archived lists keep their subscribers and consent records but take no new sign-ups."
+msgstr "Danh sách đã lưu trữ vẫn giữ người đăng ký và bản ghi đồng ý, nhưng không nhận đăng ký mới."
 
 #: src/features/setup/previews.tsx
 msgid "Arrived"
@@ -2174,6 +2224,10 @@ msgstr "Đã đến qua chuyển tiếp, {verifiedAt}."
 #: src/components/common/ShortcutSheet.tsx
 msgid "Articles"
 msgstr "Bài viết"
+
+#: src/features/docs/PagesTab.tsx
+msgid "Articles you write in Yuva"
+msgstr "Các bài viết bạn soạn trong Yuva"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "As {name}, since {when}"
@@ -2233,17 +2287,15 @@ msgstr "Giao (A)"
 
 #: src/app/Palette.tsx
 #: src/components/common/ShortcutSheet.tsx
-#: src/features/conversation/ConversationMenu.tsx
 msgid "Assign or hand to a teammate"
 msgstr "Giao hoặc chuyển cho đồng nghiệp"
 
-#: src/features/conversation/ConversationMenu.tsx
+#: src/features/conversation/ChatView.tsx
 #: src/features/conversation/HeaderActions.tsx
 msgid "Assign to me"
 msgstr "Giao cho tôi"
 
 #. placeholder {0}: assignee.name || assignee.email
-#: src/features/conversation/ChatView.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Assigned to {0}"
 msgstr "Đã giao cho {0}"
@@ -2344,7 +2396,7 @@ msgstr "Thuộc tính của điều kiện {n}"
 msgid "attribute, e.g. plan"
 msgstr "thuộc tính, ví dụ plan"
 
-#: src/features/contact/ContactsPage.tsx
+#: src/features/contact/ContactDetail.tsx
 #: src/features/contact/MergePreview.tsx
 msgid "Attributes"
 msgstr "Thuộc tính"
@@ -2368,7 +2420,7 @@ msgstr "Phản hồi tự động, bản tin và báo cáo gửi thư mà không
 msgid "Auto-reply"
 msgstr "Phản hồi tự động"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "automatic"
 msgstr "tự động"
 
@@ -2380,7 +2432,7 @@ msgstr "Thư tự động không bao giờ kích hoạt phản hồi tự độn
 msgid "Available"
 msgstr "Khả dụng"
 
-#: src/features/team/TeamColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "available now"
 msgstr "có sẵn bây giờ"
 
@@ -2397,6 +2449,7 @@ msgstr "Vắng mặt"
 #: src/components/common/Linked.tsx
 #: src/components/common/Wizard.tsx
 #: src/features/auth/CreateWorkspace.tsx
+#: src/features/broadcasts/ReviewPanel.tsx
 #: src/features/contact/MergeContactDialog.tsx
 msgid "Back"
 msgstr "Quay lại"
@@ -2461,6 +2514,10 @@ msgstr "trước đó: {0}, {1}"
 msgid "Before you connect"
 msgstr "Trước khi bạn kết nối"
 
+#: src/features/broadcasts/Composer.tsx
+msgid "Before you send"
+msgstr "Trước khi gửi"
+
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Billing"
 msgstr "Thanh toán"
@@ -2474,8 +2531,12 @@ msgstr "Bot thanh toán"
 msgid "Billing events"
 msgstr "Sự kiện thanh toán"
 
+#: src/features/contact/ContactDetail.tsx
+msgid "Block contact"
+msgstr "Chặn liên hệ"
+
 #: src/features/contact/ContactCard.tsx
-#: src/features/contact/ContactPage.tsx
+#: src/features/contact/ContactDetail.tsx
 #: src/features/contact/ContactSheet.tsx
 #: src/features/contact/ContactsPage.tsx
 #: src/features/status/DomainCard.tsx
@@ -2485,6 +2546,10 @@ msgstr "Đã chặn"
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Blocked contacts"
 msgstr "Liên hệ bị chặn"
+
+#: src/features/contact/ContactDetail.tsx
+msgid "Blocked. Mail from this contact is refused and nothing new reaches the inbox. Unblock them from the menu."
+msgstr "Đã chặn. Email từ liên hệ này bị từ chối và không có gì mới vào hộp thư. Bỏ chặn từ menu."
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Board"
@@ -2603,6 +2668,7 @@ msgstr "Đưa lịch sử email và trung tâm trợ giúp của bạn vào, ch�
 msgid "Bring your old mail"
 msgstr "Đưa thư cũ của bạn vào"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/Overview.tsx
 msgid "Broadcast"
@@ -2622,9 +2688,9 @@ msgstr "Gửi thư hàng loạt"
 #: src/app/Rail.tsx
 #: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
-#: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/Overview.tsx
 #: src/features/settings/webhooks/events.tsx
 #: src/features/settings/workspace/BroadcastsSettings.tsx
@@ -2661,11 +2727,6 @@ msgstr "Lỗi, ý tưởng và lời khen gửi từ ứng dụng và trang củ
 msgid "Business hours"
 msgstr "Giờ làm việc"
 
-#: src/features/broadcasts/SubscriberSheet.tsx
-msgid "By"
-msgstr "Bởi"
-
-#: src/features/status/IncidentsTab.tsx
 #: src/features/status/StatusPages.tsx
 msgid "by e-mail"
 msgstr "qua email"
@@ -2701,14 +2762,18 @@ msgstr "Tên chiến dịch"
 #: src/components/common/Wizard.tsx
 #: src/features/account/ConnectPage.tsx
 #: src/features/broadcasts/Import.tsx
+#: src/features/broadcasts/ListsHome.tsx
 #: src/features/broadcasts/NewBroadcastDialog.tsx
 #: src/features/broadcasts/Pace.tsx
 #: src/features/broadcasts/ReviewPanel.tsx
+#: src/features/broadcasts/SubscriberSheet.tsx
 #: src/features/contact/ContactDetails.tsx
+#: src/features/contact/ContactNotes.tsx
 #: src/features/contact/ContactsPage.tsx
 #: src/features/conversation/messages/Thread.tsx
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/docs/FromDocs.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
@@ -2716,10 +2781,10 @@ msgstr "Tên chiến dịch"
 #: src/features/status/AddSubscriberDialog.tsx
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/CreatePageDialog.tsx
+#: src/features/status/IncidentDetail.tsx
 #: src/features/status/IncidentDialog.tsx
-#: src/features/status/IncidentPane.tsx
 #: src/features/status/MonitorDialog.tsx
-#: src/features/team/TeamColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Cancel"
 msgstr "Hủy"
 
@@ -2803,7 +2868,7 @@ msgstr "Catch-all không có địa chỉ From"
 msgid "Category"
 msgstr "Danh mục"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Cause found"
 msgstr "Đã tìm ra nguyên nhân"
 
@@ -2815,18 +2880,23 @@ msgstr "Cc: {cc}"
 msgid "Certificate"
 msgstr "Chứng chỉ"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Certificate expired {expires}"
 msgstr "Chứng chỉ đã hết hạn vào {expires}"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Certificate expires {expires}"
 msgstr "Chứng chỉ hết hạn vào {expires}"
+
+#: src/features/feedback/RoadmapCard.tsx
+msgid "Change"
+msgstr "Đổi"
 
 #: src/features/auth/SignInForm.tsx
 msgid "Change address"
 msgstr "Đổi địa chỉ"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Change pace"
 msgstr "Đổi tốc độ"
@@ -2868,7 +2938,6 @@ msgid "Changing the sending domain turns DKIM signing off until you enable it ag
 msgstr "Đổi tên miền gửi sẽ tắt ký DKIM cho đến khi bạn bật lại cho tên miền mới."
 
 #: src/features/contact/ContactDetails.tsx
-#: src/features/inbox/ChatList.tsx
 #: src/features/setup/email/EmailLayout.tsx
 #: src/features/setup/SetupLayout.tsx
 msgid "Channel"
@@ -2882,10 +2951,22 @@ msgstr "Đã thêm kênh"
 msgid "Channel removed"
 msgstr "Đã gỡ kênh"
 
+#: src/features/feedback/FeedbackFormDialog.tsx
+msgid "Channel settings"
+msgstr "Cài đặt kênh"
+
 #: src/app/Sidebar.tsx
 #: src/features/settings/ProductsPage.tsx
 msgid "Channels"
 msgstr "Kênh"
+
+#: src/features/docs/InstallDialog.tsx
+msgid "Chat channel"
+msgstr "Kênh trò chuyện"
+
+#: src/features/broadcasts/ReviewPanel.tsx
+msgid "Check"
+msgstr "Kiểm tra"
 
 #: src/features/settings/channels/email/Deliverability.tsx
 #: src/features/setup/email/EmailTestStep.tsx
@@ -2913,6 +2994,7 @@ msgid "Check DNS and start signing"
 msgstr "Kiểm tra DNS và bắt đầu ký"
 
 #: src/features/status/MonitorDialog.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Check every"
 msgstr "Kiểm tra mỗi"
 
@@ -2941,7 +3023,6 @@ msgid "Check your e-mail"
 msgstr "Kiểm tra email của bạn"
 
 #: src/features/setup/email/EmailDoneStep.tsx
-#: src/features/status/MonitorsTab.tsx
 msgid "Checked"
 msgstr "Đã kiểm tra"
 
@@ -2982,7 +3063,7 @@ msgstr "Đang kiểm tra…"
 msgid "Checks"
 msgstr "Lần kiểm tra"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Checks that watch your products and set component states"
 msgstr "Các kiểm tra theo dõi sản phẩm của bạn và đặt trạng thái thành phần"
 
@@ -3006,9 +3087,9 @@ msgstr "Chọn “Tạo mật khẩu ứng dụng”, đặt tên “Yuva” và
 msgid "Choose a channel"
 msgstr "Chọn một kênh"
 
-#: src/features/status/MonitorDialog.tsx
-msgid "Choose a component"
-msgstr "Chọn một thành phần"
+#: src/features/docs/discussions/FromConversation.tsx
+msgid "Choose a page"
+msgstr "Chọn một trang"
 
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "Choose a region"
@@ -3047,6 +3128,14 @@ msgstr "claude.ai và Claude Desktop"
 #: src/features/conversation/HeaderActions.tsx
 msgid "Clear"
 msgstr "Xóa"
+
+#: src/features/contact/ContactsPage.tsx
+msgid "Clear filters"
+msgstr "Xóa bộ lọc"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Clear search and filters"
+msgstr "Xóa tìm kiếm và bộ lọc"
 
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Clear the answer"
@@ -3107,6 +3196,7 @@ msgstr "Client secret"
 #: src/components/ui/sheet.tsx
 #: src/features/contact/ContactCard.tsx
 #: src/features/contact/ContactSheet.tsx
+#: src/features/docs/DocsPage.tsx
 #: src/features/migrations/Wizard.tsx
 #: src/features/setup/SetupHub.tsx
 msgid "Close"
@@ -3150,6 +3240,10 @@ msgstr "Đóng các cuộc trò chuyện cũ"
 msgid "Close or reopen"
 msgstr "Đóng hoặc mở lại"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Close the discussion"
+msgstr "Đóng thảo luận"
+
 #: src/features/conversation/ChatView.tsx
 msgid "Close the search"
 msgstr "Đóng tìm kiếm"
@@ -3169,7 +3263,7 @@ msgid "Closed conversations untouched for this many days are deleted with their 
 msgstr "Các cuộc trò chuyện đã đóng không có thay đổi trong ngần ấy ngày sẽ bị xóa cùng tin nhắn và tệp đính kèm, và email thô cũ hơn mức này cũng bị xóa. Để trống để giữ mọi thứ."
 
 #: src/features/inbox/ChatsPage.tsx
-#: src/features/team/MemberPage.tsx
+#: src/features/team/TeamPage.tsx
 msgid "closed today"
 msgstr "đã đóng hôm nay"
 
@@ -3239,17 +3333,24 @@ msgid "Comparison of condition {n}"
 msgstr "So sánh của điều kiện {n}"
 
 #: src/features/settings/inboxes/SenderIdentity.tsx
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Complete"
 msgstr "Hoàn tất"
+
+#: src/features/status/IncidentDetail.tsx
+msgid "Complete maintenance"
+msgstr "Hoàn tất bảo trì"
 
 #: src/features/migrations/text.ts
 #: src/features/status/text.tsx
 msgid "Completed"
 msgstr "Đã hoàn tất"
 
+#: src/features/status/IncidentDetail.tsx
+msgid "Completed at {endedAt}"
+msgstr "Hoàn tất lúc {endedAt}"
+
 #: src/features/status/MonitorDialog.tsx
-#: src/features/status/MonitorsTab.tsx
 msgid "Component"
 msgstr "Thành phần"
 
@@ -3259,9 +3360,7 @@ msgstr "Đã xóa thành phần"
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/SubscriberSheet.tsx
-#: src/features/status/IncidentPane.tsx
-#: src/features/status/IncidentsTab.tsx
-#: src/features/status/StatusPagePane.tsx
+#: src/features/status/IncidentDetail.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Components"
 msgstr "Thành phần"
@@ -3312,7 +3411,6 @@ msgid "Confirmation asked"
 msgstr "Đã yêu cầu xác nhận"
 
 #: src/components/common/text.ts
-#: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Confirmation mail sent"
 msgstr "Đã gửi thư xác nhận"
 
@@ -3432,6 +3530,7 @@ msgstr "Mất kết nối. Đang kết nối lại…"
 msgid "Connections"
 msgstr "Kết nối"
 
+#: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/ListSettings.tsx
 #: src/features/status/SubscribersTab.tsx
 msgid "Consent export"
@@ -3445,13 +3544,18 @@ msgstr "Đã đồng ý"
 msgid "Consent record"
 msgstr "Bản ghi đồng ý"
 
+#: src/features/contact/ContactDetail.tsx
 #: src/features/contact/ContactSheet.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "Contact"
 msgstr "Liên hệ"
 
-#: src/features/contact/ContactPage.tsx
+#: src/features/contact/ContactsPage.tsx
+msgid "Contact added. Use New conversation to write to them."
+msgstr "Đã thêm liên hệ. Dùng Cuộc trò chuyện mới để nhắn cho họ."
+
+#: src/features/contact/ContactDetail.tsx
 msgid "Contact and identities"
 msgstr "Liên hệ và danh tính"
 
@@ -3459,7 +3563,6 @@ msgstr "Liên hệ và danh tính"
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/contact/ContactSheet.tsx
 #: src/features/contact/ContactsPage.tsx
-#: src/features/conversation/ConversationMenu.tsx
 msgid "Contact details"
 msgstr "Thông tin liên hệ"
 
@@ -3467,7 +3570,11 @@ msgstr "Thông tin liên hệ"
 msgid "Contact details (C)"
 msgstr "Thông tin liên hệ (C)"
 
-#: src/features/contact/ContactPage.tsx
+#: src/features/contact/ContactDetail.tsx
+msgid "Contact id copied"
+msgstr "Đã sao chép ID liên hệ"
+
+#: src/features/contact/ContactDetail.tsx
 #: src/features/contact/ContactSheet.tsx
 msgid "Contact since {since}"
 msgstr "Là liên hệ từ {since}"
@@ -3493,6 +3600,7 @@ msgid "Content"
 msgstr "Nội dung"
 
 #: src/features/broadcasts/Import.tsx
+#: src/features/broadcasts/ReviewPanel.tsx
 #: src/features/migrations/ChooseStep.tsx
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/migrations/MapStep.tsx
@@ -3523,6 +3631,10 @@ msgstr "Tiếp tục với thư mới hơn"
 msgid "Convers."
 msgstr "Trò chuyện"
 
+#: src/features/conversation/ChatView.tsx
+msgid "Conversation actions"
+msgstr "Thao tác với cuộc trò chuyện"
+
 #: src/features/conversation/actions.ts
 msgid "Conversation closed"
 msgstr "Đã đóng cuộc trò chuyện"
@@ -3532,22 +3644,27 @@ msgid "Conversation list"
 msgstr "Danh sách cuộc trò chuyện"
 
 #: src/features/conversation/actions.ts
+#: src/features/conversation/ChatView.tsx
 msgid "Conversation reopened"
 msgstr "Đã mở lại cuộc trò chuyện"
 
-#: src/features/contact/ContactPage.tsx
+#: src/features/contact/ContactDetail.tsx
+msgid "Conversation started"
+msgstr "Đã bắt đầu cuộc trò chuyện"
+
+#: src/features/contact/ContactDetail.tsx
 #: src/features/reports/ReportPages.tsx
 msgid "conversations"
 msgstr "cuộc trò chuyện"
 
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/contact/ContactDetail.tsx
 #: src/features/contact/ContactDetails.tsx
-#: src/features/contact/ContactPage.tsx
 #: src/features/contact/ContactSheet.tsx
-#: src/features/contact/ContactsPage.tsx
 #: src/features/contact/MergePreview.tsx
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/FromDocs.tsx
+#: src/features/docs/PagesTab.tsx
 #: src/features/home/HomePage.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/DoneStep.tsx
@@ -3563,10 +3680,6 @@ msgstr "Đã sao chép cuộc trò chuyện"
 #: src/features/inbox/ChatsPage.tsx
 msgid "Conversations from every product"
 msgstr "Cuộc trò chuyện từ mọi sản phẩm"
-
-#: src/features/inbox/ChatsPage.tsx
-msgid "Conversations in {product}"
-msgstr "Cuộc trò chuyện trong {product}"
 
 #: src/features/migrations/DoneStep.tsx
 msgid "Conversations nobody wrote in after the import are deleted. Nothing changed in {address}."
@@ -3616,7 +3729,7 @@ msgstr "Sao chép"
 msgid "Copy a message for your admin"
 msgstr "Sao chép tin nhắn cho quản trị viên của bạn"
 
-#: src/features/contact/ContactsPage.tsx
+#: src/features/contact/ContactDetail.tsx
 msgid "Copy contact id"
 msgstr "Sao chép ID liên hệ"
 
@@ -3750,14 +3863,16 @@ msgid "Create list"
 msgstr "Tạo danh sách"
 
 #: src/features/status/CreatePageDialog.tsx
-#: src/features/status/StatusColumn.tsx
 msgid "Create status page"
 msgstr "Tạo trang trạng thái"
 
-#: src/features/status/StatusColumn.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Create status page ({newKey})"
 msgstr "Tạo trang trạng thái ({newKey})"
+
+#: src/features/status/StatusPages.tsx
+msgid "Create status page for {product}"
+msgstr "Tạo trang trạng thái cho {product}"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Create the board"
@@ -3816,6 +3931,10 @@ msgstr "Tùy chỉnh"
 #: src/app/Sidebar.tsx
 msgid "Customers"
 msgstr "Khách hàng"
+
+#: src/features/status/MonitorsPage.tsx
+msgid "Customers cannot see this yet. Tell them with an incident."
+msgstr "Khách hàng chưa thấy điều này. Hãy báo cho họ bằng một sự cố."
 
 #: src/features/setup/ChannelStep.tsx
 #: src/features/setup/SetupHub.tsx
@@ -3876,6 +3995,7 @@ msgstr "Số ngày trước khi hết hạn mà lần kiểm tra bị coi là th
 msgid "Days of history"
 msgstr "Số ngày lịch sử"
 
+#: src/features/docs/PagesTab.tsx
 #: src/features/setup/InstallStep.tsx
 msgid "Decide who may write in discussions"
 msgstr "Quyết định ai được viết trong các cuộc thảo luận"
@@ -3889,6 +4009,7 @@ msgid "Degraded performance"
 msgstr "Hiệu năng giảm"
 
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/ListSettings.tsx
 #: src/features/broadcasts/SubscriberSheet.tsx
 #: src/features/contact/ContactNotes.tsx
@@ -3897,28 +4018,33 @@ msgstr "Hiệu năng giảm"
 #: src/features/settings/inboxes/InboxSecurity.tsx
 #: src/features/settings/labels/LabelsPage.tsx
 #: src/features/status/ComponentsTab.tsx
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Delete"
 msgstr "Xóa"
 
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/broadcasts/Composer.tsx
 msgid "Delete “{name}”?"
 msgstr "Xóa “{name}”?"
+
+#: src/features/status/MonitorsPage.tsx
+msgid "Delete ({removeKey})"
+msgstr "Xóa ({removeKey})"
 
 #. placeholder {0}: c.name
 #. placeholder {0}: i.title
 #. placeholder {0}: list.name
 #: src/features/broadcasts/ListSettings.tsx
 #: src/features/status/ComponentsTab.tsx
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Delete {0}?"
 msgstr "Xóa {0}?"
 
 #: src/features/settings/inboxes/InboxSecurity.tsx
 #: src/features/settings/workspace/DeleteWorkspace.tsx
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Delete {name}?"
 msgstr "Xóa {name}?"
 
@@ -3930,12 +4056,12 @@ msgstr "Xóa sau (ngày)"
 msgid "Delete component"
 msgstr "Xóa thành phần"
 
-#: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/status/IncidentPane.tsx
+#: src/features/broadcasts/Composer.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Delete draft"
 msgstr "Xóa bản nháp"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Delete draft ({removeKey})"
 msgstr "Xóa bản nháp ({removeKey})"
 
@@ -3955,7 +4081,7 @@ msgstr "Xóa khóa"
 msgid "Delete list"
 msgstr "Xóa danh sách"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Delete monitor"
 msgstr "Xóa trình giám sát"
 
@@ -3991,6 +4117,10 @@ msgstr "Xóa mục"
 #: src/features/settings/labels/LabelsPage.tsx
 msgid "Delete the label {name}?"
 msgstr "Xóa nhãn {name}?"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Delete the monitor"
+msgstr "Xóa trình giám sát"
 
 #: src/features/migrations/DoneStep.tsx
 msgid "Delete the OAuth client you created for Yuva"
@@ -4044,11 +4174,15 @@ msgstr "Xóa tài khoản của bạn"
 msgid "Delete your account?"
 msgstr "Xóa tài khoản của bạn?"
 
+#: src/features/contact/MergeContactDialog.tsx
+msgid "deleted afterwards"
+msgstr "sẽ bị xóa sau đó"
+
 #: src/features/docs/discussions/parts.tsx
 msgid "Deleted by its author."
 msgstr "Đã bị tác giả xóa."
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Deleted component"
 msgstr "Thành phần đã xóa"
 
@@ -4136,9 +4270,11 @@ msgstr "Thông báo trên màn hình đã được cho phép."
 msgid "Desktop notifications are blocked for this site in the browser's settings, so only the sound plays."
 msgstr "Thông báo trên màn hình bị chặn cho trang này trong cài đặt của trình duyệt, nên chỉ có âm thanh phát."
 
+#: src/features/broadcasts/SubscriberSheet.tsx
 #: src/features/contact/ContactCard.tsx
-#: src/features/contact/ContactPage.tsx
+#: src/features/contact/ContactDetail.tsx
 #: src/features/contact/ContactSheet.tsx
+#: src/features/feedback/FeedbackPage.tsx
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/migrations/ImportBanner.tsx
 msgid "Details"
@@ -4152,6 +4288,10 @@ msgstr "Deutsch"
 msgid "Device"
 msgstr "Thiết bị"
 
+#: src/app/Sidebar.tsx
+msgid "Devices"
+msgstr "Thiết bị"
+
 #: src/features/contact/ContactVisits.tsx
 msgid "Direct"
 msgstr "Trực tiếp"
@@ -4160,16 +4300,17 @@ msgstr "Trực tiếp"
 msgid "Directory (tenant) ID, optional"
 msgstr "Directory (tenant) ID, không bắt buộc"
 
+#: src/features/conversation/composer/ReplyBox.tsx
 #: src/features/conversation/messages/Thread.tsx
 msgid "Discard"
 msgstr "Hủy bỏ"
 
 #: src/components/common/ShortcutSheet.tsx
-#: src/features/conversation/composer/ReplyBox.tsx
 msgid "Discard the suggested reply"
 msgstr "Bỏ phản hồi được gợi ý"
 
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/docs/DocsPage.tsx
 msgid "Discussion"
 msgstr "Thảo luận"
 
@@ -4182,9 +4323,10 @@ msgid "Discussion started"
 msgstr "Đã bắt đầu thảo luận"
 
 #: src/app/Palette.tsx
-#: src/features/docs/discussions/ThreadPane.tsx
-#: src/features/docs/DocsColumn.tsx
-#: src/features/docs/DocsPages.tsx
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/docs/DiscussionsTab.tsx
+#: src/features/docs/DocsPage.tsx
+#: src/features/docs/PagesTab.tsx
 #: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/chat/ChatSections.tsx
 #: src/features/settings/webhooks/events.tsx
@@ -4215,6 +4357,10 @@ msgstr "Các cuộc thảo luận bạn đã bắt đầu hoặc trả lời"
 #: src/components/common/Linked.tsx
 msgid "Dismiss"
 msgstr "Bỏ qua"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Display"
+msgstr "Hiển thị"
 
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Display name"
@@ -4277,12 +4423,16 @@ msgstr "Làm sau"
 #: src/app/Palette.tsx
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/DocsPage.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "Docs"
 msgstr "Tài liệu"
 
-#: src/features/docs/DocsColumn.tsx
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/PagesTab.tsx
+msgid "Docs are the pages you keep on your own site and host yourself. Once Yuva’s two elements are on them, every page shows up here with its ratings, feedback and discussions."
+msgstr "Tài liệu là các trang bạn quản lý trên trang web của mình và tự lưu trữ. Khi hai thành phần của Yuva có mặt trên đó, mỗi trang sẽ hiện ở đây cùng đánh giá, phản hồi và thảo luận."
+
+#: src/features/docs/PagesTab.tsx
 msgid "Documentation pages"
 msgstr "Trang tài liệu"
 
@@ -4310,6 +4460,7 @@ msgstr "Tên miền chưa được xác minh"
 #: src/features/broadcasts/Import.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/conversation/ConversationStatus.tsx
+#: src/features/feedback/FeedbackFormDialog.tsx
 #: src/features/migrations/Wizard.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
@@ -4317,7 +4468,8 @@ msgstr "Tên miền chưa được xác minh"
 #: src/features/setup/NewsletterStep.tsx
 #: src/features/setup/SetupHub.tsx
 #: src/features/setup/SetupLayout.tsx
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
+#: src/features/status/LinkConversationsDialog.tsx
 #: src/features/status/MonitorToken.tsx
 msgid "Done"
 msgstr "Xong"
@@ -4327,13 +4479,19 @@ msgctxt "feedback progress"
 msgid "Done"
 msgstr "Hoàn thành"
 
-#: src/features/broadcasts/Overview.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "Double opt-in"
 msgstr "Xác nhận kép"
 
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/MonitorsPage.tsx
 #: src/features/status/text.tsx
 msgid "Down"
 msgstr "Ngừng hoạt động"
+
+#: src/features/status/MonitorsPage.tsx
+msgid "Down since {since}"
+msgstr "Ngừng hoạt động từ {since}"
 
 #. placeholder {0}: a.filename
 #: src/features/conversation/messages/Attachments.tsx
@@ -4366,9 +4524,10 @@ msgid "Download the rows left out"
 msgstr "Tải xuống các dòng bị bỏ qua"
 
 #: src/components/common/text.ts
+#: src/features/status/IncidentDetail.tsx
 #: src/features/status/IncidentsPage.tsx
-#: src/features/status/IncidentsTab.tsx
 #: src/features/status/LinkIncidentDialog.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Draft"
 msgstr "Bản nháp"
 
@@ -4381,12 +4540,13 @@ msgstr "Bản nháp"
 msgid "Draft author"
 msgstr "Tác giả bản nháp"
 
+#: src/features/conversation/composer/ReplyBox.tsx
 #: src/features/conversation/messages/Thread.tsx
 #: src/features/inbox/SidePanels.tsx
 msgid "Draft by {author}"
 msgstr "Bản nháp của {author}"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Draft deleted"
 msgstr "Đã xóa bản nháp"
 
@@ -4402,7 +4562,6 @@ msgstr "Văn bản bản nháp"
 msgid "Draft:"
 msgstr "Bản nháp:"
 
-#: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/Overview.tsx
 #: src/features/migrations/parts.tsx
 #: src/features/settings/webhooks/events.tsx
@@ -4453,8 +4612,8 @@ msgstr "Email"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 #: src/features/broadcasts/Import.tsx
 #: src/features/contact/ContactDetails.tsx
-#: src/features/settings/members/Invites.tsx
 #: src/features/status/AddSubscriberDialog.tsx
+#: src/features/team/TeamPage.tsx
 msgid "E-mail address"
 msgstr "Địa chỉ email"
 
@@ -4498,7 +4657,6 @@ msgstr "Người đăng ký qua e-mail đang tắt"
 msgid "E-mail subscribers are off. Nobody can subscribe and no notices go out, but the list is kept."
 msgstr "Người đăng ký qua e-mail đang tắt. Không ai có thể đăng ký và không có thông báo nào được gửi đi, nhưng danh sách vẫn được giữ lại."
 
-#: src/features/status/IncidentsTab.tsx
 #: src/features/status/StatusPages.tsx
 msgid "E-mail subscriptions are off"
 msgstr "Đăng ký nhận email đang tắt"
@@ -4543,6 +4701,10 @@ msgstr "Mỗi thư đi vào kênh email của hộp thư dành cho địa chỉ 
 msgid "Each message's original source is stored, as for mail that arrives live. Uses more storage."
 msgstr "Nguồn gốc của từng tin nhắn được lưu, như với thư đến trực tiếp. Tốn thêm dung lượng lưu trữ."
 
+#: src/features/status/MonitorsPage.tsx
+msgid "Each monitor sets the state of one component while it is down."
+msgstr "Mỗi trình giám sát đặt trạng thái của một thành phần khi nó ngừng hoạt động."
+
 #: src/features/setup/email/EmailAddressStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
 #: src/features/setup/email/EmailRepliesStep.tsx
@@ -4571,9 +4733,13 @@ msgstr "Mỗi cái cùng toàn bộ tin nhắn và ghi chú"
 #: src/features/settings/canned/CannedRepliesPage.tsx
 #: src/features/settings/labels/LabelsPage.tsx
 #: src/features/status/ComponentsTab.tsx
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Edit"
 msgstr "Sửa"
+
+#: src/features/status/MonitorsPage.tsx
+msgid "Edit ({editKey})"
+msgstr "Sửa ({editKey})"
 
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
 msgid "Edit API key"
@@ -4591,12 +4757,12 @@ msgstr "Sửa thành phần"
 msgid "Edit design"
 msgstr "Sửa thiết kế"
 
+#: src/features/status/IncidentDetail.tsx
 #: src/features/status/IncidentDialog.tsx
-#: src/features/status/IncidentPane.tsx
 msgid "Edit details"
 msgstr "Sửa chi tiết"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Edit details ({editKey})"
 msgstr "Sửa chi tiết ({editKey})"
 
@@ -4625,11 +4791,15 @@ msgid "Edit the incident"
 msgstr "Sửa sự cố"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Edit the monitor"
+msgstr "Sửa trình giám sát"
+
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Edit the title"
 msgstr "Sửa tiêu đề"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Edit this update"
 msgstr "Sửa cập nhật này"
 
@@ -4638,7 +4808,7 @@ msgid "Edit, or preview on a desktop, a phone or in dark mode"
 msgstr "Chỉnh sửa, hoặc xem trước trên máy tính, điện thoại hay chế độ tối"
 
 #: src/features/docs/discussions/ThreadPane.tsx
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "edited"
 msgstr "đã sửa"
 
@@ -4750,15 +4920,16 @@ msgstr "Lỗi"
 msgid "Error or answer"
 msgstr "Lỗi hoặc phản hồi"
 
+#: src/app/Sidebar.tsx
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Events"
 msgstr "Sự kiện"
 
-#: src/features/status/MonitorsTab.tsx
-msgid "every {every}"
-msgstr "mỗi {every}"
+#: src/features/contact/ContactDetails.tsx
+msgid "Every address of this contact is undeliverable. Clear one first, or write in another channel."
+msgstr "Mọi địa chỉ của liên hệ này đều không gửi được. Hãy xóa trạng thái một địa chỉ trước, hoặc viết qua kênh khác."
 
 #: src/features/settings/webhooks/sections.tsx
 msgid "Every attempt has failed since {failingSince}. After 24 hours of failures Yuva turns the endpoint off."
@@ -4796,7 +4967,7 @@ msgstr "Mọi ngôn ngữ. Thêm một ngôn ngữ để chỉ giữ liên hệ 
 msgid "Every open conversation has someone."
 msgstr "Mọi cuộc trò chuyện đang mở đều có người phụ trách."
 
-#: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/docs/DiscussionsTab.tsx
 msgid "Every open discussion has an answer."
 msgstr "Mọi cuộc thảo luận đang mở đều có câu trả lời."
 
@@ -4884,8 +5055,13 @@ msgid "Expand the sidebar"
 msgstr "Mở rộng thanh bên"
 
 #: src/features/status/MonitorDialog.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Expected every"
 msgstr "Dự kiến mỗi"
+
+#: src/features/status/MonitorsPage.tsx
+msgid "Expected status"
+msgstr "Trạng thái mong đợi"
 
 #: src/features/status/MonitorHttpFields.tsx
 msgid "Expected status from"
@@ -4894,10 +5070,6 @@ msgstr "Trạng thái mong đợi từ"
 #: src/features/status/MonitorHttpFields.tsx
 msgid "Expected status to"
 msgstr "Trạng thái mong đợi đến"
-
-#: src/features/status/MonitorsTab.tsx
-msgid "expects a ping every {every}"
-msgstr "mong đợi một ping mỗi {every}"
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "expired {expires}"
@@ -4911,10 +5083,7 @@ msgstr "Hết hạn"
 msgid "Expires (optional)"
 msgstr "Hết hạn (không bắt buộc)"
 
-#: src/features/settings/members/Invites.tsx
-msgid "expires {expires}"
-msgstr "hết hạn {expires}"
-
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/reports/ReportPages.tsx
 msgid "Export"
@@ -4942,6 +5111,7 @@ msgstr "ID bên ngoài"
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
 #: src/features/status/MonitorChecks.tsx
+#: src/features/status/ResponseChart.tsx
 msgid "Failed"
 msgstr "Thất bại"
 
@@ -4971,10 +5141,11 @@ msgid "Fails the monitor at once, without waiting for the grace."
 msgstr "Làm trình giám sát ngừng ngay, không chờ thời gian châm chước."
 
 #: src/features/status/MonitorDialog.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Failures to go down"
 msgstr "Số lần lỗi liên tiếp để ngừng"
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/DocsPage.tsx
 msgid "feedback"
 msgstr "phản hồi"
 
@@ -4983,20 +5154,12 @@ msgstr "phản hồi"
 #: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Source.tsx
 #: src/features/contact/ContactCard.tsx
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/PagesTab.tsx
 #: src/features/feedback/FeedbackList.tsx
 #: src/features/feedback/FeedbackPage.tsx
 #: src/features/settings/webhooks/events.tsx
 msgid "Feedback"
 msgstr "Phản hồi"
-
-#: src/features/docs/DocsPages.tsx
-msgid "Feedback and discussions from your documentation"
-msgstr "Phản hồi và thảo luận từ tài liệu của bạn"
-
-#: src/features/docs/DocsPages.tsx
-msgid "Feedback and discussions per day"
-msgstr "Phản hồi và thảo luận mỗi ngày"
 
 #: src/components/common/text.ts
 msgid "Feedback arrived"
@@ -5006,6 +5169,7 @@ msgstr "Đã nhận phản hồi"
 msgid "Feedback details"
 msgstr "Chi tiết phản hồi"
 
+#: src/features/feedback/FeedbackFormDialog.tsx
 #: src/features/feedback/FeedbackPage.tsx
 msgid "Feedback form"
 msgstr "Biểu mẫu phản hồi"
@@ -5055,6 +5219,10 @@ msgstr "Đã điền bằng giá trị của {who}"
 #: src/features/inbox/SourceFilter.tsx
 msgid "Filter"
 msgstr "Bộ lọc"
+
+#: src/features/contact/ContactsPage.tsx
+msgid "Filter by country"
+msgstr "Lọc theo quốc gia"
 
 #: src/features/inbox/ChatList.tsx
 msgid "Filter by label"
@@ -5126,7 +5294,7 @@ msgstr "Tin nhắn đầu tiên"
 msgid "First name"
 msgstr "Tên"
 
-#: src/features/contact/ContactPage.tsx
+#: src/features/contact/ContactDetail.tsx
 #: src/features/reports/ReportPages.tsx
 msgid "first reply"
 msgstr "phản hồi đầu tiên"
@@ -5144,10 +5312,6 @@ msgstr "phản hồi đầu tiên trong {first}"
 msgid "First rows of the file"
 msgstr "Các dòng đầu của tệp"
 
-#: src/features/contact/ContactsPage.tsx
-msgid "First seen"
-msgstr "Thấy lần đầu"
-
 #: src/features/status/IncidentDialog.tsx
 msgid "First update"
 msgstr "Cập nhật đầu tiên"
@@ -5156,14 +5320,16 @@ msgstr "Cập nhật đầu tiên"
 msgid "First, an e-mail address"
 msgstr "Trước hết, một địa chỉ email"
 
+#: src/features/broadcasts/ReviewPanel.tsx
 #: src/features/settings/ProductsPage.tsx
 msgid "Fix"
 msgstr "Sửa"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Fix is out"
 msgstr "Đã có bản sửa"
 
+#: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Fix it"
 msgstr "Sửa lỗi"
@@ -5255,6 +5421,7 @@ msgstr "Với người dùng đã đăng nhập, backend của bạn ký một t
 msgid "For signed-in users: the identity secret, shown only now"
 msgstr "Với người dùng đã đăng nhập: identity secret, chỉ hiện bây giờ"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
 msgid "Form"
 msgstr "Biểu mẫu"
@@ -5266,6 +5433,10 @@ msgstr "Định dạng"
 #: src/features/broadcasts/FormSnippets.tsx
 msgid "Forms run on a website chat channel of this inbox, which lists the sites they may be used on. This inbox has none yet."
 msgstr "Biểu mẫu chạy trên kênh chat trang web của hộp thư này, kênh liệt kê các trang mà chúng được dùng. Hộp thư này chưa có kênh nào."
+
+#: src/features/conversation/messages/MessageActions.tsx
+msgid "Forward"
+msgstr "Chuyển tiếp"
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "Forward all incoming mail to the address below and keep a copy in the mailbox."
@@ -5301,6 +5472,10 @@ msgstr "Chuyển tiếp"
 msgid "Forwarding address"
 msgstr "Địa chỉ chuyển tiếp"
 
+#: src/features/status/DomainCard.tsx
+msgid "Found"
+msgstr "Đã tìm thấy"
+
 #: src/features/migrations/SourceStep.tsx
 msgid "Found from the domain's IMAP record."
 msgstr "Tìm thấy từ bản ghi IMAP của tên miền."
@@ -5333,7 +5508,9 @@ msgstr "Từ (không bắt buộc)"
 msgid "from {from}"
 msgstr "từ {from}"
 
-#: src/features/broadcasts/Overview.tsx
+#: src/features/broadcasts/ListPage.tsx
+#: src/features/broadcasts/ListsHome.tsx
+#: src/features/broadcasts/ReviewPanel.tsx
 msgid "From {from}"
 msgstr "Từ {from}"
 
@@ -5341,7 +5518,9 @@ msgstr "Từ {from}"
 msgid "From a blocked contact"
 msgstr "Từ một liên hệ bị chặn"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/docs/DocsPage.tsx
 msgid "From a conversation"
 msgstr "Từ một cuộc trò chuyện"
 
@@ -5360,10 +5539,6 @@ msgstr "Địa chỉ From (không bắt buộc)"
 #: src/features/migrations/parts.tsx
 msgid "From blocked contacts"
 msgstr "Từ các liên hệ bị chặn"
-
-#: src/features/broadcasts/Overview.tsx
-msgid "From no sender yet"
-msgstr "Chưa có người gửi"
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "From the terminal"
@@ -5395,9 +5570,14 @@ msgstr "Hướng dẫn đầy đủ, với các màn hình và thông báo đẩ
 msgid "Full name"
 msgstr "Họ và tên"
 
+#: src/features/docs/InstallDialog.tsx
 #: src/features/setup/InstallStep.tsx
 msgid "Fumadocs / React"
 msgstr "Fumadocs / React"
+
+#: src/app/Sidebar.tsx
+msgid "Funnels"
+msgstr "Phễu"
 
 #: src/features/migrations/parts.tsx
 msgid "Further copies of the same message"
@@ -5447,6 +5627,10 @@ msgstr "Lấy biểu mẫu đăng ký"
 msgid "Give the channel a new forwarding address?"
 msgstr "Cấp cho kênh một địa chỉ chuyển tiếp mới?"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Give the page a name."
+msgstr "Hãy đặt tên cho trang."
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "Gmail forwards only new mail that is not spam. If a Workspace admin turned forwarding off, use the admin's routing."
 msgstr "Gmail chỉ chuyển tiếp thư mới không phải thư rác. Nếu quản trị viên Workspace đã tắt chuyển tiếp, hãy dùng định tuyến của quản trị viên."
@@ -5458,6 +5642,10 @@ msgstr "Gmail cho phép các ứng dụng khác đọc khoảng 1,5 GB mỗi ng�
 #: src/features/settings/workspace/WorkspacePage.tsx
 msgid "Gmail, Outlook, Yandex, any IMAP"
 msgstr "Gmail, Outlook, Yandex, bất kỳ IMAP nào"
+
+#: src/features/status/IncidentDetail.tsx
+msgid "go back to operational when you post this"
+msgstr "trở lại hoạt động bình thường khi bạn đăng nội dung này"
 
 #: src/app/Palette.tsx
 msgid "Go to"
@@ -5508,6 +5696,7 @@ msgid "Google Takeout"
 msgstr "Google Takeout"
 
 #: src/features/status/MonitorDialog.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Grace"
 msgstr "Thời gian châm chước"
 
@@ -5528,6 +5717,7 @@ msgstr "Chào các cuộc trò chuyện mới bằng email, mỗi liên hệ m�
 msgid "Group"
 msgstr "Nhóm"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/Growth.tsx
 #: src/features/broadcasts/ListPage.tsx
 msgid "Growth"
@@ -5556,6 +5746,10 @@ msgstr "Header"
 #: src/features/status/text.tsx
 msgid "Heartbeat"
 msgstr "Heartbeat"
+
+#: src/features/status/MonitorsPage.tsx
+msgid "Heartbeat address"
+msgstr "Địa chỉ heartbeat"
 
 #: src/features/status/ComponentsTab.tsx
 msgid "Held by an incident, {since}"
@@ -5594,6 +5788,7 @@ msgstr "Bài viết trợ giúp"
 
 #: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "Help center"
 msgstr "Trung tâm trợ giúp"
 
@@ -5609,17 +5804,18 @@ msgstr "Báo cáo trợ giúp"
 msgid "Help Scout has no read-only permission, so the app could change data; Yuva's connection refuses every request that is not a read."
 msgstr "Help Scout không có quyền chỉ đọc, nên ứng dụng có thể thay đổi dữ liệu; kết nối của Yuva từ chối mọi yêu cầu không phải đọc."
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "helpful"
 msgstr "hữu ích"
 
 #: src/features/conversation/Feedback.tsx
-#: src/features/docs/DocsPages.tsx
 #: src/features/docs/PageContext.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "Helpful"
 msgstr "Hữu ích"
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/DocsPage.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "helpful share"
 msgstr "tỷ lệ hữu ích"
 
@@ -5658,6 +5854,10 @@ msgstr "Ẩn"
 msgid "Hide from the page"
 msgstr "Ẩn khỏi trang"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Hide HTTP details"
+msgstr "Ẩn chi tiết HTTP"
+
 #: src/features/conversation/messages/EmailBody.tsx
 msgid "Hide quoted text"
 msgstr "Ẩn văn bản trích dẫn"
@@ -5676,7 +5876,7 @@ msgstr "Ẩn bài đăng đã chọn"
 msgid "High"
 msgstr "Cao"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/Toolbar.tsx
 msgid "Highest share of “helpful” first, among pages with at least 5 ratings"
 msgstr "Tỷ lệ “hữu ích” cao nhất trước, trong các trang có ít nhất 5 đánh giá"
 
@@ -5707,8 +5907,13 @@ msgid "Home"
 msgstr "Trang chủ"
 
 #: src/features/status/MonitorDialog.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Host"
 msgstr "Máy chủ"
+
+#: src/features/docs/PagesTab.tsx
+msgid "Hosted by Yuva on its own address. Searched from the chat widget and the reply box. For support answers."
+msgstr "Do Yuva lưu trữ tại địa chỉ riêng. Được tìm từ tiện ích trò chuyện và ô trả lời. Dùng cho câu trả lời hỗ trợ."
 
 #: src/features/status/DomainCard.tsx
 msgid "Hostname"
@@ -5774,9 +5979,11 @@ msgstr "Họ đã đồng ý bằng cách nào, hoặc bản ghi riêng của b�
 msgid "How they left:"
 msgstr "Họ đã rời đi bằng cách:"
 
-#: src/features/docs/DocsColumn.tsx
-msgid "How to add them"
-msgstr "Cách thêm họ"
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/docs/DocsPage.tsx
+#: src/features/docs/PagesTab.tsx
+msgid "How to add"
+msgstr "Cách thêm"
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "How to send the mail"
@@ -5797,10 +6004,6 @@ msgstr "Kiểm tra HTTP"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "I confirm that this person agreed to get e-mails from this list as described above, and that we can show how and when if asked."
 msgstr "Tôi xác nhận rằng người này đã đồng ý nhận email từ danh sách này như mô tả ở trên, và chúng tôi có thể chứng minh bằng cách nào và khi nào nếu được hỏi."
-
-#: src/features/broadcasts/AddSubscriberDialog.tsx
-msgid "I confirm that this person asked to join this list."
-msgstr "Tôi xác nhận rằng người này đã yêu cầu tham gia danh sách này."
 
 #: src/components/common/SecretDialog.tsx
 msgid "I saved it"
@@ -5900,20 +6103,25 @@ msgstr "Máy chủ IMAP"
 msgid "Impact"
 msgstr "Mức ảnh hưởng"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
 #: src/features/broadcasts/ListPage.tsx
-#: src/features/broadcasts/Overview.tsx
 msgid "Import"
 msgstr "Nhập"
 
-#: src/features/broadcasts/Import.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "Import a CSV file"
 msgstr "Nhập tệp CSV"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Import another file"
 msgstr "Nhập tệp khác"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/broadcasts/ListsHome.tsx
+msgid "Import CSV"
+msgstr "Nhập CSV"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Import finished"
@@ -5959,10 +6167,6 @@ msgstr "Đang nhập lịch sử từ {address} · {percent}% · thư mới vẫ
 #: src/features/broadcasts/Import.tsx
 msgid "Importing…"
 msgstr "Đang nhập…"
-
-#: src/features/broadcasts/Import.tsx
-msgid "Imports"
-msgstr "Lần nhập"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Imports run one at a time in the workspace. Try again when the other one ends."
@@ -6071,9 +6275,11 @@ msgstr "Trong Zoho Mail, mở Settings › Mail accounts › IMAP access và b�
 
 #: src/app/Palette.tsx
 #: src/app/Sidebar.tsx
+#: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/broadcasts/NewBroadcastDialog.tsx
 #: src/features/contact/ContactDetails.tsx
+#: src/features/docs/InstallDialog.tsx
 #: src/features/inbox/ChatsPage.tsx
 #: src/features/migrations/MapStep.tsx
 #: src/features/migrations/text.ts
@@ -6099,18 +6305,28 @@ msgstr "Hộp thư"
 msgid "Inboxes cut off subjects longer than 80 characters."
 msgstr "Hộp thư cắt bớt chủ đề dài hơn 80 ký tự."
 
+#: src/features/home/HomePage.tsx
 #: src/features/status/text.tsx
 msgid "Incident"
 msgstr "Sự cố"
 
+#: src/features/status/MonitorsPage.tsx
+msgid "Incident opened"
+msgstr "Đã mở sự cố"
+
+#: src/features/status/MonitorsPage.tsx
+msgid "Incident: {title} · {state}"
+msgstr "Sự cố: {title} · {state}"
+
 #: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
-#: src/features/status/IncidentPane.tsx
 #: src/features/status/IncidentsPage.tsx
-#: src/features/status/IncidentsTab.tsx
-#: src/features/status/StatusPagePane.tsx
 msgid "Incidents"
 msgstr "Sự cố"
+
+#: src/features/status/IncidentsPage.tsx
+msgid "Incidents live on a status page. Create one first."
+msgstr "Sự cố nằm trên một trang trạng thái. Hãy tạo trang trước."
 
 #: src/features/settings/webhooks/events.tsx
 msgid "Include notes"
@@ -6156,12 +6372,15 @@ msgstr "Cài đặt"
 msgid "Investigating"
 msgstr "Đang điều tra"
 
-#: src/features/settings/members/Invites.tsx
-#: src/features/team/TeamColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Invite"
 msgstr "Mời"
 
-#: src/features/settings/members/Invites.tsx
+#: src/features/team/TeamPage.tsx
+msgid "Invite a teammate"
+msgstr "Mời một đồng đội"
+
+#: src/features/team/TeamPage.tsx
 msgid "Invite language"
 msgstr "Ngôn ngữ lời mời"
 
@@ -6169,11 +6388,7 @@ msgstr "Ngôn ngữ lời mời"
 msgid "Invite your team"
 msgstr "Mời nhóm của bạn"
 
-#: src/features/team/TeamColumn.tsx
-msgid "Invited · waiting"
-msgstr "Đã mời · đang chờ"
-
-#: src/features/settings/members/Invites.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Invites"
 msgstr "Lời mời"
 
@@ -6311,7 +6526,7 @@ msgstr "In nghiêng"
 msgid "Its access ends at once. To use it again, connect it again."
 msgstr "Quyền truy cập của nó chấm dứt ngay. Để dùng lại, hãy kết nối lại."
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Its checks are deleted. An incident it opened is resolved."
 msgstr "Các lần kiểm tra của nó bị xóa. Sự cố mà nó đã mở được giải quyết."
 
@@ -6332,6 +6547,7 @@ msgid "Its history is deleted. Incidents that named it no longer do."
 msgstr "Lịch sử của nó bị xóa. Các sự cố từng nhắc đến nó sẽ không còn nhắc nữa."
 
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/broadcasts/Composer.tsx
 msgid "Its report and the list of recipients are deleted. Conversations opened by replies stay."
 msgstr "Báo cáo và danh sách người nhận của nó bị xóa. Các cuộc trò chuyện mở bởi phản hồi vẫn còn."
 
@@ -6363,6 +6579,10 @@ msgstr "Chỉ giữ tên"
 msgid "Keep this page open. If the connection drops, the upload goes on when it is back; after a reload, pick the same file and only the missing parts are sent."
 msgstr "Hãy giữ trang này mở. Nếu kết nối bị đứt, việc tải lên sẽ tiếp tục khi có lại; sau khi tải lại trang, hãy chọn cùng tệp và chỉ các phần còn thiếu được gửi."
 
+#: src/features/contact/MergeContactDialog.tsx
+msgid "kept"
+msgstr "được giữ lại"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Kept with every subscription from this file, as the record of their consent."
 msgstr "Được giữ cùng mọi đăng ký từ tệp này, làm bản ghi sự đồng ý của họ."
@@ -6370,6 +6590,10 @@ msgstr "Được giữ cùng mọi đăng ký từ tệp này, làm bản ghi s�
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Key"
 msgstr "Khóa"
+
+#: src/features/home/HomePage.tsx
+msgid "Key figures"
+msgstr "Số liệu chính"
 
 #: src/app/Palette.tsx
 #: src/app/TopBar.tsx
@@ -6436,9 +6660,10 @@ msgstr "Chỉ là nhãn: thư của nó đến từ Tất cả thư, và các cu
 msgid "Labels"
 msgstr "Nhãn"
 
-#: src/features/conversation/HeaderActions.tsx
-msgid "Labels (L)"
-msgstr "Nhãn (L)"
+#: src/features/conversation/ChatView.tsx
+#: src/features/inbox/ChatList.tsx
+msgid "Labels changed"
+msgstr "Đã đổi nhãn"
 
 #: src/app/UserMenu.tsx
 #: src/components/common/LanguageMenu.tsx
@@ -6446,12 +6671,15 @@ msgstr "Nhãn (L)"
 #: src/features/contact/ContactCard.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
-#: src/features/settings/members/Invites.tsx
 #: src/features/settings/ProductsPage.tsx
 #: src/features/setup/NameStep.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Language"
 msgstr "Ngôn ngữ"
+
+#: src/features/team/TeamPage.tsx
+msgid "Language of the invite"
+msgstr "Ngôn ngữ của lời mời"
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Language to keep"
@@ -6516,6 +6744,10 @@ msgstr "Lần đẩy cuối thất bại: {failed}"
 msgid "Last read {when}"
 msgstr "Đọc lần cuối {when}"
 
+#: src/features/status/MonitorsPage.tsx
+msgid "Last result {last}"
+msgstr "Kết quả gần nhất {last}"
+
 #: src/features/contact/ContactsPage.tsx
 msgid "Last seen"
 msgstr "Thấy lần cuối"
@@ -6524,7 +6756,7 @@ msgstr "Thấy lần cuối"
 msgid "Last seen {seen}"
 msgstr "Thấy lần cuối {seen}"
 
-#: src/features/contact/ContactPage.tsx
+#: src/features/contact/ContactDetail.tsx
 msgid "last seen {seenText}"
 msgstr "thấy lần cuối {seenText}"
 
@@ -6580,7 +6812,6 @@ msgstr "Để lại văn bản, rồi khối"
 msgid "Left off the public page and its overall state."
 msgstr "Không hiển thị trên trang công khai và trạng thái chung của trang."
 
-#: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/broadcasts/Import.tsx
 msgid "Left out"
 msgstr "Đã bỏ qua"
@@ -6588,6 +6819,10 @@ msgstr "Đã bỏ qua"
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Left out by a condition or language"
 msgstr "Bị bỏ qua bởi điều kiện hoặc ngôn ngữ"
+
+#: src/features/broadcasts/AudienceBuilder.tsx
+msgid "Left out: {left} of {total} people on the lists"
+msgstr "Bị loại: {left} trên {total} người trong các danh sách"
 
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "Legal name"
@@ -6606,9 +6841,23 @@ msgstr "Giao diện sáng"
 msgid "Limit the pace"
 msgstr "Giới hạn tốc độ"
 
+#: src/components/common/Linked.tsx
+#: src/features/status/LinkConversationsDialog.tsx
+msgid "Link"
+msgstr "Liên kết"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/LinkConversationsDialog.tsx
+msgid "Link conversations"
+msgstr "Liên kết cuộc trò chuyện"
+
 #: src/components/common/text.ts
 msgid "Link feedback to ideas, reply to linked customers and manage roadmap boards"
 msgstr "Liên kết phản hồi với ý tưởng, trả lời khách hàng được liên kết và quản lý bảng lộ trình"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Link feedback to the idea"
+msgstr "Liên kết phản hồi với ý tưởng"
 
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Link for your Microsoft 365 admin"
@@ -6641,8 +6890,13 @@ msgid "Link to a status incident"
 msgstr "Liên kết với sự cố trạng thái"
 
 #: src/features/conversation/ConversationMenu.tsx
+#: src/features/feedback/RoadmapCard.tsx
 msgid "Link to an idea"
 msgstr "Liên kết với ý tưởng"
+
+#: src/features/feedback/RoadmapCard.tsx
+msgid "Link to an idea (B)"
+msgstr "Liên kết với một ý tưởng (B)"
 
 #: src/features/conversation/ConversationMenu.tsx
 #: src/features/inbox/ChatList.tsx
@@ -6673,6 +6927,10 @@ msgstr "Đã liên kết các cuộc trò chuyện đã chọn với {title}"
 #: src/features/status/LinkIncidentDialog.tsx
 msgid "Linked to {title}"
 msgstr "Đã liên kết với {title}"
+
+#: src/features/feedback/RoadmapCard.tsx
+msgid "linked with {others} other feedback"
+msgstr "đã liên kết với {others} phản hồi khác"
 
 #: src/features/status/LinkIncidentDialog.tsx
 msgid "Linking…"
@@ -6711,7 +6969,9 @@ msgstr "Liệt kê tối đa 20 origin."
 msgid "List deleted"
 msgstr "Đã xóa danh sách"
 
+#: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/ListSettings.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "List restored"
 msgstr "Đã khôi phục danh sách"
 
@@ -6728,11 +6988,12 @@ msgid "Listing the tickets…"
 msgstr "Đang liệt kê các phiếu…"
 
 #: src/app/Sidebar.tsx
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/ListPage.tsx
-#: src/features/broadcasts/Overview.tsx
+#: src/features/broadcasts/ListsHome.tsx
 #: src/features/settings/webhooks/events.tsx
 msgid "Lists"
 msgstr "Danh sách"
@@ -6751,24 +7012,22 @@ msgid "Load images"
 msgstr "Tải hình ảnh"
 
 #: src/features/account/AccountPage.tsx
-#: src/features/broadcasts/BroadcastList.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/Import.tsx
+#: src/features/broadcasts/ListsHome.tsx
 #: src/features/broadcasts/Overview.tsx
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/Subscribers.tsx
+#: src/features/contact/ContactDetail.tsx
 #: src/features/contact/ContactNotes.tsx
-#: src/features/contact/ContactPage.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/contact/ContactSheet.tsx
 #: src/features/contact/ContactsPage.tsx
 #: src/features/docs/discussions/parts.tsx
-#: src/features/docs/DocsColumn.tsx
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/PagesTab.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
-#: src/features/status/IncidentsTab.tsx
+#: src/features/status/LinkConversationsDialog.tsx
 #: src/features/status/MonitorChecks.tsx
-#: src/features/team/MemberPage.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Load more"
 msgstr "Tải thêm"
 
@@ -6783,6 +7042,10 @@ msgstr "Đang tải…"
 #: src/features/conversation/Feedback.tsx
 msgid "Locale"
 msgstr "Ngôn ngữ vùng"
+
+#: src/app/Sidebar.tsx
+msgid "Locations"
+msgstr "Vị trí"
 
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Lock"
@@ -6828,7 +7091,7 @@ msgstr "Xem thêm liên hệ"
 msgid "Looking at {where}"
 msgstr "Đang xem {where}"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Looking into it"
 msgstr "Đang kiểm tra"
 
@@ -6933,12 +7196,12 @@ msgid "Maildir in a zip"
 msgstr "Maildir trong tệp zip"
 
 #: src/app/Palette.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
-#: src/features/broadcasts/Overview.tsx
-#: src/features/contact/ContactPage.tsx
+#: src/features/broadcasts/ListsHome.tsx
+#: src/features/contact/ContactDetail.tsx
 msgid "Mailing lists"
 msgstr "Danh sách gửi thư"
 
+#: src/features/home/HomePage.tsx
 #: src/features/status/text.tsx
 msgid "Maintenance"
 msgstr "Bảo trì"
@@ -6951,7 +7214,7 @@ msgstr "Lớn"
 msgid "Major outage"
 msgstr "Gián đoạn nghiêm trọng"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Make a new address for {name}?"
 msgstr "Tạo địa chỉ mới cho {name}?"
 
@@ -6959,7 +7222,7 @@ msgstr "Tạo địa chỉ mới cho {name}?"
 msgid "Make it public"
 msgstr "Công khai"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Make new address"
 msgstr "Tạo địa chỉ mới"
 
@@ -6996,6 +7259,10 @@ msgstr "Quản lý danh sách gửi thư và người đăng ký"
 #: src/components/common/text.ts
 msgid "Manage status pages, set component states and run incidents"
 msgstr "Quản lý trang trạng thái, đặt trạng thái thành phần và xử lý sự cố"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Manage the changelogs"
+msgstr "Quản lý nhật ký thay đổi"
 
 #: src/components/common/text.ts
 msgid "Manage webhooks"
@@ -7055,6 +7322,7 @@ msgstr "Đánh dấu bài đăng này là thư rác?"
 msgid "Markdown works."
 msgstr "Hỗ trợ Markdown."
 
+#: src/features/conversation/ChatView.tsx
 #: src/features/docs/discussions/parts.tsx
 msgid "Marked as spam"
 msgstr "Đã đánh dấu là thư rác"
@@ -7105,7 +7373,7 @@ msgstr "trung vị"
 msgid "Median"
 msgstr "Trung vị"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "median {median}"
 msgstr "trung vị {median}"
 
@@ -7124,9 +7392,9 @@ msgstr "Thành viên"
 
 #: src/app/Palette.tsx
 #: src/features/inbox/SidePanels.tsx
-#: src/features/settings/members/MembersPage.tsx
 #: src/features/settings/ProductsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Members"
 msgstr "Thành viên"
 
@@ -7160,8 +7428,6 @@ msgstr "Nhắc đến: {names}"
 msgid "Menu"
 msgstr "Menu"
 
-#: src/features/contact/ContactPage.tsx
-#: src/features/contact/ContactsPage.tsx
 #: src/features/contact/MergeContactDialog.tsx
 msgid "Merge"
 msgstr "Gộp"
@@ -7184,6 +7450,7 @@ msgid "Merge with another contact"
 msgstr "Gộp với liên hệ khác"
 
 #: src/features/contact/ContactCard.tsx
+#: src/features/contact/ContactDetail.tsx
 #: src/features/contact/ContactsPage.tsx
 msgid "Merge…"
 msgstr "Gộp…"
@@ -7297,11 +7564,7 @@ msgstr "Có kiểm duyệt"
 msgid "Monday"
 msgstr "Thứ Hai"
 
-#: src/features/status/MonitorsTab.tsx
-msgid "Monitor"
-msgstr "Trình giám sát"
-
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Monitor deleted"
 msgstr "Đã xóa trình giám sát"
 
@@ -7311,14 +7574,16 @@ msgstr "Đang theo dõi"
 
 #: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
-#: src/features/status/IncidentsTab.tsx
-#: src/features/status/MonitorsTab.tsx
-#: src/features/status/StatusPagePane.tsx
+#: src/features/status/MonitorsPage.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Monitors"
 msgstr "Trình giám sát"
 
-#: src/features/contact/ContactsPage.tsx
+#: src/features/status/MonitorsPage.tsx
+msgid "Monitors set the state of a status page component. Create a status page first."
+msgstr "Trình giám sát đặt trạng thái cho một thành phần của trang trạng thái. Hãy tạo trang trạng thái trước."
+
+#: src/features/contact/ContactDetail.tsx
 msgid "More"
 msgstr "Thêm"
 
@@ -7331,15 +7596,12 @@ msgid "More actions for {address}"
 msgstr "Thêm thao tác cho {address}"
 
 #. placeholder {0}: c.name
-#. placeholder {0}: i.title
-#. placeholder {0}: p.name
+#. placeholder {0}: s.group.name
 #: src/features/status/ComponentsTab.tsx
-#: src/features/status/IncidentPane.tsx
-#: src/features/status/StatusPages.tsx
 msgid "More for {0}"
 msgstr "Thêm cho {0}"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "More for {name}"
 msgstr "Thêm cho {name}"
 
@@ -7351,15 +7613,15 @@ msgstr "Thêm tùy chọn"
 msgid "More than {count} conversations"
 msgstr "Hơn {count} cuộc trò chuyện"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/Toolbar.tsx
 msgid "Most “helpful” ratings first"
 msgstr "Nhiều đánh giá “hữu ích” nhất trước"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/Toolbar.tsx
 msgid "Most “not helpful” ratings first"
 msgstr "Nhiều đánh giá “không hữu ích” nhất trước"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/Toolbar.tsx
 msgid "Most active"
 msgstr "Hoạt động nhiều nhất"
 
@@ -7367,23 +7629,23 @@ msgstr "Hoạt động nhiều nhất"
 msgid "Most asked for"
 msgstr "Được yêu cầu nhiều nhất"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/Toolbar.tsx
 msgid "Most disliked"
 msgstr "Bị không thích nhiều nhất"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/Toolbar.tsx
 msgid "Most helpful"
 msgstr "Hữu ích nhất"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/Toolbar.tsx
 msgid "Most liked"
 msgstr "Được thích nhiều nhất"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/Toolbar.tsx
 msgid "Most ratings, open feedback, open discussions and waiting posts first"
 msgstr "Nhiều đánh giá nhất, phản hồi đang mở, thảo luận đang mở và bài đang chờ trước"
 
-#: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/docs/DocsPage.tsx
 msgid "Most votes"
 msgstr "Nhiều phiếu nhất"
 
@@ -7424,8 +7686,20 @@ msgid "Move through the ideas"
 msgstr "Duyệt qua các ý tưởng"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the incidents"
+msgstr "Di chuyển giữa các sự cố"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the list"
 msgstr "Di chuyển trong danh sách"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move through the lists"
+msgstr "Di chuyển giữa các danh sách"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move through the monitors"
+msgstr "Di chuyển giữa các trình giám sát"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Move through the posts"
@@ -7461,9 +7735,17 @@ msgstr "Chuyển lên"
 msgid "Moved from {from}"
 msgstr "Chuyển từ {from}"
 
+#: src/features/conversation/ChatView.tsx
+msgid "Moved to {to}"
+msgstr "Đã chuyển đến {to}"
+
 #: src/features/migrations/MigrationsPage.tsx
 msgid "Moving from Gmail, Google Workspace, Yandex, iCloud, Zoho, Yahoo, Fastmail, GMX or any IMAP server? Yuva copies the mailbox's history into an inbox, quietly and newest first, while your team keeps working. Then you forward the mailbox here and nothing is lost in between."
 msgstr "Chuyển từ Gmail, Google Workspace, Yandex, iCloud, Zoho, Yahoo, Fastmail, GMX hay bất kỳ máy chủ IMAP nào? Yuva sao chép lịch sử hộp thư vào một hộp thư, lặng lẽ và mới nhất trước, trong khi nhóm của bạn vẫn làm việc. Sau đó bạn chuyển tiếp hộp thư về đây và không mất gì ở giữa."
+
+#: src/features/feedback/FeedbackPage.tsx
+msgid "Moving the idea to Planned, In progress or Shipped sets this for linked feedback that has no progress yet."
+msgstr "Chuyển ý tưởng sang Đã lên kế hoạch, Đang làm hoặc Đã phát hành sẽ đặt trạng thái đó cho các phản hồi liên kết chưa có tiến độ."
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "MX change"
@@ -7542,7 +7824,7 @@ msgstr "name@example.com"
 msgid "Needed for broadcasts"
 msgstr "Cần cho thư hàng loạt"
 
-#: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/features/broadcasts/ListParts.tsx
 msgid "Needs a sender"
 msgstr "Cần người gửi"
 
@@ -7593,10 +7875,6 @@ msgstr "mới"
 msgid "New"
 msgstr "Mới"
 
-#: src/features/status/MonitorsTab.tsx
-msgid "New address"
-msgstr "Địa chỉ mới"
-
 #: src/features/status/MonitorToken.tsx
 msgid "New address for {name}"
 msgstr "Địa chỉ mới cho {name}"
@@ -7614,16 +7892,10 @@ msgid "New article"
 msgstr "Bài viết mới"
 
 #: src/components/common/ShortcutSheet.tsx
-#: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/NewBroadcastDialog.tsx
 #: src/features/broadcasts/Overview.tsx
 msgid "New broadcast"
 msgstr "Thư hàng loạt mới"
-
-#: src/features/broadcasts/BroadcastList.tsx
-#: src/features/broadcasts/Overview.tsx
-msgid "New broadcast ({newKey})"
-msgstr "Thư hàng loạt mới ({newKey})"
 
 #: src/features/settings/canned/CannedRepliesPage.tsx
 #: src/features/settings/canned/CannedReplyDialog.tsx
@@ -7644,8 +7916,8 @@ msgid "New contacts created"
 msgstr "Đã tạo liên hệ mới"
 
 #: src/features/contact/ContactCard.tsx
+#: src/features/contact/ContactDetail.tsx
 #: src/features/contact/ContactDetails.tsx
-#: src/features/contact/ContactPage.tsx
 #: src/features/contact/ContactSheet.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/inbox/ChatsPage.tsx
@@ -7693,7 +7965,7 @@ msgstr "Thiết kế mới"
 msgid "New discussion"
 msgstr "Thảo luận mới"
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/DocsPage.tsx
 msgid "new discussions"
 msgstr "thảo luận mới"
 
@@ -7704,6 +7976,10 @@ msgstr "Mục mới"
 #: src/features/docs/discussions/QueuePane.tsx
 msgid "New idea"
 msgstr "Ý tưởng mới"
+
+#: src/features/feedback/RoadmapCard.tsx
+msgid "New idea from this"
+msgstr "Ý tưởng mới từ phản hồi này"
 
 #: src/features/settings/inboxes/InboxSecurity.tsx
 msgid "New identity secret"
@@ -7717,20 +7993,14 @@ msgstr "mới trong {days} ngày qua"
 msgid "New inbox…"
 msgstr "Hộp thư mới…"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/status/IncidentsPage.tsx
-#: src/features/status/IncidentsTab.tsx
-#: src/features/status/StatusPages.tsx
 msgid "New incident"
 msgstr "Sự cố mới"
 
 #: src/features/status/IncidentsPage.tsx
-#: src/features/status/IncidentsTab.tsx
 msgid "New incident ({incidentKey})"
 msgstr "Sự cố mới ({incidentKey})"
-
-#: src/components/common/ShortcutSheet.tsx
-msgid "New incident or status page"
-msgstr "Sự cố hoặc trang trạng thái mới"
 
 #: src/features/settings/labels/LabelDialog.tsx
 #: src/features/settings/labels/LabelsPage.tsx
@@ -7741,8 +8011,8 @@ msgstr "Nhãn mới"
 msgid "New label “{folder}”"
 msgstr "Nhãn mới “{folder}”"
 
-#: src/features/broadcasts/BroadcastsColumn.tsx
-#: src/features/broadcasts/Overview.tsx
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "New list"
 msgstr "Danh sách mới"
 
@@ -7763,7 +8033,7 @@ msgstr "Tin nhắn mới trong cuộc trò chuyện chưa giao"
 msgid "New migration"
 msgstr "Lần di chuyển mới"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "New monitor"
 msgstr "Trình giám sát mới"
 
@@ -7783,11 +8053,15 @@ msgstr "Phản hồi mới trong <0>{title}</0>"
 msgid "New signing secret"
 msgstr "Signing secret mới"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "New status page"
+msgstr "Trang trạng thái mới"
+
 #: src/features/broadcasts/Import.tsx
 msgid "New subscribers added"
 msgstr "Người đăng ký mới được thêm"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "New update · {stage}"
 msgstr "Cập nhật mới · {stage}"
 
@@ -7811,7 +8085,7 @@ msgstr "Kết quả mới hơn (⇧Enter)"
 msgid "Newer ones stay open when the customer wrote last, pending when your team did."
 msgstr "Những cuộc mới hơn ở trạng thái mở khi khách hàng viết sau cùng, đang chờ khi nhóm của bạn viết sau cùng."
 
-#: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/docs/DocsPage.tsx
 msgid "Newest"
 msgstr "Mới nhất"
 
@@ -7855,6 +8129,10 @@ msgstr "Lần kiểm tra tiếp theo {next}."
 msgid "Next mail on {local} ({utc} UTC), at this broadcast’s pace."
 msgstr "Thư tiếp theo lúc {local} ({utc} UTC), theo tốc độ của thư hàng loạt này."
 
+#: src/features/feedback/Lightbox.tsx
+msgid "Next screenshot"
+msgstr "Ảnh chụp màn hình tiếp theo"
+
 #: src/features/migrations/UploadStep.tsx
 msgid "Next, choose what to bring. The scan reads the file once."
 msgstr "Tiếp theo, chọn thứ cần đưa vào. Quá trình quét đọc tệp một lần."
@@ -7870,6 +8148,10 @@ msgstr "Sao lưu ban đêm"
 #: src/features/setup/previews.tsx
 msgid "No"
 msgstr "Không"
+
+#: src/features/contact/ContactDetails.tsx
+msgid "No {inboxName} id on file. They can only be reached by e-mail until they sign in."
+msgstr "Chưa có ID {inboxName}. Cho đến khi đăng nhập, chỉ có thể liên hệ qua email."
 
 #: src/features/migrations/text.ts
 msgid "No {provider} account has that subdomain. Check it in your address: acme in acme.zendesk.com."
@@ -7895,8 +8177,7 @@ msgstr "Gói này không có API"
 msgid "No App passwords page? Your admin must allow 2-Step Verification and IMAP in the Google Admin console."
 msgstr "Không có trang App passwords? Quản trị viên của bạn phải cho phép Xác minh 2 bước và IMAP trong Google Admin console."
 
-#: src/features/broadcasts/BroadcastsColumn.tsx
-#: src/features/broadcasts/Overview.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "No archived lists"
 msgstr "Chưa có danh sách lưu trữ"
 
@@ -7912,7 +8193,18 @@ msgstr "Chưa có lần thử nào."
 msgid "No attempts yet."
 msgstr "Chưa có lần thử nào."
 
-#: src/features/broadcasts/BroadcastList.tsx
+#: src/features/broadcasts/Overview.tsx
+msgid "No broadcast is scheduled."
+msgstr "Không có bản tin nào được lên lịch."
+
+#: src/features/broadcasts/Overview.tsx
+msgid "No broadcasts for {scope} yet."
+msgstr "Chưa có bản tin nào cho {scope}."
+
+#: src/features/broadcasts/Overview.tsx
+msgid "No broadcasts have gone out yet."
+msgstr "Chưa có bản tin nào được gửi đi."
+
 #: src/features/broadcasts/Overview.tsx
 msgid "No broadcasts yet"
 msgstr "Chưa có thư hàng loạt"
@@ -7952,13 +8244,25 @@ msgstr "Chưa có kênh. Hãy thêm một kênh để khách hàng có thể vi�
 msgid "No chat channel of this inbox allows the page's site with discussions on. Turn discussions on in the inbox settings."
 msgstr "Không kênh chat nào của hộp thư này cho phép trang web của trang đó với thảo luận bật. Hãy bật thảo luận trong cài đặt hộp thư."
 
+#: src/features/status/IncidentDetail.tsx
+msgid "No component is named."
+msgstr "Chưa nêu thành phần nào."
+
 #: src/features/status/ComponentsTab.tsx
 msgid "No components in this group."
 msgstr "Nhóm này chưa có thành phần."
 
-#: src/features/status/StatusPages.tsx
+#: src/features/home/HomePage.tsx
 msgid "No components yet."
 msgstr "Chưa có thành phần nào."
+
+#: src/features/status/MonitorDialog.tsx
+msgid "No components yet. Add one to a status page first."
+msgstr "Chưa có thành phần nào. Hãy thêm một thành phần vào trang trạng thái trước."
+
+#: src/features/status/StatusPages.tsx
+msgid "No components yet. Add the parts of your product that customers depend on, in the Components tab."
+msgstr "Chưa có thành phần nào. Hãy thêm các phần của sản phẩm mà khách hàng phụ thuộc vào, trong tab Thành phần."
 
 #: src/features/status/ComponentsTab.tsx
 msgid "No components yet. Add the parts of your product that customers depend on."
@@ -7995,13 +8299,21 @@ msgstr "Chưa có liên hệ. Họ xuất hiện khi có người viết đến.
 msgid "No conversation is linked yet. Open one and use Link to an incident, or select several in the list."
 msgstr "Chưa có cuộc trò chuyện nào được liên kết. Hãy mở một cuộc trò chuyện và dùng Liên kết với sự cố, hoặc chọn nhiều cuộc trong danh sách."
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/status/LinkConversationsDialog.tsx
+msgid "No conversation matches."
+msgstr "Không có cuộc trò chuyện nào khớp."
+
+#: src/features/docs/PagesTab.tsx
 msgid "No conversations from this page."
 msgstr "Không có cuộc trò chuyện nào từ trang này."
 
 #: src/features/contact/ContactDetails.tsx
 msgid "No conversations here."
 msgstr "Không có cuộc trò chuyện nào ở đây."
+
+#: src/features/docs/FromDocs.tsx
+msgid "No conversations to choose from."
+msgstr "Không có cuộc trò chuyện để chọn."
 
 #: src/features/contact/ContactCard.tsx
 #: src/features/inbox/ChatList.tsx
@@ -8012,7 +8324,7 @@ msgstr "Chưa có cuộc trò chuyện nào."
 msgid "No design yet"
 msgstr "Chưa có thiết kế"
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "No discussions on this page yet."
 msgstr "Chưa có thảo luận nào trên trang này."
 
@@ -8020,7 +8332,7 @@ msgstr "Chưa có thảo luận nào trên trang này."
 msgid "No discussions under the pages of these sites."
 msgstr "Không có thảo luận nào dưới các trang của những trang web này."
 
-#: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/docs/DiscussionsTab.tsx
 msgid "No discussions yet. Readers start them under your documentation pages."
 msgstr "Chưa có thảo luận. Người đọc bắt đầu chúng dưới các trang tài liệu của bạn."
 
@@ -8032,6 +8344,10 @@ msgstr "Không có chữ ký DKIM nào đạt, nên không thể gửi thư hàn
 msgid "No drafts are waiting. Replies an assistant, a bot or a teammate drafts show up here until someone sends or discards them."
 msgstr "Không có bản nháp nào đang chờ. Phản hồi do trợ lý, bot hoặc đồng nghiệp soạn sẽ hiện ở đây cho đến khi ai đó gửi hoặc hủy chúng."
 
+#: src/features/broadcasts/Overview.tsx
+msgid "No drafts."
+msgstr "Không có bản nháp."
+
 #: src/features/contact/ContactsPage.tsx
 msgid "no e-mail"
 msgstr "không có email"
@@ -8040,7 +8356,7 @@ msgstr "không có email"
 msgid "No e-mail address given"
 msgstr "Chưa cho địa chỉ email"
 
-#: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/features/broadcasts/ListParts.tsx
 msgid "No e-mail channel that can send its confirmation and welcome mails"
 msgstr "Không có kênh email nào có thể gửi thư xác nhận và chào mừng"
 
@@ -8060,7 +8376,7 @@ msgstr "Chưa có endpoint."
 msgid "No events recorded."
 msgstr "Không có sự kiện nào được ghi lại."
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "No feedback from this page."
 msgstr "Không có phản hồi từ trang này."
 
@@ -8069,13 +8385,17 @@ msgstr "Không có phản hồi từ trang này."
 msgid "No group"
 msgstr "Không có nhóm"
 
-#: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/docs/DiscussionsTab.tsx
 msgid "No hidden discussions."
 msgstr "Không có thảo luận bị ẩn."
 
 #: src/features/home/HomePage.tsx
 msgid "No ideas yet. Customers’ votes show up here."
 msgstr "Chưa có ý tưởng nào. Phiếu bầu của khách hàng sẽ hiện ở đây."
+
+#: src/features/contact/ContactDetail.tsx
+msgid "No ids yet. This person has not been identified by an app or widget."
+msgstr "Chưa có ID nào. Chưa có ứng dụng hay widget nào nhận diện người này."
 
 #: src/features/status/text.tsx
 msgid "No impact"
@@ -8084,10 +8404,6 @@ msgstr "Không ảnh hưởng"
 #: src/features/broadcasts/Import.tsx
 msgid "No imports yet."
 msgstr "Chưa có lần nhập nào."
-
-#: src/features/status/StatusColumn.tsx
-msgid "No inbox to show a status page for."
-msgstr "Không có hộp thư nào để hiển thị trang trạng thái."
 
 #: src/features/status/LinkIncidentDialog.tsx
 msgid "No incident matches."
@@ -8106,7 +8422,7 @@ msgid "No labels yet"
 msgstr "Chưa có nhãn"
 
 #: src/features/conversation/ConversationMenu.tsx
-#: src/features/conversation/HeaderActions.tsx
+#: src/features/inbox/ChatList.tsx
 msgid "No labels yet. Add them in settings."
 msgstr "Chưa có nhãn. Hãy thêm trong cài đặt."
 
@@ -8114,7 +8430,11 @@ msgstr "Chưa có nhãn. Hãy thêm trong cài đặt."
 msgid "No limit"
 msgstr "Không giới hạn"
 
-#: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/broadcasts/ListsHome.tsx
+msgid "No lists for {scope} yet"
+msgstr "Chưa có danh sách nào cho {scope}"
+
+#: src/features/docs/DiscussionsTab.tsx
 msgid "No locked discussions."
 msgstr "Không có thảo luận bị khóa."
 
@@ -8126,10 +8446,13 @@ msgstr "Không còn trong hộp thư"
 msgid "No mail server was found for {domain}. Pick your provider below, or “Other IMAP server” and enter the server on the next step."
 msgstr "Không tìm thấy máy chủ thư nào cho {domain}. Hãy chọn nhà cung cấp của bạn bên dưới, hoặc “Máy chủ IMAP khác” và nhập máy chủ ở bước tiếp theo."
 
-#: src/features/broadcasts/BroadcastsColumn.tsx
-#: src/features/broadcasts/Overview.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "No mailing lists yet"
 msgstr "Chưa có danh sách gửi thư"
+
+#: src/features/status/IncidentsPage.tsx
+msgid "No maintenance is planned."
+msgstr "Không có đợt bảo trì nào được lên kế hoạch."
 
 #: src/features/conversation/ChatView.tsx
 msgid "No matches"
@@ -8147,7 +8470,15 @@ msgstr "Không có lượt nhắc đến nào."
 msgid "No messages yet"
 msgstr "Chưa có tin nhắn"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
+msgid "No monitor matches this filter."
+msgstr "Không có trình giám sát nào khớp bộ lọc này."
+
+#: src/features/status/StatusPages.tsx
+msgid "No monitor watches this page yet"
+msgstr "Chưa có trình giám sát nào theo dõi trang này"
+
+#: src/features/status/MonitorsPage.tsx
 msgid "No monitors yet. Add one to let a check, a job or your monitoring set a component’s state."
 msgstr "Chưa có trình giám sát nào. Hãy thêm một cái để một lần kiểm tra, một tác vụ hoặc hệ thống giám sát của bạn đặt trạng thái cho thành phần."
 
@@ -8163,10 +8494,6 @@ msgstr "Chưa ai nhắc đến bạn trong ghi chú. Khi đồng nghiệp viết
 msgid "No open feedback."
 msgstr "Không có góp ý nào đang mở."
 
-#: src/features/status/IncidentsTab.tsx
-msgid "No open incidents or maintenance."
-msgstr "Không có sự cố hoặc đợt bảo trì nào đang mở."
-
 #: src/features/contact/ContactSearch.tsx
 msgid "No other contact matches."
 msgstr "Không có liên hệ nào khác khớp."
@@ -8175,11 +8502,11 @@ msgstr "Không có liên hệ nào khác khớp."
 msgid "No other conversations."
 msgstr "Không có cuộc trò chuyện nào khác."
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "No pages yet"
 msgstr "Chưa có trang"
 
-#: src/features/settings/members/Invites.tsx
+#: src/features/team/TeamPage.tsx
 msgid "No pending invites."
 msgstr "Không có lời mời đang chờ."
 
@@ -8195,7 +8522,7 @@ msgstr "Không tìm thấy bài viết đã xuất bản nào."
 msgid "No ratings in this period."
 msgstr "Không có đánh giá trong khoảng thời gian này."
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "No ratings in this window."
 msgstr "Không có đánh giá nào trong khoảng thời gian này."
 
@@ -8216,13 +8543,13 @@ msgstr "Không có tài khoản phản hồi"
 msgid "No response times in this range yet."
 msgstr "Chưa có thời gian phản hồi trong khoảng này."
 
-#: src/features/status/MonitorsTab.tsx
-msgid "No result yet"
-msgstr "Chưa có kết quả"
-
 #: src/app/Palette.tsx
 msgid "No results"
 msgstr "Không có kết quả"
+
+#: src/features/broadcasts/ListsHome.tsx
+msgid "No sender yet"
+msgstr "Chưa có người gửi"
 
 #: src/features/settings/channels/ChannelSummary.tsx
 msgid "No settings"
@@ -8240,7 +8567,7 @@ msgstr "Không có tài khoản SMTP"
 msgid "No status page yet. Create one under Status first."
 msgstr "Chưa có trang trạng thái. Hãy tạo một trang trong Trạng thái trước."
 
-#: src/features/status/StatusColumn.tsx
+#: src/features/status/StatusPages.tsx
 msgid "No status page yet. Owners and admins create it."
 msgstr "Chưa có trang trạng thái. Chủ sở hữu và quản trị viên tạo trang này."
 
@@ -8251,7 +8578,6 @@ msgstr "Chưa có trang trạng thái. Chủ sở hữu và quản trị viên t
 msgid "No subject"
 msgstr "Không có chủ đề"
 
-#: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/Overview.tsx
 msgid "No subject yet"
 msgstr "Chưa có chủ đề"
@@ -8291,6 +8617,14 @@ msgstr "Chưa có thử nghiệm nào được gửi từ lần thay đổi gầ
 #: src/features/broadcasts/Report.tsx
 msgid "No visits from this campaign yet."
 msgstr "Chưa có lượt truy cập nào từ chiến dịch này."
+
+#: src/features/contact/ContactDetail.tsx
+msgid "No visits yet."
+msgstr "Chưa có lượt truy cập."
+
+#: src/features/feedback/FeedbackFormDialog.tsx
+msgid "No website chat or app is set up yet."
+msgstr "Chưa thiết lập chat trên trang web hay ứng dụng nào."
 
 #: src/features/broadcasts/Import.tsx
 msgid "No welcome mail is sent. Each new address waits for confirmation and joins after clicking the link in the mail."
@@ -8333,6 +8667,10 @@ msgstr "Không ai để lại bình luận kèm đánh giá trong khoảng thờ
 msgid "Nobody matches."
 msgstr "Không ai khớp."
 
+#: src/features/team/TeamPage.tsx
+msgid "Nobody on the team works on this product yet."
+msgstr "Chưa có ai trong nhóm làm việc với sản phẩm này."
+
 #: src/features/broadcasts/Report.tsx
 msgid "Nobody opened a link yet."
 msgstr "Chưa ai mở liên kết."
@@ -8349,6 +8687,7 @@ msgstr "Không ai sẽ nhận thư này. Hãy chọn các danh sách có ngườ
 #: src/features/settings/SettingsColumn.tsx
 #: src/features/setup/email/EmailTestStep.tsx
 #: src/features/status/MonitorDialog.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "None"
 msgstr "Không có"
 
@@ -8417,13 +8756,17 @@ msgstr "Chưa kết nối. Trang này cập nhật khi bạn đăng nhập xong.
 msgid "Not delivered"
 msgstr "Chưa gửi được"
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/status/DomainCard.tsx
+msgid "Not found"
+msgstr "Không tìm thấy"
+
+#: src/features/docs/PagesTab.tsx
 msgid "not helpful"
 msgstr "không hữu ích"
 
 #: src/features/conversation/Feedback.tsx
-#: src/features/docs/DocsPages.tsx
 #: src/features/docs/PageContext.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "Not helpful"
 msgstr "Không hữu ích"
 
@@ -8444,17 +8787,17 @@ msgstr "Máy chủ này không cung cấp"
 msgid "Not on any mailing list."
 msgstr "Không nằm trong danh sách gửi thư nào."
 
+#: src/features/feedback/RoadmapCard.tsx
+msgid "Not on the roadmap yet. Link it to an idea, so you can tell everyone who asked when it ships."
+msgstr "Chưa có trong lộ trình. Hãy liên kết với một ý tưởng để báo cho mọi người đã yêu cầu khi nó ra mắt."
+
 #: src/features/status/StatusPages.tsx
 msgid "not posted yet"
 msgstr "chưa đăng"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "not public"
 msgstr "không công khai"
-
-#: src/features/status/IncidentsTab.tsx
-msgid "not public yet"
-msgstr "chưa công khai"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Not ready"
@@ -8532,6 +8875,7 @@ msgid "Note, only the team sees it"
 msgstr "Ghi chú, chỉ nhóm thấy"
 
 #: src/features/contact/ContactCard.tsx
+#: src/features/contact/ContactDetail.tsx
 #: src/features/contact/ContactSheet.tsx
 msgid "Notes"
 msgstr "Ghi chú"
@@ -8557,15 +8901,19 @@ msgid "Nothing from the file is added, and the uploaded file is deleted."
 msgstr "Không có gì từ tệp được thêm, và tệp đã tải lên bị xóa."
 
 #: src/features/status/MonitorChecks.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Nothing has arrived yet."
 msgstr "Chưa có gì được gửi đến."
+
+#: src/features/status/IncidentsPage.tsx
+msgid "Nothing has been resolved yet."
+msgstr "Chưa có gì được giải quyết."
 
 #: src/features/broadcasts/Report.tsx
 msgid "Nothing has happened yet."
 msgstr "Chưa có gì xảy ra."
 
 #: src/features/broadcasts/Overview.tsx
-#: src/features/status/IncidentsPage.tsx
 msgid "Nothing here."
 msgstr "Không có gì ở đây."
 
@@ -8602,7 +8950,6 @@ msgid "Nothing is lost: when it continues, copying picks up where it stopped."
 msgstr "Không mất gì: khi nó tiếp tục, việc sao chép tiếp tục từ chỗ đã dừng."
 
 #: src/features/feedback/FeedbackList.tsx
-#: src/features/status/IncidentsTab.tsx
 msgid "Nothing is resolved yet."
 msgstr "Chưa có gì được giải quyết."
 
@@ -8614,10 +8961,14 @@ msgstr "Chưa có gì được lên lịch."
 msgid "Nothing is snoozed."
 msgstr "Không có gì đang tạm hoãn."
 
-#: src/features/docs/discussions/DiscussionsPane.tsx
 #: src/features/docs/discussions/QueuePane.tsx
+#: src/features/docs/DiscussionsTab.tsx
 msgid "Nothing is waiting for approval."
 msgstr "Không có gì đang chờ duyệt."
+
+#: src/features/status/IncidentsPage.tsx
+msgid "Nothing is wrong right now. Open an incident when something breaks."
+msgstr "Hiện không có gì bất thường. Hãy mở sự cố khi có gì đó hỏng."
 
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing matches these filters."
@@ -8633,8 +8984,16 @@ msgid "Nothing needs you"
 msgstr "Không có gì cần bạn xử lý"
 
 #: src/features/home/HomePage.tsx
+msgid "Nothing needs you in {scoped}"
+msgstr "Không có gì đang chờ bạn trong {scoped}"
+
+#: src/features/home/HomePage.tsx
 msgid "Nothing needs you today."
 msgstr "Hôm nay không có gì cần bạn."
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Nothing opens by itself. Open an incident from the monitor when you want one."
+msgstr "Không có gì tự mở. Hãy mở sự cố từ trình giám sát khi bạn muốn."
 
 #: src/features/account/AccountPage.tsx
 msgid "Nothing unread."
@@ -8727,6 +9086,7 @@ msgid "Offline"
 msgstr "Ngoại tuyến"
 
 #: src/features/status/MonitorChecks.tsx
+#: src/features/status/ResponseChart.tsx
 msgid "OK"
 msgstr "OK"
 
@@ -8753,6 +9113,10 @@ msgstr "Lượt truy cập cũ hơn"
 #: src/features/home/HomePage.tsx
 msgid "oldest {oldestFor}"
 msgstr "cũ nhất {oldestFor}"
+
+#: src/features/home/HomePage.tsx
+msgid "oldest {oldestFor}, {oldestWho}"
+msgstr "cũ nhất {oldestFor}, {oldestWho}"
 
 #: src/features/home/HomePage.tsx
 msgid "oldest {oldestFor}, in {oldestInbox}"
@@ -8786,11 +9150,6 @@ msgstr "Trên nhiều danh sách, mỗi người một thư"
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "On Team and Enterprise plans an owner adds it once in <0>Organization settings › Connectors</0>; members then find it under Connectors and click Connect."
 msgstr "Với gói Team và Enterprise, chủ sở hữu thêm một lần trong <0>Organization settings › Connectors</0>; sau đó các thành viên tìm thấy nó trong Connectors và nhấp Connect."
-
-#. placeholder {0}: c.idea.title
-#: src/features/feedback/FeedbackPage.tsx
-msgid "On the roadmap: {0}"
-msgstr "Trên lộ trình: {0}"
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "On the web"
@@ -8874,7 +9233,7 @@ msgstr "Trạng thái trực tuyến"
 msgid "Only {0}"
 msgstr "Chỉ {0}"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Only a draft can be deleted. It was never shown on the page."
 msgstr "Chỉ có thể xóa bản nháp. Nó chưa từng hiển thị trên trang."
 
@@ -8885,6 +9244,10 @@ msgstr "Chỉ có thể xóa bản nháp. Hãy đăng một cập nhật thay th
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Only add people who agreed to get this list. What you enter here is kept as their consent record."
 msgstr "Chỉ thêm những người đã đồng ý nhận danh sách này. Những gì bạn nhập ở đây được giữ làm bản ghi đồng ý của họ."
+
+#: src/features/team/TeamPage.tsx
+msgid "Only an owner can change an owner's role."
+msgstr "Chỉ chủ sở hữu mới đổi được vai trò của chủ sở hữu."
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Only contacts whose language is one of these."
@@ -8930,10 +9293,6 @@ msgstr "Chỉ chủ sở hữu mới xóa được không gian làm việc."
 msgid "Only pages on these addresses can open the chat. Enter scheme and host, without a path."
 msgstr "Chỉ các trang ở những địa chỉ này mới mở được chat. Nhập scheme và host, không có đường dẫn."
 
-#: src/features/broadcasts/Composer.tsx
-msgid "Only people who subscribed get it. Unsubscribed, unconfirmed, bounced and blocked addresses are always left out."
-msgstr "Chỉ những người đã đăng ký mới nhận. Địa chỉ đã hủy đăng ký, chưa xác nhận, bị trả lại và bị chặn luôn bị bỏ qua."
-
 #: src/features/migrations/ChooseStep.tsx
 msgid "Only read requests are sent. You can close this page; the scan goes on and the list in Settings shows when it is done."
 msgstr "Chỉ gửi các yêu cầu đọc. Bạn có thể đóng trang này; quá trình quét vẫn tiếp tục và danh sách trong Cài đặt cho biết khi nào xong."
@@ -8966,13 +9325,21 @@ msgstr "Chỉ các lượt truy cập sau khi họ đồng ý dùng ID liên t�
 msgid "Only while the panel is open in this browser. Away, you are alerted only about conversations assigned to you."
 msgstr "Chỉ khi bảng điều khiển đang mở trong trình duyệt này. Khi vắng mặt, bạn chỉ được báo về các cuộc trò chuyện giao cho bạn."
 
-#: src/features/broadcasts/Composer.tsx
+#: src/features/status/StatusPages.tsx
+msgid "only your team can preview it"
+msgstr "chỉ nhóm của bạn có thể xem trước"
+
 #: src/features/broadcasts/NewBroadcastDialog.tsx
 msgid "Only your team sees it."
 msgstr "Chỉ nhóm của bạn thấy."
 
+#: src/features/team/TeamPage.tsx
+msgid "open"
+msgstr "đang mở"
+
 #: src/components/common/text.ts
 #: src/features/account/AccountPage.tsx
+#: src/features/broadcasts/Overview.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/conversation/ConversationStatus.tsx
@@ -8981,7 +9348,7 @@ msgstr "Chỉ nhóm của bạn thấy."
 #: src/features/home/HomePage.tsx
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/settings/channels/chat/ChatFields.tsx
-#: src/features/status/IncidentsTab.tsx
+#: src/features/status/StatusPages.tsx
 msgid "Open"
 msgstr "Mở"
 
@@ -8989,6 +9356,10 @@ msgstr "Mở"
 #: src/features/conversation/messages/Attachments.tsx
 msgid "Open {0}"
 msgstr "Mở {0}"
+
+#: src/features/status/IncidentDetail.tsx
+msgid "Open {name} in Monitors"
+msgstr "Mở {name} trong Trình giám sát"
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "Open {provider}'s mail settings and find forwarding, or a filter that forwards all incoming mail."
@@ -8998,6 +9369,7 @@ msgstr "Mở cài đặt thư của {provider} và tìm mục chuyển tiếp, h
 msgid "Open a draft incident"
 msgstr "Mở bản nháp sự cố"
 
+#: src/features/docs/PagesTab.tsx
 #: src/features/setup/InstallStep.tsx
 msgid "Open a page of your docs"
 msgstr "Mở một trang tài liệu của bạn"
@@ -9014,9 +9386,15 @@ msgstr "Mở Account security"
 msgid "Open Account security in your Yahoo account."
 msgstr "Mở Account security trong tài khoản Yahoo của bạn."
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/status/IncidentDialog.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Open an incident"
 msgstr "Mở sự cố"
+
+#: src/features/status/MonitorsPage.tsx
+msgid "Open an incident ({incidentKey})"
+msgstr "Mở sự cố ({incidentKey})"
 
 #: src/features/migrations/text.ts
 msgid "Open App passwords"
@@ -9051,16 +9429,23 @@ msgstr "Mở cuộc trò chuyện"
 msgid "Open conversations"
 msgstr "Cuộc trò chuyện đang mở"
 
-#: src/features/team/MemberPage.tsx
-#: src/features/team/TeamColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Open conversations assigned"
 msgstr "Cuộc trò chuyện đang mở được giao"
+
+#: src/features/status/LinkConversationsDialog.tsx
+msgid "Open conversations of this product that may be about {title}."
+msgstr "Các cuộc trò chuyện đang mở của sản phẩm này có thể liên quan đến “{title}”."
 
 #: src/components/common/Linked.tsx
 msgid "Open conversations that get this reply: {open}"
 msgstr "Các cuộc trò chuyện đang mở sẽ nhận câu trả lời này: {open}"
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/discussions/QueuePane.tsx
+msgid "Open discussion"
+msgstr "Mở thảo luận"
+
+#: src/features/docs/PagesTab.tsx
 msgid "open discussions"
 msgstr "thảo luận đang mở"
 
@@ -9068,11 +9453,11 @@ msgstr "thảo luận đang mở"
 msgid "Open Enterprise applications"
 msgstr "Mở Enterprise applications"
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "open feedback"
 msgstr "phản hồi đang mở"
 
-#: src/features/contact/ContactsPage.tsx
+#: src/features/contact/ContactDetail.tsx
 msgid "Open full page"
 msgstr "Mở toàn trang"
 
@@ -9088,7 +9473,15 @@ msgstr "Mở Google Takeout, chọn “Deselect all”, rồi chỉ chọn Mail.
 msgid "Open Google's confirmation page"
 msgstr "Mở trang xác nhận của Google"
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/PagesTab.tsx
+msgid "Open Help center"
+msgstr "Mở trung tâm trợ giúp"
+
+#: src/features/feedback/RoadmapCard.tsx
+msgid "Open idea"
+msgstr "Mở ý tưởng"
+
+#: src/features/docs/PagesTab.tsx
 msgid "Open in Analytics"
 msgstr "Mở trong Phân tích"
 
@@ -9096,7 +9489,7 @@ msgstr "Mở trong Phân tích"
 msgid "Open inbox →"
 msgstr "Mở hộp thư →"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Open incident"
 msgstr "Mở sự cố"
 
@@ -9179,6 +9572,10 @@ msgstr "Mở hộp thư"
 msgid "Open the inbox settings"
 msgstr "Mở cài đặt hộp thư"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the list"
+msgstr "Mở danh sách"
+
 #: src/features/migrations/text.ts
 msgid "Open the Microsoft Entra admin center or the Azure portal, go to App registrations and choose New registration. Name it “Yuva”."
 msgstr "Mở Microsoft Entra admin center hoặc cổng Azure, vào App registrations và chọn New registration. Đặt tên “Yuva”."
@@ -9203,19 +9600,27 @@ msgstr "Mở nhật ký thay đổi công khai"
 msgid "Open the public help center"
 msgstr "Mở trung tâm trợ giúp công khai"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the public page"
+msgstr "Mở trang công khai"
+
 #: src/features/broadcasts/Report.tsx
 msgid "Open the reply"
 msgstr "Mở phản hồi"
 
-#: src/components/common/ShortcutSheet.tsx
-msgid "Open the status page"
-msgstr "Mở trang trạng thái"
+#: src/features/broadcasts/FormSnippets.tsx
+msgid "Open the settings"
+msgstr "Mở cài đặt"
+
+#: src/features/team/TeamPage.tsx
+msgid "Open the unassigned queue"
+msgstr "Mở hàng đợi chưa giao"
 
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "Open the workspace settings"
 msgstr "Mở cài đặt không gian làm việc"
 
-#: src/features/team/MemberPage.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Open what they see"
 msgstr "Mở xem họ thấy gì"
 
@@ -9236,11 +9641,11 @@ msgstr "Mở trang web của bạn"
 msgid "Open Zoho Accounts"
 msgstr "Mở Zoho Accounts"
 
-#: src/features/team/MemberPage.tsx
+#: src/features/team/TeamPage.tsx
 msgid "open, assigned"
 msgstr "đang mở, đã giao"
 
-#: src/features/team/TeamColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "open, unassigned"
 msgstr "đang mở, chưa giao"
 
@@ -9322,6 +9727,10 @@ msgstr "Máy chủ IMAP khác"
 msgid "Other MCP client"
 msgstr "Client MCP khác"
 
+#: src/features/status/MonitorsPage.tsx
+msgid "Our monitor {monitor} has seen a problem since {at}. We are looking into it."
+msgstr "Trình giám sát {monitor} của chúng tôi phát hiện sự cố từ {at}. Chúng tôi đang điều tra."
+
 #: src/features/migrations/text.ts
 msgid "Outlook.com and Microsoft 365"
 msgstr "Outlook.com và Microsoft 365"
@@ -9355,7 +9764,8 @@ msgid "Over time"
 msgstr "Theo thời gian"
 
 #: src/app/Sidebar.tsx
-#: src/features/docs/DocsColumn.tsx
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/StatusPages.tsx
 msgid "Overview"
 msgstr "Tổng quan"
 
@@ -9371,22 +9781,21 @@ msgstr "Tenant riêng"
 msgid "Owner"
 msgstr "Chủ sở hữu"
 
-#: src/features/broadcasts/BroadcastsColumn.tsx
-#: src/features/broadcasts/Overview.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "Owners and admins create lists, add subscribers and send broadcasts."
 msgstr "Chủ sở hữu và quản trị viên tạo danh sách, thêm người đăng ký và gửi thư hàng loạt."
 
-#: src/features/settings/members/MembersPage.tsx
-msgid "Owners and admins see every inbox; agents see the inboxes they were given."
-msgstr "Chủ sở hữu và quản trị viên thấy mọi hộp thư; nhân viên thấy các hộp thư được giao."
+#: src/features/team/TeamPage.tsx
+msgid "Owners and admins see every inbox; agents see the inboxes they were given. Only owners and admins can invite, change roles or remove members."
+msgstr "Chủ sở hữu và quản trị viên thấy mọi hộp thư đến; nhân viên hỗ trợ thấy các hộp thư được giao cho họ. Chỉ chủ sở hữu và quản trị viên mới có thể mời, đổi vai trò hoặc xóa thành viên."
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Owners and admins see every inbox; members see the inboxes they are given."
 msgstr "Chủ sở hữu và quản trị viên thấy mọi hộp thư; thành viên thấy các hộp thư được giao."
 
-#: src/features/broadcasts/BroadcastList.tsx
-msgid "Owners and admins write and send broadcasts. You see the broadcasts of your inboxes, so you know what a reply answers."
-msgstr "Chủ sở hữu và quản trị viên viết và gửi thư hàng loạt. Bạn thấy thư hàng loạt của các hộp thư của bạn, để biết một phản hồi trả lời cho cái gì."
+#: src/features/team/TeamPage.tsx
+msgid "Owners can do everything, including billing and deleting the workspace."
+msgstr "Chủ sở hữu có thể làm mọi việc, kể cả thanh toán và xóa không gian làm việc."
 
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Pace (mails a second)"
@@ -9395,13 +9804,11 @@ msgstr "Tốc độ (thư mỗi giây)"
 #: src/features/broadcasts/SubscriberSheet.tsx
 #: src/features/conversation/Feedback.tsx
 #: src/features/docs/discussions/FromConversation.tsx
-#: src/features/docs/discussions/ThreadPane.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Page"
 msgstr "Trang"
 
 #: src/components/common/ShortcutSheet.tsx
-#: src/features/status/StatusPages.tsx
 msgid "Page settings"
 msgstr "Cài đặt trang"
 
@@ -9410,9 +9817,19 @@ msgid "Page where they agreed (optional)"
 msgstr "Trang họ đã đồng ý (không bắt buộc)"
 
 #: src/app/Sidebar.tsx
-#: src/features/docs/DocsColumn.tsx
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/docs/DocsPage.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "Pages"
 msgstr "Trang"
+
+#: src/features/docs/PagesTab.tsx
+msgid "Pages live on your own site. Articles hosted by Yuva are in <0>Help center</0>."
+msgstr "Các trang nằm trên trang web của bạn. Bài viết do Yuva lưu trữ nằm trong <0>Trung tâm trợ giúp</0>."
+
+#: src/features/docs/PagesTab.tsx
+msgid "Pages on your own site"
+msgstr "Trang trên trang web của bạn"
 
 #: src/features/settings/channels/chat/ChatInstall.tsx
 msgid "Pages that embed the old key can no longer start chats until you update the snippet. Visitors already chatting keep their session."
@@ -9463,8 +9880,8 @@ msgstr "Mật khẩu"
 msgid "Password set"
 msgstr "Đã đặt mật khẩu"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/status/IncidentsPage.tsx
-#: src/features/status/IncidentsTab.tsx
 msgid "Past"
 msgstr "Đã qua"
 
@@ -9481,9 +9898,10 @@ msgid "Paste this before the closing body tag of your pages"
 msgstr "Dán đoạn này trước thẻ đóng body của các trang của bạn"
 
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/broadcasts/Overview.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MigrationsPage.tsx
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Pause"
 msgstr "Tạm dừng"
 
@@ -9491,6 +9909,11 @@ msgstr "Tạm dừng"
 msgid "Pause or resume sending"
 msgstr "Tạm dừng hoặc tiếp tục gửi"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Pause or resume the monitor"
+msgstr "Tạm dừng hoặc tiếp tục trình giám sát"
+
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/text.ts
 #: src/features/migrations/text.ts
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -9498,6 +9921,7 @@ msgstr "Tạm dừng hoặc tiếp tục gửi"
 #: src/features/setup/email/EmailDoneStep.tsx
 #: src/features/setup/email/EmailTestStep.tsx
 #: src/features/status/MonitorDialog.tsx
+#: src/features/status/MonitorsPage.tsx
 #: src/features/status/text.tsx
 msgid "Paused"
 msgstr "Đã tạm dừng"
@@ -9542,6 +9966,10 @@ msgstr "Đã tạm dừng. Không có gì được đọc từ {address} cho đ�
 msgid "Paused. Nothing is read from {provider} until you resume."
 msgstr "Đã tạm dừng. Không có gì được đọc từ {provider} cho đến khi bạn tiếp tục."
 
+#: src/features/status/MonitorsPage.tsx
+msgid "Paused. Results are ignored and the component goes back to how you set it."
+msgstr "Đã tạm dừng. Kết quả bị bỏ qua và thành phần quay lại trạng thái bạn đã đặt."
+
 #: src/features/settings/webhooks/DeliverySheet.tsx
 msgid "Payload"
 msgstr "Payload"
@@ -9558,6 +9986,14 @@ msgstr "Các lượt gửi đang chờ bị bỏ cùng với nó."
 #: src/features/setup/NewsletterStep.tsx
 msgid "People join it on a subscribe form or are added with their consent. Broadcasts go to lists."
 msgstr "Mọi người tham gia qua biểu mẫu đăng ký hoặc được thêm kèm sự đồng ý. Thư hàng loạt gửi đến các danh sách."
+
+#: src/features/feedback/FeedbackFormDialog.tsx
+msgid "People send a bug, an idea or praise, with a screenshot and the device details. It lands here."
+msgstr "Mọi người gửi lỗi, ý tưởng hoặc lời khen, kèm ảnh chụp màn hình và thông tin thiết bị. Nó sẽ đến đây."
+
+#: src/features/contact/ContactsPage.tsx
+msgid "People so far: {shownCount}"
+msgstr "Số người đến nay: {shownCount}"
 
 #: src/features/setup/SetupHub.tsx
 msgid "People subscribe on your site; broadcasts go to the list."
@@ -9588,6 +10024,10 @@ msgstr "Những người đã nhắn cho {product}"
 #: src/features/setup/SetupHub.tsx
 msgid "People write from inside your app, signed in as themselves."
 msgstr "Mọi người viết từ trong ứng dụng của bạn, đăng nhập bằng chính họ."
+
+#: src/features/contact/ContactsPage.tsx
+msgid "People: {shownCount}"
+msgstr "Số người: {shownCount}"
 
 #: src/features/broadcasts/Pace.tsx
 msgid "Per day"
@@ -9621,6 +10061,10 @@ msgstr "Quyền gửi"
 #: src/features/contact/ContactsPage.tsx
 msgid "Person"
 msgstr "Người"
+
+#: src/features/docs/PagesTab.tsx
+msgid "Pick a chat channel of the product and paste the snippet. Ratings and questions land in its inbox."
+msgstr "Chọn một kênh trò chuyện của sản phẩm và dán mã. Đánh giá và câu hỏi sẽ vào hộp thư của kênh đó."
 
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Pick a color"
@@ -9658,6 +10102,18 @@ msgstr "Hãy chọn một thiết kế trước."
 msgid "Pick a design that renders without errors."
 msgstr "Hãy chọn một thiết kế hiển thị không lỗi."
 
+#: src/features/docs/DiscussionsTab.tsx
+msgid "Pick a discussion to read and answer it."
+msgstr "Chọn một thảo luận để đọc và trả lời."
+
+#: src/features/status/MonitorsPage.tsx
+msgid "Pick a monitor to see what happened."
+msgstr "Chọn một trình giám sát để xem điều gì đã xảy ra."
+
+#: src/features/docs/PagesTab.tsx
+msgid "Pick a page to see its ratings, discussions and questions."
+msgstr "Chọn một trang để xem đánh giá, thảo luận và câu hỏi của nó."
+
 #: src/features/feedback/FeedbackList.tsx
 msgid "Pick a piece of feedback"
 msgstr "Chọn một góp ý"
@@ -9685,6 +10141,10 @@ msgstr "Chọn một kênh email của hộp thư này có tài khoản SMTP. N�
 #: src/features/migrations/MapStep.tsx
 msgid "Pick an inbox"
 msgstr "Chọn một hộp thư"
+
+#: src/features/status/IncidentsPage.tsx
+msgid "Pick an incident to read it."
+msgstr "Chọn một sự cố để đọc."
 
 #: src/features/status/LinkIncidentDialog.tsx
 msgid "Pick an open incident or maintenance"
@@ -9729,6 +10189,10 @@ msgstr "Hãy chọn sau trong cài đặt danh sách."
 msgid "Pick the column that holds the e-mail addresses."
 msgstr "Chọn cột chứa các địa chỉ email."
 
+#: src/features/docs/FromDocs.tsx
+msgid "Pick the conversation to answer in public. The next reader finds it under your documentation page."
+msgstr "Chọn cuộc trò chuyện để trả lời công khai. Người đọc sau sẽ thấy nó bên dưới trang tài liệu của bạn."
+
 #: src/features/broadcasts/Import.tsx
 msgid "Pick the file to import."
 msgstr "Chọn tệp cần nhập."
@@ -9748,6 +10212,10 @@ msgstr "Chọn hộp thư cho {address}, ai trong nhóm của bạn đã viết 
 #: src/features/migrations/MapStep.tsx
 msgid "Pick the inboxes for {provider}'s conversations, which member each agent is, and how tags become labels. Changing these after the scan plans the import again in a moment."
 msgstr "Chọn các hộp thư cho các cuộc trò chuyện của {provider}, mỗi nhân viên là thành viên nào, và cách thẻ trở thành nhãn. Đổi những mục này sau khi quét sẽ lập lại kế hoạch nhập trong giây lát."
+
+#: src/features/broadcasts/ListsHome.tsx
+msgid "Pick the list the people join."
+msgstr "Chọn danh sách mà mọi người tham gia."
 
 #: src/features/contact/MergeContactDialog.tsx
 msgid "Pick the other contact. It is merged into this one and then deleted."
@@ -9790,7 +10258,6 @@ msgid "Pick what Yuva should tell your server about. You can change this later."
 msgstr "Chọn điều Yuva nên báo cho máy chủ của bạn. Bạn có thể đổi sau."
 
 #: src/features/conversation/ConversationMenu.tsx
-#: src/features/inbox/ChatList.tsx
 msgid "Pin to the top"
 msgstr "Ghim lên đầu"
 
@@ -9812,17 +10279,16 @@ msgstr "Văn bản thuần có liên kết và xuống dòng, tối đa 5.000 k�
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/status/IncidentDialog.tsx
-#: src/features/status/IncidentsTab.tsx
+#: src/features/status/IncidentsPage.tsx
 msgid "Plan maintenance"
 msgstr "Lên lịch bảo trì"
 
 #: src/features/status/IncidentsPage.tsx
-#: src/features/status/IncidentsTab.tsx
 msgid "Plan maintenance ({maintenanceKey})"
 msgstr "Lên lịch bảo trì ({maintenanceKey})"
 
 #: src/components/common/text.ts
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Planned"
 msgstr "Đã lên kế hoạch"
 
@@ -9862,11 +10328,7 @@ msgstr "Cổng"
 msgid "Post an update"
 msgstr "Đăng cập nhật"
 
-#: src/features/status/StatusPages.tsx
-msgid "Post an update ({incidentKey})"
-msgstr "Đăng bản cập nhật ({incidentKey})"
-
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Post an update ({updateKey})"
 msgstr "Đăng cập nhật ({updateKey})"
 
@@ -9878,7 +10340,6 @@ msgstr "Phản hồi bài đăng cho người dùng ứng dụng của bạn"
 msgid "Post status update"
 msgstr "Đăng cập nhật trạng thái"
 
-#: src/features/status/IncidentsTab.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Post update"
 msgstr "Đăng cập nhật"
@@ -9908,12 +10369,10 @@ msgstr "Đang chuẩn bị"
 #: src/components/common/Wizard.tsx
 #: src/features/settings/labels/LabelDialog.tsx
 #: src/features/status/PreviewDialog.tsx
-#: src/features/status/StatusPagePane.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Preview"
 msgstr "Xem trước"
 
-#: src/features/status/StatusPagePane.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Preview ({previewKey})"
 msgstr "Xem trước ({previewKey})"
@@ -9941,24 +10400,32 @@ msgid "Preview the page"
 msgstr "Xem trước trang"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Previous or next discussion"
+msgstr "Thảo luận trước hoặc sau"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Previous or next language"
 msgstr "Ngôn ngữ trước hoặc sau"
+
+#: src/features/feedback/Lightbox.tsx
+msgid "Previous screenshot"
+msgstr "Ảnh chụp màn hình trước"
 
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Priority"
 msgstr "Ưu tiên"
+
+#: src/features/conversation/ChatView.tsx
+msgid "Priority set to {level}"
+msgstr "Đã đặt mức ưu tiên là {level}"
 
 #: src/app/Palette.tsx
 #: src/components/common/ShortcutSheet.tsx
 msgid "Priority, inbox, spam and more"
 msgstr "Ưu tiên, hộp thư, thư rác và hơn thế"
 
-#: src/features/broadcasts/Overview.tsx
-msgid "private"
-msgstr "riêng tư"
-
-#: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/ListPage.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "Private"
 msgstr "Riêng tư"
 
@@ -9968,6 +10435,8 @@ msgstr "pro, team"
 
 #: src/features/contact/ContactsPage.tsx
 #: src/features/inbox/InboxPicker.tsx
+#: src/features/status/CreatePageDialog.tsx
+#: src/features/status/IncidentDialog.tsx
 msgid "Product"
 msgstr "Sản phẩm"
 
@@ -9996,6 +10465,7 @@ msgstr "Backend production"
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/ProductsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Products"
 msgstr "Sản phẩm"
 
@@ -10025,7 +10495,6 @@ msgstr "Tiến độ (O)"
 msgid "Proton Mail is reachable over IMAP only through Proton Mail Bridge on your own computer, which a server cannot reach. Export the mailbox with Proton Mail's export tool, put the folder in a .zip and upload it as an export file below."
 msgstr "Proton Mail chỉ truy cập được qua IMAP thông qua Proton Mail Bridge trên máy tính của chính bạn, mà máy chủ không thể kết nối tới. Hãy xuất hộp thư bằng công cụ xuất của Proton Mail, đưa thư mục vào một tệp .zip và tải lên làm tệp xuất bên dưới."
 
-#: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/broadcasts/ListPage.tsx
 msgid "Public"
@@ -10035,10 +10504,6 @@ msgstr "Công khai"
 msgid "Public address"
 msgstr "Địa chỉ công khai"
 
-#: src/features/broadcasts/Overview.tsx
-msgid "public form"
-msgstr "biểu mẫu công khai"
-
 #: src/features/settings/channels/PublicKeyField.tsx
 msgid "Public key"
 msgstr "Khóa công khai"
@@ -10047,12 +10512,7 @@ msgstr "Khóa công khai"
 msgid "Public pages that say whether your products work"
 msgstr "Các trang công khai cho biết sản phẩm của bạn có hoạt động hay không"
 
-#: src/features/docs/discussions/DiscussionsPane.tsx
-msgid "Public threads under your documentation pages, in every state."
-msgstr "Các chuỗi công khai dưới các trang tài liệu của bạn, ở mọi trạng thái."
-
-#: src/features/status/IncidentPane.tsx
-#: src/features/status/StatusPagePane.tsx
+#: src/features/status/IncidentDetail.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Publish"
 msgstr "Xuất bản"
@@ -10062,8 +10522,7 @@ msgctxt "sidebar group"
 msgid "Publish"
 msgstr "Xuất bản"
 
-#: src/features/status/IncidentPane.tsx
-#: src/features/status/StatusPagePane.tsx
+#: src/features/status/IncidentDetail.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Publish ({publishKey})"
 msgstr "Xuất bản ({publishKey})"
@@ -10100,7 +10559,7 @@ msgstr "Xuất bản bản nháp"
 msgid "Publish this TXT record in your domain’s DNS:"
 msgstr "Đăng bản ghi TXT này vào DNS của tên miền bạn:"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Publish update"
 msgstr "Xuất bản bản cập nhật"
 
@@ -10112,8 +10571,6 @@ msgstr "Xuất bản, hoặc gửi bản nháp"
 msgid "Publish, schedule and unpublish What's new entries"
 msgstr "Xuất bản, lên lịch và gỡ xuất bản các mục trong Có gì mới"
 
-#: src/features/status/StatusColumn.tsx
-#: src/features/status/StatusPagePane.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Published"
 msgstr "Đã xuất bản"
@@ -10129,6 +10586,10 @@ msgstr "Đẩy"
 #: src/features/status/MonitorToken.tsx
 msgid "Push a state"
 msgstr "Gửi một trạng thái"
+
+#: src/features/status/MonitorsPage.tsx
+msgid "Push address"
+msgstr "Địa chỉ push"
 
 #: src/features/settings/notifications/events.ts
 msgid "Push and e-mail"
@@ -10167,6 +10628,10 @@ msgstr "Đặt biểu mẫu đăng ký của nó lên trang web của bạn, ho�
 msgid "Put the SDK's conversations view behind a Help button in your app, then send a message from it."
 msgstr "Đặt chế độ xem cuộc trò chuyện của SDK sau nút Trợ giúp trong ứng dụng của bạn, rồi gửi một tin nhắn từ đó."
 
+#: src/features/docs/InstallDialog.tsx
+msgid "Put these elements under every page of your documentation. They use a chat channel of the product, so the results land in its inbox."
+msgstr "Đặt các thành phần này bên dưới mỗi trang tài liệu. Chúng dùng một kênh trò chuyện của sản phẩm, nên kết quả vào hộp thư của kênh đó."
+
 #: src/features/docs/discussions/FromConversation.tsx
 msgid "Question"
 msgstr "Câu hỏi"
@@ -10183,6 +10648,10 @@ msgstr "Đã xếp hàng. Lần thử mới sẽ hiện bên dưới trong giây
 msgid "Quick cleanup"
 msgstr "Dọn dẹp nhanh"
 
+#: src/features/conversation/messages/MessageActions.tsx
+msgid "Quote"
+msgstr "Trích dẫn"
+
 #: src/features/status/ResponseChart.tsx
 msgid "Range"
 msgstr "Khoảng"
@@ -10191,7 +10660,7 @@ msgstr "Khoảng"
 msgid "Rated bad"
 msgstr "Đánh giá không tốt"
 
-#: src/features/contact/ContactPage.tsx
+#: src/features/contact/ContactDetail.tsx
 msgid "rated good"
 msgstr "đánh giá tốt"
 
@@ -10211,21 +10680,21 @@ msgstr "Đánh giá"
 msgid "Ratings"
 msgstr "Đánh giá"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/Toolbar.tsx
 msgid "Ratings over"
 msgstr "Đánh giá theo thời gian"
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "ratings per 1,000 views"
 msgstr "đánh giá trên 1.000 lượt xem"
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "Ratings per day"
 msgstr "Đánh giá mỗi ngày"
 
-#: src/features/docs/DocsColumn.tsx
-msgid "Ratings, feedback and discussions from your documentation"
-msgstr "Đánh giá, phản hồi và thảo luận từ tài liệu của bạn"
+#: src/features/docs/DocsPage.tsx
+msgid "Ratings, questions and discussions from the documentation pages on your own site"
+msgstr "Đánh giá, câu hỏi và thảo luận từ các trang tài liệu trên trang web của bạn"
 
 #: src/features/conversation/messages/MessageActions.tsx
 msgid "Read"
@@ -10291,6 +10760,8 @@ msgstr "Đọc trang trạng thái, thành phần và sự cố"
 msgid "Read the folders"
 msgstr "Đọc các thư mục"
 
+#: src/features/docs/InstallDialog.tsx
+#: src/features/docs/PagesTab.tsx
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/migrations/SwitchStep.tsx
 #: src/features/migrations/text.ts
@@ -10348,6 +10819,10 @@ msgstr "Sẵn sàng nhập"
 msgid "Ready to send"
 msgstr "Sẵn sàng gửi"
 
+#: src/app/Sidebar.tsx
+msgid "Realtime"
+msgstr "Thời gian thực"
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "Received {when}. Enter it in Gmail's forwarding settings, or open the link."
 msgstr "Đã nhận {when}. Hãy nhập nó vào cài đặt chuyển tiếp của Gmail, hoặc mở liên kết."
@@ -10369,15 +10844,15 @@ msgstr "chỉ nhận, không có tài khoản SMTP"
 msgid "Receiving"
 msgstr "Đang nhận"
 
-#: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/docs/DocsPage.tsx
 msgid "Recent activity"
 msgstr "Hoạt động gần đây"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorChecks.tsx
 msgid "Recent checks"
 msgstr "Các lần kiểm tra gần đây"
 
-#: src/features/contact/ContactPage.tsx
+#: src/features/contact/ContactDetail.tsx
 msgid "Recent visits"
 msgstr "Lượt truy cập gần đây"
 
@@ -10463,13 +10938,13 @@ msgstr "Hình ảnh từ xa có thể cho người gửi biết bạn đã mở 
 #: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
 #: src/features/settings/channels/sections.tsx
-#: src/features/settings/members/MemberList.tsx
 #: src/features/settings/notifications/PushSection.tsx
 #: src/features/settings/profile/Passkeys.tsx
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/status/DomainCard.tsx
 #: src/features/status/MonitorHttpFields.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Remove"
 msgstr "Gỡ"
 
@@ -10490,14 +10965,14 @@ msgstr "Xóa {0}?"
 msgid "Remove {lang}"
 msgstr "Gỡ {lang}"
 
-#: src/features/settings/members/MemberList.tsx
 #: src/features/settings/notifications/PushSection.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Remove {name}"
 msgstr "Gỡ {name}"
 
-#: src/features/settings/members/MemberList.tsx
-msgid "Remove {name} from the workspace?"
-msgstr "Gỡ {name} khỏi không gian làm việc?"
+#: src/features/team/TeamPage.tsx
+msgid "Remove {name}?"
+msgstr "Xóa {name}?"
 
 #: src/features/migrations/MapStep.tsx
 msgid "Remove {sender}"
@@ -10518,6 +10993,10 @@ msgstr "Xóa tên miền"
 #: src/features/settings/webhooks/sections.tsx
 msgid "Remove endpoint"
 msgstr "Gỡ endpoint"
+
+#: src/features/team/TeamPage.tsx
+msgid "Remove from the workspace"
+msgstr "Xóa khỏi không gian làm việc"
 
 #: src/features/status/MonitorHttpFields.tsx
 msgid "Remove header {header}"
@@ -10662,7 +11141,7 @@ msgid "Replies to this address are refused until you clear it."
 msgstr "Phản hồi gửi tới địa chỉ này bị từ chối cho đến khi bạn xóa nó."
 
 #: src/features/inbox/ChatsPage.tsx
-#: src/features/team/MemberPage.tsx
+#: src/features/team/TeamPage.tsx
 msgid "replies today"
 msgstr "phản hồi hôm nay"
 
@@ -10806,7 +11285,7 @@ msgstr "Báo cáo"
 msgid "Reputation impact"
 msgstr "Ảnh hưởng đến uy tín"
 
-#: src/features/team/TeamColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Resend"
 msgstr "Gửi lại"
 
@@ -10816,7 +11295,7 @@ msgstr "Đặt lại mặc định"
 
 #: src/features/conversation/HeaderActions.tsx
 #: src/features/feedback/FeedbackPage.tsx
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Resolve"
 msgstr "Giải quyết"
 
@@ -10824,6 +11303,10 @@ msgstr "Giải quyết"
 #: src/features/feedback/FeedbackPage.tsx
 msgid "Resolve (E)"
 msgstr "Giải quyết (E)"
+
+#: src/features/status/IncidentDetail.tsx
+msgid "Resolve incident"
+msgstr "Giải quyết sự cố"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Resolve or complete"
@@ -10837,38 +11320,53 @@ msgstr "Xử lý xong hoặc hoàn tất"
 msgid "Resolved"
 msgstr "Đã giải quyết"
 
+#: src/features/status/IncidentDetail.tsx
+msgid "Resolved at {endedAt}"
+msgstr "Đã giải quyết lúc {endedAt}"
+
 #. placeholder {0}: took(last)
 #: src/features/status/StatusPages.tsx
 msgid "resolved in {0}"
 msgstr "đã giải quyết trong {0}"
 
-#: src/features/status/MonitorsTab.tsx
-msgid "Response · 24 h"
-msgstr "Phản hồi · 24 giờ"
+#: src/features/feedback/FeedbackPage.tsx
+msgid "Resolved. It moved to the Resolved tab."
+msgstr "Đã giải quyết. Nó đã chuyển sang tab Đã giải quyết."
 
 #: src/features/status/ResponseChart.tsx
 msgid "Response time"
 msgstr "Thời gian phản hồi"
 
-#: src/features/status/IncidentPane.tsx
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/IncidentDetail.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Response time, last 24 hours"
 msgstr "Thời gian phản hồi, 24 giờ qua"
 
+#: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/ListSettings.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "Restore"
 msgstr "Khôi phục"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/ResponseChart.tsx
+msgid "Results"
+msgstr "Kết quả"
+
+#: src/features/status/MonitorsPage.tsx
 msgid "Results, last 24 hours"
 msgstr "Kết quả, 24 giờ qua"
 
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/broadcasts/Overview.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MigrationsPage.tsx
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Resume"
 msgstr "Tiếp tục"
+
+#: src/app/Sidebar.tsx
+msgid "Retention"
+msgstr "Lưu giữ khách"
 
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MigrationsPage.tsx
@@ -10889,12 +11387,16 @@ msgstr "Đưa bạn quay lại"
 
 #: src/components/common/Linked.tsx
 #: src/features/broadcasts/Import.tsx
-#: src/features/inbox/ChatList.tsx
 #: src/features/migrations/Wizard.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Review"
 msgstr "Xem lại"
 
+#: src/features/status/StatusPages.tsx
+msgid "Review and post"
+msgstr "Xem lại và đăng"
+
+#: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Review and send"
 msgstr "Xem lại và gửi"
@@ -10908,12 +11410,10 @@ msgid "Review the key"
 msgstr "Xem lại khóa"
 
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/broadcasts/Composer.tsx
+#: src/features/broadcasts/ReviewPanel.tsx
 msgid "Review, then send or schedule"
 msgstr "Xem lại, rồi gửi hoặc lên lịch"
-
-#: src/features/broadcasts/ReviewPanel.tsx
-msgid "Review, then send or schedule ({key})"
-msgstr "Xem lại, rồi gửi hoặc lên lịch ({key})"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Revisions"
@@ -10943,6 +11443,7 @@ msgstr "Ngay sau khi đăng ký, mọi người nhận một thư ngắn xác nh
 #: src/app/Palette.tsx
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/feedback/RoadmapCard.tsx
 msgid "Roadmap"
 msgstr "Lộ trình"
 
@@ -10950,7 +11451,7 @@ msgstr "Lộ trình"
 msgid "Roadmap →"
 msgstr "Lộ trình →"
 
-#: src/features/settings/members/Invites.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Role"
 msgstr "Vai trò"
 
@@ -10958,7 +11459,7 @@ msgstr "Vai trò"
 msgid "Role addresses such as postmaster@ or noreply@"
 msgstr "Địa chỉ vai trò như postmaster@ hoặc noreply@"
 
-#: src/features/settings/members/MemberList.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Role of {name}"
 msgstr "Vai trò của {name}"
 
@@ -10993,6 +11494,10 @@ msgstr "Định tuyến tên miền của bạn"
 #: src/features/setup/email/EmailReceiveStep.tsx
 msgid "Route your mail to Yuva"
 msgstr "Định tuyến thư của bạn tới Yuva"
+
+#: src/features/status/MonitorsPage.tsx
+msgid "Rules"
+msgstr "Quy tắc"
 
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Run a check"
@@ -11044,8 +11549,8 @@ msgstr "Thứ Bảy"
 #: src/features/settings/ui.tsx
 #: src/features/settings/workspace/RetentionForm.tsx
 #: src/features/status/ComponentDialogs.tsx
+#: src/features/status/IncidentDetail.tsx
 #: src/features/status/IncidentDialog.tsx
-#: src/features/status/IncidentPane.tsx
 #: src/features/status/MonitorDialog.tsx
 msgid "Save"
 msgstr "Lưu"
@@ -11131,16 +11636,12 @@ msgstr "Lên lịch"
 msgid "Schedule and send broadcasts, when the workspace lets keys and assistants send them"
 msgstr "Lên lịch và gửi thư hàng loạt, khi không gian làm việc cho phép khóa và trợ lý gửi"
 
-#: src/features/status/IncidentsPage.tsx
-msgid "Schedule maintenance"
-msgstr "Lên lịch bảo trì"
-
 #: src/components/common/ShortcutSheet.tsx
 msgid "Schedule the entry"
 msgstr "Lên lịch cho mục"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/text.ts
-#: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/Overview.tsx
 #: src/features/status/IncidentsPage.tsx
 #: src/features/status/text.tsx
@@ -11152,6 +11653,7 @@ msgid "Scheduled by"
 msgstr "Lên lịch bởi"
 
 #: src/features/status/Notices.tsx
+#: src/features/status/StatusPages.tsx
 msgid "Scheduled for {due}"
 msgstr "Hẹn gửi lúc {due}"
 
@@ -11175,6 +11677,10 @@ msgstr "Điểm {score} trên 5"
 #: src/features/conversation/Feedback.tsx
 msgid "Screen"
 msgstr "Màn hình"
+
+#: src/features/feedback/Lightbox.tsx
+msgid "Screenshot"
+msgstr "Ảnh chụp màn hình"
 
 #: src/features/feedback/FeedbackList.tsx
 msgid "Screenshots attached"
@@ -11204,12 +11710,9 @@ msgstr "Tìm liên hệ"
 #: src/app/Palette.tsx
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/inbox/ChatList.tsx
+#: src/features/status/LinkConversationsDialog.tsx
 msgid "Search conversations"
 msgstr "Tìm cuộc trò chuyện"
-
-#: src/features/inbox/ChatList.tsx
-msgid "Search conversations (/)"
-msgstr "Tìm cuộc trò chuyện (/)"
 
 #: src/app/Palette.tsx
 msgid "Search conversations for “{search}”"
@@ -11227,10 +11730,6 @@ msgstr "Tìm emoji (bằng tiếng Anh)"
 msgid "Search feedback"
 msgstr "Tìm trong góp ý"
 
-#: src/features/feedback/FeedbackList.tsx
-msgid "Search feedback (/)"
-msgstr "Tìm phản hồi (/)"
-
 #: src/features/conversation/composer/ArticlePicker.tsx
 msgid "Search help articles…"
 msgstr "Tìm bài viết trợ giúp…"
@@ -11244,11 +11743,6 @@ msgstr "Tìm trong các tin nhắn đã tải"
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Search in this conversation"
 msgstr "Tìm trong cuộc trò chuyện này"
-
-#. placeholder {0}: keyLabel(SHORTCUTS.find).join("")
-#: src/features/conversation/ChatView.tsx
-msgid "Search in this conversation ({0})"
-msgstr "Tìm trong cuộc trò chuyện này ({0})"
 
 #: src/features/status/LinkIncidentDialog.tsx
 msgid "Search incidents"
@@ -11303,7 +11797,7 @@ msgstr "Các phần"
 msgid "Seen {seen}"
 msgstr "Thấy {seen}"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Seen by the monitor"
 msgstr "Được trình giám sát thấy"
 
@@ -11378,6 +11872,7 @@ msgid "Send a new code"
 msgstr "Gửi mã mới"
 
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/Overview.tsx
 #: src/features/broadcasts/TestSend.tsx
 msgid "Send a test"
@@ -11432,6 +11927,10 @@ msgstr "Gửi sự kiện tới máy chủ của chính bạn"
 msgid "Send feedback from a page"
 msgstr "Gửi phản hồi từ một trang"
 
+#: src/features/team/TeamPage.tsx
+msgid "Send invite"
+msgstr "Gửi lời mời"
+
 #: src/features/auth/SignInForm.tsx
 msgid "Send me a code"
 msgstr "Gửi mã cho tôi"
@@ -11474,7 +11973,7 @@ msgid "Send the e-mail after"
 msgstr "Gửi email sau"
 
 #. placeholder {0}: invite.email
-#: src/features/team/TeamColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Send the invite for {0} again"
 msgstr "Gửi lại lời mời cho {0}"
 
@@ -11509,7 +12008,6 @@ msgid "Sender identity"
 msgstr "Danh tính người gửi"
 
 #: src/components/common/text.ts
-#: src/features/broadcasts/BroadcastList.tsx
 #: src/features/migrations/UploadStep.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -11556,7 +12054,6 @@ msgid "Sending kept failing, so Yuva gave up."
 msgstr "Việc gửi liên tục thất bại nên Yuva đã bỏ cuộc."
 
 #: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Sending pace"
 msgstr "Tốc độ gửi"
@@ -11614,12 +12111,11 @@ msgid "sent"
 msgstr "đã gửi"
 
 #: src/components/common/Linked.tsx
-#: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/Overview.tsx
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
 #: src/features/status/Notices.tsx
-#: src/features/team/TeamColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Sent"
 msgstr "Đã gửi"
 
@@ -11636,10 +12132,6 @@ msgstr "Đã gửi"
 #: src/features/migrations/MapStep.tsx
 msgid "Sent {count} messages from this address"
 msgstr "Đã gửi {count} tin nhắn từ địa chỉ này"
-
-#: src/features/team/TeamColumn.tsx
-msgid "Sent {sent}"
-msgstr "Đã gửi {sent}"
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "Sent {sentAt}. Waiting for it to arrive…"
@@ -11711,6 +12203,10 @@ msgstr "Tenant SES"
 msgid "Set by a monitor, {since}"
 msgstr "Do bộ giám sát đặt, {since}"
 
+#: src/features/inbox/InboxPicker.tsx
+msgid "Set by the product in the sidebar"
+msgstr "Do sản phẩm ở thanh bên quyết định"
+
 #: src/features/conversation/HeaderActions.tsx
 msgid "Set progress"
 msgstr "Đặt tiến độ"
@@ -11737,6 +12233,10 @@ msgstr "Thiết lập email"
 msgid "Set up Yuva"
 msgstr "Thiết lập Yuva"
 
+#: src/features/status/MonitorsPage.tsx
+msgid "Sets {cname} to {downState} while it is down"
+msgstr "Đặt {cname} thành “{downState}” khi nó ngừng hoạt động"
+
 #: src/features/settings/channels/email/Ses.tsx
 msgid "Setting up the inbox’s Amazon SES tenant…"
 msgstr "Đang thiết lập tenant Amazon SES của hộp thư…"
@@ -11760,7 +12260,7 @@ msgstr "Đang thiết lập…"
 #: src/features/settings/ProductsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
 #: src/features/settings/ui.tsx
-#: src/features/status/StatusPagePane.tsx
+#: src/features/status/StatusPages.tsx
 msgid "Settings"
 msgstr "Cài đặt"
 
@@ -11803,20 +12303,20 @@ msgstr "Phím tắt"
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/contact/ContactsPage.tsx
-#: src/features/docs/discussions/DiscussionsPane.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/docs/DocsPage.tsx
 #: src/features/inbox/SidePanels.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Show"
 msgstr "Hiện"
-
-#: src/features/broadcasts/BroadcastsColumn.tsx
-#: src/features/broadcasts/Overview.tsx
-msgid "Show archived lists"
-msgstr "Hiện danh sách đã lưu trữ"
 
 #: src/features/conversation/messages/EmailBody.tsx
 msgid "Show as sent"
 msgstr "Hiện như đã gửi"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Show HTTP details"
+msgstr "Hiện chi tiết HTTP"
 
 #: src/features/inbox/SidePanels.tsx
 #: src/features/migrations/CopyStep.tsx
@@ -12102,19 +12602,15 @@ msgstr "Từ"
 msgid "Since {since}"
 msgstr "Từ {since}"
 
-#: src/features/status/IncidentsTab.tsx
-msgid "since {started}"
-msgstr "từ {started}"
-
 #: src/features/migrations/ChooseStep.tsx
 msgid "Since…"
 msgstr "Từ…"
 
-#: src/features/broadcasts/Overview.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "Single opt-in"
 msgstr "Xác nhận đơn"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/Toolbar.tsx
 #: src/features/inbox/SourceFilter.tsx
 #: src/features/setup/SetupLayout.tsx
 msgid "Site"
@@ -12125,6 +12621,7 @@ msgid "Site address"
 msgstr "Địa chỉ trang web"
 
 #: src/features/broadcasts/FormSnippets.tsx
+#: src/features/docs/InstallDialog.tsx
 #: src/features/setup/InstallStep.tsx
 msgid "Site generator"
 msgstr "Trình tạo trang web"
@@ -12183,7 +12680,6 @@ msgstr "Host SMTP"
 
 #: src/app/Palette.tsx
 #: src/components/common/ShortcutSheet.tsx
-#: src/features/conversation/ConversationMenu.tsx
 #: src/features/conversation/HeaderActions.tsx
 msgid "Snooze"
 msgstr "Tạm hoãn"
@@ -12200,6 +12696,10 @@ msgstr "Đã tạm hoãn"
 #: src/features/conversation/ConversationStatus.tsx
 msgid "Snoozed until {until}"
 msgstr "Tạm hoãn đến {until}"
+
+#: src/features/contact/ContactDetail.tsx
+msgid "Some addresses are undeliverable. Clear them under Contact and identities once they work again."
+msgstr "Một số địa chỉ không gửi được. Hãy xóa trạng thái trong Liên hệ và danh tính khi chúng hoạt động lại."
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Some images have no description for people who cannot see them."
@@ -12253,8 +12753,8 @@ msgstr "Đã xảy ra lỗi trên máy chủ. Hãy thử lại."
 msgid "Something you can find again if asked, such as an order number or a signed form."
 msgstr "Thứ bạn có thể tìm lại khi được hỏi, như mã đơn hàng hoặc một biểu mẫu đã ký."
 
-#: src/features/docs/discussions/DiscussionsPane.tsx
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/DocsPage.tsx
+#: src/features/docs/Toolbar.tsx
 msgid "Sort"
 msgstr "Sắp xếp"
 
@@ -12268,6 +12768,10 @@ msgstr "Sắp xếp cuộc trò chuyện theo cách của bạn"
 
 #: src/features/migrations/Wizard.tsx
 msgid "Source"
+msgstr "Nguồn"
+
+#: src/app/Sidebar.tsx
+msgid "Sources"
 msgstr "Nguồn"
 
 #: src/features/docs/discussions/QueuePane.tsx
@@ -12304,7 +12808,7 @@ msgstr "SPF đạt cho {spfDomain}, không phải cho tên miền gửi {from}, 
 msgid "SPF passes for {spfDomain}."
 msgstr "SPF đạt cho {spfDomain}."
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Stage"
 msgstr "Giai đoạn"
 
@@ -12352,7 +12856,7 @@ msgstr "Tạo danh sách gửi thư của bạn"
 msgid "Started"
 msgstr "Đã bắt đầu"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "started {started} · {lasted}"
 msgstr "bắt đầu {started} · {lasted}"
 
@@ -12387,7 +12891,6 @@ msgstr "STARTTLS (cổng 587)"
 #: src/features/migrations/Wizard.tsx
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/IncidentDialog.tsx
-#: src/features/status/MonitorsTab.tsx
 msgid "State"
 msgstr "Trạng thái"
 
@@ -12401,11 +12904,8 @@ msgstr "Trạng thái của {0}"
 msgid "State of {0} while it is open"
 msgstr "Trạng thái của {0} khi còn mở"
 
-#: src/features/status/MonitorsTab.tsx
-msgid "state pushed by your alerting"
-msgstr "trạng thái được hệ thống cảnh báo của bạn đẩy lên"
-
 #: src/features/status/MonitorDialog.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "State while down"
 msgstr "Trạng thái khi ngừng"
 
@@ -12415,15 +12915,14 @@ msgstr "Trạng thái khi ngừng"
 #: src/features/broadcasts/Overview.tsx
 #: src/features/feedback/FeedbackList.tsx
 #: src/features/feedback/FeedbackPage.tsx
+#: src/features/home/HomePage.tsx
 #: src/features/migrations/MapStep.tsx
 #: src/features/settings/webhooks/AttemptLog.tsx
 #: src/features/settings/webhooks/events.tsx
-#: src/features/status/StatusColumn.tsx
-#: src/features/status/StatusPagePane.tsx
 msgid "Status"
 msgstr "Trạng thái"
 
-#: src/features/status/StatusPagePane.tsx
+#: src/features/status/StatusPages.tsx
 msgid "Status page"
 msgstr "Trang trạng thái"
 
@@ -12432,8 +12931,9 @@ msgid "Status page deleted"
 msgstr "Đã xóa trang trạng thái"
 
 #: src/app/Sidebar.tsx
-#: src/features/status/StatusColumn.tsx
-#: src/features/status/StatusPagePane.tsx
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/IncidentsPage.tsx
+#: src/features/status/MonitorsPage.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Status pages"
 msgstr "Trang trạng thái"
@@ -12467,8 +12967,8 @@ msgid "Stop signing"
 msgstr "Ngừng ký"
 
 #: src/features/broadcasts/ListSettings.tsx
-msgid "Stop taking new subscribers."
-msgstr "Ngừng nhận người đăng ký mới."
+msgid "Stop taking new subscribers. Records and past reports stay, and you can restore it."
+msgstr "Ngừng nhận người đăng ký mới. Bản ghi và báo cáo cũ vẫn còn, và bạn có thể khôi phục danh sách."
 
 #: src/features/migrations/ReviewStep.tsx
 msgid "Storage"
@@ -12527,8 +13027,6 @@ msgstr "Vừa đăng ký danh sách"
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/Subscribers.tsx
-#: src/features/status/IncidentsTab.tsx
-#: src/features/status/StatusPagePane.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Subscribers"
 msgstr "Người đăng ký"
@@ -12541,7 +13039,7 @@ msgstr "Đã thêm người đăng ký"
 msgid "Subscribers confirm their address by mail before they get notices."
 msgstr "Người đăng ký xác nhận địa chỉ qua thư trước khi nhận thông báo."
 
-#: src/features/broadcasts/Overview.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "Subscribers over the last 30 days"
 msgstr "Người đăng ký trong 30 ngày qua"
 
@@ -12554,16 +13052,13 @@ msgid "Succeeded"
 msgstr "Thành công"
 
 #: src/features/status/MonitorDialog.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Successes to recover"
 msgstr "Số lần thành công liên tiếp để khôi phục"
 
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "Such as a MERSİS number, trade register or VAT id, if you have one"
 msgstr "Ví dụ số MERSİS, đăng ký kinh doanh hoặc mã số thuế GTGT, nếu bạn có"
-
-#: src/features/conversation/composer/ReplyBox.tsx
-msgid "Suggested by {author}"
-msgstr "Đề xuất bởi {author}"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Suggested scopes"
@@ -12573,13 +13068,17 @@ msgstr "Phạm vi được đề xuất"
 msgid "Suggestion discarded"
 msgstr "Đã hủy đề xuất"
 
-#: src/features/contact/ContactPage.tsx
+#: src/features/contact/ContactDetail.tsx
 msgid "Summary"
 msgstr "Tóm tắt"
 
 #: src/components/common/text.ts
 msgid "Sunday"
 msgstr "Chủ Nhật"
+
+#: src/app/Sidebar.tsx
+msgid "Support"
+msgstr "Hỗ trợ"
 
 #: src/features/migrations/SourceStep.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
@@ -12646,6 +13145,10 @@ msgstr "các tab"
 msgid "Tags"
 msgstr "Thẻ"
 
+#: src/features/broadcasts/ListSettings.tsx
+msgid "Takes sign-ups again and brings the list back to the broadcast audience picker."
+msgstr "Nhận đăng ký trở lại và đưa danh sách về bộ chọn đối tượng của bản tin."
+
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Taking the recipients: {prepared} so far"
 msgstr "Đang lấy người nhận: đến giờ được {prepared}"
@@ -12667,8 +13170,7 @@ msgstr "Kiểm tra TCP"
 #: src/features/home/HomePage.tsx
 #: src/features/reports/ReportPages.tsx
 #: src/features/settings/SettingsColumn.tsx
-#: src/features/team/MemberPage.tsx
-#: src/features/team/TeamColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Team"
 msgstr "Nhóm"
 
@@ -12684,7 +13186,7 @@ msgstr "Thành viên nhóm cho {sender}"
 msgid "Team note"
 msgstr "Ghi chú của nhóm"
 
-#: src/features/contact/ContactPage.tsx
+#: src/features/contact/ContactDetail.tsx
 msgid "Team notes"
 msgstr "Ghi chú của nhóm"
 
@@ -12700,15 +13202,14 @@ msgstr "Phản hồi của nhóm"
 msgid "Team right now"
 msgstr "Nhóm ngay lúc này"
 
-#: src/features/settings/members/Invites.tsx
+#: src/features/team/TeamPage.tsx
 msgid "teammate@company.com"
 msgstr "teammate@company.com"
 
 #: src/features/status/StatusPages.tsx
-msgid "Tell your customers whether your product works. Each inbox gets one page, where you open incidents, plan maintenance and set the state of each component."
-msgstr "Cho khách hàng biết sản phẩm của bạn có hoạt động hay không. Mỗi hộp thư có một trang, nơi bạn mở sự cố, lên kế hoạch bảo trì và đặt trạng thái cho từng thành phần."
+msgid "Tell your customers whether your product works. Each product gets one page, where you open incidents, plan maintenance and set the state of each component."
+msgstr "Cho khách hàng biết sản phẩm của bạn có hoạt động hay không. Mỗi sản phẩm có một trang, nơi bạn mở sự cố, lên kế hoạch bảo trì và đặt trạng thái cho từng thành phần."
 
-#: src/features/broadcasts/Composer.tsx
 #: src/features/setup/email/EmailLayout.tsx
 msgid "Test"
 msgstr "Thử"
@@ -12851,6 +13352,10 @@ msgstr "Các cột được đoán từ dòng tiêu đề. Một cột phải l�
 msgid "The component whose state this monitor sets."
 msgstr "Thành phần mà trình giám sát này đặt trạng thái."
 
+#: src/features/status/IncidentDetail.tsx
+msgid "The components are back to operational. It moved to Past."
+msgstr "Các thành phần đã hoạt động bình thường. Đã chuyển sang Đã qua."
+
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "The confirmation mail is on its way."
 msgstr "Thư xác nhận đang được gửi."
@@ -12867,7 +13372,7 @@ msgstr "Liên hệ đã bị xóa"
 msgid "The conversations stay open. Customers get it right away and it cannot be recalled."
 msgstr "Các cuộc trò chuyện vẫn mở. Khách hàng nhận câu trả lời ngay và không thể thu hồi."
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "The current address stops working at once. Update whatever calls it."
 msgstr "Địa chỉ hiện tại ngừng hoạt động ngay. Hãy cập nhật mọi thứ đang gọi nó."
 
@@ -13007,6 +13512,10 @@ msgstr "Tin nhắn đầu tiên của một cuộc trò chuyện trong hộp th�
 msgid "the first one"
 msgstr "cái đầu tiên"
 
+#: src/features/docs/PagesTab.tsx
+msgid "The first rating makes the page appear here."
+msgstr "Đánh giá đầu tiên sẽ làm trang hiện ở đây."
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "The first thing the chat says"
 msgstr "Điều đầu tiên chat nói"
@@ -13022,6 +13531,10 @@ msgstr "Biểu mẫu hiện một ô đồng ý chưa tích và lưu nguyên vă
 #: src/features/broadcasts/FormSnippets.tsx
 msgid "The form works on these addresses:"
 msgstr "Biểu mẫu hoạt động ở các địa chỉ này:"
+
+#: src/features/status/MonitorsPage.tsx
+msgid "The full address is shown only once, when you make it. Anyone who has it can report for this monitor."
+msgstr "Địa chỉ đầy đủ chỉ hiển thị một lần khi bạn tạo. Ai có địa chỉ này đều có thể báo cáo cho trình giám sát này."
 
 #: src/features/oauth/ConsentPage.tsx
 msgid "The full API: MCP, the REST API and live updates, like a member app."
@@ -13197,6 +13710,10 @@ msgstr "Hộp thư đã từ chối đăng nhập"
 msgid "The mailbox refused the sign-in over IMAP"
 msgstr "Hộp thư đã từ chối đăng nhập qua IMAP"
 
+#: src/features/status/IncidentDetail.tsx
+msgid "The maintenance is complete. Everything works as before."
+msgstr "Đã bảo trì xong. Mọi thứ hoạt động như trước."
+
 #: src/components/common/text.ts
 msgid "The mbox file is compressed inside the zip. Unzip the Takeout archive and upload the .mbox file."
 msgstr "Tệp mbox bị nén bên trong tệp zip. Hãy giải nén kho lưu trữ Takeout và tải lên tệp .mbox."
@@ -13257,6 +13774,10 @@ msgstr "Trang đã gửi 10 thông báo trong giờ qua"
 msgid "The page answers at"
 msgstr "Trang trả lời tại"
 
+#: src/features/status/StatusPages.tsx
+msgid "The page answers not found until you publish it again."
+msgstr "Trang sẽ trả lời “không tìm thấy” cho đến khi bạn xuất bản lại."
+
 #: src/features/status/PreviewDialog.tsx
 msgid "The page as visitors see it now. Drafts are left out."
 msgstr "Trang như khách truy cập đang thấy. Không gồm bản nháp."
@@ -13282,8 +13803,8 @@ msgid "The page stops answering on this domain. Its address on this server keeps
 msgstr "Trang sẽ không còn trả lời trên tên miền này. Địa chỉ của nó trên máy chủ này vẫn hoạt động."
 
 #: src/features/status/ComponentsTab.tsx
-msgid "The parts of your product. Set a state by hand, or let an incident do it."
-msgstr "Các phần của sản phẩm. Đặt trạng thái thủ công, hoặc để sự cố làm việc đó."
+msgid "The parts of your product. Set a state by hand, or let an incident or a monitor do it."
+msgstr "Các phần của sản phẩm. Hãy đặt trạng thái thủ công, hoặc để sự cố hay trình giám sát làm việc đó."
 
 #: src/features/auth/SignInForm.tsx
 msgid "The passkey sign-in did not complete. Try again or use an e-mailed code."
@@ -13324,6 +13845,10 @@ msgstr "Cổng phải từ 1 đến 65535."
 #: src/features/settings/webhooks/sections.tsx
 msgid "The previous secret also signs until {rotatedUntil}."
 msgstr "Secret trước đó cũng ký đến {rotatedUntil}."
+
+#: src/features/status/IncidentDetail.tsx
+msgid "The problem is fixed. Sorry for the trouble."
+msgstr "Sự cố đã được khắc phục. Xin lỗi vì sự bất tiện."
 
 #: src/features/migrations/text.ts
 msgid "The provider asked to slow down"
@@ -13584,7 +14109,7 @@ msgstr "Múi giờ của các cột theo ngày."
 msgid "Their consent records, for a request about what you hold on them:"
 msgstr "Bản ghi đồng ý của họ, để trả lời yêu cầu về những gì bạn đang giữ về họ:"
 
-#: src/features/settings/members/MemberList.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Their conversations stay; they lose access at once."
 msgstr "Cuộc trò chuyện của họ vẫn còn; họ mất quyền truy cập ngay."
 
@@ -13605,8 +14130,8 @@ msgid "These choices are kept on this device only."
 msgstr "Những lựa chọn này chỉ được giữ trên thiết bị này."
 
 #: src/features/contact/ContactsPage.tsx
-msgid "These look like the same person. Merging keeps the left one and moves addresses, ids and conversations into it."
-msgstr "Có vẻ là cùng một người. Gộp sẽ giữ liên hệ bên trái và chuyển địa chỉ, id và cuộc trò chuyện vào đó."
+msgid "These look like the same person. Merging keeps the left one and moves addresses, ids and conversations into it. Nothing is merged until you have seen what changes."
+msgstr "Có vẻ là cùng một người. Gộp sẽ giữ liên hệ bên trái và chuyển địa chỉ, ID và cuộc trò chuyện sang đó. Không có gì được gộp cho đến khi bạn xem những gì thay đổi."
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "These merge fields have no fallback and would be empty for some recipients:"
@@ -13712,6 +14237,10 @@ msgstr "Thư hàng loạt của kênh này đi qua Amazon SES, ký thư với t�
 msgid "This conflicts with something that already exists."
 msgstr "Việc này xung đột với một thứ đã tồn tại."
 
+#: src/features/contact/ContactDetails.tsx
+msgid "This contact has no e-mail address yet. Add one under Contact and identities first."
+msgstr "Liên hệ này chưa có địa chỉ email. Hãy thêm một địa chỉ trước trong Liên hệ và danh tính."
+
 #: src/features/contact/MergePreview.tsx
 msgid "This contact keeps its own value"
 msgstr "Liên hệ này giữ giá trị riêng của nó"
@@ -13766,6 +14295,10 @@ msgstr "Hộp thư này đã có một danh sách với tên này."
 msgid "This inbox already has a status page."
 msgstr "Hộp thư này đã có trang trạng thái."
 
+#: src/features/docs/InstallDialog.tsx
+msgid "This inbox has no chat channel yet. Add one under <0>Add a channel</0>."
+msgstr "Hộp thư này chưa có kênh trò chuyện. Hãy thêm tại <0>Thêm kênh</0>."
+
 #: src/features/setup/NewsletterStep.tsx
 msgid "This inbox has no e-mail channel that can send yet. You can create the list now; it sends once an e-mail channel with a reply account is picked in its settings."
 msgstr "Hộp thư này chưa có kênh email nào có thể gửi. Bạn có thể tạo danh sách ngay bây giờ; nó gửi khi một kênh email có tài khoản phản hồi được chọn trong cài đặt của nó."
@@ -13790,7 +14323,7 @@ msgstr "Hộp thư này chưa có danh sách gửi thư. Thư hàng loạt chỉ
 msgid "This is a compressed archive. Unzip the Takeout archive and upload the .mbox file."
 msgstr "Đây là một kho lưu trữ nén. Hãy giải nén kho lưu trữ Takeout và tải lên tệp .mbox."
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "This is a draft. Only your team sees it, and it changes no component until you publish it."
 msgstr "Đây là bản nháp. Chỉ nhóm của bạn thấy và nó không thay đổi thành phần nào cho đến khi bạn xuất bản."
 
@@ -13858,9 +14391,9 @@ msgstr "Danh sách này không có kênh email nào có thể gửi, nên chưa 
 msgid "This list has no e-mail channel that can send. Until it has one, forms send no confirmation mail, new form subscribers stay waiting for confirmation and nobody gets a welcome mail. Pick an e-mail channel with an SMTP account below, or add the SMTP account in the inbox settings."
 msgstr "Danh sách này không có kênh email nào có thể gửi. Cho đến khi có, biểu mẫu không gửi thư xác nhận, người đăng ký mới qua biểu mẫu vẫn chờ xác nhận và không ai nhận thư chào mừng. Hãy chọn một kênh email có tài khoản SMTP bên dưới, hoặc thêm tài khoản SMTP trong cài đặt hộp thư."
 
-#: src/features/broadcasts/ListSettings.tsx
-msgid "This list is archived."
-msgstr "Danh sách này đã được lưu trữ."
+#: src/features/broadcasts/ListPage.tsx
+msgid "This list is archived. It takes no new subscribers and broadcasts cannot pick it."
+msgstr "Danh sách này đã được lưu trữ. Nó không nhận người đăng ký mới và bản tin không thể chọn nó."
 
 #: src/features/broadcasts/FormSnippets.tsx
 msgid "This list is private, so forms do not offer it. Make it public in the settings to use a form."
@@ -13870,7 +14403,7 @@ msgstr "Danh sách này riêng tư, nên biểu mẫu không đưa nó ra. Hãy 
 msgid "This mailbox connects only with “Sign in with Microsoft”, which this Yuva server does not offer. Ask its operator to set it up."
 msgstr "Hộp thư này chỉ kết nối bằng “Đăng nhập bằng Microsoft”, mà máy chủ Yuva này không cung cấp. Hãy nhờ người vận hành thiết lập."
 
-#: src/features/team/MemberPage.tsx
+#: src/features/team/TeamPage.tsx
 msgid "This member is not in the workspace any more."
 msgstr "Thành viên này không còn trong không gian làm việc."
 
@@ -13881,6 +14414,10 @@ msgstr "Lần di chuyển này đã kết thúc, nên không thể tải lên th
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "This month"
 msgstr "Tháng này"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "This page is not public yet, so visitors see nothing until you publish the page."
+msgstr "Trang này chưa công khai nên khách truy cập không thấy gì cho đến khi bạn xuất bản trang."
 
 #: src/components/common/text.ts
 msgid "This person unsubscribed from everything, reported a mail as spam or had their data erased, so the team cannot add them again."
@@ -14042,6 +14579,7 @@ msgid "Time zone"
 msgstr "Múi giờ"
 
 #: src/features/status/MonitorDialog.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Timeout"
 msgstr "Thời gian chờ"
 
@@ -14161,6 +14699,7 @@ msgstr "Türkçe"
 #: src/app/Palette.tsx
 #: src/features/conversation/ConversationMenu.tsx
 #: src/features/docs/discussions/FromConversation.tsx
+#: src/features/docs/FromDocs.tsx
 msgid "Turn into a discussion"
 msgstr "Chuyển thành thảo luận"
 
@@ -14206,7 +14745,6 @@ msgid "TXT record"
 msgstr "Bản ghi TXT"
 
 #: src/features/inbox/SourceFilter.tsx
-#: src/features/status/MonitorsTab.tsx
 msgid "Type"
 msgstr "Loại"
 
@@ -14240,7 +14778,12 @@ msgstr "Chưa trả lời"
 msgid "Unassigned"
 msgstr "Chưa giao"
 
+#: src/features/contact/ContactDetail.tsx
+msgid "Unblock contact"
+msgstr "Bỏ chặn liên hệ"
+
 #: src/features/contact/ContactDetails.tsx
+#: src/features/contact/ContactsPage.tsx
 msgid "Undeliverable"
 msgstr "Không gửi được"
 
@@ -14299,6 +14842,10 @@ msgstr "Đã bỏ theo dõi"
 msgid "Unknown device"
 msgstr "Thiết bị không xác định"
 
+#: src/features/feedback/RoadmapCard.tsx
+msgid "Unlink"
+msgstr "Hủy liên kết"
+
 #: src/components/common/Linked.tsx
 msgid "Unlink {name}"
 msgstr "Hủy liên kết {name}"
@@ -14321,7 +14868,7 @@ msgstr "Đã mở khóa"
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/TestSend.tsx
 #: src/features/contact/ContactCard.tsx
-#: src/features/contact/ContactPage.tsx
+#: src/features/contact/ContactDetail.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/contact/ContactSearch.tsx
 #: src/features/contact/ContactSheet.tsx
@@ -14333,7 +14880,6 @@ msgid "Unnamed contact"
 msgstr "Liên hệ chưa đặt tên"
 
 #: src/features/conversation/ConversationMenu.tsx
-#: src/features/inbox/ChatList.tsx
 msgid "Unpin"
 msgstr "Bỏ ghim"
 
@@ -14341,15 +14887,17 @@ msgstr "Bỏ ghim"
 msgid "Unpinned"
 msgstr "Đã bỏ ghim"
 
-#: src/features/status/StatusPagePane.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Unpublish"
 msgstr "Gỡ xuất bản"
 
-#: src/features/status/StatusPagePane.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Unpublish ({publishKey})"
 msgstr "Gỡ xuất bản ({publishKey})"
+
+#: src/features/status/StatusPages.tsx
+msgid "Unpublish {pageName}?"
+msgstr "Hủy xuất bản {pageName}?"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Unpublish or unschedule the entry"
@@ -14359,14 +14907,9 @@ msgstr "Gỡ xuất bản hoặc hủy lịch của mục"
 msgid "Unpublish the translation"
 msgstr "Hủy xuất bản bản dịch"
 
-#: src/features/status/StatusColumn.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Unpublished"
 msgstr "Chưa xuất bản"
-
-#: src/features/status/StatusPagePane.tsx
-msgid "Unpublished, only your team can preview it"
-msgstr "Chưa xuất bản, chỉ nhóm của bạn xem trước được"
 
 #: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
@@ -14433,6 +14976,10 @@ msgstr "vừa hủy đăng ký"
 msgid "until {expires}"
 msgstr "đến {expires}"
 
+#: src/features/broadcasts/ReviewPanel.tsx
+msgid "Until it starts you can go back to a draft."
+msgstr "Trước khi bắt đầu, bạn có thể quay lại bản nháp."
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Until they click the link they stay waiting for confirmation and get no other mail. Unconfirmed subscriptions are deleted after 30 days."
 msgstr "Cho đến khi họ nhấp liên kết, họ vẫn chờ xác nhận và không nhận thư nào khác. Đăng ký chưa xác nhận bị xóa sau 30 ngày."
@@ -14445,17 +14992,31 @@ msgstr "Cho đến khi nhấp vào liên kết, họ vẫn ở trạng thái ch�
 msgid "Unverified sender"
 msgstr "Người gửi chưa xác minh"
 
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/MonitorsPage.tsx
 #: src/features/status/text.tsx
 msgid "Up"
 msgstr "Hoạt động"
+
+#: src/features/status/MonitorsPage.tsx
+msgid "Up again"
+msgstr "Đã hoạt động lại"
+
+#: src/features/status/IncidentDetail.tsx
+msgid "Up since {upSince}. Post the all-clear when you are sure."
+msgstr "Hoạt động từ {upSince}. Khi chắc chắn, hãy đăng thông báo mọi thứ đã bình thường."
 
 #: src/features/broadcasts/Import.tsx
 msgid "Up to {max} and 100,000 rows, with a header row. Excel files in Turkish or Western encodings and columns separated by commas, semicolons or tabs are read as they are."
 msgstr "Tối đa {max} và 100.000 dòng, có dòng tiêu đề. Tệp Excel mã hóa Thổ Nhĩ Kỳ hoặc phương Tây và các cột phân tách bằng dấu phẩy, dấu chấm phẩy hoặc tab được đọc nguyên trạng."
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Update text"
 msgstr "Nội dung cập nhật"
+
+#: src/features/status/IncidentDetail.tsx
+msgid "Updates"
+msgstr "Cập nhật"
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Updating"
@@ -14497,14 +15058,13 @@ msgstr "Đã tải lên {step}%"
 msgid "Uploading…"
 msgstr "Đang tải lên…"
 
-#: src/features/status/MonitorsTab.tsx
 #: src/features/status/ResponseChart.tsx
 msgid "Uptime"
 msgstr "Thời gian hoạt động"
 
 #: src/features/home/HomePage.tsx
-msgid "uptime · 30 days"
-msgstr "thời gian hoạt động · 30 ngày"
+msgid "uptime · {shown} days"
+msgstr "thời gian hoạt động · {shown} ngày"
 
 #: src/features/status/ComponentsTab.tsx
 msgid "Uptime is hidden on this page. Turn it on in the settings to see each day here."
@@ -14706,23 +15266,27 @@ msgstr "Hộp thư rất lớn? Hãy bắt đầu bằng tệp Google Takeout"
 msgid "View"
 msgstr "Xem"
 
-#: src/features/status/StatusPagePane.tsx
 #: src/features/status/StatusPages.tsx
 msgid "View page"
 msgstr "Xem trang"
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/status/StatusPages.tsx
+msgid "View page ({openKey})"
+msgstr "Xem trang ({openKey})"
+
+#: src/features/docs/PagesTab.tsx
 msgid "views"
 msgstr "lượt xem"
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "Views"
 msgstr "Lượt xem"
 
 #: src/components/common/Source.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/contact/ContactsPage.tsx
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/FromDocs.tsx
+#: src/features/docs/PagesTab.tsx
 #: src/features/setup/previews.tsx
 msgid "Visitor"
 msgstr "Khách truy cập"
@@ -14732,7 +15296,7 @@ msgid "Visitor · {where}"
 msgstr "Khách truy cập · {where}"
 
 #: src/features/broadcasts/Report.tsx
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "visitors"
 msgstr "khách truy cập"
 
@@ -14787,7 +15351,8 @@ msgstr "Lượt truy cập vào các trang của bạn với utm_campaign={campa
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/parts.tsx
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/DomainCard.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Waiting"
 msgstr "Đang chờ"
 
@@ -14795,15 +15360,17 @@ msgstr "Đang chờ"
 msgid "Waiting for {provider}'s limit; continues at {waiting}."
 msgstr "Đang chờ giới hạn của {provider}; tiếp tục lúc {waiting}."
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/DocsPage.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "waiting for approval"
 msgstr "đang chờ duyệt"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/account/AccountPage.tsx
 #: src/features/docs/discussions/DiscussionsPane.tsx
 #: src/features/docs/discussions/parts.tsx
-#: src/features/docs/discussions/ThreadPane.tsx
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/DiscussionsTab.tsx
+#: src/features/docs/DocsPage.tsx
 msgid "Waiting for approval"
 msgstr "Đang chờ duyệt"
 
@@ -14897,6 +15464,10 @@ msgstr "Chúng tôi đã gửi mã mới. Chỉ mã mới nhất dùng được.
 msgid "Web chat"
 msgstr "Chat web"
 
+#: src/features/feedback/FeedbackFormDialog.tsx
+msgid "Web pages use the chat widget with the feedback form turned on. Apps call the feedback form from the SDK."
+msgstr "Trang web dùng tiện ích chat có bật biểu mẫu phản hồi. Ứng dụng gọi biểu mẫu từ SDK."
+
 #: src/features/settings/webhooks/WebhookPage.tsx
 msgid "Webhook endpoint"
 msgstr "Endpoint webhook"
@@ -14917,6 +15488,10 @@ msgstr "Webhook cho {0}"
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Webhooks for this inbox"
 msgstr "Webhook cho hộp thư này"
+
+#: src/features/feedback/FeedbackFormDialog.tsx
+msgid "Website"
+msgstr "Trang web"
 
 #: src/features/setup/AddChannelStep.tsx
 msgid "Website addresses"
@@ -14951,7 +15526,7 @@ msgstr "Những gì được chuyển sang"
 msgid "What did they agree to?"
 msgstr "Họ đã đồng ý điều gì?"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "What do customers need to know?"
 msgstr "Khách hàng cần biết điều gì?"
 
@@ -14963,6 +15538,7 @@ msgstr "Những khách hàng này cần biết điều gì?"
 msgid "What each column holds"
 msgstr "Mỗi cột chứa gì"
 
+#: src/features/broadcasts/SubscriberSheet.tsx
 #: src/features/migrations/DoneStep.tsx
 msgid "What happened"
 msgstr "Đã xảy ra gì"
@@ -15030,6 +15606,7 @@ msgstr "Những gì bạn hay viết"
 #: src/app/Palette.tsx
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/home/HomePage.tsx
 #: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/chat/ChatSections.tsx
 msgid "What’s new"
@@ -15060,6 +15637,7 @@ msgid "When did they agree?"
 msgstr "Họ đã đồng ý khi nào?"
 
 #: src/features/status/MonitorDialog.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "When it goes down"
 msgstr "Khi ngừng hoạt động"
 
@@ -15086,6 +15664,10 @@ msgstr "Khi người khác giao nó cho bạn."
 #: src/features/feedback/FeedbackList.tsx
 msgid "When someone sends feedback, it will be in the list."
 msgstr "Khi có người gửi góp ý, nó sẽ xuất hiện trong danh sách."
+
+#: src/features/feedback/RoadmapCard.tsx
+msgid "When this idea ships, you can answer everyone linked to it in one reply."
+msgstr "Khi ý tưởng này ra mắt, bạn có thể trả lời tất cả những người liên kết bằng một phản hồi."
 
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "When to notify me"
@@ -15159,11 +15741,11 @@ msgstr "Khi tắt, không có lượt gửi nào được thực hiện."
 msgid "While your status is Away, only new messages in conversations assigned to you and new assignments notify you. A conversation you have open in the panel never notifies you."
 msgstr "Khi trạng thái của bạn là Vắng mặt, chỉ tin nhắn mới trong các cuộc trò chuyện giao cho bạn và các lần giao mới mới thông báo cho bạn. Cuộc trò chuyện bạn đang mở trong bảng điều khiển không bao giờ thông báo."
 
-#: src/features/broadcasts/Overview.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "Who agreed to hear from you, with consent recorded"
 msgstr "Ai đã đồng ý nhận tin từ bạn, kèm sự đồng ý đã ghi lại"
 
-#: src/features/team/TeamColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Who answers, where, and who is online"
 msgstr "Ai trả lời, ở đâu và ai đang trực tuyến"
 
@@ -15171,7 +15753,7 @@ msgstr "Ai trả lời, ở đâu và ai đang trực tuyến"
 msgid "Who can reply"
 msgstr "Ai có thể trả lời"
 
-#: src/features/team/TeamColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Who is here"
 msgstr "Ai đang ở đây"
 
@@ -15211,16 +15793,18 @@ msgstr "Với tên, ngôn ngữ và múi giờ riêng"
 msgid "With two-factor sign-in, create an app password in Zoho Accounts › Security › App passwords; otherwise your password works."
 msgstr "Với đăng nhập hai yếu tố, hãy tạo mật khẩu ứng dụng trong Zoho Accounts › Security › App passwords; nếu không mật khẩu của bạn dùng được."
 
-#: src/features/settings/members/Invites.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Withdraw"
 msgstr "Rút lại"
 
-#. placeholder {0}: inv.email
 #. placeholder {0}: invite.email
-#: src/features/settings/members/Invites.tsx
-#: src/features/team/TeamColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Withdraw the invite for {0}"
 msgstr "Rút lại lời mời cho {0}"
+
+#: src/features/team/TeamPage.tsx
+msgid "Withdraw this invite?"
+msgstr "Thu hồi lời mời này?"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Within {m} minutes"
@@ -15250,7 +15834,7 @@ msgstr "Không có xác nhận, bất kỳ ai cũng có thể gõ địa chỉ c
 msgid "Won't do"
 msgstr "Sẽ không làm"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Work is going on"
 msgstr "Đang xử lý"
 
@@ -15279,10 +15863,6 @@ msgstr "Đang xử lý…"
 msgid "Workspace"
 msgstr "Không gian làm việc"
 
-#: src/features/settings/members/MemberList.tsx
-msgid "Workspace members"
-msgstr "Thành viên không gian làm việc"
-
 #: src/features/auth/CreateWorkspace.tsx
 msgid "Workspace name"
 msgstr "Tên không gian làm việc"
@@ -15302,10 +15882,6 @@ msgstr "Không gian làm việc: {name}"
 #: src/app/Sidebar.tsx
 msgid "Workspaces"
 msgstr "Không gian làm việc"
-
-#: src/features/contact/ContactsPage.tsx
-msgid "Write"
-msgstr "Viết"
 
 #: src/features/setup/previews.tsx
 msgid "Write a message…"
@@ -15431,6 +16007,14 @@ msgstr "Bạn có thể rời trang này: cuộc trò chuyện sẽ chờ bạn 
 msgid "You can then write, vote and follow discussions there. The team behind {host} sees your name and e-mail address when you write; other readers see only your name."
 msgstr "Sau đó bạn có thể viết, bình chọn và theo dõi các cuộc thảo luận ở đó. Nhóm đứng sau {host} thấy tên và địa chỉ email của bạn khi bạn viết; những người đọc khác chỉ thấy tên."
 
+#: src/features/team/TeamPage.tsx
+msgid "You cannot change your own role."
+msgstr "Bạn không thể đổi vai trò của chính mình."
+
+#: src/features/team/TeamPage.tsx
+msgid "You cannot remove yourself."
+msgstr "Bạn không thể tự xóa mình."
+
 #: src/features/account/AccountPage.tsx
 msgid "You follow no discussions. You follow the ones you start or reply to."
 msgstr "Bạn không theo dõi cuộc thảo luận nào. Bạn theo dõi những cuộc bạn bắt đầu hoặc trả lời."
@@ -15442,6 +16026,14 @@ msgstr "Bạn nhận một secret mới một lần. Trong 24 giờ mỗi lượ
 #: src/features/account/AccountPage.tsx
 msgid "You get a notification when someone replies in these"
 msgstr "Bạn nhận thông báo khi có người phản hồi trong những cuộc này"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "You get the address to call when you save. It is shown only once."
+msgstr "Khi lưu, bạn nhận được địa chỉ để gọi. Địa chỉ chỉ hiển thị một lần."
+
+#: src/features/status/MonitorDialog.tsx
+msgid "You get the address your alerting calls when you save, for Alertmanager, Grafana or your own script. It is shown only once."
+msgstr "Khi lưu, bạn nhận được địa chỉ mà hệ thống cảnh báo của bạn gọi tới, dành cho Alertmanager, Grafana hoặc script của riêng bạn. Địa chỉ chỉ hiển thị một lần."
 
 #: src/features/auth/CreateWorkspace.tsx
 msgid "You have created as many workspaces as this server allows. Delete one you no longer use, or ask to be invited to another."
@@ -15458,10 +16050,6 @@ msgstr "Bạn chưa viết trong cuộc thảo luận nào."
 #: src/features/inbox/SidePanels.tsx
 msgid "You have read every mention."
 msgstr "Bạn đã đọc mọi lượt nhắc."
-
-#: src/features/inbox/ChatList.tsx
-msgid "You have read everything."
-msgstr "Bạn đã đọc hết mọi thứ."
 
 #: src/features/auth/DeleteAccountButton.tsx
 msgid "You leave every workspace and lose your sign-ins, passkeys and notifications. Messages you wrote stay in their conversations, shown as from a deleted member. This cannot be undone."
@@ -15483,6 +16071,10 @@ msgstr "Bạn đã bắt đầu"
 msgid "You will no longer be able to sign in with it."
 msgstr "Bạn sẽ không còn đăng nhập bằng nó được nữa."
 
+#: src/features/docs/PagesTab.tsx
+msgid "You write and host them. Yuva adds a rating and a discussion under each page and shows the results here."
+msgstr "Bạn tự viết và tự lưu trữ. Yuva thêm đánh giá và thảo luận bên dưới mỗi trang và hiển thị kết quả tại đây."
+
 #: src/features/auth/SignInForm.tsx
 msgid "you@company.com"
 msgstr "you@company.com"
@@ -15503,7 +16095,7 @@ msgstr "Tài khoản của bạn"
 msgid "Your admin allowed Yuva"
 msgstr "Quản trị viên của bạn đã cho phép Yuva"
 
-#: src/features/contact/ContactPage.tsx
+#: src/features/contact/ContactDetail.tsx
 msgid "Your app or widget sends these when it identifies the contact."
 msgstr "Ứng dụng hoặc widget của bạn gửi những thứ này khi nhận diện liên hệ."
 

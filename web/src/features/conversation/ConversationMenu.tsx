@@ -1,13 +1,15 @@
 import { Trans, useLingui } from "@lingui/react/macro"
 import {
-  ClockIcon,
+  CheckIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
   EllipsisIcon,
   FlagIcon,
   FlameIcon,
   InboxIcon,
   LightbulbIcon,
-  MessagesSquareIcon,
   MailIcon,
+  MessagesSquareIcon,
   PinIcon,
   PinOffIcon,
   RotateCcwIcon,
@@ -15,108 +17,165 @@ import {
   ShieldAlertIcon,
   ShieldCheckIcon,
   TagIcon,
-  UserIcon,
-  UserRoundCheckIcon,
-  UserRoundPlusIcon,
 } from "lucide-react"
 
 import { Dot, Kbd } from "@/components/common"
 import { keyLabel, SHORTCUTS } from "@/components/common/ShortcutSheet"
 import { PRIORITIES, useEnumText } from "@/components/common/text"
+import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
   DropdownMenuSeparator,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { priorityClass } from "@/features/conversation/controls/shared"
-import type { Conversation, ConversationUpdate, Priority } from "@/lib/api"
-import { useSession } from "@/lib/session"
-import { useInboxes, useLabels } from "@/lib/workspace"
-import { Button } from "@/components/ui/button"
 import { look } from "@/features/inbox/PageFrame"
+import type { Conversation, ConversationUpdate, Priority } from "@/lib/api"
 import { cn } from "@/lib/utils"
+import { useInboxes, useLabels } from "@/lib/workspace"
+
+export type MenuView = "root" | "priority" | "labels" | "move"
 
 export function ConversationMenu({
   c,
   open,
   onOpenChange,
+  view,
+  onView,
   update,
   move,
-  onContact,
   pinned,
   onPin,
   onUnread,
   onDiscussion,
   onIncident,
   onIdea,
-  folded,
   onFind,
-  outlined,
 }: {
   c: Conversation
   open: boolean
   onOpenChange: (open: boolean) => void
+  view: MenuView
+  onView: (view: MenuView) => void
   update: (body: ConversationUpdate) => void
   move: (inboxId: string) => void
-  onContact: () => void
   pinned: boolean
   onPin: () => void
   onUnread: () => void
   onDiscussion: () => void
   onIncident: () => void
   onIdea: () => void
-  folded?: { hand: () => void; snooze: () => void; find: () => void }
-  onFind?: () => void
-  outlined?: boolean
+  onFind: () => void
 }) {
   const { t } = useLingui()
   const text = useEnumText()
-  const { membership } = useSession()
   const labels = useLabels().data ?? []
   const others = (useInboxes().data ?? []).filter((i) => i.id !== c.inbox_id)
   const current = new Set(c.labels)
+  const sub = (v: MenuView) => (
+    <DropdownMenuItem closeOnClick={false} onClick={() => onView(v)} data-testid={`menu-${v}`}>
+      <ChevronLeftIcon className="rtl:rotate-180" />
+      {v === "priority" ? (
+        <Trans>Priority</Trans>
+      ) : v === "labels" ? (
+        <Trans>Labels</Trans>
+      ) : (
+        <Trans>Move to inbox</Trans>
+      )}
+    </DropdownMenuItem>
+  )
+  const enter = (
+    v: MenuView,
+    icon: React.ReactNode,
+    label: React.ReactNode,
+    hint?: React.ReactNode,
+    disabled?: boolean
+  ) => (
+    <DropdownMenuItem closeOnClick={false} disabled={disabled} onClick={() => onView(v)} data-testid={`menu-open-${v}`}>
+      {icon}
+      <span className="flex-1">{label}</span>
+      {hint && <span className="text-caption text-faint">{hint}</span>}
+      <ChevronRightIcon className="rtl:rotate-180" />
+    </DropdownMenuItem>
+  )
   return (
-    <DropdownMenu open={open} onOpenChange={onOpenChange}>
+    <DropdownMenu
+      open={open}
+      onOpenChange={(o) => {
+        onOpenChange(o)
+        if (!o) onView("root")
+      }}
+    >
       <DropdownMenuTrigger
-        render={
-          outlined ? (
-            <Button variant="outline" className={cn(look.btnSm, "w-[30px] px-0")} />
-          ) : (
-            <Button variant="ghost" size="icon-sm" className="self-start text-faint" />
-          )
-        }
+        render={<Button variant="outline" className={cn(look.btnSm, "w-[30px] px-0")} />}
         aria-label={t`More actions`}
         title={t`More actions`}
         data-testid="conversation-menu"
       >
         <EllipsisIcon />
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="min-w-60">
-        {folded && (
+      <DropdownMenuContent align="end" className="max-h-[70svh] min-w-60">
+        {view === "root" && (
           <>
-            <DropdownMenuItem onClick={folded.hand} data-testid="header-hand">
-              <UserRoundPlusIcon />
-              <span className="flex-1">
-                <Trans>Assign or hand to a teammate</Trans>
-              </span>
-              <Kbd>{keyLabel(SHORTCUTS.hand)[0]}</Kbd>
+            {enter(
+              "priority",
+              <FlagIcon className={priorityClass[c.priority]} />,
+              <Trans>Priority</Trans>,
+              text.priority[c.priority]
+            )}
+            {enter("labels", <TagIcon />, <Trans>Labels</Trans>, c.labels.length > 0 ? c.labels.length : undefined)}
+            {enter("move", <InboxIcon />, <Trans>Move to inbox</Trans>, undefined, others.length === 0)}
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={onPin} data-testid="header-pin">
+              {pinned ? <PinOffIcon /> : <PinIcon />}
+              <span className="flex-1">{pinned ? <Trans>Unpin</Trans> : <Trans>Pin to the top</Trans>}</span>
+              <Kbd>{SHORTCUTS.pin}</Kbd>
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={folded.snooze} data-testid="header-snooze">
-              <ClockIcon />
+            <DropdownMenuItem onClick={onUnread} data-testid="header-unread">
+              <MailIcon />
               <span className="flex-1">
-                <Trans>Snooze</Trans>
+                <Trans>Mark as unread</Trans>
               </span>
-              <Kbd>{keyLabel(SHORTCUTS.snooze)[0]}</Kbd>
+              <Kbd>{SHORTCUTS.unread}</Kbd>
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={folded.find} data-testid="header-find">
+            {c.status !== "open" && (
+              <DropdownMenuItem onClick={() => update({ status: "open" })} data-testid="back-to-waiting">
+                <RotateCcwIcon />
+                <Trans>Back to waiting</Trans>
+              </DropdownMenuItem>
+            )}
+            <DropdownMenuSeparator />
+            {c.kind === "feedback" && (
+              <DropdownMenuItem onClick={onIdea} data-testid="header-idea">
+                <LightbulbIcon />
+                <span className="flex-1">
+                  <Trans>Link to an idea</Trans>
+                </span>
+                <Kbd>{SHORTCUTS.idea}</Kbd>
+              </DropdownMenuItem>
+            )}
+            <DropdownMenuItem onClick={onIncident} data-testid="header-incident">
+              <FlameIcon />
+              <span className="flex-1">
+                <Trans>Link to an incident</Trans>
+              </span>
+              <Kbd>{SHORTCUTS.incident}</Kbd>
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={onDiscussion} data-testid="header-discussion">
+              <MessagesSquareIcon />
+              <span className="flex-1">
+                <Trans>Turn into a discussion</Trans>
+              </span>
+              <span className="flex gap-0.5">
+                {keyLabel(SHORTCUTS.discussion).map((k) => (
+                  <Kbd key={k}>{k}</Kbd>
+                ))}
+              </span>
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={onFind} data-testid="find-toggle">
               <SearchIcon />
               <span className="flex-1">
                 <Trans>Search in this conversation</Trans>
@@ -128,86 +187,38 @@ export function ConversationMenu({
               </span>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
+            <DropdownMenuItem
+              variant={c.spam ? "default" : "destructive"}
+              onClick={() => update({ spam: !c.spam })}
+              data-testid="spam-toggle"
+            >
+              {c.spam ? <ShieldCheckIcon /> : <ShieldAlertIcon />}
+              <span className="flex-1">{c.spam ? <Trans>Not spam</Trans> : <Trans>Mark as spam</Trans>}</span>
+              <Kbd>{SHORTCUTS.spam}</Kbd>
+            </DropdownMenuItem>
           </>
         )}
-        {onFind && (
-          <DropdownMenuItem onClick={onFind} data-testid="find-toggle">
-            <SearchIcon />
-            <span className="flex-1">
-              <Trans>Search in this conversation</Trans>
-            </span>
-            <span className="flex gap-0.5">
-              {keyLabel(SHORTCUTS.find).map((k) => (
-                <Kbd key={k}>{k}</Kbd>
-              ))}
-            </span>
-          </DropdownMenuItem>
-        )}
-        <DropdownMenuItem onClick={onContact} data-testid="toggle-contact-panel">
-          <UserIcon />
-          <span className="flex-1">
-            <Trans>Contact details</Trans>
-          </span>
-          <Kbd>{keyLabel(SHORTCUTS.contact)[0]}</Kbd>
-        </DropdownMenuItem>
-        {c.assignee_id !== membership.member_id && (
-          <DropdownMenuItem onClick={() => update({ assignee_id: membership.member_id })}>
-            <UserRoundCheckIcon />
-            <Trans>Assign to me</Trans>
-          </DropdownMenuItem>
-        )}
-        {c.status !== "open" && (
-          <DropdownMenuItem onClick={() => update({ status: "open" })}>
-            <RotateCcwIcon />
-            <Trans>Back to waiting</Trans>
-          </DropdownMenuItem>
-        )}
-        <DropdownMenuItem onClick={onPin} data-testid="header-pin">
-          {pinned ? <PinOffIcon /> : <PinIcon />}
-          <span className="flex-1">{pinned ? <Trans>Unpin</Trans> : <Trans>Pin to the top</Trans>}</span>
-          <Kbd>{SHORTCUTS.pin}</Kbd>
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={onUnread} data-testid="header-unread">
-          <MailIcon />
-          <span className="flex-1">
-            <Trans>Mark as unread</Trans>
-          </span>
-          <Kbd>{SHORTCUTS.unread}</Kbd>
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={onDiscussion} data-testid="header-discussion">
-          <MessagesSquareIcon />
-          <span className="flex-1">
-            <Trans>Turn into a discussion</Trans>
-          </span>
-          <span className="flex gap-0.5">
-            {keyLabel(SHORTCUTS.discussion).map((k) => (
-              <Kbd key={k}>{k}</Kbd>
+        {view === "priority" && (
+          <>
+            {sub("priority")}
+            <DropdownMenuSeparator />
+            {PRIORITIES.map((p) => (
+              <DropdownMenuItem
+                key={p}
+                onClick={() => update({ priority: p as Priority })}
+                data-testid={`priority-${p}`}
+              >
+                <FlagIcon className={priorityClass[p]} />
+                <span className="flex-1">{text.priority[p]}</span>
+                {c.priority === p && <CheckIcon className="text-brand" />}
+              </DropdownMenuItem>
             ))}
-          </span>
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={onIncident} data-testid="header-incident">
-          <FlameIcon />
-          <span className="flex-1">
-            <Trans>Link to an incident</Trans>
-          </span>
-          <Kbd>{SHORTCUTS.incident}</Kbd>
-        </DropdownMenuItem>
-        {c.kind === "feedback" && (
-          <DropdownMenuItem onClick={onIdea} data-testid="header-idea">
-            <LightbulbIcon />
-            <span className="flex-1">
-              <Trans>Link to an idea</Trans>
-            </span>
-            <Kbd>{SHORTCUTS.idea}</Kbd>
-          </DropdownMenuItem>
+          </>
         )}
-        <DropdownMenuSeparator />
-        <DropdownMenuSub>
-          <DropdownMenuSubTrigger>
-            <TagIcon />
-            <Trans>Labels</Trans>
-          </DropdownMenuSubTrigger>
-          <DropdownMenuSubContent className="max-h-[60svh] min-w-52">
+        {view === "labels" && (
+          <>
+            {sub("labels")}
+            <DropdownMenuSeparator />
             {labels.length === 0 && (
               <p className="px-2.5 py-1.5 text-body text-muted-foreground">
                 <Trans>No labels yet. Add them in settings.</Trans>
@@ -217,6 +228,7 @@ export function ConversationMenu({
               <DropdownMenuCheckboxItem
                 key={l.id}
                 checked={current.has(l.id)}
+                closeOnClick={false}
                 onCheckedChange={(on) => {
                   const next = new Set(current)
                   if (on) next.add(l.id)
@@ -228,45 +240,20 @@ export function ConversationMenu({
                 {l.name}
               </DropdownMenuCheckboxItem>
             ))}
-          </DropdownMenuSubContent>
-        </DropdownMenuSub>
-        <DropdownMenuSub>
-          <DropdownMenuSubTrigger>
-            <FlagIcon className={priorityClass[c.priority]} />
-            <Trans>Priority</Trans>
-            <span className="ms-auto text-caption text-faint">{text.priority[c.priority]}</span>
-          </DropdownMenuSubTrigger>
-          <DropdownMenuSubContent className="min-w-40">
-            <DropdownMenuRadioGroup value={c.priority} onValueChange={(v) => update({ priority: v as Priority })}>
-              {PRIORITIES.map((p) => (
-                <DropdownMenuRadioItem key={p} value={p}>
-                  <FlagIcon className={priorityClass[p]} />
-                  {text.priority[p]}
-                </DropdownMenuRadioItem>
-              ))}
-            </DropdownMenuRadioGroup>
-          </DropdownMenuSubContent>
-        </DropdownMenuSub>
-        <DropdownMenuSub>
-          <DropdownMenuSubTrigger disabled={others.length === 0}>
-            <InboxIcon />
-            <Trans>Move to inbox</Trans>
-          </DropdownMenuSubTrigger>
-          <DropdownMenuSubContent className="max-h-[60svh] min-w-52">
+          </>
+        )}
+        {view === "move" && (
+          <>
+            {sub("move")}
+            <DropdownMenuSeparator />
             {others.map((i) => (
               <DropdownMenuItem key={i.id} onClick={() => move(i.id)}>
                 <Dot color={i.branding.color} />
                 <span className="flex-1 truncate">{i.name}</span>
               </DropdownMenuItem>
             ))}
-          </DropdownMenuSubContent>
-        </DropdownMenuSub>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => update({ spam: !c.spam })} data-testid="spam-toggle">
-          {c.spam ? <ShieldCheckIcon /> : <ShieldAlertIcon />}
-          <span className="flex-1">{c.spam ? <Trans>Not spam</Trans> : <Trans>Mark as spam</Trans>}</span>
-          <Kbd>{SHORTCUTS.spam}</Kbd>
-        </DropdownMenuItem>
+          </>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   )

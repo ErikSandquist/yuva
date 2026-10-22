@@ -5,22 +5,17 @@ import {
   CheckIcon,
   ChevronDownIcon,
   ClockIcon,
-  MailIcon,
   MegaphoneIcon,
-  MailOpenIcon,
   PinIcon,
-  PinOffIcon,
-  PlusIcon,
   CommandIcon,
   EllipsisVerticalIcon,
-  FlameIcon,
   InboxIcon,
   KeyboardIcon,
-  ListChecksIcon,
   MessageSquarePlusIcon,
   ReplyIcon,
   SearchIcon,
   SettingsIcon,
+  SquareCheckBigIcon,
   XIcon,
 } from "lucide-react"
 import { useEffect, useMemo, useRef, useState } from "react"
@@ -49,7 +44,6 @@ import { formatDuration, formatShort, useErrorText } from "@/components/common/t
 import { useNow } from "@/hooks/use-now"
 import { Alert } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
-import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger } from "@/components/ui/context-menu"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import {
   DropdownMenu,
@@ -75,15 +69,15 @@ import { useListCursor } from "@/features/inbox/listCursor"
 import { LinkIncidentDialog } from "@/features/status/LinkIncidentDialog"
 import { useHotkeys } from "@/hooks/use-hotkeys"
 import { ImportBanner } from "@/features/migrations/ImportBanner"
-import { InboxPicker } from "@/features/inbox/InboxPicker"
+import { InboxChip } from "@/features/inbox/InboxPicker"
 import { UnderlineTabs } from "@/features/inbox/ListHead"
 import { ProductTag } from "@/features/inbox/ProductTag"
 import { LabelTag, look } from "@/features/inbox/PageFrame"
 import { useListActions } from "@/features/inbox/memberState"
 import { setListQuery, useListSearch } from "@/features/inbox/listSearch"
 import { SourceFilter, sourceFilters, useSourceFilter } from "@/features/inbox/SourceFilter"
-import { useBulkUpdateConversations, useConversations, useCounts } from "@/features/inbox/queries"
-import type { Contact, ConversationListItem } from "@/lib/api"
+import { useBulkUpdateConversations, useConversations, useCounts, useLoadedCount } from "@/features/inbox/queries"
+import type { Contact, ConversationListItem, ConversationStatus } from "@/lib/api"
 import type { ConversationFilters } from "@/lib/keys"
 import { useSetAvailability } from "@/lib/availability"
 import { useSession } from "@/lib/session"
@@ -91,14 +85,12 @@ import { useTyping } from "@/lib/typing"
 import { cn } from "@/lib/utils"
 import { useChannelMap, useLabels, useMemberMap } from "@/lib/workspace"
 
-export type Chip = "waiting" | "all" | "unread" | "mine" | "unassigned" | "snoozed" | "done"
-export const PAGE_CHIPS: Chip[] = ["waiting", "mine", "unassigned", "snoozed", "done", "all"]
-const PHONE_CHIPS: Chip[] = ["waiting", "all", "unread", "mine", "unassigned", "snoozed", "done"]
+export type Chip = "waiting" | "all" | "mine" | "unassigned" | "snoozed" | "done"
+export const PAGE_CHIPS: Chip[] = ["waiting", "all", "mine", "unassigned", "snoozed", "done"]
 
 const chipFilters: Record<Chip, ConversationFilters> = {
   waiting: { status: ["open"] },
   all: {},
-  unread: {},
   mine: { status: ["open"], assignee: "me" },
   unassigned: { status: ["open"], assignee: "unassigned" },
   snoozed: { status: ["snoozed"] },
@@ -125,7 +117,6 @@ export function useChipLabels(): Record<Chip, string> {
   return {
     waiting: t`Waiting`,
     all: t`All`,
-    unread: t`Unread`,
     mine: t`Mine`,
     unassigned: t`Unassigned`,
     snoozed: t`Snoozed`,
@@ -190,43 +181,6 @@ function Preview({
   )
 }
 
-export function RowMenuItems({
-  c,
-  Item,
-  onDone,
-}: {
-  c: ConversationListItem
-  Item: typeof ContextMenuItem
-  onDone?: () => void
-}) {
-  const actions = useListActions()
-  return (
-    <>
-      <Item
-        onClick={() => {
-          actions.pin(c.id, !c.pinned_at)
-          onDone?.()
-        }}
-        data-testid="row-pin"
-      >
-        {c.pinned_at ? <PinOffIcon /> : <PinIcon />}
-        {c.pinned_at ? <Trans>Unpin</Trans> : <Trans>Pin to the top</Trans>}
-      </Item>
-      <Item
-        onClick={() => {
-          if (c.unread) actions.markRead(c.id)
-          else actions.markUnread(c.id)
-          onDone?.()
-        }}
-        data-testid="row-mark-unread"
-      >
-        {c.unread ? <MailOpenIcon /> : <MailIcon />}
-        {c.unread ? <Trans>Mark as read</Trans> : <Trans>Mark as unread</Trans>}
-      </Item>
-    </>
-  )
-}
-
 function Row({
   c,
   current,
@@ -261,118 +215,113 @@ function Row({
   const now = useNow(60_000)
   const subject = c.subject.trim()
   return (
-    <ContextMenu>
-      <ContextMenuTrigger
-        render={<button type="button" />}
-        onClick={onOpen}
-        className={cn(
-          "group flex w-full items-start gap-2.5 border-b px-3.5 py-3 text-start outline-none transition-colors",
-          current ? "bg-surface" : "hover:bg-surface",
-          cursor && !current && "bg-surface",
-          (current || cursor) && "shadow-[inset_2px_0_0_var(--brand)] rtl:shadow-[inset_-2px_0_0_var(--brand)]"
-        )}
-        aria-current={current || undefined}
-        aria-pressed={selecting ? checked : undefined}
-        data-checked={checked || undefined}
-        data-testid="list-row"
-        data-conversation-id={c.id}
-        data-unread={c.unread || undefined}
-        data-pinned={c.pinned_at ? true : undefined}
-      >
-        {selecting && (
-          <span
-            aria-hidden
-            className={cn(
-              "grid size-5 shrink-0 place-items-center rounded-[6px] border",
-              checked ? "border-brand bg-brand text-white" : "border-input bg-background"
-            )}
-            data-testid="row-check"
-          >
-            {checked && <CheckIcon className="size-3.5" strokeWidth={3} />}
-          </span>
-        )}
-        <span className="relative shrink-0">
-          {visitor ? (
-            <VisitorAvatar className="size-[34px]" />
-          ) : (
-            <ContactAvatar id={c.contact.id} name={name} className="size-[34px] font-semibold" />
+    <button
+      type="button"
+      onClick={onOpen}
+      className={cn(
+        "group flex w-full items-start gap-2.5 border-b px-3.5 py-3 text-start outline-none transition-colors",
+        current ? "bg-surface" : "hover:bg-surface",
+        cursor && !current && "bg-surface",
+        (current || cursor) && "shadow-[inset_2px_0_0_var(--brand)] rtl:shadow-[inset_-2px_0_0_var(--brand)]"
+      )}
+      aria-current={current || undefined}
+      aria-pressed={selecting ? checked : undefined}
+      data-checked={checked || undefined}
+      data-testid="list-row"
+      data-conversation-id={c.id}
+      data-unread={c.unread || undefined}
+      data-pinned={c.pinned_at ? true : undefined}
+    >
+      {selecting && (
+        <span
+          aria-hidden
+          className={cn(
+            "grid size-5 shrink-0 place-items-center rounded-[6px] border",
+            checked ? "border-brand bg-brand text-white" : "border-input bg-background"
           )}
-          {live && (
-            <span
-              className="absolute -end-0.5 bottom-0 size-3 rounded-full border-2 border-background bg-success"
-              title={t`Online now`}
-              data-testid="row-live"
+          data-testid="row-check"
+        >
+          {checked && <CheckIcon className="size-3.5" strokeWidth={3} />}
+        </span>
+      )}
+      <span className="relative shrink-0">
+        {visitor ? (
+          <VisitorAvatar className="size-[34px]" />
+        ) : (
+          <ContactAvatar id={c.contact.id} name={name} className="size-[34px] font-semibold" />
+        )}
+        {live && (
+          <span
+            className="absolute -end-0.5 bottom-0 size-3 rounded-full border-2 border-background bg-success"
+            title={t`Online now`}
+            data-testid="row-live"
+          />
+        )}
+      </span>
+      <span className="flex min-w-0 flex-1 flex-col gap-0.5">
+        <span className="flex min-w-0 items-baseline gap-2">
+          <span className={cn("min-w-0 flex-1 truncate text-body", c.unread ? "font-semibold" : "font-medium")}>
+            {name}
+          </span>
+          {c.pinned_at && (
+            <PinIcon
+              className="size-3.5 shrink-0 rotate-45 self-center text-faint"
+              aria-label={t`Pinned`}
+              data-testid="row-pinned"
             />
           )}
+          {c.unread && (
+            <span
+              className="size-2 shrink-0 self-center rounded-full bg-brand"
+              aria-label={t`Unread`}
+              data-testid="row-unread"
+            />
+          )}
+          <time
+            className={cn("shrink-0 text-caption", waiting ? "font-medium text-brand" : "text-faint")}
+            dateTime={c.last_activity_at}
+          >
+            {waiting
+              ? formatDuration(Math.max(60, (now - Date.parse(c.last_activity_at)) / 1000), i18n.locale)
+              : formatShort(c.last_activity_at, i18n.locale)}
+          </time>
         </span>
-        <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-          <span className="flex min-w-0 items-baseline gap-2">
-            <span className={cn("min-w-0 flex-1 truncate text-body", c.unread ? "font-semibold" : "font-medium")}>
-              {name}
-            </span>
-            {c.pinned_at && (
-              <PinIcon
-                className="size-3.5 shrink-0 rotate-45 self-center text-faint"
-                aria-label={t`Pinned`}
-                data-testid="row-pinned"
-              />
-            )}
-            {c.unread && (
-              <span
-                className="size-2 shrink-0 self-center rounded-full bg-brand"
-                aria-label={t`Unread`}
-                data-testid="row-unread"
-              />
-            )}
-            <time
-              className={cn("shrink-0 text-caption", waiting ? "font-medium text-brand" : "text-faint")}
-              dateTime={c.last_activity_at}
-            >
-              {waiting
-                ? formatDuration(Math.max(60, (now - Date.parse(c.last_activity_at)) / 1000), i18n.locale)
-                : formatShort(c.last_activity_at, i18n.locale)}
-            </time>
-          </span>
-          <span className="flex min-w-0 items-center gap-1.5 text-body text-muted-foreground">
-            {c.status === "snoozed" && <ClockIcon className="size-3.5 shrink-0 text-faint" aria-label={t`Snoozed`} />}
-            <span className="flex min-w-0 flex-1">
-              <Preview
-                c={c}
-                current={current}
-                subject={subject}
-                receipts={channel?.kind === "chat" || channel?.kind === "app"}
-              />
-            </span>
-          </span>
-          <span className="flex min-w-0 items-center gap-1.5 text-caption" data-testid="row-source">
-            <ProductTag id={c.inbox_id} />
-            {c.imported && <ImportedChip at={c.imported.at} />}
-            {source && <span className="shrink-0 text-faint">{sourceText[source]}</span>}
-            {c.broadcast_id && (
-              <MegaphoneIcon
-                className="size-3.5 shrink-0 text-brand"
-                aria-label={t`Reply to a broadcast`}
-                data-testid="row-broadcast"
-              />
-            )}
-            {place && <span className="min-w-0 truncate text-faint">{place}</span>}
-            {chips.map((l) => (
-              <LabelTag key={l.id} name={l.name} />
-            ))}
-            <span className="flex-1" />
-            {rating && <RatingMark rating={rating.rating} comment={rating.comment} />}
-            {assignee && (
-              <span title={t`Assigned to ${assignee.name || assignee.email}`} data-testid="row-assignee">
-                <MemberAvatar name={assignee.name || assignee.email} className="size-[18px] text-[8px]" />
-              </span>
-            )}
+        <span className="flex min-w-0 items-center gap-1.5 text-body text-muted-foreground">
+          {c.status === "snoozed" && <ClockIcon className="size-3.5 shrink-0 text-faint" aria-label={t`Snoozed`} />}
+          <span className="flex min-w-0 flex-1">
+            <Preview
+              c={c}
+              current={current}
+              subject={subject}
+              receipts={channel?.kind === "chat" || channel?.kind === "app"}
+            />
           </span>
         </span>
-      </ContextMenuTrigger>
-      <ContextMenuContent className="min-w-52" data-testid="row-menu">
-        <RowMenuItems c={c} Item={ContextMenuItem} />
-      </ContextMenuContent>
-    </ContextMenu>
+        <span className="flex min-w-0 items-center gap-1.5 text-caption" data-testid="row-source">
+          <ProductTag id={c.inbox_id} />
+          {c.imported && <ImportedChip at={c.imported.at} />}
+          {source && <span className="shrink-0 text-faint">{sourceText[source]}</span>}
+          {c.broadcast_id && (
+            <MegaphoneIcon
+              className="size-3.5 shrink-0 text-brand"
+              aria-label={t`Reply to a broadcast`}
+              data-testid="row-broadcast"
+            />
+          )}
+          {place && <span className="min-w-0 truncate text-faint">{place}</span>}
+          {chips.map((l) => (
+            <LabelTag key={l.id} name={l.name} />
+          ))}
+          <span className="flex-1" />
+          {rating && <RatingMark rating={rating.rating} comment={rating.comment} />}
+          {assignee && (
+            <span title={t`Assigned to ${assignee.name || assignee.email}`} data-testid="row-assignee">
+              <MemberAvatar name={assignee.name || assignee.email} className="size-[18px] text-[8px]" />
+            </span>
+          )}
+        </span>
+      </span>
+    </button>
   )
 }
 
@@ -403,10 +352,9 @@ function AwayBanner() {
   )
 }
 
-function CleanupBanner({ onReview }: { onReview: (id: string) => void }) {
+function CleanupBanner({ inboxId }: { inboxId: string }) {
   const { t } = useLingui()
   const errorText = useErrorText()
-  const [inboxId] = useInboxFilter()
   const counts = useCounts(["conversation"]).data
   const spam = useConversations({ status: ["open"], spam: true, kind: ["conversation"] }, !!counts?.spam)
   const bulk = useBulkUpdateConversations()
@@ -440,20 +388,16 @@ function CleanupBanner({ onReview }: { onReview: (id: string) => void }) {
           <Trans>{items.length} marked as spam · no reply needed</Trans>
         </span>
       </span>
-      <span className="flex gap-1">
-        <Button variant="ghost" size="sm" onClick={() => onReview(items[0].id)}>
-          <Trans>Review</Trans>
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={closeAll}
-          disabled={bulk.isPending}
-          data-testid="cleanup-close-all"
-        >
-          <Trans>Close all</Trans>
-        </Button>
-      </span>
+      <Button
+        variant="outline"
+        size="sm"
+        className={look.btnSm}
+        onClick={closeAll}
+        disabled={bulk.isPending}
+        data-testid="cleanup-close-all"
+      >
+        <Trans>Close all</Trans>
+      </Button>
     </Alert>
   )
 }
@@ -493,7 +437,7 @@ export function StartConversation({ open, onOpenChange }: { open: boolean; onOpe
   )
 }
 
-export function ListMenu({ onSelect, className }: { onSelect: () => void; className?: string }) {
+export function ListMenu({ className }: { className?: string }) {
   const { t } = useLingui()
   const navigate = useNavigate()
   const { canManage } = useSession()
@@ -526,12 +470,6 @@ export function ListMenu({ onSelect, className }: { onSelect: () => void; classN
           </DropdownMenuItem>
         )}
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={onSelect} data-testid="select-conversations">
-          <ListChecksIcon />
-          <Trans>Select conversations</Trans>
-          <DropdownMenuShortcut>{keyLabel(SHORTCUTS.select).join(" ")}</DropdownMenuShortcut>
-        </DropdownMenuItem>
-        <DropdownMenuSeparator />
         <DropdownMenuItem onClick={openPalette}>
           <CommandIcon />
           <Trans>Everything</Trans>
@@ -547,7 +485,7 @@ export function ListMenu({ onSelect, className }: { onSelect: () => void; classN
   )
 }
 
-function PhoneHeader({ onSelect, children }: { onSelect: () => void; children: React.ReactNode }) {
+function PhoneHeader({ children }: { children: React.ReactNode }) {
   const { t } = useLingui()
   const { membership } = useSession()
   const [starting, setStarting] = useState(false)
@@ -579,7 +517,7 @@ function PhoneHeader({ onSelect, children }: { onSelect: () => void; children: R
         >
           <SettingsIcon />
         </Button>
-        <ListMenu onSelect={onSelect} />
+        <ListMenu />
       </div>
       <div className="px-3 [&>[role=toolbar]]:mt-0">{children}</div>
       <StartConversation open={starting} onOpenChange={setStarting} />
@@ -605,7 +543,7 @@ function OrderChip({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
-        render={<button type="button" className={look.chip} />}
+        render={<button type="button" className={cn(unreadOnly ? look.chipOn : look.chip, "ms-auto")} />}
         aria-label={t`Order and view`}
         data-testid="list-order"
       >
@@ -638,7 +576,7 @@ function LabelChip({ value, onChange }: { value: string; onChange: (id: string) 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
-        render={<button type="button" className={current ? look.chipOn : look.chipDash} />}
+        render={<button type="button" className={current ? look.chipOn : look.chip} />}
         aria-label={t`Filter by label`}
         title={t`Filter by label`}
         data-testid="label-filter"
@@ -649,11 +587,9 @@ function LabelChip({ value, onChange }: { value: string; onChange: (id: string) 
             <span className="max-w-24 truncate">{current.name}</span>
           </>
         ) : (
-          <>
-            <PlusIcon className="size-3.5" />
-            <Trans>Label</Trans>
-          </>
+          <Trans>Label</Trans>
         )}
+        <ChevronDownIcon className="size-3.5 shrink-0 text-faint" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start" className="max-h-[60svh] min-w-48">
         <DropdownMenuRadioGroup value={value} onValueChange={(v) => onChange(String(v))}>
@@ -672,12 +608,28 @@ function LabelChip({ value, onChange }: { value: string; onChange: (id: string) 
   )
 }
 
+function statusGroups(prev: ConversationListItem[]) {
+  const groups = new Map<string, { status: ConversationStatus; until?: string; ids: string[] }>()
+  for (const c of prev) {
+    const until =
+      c.status === "snoozed" && c.snooze_until && Date.parse(c.snooze_until) > Date.now() ? c.snooze_until : undefined
+    const status: ConversationStatus = c.status === "snoozed" && !until ? "open" : c.status
+    const key = `${status}|${until ?? ""}`
+    const g = groups.get(key) ?? { status, until, ids: [] }
+    g.ids.push(c.id)
+    groups.set(key, g)
+  }
+  return groups.values()
+}
+
 export function ChatList({
   currentId,
   onOpen,
   active = true,
   chip: controlledChip,
   onChip,
+  inbox: controlledInbox,
+  onInbox,
   embedded = false,
 }: {
   currentId: string | null
@@ -685,18 +637,24 @@ export function ChatList({
   active?: boolean
   chip?: Chip
   onChip?: (c: Chip) => void
+  inbox?: string
+  onInbox?: (id: string) => void
   embedded?: boolean
 }) {
   const { t } = useLingui()
+  const errorText = useErrorText()
   const { query, focus, select } = useListSearch()
   const q = useDebounced(query.trim(), 250)
-  const [inboxId] = useInboxFilter()
+  const [sidebarInbox] = useInboxFilter()
+  const [ownInbox, setOwnInbox] = useState("")
+  const chipInbox = controlledInbox ?? ownInbox
+  const locked = !!sidebarInbox
+  const inboxId = sidebarInbox || chipInbox
   const [ownChip, setOwnChip] = useState<Chip>(remembered)
   const chip = controlledChip ?? ownChip
   const [order, setOrder] = useState<Order | null>(null)
   const [unreadOnly, setUnreadOnly] = useState(false)
   const [labelId, setLabelId] = useState("")
-  const [searching, setSearching] = useState(false)
   const search = useRef<HTMLInputElement>(null)
   const scroller = useRef<HTMLDivElement>(null)
   const sentinel = useRef<HTMLDivElement>(null)
@@ -706,8 +664,8 @@ export function ChatList({
   const [linking, setLinking] = useState(false)
   const sort: Order = order ?? (chip === "waiting" ? "oldest" : "newest")
 
-  const [source] = useSourceFilter()
-  const narrowed = !!source.source || !!source.site || !!labelId
+  const [source, setSource] = useSourceFilter()
+  const narrowed = !!source.source || !!source.site || !!source.broadcast || !!labelId || !!chipInbox
   const filters = {
     kind: ["conversation" as const],
     ...chipFilters[chip],
@@ -717,12 +675,10 @@ export function ChatList({
     q: q || undefined,
   }
   const list = useConversations(filters)
-  const counts = useCounts(["conversation"]).data
   const pinnedList = useConversations({ ...filters, pinned: true })
   const loaded = useMemo(() => list.data?.pages.flatMap((p) => p.items) ?? [], [list.data])
   const pinnedLoaded = useMemo(() => pinnedList.data?.pages.flatMap((p) => p.items) ?? [], [pinnedList.data])
-  const keep = (c: ConversationListItem) =>
-    (chip !== "unread" && !unreadOnly) || c.unread ? chip !== "waiting" || isWaiting(c) : false
+  const keep = (c: ConversationListItem) => (!unreadOnly || c.unread) && (chip !== "waiting" || isWaiting(c))
   const byTime = (a: ConversationListItem, b: ConversationListItem) =>
     (a.last_activity_at < b.last_activity_at ? 1 : -1) * (sort === "oldest" ? -1 : 1)
   const pinnedRows = [...pinnedLoaded, ...loaded.filter((c) => c.pinned_at && !pinnedLoaded.some((x) => x.id === c.id))]
@@ -733,6 +689,19 @@ export function ChatList({
   const rows = [...pinnedRows, ...mainRows]
   const live = useLiveIds(rows.filter((c) => c.status !== "closed"))
   const { cursorId, setCursorId, moveCursor, openCursor } = useListCursor(rows, currentId, onOpen, active, scroller)
+
+  const scope = [chip, q, inboxId, labelId, unreadOnly, source.source, source.site, source.broadcast?.id].join("|")
+  const shown = useRef({ scope, ids: [] as string[] })
+  useEffect(() => {
+    const before = shown.current
+    const ids = rows.map((c) => c.id)
+    shown.current = { scope, ids }
+    if (!active || !currentId || selecting || list.isPending || before.scope !== scope) return
+    const at = before.ids.indexOf(currentId)
+    if (at < 0 || ids.includes(currentId)) return
+    const next = ids[Math.min(at, ids.length - 1)]
+    if (next) onOpen(next)
+  })
 
   const toggle = (id: string) => {
     setSelecting(true)
@@ -747,7 +716,8 @@ export function ChatList({
     setSelected(new Set())
   }
   const linkKey = keyLabel(SHORTCUTS.linkSelected).join("")
-  const chosen = rows.filter((c) => selected.has(c.id)).map((c) => c.id)
+  const chosenRows = rows.filter((c) => selected.has(c.id))
+  const chosen = chosenRows.map((c) => c.id)
   const picked = chosen.length
   useHotkeys(
     {
@@ -772,11 +742,6 @@ export function ChatList({
     setSelecting(true)
   }
 
-  const [focusSeen, setFocusSeen] = useState(focused)
-  if (focus > focusSeen) {
-    setFocusSeen(focus)
-    setSearching(true)
-  }
   useEffect(() => {
     if (focus <= focused) return
     focused = focus
@@ -809,6 +774,11 @@ export function ChatList({
     onChip?.(c)
     reset()
   }
+  const setInbox = (id: string) => {
+    setOwnInbox(id)
+    onInbox?.(id)
+    reset()
+  }
   const [shownChip, setShownChip] = useState(chip)
   if (shownChip !== chip) {
     setShownChip(chip)
@@ -822,16 +792,80 @@ export function ChatList({
   const empty: Record<Chip, React.ReactNode> = {
     waiting: <Trans>Nobody is waiting for a reply.</Trans>,
     all: <Trans>No conversations yet.</Trans>,
-    unread: <Trans>You have read everything.</Trans>,
     mine: <Trans>Nothing is assigned to you.</Trans>,
     unassigned: <Trans>Every open conversation has someone.</Trans>,
     snoozed: <Trans>Nothing is snoozed.</Trans>,
     done: <Trans>Nothing is closed yet.</Trans>,
   }
-  const showSearch = !embedded || searching || !!query
+  const filtered = !!q || narrowed || unreadOnly
+  const clearFilters = () => {
+    setListQuery("")
+    setLabelId("")
+    setSource({})
+    setUnreadOnly(false)
+    setInbox("")
+  }
+
+  const bulk = useBulkUpdateConversations()
+  const memberActions = useListActions()
+  const failed = (e: unknown) => toast(errorText(e))
+  const restoreStatus = (prev: ConversationListItem[]) => {
+    for (const g of statusGroups(prev))
+      bulk.mutate({ conversation_ids: g.ids, status: g.status, snooze_until: g.until }, { onError: failed })
+  }
+  const closeChosen = () => {
+    const prev = chosenRows.filter((c) => c.status !== "closed").slice(0, 100)
+    if (prev.length === 0) return
+    bulk.mutate(
+      { conversation_ids: prev.map((c) => c.id), status: "closed" },
+      {
+        onSuccess: (r) => {
+          const done = new Set(r.updated.map((c) => c.id))
+          toast(t`${done.size} closed`, () => restoreStatus(prev.filter((c) => done.has(c.id))))
+          stopSelecting()
+        },
+        onError: failed,
+      }
+    )
+  }
+  const anyUnread = chosenRows.some((c) => c.unread)
+  const readChosen = () => {
+    const ids = chosenRows.filter((c) => c.unread === anyUnread).map((c) => c.id)
+    const n = ids.length
+    for (const id of ids) {
+      if (anyUnread) memberActions.markRead(id)
+      else memberActions.markUnread(id)
+    }
+    const undo = () => {
+      for (const id of ids) {
+        if (anyUnread) memberActions.markUnread(id)
+        else memberActions.markRead(id)
+      }
+    }
+    toast(anyUnread ? t`${n} marked as read` : t`${n} marked as unread`, undo)
+    stopSelecting()
+  }
+  const labelChosen = (labelIdToToggle: string) => {
+    const all = chosenRows.every((c) => c.labels.includes(labelIdToToggle))
+    const targets = chosenRows.filter((c) => c.labels.includes(labelIdToToggle) === all).map((c) => c.id)
+    const body = (add: boolean) => (add ? { add_labels: [labelIdToToggle] } : { remove_labels: [labelIdToToggle] })
+    bulk.mutate(
+      { conversation_ids: targets.slice(0, 100), ...body(!all) },
+      {
+        onSuccess: () => {
+          toast(t`Labels changed`, () =>
+            bulk.mutate({ conversation_ids: targets.slice(0, 100), ...body(all) }, { onError: failed })
+          )
+          stopSelecting()
+        },
+        onError: failed,
+      }
+    )
+  }
+  const allLabels = useLabels().data ?? []
 
   const searchBox = (
-    <InputGroup className="h-8 min-w-0 flex-1 rounded-lg border-transparent bg-muted shadow-none focus-within:border-border focus-within:bg-card dark:bg-muted">
+    <InputGroup className="h-[34px] min-w-0 flex-1 rounded-lg border-input bg-background shadow-none focus-within:border-faint">
       <InputGroupAddon>
         <SearchIcon className="size-[15px] text-faint" />
       </InputGroupAddon>
@@ -843,7 +877,6 @@ export function ChatList({
           setListQuery(e.target.value)
           setCursorId(null)
         }}
-        onBlur={() => !query && setSearching(false)}
         onKeyDown={(e) => {
           if (e.key === "ArrowDown" || e.key === "ArrowUp") {
             e.preventDefault()
@@ -872,31 +905,85 @@ export function ChatList({
     </InputGroup>
   )
 
+  const searchRow = (
+    <div className="flex shrink-0 items-center gap-1.5 px-3 pt-2.5 pb-1.5">
+      {searchBox}
+      <Button
+        variant="outline"
+        className={cn(look.btn, "w-[34px] px-0", selecting && "bg-muted")}
+        onClick={() => (selecting ? stopSelecting() : setSelecting(true))}
+        aria-pressed={selecting}
+        aria-label={t`Select conversations`}
+        title={t`Select conversations`}
+        data-testid="select-conversations"
+      >
+        <SquareCheckBigIcon />
+      </Button>
+    </div>
+  )
+
+  const none = picked === 0
   const selection = (
     <div
-      className="flex h-[30px] min-w-0 flex-1 shrink-0 items-center gap-1.5"
+      className="flex shrink-0 flex-wrap items-center gap-1.5 px-3 pt-1 pb-2"
       role="toolbar"
       aria-label={t`Selection`}
       data-testid="selection-bar"
     >
-      <span className="me-auto min-w-0 truncate text-small font-medium" aria-live="polite">
-        {chosen.length === 0 ? <Trans>Pick conversations</Trans> : <Trans>Selected: {picked}</Trans>}
+      <span className="me-1 min-w-0 truncate text-small font-medium" aria-live="polite">
+        {none ? <Trans>Pick conversations</Trans> : <Trans>Selected: {picked}</Trans>}
       </span>
       <Button
-        size="sm"
-        className={look.btnPSm}
-        disabled={chosen.length === 0}
+        variant="outline"
+        className={look.btnSm}
+        disabled={none || bulk.isPending}
+        onClick={closeChosen}
+        data-testid="close-selected"
+      >
+        <Trans>Close all</Trans>
+      </Button>
+      <Button variant="outline" className={look.btnSm} disabled={none} onClick={readChosen} data-testid="read-selected">
+        {anyUnread || none ? <Trans>Mark as read</Trans> : <Trans>Mark as unread</Trans>}
+      </Button>
+      <DropdownMenu>
+        <DropdownMenuTrigger
+          render={<Button variant="outline" className={look.btnSm} disabled={none || bulk.isPending} />}
+          data-testid="label-selected"
+        >
+          <Trans>Label</Trans>
+          <ChevronDownIcon className="text-faint" />
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="start" className="max-h-[60svh] min-w-48">
+          {allLabels.length === 0 && (
+            <p className="px-2.5 py-1.5 text-body text-muted-foreground">
+              <Trans>No labels yet. Add them in settings.</Trans>
+            </p>
+          )}
+          {allLabels.map((l) => (
+            <DropdownMenuCheckboxItem
+              key={l.id}
+              checked={chosenRows.length > 0 && chosenRows.every((c) => c.labels.includes(l.id))}
+              onCheckedChange={() => labelChosen(l.id)}
+            >
+              <Dot color={l.color} />
+              {l.name}
+            </DropdownMenuCheckboxItem>
+          ))}
+        </DropdownMenuContent>
+      </DropdownMenu>
+      <Button
+        variant="outline"
+        className={look.btnSm}
+        disabled={none}
         onClick={() => setLinking(true)}
         title={t`Link to an incident (${linkKey})`}
         data-testid="link-selected"
       >
-        <FlameIcon />
         <Trans>Link to an incident</Trans>
       </Button>
       <Button
         variant="ghost"
-        size="sm"
-        className="h-[30px] rounded-lg"
+        className="h-[30px] rounded-lg px-2"
         onClick={stopSelecting}
         title={t`Clear the selection (Esc)`}
       >
@@ -905,99 +992,78 @@ export function ChatList({
     </div>
   )
 
+  const chips = (
+    <div className="flex shrink-0 flex-wrap items-center gap-1.5 px-3 pb-2.5" data-testid="chips">
+      <InboxChip value={sidebarInbox || chipInbox} locked={locked} onChange={setInbox} />
+      <SourceFilter inboxId={inboxId} onChange={reset} placeholder={<Trans>Filter</Trans>} />
+      <LabelChip
+        value={labelId}
+        onChange={(id) => {
+          setLabelId(id)
+          reset()
+        }}
+      />
+      <OrderChip
+        order={sort}
+        unreadOnly={unreadOnly}
+        onOrder={(o) => {
+          setOrder(o)
+          reset()
+        }}
+        onUnread={(on) => {
+          setUnreadOnly(on)
+          reset()
+        }}
+      />
+    </div>
+  )
+
+  const counts = useCounts(["conversation"]).data
+  const unassignedHere = useLoadedCount({
+    kind: ["conversation"],
+    inbox_id: inboxId || undefined,
+    status: ["open"],
+    assignee: "unassigned",
+  })
+  const waitingHere = useLoadedCount(
+    { kind: ["conversation"], inbox_id: inboxId || undefined, status: ["open"] },
+    isWaiting
+  )
+
   return (
     <nav
       aria-label={t`Conversations`}
       className="@container/list flex h-full min-h-0 flex-col bg-background"
       data-testid="chat-list"
     >
-      {embedded ? (
-        <>
-          <div className="flex shrink-0 items-center gap-2 border-b px-4 py-2.5" data-testid="chips">
-            {selecting ? (
-              selection
-            ) : (
-              <>
-                <OrderChip
-                  order={sort}
-                  unreadOnly={unreadOnly}
-                  onOrder={(o) => {
-                    setOrder(o)
-                    reset()
-                  }}
-                  onUnread={(on) => {
-                    setUnreadOnly(on)
-                    reset()
-                  }}
-                />
-                <SourceFilter inboxId={inboxId} onChange={reset} placeholder={<Trans>Channel</Trans>} />
-                <LabelChip
-                  value={labelId}
-                  onChange={(id) => {
-                    setLabelId(id)
-                    reset()
-                  }}
-                />
-                <span className="flex-1" />
-                {!showSearch && (
-                  <Button
-                    variant="ghost"
-                    size="icon-sm"
-                    className="size-[30px] rounded-lg text-faint"
-                    onClick={() => {
-                      setSearching(true)
-                      requestAnimationFrame(() => search.current?.focus())
-                    }}
-                    aria-label={t`Search conversations`}
-                    title={t`Search conversations (/)`}
-                    data-testid="list-search-open"
-                  >
-                    <SearchIcon />
-                  </Button>
-                )}
-              </>
-            )}
-          </div>
-          {showSearch && <div className="flex shrink-0 items-center border-b px-3 py-2">{searchBox}</div>}
-        </>
-      ) : (
-        <>
-          <PhoneHeader onSelect={() => setSelecting(true)}>
-            {selecting ? (
-              <div className="py-2">{selection}</div>
-            ) : (
-              <div data-testid="chips">
-                <UnderlineTabs
-                  value={chip}
-                  onChange={setChip}
-                  label={t`Filter`}
-                  items={PHONE_CHIPS.map((k) => ({
-                    value: k,
-                    label: labels[k],
-                    count: inboxId
-                      ? undefined
-                      : k === "mine"
-                        ? counts?.mine
-                        : k === "unassigned"
-                          ? counts?.unassigned
-                          : undefined,
-                    testId: `chip-${k}`,
-                  }))}
-                />
-              </div>
-            )}
-          </PhoneHeader>
-          <div className="flex shrink-0 items-center gap-1.5 border-b px-3 py-2">
-            {searchBox}
-            <InboxPicker className="max-w-36" />
-            <SourceFilter inboxId={inboxId} onChange={reset} />
-          </div>
-        </>
+      {!embedded && (
+        <PhoneHeader>
+          <UnderlineTabs
+            value={chip}
+            onChange={setChip}
+            label={t`Filter`}
+            items={PAGE_CHIPS.map((k) => ({
+              value: k,
+              label: labels[k],
+              count:
+                k === "waiting"
+                  ? waitingHere
+                  : k === "unassigned"
+                    ? inboxId
+                      ? unassignedHere
+                      : counts?.unassigned
+                    : undefined,
+              testId: `chip-${k}`,
+            }))}
+          />
+        </PhoneHeader>
       )}
+      {searchRow}
+      {selecting ? selection : chips}
       <AwayBanner />
-      <CleanupBanner onReview={onOpen} />
+      {chip === "waiting" && <CleanupBanner inboxId={inboxId} />}
       <ImportBanner />
-      <div ref={scroller} className="min-h-0 flex-1 overflow-y-auto" data-testid="list">
+      <div ref={scroller} className="min-h-0 flex-1 overflow-y-auto border-t" data-testid="list">
         {list.isPending ? (
           <div className="grid gap-1 p-3">
             {[0, 1, 2, 3].map((i) => (
@@ -1011,17 +1077,22 @@ export function ChatList({
             ))}
           </div>
         ) : rows.length === 0 && !hasNextPage ? (
-          <p className="px-4 py-10 text-center text-body text-faint" data-testid="list-empty">
-            {q ? (
-              <Trans>Nothing matches your search here.</Trans>
-            ) : narrowed ? (
-              <Trans>Nothing matches these filters.</Trans>
-            ) : unreadOnly ? (
-              empty.unread
-            ) : (
-              empty[chip]
+          <div className="flex flex-col items-center gap-3 px-4 py-10 text-center" data-testid="list-empty">
+            <p className="text-body text-faint">
+              {q ? (
+                <Trans>Nothing matches your search here.</Trans>
+              ) : narrowed || unreadOnly ? (
+                <Trans>Nothing matches these filters.</Trans>
+              ) : (
+                empty[chip]
+              )}
+            </p>
+            {filtered && (
+              <Button variant="outline" className={look.btnSm} onClick={clearFilters} data-testid="clear-filters">
+                <Trans>Clear search and filters</Trans>
+              </Button>
             )}
-          </p>
+          </div>
         ) : (
           <>
             {pinnedRows.length > 0 && (

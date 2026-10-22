@@ -77,8 +77,8 @@ msgid "Another help center already uses this address, now or before."
 msgstr "다른 도움말 센터가 현재 또는 이전에 이 주소를 사용합니다."
 
 #: src/features/help/pages.tsx
-msgid "Answer common questions once, in writing. Each product gets its own help center with articles, collections and a report of what people search for."
-msgstr "자주 묻는 질문에는 한 번만 글로 답하세요. 제품마다 문서, 컬렉션, 사람들이 검색하는 내용에 대한 보고서를 갖춘 별도의 고객센터가 제공됩니다."
+msgid "Answer common questions once, in writing. Each product gets its own help center with articles, collections and a report of what people search for. Pages are hosted by Yuva, so there is nothing to install on your site."
+msgstr "자주 묻는 질문에는 한 번만, 글로 답하세요. 제품마다 문서, 컬렉션, 사람들이 검색한 내용의 보고서가 있는 고유한 도움말 센터가 생깁니다. 페이지는 Yuva가 호스팅하므로 사이트에 설치할 것이 없습니다."
 
 #: src/features/help/pages.tsx
 msgid "Answer common questions once, in writing. Pick an inbox’s help center to write articles, group them in collections and see what customers search for."
@@ -162,6 +162,7 @@ msgstr "글머리 기호 목록"
 msgid "Cancel"
 msgstr "취소"
 
+#: src/features/help/ArticleEditor.tsx
 #: src/features/help/ArticlesTab.tsx
 msgid "Changed"
 msgstr "변경됨"
@@ -226,11 +227,6 @@ msgstr "도움말 센터 만들기"
 #: src/features/help/HelpColumn.tsx
 msgid "Create help center ({newKey})"
 msgstr "도움말 센터 만들기 ({newKey})"
-
-#. placeholder {0}: inbox.name
-#: src/features/help/pages.tsx
-msgid "Create one for {0}"
-msgstr "{0}용으로 만들기"
 
 #: src/features/help/CollectionsTab.tsx
 #: src/features/help/SettingsTab.tsx
@@ -342,11 +338,16 @@ msgstr "방문자가 둘러볼 수 있도록 문서를 묶으세요. 컬렉션�
 msgid "Heading"
 msgstr "제목"
 
+#: src/features/help/CenterBar.tsx
 #: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 #: src/features/help/SettingsTab.tsx
 msgid "Help center"
 msgstr "도움말 센터"
+
+#: src/features/help/pages.tsx
+msgid "Help center created. Write the first article, then publish it."
+msgstr "도움말 센터를 만들었습니다. 첫 문서를 쓰고 게시하세요."
 
 #: src/features/help/SettingsTab.tsx
 msgid "Help center deleted"
@@ -445,7 +446,10 @@ msgid "Main language"
 msgstr "기본 언어"
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+msgid "Mark up to date"
+msgstr "최신으로 표시"
+
+#: src/features/help/ArticleEditor.tsx
 msgid "More"
 msgstr "더 보기"
 
@@ -522,6 +526,11 @@ msgstr "초안이 없습니다. 작성한 모든 것이 게시되었습니다."
 msgid "No earlier versions yet."
 msgstr "이전 버전이 아직 없습니다."
 
+#. placeholder {0}: target.inbox.name
+#: src/features/help/pages.tsx
+msgid "No help center for {0} yet"
+msgstr "{0}의 도움말 센터가 아직 없습니다"
+
 #: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 msgid "No help center yet. Owners and admins create it."
@@ -540,6 +549,7 @@ msgstr "없음"
 msgid "not named"
 msgstr "이름 없음"
 
+#: src/features/help/ArticleEditor.tsx
 #: src/features/help/ArticlesTab.tsx
 msgid "Not written"
 msgstr "작성 안 됨"
@@ -555,6 +565,10 @@ msgstr "답변 {answers}개 중"
 #: src/features/help/SettingsTab.tsx
 msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish and unpublish too."
 msgstr "꺼짐: 상담원은 초안을 작성해 제출하고 소유자와 관리자가 게시합니다. 켜짐: 받은편지함에 접근할 수 있는 상담원도 게시하고 게시를 취소할 수 있습니다."
+
+#: src/features/help/SettingsTab.tsx
+msgid "On: anyone with the address can read the help center. Off: only your team can preview it."
+msgstr "켜짐: 주소를 아는 누구나 도움말 센터를 볼 수 있습니다. 꺼짐: 팀만 미리 볼 수 있습니다."
 
 #: src/features/help/ArticleEditor.tsx
 msgid "One path per line, such as /billing/*. The chat widget suggests this article on matching pages."
@@ -618,6 +632,10 @@ msgstr "미리보기"
 msgid "Preview ({alt} P)"
 msgstr "미리보기 ({alt} P)"
 
+#: src/features/help/pages.tsx
+msgid "Preview ({previewKey})"
+msgstr "미리보기 ({previewKey})"
+
 #. placeholder {0}: center.name
 #: src/features/help/pages.tsx
 msgid "Preview of {0}"
@@ -632,22 +650,27 @@ msgid "Public address"
 msgstr "공개 주소"
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "Publish"
 msgstr "게시"
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "Publish ({publishKey})"
 msgstr "게시 ({publishKey})"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/CenterBar.tsx
 #: src/features/help/HelpColumn.tsx
-#: src/features/help/pages.tsx
 #: src/features/help/Revisions.tsx
+#: src/features/help/SettingsTab.tsx
 #: src/features/help/text.tsx
 msgid "Published"
 msgstr "게시됨"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Publishing"
+msgstr "게시"
 
 #: src/features/help/text.tsx
 msgid "Question mark"
@@ -758,6 +781,10 @@ msgstr "방패"
 msgid "Show"
 msgstr "표시"
 
+#: src/features/help/ArticleEditor.tsx
+msgid "Show original"
+msgstr "원본 보기"
+
 #: src/features/help/SettingsTab.tsx
 msgid "Shown under the name on the home page."
 msgstr "홈페이지의 이름 아래에 표시됩니다."
@@ -831,6 +858,10 @@ msgid "The main language has no text for this article yet."
 msgstr "기본 언어에 이 문서의 텍스트가 아직 없습니다."
 
 #: src/features/help/ArticleEditor.tsx
+msgid "The original changed after this translation was written. Compare them, then mark it up to date."
+msgstr "이 번역을 작성한 후 원문이 변경되었습니다. 비교해 본 다음 최신으로 표시하세요."
+
+#: src/features/help/ArticleEditor.tsx
 msgid "The page stops working for visitors. The draft stays, and you can publish it again."
 msgstr "페이지가 방문자에게 작동하지 않게 됩니다. 초안은 유지되며 다시 게시할 수 있습니다."
 
@@ -880,15 +911,24 @@ msgid "Type a word to search for."
 msgstr "검색할 단어를 입력하세요."
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "Unpublish"
 msgstr "게시 취소"
+
+#: src/features/help/CenterBar.tsx
+msgid "Unpublish ({publishKey})"
+msgstr "게시 취소 ({publishKey})"
+
+#: src/features/help/CenterBar.tsx
+msgid "Unpublish this help center?"
+msgstr "이 도움말 센터의 게시를 취소할까요?"
 
 #: src/features/help/ArticleEditor.tsx
 msgid "Unpublish this translation?"
 msgstr "이 번역의 게시를 취소할까요?"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/CenterBar.tsx
 #: src/features/help/HelpColumn.tsx
 msgid "Unpublished"
 msgstr "게시 안 됨"
@@ -896,10 +936,6 @@ msgstr "게시 안 됨"
 #: src/features/help/text.tsx
 msgid "Unpublished changes"
 msgstr "게시되지 않은 변경 사항"
-
-#: src/features/help/pages.tsx
-msgid "Unpublished, only your team can preview it"
-msgstr "게시 안 됨, 팀만 미리 볼 수 있습니다"
 
 #: src/features/help/ArticleEditor.tsx
 msgid "Unsaved changes"
@@ -929,11 +965,11 @@ msgstr "버전을 초안으로 복원했습니다"
 msgid "View"
 msgstr "보기"
 
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "View site"
 msgstr "사이트 보기"
 
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "View site ({openKey})"
 msgstr "사이트 보기 ({openKey})"
 
@@ -945,13 +981,13 @@ msgstr "조회수"
 msgid "Views · 7 days"
 msgstr "조회 · 7일"
 
+#: src/features/help/CenterBar.tsx
+msgid "Visitors can no longer open it and the chat widget stops suggesting its articles. Your articles stay as they are."
+msgstr "방문자는 더 이상 열 수 없고 채팅 위젯도 문서를 추천하지 않습니다. 문서는 그대로 유지됩니다."
+
 #: src/features/help/ReportTab.tsx
 msgid "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
 msgstr "방문자가 읽고 검색하는 내용입니다. 조회수는 대략적이며, 수치는 1분 안에 이 페이지에 반영됩니다."
-
-#: src/features/help/SettingsTab.tsx
-msgid "Who can publish"
-msgstr "게시할 수 있는 사람"
 
 #: src/features/help/ReportTab.tsx
 msgid "Words visitors typed that found nothing. A new article for each is the fastest fix."
@@ -965,6 +1001,10 @@ msgstr "작성"
 #: src/features/help/ArticleEditor.tsx
 msgid "Write the answer in Markdown…"
 msgstr "Markdown으로 답변을 작성하세요…"
+
+#: src/features/help/CenterBar.tsx
+msgid "Written here, shown on pages Yuva hosts, searched from the chat widget and the reply box. Documentation pages on your own site live under <0>Docs</0>."
+msgstr "여기에서 작성하고, Yuva가 호스팅하는 페이지에 표시되며, 채팅 위젯과 답장 상자에서 검색됩니다. 자체 사이트의 문서 페이지는 <0>Docs</0>에 있습니다."
 
 #: src/features/help/SettingsTab.tsx
 msgid "Your product."

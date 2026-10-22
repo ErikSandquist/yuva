@@ -1,8 +1,17 @@
-import { useLingui } from "@lingui/react/macro"
+import { Trans, useLingui } from "@lingui/react/macro"
+import { ChevronDownIcon, LockIcon } from "lucide-react"
 
 import { Dot } from "@/components/common"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useInboxFilter } from "@/features/inbox/inboxFilter"
+import { look } from "@/features/inbox/PageFrame"
 import { cn } from "@/lib/utils"
 import { useInboxes } from "@/lib/workspace"
 
@@ -50,5 +59,66 @@ export function InboxPicker({
         ))}
       </SelectContent>
     </Select>
+  )
+}
+
+export function InboxChip({
+  value,
+  locked,
+  onChange,
+}: {
+  value: string
+  locked: boolean
+  onChange: (id: string) => void
+}) {
+  const { t } = useLingui()
+  const inboxes = useInboxes().data ?? []
+  if (inboxes.length < 2) return null
+  const current = inboxes.find((i) => i.id === value)
+  const label = (
+    <>
+      {current && <Dot color={current.branding.color} className="size-2 rounded-[3px]" />}
+      <span className="max-w-32 truncate">{current ? current.name : <Trans>All products</Trans>}</span>
+    </>
+  )
+  if (locked) {
+    return (
+      <button
+        type="button"
+        disabled
+        className={cn(look.chip, "cursor-default opacity-80 hover:border-input")}
+        title={t`Set by the product in the sidebar`}
+        aria-label={t`Product`}
+        data-testid="inbox-chip"
+      >
+        {label}
+        <LockIcon className="size-3 text-faint" />
+      </button>
+    )
+  }
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger
+        render={<button type="button" className={look.chip} />}
+        aria-label={t`Product`}
+        data-testid="inbox-chip"
+      >
+        {label}
+        <ChevronDownIcon className="size-3.5 shrink-0 text-faint" />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="start" className="max-h-[60svh] min-w-48">
+        <DropdownMenuRadioGroup value={value} onValueChange={(v) => onChange(String(v))}>
+          <DropdownMenuRadioItem value="">
+            <Trans>All products</Trans>
+          </DropdownMenuRadioItem>
+          {inboxes.map((i) => (
+            <DropdownMenuRadioItem key={i.id} value={i.id}>
+              <Dot color={i.branding.color} className="size-2 rounded-[3px]" />
+              <span className="truncate">{i.name}</span>
+            </DropdownMenuRadioItem>
+          ))}
+        </DropdownMenuRadioGroup>
+      </DropdownMenuContent>
+    </DropdownMenu>
   )
 }

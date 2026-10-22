@@ -1,23 +1,12 @@
 import { Trans, useLingui } from "@lingui/react/macro"
-import {
-  CalendarClockIcon,
-  CircleAlertIcon,
-  GaugeIcon,
-  LoaderIcon,
-  PauseIcon,
-  PlayIcon,
-  Trash2Icon,
-  Undo2Icon,
-  XIcon,
-} from "lucide-react"
+import { CircleAlertIcon, GaugeIcon, LoaderIcon, PauseIcon } from "lucide-react"
 import { useState } from "react"
 import { Link, useNavigate, useParams, useSearchParams } from "react-router"
 
-import { ErrorLine, InboxMark, Notice, useConfirm } from "@/components/common"
-import { Pane, PaneBack } from "@/components/common/Column"
-import { BROADCAST_KEYS, keyLabel } from "@/components/common/ShortcutSheet"
+import { ErrorLine, Notice, useConfirm } from "@/components/common"
+import { PageBar } from "@/components/common/PageBar"
+import { BROADCAST_KEYS } from "@/components/common/ShortcutSheet"
 import { formatDateTime, formatDuration, useEnumText } from "@/components/common/text"
-import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import {
   broadcastLink,
@@ -26,14 +15,13 @@ import {
   useBroadcast,
   useBroadcastAction,
   useDeleteBroadcast,
-  useReview,
   type BroadcastAction,
 } from "@/features/broadcasts/broadcastQueries"
 import {
+  keyHint,
   progressOf,
   ProgressBar,
   StateBadge,
-  StatusNotice,
   useNumber,
   utcLine,
   PaceLine,
@@ -42,148 +30,110 @@ import {
 import { Composer } from "@/features/broadcasts/Composer"
 import { DesignThumb } from "@/features/broadcasts/DesignPicker"
 import { useInboxChannels, useLists } from "@/features/broadcasts/queries"
-import { Deliveries, Report } from "@/features/broadcasts/Report"
+import { Deliveries, Report, ReportStats } from "@/features/broadcasts/Report"
 import { paceGap, PaceDialog, usePaceSummary } from "@/features/broadcasts/Pace"
-import { useTestSend } from "@/features/broadcasts/TestSend"
 import { designLink } from "@/features/designs/queries"
-import { Card, PageHeader, PageTabs, Section } from "@/features/settings/ui"
+import { Card, Section } from "@/features/settings/ui"
+import { FrameButton, FrameTabs, framePad, ProductTag } from "@/features/status/PageFrame"
 import { useHotkeys } from "@/hooks/use-hotkeys"
 import type { Broadcast } from "@/lib/api"
 import { useSession } from "@/lib/session"
+import { cn } from "@/lib/utils"
 import { useInboxes, useMemberMap } from "@/lib/workspace"
 
 export { BroadcastsOverview as BroadcastsHome } from "@/features/broadcasts/Overview"
-
-function hint(label: string, key: string) {
-  return `${label} (${keyLabel(key).join("")})`
-}
 
 function Actions({
   b,
   run,
   pending,
   onDelete,
+  onPace,
 }: {
   b: Broadcast
   run: (a: BroadcastAction) => void
   pending: boolean
   onDelete: () => void
+  onPace: () => void
 }) {
   const { t } = useLingui()
-  return (
-    <div className="flex flex-wrap items-center gap-2" data-testid="broadcast-actions">
-      {b.state === "scheduled" && (
-        <Button
-          variant="outline"
-          size="sm"
-          disabled={pending}
-          onClick={() => run("unschedule")}
-          title={hint(t`Back to draft`, BROADCAST_KEYS.unschedule)}
-          data-testid="broadcast-unschedule"
-        >
-          <Undo2Icon />
-          <Trans>Back to draft</Trans>
-        </Button>
-      )}
-      {(b.state === "sending" || b.state === "preparing") && (
-        <Button
-          variant="outline"
-          size="sm"
-          disabled={pending}
-          onClick={() => run("pause")}
-          title={hint(t`Pause`, BROADCAST_KEYS.pause)}
-          data-testid="broadcast-pause"
-        >
-          <PauseIcon />
-          <Trans>Pause</Trans>
-        </Button>
-      )}
-      {b.state === "paused" && (
-        <Button
-          size="sm"
-          disabled={pending}
-          onClick={() => run("resume")}
-          title={hint(t`Resume`, BROADCAST_KEYS.pause)}
-          data-testid="broadcast-resume"
-        >
-          <PlayIcon />
-          <Trans>Resume</Trans>
-        </Button>
-      )}
-      {(b.state === "scheduled" || isActive(b)) && (
-        <Button
-          variant="ghost"
-          size="sm"
-          disabled={pending}
-          onClick={() => run("cancel")}
-          title={hint(t`Cancel the broadcast`, BROADCAST_KEYS.cancel)}
-          data-testid="broadcast-cancel"
-        >
-          <XIcon />
-          <Trans>Cancel broadcast</Trans>
-        </Button>
-      )}
-      {(b.state === "draft" || FINISHED.includes(b.state)) && (
-        <Button variant="ghost" size="sm" onClick={onDelete} data-testid="broadcast-delete">
-          <Trash2Icon />
-          {b.state === "draft" ? <Trans>Delete draft</Trans> : <Trans>Delete</Trans>}
-        </Button>
-      )}
-    </div>
-  )
-}
-
-function ChangePace({ b }: { b: Broadcast }) {
-  const { canManage } = useSession()
-  const [open, setOpen] = useState(false)
-  const rate = useInboxChannels(b.inbox_id).data?.find((c) => c.id === b.channel_id)?.email?.broadcast_rate
-  if (!canManage) return null
+  const active = b.state === "sending" || b.state === "preparing"
+  const live = b.state === "scheduled" || isActive(b)
   return (
     <>
-      <Button
-        variant="outline"
-        size="sm"
-        className="w-fit"
-        onClick={() => setOpen(true)}
-        data-testid="broadcast-pace-change"
-      >
-        <GaugeIcon />
-        <Trans>Change pace</Trans>
-      </Button>
-      {open && <PaceDialog b={b} rate={rate} onClose={() => setOpen(false)} />}
+      {live && (
+        <FrameButton
+          disabled={pending}
+          onClick={() => run("cancel")}
+          title={keyHint(t`Cancel the broadcast`, BROADCAST_KEYS.cancel)}
+          data-testid="broadcast-cancel"
+        >
+          <Trans>Cancel broadcast</Trans>
+        </FrameButton>
+      )}
+      {live && (
+        <FrameButton
+          onClick={onPace}
+          title={keyHint(t`Change pace`, BROADCAST_KEYS.pace)}
+          data-testid="broadcast-pace-change"
+        >
+          <GaugeIcon />
+          <Trans>Change pace</Trans>
+        </FrameButton>
+      )}
+      {b.state === "scheduled" && (
+        <FrameButton
+          ink
+          disabled={pending}
+          onClick={() => run("unschedule")}
+          title={keyHint(t`Back to draft`, BROADCAST_KEYS.unschedule)}
+          data-testid="broadcast-unschedule"
+        >
+          <Trans>Back to draft</Trans>
+        </FrameButton>
+      )}
+      {active && (
+        <FrameButton
+          ink
+          disabled={pending}
+          onClick={() => run("pause")}
+          title={keyHint(t`Pause`, BROADCAST_KEYS.pause)}
+          data-testid="broadcast-pause"
+        >
+          <Trans>Pause</Trans>
+        </FrameButton>
+      )}
+      {b.state === "paused" && (
+        <FrameButton
+          ink
+          disabled={pending}
+          onClick={() => run("resume")}
+          title={keyHint(t`Resume`, BROADCAST_KEYS.pause)}
+          data-testid="broadcast-resume"
+        >
+          <Trans>Resume</Trans>
+        </FrameButton>
+      )}
+      {FINISHED.includes(b.state) && (
+        <>
+          {b.design_id && (
+            <FrameButton
+              render={<Link to={designLink(b.design_id)} />}
+              title={keyHint(t`Open the design`, BROADCAST_KEYS.design)}
+            >
+              <Trans>Open the design</Trans>
+            </FrameButton>
+          )}
+          <FrameButton onClick={onDelete} data-testid="broadcast-delete">
+            <Trans>Delete</Trans>
+          </FrameButton>
+        </>
+      )}
     </>
   )
 }
 
-function Scheduled({ b }: { b: Broadcast }) {
-  const { i18n } = useLingui()
-  if (!b.scheduled_at) return null
-  const local = formatDateTime(b.scheduled_at, i18n.locale)
-  const utc = utcLine(b.scheduled_at, i18n.locale)
-  const zone = Intl.DateTimeFormat().resolvedOptions().timeZone
-  return (
-    <Card data-testid="broadcast-scheduled">
-      <div className="flex items-start gap-3">
-        <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-brand-wash text-brand">
-          <CalendarClockIcon className="size-5" />
-        </span>
-        <div className="flex min-w-0 flex-col gap-0.5">
-          <p className="text-reading font-medium">
-            <Trans>Sends on {local}</Trans>
-          </p>
-          <p className="text-small text-faint">
-            <Trans>
-              {zone} · {utc} UTC. The recipients are taken then; you can go back to the draft until it starts.
-            </Trans>
-          </p>
-        </div>
-      </div>
-      <ChangePace b={b} />
-    </Card>
-  )
-}
-
-function Sending({ b, at }: { b: Broadcast; at: number }) {
+function Banner({ b, at }: { b: Broadcast; at: number }) {
   const { t, i18n } = useLingui()
   const text = useEnumText()
   const num = useNumber()
@@ -204,34 +154,48 @@ function Sending({ b, at }: { b: Broadcast; at: number }) {
       : null
   const every = gap > 0 ? formatDuration(gap, i18n.locale) : ""
   const reason = b.pause_reason
-  return (
-    <Card data-testid="broadcast-sending">
-      <div className="flex flex-col gap-2">
-        <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
-          <p className="text-reading font-medium tabular-nums" data-testid="broadcast-sent-count">
-            {b.state === "preparing" ? (
-              <Trans>Taking the recipients: {prepared} so far</Trans>
-            ) : (
-              <Trans>
-                {sent} of {all} done
-              </Trans>
-            )}
-          </p>
-          <p className="text-small text-faint">
-            {rate ? (every ? t`${rate} mails a second · one every ${every}` : t`${rate} mails a second`) : null}
-            {end && (
-              <>
-                {" · "}
-                <Trans>about done by {end}</Trans>
-              </>
-            )}
-          </p>
-        </div>
-        <ProgressBar b={b} className="h-2" />
+  if (b.state === "scheduled" && b.scheduled_at) {
+    const local = formatDateTime(b.scheduled_at, i18n.locale)
+    const utc = utcLine(b.scheduled_at, i18n.locale)
+    const zone = Intl.DateTimeFormat().resolvedOptions().timeZone
+    return (
+      <div className="flex flex-col gap-1 rounded-xl border bg-card p-4" data-testid="broadcast-scheduled">
+        <p className="text-reading font-semibold">
+          <Trans>Sends on {local}</Trans>
+        </p>
+        <p className="text-small text-muted-foreground">
+          <Trans>
+            {zone} · {utc} UTC. The recipients are taken then; you can go back to the draft until it starts.
+          </Trans>
+        </p>
       </div>
+    )
+  }
+  return (
+    <div className="flex flex-col gap-3 rounded-xl border bg-card p-4" data-testid="broadcast-sending">
+      <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
+        <p className="text-reading font-semibold tabular-nums" data-testid="broadcast-sent-count">
+          {b.state === "preparing" ? (
+            <Trans>Taking the recipients: {prepared} so far</Trans>
+          ) : (
+            <Trans>
+              {sent} of {all} done
+            </Trans>
+          )}
+        </p>
+        <p className="text-small text-muted-foreground">
+          {rate ? (every ? t`${rate} mails a second · one every ${every}` : t`${rate} mails a second`) : null}
+          {end && (
+            <>
+              {" · "}
+              <Trans>about done by {end}</Trans>
+            </>
+          )}
+        </p>
+      </div>
+      <ProgressBar b={b} className="h-2" />
       {b.waiting_until && <WaitingLine until={b.waiting_until} />}
       {b.state === "sending" && b.pace_next_at && next > at && <PaceLine at={b.pace_next_at} />}
-      <ChangePace b={b} />
       {b.state === "paused" && reason && (
         <Notice tone={reason === "member" ? "info" : "warning"} icon={PauseIcon} data-testid="broadcast-pause-reason">
           <p>{text.pauseReason[reason]}</p>
@@ -245,7 +209,7 @@ function Sending({ b, at }: { b: Broadcast; at: number }) {
           )}
         </Notice>
       )}
-    </Card>
+    </div>
   )
 }
 
@@ -253,8 +217,10 @@ function Summary({ b }: { b: Broadcast }) {
   const { t, i18n } = useLingui()
   const { canManage } = useSession()
   const channel = useInboxChannels(b.inbox_id).data?.find((c) => c.id === b.channel_id)
+  const open = useLists(b.inbox_id, false)
+  const archived = useLists(b.inbox_id, true)
   const lists = new Map(
-    (useLists(b.inbox_id, false).data?.pages.flatMap((p) => p.items) ?? []).map((l) => [l.id, l.name])
+    [...(open.data?.pages ?? []), ...(archived.data?.pages ?? [])].flatMap((p) => p.items).map((l) => [l.id, l.name])
   )
   const paceSummary = usePaceSummary()
   const members = useMemberMap()
@@ -309,14 +275,14 @@ function Summary({ b }: { b: Broadcast }) {
   )
 }
 
-const TABS = ["report", "recipients"] as const
+const TABS = ["report", "recipients", "broadcast"] as const
 type Tab = (typeof TABS)[number]
 
 export function BroadcastPage() {
   const { t } = useLingui()
   const navigate = useNavigate()
   const { broadcastId = "" } = useParams()
-  const [params, setParams] = useSearchParams()
+  const [params] = useSearchParams()
   const { canManage } = useSession()
   const broadcast = useBroadcast(broadcastId)
   const b = broadcast.data
@@ -324,13 +290,16 @@ export function BroadcastPage() {
   const action = useBroadcastAction(broadcastId)
   const remove = useDeleteBroadcast()
   const [confirm, confirmDialog] = useConfirm()
-  const [confirming, setConfirming] = useState(false)
+  const [pacing, setPacing] = useState(false)
+  const rate = useInboxChannels(b?.inbox_id ?? "").data?.find((c) => c.id === b?.channel_id)?.email?.broadcast_rate
   const draft = b?.state === "draft"
-  const review = useReview(b ?? ({ id: broadcastId, updated_at: "" } as Broadcast), !!draft)
-  const test = useTestSend(broadcastId)
-  const raw = params.get("tab")
-  const tab: Tab = TABS.includes(raw as Tab) && canManage ? (raw as Tab) : "report"
-  const setTab = (v: Tab) => setParams(v === "report" ? {} : { tab: v }, { replace: true })
+  const scheduled = b?.state === "scheduled"
+  const raw = params.get("tab") as Tab | null
+  const tab: Tab = scheduled
+    ? "broadcast"
+    : raw && TABS.includes(raw) && (raw !== "recipients" || canManage)
+      ? raw
+      : "report"
   const name = b?.name ?? ""
 
   const run = (a: BroadcastAction) => {
@@ -358,106 +327,94 @@ export function BroadcastPage() {
     })
 
   useHotkeys(
-    b
+    b && !draft
       ? {
-          ...(draft && b.design_id ? { [BROADCAST_KEYS.design]: () => navigate(designLink(b.design_id!)) } : {}),
-          ...(draft ? { [BROADCAST_KEYS.test]: test.run } : {}),
-          ...(draft && review.data?.ready ? { [BROADCAST_KEYS.send]: () => setConfirming(true) } : {}),
+          ...(b.design_id && FINISHED.includes(b.state)
+            ? { [BROADCAST_KEYS.design]: () => navigate(designLink(b.design_id!)) }
+            : {}),
           ...(b.state === "scheduled" ? { [BROADCAST_KEYS.unschedule]: () => run("unschedule") } : {}),
           ...(b.state === "sending" || b.state === "preparing" ? { [BROADCAST_KEYS.pause]: () => run("pause") } : {}),
           ...(b.state === "paused" ? { [BROADCAST_KEYS.pause]: () => run("resume") } : {}),
-          ...(b.state === "scheduled" || isActive(b) ? { [BROADCAST_KEYS.cancel]: () => run("cancel") } : {}),
-          ...(!draft
+          ...(b.state === "scheduled" || isActive(b)
+            ? { [BROADCAST_KEYS.cancel]: () => run("cancel"), [BROADCAST_KEYS.pace]: () => setPacing(true) }
+            : {}),
+          ...(!scheduled
             ? {
-                [BROADCAST_KEYS.report]: () => setTab("report"),
-                [BROADCAST_KEYS.deliveries]: () => setTab("recipients"),
+                [BROADCAST_KEYS.report]: () => navigate(broadcastLink(b.id)),
+                [BROADCAST_KEYS.summary]: () => navigate(broadcastLink(b.id, "broadcast")),
+                ...(canManage
+                  ? { [BROADCAST_KEYS.deliveries]: () => navigate(broadcastLink(b.id, "recipients")) }
+                  : {}),
               }
             : {}),
         }
       : {},
-    canManage && !!b
+    canManage && !!b && !pacing
   )
 
-  if (broadcast.isPending) {
+  if (broadcast.isPending || !b) {
     return (
-      <Pane wide className="gap-4">
-        <Skeleton className="h-8 w-60" />
-        <Skeleton className="h-40 w-full rounded-2xl" />
-      </Pane>
+      <div className="flex min-h-0 min-w-0 flex-1 flex-col bg-background">
+        <PageBar back="/broadcasts" label={t`Broadcasts`}>
+          {broadcast.isPending ? <Skeleton className="h-7 w-60" /> : <ErrorLine error={broadcast.error} />}
+        </PageBar>
+        <div className={framePad}>{broadcast.isPending && <Skeleton className="h-40 w-full rounded-2xl" />}</div>
+      </div>
     )
   }
-  if (!b) {
-    return (
-      <Pane wide>
-        <PaneBack to="/broadcasts" label={t`Broadcasts`} always />
-        <ErrorLine error={broadcast.error} />
-      </Pane>
-    )
-  }
+  if (draft) return <Composer key={b.id} b={b} readOnly={!canManage} />
+  const names: Record<Tab, string> = { report: t`Report`, recipients: t`Recipients`, broadcast: t`Broadcast` }
+  const tabs = TABS.filter((v) => (v === "recipients" ? canManage : true))
+    .filter((v) => !scheduled || v === "broadcast")
+    .map((v) => ({
+      key: v,
+      to: broadcastLink(b.id, v === "report" ? undefined : v),
+      label: names[v],
+      testId: `broadcast-tab-${v}`,
+    }))
   return (
-    <Pane wide testId="broadcast-page" key={b.id} className="@container gap-6">
-      <PaneBack to="/broadcasts" label={t`Broadcasts`} always />
-      <PageHeader
-        back={false}
-        title={<span data-testid="broadcast-name-heading">{b.name}</span>}
-        description={
-          <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
+    <div className="flex min-h-0 min-w-0 flex-1 flex-col bg-background" data-testid="broadcast-page" key={b.id}>
+      <PageBar back="/broadcasts" label={t`Broadcasts`}>
+        <div className="flex min-w-48 flex-1 basis-64 flex-col leading-snug">
+          <span className="flex min-w-0 flex-wrap items-center gap-x-2.5 gap-y-1">
+            <h1 className="min-w-0 truncate text-[17px] font-semibold" data-testid="broadcast-name-heading">
+              {b.name}
+            </h1>
             <StateBadge state={b.state} />
-            {inbox && (
-              <span className="inline-flex items-center gap-1.5">
-                <InboxMark name={inbox.name} color={inbox.branding.color} className="size-4 text-[9px]" />
-                {inbox.name}
-              </span>
-            )}
-            {b.subject && (
-              <>
-                <span aria-hidden>·</span>
-                <span className="min-w-0 truncate">{b.subject}</span>
-              </>
-            )}
+            {inbox && <ProductTag name={inbox.name} color={inbox.branding.color} />}
           </span>
-        }
-        action={canManage && <Actions b={b} run={run} pending={action.isPending} onDelete={onDelete} />}
-        tabs={
-          !draft &&
-          b.state !== "scheduled" &&
-          canManage && (
-            <PageTabs
-              label={t`Broadcast`}
-              current={tab}
-              items={[
-                { key: "report", to: broadcastLink(b.id), label: t`Report`, testId: "broadcast-tab-report" },
-                {
-                  key: "recipients",
-                  to: broadcastLink(b.id, "recipients"),
-                  label: t`Recipients`,
-                  testId: "broadcast-tab-recipients",
-                },
-              ]}
-            />
-          )
-        }
-      />
-      <ErrorLine error={action.error ?? remove.error} />
-      {draft && <StatusNotice />}
-      {b.state === "failed" && (
-        <Notice tone="danger" icon={CircleAlertIcon} data-testid="broadcast-failed">
-          <p>
-            <Trans>Sending stopped and cannot go on, for example because its channel was removed.</Trans>
-          </p>
-          {b.state_detail && <p className="text-muted-foreground">{b.state_detail}</p>}
-        </Notice>
-      )}
-      {draft ? (
-        <Composer b={b} readOnly={!canManage} test={test} confirming={confirming} setConfirming={setConfirming} />
-      ) : (
-        <>
-          {b.state === "scheduled" && <Scheduled b={b} />}
-          {isActive(b) && <Sending b={b} at={broadcast.dataUpdatedAt} />}
-          {b.state !== "scheduled" && (tab === "report" ? <Report b={b} /> : <Deliveries b={b} />)}
-          <Summary b={b} />
-        </>
-      )}
+          {b.subject && <span className="truncate text-small text-muted-foreground">{b.subject}</span>}
+        </div>
+        {canManage && (
+          <div className="flex shrink-0 flex-wrap items-center gap-2">
+            <Actions b={b} run={run} pending={action.isPending} onDelete={onDelete} onPace={() => setPacing(true)} />
+          </div>
+        )}
+      </PageBar>
+      <div className="@container min-h-0 flex-1 in-data-frame:overflow-y-auto">
+        <div className={cn(framePad, "max-w-[1200px]")}>
+          <ErrorLine error={action.error ?? remove.error} />
+          {b.state === "failed" && (
+            <Notice tone="danger" icon={CircleAlertIcon} data-testid="broadcast-failed">
+              <p>
+                <Trans>Sending stopped and cannot go on, for example because its channel was removed.</Trans>
+              </p>
+              {b.state_detail && <p className="text-muted-foreground">{b.state_detail}</p>}
+            </Notice>
+          )}
+          {(scheduled || isActive(b)) && <Banner b={b} at={broadcast.dataUpdatedAt} />}
+          {!scheduled && <ReportStats b={b} />}
+          {tabs.length > 1 && (
+            <div className="border-b">
+              <FrameTabs label={t`Broadcast`} items={tabs} current={tab} />
+            </div>
+          )}
+          {tab === "report" && <Report b={b} />}
+          {tab === "recipients" && <Deliveries b={b} />}
+          {tab === "broadcast" && <Summary b={b} />}
+        </div>
+      </div>
+      {pacing && <PaceDialog b={b} rate={rate} onClose={() => setPacing(false)} />}
       {action.isPending && (
         <span className="fixed bottom-6 left-1/2 inline-flex -translate-x-1/2 items-center gap-1.5 rounded-full bg-foreground px-3 py-1.5 text-caption text-background shadow-lg">
           <LoaderIcon className="size-3 animate-spin" />
@@ -465,6 +422,6 @@ export function BroadcastPage() {
         </span>
       )}
       {confirmDialog}
-    </Pane>
+    </div>
   )
 }

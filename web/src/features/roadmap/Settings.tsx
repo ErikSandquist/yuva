@@ -1,9 +1,8 @@
 import { Trans, useLingui } from "@lingui/react/macro"
 import { useState } from "react"
-import { useNavigate } from "react-router"
+import { Link, useNavigate } from "react-router"
 
-import { CopyButton, toast, useConfirm } from "@/components/common"
-import { ErrorLine } from "@/components/common"
+import { CopyButton, ErrorLine, Segmented, toast, useConfirm } from "@/components/common"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Switch } from "@/components/ui/switch"
@@ -11,7 +10,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { useAnalyticsProperties } from "@/features/analytics/properties"
 import { useInboxChannels } from "@/features/broadcasts/queries"
 import { useDeleteBoard, useUpdateBoard } from "@/features/roadmap/queries"
-import { Card, ChoiceSelect, Field, FormActions, FormCard, Section, ToggleRow } from "@/features/settings/ui"
+import { Card, ChoiceSelect, Field, FormCard, Section, ToggleRow } from "@/features/settings/ui"
 import { validSlug } from "@/features/status/CreatePageDialog"
 import type { RoadmapBoard, RoadmapBoardUpdate, RoadmapSuggestions } from "@/lib/api"
 
@@ -117,7 +116,19 @@ function General({ board }: { board: RoadmapBoard }) {
             },
           })
         }
-        footer={<FormActions pending={patch.isPending} saved={patch.isSuccess && !dirty} disabled={!dirty || !ok} />}
+        footer={
+          <>
+            <ErrorLine error={patch.error} className="min-w-0 flex-1" />
+            {!patch.error && (
+              <span className="min-w-0 flex-1 text-small text-faint" role="status" data-testid="board-save-note">
+                {dirty ? <Trans>You have unsaved changes.</Trans> : <Trans>All changes saved.</Trans>}
+              </span>
+            )}
+            <Button type="submit" size="sm" className="ms-auto" disabled={patch.isPending || !dirty || !ok}>
+              <Trans>Save</Trans>
+            </Button>
+          </>
+        }
       >
         <Field label={<Trans>Name</Trans>} htmlFor="board-name">
           <Input
@@ -157,20 +168,20 @@ function General({ board }: { board: RoadmapBoard }) {
             data-testid="board-setting-slug"
           />
         </Field>
+        <div className="flex flex-col gap-2" data-testid="board-suggestions">
+          <span className="text-body font-medium" id="board-suggestions-label">
+            <Trans>Suggestions from readers</Trans>
+          </span>
+          <Segmented
+            value={suggestions}
+            onChange={setSuggestions}
+            items={modes.map(([value, label]) => ({ value, label, testId: `board-suggestions-${value}` }))}
+            label={t`Suggestions from readers`}
+            className="w-fit max-w-full"
+          />
+          <p className="text-small text-muted-foreground">{modeHint[suggestions]}</p>
+        </div>
         <div className="grid gap-5 sm:grid-cols-2">
-          <Field
-            label={<Trans>Suggestions from readers</Trans>}
-            htmlFor="board-suggestions"
-            hint={modeHint[suggestions]}
-          >
-            <ChoiceSelect
-              id="board-suggestions"
-              value={suggestions}
-              onChange={setSuggestions}
-              options={modes}
-              label={t`Suggestions from readers`}
-            />
-          </Field>
           <Field
             label={<Trans>Chat channel</Trans>}
             htmlFor="board-channel"
@@ -188,7 +199,23 @@ function General({ board }: { board: RoadmapBoard }) {
             <Field
               label={<Trans>Analytics property</Trans>}
               htmlFor="board-property"
-              hint={<Trans>Counts page views of the public board without cookies.</Trans>}
+              hint={
+                <>
+                  <Trans>Counts page views of the public board without cookies.</Trans>
+                  {property && (
+                    <>
+                      {" "}
+                      <Link
+                        to={`/analytics/${property}`}
+                        className="text-brand underline-offset-4 hover:underline"
+                        data-testid="board-property-open"
+                      >
+                        <Trans>Open Analytics</Trans>
+                      </Link>
+                    </>
+                  )}
+                </>
+              }
             >
               <ChoiceSelect
                 id="board-property"
@@ -200,7 +227,6 @@ function General({ board }: { board: RoadmapBoard }) {
             </Field>
           )}
         </div>
-        <ErrorLine error={patch.error} />
       </FormCard>
     </Section>
   )

@@ -7,7 +7,7 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: ar\n"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 msgid "{published} of {total} entries published"
 msgstr "نُشر {published} من {total} إدخالاً"
 
@@ -41,8 +41,13 @@ msgid "All"
 msgstr "الكل"
 
 #: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/pages.tsx
 msgid "All labels"
 msgstr "كل الوسوم"
+
+#: src/features/changelog/pages.tsx
+msgid "All languages"
+msgstr "كل اللغات"
 
 #: src/features/changelog/SettingsTab.tsx
 msgid "Analytics property"
@@ -80,6 +85,7 @@ msgstr "تغيير الوقت"
 msgid "Changelog"
 msgstr "سجل التغييرات"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "Changelogs"
 msgstr "سجلات التغييرات"
@@ -88,16 +94,21 @@ msgstr "سجلات التغييرات"
 msgid "Choose a picture"
 msgstr "اختيار صورة"
 
+#: src/features/changelog/pages.tsx
+msgid "Clear filters"
+msgstr "مسح عوامل التصفية"
+
 #: src/features/changelog/SettingsTab.tsx
 msgid "Counts page views of the changelog without cookies."
 msgstr "يحسب مشاهدات صفحات سجل التغييرات دون ملفات تعريف الارتباط."
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/CreateChangelogDialog.tsx
 #: src/features/changelog/pages.tsx
 msgid "Create changelog"
 msgstr "إنشاء سجل تغييرات"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "Create changelog ({createKey})"
 msgstr "إنشاء سجل التغييرات ({createKey})"
@@ -162,6 +173,11 @@ msgstr "تم إرسال المسودة. يمكن للمالك أو المسؤو�
 msgid "Drafts"
 msgstr "المسودات"
 
+#: src/features/changelog/ChangelogsPage.tsx
+msgid "Each product has one changelog. Owners and admins create and publish them."
+msgstr "لكل منتج سجل تغييرات واحد. ينشئه المالكون والمشرفون وينشرونه."
+
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "Entries"
 msgstr "الإدخالات"
@@ -173,6 +189,14 @@ msgstr "تُحذف الإدخالات والترجمات معه."
 #: src/features/changelog/SettingsTab.tsx
 msgid "Entries can be written and published in these languages. Visitors see their own when it exists."
 msgstr "يمكن كتابة الإدخالات ونشرها بهذه اللغات. يرى الزوار لغتهم إن وُجدت."
+
+#: src/features/changelog/pages.tsx
+msgid "Entries show on the public page once they are published."
+msgstr "تظهر الإدخالات في الصفحة العامة بعد نشرها."
+
+#: src/features/changelog/pages.tsx
+msgid "Entries you have not published yet show up here."
+msgstr "الإدخالات التي لم تنشرها بعد تظهر هنا."
 
 #: src/features/changelog/EntryEditor.tsx
 msgid "Every translation is deleted. Broadcasts made from it stay."
@@ -208,6 +232,7 @@ msgid "Keep mine"
 msgstr "الإبقاء على نسختي"
 
 #: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/pages.tsx
 msgid "Label"
 msgstr "الوسم"
 
@@ -219,9 +244,11 @@ msgstr "الوسوم"
 #: src/features/changelog/EntriesTab.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/MailDialog.tsx
+#: src/features/changelog/pages.tsx
 msgid "Language"
 msgstr "اللغة"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/SettingsTab.tsx
 msgid "Languages"
 msgstr "اللغات"
@@ -248,6 +275,10 @@ msgid "Main language"
 msgstr "اللغة الرئيسية"
 
 #: src/features/changelog/EntryEditor.tsx
+msgid "Mark up to date"
+msgstr "وضع علامة محدّث"
+
+#: src/features/changelog/EntryEditor.tsx
 msgid "More"
 msgstr "المزيد"
 
@@ -272,7 +303,7 @@ msgstr "منشور جديد"
 msgid "New post ({newKey})"
 msgstr "منشور جديد ({newKey})"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 msgid "No changelog yet. Owners and admins create it."
 msgstr "لا يوجد سجل تغييرات بعد. ينشئه المالكون والمشرفون."
 
@@ -281,12 +312,9 @@ msgid "No entries yet. Tell your customers what changed in your latest release."
 msgstr "لا توجد إدخالات بعد. أخبر عملاءك بما تغيّر في إصدارك الأخير."
 
 #: src/features/changelog/EntriesTab.tsx
+#: src/features/changelog/pages.tsx
 msgid "No entry matches."
 msgstr "لا يوجد إدخال مطابق."
-
-#: src/features/changelog/ChangelogColumn.tsx
-msgid "No inbox to show a changelog for."
-msgstr "لا يوجد صندوق وارد لعرض سجل تغييرات له."
 
 #: src/features/changelog/EntriesTab.tsx
 msgid "No text yet."
@@ -340,6 +368,10 @@ msgstr "جزء من عنوان الويب لهذه الترجمة. يُنشأ م
 msgid "Pick a time in the next year, in your time zone, {zone}."
 msgstr "اختر وقتاً خلال السنة القادمة، بمنطقتك الزمنية، {zone}."
 
+#: src/features/changelog/pages.tsx
+msgid "Pick a time when you write an entry and it goes public by itself."
+msgstr "اختر وقتًا عند كتابة إدخال فيُنشر من تلقاء نفسه."
+
 #: src/features/changelog/MailDialog.tsx
 msgid "Pick up to 10 lists of this inbox."
 msgstr "اختر حتى 10 قوائم من هذا الصندوق."
@@ -348,6 +380,7 @@ msgstr "اختر حتى 10 قوائم من هذا الصندوق."
 msgid "Picture"
 msgstr "صورة"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 #: src/features/changelog/PreviewDialog.tsx
@@ -370,6 +403,7 @@ msgstr "معاينة الإدخال"
 msgid "Public address"
 msgstr "العنوان العام"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 msgid "Publish"
@@ -380,11 +414,19 @@ msgstr "نشر"
 msgid "Publish ({publishKey})"
 msgstr "نشر ({publishKey})"
 
+#: src/features/changelog/pages.tsx
+msgid "Publish it now or schedule it again."
+msgstr "انشره الآن أو جدوله مرة أخرى."
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Publish now"
+msgstr "انشر الآن"
+
 #: src/features/changelog/ScheduleDialog.tsx
 msgid "Publish on"
 msgstr "النشر في"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 #: src/features/changelog/text.tsx
@@ -393,6 +435,7 @@ msgstr "منشورة"
 
 #: src/features/changelog/EntriesTab.tsx
 #: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
 msgid "Publishing on schedule failed."
 msgstr "فشل النشر المجدول."
 
@@ -403,6 +446,10 @@ msgstr "ملاحظات الإصدار المعروضة في منتجاتك وع�
 #: src/features/changelog/EntryEditor.tsx
 msgid "Remove"
 msgstr "إزالة"
+
+#: src/features/changelog/pages.tsx
+msgid "Review"
+msgstr "مراجعة"
 
 #: src/features/changelog/EntryEditor.tsx
 msgid "Save now"
@@ -422,23 +469,33 @@ msgstr "جارٍ الحفظ…"
 msgid "Schedule"
 msgstr "جدولة"
 
+#: src/features/changelog/EntryEditor.tsx
+msgid "Schedule again"
+msgstr "جدولة مرة أخرى"
+
 #: src/features/changelog/ScheduleDialog.tsx
 msgid "Schedule this entry"
 msgstr "جدولة هذا الإدخال"
 
 #: src/features/changelog/EntryEditor.tsx
+#: src/features/changelog/pages.tsx
 #: src/features/changelog/text.tsx
 msgid "Scheduled"
 msgstr "مجدولة"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 msgid "Scheduled: {scheduled}"
 msgstr "مجدولة: {scheduled}"
+
+#: src/features/changelog/pages.tsx
+msgid "Search entries"
+msgstr "بحث في الإدخالات"
 
 #: src/features/changelog/MailDialog.tsx
 msgid "Send through"
 msgstr "الإرسال عبر"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "Settings"
 msgstr "الإعدادات"
@@ -446,6 +503,10 @@ msgstr "الإعدادات"
 #: src/features/changelog/EntryEditor.tsx
 msgid "Show"
 msgstr "إظهار"
+
+#: src/features/changelog/EntryEditor.tsx
+msgid "Show the original"
+msgstr "عرض الأصل"
 
 #: src/features/changelog/EntriesTab.tsx
 msgid "Shown in the chat bubble, the apps and on {host}."
@@ -482,6 +543,10 @@ msgstr "إرسال المسودة"
 #: src/features/changelog/EntryEditor.tsx
 msgid "Submit draft ({publishKey})"
 msgstr "إرسال المسودة ({publishKey})"
+
+#: src/features/changelog/MailDialog.tsx
+msgid "Subscribed: {subscribed}"
+msgstr "المشتركون: {subscribed}"
 
 #: src/features/changelog/CreateChangelogDialog.tsx
 msgid "Tell the customers of {inboxName} what is new, improved and fixed. It stays unpublished until you publish it."
@@ -527,6 +592,10 @@ msgstr "لا يوجد بعد نص لهذا الإدخال في اللغة الر
 msgid "The member who scheduled it may no longer publish."
 msgstr "قد لا يستطيع العضو الذي جدوله النشر بعد الآن."
 
+#: src/features/changelog/EntryEditor.tsx
+msgid "The original changed after this translation was saved."
+msgstr "تغيّر الأصل بعد حفظ هذه الترجمة."
+
 #: src/features/changelog/PreviewDialog.tsx
 msgid "The page as visitors would see it, drafts included. Only your team sees this."
 msgstr "الصفحة كما سيراها الزوار، مع المسودات. فريقك فقط يرى هذا."
@@ -534,6 +603,11 @@ msgstr "الصفحة كما سيراها الزوار، مع المسودات. �
 #: src/features/changelog/EntryEditor.tsx
 msgid "The title needs at least 3 characters"
 msgstr "يحتاج العنوان إلى 3 أحرف على الأقل"
+
+#. placeholder {0}: formatDateTime(entry.publish_at, i18n.locale)
+#: src/features/changelog/EntryEditor.tsx
+msgid "This entry is scheduled for {0}."
+msgstr "هذا الإدخال مجدول في {0}."
 
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/text.tsx
@@ -569,6 +643,11 @@ msgstr "العنوان"
 msgid "Translation deleted"
 msgstr "تم حذف الترجمة"
 
+#: src/features/changelog/pages.tsx
+msgid "Try another word, label or language."
+msgstr "جرّب كلمة أو تسمية أو لغة أخرى."
+
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
 msgid "Unpublish"
@@ -582,9 +661,8 @@ msgstr "إلغاء النشر ({publishKey})"
 msgid "Unpublish this entry?"
 msgstr "هل تريد إلغاء نشر هذا الإدخال؟"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntryEditor.tsx
-#: src/features/changelog/pages.tsx
 msgid "Unpublished"
 msgstr "غير منشورة"
 
@@ -616,11 +694,12 @@ msgstr "استخدام نسختهم"
 msgid "View"
 msgstr "عرض"
 
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/pages.tsx
 msgid "View changelog"
 msgstr "عرض سجل التغييرات"
 
-#: src/features/changelog/ChangelogColumn.tsx
+#: src/features/changelog/ChangelogsPage.tsx
 #: src/features/changelog/EntriesTab.tsx
 #: src/features/changelog/EntryEditor.tsx
 #: src/features/changelog/pages.tsx
@@ -638,6 +717,10 @@ msgstr "كتابة"
 #: src/features/changelog/text.tsx
 msgid "Write the entry in the main language before publishing."
 msgstr "اكتب الإدخال باللغة الرئيسية قبل النشر."
+
+#: src/features/changelog/pages.tsx
+msgid "Write the first entry with New post."
+msgstr "اكتب أول إدخال بزر منشور جديد."
 
 #: src/features/changelog/EntryEditor.tsx
 msgid "Write what changed in Markdown…"

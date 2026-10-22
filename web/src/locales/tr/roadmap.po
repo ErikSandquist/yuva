@@ -7,6 +7,10 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: tr\n"
 
+#: src/features/roadmap/CreateBoardDialog.tsx
+msgid "{inboxName} has no web chat channel. Add one first, because the public board embeds it."
+msgstr "{inboxName} için web sohbeti kanalı yok. Herkese açık pano onu gömdüğü için önce bir tane ekleyin."
+
 #: src/features/roadmap/Board.tsx
 msgid "{linked, plural, one {# feedback} other {# feedback}}"
 msgstr "{linked, plural, one {# geri bildirim} other {# geri bildirim}}"
@@ -29,9 +33,25 @@ msgid "A reader's posts wait for a member until one of theirs is approved. Signe
 msgstr "Bir okuyucunun gönderileri, onlardan biri onaylanana kadar bir üyeyi bekler. Uygulamanızda oturum açmış kullanıcılar hemen yayımlar."
 
 #: src/features/roadmap/CreateBoardDialog.tsx
+msgid "Add a web chat channel"
+msgstr "Web sohbeti kanalı ekle"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
 #: src/features/roadmap/Settings.tsx
 msgid "Address"
 msgstr "Adres"
+
+#: src/features/roadmap/BoardBar.tsx
+msgid "All boards"
+msgstr "Tüm panolar"
+
+#: src/features/roadmap/Settings.tsx
+msgid "All changes saved."
+msgstr "Tüm değişiklikler kaydedildi."
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "All feedback from {inboxName} that fits is already linked."
+msgstr "{inboxName} için uygun tüm geri bildirimler zaten bağlı."
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Already linked"
@@ -89,13 +109,16 @@ msgstr "Herkese açık panonun sayfa görüntülemelerini çerez kullanmadan say
 
 #: src/features/roadmap/CreateBoardDialog.tsx
 #: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
 msgid "Create board"
 msgstr "Pano oluştur"
 
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Create board ({newKey})"
 msgstr "Pano oluştur ({newKey})"
+
+#: src/features/roadmap/BoardBar.tsx
+msgid "Create board for {name}"
+msgstr "{name} için pano oluştur"
 
 #: src/features/roadmap/NewIdeaDialog.tsx
 msgid "Create idea"
@@ -123,17 +146,21 @@ msgstr "Panoyu fikirleri, oyları, yanıtları ve aşama geçmişiyle birlikte s
 msgid "Description"
 msgstr "Açıklama"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Dismiss"
+msgstr "Kapat"
+
 #: src/features/roadmap/Board.tsx
 msgid "Done"
 msgstr "Bitti"
 
-#: src/features/roadmap/MoveDialog.tsx
-msgid "Every linked feedback that does not have it yet gets the progress {progress}. Linked feedback: {linked}"
-msgstr "Bağlı geri bildirimlerin ilerleme durumu, zaten değilse, {progress} olarak ayarlanır. Bağlı geri bildirim: {linked}"
-
 #: src/features/roadmap/Settings.tsx
 msgid "Everyone's posts are published at once, except those of authors you marked as spam."
 msgstr "Herkesin gönderisi hemen yayımlanır; spam olarak işaretlediğiniz yazarlarınki hariç."
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Good news: “{title}” has shipped. Thank you for asking for it."
+msgstr "Güzel haber: “{title}” yayında. İstediğiniz için teşekkürler."
 
 #: src/features/roadmap/Board.tsx
 msgid "Hidden"
@@ -155,21 +182,30 @@ msgstr "Müşterilerinizin oy verdiği fikirler, arkasındaki geri bildirimlerle
 msgid "Ideas, votes and stages for {inboxName}, with the feedback behind each idea. It stays private until you make it public."
 msgstr "{inboxName} için fikirler, oylar ve aşamalar; her fikrin arkasındaki geri bildirimlerle birlikte. Herkese açık yapana kadar özel kalır."
 
-#: src/features/roadmap/RoadmapColumn.tsx
-msgid "Ideas: {ideas}"
-msgstr "Fikir: {ideas}"
-
 #: src/features/roadmap/NewIdeaDialog.tsx
 msgid "It goes into Ideas on the board, where customers can vote on it."
 msgstr "Panoda Fikirler bölümüne girer; müşteriler burada oy verebilir."
 
-#: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/NewIdeaDialog.tsx
+msgid "It goes into Ideas on the board. The board is private, so only your team sees it."
+msgstr "Panodaki Fikirler aşamasına girer. Pano gizli olduğundan yalnızca ekibiniz görür."
+
+#: src/features/roadmap/IdeaFeedback.tsx
 msgid "It was unlinked from the idea."
 msgstr "Fikirle bağlantısı kaldırıldı."
 
 #: src/features/roadmap/Settings.tsx
 msgid "Its ideas, votes, replies and stage history are deleted with it."
 msgstr "Fikirleri, oyları, yanıtları ve aşama geçmişi onunla birlikte silinir."
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgctxt "link feedback to the idea"
+msgid "Link"
+msgstr "Bağla"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Link feedback"
+msgstr "Geri bildirim bağla"
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Link this feedback to an idea…"
@@ -179,13 +215,21 @@ msgstr "Bu geri bildirimi bir fikre bağla…"
 msgid "Link to an idea"
 msgstr "Bir fikre bağla"
 
-#: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Linked"
+msgstr "Bağlandı"
+
+#: src/features/roadmap/IdeaFeedback.tsx
 msgid "Linked feedback"
 msgstr "Bağlı geri bildirimler"
 
 #: src/features/roadmap/IdeaPane.tsx
 msgid "Linked feedback set to {progress}: {set}"
 msgstr "Bağlı geri bildirimler {progress} yapıldı: {set}"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Linked feedback that gets the progress {progress}: {gets} of {linked}."
+msgstr "{progress} ilerlemesini alacak bağlı geri bildirim: {linked} içinden {gets}."
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Linked to {title}"
@@ -195,19 +239,19 @@ msgstr "{title} olayına bağlandı"
 msgid "Load more"
 msgstr "Daha fazla yükle"
 
-#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Make private"
 msgstr "Özel yap"
 
-#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Make private ({publicKey})"
 msgstr "Özel yap ({publicKey})"
 
-#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Make public"
 msgstr "Herkese açık yap"
 
-#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Make public ({publicKey})"
 msgstr "Herkese açık yap ({publicKey})"
 
@@ -254,25 +298,37 @@ msgstr "Yeni fikir"
 msgid "New idea from this feedback"
 msgstr "Bu geri bildirimden yeni fikir"
 
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/pages.tsx
+msgid "No board is public yet. Make one public under Settings."
+msgstr "Henüz herkese açık pano yok. Ayarlar’dan birini herkese açın."
+
+#: src/features/roadmap/pages.tsx
 msgid "No board yet. Owners and admins create it."
 msgstr "Henüz pano yok. Sahipler ve yöneticiler oluşturur."
 
-#: src/features/roadmap/IdeaPane.tsx
-msgid "No feedback is linked yet. Open a piece of feedback and use Link to an idea."
-msgstr "Henüz bağlı geri bildirim yok. Bir geri bildirimi açıp “Bir fikre bağla”yı kullanın."
+#: src/features/roadmap/MoveDialog.tsx
+msgid "No feedback is linked to this idea yet."
+msgstr "Bu fikre henüz geri bildirim bağlı değil."
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "No feedback is linked yet. Use Link feedback, or open a piece of feedback and choose Link to an idea."
+msgstr "Henüz bağlı geri bildirim yok. Geri bildirim bağla’yı kullanın ya da bir geri bildirimi açıp Bir fikre bağla’yı seçin."
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "No idea matches."
 msgstr "Eşleşen fikir yok."
 
-#: src/features/roadmap/RoadmapColumn.tsx
-msgid "No inbox to show a board for."
-msgstr "Pano gösterilecek gelen kutusu yok."
+#: src/features/roadmap/Board.tsx
+msgid "No ideas yet. New ones land here."
+msgstr "Henüz fikir yok. Yenileri buraya düşer."
 
 #: src/features/roadmap/Settings.tsx
 msgid "None"
 msgstr "Yok"
+
+#: src/features/roadmap/Board.tsx
+msgid "Nothing here yet."
+msgstr "Burada henüz bir şey yok."
 
 #: src/features/roadmap/Settings.tsx
 msgid "Off"
@@ -282,7 +338,7 @@ msgstr "Kapalı"
 msgid "On: anyone with the address reads the board, and signed-in readers vote and suggest ideas. Off: only your team sees it, as a tool to sort feedback."
 msgstr "Açık: adresi bilen herkes panoyu okur; giriş yapmış okurlar oy verir ve fikir önerir. Kapalı: yalnızca ekibiniz görür, geri bildirimleri ayıklamak için bir araç olarak."
 
-#: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/IdeaFeedback.tsx
 msgid "One reply, written once, goes to every open feedback conversation linked to this idea, as you, on each conversation’s own channel."
 msgstr "Bir kez yazılan tek yanıt, bu fikre bağlı her açık geri bildirim konuşmasına, sizin adınıza ve her konuşmanın kendi kanalından gider."
 
@@ -290,9 +346,22 @@ msgstr "Bir kez yazılan tek yanıt, bu fikre bağlı her açık geri bildirim k
 msgid "Open"
 msgstr "Açık"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgctxt "open the feedback"
+msgid "Open"
+msgstr "Aç"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Open Analytics"
+msgstr "Analitiği aç"
+
 #: src/features/roadmap/IdeaPane.tsx
 msgid "Open on the public board"
 msgstr "Herkese açık panoda aç"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Open Roadmap"
+msgstr "Yol haritasını aç"
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Pick an idea of this inbox’s board"
@@ -302,17 +371,11 @@ msgstr "Bu gelen kutusunun panosundan bir fikir seçin"
 msgid "Posted as your public reply on the idea. Markdown works."
 msgstr "Fikirde herkese açık yanıtınız olarak yayınlanır. Markdown kullanabilirsiniz."
 
-#: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Private"
 msgstr "Özel"
 
-#: src/features/roadmap/pages.tsx
-msgid "Private, only your team sees it"
-msgstr "Özel, yalnızca ekibiniz görür"
-
-#: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/BoardBar.tsx
 #: src/features/roadmap/Settings.tsx
 msgid "Public"
 msgstr "Herkese açık"
@@ -329,19 +392,37 @@ msgstr "Okurlar fikir öneremez. Oylar ve yanıtlar yine de çalışır."
 msgid "Readers suggested new ideas. Review them before they show on the public board."
 msgstr "Okuyucular yeni fikirler önerdi. Herkese açık panoda görünmeden önce onları inceleyin."
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Reply to everyone"
+msgstr "Herkese yanıt ver"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Reply to linked ({key})"
+msgstr "Bağlılara yanıt ver ({key})"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Resolved feedback does not get it: {closed}"
+msgstr "Çözülmüş geri bildirimler almaz: {closed}"
+
 #: src/features/roadmap/Board.tsx
 msgid "Review"
 msgstr "Gözden geçir"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Review the reply"
+msgstr "Yanıtı gözden geçir"
+
 #: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
 msgid "Roadmap"
 msgstr "Yol haritası"
 
-#: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Roadmap boards"
 msgstr "Yol haritası panoları"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Save"
+msgstr "Kaydet"
 
 #: src/features/roadmap/Settings.tsx
 msgid "Saved"
@@ -355,9 +436,13 @@ msgstr "Fikirlerde ara"
 msgid "Settings"
 msgstr "Ayarlar"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Shipped. Open feedback linked to it: {open}. A reply is ready to send."
+msgstr "Yayınlandı. Ona bağlı açık geri bildirim: {open}. Gönderilmeye hazır bir yanıt var."
+
 #: src/features/roadmap/pages.tsx
-msgid "Show your customers what you are building, and link the feedback behind each idea. Create a board for an inbox to sort ideas into stages."
-msgstr "Müşterilerinize ne geliştirdiğinizi gösterin ve her fikrin arkasındaki geri bildirimleri bağlayın. Fikirleri aşamalara ayırmak için bir gelen kutusuna pano oluşturun."
+msgid "Show your customers what you are building, and link the feedback behind each idea. Create a board for {missingName} to sort ideas into stages."
+msgstr "Müşterilerinize ne geliştirdiğinizi gösterin ve her fikrin ardındaki geri bildirimi bağlayın. Fikirleri aşamalara ayırmak için {missingName} için bir pano oluşturun."
 
 #: src/features/roadmap/Settings.tsx
 msgid "Shown under the name on the public board."
@@ -404,6 +489,10 @@ msgstr "Bağlı geri bildirimlerin ilerleme durumu değişmez. Bağlı geri bild
 msgid "The public board embeds this chat, and ideas your team starts are filed on it."
 msgstr "Herkese açık pano bu sohbeti gömer; ekibinizin başlattığı fikirler bu kanala kaydedilir."
 
+#: src/features/roadmap/MoveDialog.tsx
+msgid "The rest already have it."
+msgstr "Geri kalanlarda zaten var."
+
 #: src/features/roadmap/pages.tsx
 msgid "This board no longer exists or you cannot see it."
 msgstr "Bu pano artık yok ya da göremiyorsunuz."
@@ -412,14 +501,18 @@ msgstr "Bu pano artık yok ya da göremiyorsunuz."
 msgid "This inbox has no roadmap board. Create one under Roadmap first."
 msgstr "Bu gelen kutusunun yol haritası panosu yok. Önce Yol haritası bölümünde bir tane oluşturun."
 
-#: src/features/roadmap/CreateBoardDialog.tsx
-msgid "This inbox has no web chat channel. Add one first, because the public board embeds it."
-msgstr "Bu gelen kutusunda web sohbeti kanalı yok. Herkese açık pano onu gömdüğü için önce bir tane ekleyin."
-
 #: src/features/roadmap/LinkIdeaDialog.tsx
 #: src/features/roadmap/NewIdeaDialog.tsx
 msgid "Title"
 msgstr "Başlık"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Unlink"
+msgstr "Bağlantıyı kaldır"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Unlinked feedback from {inboxName}"
+msgstr "{inboxName} için bağlanmamış geri bildirimler"
 
 #: src/features/roadmap/Settings.tsx
 msgid "Use 3 to 48 letters, numbers and inner hyphens."
@@ -437,6 +530,6 @@ msgstr "Görünürlük"
 msgid "Waiting for approval"
 msgstr "Onay bekliyor"
 
-#: src/features/roadmap/RoadmapColumn.tsx
-msgid "Waiting for approval: {pending}"
-msgstr "Onay bekleyen: {pending}"
+#: src/features/roadmap/Settings.tsx
+msgid "You have unsaved changes."
+msgstr "Kaydedilmemiş değişiklikleriniz var."

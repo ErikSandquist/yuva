@@ -10,6 +10,7 @@ import { Switch } from "@/components/ui/switch"
 import { Textarea } from "@/components/ui/textarea"
 import { useAnalyticsProperties } from "@/features/analytics/properties"
 import { useInboxChannels } from "@/features/broadcasts/queries"
+import { usePublishToggle } from "@/features/help/CenterBar"
 import { useDeleteHelpCenter, useUpdateHelpCenter } from "@/features/help/queries"
 import { ErrorLine, useLocaleName } from "@/features/help/text"
 import { Card, ChoiceSelect, Field, FormActions, FormCard, Section, ToggleRow } from "@/features/settings/ui"
@@ -285,11 +286,25 @@ function General({ center }: { center: HelpCenter }) {
   )
 }
 
-function Access({ center }: { center: HelpCenter }) {
+function Publishing({ center }: { center: HelpCenter }) {
   const patch = useUpdateHelpCenter(center.id)
+  const pub = usePublishToggle(center.id, center.published)
   return (
-    <Section title={<Trans>Who can publish</Trans>}>
+    <Section title={<Trans>Publishing</Trans>}>
       <Card>
+        <ToggleRow
+          title={<Trans>Published</Trans>}
+          hint={
+            <Trans>On: anyone with the address can read the help center. Off: only your team can preview it.</Trans>
+          }
+        >
+          <Switch
+            checked={center.published}
+            disabled={pub.pending}
+            onCheckedChange={pub.toggle}
+            data-testid="help-published-switch"
+          />
+        </ToggleRow>
         <ToggleRow
           title={<Trans>Agents may publish</Trans>}
           hint={
@@ -306,8 +321,9 @@ function Access({ center }: { center: HelpCenter }) {
             data-testid="help-agents-publish"
           />
         </ToggleRow>
-        <ErrorLine error={patch.error} />
+        <ErrorLine error={pub.error ?? patch.error} />
       </Card>
+      {pub.dialog}
     </Section>
   )
 }
@@ -397,7 +413,7 @@ export function SettingsTab({ center }: { center: HelpCenter }) {
     <div className="flex flex-col gap-8" data-testid="help-settings">
       <Address center={center} />
       <General center={center} />
-      <Access center={center} />
+      <Publishing center={center} />
       <Danger center={center} />
     </div>
   )

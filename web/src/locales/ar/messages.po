@@ -19,10 +19,6 @@ msgstr "«هل كانت هذه الصفحة مفيدة؟» والملاحظات 
 msgid "(no subject)"
 msgstr "(بلا موضوع)"
 
-#: src/features/settings/members/MemberList.tsx
-msgid "(you)"
-msgstr "(أنت)"
-
 #. placeholder {0}: msg.attachments
 #: src/features/migrations/ReviewStep.tsx
 msgid "{0, plural, one {# attachment} other {# attachments}}"
@@ -78,6 +74,7 @@ msgid "{0} active today"
 msgstr "{0} نشط اليوم"
 
 #. placeholder {0}: done.length
+#. placeholder {0}: done.size
 #: src/features/inbox/ChatList.tsx
 msgid "{0} closed"
 msgstr "{0} مغلقة"
@@ -88,6 +85,8 @@ msgid "{0} events"
 msgstr "{0} أحداث"
 
 #. placeholder {0}: pct.format(good / mine.length)
+#. placeholder {0}: pct.format(good)
+#: src/features/home/HomePage.tsx
 #: src/features/reports/ReportPages.tsx
 msgid "{0} good"
 msgstr "{0} جيدة"
@@ -206,6 +205,10 @@ msgstr "{attachmentsLeft} مرفقات تتجاوز حد الحجم في هذا 
 msgid "{author}, sent by {by}"
 msgstr "{author}، أرسلها {by}"
 
+#: src/features/team/TeamPage.tsx
+msgid "{available} of {total}"
+msgstr "{available} من {total}"
+
 #: src/features/contact/ContactDetails.tsx
 msgid "{bad} bad"
 msgstr "{bad} سيئ"
@@ -227,6 +230,10 @@ msgstr "{clientName} متصل"
 msgid "{closed, plural, one {# closed} other {# closed}}"
 msgstr "{closed, plural, zero {# مغلقة} one {مغلقة واحدة} two {مغلقتان} few {# مغلقة} many {# مغلقة} other {# مغلقة}}"
 
+#: src/features/status/MonitorsPage.tsx
+msgid "{comp} is not working"
+msgstr "{comp} لا يعمل"
+
 #: src/features/migrations/Wizard.tsx
 msgid "{conversations} conversations, {messages} messages"
 msgstr "{conversations} محادثة، {messages} رسالة"
@@ -243,10 +250,6 @@ msgstr "{count, plural, zero {# علامة تجارية} one {علامة تجا�
 msgid "{count, plural, one {# folder} other {# folders}}"
 msgstr "{count, plural, zero {# مجلد} one {مجلد واحد} two {مجلدان} few {# مجلدات} many {# مجلدًا} other {# مجلد}}"
 
-#: src/features/status/StatusPages.tsx
-msgid "{count, plural, one {# linked conversation} other {# linked conversations}}"
-msgstr "{count, plural, zero {# محادثة مرتبطة} one {محادثة مرتبطة واحدة} two {محادثتان مرتبطتان} few {# محادثات مرتبطة} many {# محادثة مرتبطة} other {# محادثة مرتبطة}}"
-
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "{count, plural, one {# mailbox} other {# mailboxes}}"
 msgstr "{count, plural, zero {# صندوق بريد} one {صندوق بريد واحد} two {صندوقا بريد} few {# صناديق بريد} many {# صندوق بريد} other {# صندوق بريد}}"
@@ -254,14 +257,6 @@ msgstr "{count, plural, zero {# صندوق بريد} one {صندوق بريد و
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "{count, plural, one {It goes to # recipient.} other {It goes to # recipients.}}"
 msgstr "{count, plural, zero {لن تصل إلى أحد.} one {تصل إلى مستلم واحد.} two {تصل إلى مستلمَين.} few {تصل إلى # مستلمين.} many {تصل إلى # مستلمًا.} other {تصل إلى # مستلم.}}"
-
-#: src/features/broadcasts/ReviewPanel.tsx
-msgid "{count, plural, one {Schedule for # recipient} other {Schedule for # recipients}}"
-msgstr "{count, plural, zero {جدولة لـ # مستلم} one {جدولة لمستلم واحد} two {جدولة لمستلمَين} few {جدولة لـ # مستلمين} many {جدولة لـ # مستلمًا} other {جدولة لـ # مستلم}}"
-
-#: src/features/broadcasts/ReviewPanel.tsx
-msgid "{count, plural, one {Send to # recipient} other {Send to # recipients}}"
-msgstr "{count, plural, zero {إرسال إلى # مستلم} one {إرسال إلى مستلم واحد} two {إرسال إلى مستلمَين} few {إرسال إلى # مستلمين} many {إرسال إلى # مستلمًا} other {إرسال إلى # مستلم}}"
 
 #: src/features/settings/webhooks/WebhookList.tsx
 msgid "{count} events"
@@ -288,7 +283,7 @@ msgid "{created, plural, one {# new} other {# new}}"
 msgstr "{created, plural, zero {# جديد} one {جديد واحد} two {جديدان} few {# جديدة} many {# جديدًا} other {# جديد}}"
 
 #: src/features/broadcasts/Growth.tsx
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/Toolbar.tsx
 msgid "{d, plural, one {# day} other {# days}}"
 msgstr "{d, plural, zero {# يوم} one {يوم واحد} two {يومان} few {# أيام} many {# يومًا} other {# يوم}}"
 
@@ -303,10 +298,6 @@ msgstr "{days, plural, zero {# يوم} one {يوم واحد} two {يومان} fe
 #: src/features/home/HomePage.tsx
 msgid "{days, plural, one {median, last # day} other {median, last # days}}"
 msgstr "{days, plural, zero {الوسيط، آخر # يوم} one {الوسيط، آخر يوم} two {الوسيط، آخر يومين} few {الوسيط، آخر # أيام} many {الوسيط، آخر # يومًا} other {الوسيط، آخر # يوم}}"
-
-#: src/features/docs/DocsPages.tsx
-msgid "{days, plural, one {The last day, over the inboxes you can see.} other {The last # days, over the inboxes you can see.}}"
-msgstr "{days, plural, zero {آخر # يوم، عبر صناديق الوارد التي تراها.} one {آخر يوم، عبر صناديق الوارد التي تراها.} two {آخر يومين، عبر صناديق الوارد التي تراها.} few {آخر # أيام، عبر صناديق الوارد التي تراها.} many {آخر # يومًا، عبر صناديق الوارد التي تراها.} other {آخر # يوم، عبر صناديق الوارد التي تراها.}}"
 
 #: src/features/conversation/ConversationStatus.tsx
 msgid "{days, plural, one {Waiting for # day} other {Waiting for # days}}"
@@ -325,12 +316,11 @@ msgstr "{doneParts} من {totalParts} أجزاء"
 msgid "{doneText} of {total}"
 msgstr "{doneText} من {total}"
 
-#: src/features/status/IncidentsTab.tsx
 #: src/features/status/StatusPages.tsx
 msgid "{down, plural, one {# down} other {# down}}"
 msgstr "{down, plural, zero {لا شيء متوقف} one {واحد متوقف} two {اثنان متوقفان} few {# متوقفة} many {# متوقفًا} other {# متوقف}}"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "{down} not helpful"
 msgstr "{down} غير مفيد"
 
@@ -342,7 +332,7 @@ msgstr "{existing} موجود في Yuva بالفعل"
 msgid "{feedback, plural, one {# feedback is not resolved yet} other {# feedback are not resolved yet}}"
 msgstr "{feedback, plural, zero {# ملاحظة لم تُحل بعد} one {ملاحظة واحدة لم تُحل بعد} two {ملاحظتان لم تُحلا بعد} few {# ملاحظات لم تُحل بعد} many {# ملاحظة لم تُحل بعد} other {# ملاحظة لم تُحل بعد}}"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "{feedback} open feedback"
 msgstr "{feedback} ملاحظات مفتوحة"
 
@@ -361,6 +351,10 @@ msgstr "{first} قيّم المحادثة 👍"
 #: src/features/conversation/messages/Thread.tsx
 msgid "{first} rated the conversation 👎"
 msgstr "{first} قيّم المحادثة 👎"
+
+#: src/features/home/HomePage.tsx
+msgid "{from} – today, {scope}"
+msgstr "{from} – اليوم، {scope}"
 
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "{from} has an SPF record. Whether it passes is known once the test mail is read."
@@ -442,6 +436,10 @@ msgstr "{liveText} في آخر 30 دقيقة"
 msgid "{minutes, plural, one {Waiting for # minute} other {Waiting for # minutes}}"
 msgstr "{minutes, plural, zero {في الانتظار منذ # دقيقة} one {في الانتظار منذ دقيقة} two {في الانتظار منذ دقيقتين} few {في الانتظار منذ # دقائق} many {في الانتظار منذ # دقيقة} other {في الانتظار منذ # دقيقة}}"
 
+#: src/features/status/IncidentDetail.tsx
+msgid "{monitorName} answers normally again"
+msgstr "{monitorName} يستجيب بشكل طبيعي مرة أخرى"
+
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "{mxDomain} has no MX record, so replies to broadcasts cannot arrive. Publish the MX records of your mail service."
 msgstr "ليس لدى {mxDomain} سجل MX، لذا لا يمكن أن تصل الردود على الرسائل الجماعية. انشر سجلات MX لخدمة بريدك."
@@ -494,14 +492,25 @@ msgstr "{n} محادثة"
 msgid "{n} in 30 days"
 msgstr "{n} في 30 يومًا"
 
+#: src/features/inbox/ChatList.tsx
+msgid "{n} marked as read"
+msgstr "تم تمييز {n} كمقروءة"
+
+#: src/features/inbox/ChatList.tsx
+msgid "{n} marked as unread"
+msgstr "تم تمييز {n} كغير مقروءة"
+
 #: src/app/UserMenu.tsx
 msgid "{name} · {statusText}"
 msgstr "{name} · {statusText}"
 
-#: src/features/team/MemberPage.tsx
-#: src/features/team/TeamColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "{name} (you)"
 msgstr "{name} (أنت)"
+
+#: src/features/contact/ContactDetail.tsx
+msgid "{name} blocked. Their mail is refused."
+msgstr "تم حظر {name}. سيتم رفض رسائله."
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "{name} can reply"
@@ -552,6 +561,10 @@ msgstr "{name} يستقبل البريد على هذا العنوان. إليك 
 msgid "{name} replied before you."
 msgstr "{name} ردّ قبلك."
 
+#: src/features/contact/ContactDetail.tsx
+msgid "{name} unblocked"
+msgstr "تم إلغاء حظر {name}"
+
 #: src/features/conversation/messages/context.ts
 #: src/features/inbox/SidePanels.tsx
 msgid "{name} via {via}"
@@ -569,21 +582,12 @@ msgstr "سيتم إشعار {names}"
 msgid "{needs, plural, one {# thing needs you today.} other {# things need you today.}}"
 msgstr "{needs, plural, zero {لا شيء يحتاجك اليوم.} one {شيء واحد يحتاجك اليوم.} two {شيئان يحتاجانك اليوم.} few {# أشياء تحتاجك اليوم.} many {# شيئًا يحتاجك اليوم.} other {# شيء يحتاجك اليوم.}}"
 
-#: src/features/status/IncidentsTab.tsx
-msgid "{notOk, plural, one {# not operational} other {# not operational}}"
-msgstr "{notOk, plural, zero {لا شيء معطل} one {واحد لا يعمل} two {اثنان لا يعملان} few {# لا تعمل} many {# لا تعمل} other {# لا تعمل}}"
-
 #: src/features/home/HomePage.tsx
 msgid "{on} of {of} online"
 msgstr "{on} من {of} متصلون"
 
-#: src/features/team/TeamColumn.tsx
-msgid "{open, plural, one {# open now} other {# open now}}"
-msgstr "{open, plural, zero {لا شيء مفتوح الآن} one {واحدة مفتوحة الآن} two {اثنتان مفتوحتان الآن} few {# مفتوحة الآن} many {# مفتوحة الآن} other {# مفتوحة الآن}}"
-
 #: src/components/common/Linked.tsx
 #: src/features/home/HomePage.tsx
-#: src/features/team/TeamColumn.tsx
 msgid "{open, plural, one {# open} other {# open}}"
 msgstr "{open, plural, zero {# مفتوحة} one {مفتوحة واحدة} two {مفتوحتان} few {# مفتوحة} many {# مفتوحة} other {# مفتوحة}}"
 
@@ -599,27 +603,23 @@ msgstr "{out, plural, zero {# صف مستبعد} one {صف واحد مستبعد
 msgid "{pct} satisfied"
 msgstr "{pct} راضون"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "{pending} posts waiting for approval"
 msgstr "{pending} منشورات بانتظار الموافقة"
 
-#: src/features/broadcasts/Overview.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "{pending} waiting · {unsubscribed} unsubscribed"
 msgstr "قيد الانتظار: {pending} · ألغوا الاشتراك: {unsubscribed}"
 
-#: src/features/docs/discussions/DiscussionsPane.tsx
 #: src/features/docs/discussions/parts.tsx
 msgid "{pending} waiting for approval"
 msgstr "{pending} بانتظار الموافقة"
-
-#: src/features/broadcasts/BroadcastsColumn.tsx
-msgid "{pending} waiting for confirmation"
-msgstr "{pending} بانتظار التأكيد"
 
 #: src/features/broadcasts/ListSettings.tsx
 msgid "{people, plural, one {Its # subscription and its consent record are deleted.} other {Its # subscriptions and their consent records are deleted.}}"
 msgstr "{people, plural, zero {يُحذف اشتراكه وسجل موافقته.} one {يُحذف اشتراكه الواحد وسجل موافقته.} two {يُحذف اشتراكاه وسجلا موافقتهما.} few {تُحذف اشتراكاته الـ # وسجلات موافقتها.} many {تُحذف اشتراكاته الـ # وسجلات موافقتها.} other {تُحذف اشتراكاته الـ # وسجلات موافقتها.}}"
 
+#: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/Overview.tsx
 msgid "{people} people"
 msgstr "{people} شخص"
@@ -647,6 +647,10 @@ msgstr "{percent}%، {doneText} من {total}"
 #: src/features/migrations/UploadStep.tsx
 msgid "{percent}%, {sent} of {size}"
 msgstr "{percent}%، {sent} من {size}"
+
+#: src/features/inbox/ChatsPage.tsx
+msgid "{product}’s conversations"
+msgstr "محادثات {product}"
 
 #: src/features/migrations/text.ts
 msgid "{provider} accepts no passwords over IMAP. This mailbox connects only with “Sign in with Microsoft”: go back and pick Outlook.com and Microsoft 365."
@@ -729,10 +733,6 @@ msgstr "{rated, plural, =0 {لا توجد تقييمات بعد} zero {# تقي�
 msgid "{rated, plural, one {# rating} other {# ratings}}"
 msgstr "{rated, plural, zero {# تقييم} one {تقييم واحد} two {تقييمان} few {# تقييمات} many {# تقييمًا} other {# تقييم}}"
 
-#: src/features/broadcasts/BroadcastList.tsx
-msgid "{recipients} recipients"
-msgstr "{recipients} مستلم"
-
 #: src/features/broadcasts/Report.tsx
 msgid "{recipients} recipients · {failed} refused by the mail server · {left} skipped · {auto} automatic replies, only counted"
 msgstr "{recipients} مستلم · {failed} رفضها خادم البريد · {left} متخطاة · {auto} ردود تلقائية، تُحصى فقط"
@@ -740,10 +740,6 @@ msgstr "{recipients} مستلم · {failed} رفضها خادم البريد · 
 #: src/features/migrations/DoneStep.tsx
 msgid "{removable, plural, one {# imported conversation nobody wrote in since can be removed.} other {# imported conversations nobody wrote in since can be removed.}}"
 msgstr "{removable, plural, zero {لا محادثات مستوردة يمكن إزالتها.} one {يمكن إزالة محادثة مستوردة واحدة لم يكتب فيها أحد منذ ذلك الحين.} two {يمكن إزالة محادثتين مستوردتين لم يكتب فيهما أحد منذ ذلك الحين.} few {يمكن إزالة # محادثات مستوردة لم يكتب فيها أحد منذ ذلك الحين.} many {يمكن إزالة # محادثة مستوردة لم يكتب فيها أحد منذ ذلك الحين.} other {يمكن إزالة # محادثة مستوردة لم يكتب فيها أحد منذ ذلك الحين.}}"
-
-#: src/features/team/TeamColumn.tsx
-msgid "{replies, plural, one {# reply today} other {# replies today}}"
-msgstr "{replies, plural, zero {# رد اليوم} one {رد واحد اليوم} two {ردان اليوم} few {# ردود اليوم} many {# ردًا اليوم} other {# رد اليوم}}"
 
 #: src/app/TeamMenu.tsx
 msgid "{replies, plural, one {# reply} other {# replies}}"
@@ -758,6 +754,10 @@ msgstr "{replies} ردود"
 msgid "{rest, plural, one {and # more page} other {and # more pages}}"
 msgstr "{rest, plural, zero {و# صفحة أخرى} one {وصفحة أخرى} two {وصفحتان أخريان} few {و# صفحات أخرى} many {و# صفحة أخرى} other {و# صفحة أخرى}}"
 
+#: src/features/team/TeamPage.tsx
+msgid "{role} · {language} · sent {sent} · expires {expires}"
+msgstr "{role} · {language} · أُرسلت {sent} · تنتهي {expires}"
+
 #: src/features/broadcasts/Import.tsx
 msgid "{rows} rows, read as {encoding}, separated by {delimiter}."
 msgstr "{rows} صف، قُرئت بترميز {encoding}، ويفصل بينها {delimiter}."
@@ -770,15 +770,12 @@ msgstr "{rows} صف."
 msgid "{satisfied} satisfied"
 msgstr "{satisfied} راضون"
 
-#: src/features/broadcasts/BroadcastList.tsx
-msgid "{sent} of {all}"
-msgstr "{sent} من {all}"
-
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/broadcasts/Overview.tsx
 msgid "{sent} of {all} done"
 msgstr "تم {sent} من {all}"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "{share} helpful"
 msgstr "{share} وجدوها مفيدة"
 
@@ -795,34 +792,30 @@ msgid "{state} since {since}"
 msgstr "{state} منذ {since}"
 
 #: src/features/broadcasts/AudienceBuilder.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
 msgid "{subscribed} subscribed"
 msgstr "{subscribed} مشتركون"
 
-#: src/features/status/StatusColumn.tsx
 #: src/features/status/StatusPages.tsx
 msgid "{subscribed} subscribers"
 msgstr "المشتركون: {subscribed}"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "{threads} open discussions"
 msgstr "{threads} نقاشات مفتوحة"
 
-#: src/features/broadcasts/Overview.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "{unsubscribed} unsubscribed"
 msgstr "ألغوا الاشتراك: {unsubscribed}"
 
-#: src/features/status/IncidentsTab.tsx
 #: src/features/status/StatusPages.tsx
 msgid "{up, plural, one {# up} other {# up}}"
 msgstr "{up, plural, zero {لا شيء يعمل} one {واحد يعمل} two {اثنان يعملان} few {# تعمل} many {# تعمل} other {# تعمل}}"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "{up} helpful"
 msgstr "{up} مفيد"
 
 #: src/features/status/IncidentsPage.tsx
-#: src/features/status/IncidentsTab.tsx
 msgid "{updates, plural, one {# update} other {# updates}}"
 msgstr "{updates, plural, zero {لا تحديثات} one {تحديث واحد} two {تحديثان} few {# تحديثات} many {# تحديثًا} other {# تحديث}}"
 
@@ -837,8 +830,13 @@ msgstr "{views, plural, zero {# مشاهدة} one {مشاهدة واحدة} two 
 #: src/features/account/AccountPage.tsx
 #: src/features/docs/discussions/parts.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/feedback/RoadmapCard.tsx
 msgid "{votes} votes"
 msgstr "{votes} أصوات"
+
+#: src/features/status/StatusPages.tsx
+msgid "{watching, plural, one {Watched by # monitor} other {Watched by # monitors}}"
+msgstr "{watching, plural, zero {لا مراقبين} one {يراقبها مراقب واحد} two {يراقبها مراقبان} few {يراقبها # مراقبين} many {يراقبها # مراقبًا} other {يراقبها # مراقب}}"
 
 #: src/features/reports/ReportPages.tsx
 msgid "{who} · answered by {name}"
@@ -870,7 +868,7 @@ msgstr "+ إضافة عنوان"
 msgid "+ Add channel"
 msgstr "+ إضافة قناة"
 
-#: src/features/broadcasts/Overview.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "+{added} this month"
 msgstr "+{added} هذا الشهر"
 
@@ -1083,6 +1081,10 @@ msgstr "حصل نقاش على إجابة مقبولة"
 msgid "A discussion started"
 msgstr "بدأ نقاش"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "A draft incident opens for your team to review. Customers see nothing until a member publishes it."
+msgstr "يُفتح حادث كمسودة ليراجعها فريقك. لا يرى العملاء شيئًا حتى ينشره أحد الأعضاء."
+
 #: src/features/status/IncidentDialog.tsx
 msgid "A draft is seen only by your team and changes no component until you publish it."
 msgstr "المسودة لا يراها إلا فريقك ولا تغيّر أي مكوّن حتى تنشرها."
@@ -1131,7 +1133,11 @@ msgstr "رسالة لاحقة من جهة الاتصال."
 msgid "A line that makes people open it"
 msgstr "سطر يدفع الناس إلى فتح الرسالة"
 
-#: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/features/broadcasts/ListsHome.tsx
+msgid "A list is who agreed to hear from you. Every subscriber keeps a consent record you can export."
+msgstr "القائمة هي من وافقوا على تلقي رسائلك. لكل مشترك سجل موافقة يمكنك تصديره."
+
+#: src/features/broadcasts/ListParts.tsx
 msgid "A mailing list holds the people who agreed to get your broadcasts. They join on a subscribe form on your site, or your team adds them and records how they agreed. Every step is kept as proof of consent, and everyone can leave with one click."
 msgstr "القائمة البريدية تضم الأشخاص الذين وافقوا على تلقي رسائلك الجماعية. ينضمون عبر نموذج اشتراك في موقعك، أو يضيفهم فريقك ويسجّل كيف وافقوا. تُحفظ كل خطوة كدليل على الموافقة، ويستطيع الجميع المغادرة بنقرة واحدة."
 
@@ -1142,10 +1148,6 @@ msgstr "ترسل القائمة البريدية باسم صندوق وارد، 
 #: src/features/setup/SetupHub.tsx
 msgid "A mailing list with subscribe forms, for your broadcasts"
 msgstr "قائمة بريدية بنماذج اشتراك، لرسائلك الجماعية"
-
-#: src/features/status/MonitorsTab.tsx
-msgid "A member set the component by hand later, so it stays as they left it."
-msgstr "قام عضو بضبط المكوّن يدويًا لاحقًا، لذلك يبقى كما تركه."
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "A merge field without a fallback would be empty for some recipients. Give it a fallback."
@@ -1166,6 +1168,10 @@ msgstr "اسم تتحكم فيه، مثل status.example.com. يعرض لك Yuva
 #: src/features/setup/StartStep.tsx
 msgid "A new product"
 msgstr "منتج جديد"
+
+#: src/features/docs/PagesTab.tsx
+msgid "A new reader’s first post waits for your approval. You can change this in the inbox settings."
+msgstr "أول منشور لقارئ جديد ينتظر موافقتك. يمكنك تغيير ذلك من إعدادات صندوق الوارد."
 
 #: src/components/common/ServiceWorkerBridge.tsx
 msgid "A new version of Yuva is ready."
@@ -1362,10 +1368,15 @@ msgstr "دعم Acme"
 msgid "Actions for {0}"
 msgstr "إجراءات لـ {0}"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/status/DomainCard.tsx
 #: src/features/status/IncidentsPage.tsx
 msgid "Active"
 msgstr "نشط"
+
+#: src/features/contact/ContactDetail.tsx
+msgid "Activity"
+msgstr "النشاط"
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/contact/ContactDetails.tsx
@@ -1376,6 +1387,10 @@ msgstr "إضافة"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Add a block"
 msgstr "إضافة كتلة"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Add a component"
+msgstr "إضافة مكوّن"
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Add a condition"
@@ -1492,7 +1507,7 @@ msgstr "إضافة ترويسة"
 msgid "Add monitor"
 msgstr "إضافة مراقب"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Add monitor ({addKey})"
 msgstr "إضافة مراقب ({addKey})"
 
@@ -1505,6 +1520,11 @@ msgstr "إضافة ملاحظة"
 msgid "Add product"
 msgstr "إضافة منتج"
 
+#: src/features/docs/InstallDialog.tsx
+msgid "Add ratings and discussions to your docs"
+msgstr "أضف التقييمات والنقاشات إلى وثائقك"
+
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 #: src/features/broadcasts/Subscribers.tsx
 msgid "Add subscriber"
@@ -1513,10 +1533,6 @@ msgstr "إضافة مشترك"
 #: src/features/setup/InstallStep.tsx
 msgid "Add the chat to your site"
 msgstr "أضف الدردشة إلى موقعك"
-
-#: src/features/docs/DocsColumn.tsx
-msgid "Add the page feedback and discussions elements to your documentation site, on one of the inbox's chat channels. Ratings, feedback and discussions then show up here per page."
-msgstr "أضف عنصري ملاحظات الصفحة والنقاشات إلى موقع وثائقك، على إحدى قنوات الدردشة في صندوق الوارد. تظهر هنا التقييمات والملاحظات والنقاشات لكل صفحة."
 
 #: src/features/setup/InstallStep.tsx
 msgid "Add the SDK and create one client"
@@ -1530,6 +1546,7 @@ msgstr "أضف الخادم في الطرفية:"
 msgid "Add the site's address."
 msgstr "أضف عنوان الموقع."
 
+#: src/features/docs/PagesTab.tsx
 #: src/features/setup/InstallStep.tsx
 msgid "Add the two elements under every docs page"
 msgstr "أضف العنصرين أسفل كل صفحة وثائق"
@@ -1537,14 +1554,6 @@ msgstr "أضف العنصرين أسفل كل صفحة وثائق"
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Add to Cursor"
 msgstr "إضافة إلى Cursor"
-
-#: src/features/feedback/FeedbackPage.tsx
-msgid "Add to roadmap"
-msgstr "إضافة إلى خارطة الطريق"
-
-#: src/features/feedback/FeedbackPage.tsx
-msgid "Add to roadmap (B)"
-msgstr "إضافة إلى خارطة الطريق (B)"
 
 #: src/features/setup/InstallStep.tsx
 msgid "Add Yuva to your app"
@@ -1580,6 +1589,7 @@ msgstr "أضافه الفريق"
 #: src/features/setup/email/EmailLayout.tsx
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/MonitorHttpFields.tsx
+#: src/features/status/MonitorsPage.tsx
 #: src/features/status/MonitorToken.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Address"
@@ -1598,11 +1608,11 @@ msgstr "مسؤول"
 msgid "Admin routing"
 msgstr "توجيه المسؤول"
 
-#: src/features/status/IncidentPane.tsx
-msgid "Affected"
-msgstr "المتأثرون"
+#: src/features/team/TeamPage.tsx
+msgid "Admins see every inbox and manage products, channels and members."
+msgstr "يرى المشرفون كل صندوق وارد ويديرون المنتجات والقنوات والأعضاء."
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Affects"
 msgstr "يؤثر على"
 
@@ -1613,6 +1623,10 @@ msgstr "وكيل"
 #: src/features/migrations/MapStep.tsx
 msgid "Agents"
 msgstr "الوكلاء"
+
+#: src/features/team/TeamPage.tsx
+msgid "Agents see the inboxes they were given and answer in them."
+msgstr "يرى الوكلاء صناديق الوارد التي مُنحت لهم ويردّون فيها."
 
 #: src/features/conversation/Collision.tsx
 msgid "Agree who replies."
@@ -1646,6 +1660,7 @@ msgstr "Alertmanager"
 #: src/features/inbox/ChatList.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "All"
 msgstr "الكل"
 
@@ -1654,7 +1669,7 @@ msgstr "الكل"
 msgid "All components"
 msgstr "كل المكوّنات"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "All good"
 msgstr "كل شيء على ما يرام"
 
@@ -1678,17 +1693,21 @@ msgstr "كل البريد"
 msgid "All marked as read"
 msgstr "تم تمييز الكل كمقروء"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "All monitors"
+msgstr "كل المراقبين"
+
 #: src/features/settings/inboxes/InboxSecurity.tsx
 msgid "All of its conversations are deleted with it."
 msgstr "تُحذف كل محادثاتها معها."
 
-#: src/features/status/IncidentsTab.tsx
-msgid "all operational"
-msgstr "كلها تعمل"
-
 #: src/features/migrations/UploadStep.tsx
 msgid "All parts arrived. Reading the file…"
 msgstr "وصلت كل الأجزاء. جارٍ قراءة الملف…"
+
+#: src/features/home/HomePage.tsx
+msgid "all products"
+msgstr "كل المنتجات"
 
 #: src/features/inbox/InboxPicker.tsx
 #: src/features/inbox/ProductSwitcher.tsx
@@ -1702,7 +1721,7 @@ msgstr "كل المنتجات"
 msgid "All scopes"
 msgstr "كل النطاقات"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/Toolbar.tsx
 msgid "All sites"
 msgstr "كل المواقع"
 
@@ -1714,7 +1733,6 @@ msgstr "كل المواقع والتطبيقات"
 msgid "All systems operational"
 msgstr "كل الأنظمة تعمل"
 
-#: src/features/status/IncidentsTab.tsx
 #: src/features/status/StatusPages.tsx
 msgid "all up"
 msgstr "كلها متاحة"
@@ -1758,6 +1776,7 @@ msgstr "موجود سابقًا في الملف"
 msgid "Already in Yuva"
 msgstr "موجود في Yuva بالفعل"
 
+#: src/features/status/LinkConversationsDialog.tsx
 #: src/features/status/LinkIncidentDialog.tsx
 msgid "Already linked"
 msgstr "مرتبطة بالفعل"
@@ -1903,6 +1922,14 @@ msgstr "صورة https."
 msgid "An inbox collects the conversations of one product or brand. Name it after the product your customers know."
 msgstr "يجمع صندوق الوارد محادثات منتج أو علامة تجارية واحدة. سمِّه باسم المنتج الذي يعرفه عملاؤك."
 
+#: src/features/status/MonitorDialog.tsx
+msgid "An incident is published at once, so customers see it on the page."
+msgstr "يُنشر الحادث فورًا، فيراه العملاء على الصفحة."
+
+#: src/features/status/MonitorsPage.tsx
+msgid "An incident is still open. Post the all-clear."
+msgstr "لا يزال هناك حادث مفتوح. انشر إشعار عودة الأمور إلى طبيعتها."
+
 #: src/components/common/text.ts
 msgid "An incident or maintenance changed or got an update"
 msgstr "تغيّر حادث أو صيانة أو حصل على تحديث"
@@ -1919,9 +1946,13 @@ msgstr "يقبل الحادث ما يصل إلى 5,000 محادثة مرتبطة
 msgid "An incident was resolved or maintenance completed"
 msgstr "حُلّ حادث أو اكتملت صيانة"
 
-#: src/features/settings/members/Invites.tsx
+#: src/features/team/TeamPage.tsx
 msgid "An invite is accepted when the person signs in with a code sent to that address. It expires after 7 days."
 msgstr "تُقبل الدعوة عندما يسجّل الشخص الدخول برمز يُرسل إلى ذلك العنوان. تنتهي صلاحيتها بعد 7 أيام."
+
+#: src/features/team/TeamPage.tsx
+msgid "An owner cannot be removed. Change their role first."
+msgstr "لا يمكن إزالة المالك. غيّر دوره أولًا."
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "An owner or admin can let assistants send on their own with Bots may send."
@@ -1993,6 +2024,10 @@ msgstr "صندوق وارد آخر"
 msgid "Another page verified this domain first, and only a verified claim holds a name. Remove the domain, or start over once the other page lets it go."
 msgstr "تحققت صفحة أخرى من هذا النطاق أولاً، والمطالبة المتحقق منها وحدها تحتفظ بالاسم. أزل النطاق أو ابدأ من جديد عندما تتخلى عنه الصفحة الأخرى."
 
+#: src/features/docs/discussions/FromConversation.tsx
+msgid "Another page…"
+msgstr "صفحة أخرى…"
+
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "Another SMTP server"
 msgstr "خادم SMTP آخر"
@@ -2046,6 +2081,10 @@ msgstr "أي عميل يدعم MCP عبر HTTP. يعمل باسمك، بالصل
 msgid "Any conversation"
 msgstr "أي محادثة"
 
+#: src/features/contact/ContactsPage.tsx
+msgid "Any country"
+msgstr "أي بلد"
+
 #: src/features/inbox/ChatList.tsx
 msgid "Any label"
 msgstr "أي وسم"
@@ -2078,7 +2117,7 @@ msgstr "API و MCP"
 msgid "API channel"
 msgstr "قناة API"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "API key"
 msgstr "مفتاح API"
 
@@ -2090,6 +2129,7 @@ msgstr "مفاتيح API"
 
 #: src/components/common/Source.tsx
 #: src/features/conversation/Feedback.tsx
+#: src/features/feedback/FeedbackFormDialog.tsx
 #: src/features/oauth/ConsentPage.tsx
 msgid "App"
 msgstr "التطبيق"
@@ -2155,9 +2195,19 @@ msgctxt "mail folder kind"
 msgid "Archive"
 msgstr "الأرشيف"
 
+#: src/features/broadcasts/ListSettings.tsx
+msgid "Archive the list instead to keep the records."
+msgstr "أرشف القائمة بدلاً من ذلك للاحتفاظ بالسجلات."
+
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "Archived"
 msgstr "مؤرشف"
+
+#: src/features/broadcasts/ListsHome.tsx
+msgid "Archived lists keep their subscribers and consent records but take no new sign-ups."
+msgstr "تحتفظ القوائم المؤرشفة بمشتركيها وسجلات الموافقة، لكنها لا تقبل اشتراكات جديدة."
 
 #: src/features/setup/previews.tsx
 msgid "Arrived"
@@ -2174,6 +2224,10 @@ msgstr "وصلت عبر التحويل، {verifiedAt}."
 #: src/components/common/ShortcutSheet.tsx
 msgid "Articles"
 msgstr "المقالات"
+
+#: src/features/docs/PagesTab.tsx
+msgid "Articles you write in Yuva"
+msgstr "مقالات تكتبها في Yuva"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "As {name}, since {when}"
@@ -2233,17 +2287,15 @@ msgstr "إسناد (A)"
 
 #: src/app/Palette.tsx
 #: src/components/common/ShortcutSheet.tsx
-#: src/features/conversation/ConversationMenu.tsx
 msgid "Assign or hand to a teammate"
 msgstr "إسناد أو تسليم إلى زميل"
 
-#: src/features/conversation/ConversationMenu.tsx
+#: src/features/conversation/ChatView.tsx
 #: src/features/conversation/HeaderActions.tsx
 msgid "Assign to me"
 msgstr "إسناد إليّ"
 
 #. placeholder {0}: assignee.name || assignee.email
-#: src/features/conversation/ChatView.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Assigned to {0}"
 msgstr "مسندة إلى {0}"
@@ -2344,7 +2396,7 @@ msgstr "خاصية الشرط {n}"
 msgid "attribute, e.g. plan"
 msgstr "الخاصية، مثل plan"
 
-#: src/features/contact/ContactsPage.tsx
+#: src/features/contact/ContactDetail.tsx
 #: src/features/contact/MergePreview.tsx
 msgid "Attributes"
 msgstr "الخصائص"
@@ -2368,7 +2420,7 @@ msgstr "ردود تلقائية ونشرات بريدية وتقارير تسل�
 msgid "Auto-reply"
 msgstr "رد تلقائي"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "automatic"
 msgstr "تلقائي"
 
@@ -2380,7 +2432,7 @@ msgstr "البريد الآلي لا يطلق ردًا تلقائيًا أبدً
 msgid "Available"
 msgstr "متاح"
 
-#: src/features/team/TeamColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "available now"
 msgstr "متاح الآن"
 
@@ -2397,6 +2449,7 @@ msgstr "بعيد"
 #: src/components/common/Linked.tsx
 #: src/components/common/Wizard.tsx
 #: src/features/auth/CreateWorkspace.tsx
+#: src/features/broadcasts/ReviewPanel.tsx
 #: src/features/contact/MergeContactDialog.tsx
 msgid "Back"
 msgstr "رجوع"
@@ -2461,6 +2514,10 @@ msgstr "قبل ذلك: {0}، {1}"
 msgid "Before you connect"
 msgstr "قبل أن تتصل"
 
+#: src/features/broadcasts/Composer.tsx
+msgid "Before you send"
+msgstr "قبل الإرسال"
+
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Billing"
 msgstr "الفوترة"
@@ -2474,8 +2531,12 @@ msgstr "روبوت الفوترة"
 msgid "Billing events"
 msgstr "أحداث الفوترة"
 
+#: src/features/contact/ContactDetail.tsx
+msgid "Block contact"
+msgstr "حظر جهة الاتصال"
+
 #: src/features/contact/ContactCard.tsx
-#: src/features/contact/ContactPage.tsx
+#: src/features/contact/ContactDetail.tsx
 #: src/features/contact/ContactSheet.tsx
 #: src/features/contact/ContactsPage.tsx
 #: src/features/status/DomainCard.tsx
@@ -2485,6 +2546,10 @@ msgstr "محظور"
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Blocked contacts"
 msgstr "جهات الاتصال المحظورة"
+
+#: src/features/contact/ContactDetail.tsx
+msgid "Blocked. Mail from this contact is refused and nothing new reaches the inbox. Unblock them from the menu."
+msgstr "محظورة. تُرفض الرسائل من جهة الاتصال هذه ولا يصل أي جديد إلى صندوق الوارد. ألغِ الحظر من القائمة."
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Board"
@@ -2603,6 +2668,7 @@ msgstr "أحضر سجل بريدك ومكتب المساعدة، بالقراء�
 msgid "Bring your old mail"
 msgstr "انقل بريدك القديم"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/Overview.tsx
 msgid "Broadcast"
@@ -2622,9 +2688,9 @@ msgstr "إرسال الرسائل الجماعية"
 #: src/app/Rail.tsx
 #: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
-#: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/Overview.tsx
 #: src/features/settings/webhooks/events.tsx
 #: src/features/settings/workspace/BroadcastsSettings.tsx
@@ -2661,11 +2727,6 @@ msgstr "الأخطاء والأفكار والثناء المرسلة من تط�
 msgid "Business hours"
 msgstr "ساعات العمل"
 
-#: src/features/broadcasts/SubscriberSheet.tsx
-msgid "By"
-msgstr "بواسطة"
-
-#: src/features/status/IncidentsTab.tsx
 #: src/features/status/StatusPages.tsx
 msgid "by e-mail"
 msgstr "عبر البريد"
@@ -2701,14 +2762,18 @@ msgstr "اسم الحملة"
 #: src/components/common/Wizard.tsx
 #: src/features/account/ConnectPage.tsx
 #: src/features/broadcasts/Import.tsx
+#: src/features/broadcasts/ListsHome.tsx
 #: src/features/broadcasts/NewBroadcastDialog.tsx
 #: src/features/broadcasts/Pace.tsx
 #: src/features/broadcasts/ReviewPanel.tsx
+#: src/features/broadcasts/SubscriberSheet.tsx
 #: src/features/contact/ContactDetails.tsx
+#: src/features/contact/ContactNotes.tsx
 #: src/features/contact/ContactsPage.tsx
 #: src/features/conversation/messages/Thread.tsx
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/docs/FromDocs.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
@@ -2716,10 +2781,10 @@ msgstr "اسم الحملة"
 #: src/features/status/AddSubscriberDialog.tsx
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/CreatePageDialog.tsx
+#: src/features/status/IncidentDetail.tsx
 #: src/features/status/IncidentDialog.tsx
-#: src/features/status/IncidentPane.tsx
 #: src/features/status/MonitorDialog.tsx
-#: src/features/team/TeamColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Cancel"
 msgstr "إلغاء"
 
@@ -2803,7 +2868,7 @@ msgstr "احتواء شامل بلا عنوان مرسِل"
 msgid "Category"
 msgstr "الفئة"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Cause found"
 msgstr "تم العثور على السبب"
 
@@ -2815,18 +2880,23 @@ msgstr "نسخة: {cc}"
 msgid "Certificate"
 msgstr "الشهادة"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Certificate expired {expires}"
 msgstr "انتهت صلاحية الشهادة في {expires}"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Certificate expires {expires}"
 msgstr "تنتهي صلاحية الشهادة في {expires}"
+
+#: src/features/feedback/RoadmapCard.tsx
+msgid "Change"
+msgstr "تغيير"
 
 #: src/features/auth/SignInForm.tsx
 msgid "Change address"
 msgstr "تغيير العنوان"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Change pace"
 msgstr "تغيير الوتيرة"
@@ -2868,7 +2938,6 @@ msgid "Changing the sending domain turns DKIM signing off until you enable it ag
 msgstr "تغيير نطاق الإرسال يوقف توقيع DKIM حتى تفعّله مجددًا للنطاق الجديد."
 
 #: src/features/contact/ContactDetails.tsx
-#: src/features/inbox/ChatList.tsx
 #: src/features/setup/email/EmailLayout.tsx
 #: src/features/setup/SetupLayout.tsx
 msgid "Channel"
@@ -2882,10 +2951,22 @@ msgstr "أُضيفت القناة"
 msgid "Channel removed"
 msgstr "أُزيلت القناة"
 
+#: src/features/feedback/FeedbackFormDialog.tsx
+msgid "Channel settings"
+msgstr "إعدادات القناة"
+
 #: src/app/Sidebar.tsx
 #: src/features/settings/ProductsPage.tsx
 msgid "Channels"
 msgstr "القنوات"
+
+#: src/features/docs/InstallDialog.tsx
+msgid "Chat channel"
+msgstr "قناة الدردشة"
+
+#: src/features/broadcasts/ReviewPanel.tsx
+msgid "Check"
+msgstr "تحقق"
 
 #: src/features/settings/channels/email/Deliverability.tsx
 #: src/features/setup/email/EmailTestStep.tsx
@@ -2913,6 +2994,7 @@ msgid "Check DNS and start signing"
 msgstr "فحص DNS وبدء التوقيع"
 
 #: src/features/status/MonitorDialog.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Check every"
 msgstr "الفحص كل"
 
@@ -2941,7 +3023,6 @@ msgid "Check your e-mail"
 msgstr "تحقق من بريدك الإلكتروني"
 
 #: src/features/setup/email/EmailDoneStep.tsx
-#: src/features/status/MonitorsTab.tsx
 msgid "Checked"
 msgstr "تم الفحص"
 
@@ -2982,7 +3063,7 @@ msgstr "جارٍ الفحص…"
 msgid "Checks"
 msgstr "الفحوصات"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Checks that watch your products and set component states"
 msgstr "فحوصات تراقب منتجاتك وتحدد حالات المكونات"
 
@@ -3006,9 +3087,9 @@ msgstr "اختر «إنشاء كلمة مرور تطبيق» وسمّها «Yuva
 msgid "Choose a channel"
 msgstr "اختيار قناة"
 
-#: src/features/status/MonitorDialog.tsx
-msgid "Choose a component"
-msgstr "اختر مكوّنًا"
+#: src/features/docs/discussions/FromConversation.tsx
+msgid "Choose a page"
+msgstr "اختر صفحة"
 
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "Choose a region"
@@ -3047,6 +3128,14 @@ msgstr "claude.ai وClaude Desktop"
 #: src/features/conversation/HeaderActions.tsx
 msgid "Clear"
 msgstr "مسح"
+
+#: src/features/contact/ContactsPage.tsx
+msgid "Clear filters"
+msgstr "مسح عوامل التصفية"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Clear search and filters"
+msgstr "مسح البحث وعوامل التصفية"
 
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Clear the answer"
@@ -3107,6 +3196,7 @@ msgstr "سر العميل"
 #: src/components/ui/sheet.tsx
 #: src/features/contact/ContactCard.tsx
 #: src/features/contact/ContactSheet.tsx
+#: src/features/docs/DocsPage.tsx
 #: src/features/migrations/Wizard.tsx
 #: src/features/setup/SetupHub.tsx
 msgid "Close"
@@ -3150,6 +3240,10 @@ msgstr "إغلاق المحادثات الأقدم"
 msgid "Close or reopen"
 msgstr "إغلاق أو إعادة فتح"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Close the discussion"
+msgstr "إغلاق النقاش"
+
 #: src/features/conversation/ChatView.tsx
 msgid "Close the search"
 msgstr "إغلاق البحث"
@@ -3169,7 +3263,7 @@ msgid "Closed conversations untouched for this many days are deleted with their 
 msgstr "تُحذف المحادثات المغلقة التي لم تُمَسّ منذ هذا العدد من الأيام مع رسائلها ومرفقاتها، وتُحذف رسائل البريد الخام الأقدم من ذلك. اتركه فارغًا للاحتفاظ بكل شيء."
 
 #: src/features/inbox/ChatsPage.tsx
-#: src/features/team/MemberPage.tsx
+#: src/features/team/TeamPage.tsx
 msgid "closed today"
 msgstr "أُغلقت اليوم"
 
@@ -3239,17 +3333,24 @@ msgid "Comparison of condition {n}"
 msgstr "مقارنة الشرط {n}"
 
 #: src/features/settings/inboxes/SenderIdentity.tsx
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Complete"
 msgstr "مكتمل"
+
+#: src/features/status/IncidentDetail.tsx
+msgid "Complete maintenance"
+msgstr "إنهاء الصيانة"
 
 #: src/features/migrations/text.ts
 #: src/features/status/text.tsx
 msgid "Completed"
 msgstr "مكتمل"
 
+#: src/features/status/IncidentDetail.tsx
+msgid "Completed at {endedAt}"
+msgstr "اكتمل في {endedAt}"
+
 #: src/features/status/MonitorDialog.tsx
-#: src/features/status/MonitorsTab.tsx
 msgid "Component"
 msgstr "المكوّن"
 
@@ -3259,9 +3360,7 @@ msgstr "حُذف المكوّن"
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/SubscriberSheet.tsx
-#: src/features/status/IncidentPane.tsx
-#: src/features/status/IncidentsTab.tsx
-#: src/features/status/StatusPagePane.tsx
+#: src/features/status/IncidentDetail.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Components"
 msgstr "المكوّنات"
@@ -3312,7 +3411,6 @@ msgid "Confirmation asked"
 msgstr "طُلب التأكيد"
 
 #: src/components/common/text.ts
-#: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Confirmation mail sent"
 msgstr "أُرسلت رسالة التأكيد"
 
@@ -3432,6 +3530,7 @@ msgstr "انقطع الاتصال. جارٍ إعادة الاتصال…"
 msgid "Connections"
 msgstr "الاتصالات"
 
+#: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/ListSettings.tsx
 #: src/features/status/SubscribersTab.tsx
 msgid "Consent export"
@@ -3445,13 +3544,18 @@ msgstr "تمت الموافقة"
 msgid "Consent record"
 msgstr "سجل الموافقة"
 
+#: src/features/contact/ContactDetail.tsx
 #: src/features/contact/ContactSheet.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "Contact"
 msgstr "جهة الاتصال"
 
-#: src/features/contact/ContactPage.tsx
+#: src/features/contact/ContactsPage.tsx
+msgid "Contact added. Use New conversation to write to them."
+msgstr "تمت إضافة جهة الاتصال. استخدم «محادثة جديدة» للكتابة إليها."
+
+#: src/features/contact/ContactDetail.tsx
 msgid "Contact and identities"
 msgstr "جهة الاتصال والهويات"
 
@@ -3459,7 +3563,6 @@ msgstr "جهة الاتصال والهويات"
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/contact/ContactSheet.tsx
 #: src/features/contact/ContactsPage.tsx
-#: src/features/conversation/ConversationMenu.tsx
 msgid "Contact details"
 msgstr "تفاصيل جهة الاتصال"
 
@@ -3467,7 +3570,11 @@ msgstr "تفاصيل جهة الاتصال"
 msgid "Contact details (C)"
 msgstr "تفاصيل جهة الاتصال (C)"
 
-#: src/features/contact/ContactPage.tsx
+#: src/features/contact/ContactDetail.tsx
+msgid "Contact id copied"
+msgstr "تم نسخ معرّف جهة الاتصال"
+
+#: src/features/contact/ContactDetail.tsx
 #: src/features/contact/ContactSheet.tsx
 msgid "Contact since {since}"
 msgstr "جهة اتصال منذ {since}"
@@ -3493,6 +3600,7 @@ msgid "Content"
 msgstr "المحتوى"
 
 #: src/features/broadcasts/Import.tsx
+#: src/features/broadcasts/ReviewPanel.tsx
 #: src/features/migrations/ChooseStep.tsx
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/migrations/MapStep.tsx
@@ -3523,6 +3631,10 @@ msgstr "المتابعة بالبريد الأحدث"
 msgid "Convers."
 msgstr "محاد."
 
+#: src/features/conversation/ChatView.tsx
+msgid "Conversation actions"
+msgstr "إجراءات المحادثة"
+
 #: src/features/conversation/actions.ts
 msgid "Conversation closed"
 msgstr "أُغلقت المحادثة"
@@ -3532,22 +3644,27 @@ msgid "Conversation list"
 msgstr "قائمة المحادثات"
 
 #: src/features/conversation/actions.ts
+#: src/features/conversation/ChatView.tsx
 msgid "Conversation reopened"
 msgstr "أُعيد فتح المحادثة"
 
-#: src/features/contact/ContactPage.tsx
+#: src/features/contact/ContactDetail.tsx
+msgid "Conversation started"
+msgstr "بدأت المحادثة"
+
+#: src/features/contact/ContactDetail.tsx
 #: src/features/reports/ReportPages.tsx
 msgid "conversations"
 msgstr "المحادثات"
 
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/contact/ContactDetail.tsx
 #: src/features/contact/ContactDetails.tsx
-#: src/features/contact/ContactPage.tsx
 #: src/features/contact/ContactSheet.tsx
-#: src/features/contact/ContactsPage.tsx
 #: src/features/contact/MergePreview.tsx
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/FromDocs.tsx
+#: src/features/docs/PagesTab.tsx
 #: src/features/home/HomePage.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/DoneStep.tsx
@@ -3563,10 +3680,6 @@ msgstr "تم نسخ المحادثات"
 #: src/features/inbox/ChatsPage.tsx
 msgid "Conversations from every product"
 msgstr "المحادثات من كل المنتجات"
-
-#: src/features/inbox/ChatsPage.tsx
-msgid "Conversations in {product}"
-msgstr "المحادثات في {product}"
 
 #: src/features/migrations/DoneStep.tsx
 msgid "Conversations nobody wrote in after the import are deleted. Nothing changed in {address}."
@@ -3616,7 +3729,7 @@ msgstr "نسخ"
 msgid "Copy a message for your admin"
 msgstr "انسخ رسالة لمسؤولك"
 
-#: src/features/contact/ContactsPage.tsx
+#: src/features/contact/ContactDetail.tsx
 msgid "Copy contact id"
 msgstr "نسخ معرّف جهة الاتصال"
 
@@ -3750,14 +3863,16 @@ msgid "Create list"
 msgstr "إنشاء قائمة"
 
 #: src/features/status/CreatePageDialog.tsx
-#: src/features/status/StatusColumn.tsx
 msgid "Create status page"
 msgstr "إنشاء صفحة حالة"
 
-#: src/features/status/StatusColumn.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Create status page ({newKey})"
 msgstr "إنشاء صفحة حالة ({newKey})"
+
+#: src/features/status/StatusPages.tsx
+msgid "Create status page for {product}"
+msgstr "إنشاء صفحة حالة لـ {product}"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Create the board"
@@ -3816,6 +3931,10 @@ msgstr "مخصص"
 #: src/app/Sidebar.tsx
 msgid "Customers"
 msgstr "العملاء"
+
+#: src/features/status/MonitorsPage.tsx
+msgid "Customers cannot see this yet. Tell them with an incident."
+msgstr "لا يراه العملاء بعد. أبلغهم بحادث."
 
 #: src/features/setup/ChannelStep.tsx
 #: src/features/setup/SetupHub.tsx
@@ -3876,6 +3995,7 @@ msgstr "عدد الأيام قبل انتهاء الصلاحية الذي يفش
 msgid "Days of history"
 msgstr "أيام السجل"
 
+#: src/features/docs/PagesTab.tsx
 #: src/features/setup/InstallStep.tsx
 msgid "Decide who may write in discussions"
 msgstr "حدّد من يمكنه الكتابة في النقاشات"
@@ -3889,6 +4009,7 @@ msgid "Degraded performance"
 msgstr "أداء متدهور"
 
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/ListSettings.tsx
 #: src/features/broadcasts/SubscriberSheet.tsx
 #: src/features/contact/ContactNotes.tsx
@@ -3897,28 +4018,33 @@ msgstr "أداء متدهور"
 #: src/features/settings/inboxes/InboxSecurity.tsx
 #: src/features/settings/labels/LabelsPage.tsx
 #: src/features/status/ComponentsTab.tsx
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Delete"
 msgstr "حذف"
 
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/broadcasts/Composer.tsx
 msgid "Delete “{name}”?"
 msgstr "حذف «{name}»؟"
+
+#: src/features/status/MonitorsPage.tsx
+msgid "Delete ({removeKey})"
+msgstr "حذف ({removeKey})"
 
 #. placeholder {0}: c.name
 #. placeholder {0}: i.title
 #. placeholder {0}: list.name
 #: src/features/broadcasts/ListSettings.tsx
 #: src/features/status/ComponentsTab.tsx
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Delete {0}?"
 msgstr "حذف {0}؟"
 
 #: src/features/settings/inboxes/InboxSecurity.tsx
 #: src/features/settings/workspace/DeleteWorkspace.tsx
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Delete {name}?"
 msgstr "حذف {name}؟"
 
@@ -3930,12 +4056,12 @@ msgstr "الحذف بعد (أيام)"
 msgid "Delete component"
 msgstr "حذف المكوّن"
 
-#: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/status/IncidentPane.tsx
+#: src/features/broadcasts/Composer.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Delete draft"
 msgstr "حذف المسودة"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Delete draft ({removeKey})"
 msgstr "حذف المسودة ({removeKey})"
 
@@ -3955,7 +4081,7 @@ msgstr "حذف المفتاح"
 msgid "Delete list"
 msgstr "حذف القائمة"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Delete monitor"
 msgstr "حذف المراقب"
 
@@ -3991,6 +4117,10 @@ msgstr "حذف الإدخال"
 #: src/features/settings/labels/LabelsPage.tsx
 msgid "Delete the label {name}?"
 msgstr "حذف الوسم {name}؟"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Delete the monitor"
+msgstr "حذف المراقب"
 
 #: src/features/migrations/DoneStep.tsx
 msgid "Delete the OAuth client you created for Yuva"
@@ -4044,11 +4174,15 @@ msgstr "حذف حسابك"
 msgid "Delete your account?"
 msgstr "حذف حسابك؟"
 
+#: src/features/contact/MergeContactDialog.tsx
+msgid "deleted afterwards"
+msgstr "تُحذف بعد ذلك"
+
 #: src/features/docs/discussions/parts.tsx
 msgid "Deleted by its author."
 msgstr "حذفه كاتبه."
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Deleted component"
 msgstr "مكوّن محذوف"
 
@@ -4136,9 +4270,11 @@ msgstr "إشعارات سطح المكتب مسموح بها."
 msgid "Desktop notifications are blocked for this site in the browser's settings, so only the sound plays."
 msgstr "إشعارات سطح المكتب محظورة لهذا الموقع في إعدادات المتصفح، لذا يُشغَّل الصوت فقط."
 
+#: src/features/broadcasts/SubscriberSheet.tsx
 #: src/features/contact/ContactCard.tsx
-#: src/features/contact/ContactPage.tsx
+#: src/features/contact/ContactDetail.tsx
 #: src/features/contact/ContactSheet.tsx
+#: src/features/feedback/FeedbackPage.tsx
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/migrations/ImportBanner.tsx
 msgid "Details"
@@ -4152,6 +4288,10 @@ msgstr "Deutsch"
 msgid "Device"
 msgstr "الجهاز"
 
+#: src/app/Sidebar.tsx
+msgid "Devices"
+msgstr "الأجهزة"
+
 #: src/features/contact/ContactVisits.tsx
 msgid "Direct"
 msgstr "مباشر"
@@ -4160,16 +4300,17 @@ msgstr "مباشر"
 msgid "Directory (tenant) ID, optional"
 msgstr "معرّف الدليل (المستأجر)، اختياري"
 
+#: src/features/conversation/composer/ReplyBox.tsx
 #: src/features/conversation/messages/Thread.tsx
 msgid "Discard"
 msgstr "تجاهل"
 
 #: src/components/common/ShortcutSheet.tsx
-#: src/features/conversation/composer/ReplyBox.tsx
 msgid "Discard the suggested reply"
 msgstr "تجاهل الرد المقترح"
 
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/docs/DocsPage.tsx
 msgid "Discussion"
 msgstr "نقاش"
 
@@ -4182,9 +4323,10 @@ msgid "Discussion started"
 msgstr "بدأ النقاش"
 
 #: src/app/Palette.tsx
-#: src/features/docs/discussions/ThreadPane.tsx
-#: src/features/docs/DocsColumn.tsx
-#: src/features/docs/DocsPages.tsx
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/docs/DiscussionsTab.tsx
+#: src/features/docs/DocsPage.tsx
+#: src/features/docs/PagesTab.tsx
 #: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/chat/ChatSections.tsx
 #: src/features/settings/webhooks/events.tsx
@@ -4215,6 +4357,10 @@ msgstr "النقاشات التي بدأتها أو ردَدت عليها"
 #: src/components/common/Linked.tsx
 msgid "Dismiss"
 msgstr "إخفاء"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Display"
+msgstr "العرض"
 
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Display name"
@@ -4277,12 +4423,16 @@ msgstr "افعل هذا لاحقًا"
 #: src/app/Palette.tsx
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/DocsPage.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "Docs"
 msgstr "الوثائق"
 
-#: src/features/docs/DocsColumn.tsx
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/PagesTab.tsx
+msgid "Docs are the pages you keep on your own site and host yourself. Once Yuva’s two elements are on them, every page shows up here with its ratings, feedback and discussions."
+msgstr "الوثائق هي الصفحات التي تحتفظ بها على موقعك وتستضيفها بنفسك. بمجرد وضع عنصرَي Yuva عليها، تظهر كل صفحة هنا مع تقييماتها وملاحظاتها ونقاشاتها."
+
+#: src/features/docs/PagesTab.tsx
 msgid "Documentation pages"
 msgstr "صفحات الوثائق"
 
@@ -4310,6 +4460,7 @@ msgstr "النطاق غير موثَّق"
 #: src/features/broadcasts/Import.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/conversation/ConversationStatus.tsx
+#: src/features/feedback/FeedbackFormDialog.tsx
 #: src/features/migrations/Wizard.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
@@ -4317,7 +4468,8 @@ msgstr "النطاق غير موثَّق"
 #: src/features/setup/NewsletterStep.tsx
 #: src/features/setup/SetupHub.tsx
 #: src/features/setup/SetupLayout.tsx
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
+#: src/features/status/LinkConversationsDialog.tsx
 #: src/features/status/MonitorToken.tsx
 msgid "Done"
 msgstr "تم"
@@ -4327,13 +4479,19 @@ msgctxt "feedback progress"
 msgid "Done"
 msgstr "Done"
 
-#: src/features/broadcasts/Overview.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "Double opt-in"
 msgstr "تأكيد مزدوج"
 
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/MonitorsPage.tsx
 #: src/features/status/text.tsx
 msgid "Down"
 msgstr "متوقف"
+
+#: src/features/status/MonitorsPage.tsx
+msgid "Down since {since}"
+msgstr "متوقف منذ {since}"
 
 #. placeholder {0}: a.filename
 #: src/features/conversation/messages/Attachments.tsx
@@ -4366,9 +4524,10 @@ msgid "Download the rows left out"
 msgstr "تنزيل الصفوف المستبعدة"
 
 #: src/components/common/text.ts
+#: src/features/status/IncidentDetail.tsx
 #: src/features/status/IncidentsPage.tsx
-#: src/features/status/IncidentsTab.tsx
 #: src/features/status/LinkIncidentDialog.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Draft"
 msgstr "مسودة"
 
@@ -4381,12 +4540,13 @@ msgstr "مسودة"
 msgid "Draft author"
 msgstr "كاتب المسودة"
 
+#: src/features/conversation/composer/ReplyBox.tsx
 #: src/features/conversation/messages/Thread.tsx
 #: src/features/inbox/SidePanels.tsx
 msgid "Draft by {author}"
 msgstr "مسودة من {author}"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Draft deleted"
 msgstr "حُذفت المسودة"
 
@@ -4402,7 +4562,6 @@ msgstr "نص المسودة"
 msgid "Draft:"
 msgstr "مسودة:"
 
-#: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/Overview.tsx
 #: src/features/migrations/parts.tsx
 #: src/features/settings/webhooks/events.tsx
@@ -4453,8 +4612,8 @@ msgstr "البريد الإلكتروني"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 #: src/features/broadcasts/Import.tsx
 #: src/features/contact/ContactDetails.tsx
-#: src/features/settings/members/Invites.tsx
 #: src/features/status/AddSubscriberDialog.tsx
+#: src/features/team/TeamPage.tsx
 msgid "E-mail address"
 msgstr "عنوان البريد الإلكتروني"
 
@@ -4498,7 +4657,6 @@ msgstr "مشتركو البريد الإلكتروني معطّلون"
 msgid "E-mail subscribers are off. Nobody can subscribe and no notices go out, but the list is kept."
 msgstr "مشتركو البريد الإلكتروني معطّلون. لا يمكن لأحد الاشتراك ولا تُرسل أي إشعارات، لكن القائمة تبقى محفوظة."
 
-#: src/features/status/IncidentsTab.tsx
 #: src/features/status/StatusPages.tsx
 msgid "E-mail subscriptions are off"
 msgstr "الاشتراكات عبر البريد متوقفة"
@@ -4543,6 +4701,10 @@ msgstr "يذهب كل منها إلى قناة البريد الإلكتروني
 msgid "Each message's original source is stored, as for mail that arrives live. Uses more storage."
 msgstr "يُخزَّن المصدر الأصلي لكل رسالة، كما للبريد الذي يصل مباشرة. يستهلك مساحة تخزين أكبر."
 
+#: src/features/status/MonitorsPage.tsx
+msgid "Each monitor sets the state of one component while it is down."
+msgstr "يحدد كل مراقب حالة مكوّن واحد أثناء توقفه."
+
 #: src/features/setup/email/EmailAddressStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
 #: src/features/setup/email/EmailRepliesStep.tsx
@@ -4571,9 +4733,13 @@ msgstr "كل واحدة بكل رسائلها وملاحظاتها"
 #: src/features/settings/canned/CannedRepliesPage.tsx
 #: src/features/settings/labels/LabelsPage.tsx
 #: src/features/status/ComponentsTab.tsx
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Edit"
 msgstr "تعديل"
+
+#: src/features/status/MonitorsPage.tsx
+msgid "Edit ({editKey})"
+msgstr "تعديل ({editKey})"
 
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
 msgid "Edit API key"
@@ -4591,12 +4757,12 @@ msgstr "تعديل المكوّن"
 msgid "Edit design"
 msgstr "تعديل التصميم"
 
+#: src/features/status/IncidentDetail.tsx
 #: src/features/status/IncidentDialog.tsx
-#: src/features/status/IncidentPane.tsx
 msgid "Edit details"
 msgstr "تعديل التفاصيل"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Edit details ({editKey})"
 msgstr "تعديل التفاصيل ({editKey})"
 
@@ -4625,11 +4791,15 @@ msgid "Edit the incident"
 msgstr "تعديل الحادث"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Edit the monitor"
+msgstr "تعديل المراقب"
+
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Edit the title"
 msgstr "تعديل العنوان"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Edit this update"
 msgstr "تعديل هذا التحديث"
 
@@ -4638,7 +4808,7 @@ msgid "Edit, or preview on a desktop, a phone or in dark mode"
 msgstr "عدّل أو عاين على سطح المكتب أو الهاتف أو في الوضع الداكن"
 
 #: src/features/docs/discussions/ThreadPane.tsx
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "edited"
 msgstr "معدّل"
 
@@ -4750,15 +4920,16 @@ msgstr "خطأ"
 msgid "Error or answer"
 msgstr "خطأ أو إجابة"
 
+#: src/app/Sidebar.tsx
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Events"
 msgstr "الأحداث"
 
-#: src/features/status/MonitorsTab.tsx
-msgid "every {every}"
-msgstr "كل {every}"
+#: src/features/contact/ContactDetails.tsx
+msgid "Every address of this contact is undeliverable. Clear one first, or write in another channel."
+msgstr "جميع عناوين جهة الاتصال هذه غير قابلة للتسليم. امسح أحدها أولًا أو راسلها عبر قناة أخرى."
 
 #: src/features/settings/webhooks/sections.tsx
 msgid "Every attempt has failed since {failingSince}. After 24 hours of failures Yuva turns the endpoint off."
@@ -4796,7 +4967,7 @@ msgstr "كل اللغات. أضف لغة للاحتفاظ بجهات الاتص�
 msgid "Every open conversation has someone."
 msgstr "لكل محادثة مفتوحة شخص مسؤول عنها."
 
-#: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/docs/DiscussionsTab.tsx
 msgid "Every open discussion has an answer."
 msgstr "لكل نقاش مفتوح إجابة."
 
@@ -4884,8 +5055,13 @@ msgid "Expand the sidebar"
 msgstr "توسيع الشريط الجانبي"
 
 #: src/features/status/MonitorDialog.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Expected every"
 msgstr "المتوقع كل"
+
+#: src/features/status/MonitorsPage.tsx
+msgid "Expected status"
+msgstr "الحالة المتوقعة"
 
 #: src/features/status/MonitorHttpFields.tsx
 msgid "Expected status from"
@@ -4894,10 +5070,6 @@ msgstr "الحالة المتوقعة من"
 #: src/features/status/MonitorHttpFields.tsx
 msgid "Expected status to"
 msgstr "الحالة المتوقعة إلى"
-
-#: src/features/status/MonitorsTab.tsx
-msgid "expects a ping every {every}"
-msgstr "يتوقع ping كل {every}"
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "expired {expires}"
@@ -4911,10 +5083,7 @@ msgstr "تنتهي الصلاحية"
 msgid "Expires (optional)"
 msgstr "تنتهي الصلاحية (اختياري)"
 
-#: src/features/settings/members/Invites.tsx
-msgid "expires {expires}"
-msgstr "تنتهي صلاحيته {expires}"
-
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/reports/ReportPages.tsx
 msgid "Export"
@@ -4942,6 +5111,7 @@ msgstr "معرّفات خارجية"
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
 #: src/features/status/MonitorChecks.tsx
+#: src/features/status/ResponseChart.tsx
 msgid "Failed"
 msgstr "فشل"
 
@@ -4971,10 +5141,11 @@ msgid "Fails the monitor at once, without waiting for the grace."
 msgstr "يُسقط المراقب فورًا دون انتظار مهلة السماح."
 
 #: src/features/status/MonitorDialog.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Failures to go down"
 msgstr "إخفاقات متتالية حتى التوقف"
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/DocsPage.tsx
 msgid "feedback"
 msgstr "ملاحظات"
 
@@ -4983,20 +5154,12 @@ msgstr "ملاحظات"
 #: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Source.tsx
 #: src/features/contact/ContactCard.tsx
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/PagesTab.tsx
 #: src/features/feedback/FeedbackList.tsx
 #: src/features/feedback/FeedbackPage.tsx
 #: src/features/settings/webhooks/events.tsx
 msgid "Feedback"
 msgstr "الملاحظات"
-
-#: src/features/docs/DocsPages.tsx
-msgid "Feedback and discussions from your documentation"
-msgstr "ملاحظات ونقاشات من وثائقك"
-
-#: src/features/docs/DocsPages.tsx
-msgid "Feedback and discussions per day"
-msgstr "الملاحظات والنقاشات في اليوم"
 
 #: src/components/common/text.ts
 msgid "Feedback arrived"
@@ -5006,6 +5169,7 @@ msgstr "وصلت ملاحظات"
 msgid "Feedback details"
 msgstr "تفاصيل الملاحظة"
 
+#: src/features/feedback/FeedbackFormDialog.tsx
 #: src/features/feedback/FeedbackPage.tsx
 msgid "Feedback form"
 msgstr "نموذج الملاحظات"
@@ -5055,6 +5219,10 @@ msgstr "مملوء بقيم {who}"
 #: src/features/inbox/SourceFilter.tsx
 msgid "Filter"
 msgstr "تصفية"
+
+#: src/features/contact/ContactsPage.tsx
+msgid "Filter by country"
+msgstr "التصفية حسب البلد"
 
 #: src/features/inbox/ChatList.tsx
 msgid "Filter by label"
@@ -5126,7 +5294,7 @@ msgstr "الرسالة الأولى"
 msgid "First name"
 msgstr "الاسم الأول"
 
-#: src/features/contact/ContactPage.tsx
+#: src/features/contact/ContactDetail.tsx
 #: src/features/reports/ReportPages.tsx
 msgid "first reply"
 msgstr "الرد الأول"
@@ -5144,10 +5312,6 @@ msgstr "الرد الأول في {first}"
 msgid "First rows of the file"
 msgstr "الصفوف الأولى من الملف"
 
-#: src/features/contact/ContactsPage.tsx
-msgid "First seen"
-msgstr "أول ظهور"
-
 #: src/features/status/IncidentDialog.tsx
 msgid "First update"
 msgstr "أول تحديث"
@@ -5156,14 +5320,16 @@ msgstr "أول تحديث"
 msgid "First, an e-mail address"
 msgstr "أولًا، عنوان بريد إلكتروني"
 
+#: src/features/broadcasts/ReviewPanel.tsx
 #: src/features/settings/ProductsPage.tsx
 msgid "Fix"
 msgstr "إصلاح"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Fix is out"
 msgstr "تم نشر الإصلاح"
 
+#: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Fix it"
 msgstr "إصلاحه"
@@ -5255,6 +5421,7 @@ msgstr "للمستخدمين المسجّلين، توقّع الخلفية ال
 msgid "For signed-in users: the identity secret, shown only now"
 msgstr "للمستخدمين المسجّلين: سر الهوية، يظهر الآن فقط"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
 msgid "Form"
 msgstr "النموذج"
@@ -5266,6 +5433,10 @@ msgstr "التنسيق"
 #: src/features/broadcasts/FormSnippets.tsx
 msgid "Forms run on a website chat channel of this inbox, which lists the sites they may be used on. This inbox has none yet."
 msgstr "تعمل النماذج على قناة دردشة موقع في صندوق الوارد هذا، وهي تسرد المواقع التي يمكن استخدامها عليها. ليس لدى هذا الصندوق قناة بعد."
+
+#: src/features/conversation/messages/MessageActions.tsx
+msgid "Forward"
+msgstr "تحويل"
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "Forward all incoming mail to the address below and keep a copy in the mailbox."
@@ -5301,6 +5472,10 @@ msgstr "التحويل"
 msgid "Forwarding address"
 msgstr "عنوان التحويل"
 
+#: src/features/status/DomainCard.tsx
+msgid "Found"
+msgstr "تم العثور عليه"
+
 #: src/features/migrations/SourceStep.tsx
 msgid "Found from the domain's IMAP record."
 msgstr "عُثر عليه من سجل IMAP للنطاق."
@@ -5333,7 +5508,9 @@ msgstr "من (اختياري)"
 msgid "from {from}"
 msgstr "من {from}"
 
-#: src/features/broadcasts/Overview.tsx
+#: src/features/broadcasts/ListPage.tsx
+#: src/features/broadcasts/ListsHome.tsx
+#: src/features/broadcasts/ReviewPanel.tsx
 msgid "From {from}"
 msgstr "من {from}"
 
@@ -5341,7 +5518,9 @@ msgstr "من {from}"
 msgid "From a blocked contact"
 msgstr "من جهة اتصال محظورة"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/docs/DocsPage.tsx
 msgid "From a conversation"
 msgstr "من محادثة"
 
@@ -5360,10 +5539,6 @@ msgstr "عنوان المرسِل (اختياري)"
 #: src/features/migrations/parts.tsx
 msgid "From blocked contacts"
 msgstr "من جهات اتصال محظورة"
-
-#: src/features/broadcasts/Overview.tsx
-msgid "From no sender yet"
-msgstr "لا يوجد مرسل بعد"
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "From the terminal"
@@ -5395,9 +5570,14 @@ msgstr "الدليل الكامل، مع الشاشات والإشعارات ا�
 msgid "Full name"
 msgstr "الاسم الكامل"
 
+#: src/features/docs/InstallDialog.tsx
 #: src/features/setup/InstallStep.tsx
 msgid "Fumadocs / React"
 msgstr "Fumadocs / React"
+
+#: src/app/Sidebar.tsx
+msgid "Funnels"
+msgstr "مسارات التحويل"
 
 #: src/features/migrations/parts.tsx
 msgid "Further copies of the same message"
@@ -5447,6 +5627,10 @@ msgstr "الحصول على نموذج الاشتراك"
 msgid "Give the channel a new forwarding address?"
 msgstr "منح القناة عنوان تحويل جديدًا؟"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Give the page a name."
+msgstr "أعطِ الصفحة اسمًا."
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "Gmail forwards only new mail that is not spam. If a Workspace admin turned forwarding off, use the admin's routing."
 msgstr "يحوّل Gmail البريد الجديد غير المزعج فقط. إذا أوقف مسؤول Workspace التحويل، فاستخدم توجيه المسؤول."
@@ -5458,6 +5642,10 @@ msgstr "يتيح Gmail للتطبيقات الأخرى قراءة نحو 1.5 ج�
 #: src/features/settings/workspace/WorkspacePage.tsx
 msgid "Gmail, Outlook, Yandex, any IMAP"
 msgstr "Gmail وOutlook وYandex وأي خادم IMAP"
+
+#: src/features/status/IncidentDetail.tsx
+msgid "go back to operational when you post this"
+msgstr "تعود إلى وضع التشغيل عند نشر هذا"
 
 #: src/app/Palette.tsx
 msgid "Go to"
@@ -5508,6 +5696,7 @@ msgid "Google Takeout"
 msgstr "Google Takeout"
 
 #: src/features/status/MonitorDialog.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Grace"
 msgstr "مهلة السماح"
 
@@ -5528,6 +5717,7 @@ msgstr "يحيّي المحادثات الجديدة بالبريد الإلكت
 msgid "Group"
 msgstr "المجموعة"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/Growth.tsx
 #: src/features/broadcasts/ListPage.tsx
 msgid "Growth"
@@ -5556,6 +5746,10 @@ msgstr "الترويسات"
 #: src/features/status/text.tsx
 msgid "Heartbeat"
 msgstr "نبض"
+
+#: src/features/status/MonitorsPage.tsx
+msgid "Heartbeat address"
+msgstr "عنوان النبض"
 
 #: src/features/status/ComponentsTab.tsx
 msgid "Held by an incident, {since}"
@@ -5594,6 +5788,7 @@ msgstr "مقالات المساعدة"
 
 #: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "Help center"
 msgstr "مركز المساعدة"
 
@@ -5609,17 +5804,18 @@ msgstr "تقرير المساعدة"
 msgid "Help Scout has no read-only permission, so the app could change data; Yuva's connection refuses every request that is not a read."
 msgstr "ليس لدى Help Scout إذن قراءة فقط، لذا قد يغيّر التطبيق البيانات؛ ويرفض اتصال Yuva كل طلب ليس قراءة."
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "helpful"
 msgstr "مفيد"
 
 #: src/features/conversation/Feedback.tsx
-#: src/features/docs/DocsPages.tsx
 #: src/features/docs/PageContext.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "Helpful"
 msgstr "مفيد"
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/DocsPage.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "helpful share"
 msgstr "نسبة المفيد"
 
@@ -5658,6 +5854,10 @@ msgstr "إخفاء"
 msgid "Hide from the page"
 msgstr "إخفاء من الصفحة"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Hide HTTP details"
+msgstr "إخفاء تفاصيل HTTP"
+
 #: src/features/conversation/messages/EmailBody.tsx
 msgid "Hide quoted text"
 msgstr "إخفاء النص المقتبس"
@@ -5676,7 +5876,7 @@ msgstr "إخفاء المنشور المحدد"
 msgid "High"
 msgstr "عالٍ"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/Toolbar.tsx
 msgid "Highest share of “helpful” first, among pages with at least 5 ratings"
 msgstr "الأعلى نسبة «مفيد» أولًا، بين الصفحات التي لها 5 تقييمات على الأقل"
 
@@ -5707,8 +5907,13 @@ msgid "Home"
 msgstr "الرئيسية"
 
 #: src/features/status/MonitorDialog.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Host"
 msgstr "المضيف"
+
+#: src/features/docs/PagesTab.tsx
+msgid "Hosted by Yuva on its own address. Searched from the chat widget and the reply box. For support answers."
+msgstr "تستضيفها Yuva على عنوان خاص بها. يُبحث فيها من أداة الدردشة ومربع الرد. لإجابات الدعم."
 
 #: src/features/status/DomainCard.tsx
 msgid "Hostname"
@@ -5774,9 +5979,11 @@ msgstr "كيف وافقوا، أو سجلك الخاص (اختياري)"
 msgid "How they left:"
 msgstr "كيف غادروا:"
 
-#: src/features/docs/DocsColumn.tsx
-msgid "How to add them"
-msgstr "كيفية إضافتهم"
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/docs/DocsPage.tsx
+#: src/features/docs/PagesTab.tsx
+msgid "How to add"
+msgstr "طريقة الإضافة"
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "How to send the mail"
@@ -5797,10 +6004,6 @@ msgstr "فحص HTTP"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "I confirm that this person agreed to get e-mails from this list as described above, and that we can show how and when if asked."
 msgstr "أؤكد أن هذا الشخص وافق على تلقي رسائل بريد إلكتروني من هذه القائمة كما هو موضح أعلاه، وأننا نستطيع إثبات كيف ومتى إن طُلب منا."
-
-#: src/features/broadcasts/AddSubscriberDialog.tsx
-msgid "I confirm that this person asked to join this list."
-msgstr "أؤكد أن هذا الشخص طلب الانضمام إلى هذه القائمة."
 
 #: src/components/common/SecretDialog.tsx
 msgid "I saved it"
@@ -5900,20 +6103,25 @@ msgstr "خادم IMAP"
 msgid "Impact"
 msgstr "التأثير"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
 #: src/features/broadcasts/ListPage.tsx
-#: src/features/broadcasts/Overview.tsx
 msgid "Import"
 msgstr "استيراد"
 
-#: src/features/broadcasts/Import.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "Import a CSV file"
 msgstr "استيراد ملف CSV"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Import another file"
 msgstr "استيراد ملف آخر"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/broadcasts/ListsHome.tsx
+msgid "Import CSV"
+msgstr "استيراد CSV"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Import finished"
@@ -5959,10 +6167,6 @@ msgstr "جارٍ استيراد السجل من {address} · {percent}% · يو�
 #: src/features/broadcasts/Import.tsx
 msgid "Importing…"
 msgstr "جارٍ الاستيراد…"
-
-#: src/features/broadcasts/Import.tsx
-msgid "Imports"
-msgstr "عمليات الاستيراد"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Imports run one at a time in the workspace. Try again when the other one ends."
@@ -6071,9 +6275,11 @@ msgstr "في Zoho Mail، افتح Settings › Mail accounts › IMAP access و�
 
 #: src/app/Palette.tsx
 #: src/app/Sidebar.tsx
+#: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/broadcasts/NewBroadcastDialog.tsx
 #: src/features/contact/ContactDetails.tsx
+#: src/features/docs/InstallDialog.tsx
 #: src/features/inbox/ChatsPage.tsx
 #: src/features/migrations/MapStep.tsx
 #: src/features/migrations/text.ts
@@ -6099,18 +6305,28 @@ msgstr "صناديق الوارد"
 msgid "Inboxes cut off subjects longer than 80 characters."
 msgstr "تقتطع صناديق الوارد الموضوعات الأطول من 80 حرفًا."
 
+#: src/features/home/HomePage.tsx
 #: src/features/status/text.tsx
 msgid "Incident"
 msgstr "حادث"
 
+#: src/features/status/MonitorsPage.tsx
+msgid "Incident opened"
+msgstr "تم فتح الحادث"
+
+#: src/features/status/MonitorsPage.tsx
+msgid "Incident: {title} · {state}"
+msgstr "الحادث: {title} · {state}"
+
 #: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
-#: src/features/status/IncidentPane.tsx
 #: src/features/status/IncidentsPage.tsx
-#: src/features/status/IncidentsTab.tsx
-#: src/features/status/StatusPagePane.tsx
 msgid "Incidents"
 msgstr "الحوادث"
+
+#: src/features/status/IncidentsPage.tsx
+msgid "Incidents live on a status page. Create one first."
+msgstr "تعيش الحوادث على صفحة حالة. أنشئ واحدة أولًا."
 
 #: src/features/settings/webhooks/events.tsx
 msgid "Include notes"
@@ -6156,12 +6372,15 @@ msgstr "التثبيت"
 msgid "Investigating"
 msgstr "قيد التحقيق"
 
-#: src/features/settings/members/Invites.tsx
-#: src/features/team/TeamColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Invite"
 msgstr "دعوة"
 
-#: src/features/settings/members/Invites.tsx
+#: src/features/team/TeamPage.tsx
+msgid "Invite a teammate"
+msgstr "دعوة زميل"
+
+#: src/features/team/TeamPage.tsx
 msgid "Invite language"
 msgstr "لغة الدعوة"
 
@@ -6169,11 +6388,7 @@ msgstr "لغة الدعوة"
 msgid "Invite your team"
 msgstr "ادعُ فريقك"
 
-#: src/features/team/TeamColumn.tsx
-msgid "Invited · waiting"
-msgstr "تمت دعوته · في الانتظار"
-
-#: src/features/settings/members/Invites.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Invites"
 msgstr "الدعوات"
 
@@ -6311,7 +6526,7 @@ msgstr "مائل"
 msgid "Its access ends at once. To use it again, connect it again."
 msgstr "ينتهي وصوله فورًا. لاستخدامه مجددًا، اربطه مجددًا."
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Its checks are deleted. An incident it opened is resolved."
 msgstr "تُحذف فحوصاته. وتُحَل الحادثة التي فتحها."
 
@@ -6332,6 +6547,7 @@ msgid "Its history is deleted. Incidents that named it no longer do."
 msgstr "يُحذف سجله. الحوادث التي ذكرته لم تعد تذكره."
 
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/broadcasts/Composer.tsx
 msgid "Its report and the list of recipients are deleted. Conversations opened by replies stay."
 msgstr "يُحذف تقريره وقائمة مستلميه. تبقى المحادثات التي فُتحت بالردود."
 
@@ -6363,6 +6579,10 @@ msgstr "الاحتفاظ بالاسم فقط"
 msgid "Keep this page open. If the connection drops, the upload goes on when it is back; after a reload, pick the same file and only the missing parts are sent."
 msgstr "أبقِ هذه الصفحة مفتوحة. إذا انقطع الاتصال يتابع الرفع عند عودته؛ وبعد إعادة التحميل اختر الملف نفسه فتُرسل الأجزاء الناقصة فقط."
 
+#: src/features/contact/MergeContactDialog.tsx
+msgid "kept"
+msgstr "تبقى"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Kept with every subscription from this file, as the record of their consent."
 msgstr "يُحفظ مع كل اشتراك من هذا الملف كسجل لموافقته."
@@ -6370,6 +6590,10 @@ msgstr "يُحفظ مع كل اشتراك من هذا الملف كسجل لمو
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Key"
 msgstr "المفتاح"
+
+#: src/features/home/HomePage.tsx
+msgid "Key figures"
+msgstr "الأرقام الرئيسية"
 
 #: src/app/Palette.tsx
 #: src/app/TopBar.tsx
@@ -6436,9 +6660,10 @@ msgstr "وسم فقط: يأتي بريده من كل البريد، وتحصل �
 msgid "Labels"
 msgstr "الوسوم"
 
-#: src/features/conversation/HeaderActions.tsx
-msgid "Labels (L)"
-msgstr "الوسوم (L)"
+#: src/features/conversation/ChatView.tsx
+#: src/features/inbox/ChatList.tsx
+msgid "Labels changed"
+msgstr "تم تغيير الوسوم"
 
 #: src/app/UserMenu.tsx
 #: src/components/common/LanguageMenu.tsx
@@ -6446,12 +6671,15 @@ msgstr "الوسوم (L)"
 #: src/features/contact/ContactCard.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
-#: src/features/settings/members/Invites.tsx
 #: src/features/settings/ProductsPage.tsx
 #: src/features/setup/NameStep.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Language"
 msgstr "اللغة"
+
+#: src/features/team/TeamPage.tsx
+msgid "Language of the invite"
+msgstr "لغة الدعوة"
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Language to keep"
@@ -6516,6 +6744,10 @@ msgstr "فشل آخر دفع: {failed}"
 msgid "Last read {when}"
 msgstr "آخر قراءة {when}"
 
+#: src/features/status/MonitorsPage.tsx
+msgid "Last result {last}"
+msgstr "آخر نتيجة {last}"
+
 #: src/features/contact/ContactsPage.tsx
 msgid "Last seen"
 msgstr "آخر ظهور"
@@ -6524,7 +6756,7 @@ msgstr "آخر ظهور"
 msgid "Last seen {seen}"
 msgstr "آخر ظهور {seen}"
 
-#: src/features/contact/ContactPage.tsx
+#: src/features/contact/ContactDetail.tsx
 msgid "last seen {seenText}"
 msgstr "آخر ظهور {seenText}"
 
@@ -6580,7 +6812,6 @@ msgstr "أبقِ النص، ثم الكتلة"
 msgid "Left off the public page and its overall state."
 msgstr "يُستثنى من الصفحة العامة ومن حالتها العامة."
 
-#: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/broadcasts/Import.tsx
 msgid "Left out"
 msgstr "مستبعد"
@@ -6588,6 +6819,10 @@ msgstr "مستبعد"
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Left out by a condition or language"
 msgstr "مستبعد بسبب شرط أو لغة"
+
+#: src/features/broadcasts/AudienceBuilder.tsx
+msgid "Left out: {left} of {total} people on the lists"
+msgstr "مستبعد: {left} من {total} شخصاً في القوائم"
 
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "Legal name"
@@ -6606,9 +6841,23 @@ msgstr "المظهر الفاتح"
 msgid "Limit the pace"
 msgstr "تحديد الوتيرة"
 
+#: src/components/common/Linked.tsx
+#: src/features/status/LinkConversationsDialog.tsx
+msgid "Link"
+msgstr "ربط"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/LinkConversationsDialog.tsx
+msgid "Link conversations"
+msgstr "ربط المحادثات"
+
 #: src/components/common/text.ts
 msgid "Link feedback to ideas, reply to linked customers and manage roadmap boards"
 msgstr "ربط الملاحظات بالأفكار والرد على العملاء المرتبطين وإدارة لوحات خريطة الطريق"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Link feedback to the idea"
+msgstr "ربط الملاحظات بالفكرة"
 
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Link for your Microsoft 365 admin"
@@ -6641,8 +6890,13 @@ msgid "Link to a status incident"
 msgstr "اربط بحادث حالة"
 
 #: src/features/conversation/ConversationMenu.tsx
+#: src/features/feedback/RoadmapCard.tsx
 msgid "Link to an idea"
 msgstr "الربط بفكرة"
+
+#: src/features/feedback/RoadmapCard.tsx
+msgid "Link to an idea (B)"
+msgstr "ربط بفكرة (B)"
 
 #: src/features/conversation/ConversationMenu.tsx
 #: src/features/inbox/ChatList.tsx
@@ -6673,6 +6927,10 @@ msgstr "رُبطت المحادثات المحددة بـ {title}"
 #: src/features/status/LinkIncidentDialog.tsx
 msgid "Linked to {title}"
 msgstr "رُبطت بـ {title}"
+
+#: src/features/feedback/RoadmapCard.tsx
+msgid "linked with {others} other feedback"
+msgstr "مرتبط بـ {others} ملاحظات أخرى"
 
 #: src/features/status/LinkIncidentDialog.tsx
 msgid "Linking…"
@@ -6711,7 +6969,9 @@ msgstr "اذكر 20 أصلًا كحد أقصى."
 msgid "List deleted"
 msgstr "حُذفت القائمة"
 
+#: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/ListSettings.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "List restored"
 msgstr "استُعيدت القائمة"
 
@@ -6728,11 +6988,12 @@ msgid "Listing the tickets…"
 msgstr "جارٍ سرد التذاكر…"
 
 #: src/app/Sidebar.tsx
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/ListPage.tsx
-#: src/features/broadcasts/Overview.tsx
+#: src/features/broadcasts/ListsHome.tsx
 #: src/features/settings/webhooks/events.tsx
 msgid "Lists"
 msgstr "القوائم"
@@ -6751,24 +7012,22 @@ msgid "Load images"
 msgstr "تحميل الصور"
 
 #: src/features/account/AccountPage.tsx
-#: src/features/broadcasts/BroadcastList.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/Import.tsx
+#: src/features/broadcasts/ListsHome.tsx
 #: src/features/broadcasts/Overview.tsx
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/Subscribers.tsx
+#: src/features/contact/ContactDetail.tsx
 #: src/features/contact/ContactNotes.tsx
-#: src/features/contact/ContactPage.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/contact/ContactSheet.tsx
 #: src/features/contact/ContactsPage.tsx
 #: src/features/docs/discussions/parts.tsx
-#: src/features/docs/DocsColumn.tsx
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/PagesTab.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
-#: src/features/status/IncidentsTab.tsx
+#: src/features/status/LinkConversationsDialog.tsx
 #: src/features/status/MonitorChecks.tsx
-#: src/features/team/MemberPage.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Load more"
 msgstr "تحميل المزيد"
 
@@ -6783,6 +7042,10 @@ msgstr "جارٍ التحميل…"
 #: src/features/conversation/Feedback.tsx
 msgid "Locale"
 msgstr "اللغة"
+
+#: src/app/Sidebar.tsx
+msgid "Locations"
+msgstr "المواقع الجغرافية"
 
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Lock"
@@ -6828,7 +7091,7 @@ msgstr "تصفح المزيد من جهات الاتصال"
 msgid "Looking at {where}"
 msgstr "يتصفح {where}"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Looking into it"
 msgstr "نتحقق من الأمر"
 
@@ -6933,12 +7196,12 @@ msgid "Maildir in a zip"
 msgstr "Maildir داخل ملف zip"
 
 #: src/app/Palette.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
-#: src/features/broadcasts/Overview.tsx
-#: src/features/contact/ContactPage.tsx
+#: src/features/broadcasts/ListsHome.tsx
+#: src/features/contact/ContactDetail.tsx
 msgid "Mailing lists"
 msgstr "القوائم البريدية"
 
+#: src/features/home/HomePage.tsx
 #: src/features/status/text.tsx
 msgid "Maintenance"
 msgstr "صيانة"
@@ -6951,7 +7214,7 @@ msgstr "كبير"
 msgid "Major outage"
 msgstr "انقطاع كبير"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Make a new address for {name}?"
 msgstr "إنشاء عنوان جديد لـ {name}؟"
 
@@ -6959,7 +7222,7 @@ msgstr "إنشاء عنوان جديد لـ {name}؟"
 msgid "Make it public"
 msgstr "جعله عامًا"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Make new address"
 msgstr "إنشاء عنوان جديد"
 
@@ -6996,6 +7259,10 @@ msgstr "إدارة القوائم البريدية والمشتركين"
 #: src/components/common/text.ts
 msgid "Manage status pages, set component states and run incidents"
 msgstr "إدارة صفحات الحالة وضبط حالات المكوّنات وإدارة الحوادث"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Manage the changelogs"
+msgstr "إدارة سجلات التغييرات"
 
 #: src/components/common/text.ts
 msgid "Manage webhooks"
@@ -7055,6 +7322,7 @@ msgstr "تمييز هذا المنشور كرسالة غير مرغوبة؟"
 msgid "Markdown works."
 msgstr "يدعم Markdown."
 
+#: src/features/conversation/ChatView.tsx
 #: src/features/docs/discussions/parts.tsx
 msgid "Marked as spam"
 msgstr "مميّز كرسالة غير مرغوبة"
@@ -7105,7 +7373,7 @@ msgstr "الوسيط"
 msgid "Median"
 msgstr "الوسيط"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "median {median}"
 msgstr "الوسيط {median}"
 
@@ -7124,9 +7392,9 @@ msgstr "عضو"
 
 #: src/app/Palette.tsx
 #: src/features/inbox/SidePanels.tsx
-#: src/features/settings/members/MembersPage.tsx
 #: src/features/settings/ProductsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Members"
 msgstr "الأعضاء"
 
@@ -7160,8 +7428,6 @@ msgstr "الإشارات: {names}"
 msgid "Menu"
 msgstr "القائمة"
 
-#: src/features/contact/ContactPage.tsx
-#: src/features/contact/ContactsPage.tsx
 #: src/features/contact/MergeContactDialog.tsx
 msgid "Merge"
 msgstr "دمج"
@@ -7184,6 +7450,7 @@ msgid "Merge with another contact"
 msgstr "الدمج مع جهة اتصال أخرى"
 
 #: src/features/contact/ContactCard.tsx
+#: src/features/contact/ContactDetail.tsx
 #: src/features/contact/ContactsPage.tsx
 msgid "Merge…"
 msgstr "دمج…"
@@ -7297,11 +7564,7 @@ msgstr "خاضع للإشراف"
 msgid "Monday"
 msgstr "الاثنين"
 
-#: src/features/status/MonitorsTab.tsx
-msgid "Monitor"
-msgstr "مراقب"
-
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Monitor deleted"
 msgstr "تم حذف المراقب"
 
@@ -7311,14 +7574,16 @@ msgstr "قيد المراقبة"
 
 #: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
-#: src/features/status/IncidentsTab.tsx
-#: src/features/status/MonitorsTab.tsx
-#: src/features/status/StatusPagePane.tsx
+#: src/features/status/MonitorsPage.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Monitors"
 msgstr "المراقبون"
 
-#: src/features/contact/ContactsPage.tsx
+#: src/features/status/MonitorsPage.tsx
+msgid "Monitors set the state of a status page component. Create a status page first."
+msgstr "تحدد المراقبات حالة مكوّن في صفحة الحالة. أنشئ صفحة حالة أولًا."
+
+#: src/features/contact/ContactDetail.tsx
 msgid "More"
 msgstr "المزيد"
 
@@ -7331,15 +7596,12 @@ msgid "More actions for {address}"
 msgstr "مزيد من الإجراءات لـ {address}"
 
 #. placeholder {0}: c.name
-#. placeholder {0}: i.title
-#. placeholder {0}: p.name
+#. placeholder {0}: s.group.name
 #: src/features/status/ComponentsTab.tsx
-#: src/features/status/IncidentPane.tsx
-#: src/features/status/StatusPages.tsx
 msgid "More for {0}"
 msgstr "المزيد لـ {0}"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "More for {name}"
 msgstr "المزيد لـ {name}"
 
@@ -7351,15 +7613,15 @@ msgstr "مزيد من الخيارات"
 msgid "More than {count} conversations"
 msgstr "أكثر من {count} محادثة"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/Toolbar.tsx
 msgid "Most “helpful” ratings first"
 msgstr "الأكثر تقييمًا بـ«مفيد» أولًا"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/Toolbar.tsx
 msgid "Most “not helpful” ratings first"
 msgstr "الأكثر تقييمًا بـ«غير مفيد» أولًا"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/Toolbar.tsx
 msgid "Most active"
 msgstr "الأكثر نشاطًا"
 
@@ -7367,23 +7629,23 @@ msgstr "الأكثر نشاطًا"
 msgid "Most asked for"
 msgstr "الأكثر طلبًا"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/Toolbar.tsx
 msgid "Most disliked"
 msgstr "الأكثر عدم إعجاب"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/Toolbar.tsx
 msgid "Most helpful"
 msgstr "الأكثر فائدة"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/Toolbar.tsx
 msgid "Most liked"
 msgstr "الأكثر إعجابًا"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/Toolbar.tsx
 msgid "Most ratings, open feedback, open discussions and waiting posts first"
 msgstr "الأكثر تقييمًا ثم الملاحظات المفتوحة ثم النقاشات المفتوحة ثم المنشورات المنتظرة أولًا"
 
-#: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/docs/DocsPage.tsx
 msgid "Most votes"
 msgstr "الأكثر تصويتًا"
 
@@ -7424,8 +7686,20 @@ msgid "Move through the ideas"
 msgstr "التنقل بين الأفكار"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the incidents"
+msgstr "التنقل بين الحوادث"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the list"
 msgstr "التنقل في القائمة"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move through the lists"
+msgstr "التنقل بين القوائم"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move through the monitors"
+msgstr "التنقل بين المراقبات"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Move through the posts"
@@ -7461,9 +7735,17 @@ msgstr "نقل لأعلى"
 msgid "Moved from {from}"
 msgstr "نُقل من {from}"
 
+#: src/features/conversation/ChatView.tsx
+msgid "Moved to {to}"
+msgstr "تم النقل إلى {to}"
+
 #: src/features/migrations/MigrationsPage.tsx
 msgid "Moving from Gmail, Google Workspace, Yandex, iCloud, Zoho, Yahoo, Fastmail, GMX or any IMAP server? Yuva copies the mailbox's history into an inbox, quietly and newest first, while your team keeps working. Then you forward the mailbox here and nothing is lost in between."
 msgstr "تنتقل من Gmail أو Google Workspace أو Yandex أو iCloud أو Zoho أو Yahoo أو Fastmail أو GMX أو أي خادم IMAP؟ تنسخ Yuva سجل صندوق البريد إلى صندوق وارد بهدوء والأحدث أولًا، بينما يواصل فريقك العمل. ثم تحوّل صندوق البريد إلى هنا فلا يضيع شيء في الأثناء."
+
+#: src/features/feedback/FeedbackPage.tsx
+msgid "Moving the idea to Planned, In progress or Shipped sets this for linked feedback that has no progress yet."
+msgstr "نقل الفكرة إلى مخطط لها أو قيد التنفيذ أو تم إطلاقها يضبط ذلك للملاحظات المرتبطة التي لا تملك تقدمًا بعد."
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "MX change"
@@ -7542,7 +7824,7 @@ msgstr "name@example.com"
 msgid "Needed for broadcasts"
 msgstr "مطلوب للرسائل الجماعية"
 
-#: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/features/broadcasts/ListParts.tsx
 msgid "Needs a sender"
 msgstr "يحتاج إلى مرسِل"
 
@@ -7593,10 +7875,6 @@ msgstr "جديد"
 msgid "New"
 msgstr "جديد"
 
-#: src/features/status/MonitorsTab.tsx
-msgid "New address"
-msgstr "عنوان جديد"
-
 #: src/features/status/MonitorToken.tsx
 msgid "New address for {name}"
 msgstr "عنوان جديد لـ {name}"
@@ -7614,16 +7892,10 @@ msgid "New article"
 msgstr "مقالة جديدة"
 
 #: src/components/common/ShortcutSheet.tsx
-#: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/NewBroadcastDialog.tsx
 #: src/features/broadcasts/Overview.tsx
 msgid "New broadcast"
 msgstr "رسالة جماعية جديدة"
-
-#: src/features/broadcasts/BroadcastList.tsx
-#: src/features/broadcasts/Overview.tsx
-msgid "New broadcast ({newKey})"
-msgstr "رسالة جماعية جديدة ({newKey})"
 
 #: src/features/settings/canned/CannedRepliesPage.tsx
 #: src/features/settings/canned/CannedReplyDialog.tsx
@@ -7644,8 +7916,8 @@ msgid "New contacts created"
 msgstr "أُنشئت جهات اتصال جديدة"
 
 #: src/features/contact/ContactCard.tsx
+#: src/features/contact/ContactDetail.tsx
 #: src/features/contact/ContactDetails.tsx
-#: src/features/contact/ContactPage.tsx
 #: src/features/contact/ContactSheet.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/inbox/ChatsPage.tsx
@@ -7693,7 +7965,7 @@ msgstr "تصميم جديد"
 msgid "New discussion"
 msgstr "نقاش جديد"
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/DocsPage.tsx
 msgid "new discussions"
 msgstr "نقاشات جديدة"
 
@@ -7704,6 +7976,10 @@ msgstr "إدخال جديد"
 #: src/features/docs/discussions/QueuePane.tsx
 msgid "New idea"
 msgstr "فكرة جديدة"
+
+#: src/features/feedback/RoadmapCard.tsx
+msgid "New idea from this"
+msgstr "فكرة جديدة من هذه الملاحظة"
 
 #: src/features/settings/inboxes/InboxSecurity.tsx
 msgid "New identity secret"
@@ -7717,20 +7993,14 @@ msgstr "جديد في آخر {days} يومًا"
 msgid "New inbox…"
 msgstr "صندوق وارد جديد…"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/status/IncidentsPage.tsx
-#: src/features/status/IncidentsTab.tsx
-#: src/features/status/StatusPages.tsx
 msgid "New incident"
 msgstr "حادث جديد"
 
 #: src/features/status/IncidentsPage.tsx
-#: src/features/status/IncidentsTab.tsx
 msgid "New incident ({incidentKey})"
 msgstr "حادث جديد ({incidentKey})"
-
-#: src/components/common/ShortcutSheet.tsx
-msgid "New incident or status page"
-msgstr "حادث جديد أو صفحة حالة"
 
 #: src/features/settings/labels/LabelDialog.tsx
 #: src/features/settings/labels/LabelsPage.tsx
@@ -7741,8 +8011,8 @@ msgstr "وسم جديد"
 msgid "New label “{folder}”"
 msgstr "وسم جديد «{folder}»"
 
-#: src/features/broadcasts/BroadcastsColumn.tsx
-#: src/features/broadcasts/Overview.tsx
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "New list"
 msgstr "قائمة جديدة"
 
@@ -7763,7 +8033,7 @@ msgstr "رسالة جديدة في محادثة غير مسندة"
 msgid "New migration"
 msgstr "نقل جديد"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "New monitor"
 msgstr "مراقب جديد"
 
@@ -7783,11 +8053,15 @@ msgstr "رد جديد في <0>{title}</0>"
 msgid "New signing secret"
 msgstr "سر توقيع جديد"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "New status page"
+msgstr "صفحة حالة جديدة"
+
 #: src/features/broadcasts/Import.tsx
 msgid "New subscribers added"
 msgstr "أُضيف مشتركون جدد"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "New update · {stage}"
 msgstr "تحديث جديد · {stage}"
 
@@ -7811,7 +8085,7 @@ msgstr "تطابق أحدث (⇧Enter)"
 msgid "Newer ones stay open when the customer wrote last, pending when your team did."
 msgstr "تبقى الأحدث مفتوحة عندما يكون العميل آخر من كتب، ومعلّقة عندما يكون فريقك."
 
-#: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/docs/DocsPage.tsx
 msgid "Newest"
 msgstr "الأحدث"
 
@@ -7855,6 +8129,10 @@ msgstr "الفحص التالي {next}."
 msgid "Next mail on {local} ({utc} UTC), at this broadcast’s pace."
 msgstr "البريد التالي في {local} ({utc} UTC)، بوتيرة هذه الرسالة الجماعية."
 
+#: src/features/feedback/Lightbox.tsx
+msgid "Next screenshot"
+msgstr "لقطة الشاشة التالية"
+
 #: src/features/migrations/UploadStep.tsx
 msgid "Next, choose what to bring. The scan reads the file once."
 msgstr "بعد ذلك، اختر ما تنقله. يقرأ الفحص الملف مرة واحدة."
@@ -7870,6 +8148,10 @@ msgstr "نسخ احتياطي ليلي"
 #: src/features/setup/previews.tsx
 msgid "No"
 msgstr "لا"
+
+#: src/features/contact/ContactDetails.tsx
+msgid "No {inboxName} id on file. They can only be reached by e-mail until they sign in."
+msgstr "لا يوجد معرّف {inboxName}. لا يمكن التواصل معه إلا عبر البريد الإلكتروني حتى يسجّل الدخول."
 
 #: src/features/migrations/text.ts
 msgid "No {provider} account has that subdomain. Check it in your address: acme in acme.zendesk.com."
@@ -7895,8 +8177,7 @@ msgstr "لا API في هذه الخطة"
 msgid "No App passwords page? Your admin must allow 2-Step Verification and IMAP in the Google Admin console."
 msgstr "لا توجد صفحة App passwords؟ يجب أن يسمح مسؤولك بالتحقق بخطوتين وIMAP في وحدة تحكم Google Admin."
 
-#: src/features/broadcasts/BroadcastsColumn.tsx
-#: src/features/broadcasts/Overview.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "No archived lists"
 msgstr "لا قوائم مؤرشفة"
 
@@ -7912,7 +8193,18 @@ msgstr "لا محاولات بعد."
 msgid "No attempts yet."
 msgstr "لا محاولات بعد."
 
-#: src/features/broadcasts/BroadcastList.tsx
+#: src/features/broadcasts/Overview.tsx
+msgid "No broadcast is scheduled."
+msgstr "لا توجد رسالة جماعية مجدولة."
+
+#: src/features/broadcasts/Overview.tsx
+msgid "No broadcasts for {scope} yet."
+msgstr "لا توجد رسائل جماعية لـ {scope} بعد."
+
+#: src/features/broadcasts/Overview.tsx
+msgid "No broadcasts have gone out yet."
+msgstr "لم تُرسل أي رسالة جماعية بعد."
+
 #: src/features/broadcasts/Overview.tsx
 msgid "No broadcasts yet"
 msgstr "لا رسائل جماعية بعد"
@@ -7952,13 +8244,25 @@ msgstr "لا قنوات بعد. أضف واحدة ليتمكن العملاء م
 msgid "No chat channel of this inbox allows the page's site with discussions on. Turn discussions on in the inbox settings."
 msgstr "لا تسمح أي قناة دردشة في صندوق الوارد هذا بموقع الصفحة مع تفعيل النقاشات. فعّل النقاشات في إعدادات صندوق الوارد."
 
+#: src/features/status/IncidentDetail.tsx
+msgid "No component is named."
+msgstr "لم يُذكر أي مكوّن."
+
 #: src/features/status/ComponentsTab.tsx
 msgid "No components in this group."
 msgstr "لا توجد مكوّنات في هذه المجموعة."
 
-#: src/features/status/StatusPages.tsx
+#: src/features/home/HomePage.tsx
 msgid "No components yet."
 msgstr "لا توجد مكونات بعد."
+
+#: src/features/status/MonitorDialog.tsx
+msgid "No components yet. Add one to a status page first."
+msgstr "لا توجد مكوّنات بعد. أضف مكوّنًا إلى صفحة حالة أولًا."
+
+#: src/features/status/StatusPages.tsx
+msgid "No components yet. Add the parts of your product that customers depend on, in the Components tab."
+msgstr "لا توجد مكوّنات بعد. أضف في تبويب المكوّنات أجزاء منتجك التي يعتمد عليها العملاء."
 
 #: src/features/status/ComponentsTab.tsx
 msgid "No components yet. Add the parts of your product that customers depend on."
@@ -7995,13 +8299,21 @@ msgstr "لا جهات اتصال بعد. تظهر عندما يكتب أحدهم
 msgid "No conversation is linked yet. Open one and use Link to an incident, or select several in the list."
 msgstr "لا توجد محادثة مرتبطة بعد. افتح واحدة واختر «اربط بحادث»، أو حدّد عدة محادثات في القائمة."
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/status/LinkConversationsDialog.tsx
+msgid "No conversation matches."
+msgstr "لا توجد محادثة مطابقة."
+
+#: src/features/docs/PagesTab.tsx
 msgid "No conversations from this page."
 msgstr "لا محادثات من هذه الصفحة."
 
 #: src/features/contact/ContactDetails.tsx
 msgid "No conversations here."
 msgstr "لا محادثات هنا."
+
+#: src/features/docs/FromDocs.tsx
+msgid "No conversations to choose from."
+msgstr "لا توجد محادثات للاختيار منها."
 
 #: src/features/contact/ContactCard.tsx
 #: src/features/inbox/ChatList.tsx
@@ -8012,7 +8324,7 @@ msgstr "لا محادثات بعد."
 msgid "No design yet"
 msgstr "لا تصميم بعد"
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "No discussions on this page yet."
 msgstr "لا نقاشات على هذه الصفحة بعد."
 
@@ -8020,7 +8332,7 @@ msgstr "لا نقاشات على هذه الصفحة بعد."
 msgid "No discussions under the pages of these sites."
 msgstr "لا نقاشات تحت صفحات هذه المواقع."
 
-#: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/docs/DiscussionsTab.tsx
 msgid "No discussions yet. Readers start them under your documentation pages."
 msgstr "لا نقاشات بعد. يبدأها القرّاء تحت صفحات وثائقك."
 
@@ -8032,6 +8344,10 @@ msgstr "لم ينجح أي توقيع DKIM، لذا لا يمكن إرسال ا�
 msgid "No drafts are waiting. Replies an assistant, a bot or a teammate drafts show up here until someone sends or discards them."
 msgstr "لا مسودات بالانتظار. تظهر هنا الردود التي يكتبها مساعد أو روبوت أو زميل مسودةً إلى أن يرسلها أحد أو يتجاهلها."
 
+#: src/features/broadcasts/Overview.tsx
+msgid "No drafts."
+msgstr "لا توجد مسودات."
+
 #: src/features/contact/ContactsPage.tsx
 msgid "no e-mail"
 msgstr "بلا بريد إلكتروني"
@@ -8040,7 +8356,7 @@ msgstr "بلا بريد إلكتروني"
 msgid "No e-mail address given"
 msgstr "لم يُذكر عنوان بريد إلكتروني"
 
-#: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/features/broadcasts/ListParts.tsx
 msgid "No e-mail channel that can send its confirmation and welcome mails"
 msgstr "لا قناة بريد إلكتروني قادرة على إرسال رسائل التأكيد والترحيب الخاصة بها"
 
@@ -8060,7 +8376,7 @@ msgstr "لا نقاط نهاية بعد."
 msgid "No events recorded."
 msgstr "لا أحداث مسجّلة."
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "No feedback from this page."
 msgstr "لا ملاحظات من هذه الصفحة."
 
@@ -8069,13 +8385,17 @@ msgstr "لا ملاحظات من هذه الصفحة."
 msgid "No group"
 msgstr "بلا مجموعة"
 
-#: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/docs/DiscussionsTab.tsx
 msgid "No hidden discussions."
 msgstr "لا نقاشات مخفية."
 
 #: src/features/home/HomePage.tsx
 msgid "No ideas yet. Customers’ votes show up here."
 msgstr "لا توجد أفكار بعد. تظهر هنا أصوات عملائك."
+
+#: src/features/contact/ContactDetail.tsx
+msgid "No ids yet. This person has not been identified by an app or widget."
+msgstr "لا توجد معرّفات بعد. لم يتعرّف على هذا الشخص أي تطبيق أو أداة."
 
 #: src/features/status/text.tsx
 msgid "No impact"
@@ -8084,10 +8404,6 @@ msgstr "بلا تأثير"
 #: src/features/broadcasts/Import.tsx
 msgid "No imports yet."
 msgstr "لا عمليات استيراد بعد."
-
-#: src/features/status/StatusColumn.tsx
-msgid "No inbox to show a status page for."
-msgstr "لا يوجد صندوق وارد تُعرض له صفحة حالة."
 
 #: src/features/status/LinkIncidentDialog.tsx
 msgid "No incident matches."
@@ -8106,7 +8422,7 @@ msgid "No labels yet"
 msgstr "لا وسوم بعد"
 
 #: src/features/conversation/ConversationMenu.tsx
-#: src/features/conversation/HeaderActions.tsx
+#: src/features/inbox/ChatList.tsx
 msgid "No labels yet. Add them in settings."
 msgstr "لا وسوم بعد. أضفها من الإعدادات."
 
@@ -8114,7 +8430,11 @@ msgstr "لا وسوم بعد. أضفها من الإعدادات."
 msgid "No limit"
 msgstr "بلا حد"
 
-#: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/broadcasts/ListsHome.tsx
+msgid "No lists for {scope} yet"
+msgstr "لا توجد قوائم لـ {scope} بعد"
+
+#: src/features/docs/DiscussionsTab.tsx
 msgid "No locked discussions."
 msgstr "لا نقاشات مقفلة."
 
@@ -8126,10 +8446,13 @@ msgstr "لم يعد في صندوق البريد"
 msgid "No mail server was found for {domain}. Pick your provider below, or “Other IMAP server” and enter the server on the next step."
 msgstr "لم يُعثر على خادم بريد لـ {domain}. اختر مزوّدك أدناه، أو «Other IMAP server» وأدخل الخادم في الخطوة التالية."
 
-#: src/features/broadcasts/BroadcastsColumn.tsx
-#: src/features/broadcasts/Overview.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "No mailing lists yet"
 msgstr "لا قوائم بريدية بعد"
+
+#: src/features/status/IncidentsPage.tsx
+msgid "No maintenance is planned."
+msgstr "لا توجد صيانة مخطط لها."
 
 #: src/features/conversation/ChatView.tsx
 msgid "No matches"
@@ -8147,7 +8470,15 @@ msgstr "لا توجد إشارات هنا."
 msgid "No messages yet"
 msgstr "لا رسائل بعد"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
+msgid "No monitor matches this filter."
+msgstr "لا يوجد مراقب يطابق هذا المرشح."
+
+#: src/features/status/StatusPages.tsx
+msgid "No monitor watches this page yet"
+msgstr "لا يراقب هذه الصفحة أي مراقب بعد"
+
+#: src/features/status/MonitorsPage.tsx
 msgid "No monitors yet. Add one to let a check, a job or your monitoring set a component’s state."
 msgstr "لا توجد مراقبات بعد. أضف واحدة ليحدد فحص أو مهمة أو مراقبتك حالة أحد المكونات."
 
@@ -8163,10 +8494,6 @@ msgstr "لم يذكرك أحد في ملاحظة بعد. عندما يكتب ز�
 msgid "No open feedback."
 msgstr "No open feedback."
 
-#: src/features/status/IncidentsTab.tsx
-msgid "No open incidents or maintenance."
-msgstr "لا توجد حوادث أو صيانات مفتوحة."
-
 #: src/features/contact/ContactSearch.tsx
 msgid "No other contact matches."
 msgstr "لا جهة اتصال أخرى تطابق."
@@ -8175,11 +8502,11 @@ msgstr "لا جهة اتصال أخرى تطابق."
 msgid "No other conversations."
 msgstr "لا توجد محادثات أخرى."
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "No pages yet"
 msgstr "لا صفحات بعد"
 
-#: src/features/settings/members/Invites.tsx
+#: src/features/team/TeamPage.tsx
 msgid "No pending invites."
 msgstr "لا دعوات معلّقة."
 
@@ -8195,7 +8522,7 @@ msgstr "لم يتم العثور على مقالة منشورة."
 msgid "No ratings in this period."
 msgstr "لا توجد تقييمات في هذه الفترة."
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "No ratings in this window."
 msgstr "لا تقييمات في هذه الفترة."
 
@@ -8216,13 +8543,13 @@ msgstr "لا حساب رد"
 msgid "No response times in this range yet."
 msgstr "لا توجد أزمنة استجابة في هذا النطاق بعد."
 
-#: src/features/status/MonitorsTab.tsx
-msgid "No result yet"
-msgstr "لا توجد نتيجة بعد"
-
 #: src/app/Palette.tsx
 msgid "No results"
 msgstr "لا نتائج"
+
+#: src/features/broadcasts/ListsHome.tsx
+msgid "No sender yet"
+msgstr "لا يوجد مرسل بعد"
 
 #: src/features/settings/channels/ChannelSummary.tsx
 msgid "No settings"
@@ -8240,7 +8567,7 @@ msgstr "بلا حساب SMTP"
 msgid "No status page yet. Create one under Status first."
 msgstr "لا توجد صفحة حالة بعد. أنشئ واحدة أولًا ضمن «الحالة»."
 
-#: src/features/status/StatusColumn.tsx
+#: src/features/status/StatusPages.tsx
 msgid "No status page yet. Owners and admins create it."
 msgstr "لا توجد صفحة حالة بعد. ينشئها المالكون والمسؤولون."
 
@@ -8251,7 +8578,6 @@ msgstr "لا توجد صفحة حالة بعد. ينشئها المالكون و
 msgid "No subject"
 msgstr "بلا موضوع"
 
-#: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/Overview.tsx
 msgid "No subject yet"
 msgstr "لا موضوع بعد"
@@ -8291,6 +8617,14 @@ msgstr "لم يُرسل أي اختبار منذ آخر تغيير."
 #: src/features/broadcasts/Report.tsx
 msgid "No visits from this campaign yet."
 msgstr "لا زيارات من هذه الحملة بعد."
+
+#: src/features/contact/ContactDetail.tsx
+msgid "No visits yet."
+msgstr "لا توجد زيارات بعد."
+
+#: src/features/feedback/FeedbackFormDialog.tsx
+msgid "No website chat or app is set up yet."
+msgstr "لم يتم إعداد دردشة موقع أو تطبيق بعد."
 
 #: src/features/broadcasts/Import.tsx
 msgid "No welcome mail is sent. Each new address waits for confirmation and joins after clicking the link in the mail."
@@ -8333,6 +8667,10 @@ msgstr "لم يترك أحد تعليقًا مع تقييم في هذه الفت
 msgid "Nobody matches."
 msgstr "لا أحد يطابق."
 
+#: src/features/team/TeamPage.tsx
+msgid "Nobody on the team works on this product yet."
+msgstr "لا أحد من الفريق يعمل على هذا المنتج بعد."
+
 #: src/features/broadcasts/Report.tsx
 msgid "Nobody opened a link yet."
 msgstr "لم ينقر أحد على رابط بعد."
@@ -8349,6 +8687,7 @@ msgstr "لن يتلقى أحد هذه الرسالة. اختر قوائم لها
 #: src/features/settings/SettingsColumn.tsx
 #: src/features/setup/email/EmailTestStep.tsx
 #: src/features/status/MonitorDialog.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "None"
 msgstr "بلا"
 
@@ -8417,13 +8756,17 @@ msgstr "غير متصل بعد. تتحدث هذه الصفحة عند انتها
 msgid "Not delivered"
 msgstr "لم يُسلَّم"
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/status/DomainCard.tsx
+msgid "Not found"
+msgstr "غير موجود"
+
+#: src/features/docs/PagesTab.tsx
 msgid "not helpful"
 msgstr "غير مفيد"
 
 #: src/features/conversation/Feedback.tsx
-#: src/features/docs/DocsPages.tsx
 #: src/features/docs/PageContext.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "Not helpful"
 msgstr "غير مفيد"
 
@@ -8444,17 +8787,17 @@ msgstr "غير متاح على هذا الخادم"
 msgid "Not on any mailing list."
 msgstr "ليس في أي قائمة بريدية."
 
+#: src/features/feedback/RoadmapCard.tsx
+msgid "Not on the roadmap yet. Link it to an idea, so you can tell everyone who asked when it ships."
+msgstr "ليست على خارطة الطريق بعد. اربطها بفكرة لتخبر كل من طلبها متى تصدر."
+
 #: src/features/status/StatusPages.tsx
 msgid "not posted yet"
 msgstr "لم يُنشر بعد"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "not public"
 msgstr "غير عام"
-
-#: src/features/status/IncidentsTab.tsx
-msgid "not public yet"
-msgstr "ليس عامًا بعد"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Not ready"
@@ -8532,6 +8875,7 @@ msgid "Note, only the team sees it"
 msgstr "ملاحظة، يراها الفريق فقط"
 
 #: src/features/contact/ContactCard.tsx
+#: src/features/contact/ContactDetail.tsx
 #: src/features/contact/ContactSheet.tsx
 msgid "Notes"
 msgstr "الملاحظات"
@@ -8557,15 +8901,19 @@ msgid "Nothing from the file is added, and the uploaded file is deleted."
 msgstr "لا يُضاف شيء من الملف، ويُحذف الملف المرفوع."
 
 #: src/features/status/MonitorChecks.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Nothing has arrived yet."
 msgstr "لم يصل شيء بعد."
+
+#: src/features/status/IncidentsPage.tsx
+msgid "Nothing has been resolved yet."
+msgstr "لم يتم حل أي شيء بعد."
 
 #: src/features/broadcasts/Report.tsx
 msgid "Nothing has happened yet."
 msgstr "لم يحدث شيء بعد."
 
 #: src/features/broadcasts/Overview.tsx
-#: src/features/status/IncidentsPage.tsx
 msgid "Nothing here."
 msgstr "لا شيء هنا."
 
@@ -8602,7 +8950,6 @@ msgid "Nothing is lost: when it continues, copying picks up where it stopped."
 msgstr "لا يضيع شيء: عندما يتابع، يستأنف النسخ من حيث توقف."
 
 #: src/features/feedback/FeedbackList.tsx
-#: src/features/status/IncidentsTab.tsx
 msgid "Nothing is resolved yet."
 msgstr "Nothing is resolved yet."
 
@@ -8614,10 +8961,14 @@ msgstr "لا شيء مجدول."
 msgid "Nothing is snoozed."
 msgstr "لا شيء مؤجَّل."
 
-#: src/features/docs/discussions/DiscussionsPane.tsx
 #: src/features/docs/discussions/QueuePane.tsx
+#: src/features/docs/DiscussionsTab.tsx
 msgid "Nothing is waiting for approval."
 msgstr "لا شيء بانتظار الموافقة."
+
+#: src/features/status/IncidentsPage.tsx
+msgid "Nothing is wrong right now. Open an incident when something breaks."
+msgstr "لا توجد مشكلة الآن. افتح حادثًا عندما يتعطل شيء."
 
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing matches these filters."
@@ -8633,8 +8984,16 @@ msgid "Nothing needs you"
 msgstr "لا شيء بانتظارك"
 
 #: src/features/home/HomePage.tsx
+msgid "Nothing needs you in {scoped}"
+msgstr "لا شيء ينتظرك في {scoped}"
+
+#: src/features/home/HomePage.tsx
 msgid "Nothing needs you today."
 msgstr "لا شيء يحتاجك اليوم."
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Nothing opens by itself. Open an incident from the monitor when you want one."
+msgstr "لا يُفتح شيء تلقائيًا. افتح حادثًا من المراقب عندما تريد."
 
 #: src/features/account/AccountPage.tsx
 msgid "Nothing unread."
@@ -8727,6 +9086,7 @@ msgid "Offline"
 msgstr "غير متصل"
 
 #: src/features/status/MonitorChecks.tsx
+#: src/features/status/ResponseChart.tsx
 msgid "OK"
 msgstr "موافق"
 
@@ -8753,6 +9113,10 @@ msgstr "زيارات أقدم"
 #: src/features/home/HomePage.tsx
 msgid "oldest {oldestFor}"
 msgstr "الأقدم {oldestFor}"
+
+#: src/features/home/HomePage.tsx
+msgid "oldest {oldestFor}, {oldestWho}"
+msgstr "الأقدم {oldestFor}، {oldestWho}"
 
 #: src/features/home/HomePage.tsx
 msgid "oldest {oldestFor}, in {oldestInbox}"
@@ -8786,11 +9150,6 @@ msgstr "على عدة قوائم، رسالة واحدة لكل شخص"
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "On Team and Enterprise plans an owner adds it once in <0>Organization settings › Connectors</0>; members then find it under Connectors and click Connect."
 msgstr "في خطتي Team وEnterprise يضيفه المالك مرة واحدة في <0>Organization settings › Connectors</0>؛ ثم يجده الأعضاء ضمن Connectors وينقرون Connect."
-
-#. placeholder {0}: c.idea.title
-#: src/features/feedback/FeedbackPage.tsx
-msgid "On the roadmap: {0}"
-msgstr "في خارطة الطريق: {0}"
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "On the web"
@@ -8874,7 +9233,7 @@ msgstr "حالة الاتصال"
 msgid "Only {0}"
 msgstr "{0} فقط"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Only a draft can be deleted. It was never shown on the page."
 msgstr "يمكن حذف المسودة فقط. لم تُعرض على الصفحة قط."
 
@@ -8885,6 +9244,10 @@ msgstr "يمكن حذف المسودة فقط. انشر تحديثًا بدلً�
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Only add people who agreed to get this list. What you enter here is kept as their consent record."
 msgstr "أضف فقط من وافقوا على تلقي هذه القائمة. ما تدخله هنا يُحفظ كسجل موافقتهم."
+
+#: src/features/team/TeamPage.tsx
+msgid "Only an owner can change an owner's role."
+msgstr "لا يمكن لغير المالك تغيير دور مالك."
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Only contacts whose language is one of these."
@@ -8930,10 +9293,6 @@ msgstr "يمكن للمالكين فقط حذف مساحة العمل."
 msgid "Only pages on these addresses can open the chat. Enter scheme and host, without a path."
 msgstr "الصفحات على هذه العناوين فقط يمكنها فتح الدردشة. أدخل المخطط والمضيف بلا مسار."
 
-#: src/features/broadcasts/Composer.tsx
-msgid "Only people who subscribed get it. Unsubscribed, unconfirmed, bounced and blocked addresses are always left out."
-msgstr "يتلقاها المشتركون فقط. العناوين التي ألغت الاشتراك أو لم تؤكد أو ارتدّت أو حُظرت تُستبعد دائمًا."
-
 #: src/features/migrations/ChooseStep.tsx
 msgid "Only read requests are sent. You can close this page; the scan goes on and the list in Settings shows when it is done."
 msgstr "تُرسل طلبات القراءة فقط. يمكنك إغلاق هذه الصفحة؛ يستمر الفحص وتعرض القائمة في الإعدادات متى انتهى."
@@ -8966,13 +9325,21 @@ msgstr "الزيارات التي تمت بعد موافقتهم على معرّ
 msgid "Only while the panel is open in this browser. Away, you are alerted only about conversations assigned to you."
 msgstr "فقط أثناء فتح اللوحة في هذا المتصفح. عند الابتعاد، تُنبَّه فقط إلى المحادثات المسندة إليك."
 
-#: src/features/broadcasts/Composer.tsx
+#: src/features/status/StatusPages.tsx
+msgid "only your team can preview it"
+msgstr "يمكن لفريقك فقط معاينتها"
+
 #: src/features/broadcasts/NewBroadcastDialog.tsx
 msgid "Only your team sees it."
 msgstr "يراه فريقك فقط."
 
+#: src/features/team/TeamPage.tsx
+msgid "open"
+msgstr "مفتوحة"
+
 #: src/components/common/text.ts
 #: src/features/account/AccountPage.tsx
+#: src/features/broadcasts/Overview.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/conversation/ConversationStatus.tsx
@@ -8981,7 +9348,7 @@ msgstr "يراه فريقك فقط."
 #: src/features/home/HomePage.tsx
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/settings/channels/chat/ChatFields.tsx
-#: src/features/status/IncidentsTab.tsx
+#: src/features/status/StatusPages.tsx
 msgid "Open"
 msgstr "مفتوحة"
 
@@ -8989,6 +9356,10 @@ msgstr "مفتوحة"
 #: src/features/conversation/messages/Attachments.tsx
 msgid "Open {0}"
 msgstr "فتح {0}"
+
+#: src/features/status/IncidentDetail.tsx
+msgid "Open {name} in Monitors"
+msgstr "فتح {name} في المراقبات"
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "Open {provider}'s mail settings and find forwarding, or a filter that forwards all incoming mail."
@@ -8998,6 +9369,7 @@ msgstr "افتح إعدادات بريد {provider} وابحث عن التحوي
 msgid "Open a draft incident"
 msgstr "فتح مسودة حادثة"
 
+#: src/features/docs/PagesTab.tsx
 #: src/features/setup/InstallStep.tsx
 msgid "Open a page of your docs"
 msgstr "افتح صفحة من وثائقك"
@@ -9014,9 +9386,15 @@ msgstr "فتح أمان الحساب"
 msgid "Open Account security in your Yahoo account."
 msgstr "افتح Account security في حساب Yahoo."
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/status/IncidentDialog.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Open an incident"
 msgstr "فتح حادث"
+
+#: src/features/status/MonitorsPage.tsx
+msgid "Open an incident ({incidentKey})"
+msgstr "فتح حادث ({incidentKey})"
 
 #: src/features/migrations/text.ts
 msgid "Open App passwords"
@@ -9051,16 +9429,23 @@ msgstr "فتح المحادثة"
 msgid "Open conversations"
 msgstr "المحادثات المفتوحة"
 
-#: src/features/team/MemberPage.tsx
-#: src/features/team/TeamColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Open conversations assigned"
 msgstr "المحادثات المفتوحة المسندة"
+
+#: src/features/status/LinkConversationsDialog.tsx
+msgid "Open conversations of this product that may be about {title}."
+msgstr "محادثات مفتوحة لهذا المنتج قد تتعلق بـ {title}."
 
 #: src/components/common/Linked.tsx
 msgid "Open conversations that get this reply: {open}"
 msgstr "المحادثات المفتوحة التي ستتلقى هذا الرد: {open}"
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/discussions/QueuePane.tsx
+msgid "Open discussion"
+msgstr "فتح النقاش"
+
+#: src/features/docs/PagesTab.tsx
 msgid "open discussions"
 msgstr "نقاشات مفتوحة"
 
@@ -9068,11 +9453,11 @@ msgstr "نقاشات مفتوحة"
 msgid "Open Enterprise applications"
 msgstr "فتح Enterprise applications"
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "open feedback"
 msgstr "ملاحظات مفتوحة"
 
-#: src/features/contact/ContactsPage.tsx
+#: src/features/contact/ContactDetail.tsx
 msgid "Open full page"
 msgstr "فتح الصفحة كاملة"
 
@@ -9088,7 +9473,15 @@ msgstr "افتح Google Takeout واختر «Deselect all» ثم حدد Mail ف�
 msgid "Open Google's confirmation page"
 msgstr "فتح صفحة التأكيد في Google"
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/PagesTab.tsx
+msgid "Open Help center"
+msgstr "فتح مركز المساعدة"
+
+#: src/features/feedback/RoadmapCard.tsx
+msgid "Open idea"
+msgstr "فتح الفكرة"
+
+#: src/features/docs/PagesTab.tsx
 msgid "Open in Analytics"
 msgstr "فتح في التحليلات"
 
@@ -9096,7 +9489,7 @@ msgstr "فتح في التحليلات"
 msgid "Open inbox →"
 msgstr "فتح صندوق الوارد →"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Open incident"
 msgstr "فتح الحادثة"
 
@@ -9179,6 +9572,10 @@ msgstr "فتح صندوق الوارد"
 msgid "Open the inbox settings"
 msgstr "فتح إعدادات صندوق الوارد"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the list"
+msgstr "فتح القائمة"
+
 #: src/features/migrations/text.ts
 msgid "Open the Microsoft Entra admin center or the Azure portal, go to App registrations and choose New registration. Name it “Yuva”."
 msgstr "افتح Microsoft Entra admin center أو بوابة Azure، وانتقل إلى App registrations واختر New registration. سمِّه «Yuva»."
@@ -9203,19 +9600,27 @@ msgstr "فتح سجل التغييرات العام"
 msgid "Open the public help center"
 msgstr "فتح مركز المساعدة العام"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the public page"
+msgstr "فتح الصفحة العامة"
+
 #: src/features/broadcasts/Report.tsx
 msgid "Open the reply"
 msgstr "فتح الرد"
 
-#: src/components/common/ShortcutSheet.tsx
-msgid "Open the status page"
-msgstr "فتح صفحة الحالة"
+#: src/features/broadcasts/FormSnippets.tsx
+msgid "Open the settings"
+msgstr "فتح الإعدادات"
+
+#: src/features/team/TeamPage.tsx
+msgid "Open the unassigned queue"
+msgstr "فتح قائمة غير المُسندة"
 
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "Open the workspace settings"
 msgstr "فتح إعدادات مساحة العمل"
 
-#: src/features/team/MemberPage.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Open what they see"
 msgstr "فتح ما يرونه"
 
@@ -9236,11 +9641,11 @@ msgstr "فتح موقعك"
 msgid "Open Zoho Accounts"
 msgstr "فتح Zoho Accounts"
 
-#: src/features/team/MemberPage.tsx
+#: src/features/team/TeamPage.tsx
 msgid "open, assigned"
 msgstr "مفتوحة، مسندة"
 
-#: src/features/team/TeamColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "open, unassigned"
 msgstr "مفتوحة، غير مسندة"
 
@@ -9322,6 +9727,10 @@ msgstr "خادم IMAP آخر"
 msgid "Other MCP client"
 msgstr "عميل MCP آخر"
 
+#: src/features/status/MonitorsPage.tsx
+msgid "Our monitor {monitor} has seen a problem since {at}. We are looking into it."
+msgstr "رصد مراقبنا {monitor} مشكلة منذ {at}. نحن نتحقق منها."
+
 #: src/features/migrations/text.ts
 msgid "Outlook.com and Microsoft 365"
 msgstr "Outlook.com وMicrosoft 365"
@@ -9355,7 +9764,8 @@ msgid "Over time"
 msgstr "مع الوقت"
 
 #: src/app/Sidebar.tsx
-#: src/features/docs/DocsColumn.tsx
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/StatusPages.tsx
 msgid "Overview"
 msgstr "نظرة عامة"
 
@@ -9371,22 +9781,21 @@ msgstr "مستأجر خاص"
 msgid "Owner"
 msgstr "مالك"
 
-#: src/features/broadcasts/BroadcastsColumn.tsx
-#: src/features/broadcasts/Overview.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "Owners and admins create lists, add subscribers and send broadcasts."
 msgstr "ينشئ المالكون والمسؤولون القوائم ويضيفون المشتركين ويرسلون الرسائل الجماعية."
 
-#: src/features/settings/members/MembersPage.tsx
-msgid "Owners and admins see every inbox; agents see the inboxes they were given."
-msgstr "يرى المالكون والمسؤولون كل صناديق الوارد؛ ويرى الوكلاء الصناديق الممنوحة لهم."
+#: src/features/team/TeamPage.tsx
+msgid "Owners and admins see every inbox; agents see the inboxes they were given. Only owners and admins can invite, change roles or remove members."
+msgstr "يرى المالكون والمشرفون كل صندوق وارد؛ ويرى الوكلاء الصناديق التي مُنحت لهم. وحدهم المالكون والمشرفون يمكنهم الدعوة وتغيير الأدوار وإزالة الأعضاء."
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Owners and admins see every inbox; members see the inboxes they are given."
 msgstr "يرى المالكون والمسؤولون كل صناديق الوارد؛ ويرى الأعضاء الصناديق الممنوحة لهم."
 
-#: src/features/broadcasts/BroadcastList.tsx
-msgid "Owners and admins write and send broadcasts. You see the broadcasts of your inboxes, so you know what a reply answers."
-msgstr "يكتب المالكون والمسؤولون الرسائل الجماعية ويرسلونها. ترى الرسائل الجماعية الخاصة بصناديق الوارد لديك، لتعرف على ماذا يردّ الرد."
+#: src/features/team/TeamPage.tsx
+msgid "Owners can do everything, including billing and deleting the workspace."
+msgstr "يستطيع المالكون فعل كل شيء، بما في ذلك الفوترة وحذف مساحة العمل."
 
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Pace (mails a second)"
@@ -9395,13 +9804,11 @@ msgstr "الوتيرة (رسائل في الثانية)"
 #: src/features/broadcasts/SubscriberSheet.tsx
 #: src/features/conversation/Feedback.tsx
 #: src/features/docs/discussions/FromConversation.tsx
-#: src/features/docs/discussions/ThreadPane.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Page"
 msgstr "الصفحة"
 
 #: src/components/common/ShortcutSheet.tsx
-#: src/features/status/StatusPages.tsx
 msgid "Page settings"
 msgstr "إعدادات الصفحة"
 
@@ -9410,9 +9817,19 @@ msgid "Page where they agreed (optional)"
 msgstr "الصفحة التي وافقوا فيها (اختياري)"
 
 #: src/app/Sidebar.tsx
-#: src/features/docs/DocsColumn.tsx
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/docs/DocsPage.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "Pages"
 msgstr "الصفحات"
+
+#: src/features/docs/PagesTab.tsx
+msgid "Pages live on your own site. Articles hosted by Yuva are in <0>Help center</0>."
+msgstr "الصفحات على موقعك. المقالات التي تستضيفها Yuva في <0>مركز المساعدة</0>."
+
+#: src/features/docs/PagesTab.tsx
+msgid "Pages on your own site"
+msgstr "صفحات على موقعك"
 
 #: src/features/settings/channels/chat/ChatInstall.tsx
 msgid "Pages that embed the old key can no longer start chats until you update the snippet. Visitors already chatting keep their session."
@@ -9463,8 +9880,8 @@ msgstr "كلمة المرور"
 msgid "Password set"
 msgstr "تم تعيين كلمة المرور"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/status/IncidentsPage.tsx
-#: src/features/status/IncidentsTab.tsx
 msgid "Past"
 msgstr "السابقة"
 
@@ -9481,9 +9898,10 @@ msgid "Paste this before the closing body tag of your pages"
 msgstr "الصق هذا قبل وسم body الختامي في صفحاتك"
 
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/broadcasts/Overview.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MigrationsPage.tsx
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Pause"
 msgstr "إيقاف مؤقت"
 
@@ -9491,6 +9909,11 @@ msgstr "إيقاف مؤقت"
 msgid "Pause or resume sending"
 msgstr "إيقاف الإرسال مؤقتًا أو استئنافه"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Pause or resume the monitor"
+msgstr "إيقاف المراقب مؤقتًا أو استئنافه"
+
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/text.ts
 #: src/features/migrations/text.ts
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -9498,6 +9921,7 @@ msgstr "إيقاف الإرسال مؤقتًا أو استئنافه"
 #: src/features/setup/email/EmailDoneStep.tsx
 #: src/features/setup/email/EmailTestStep.tsx
 #: src/features/status/MonitorDialog.tsx
+#: src/features/status/MonitorsPage.tsx
 #: src/features/status/text.tsx
 msgid "Paused"
 msgstr "متوقف مؤقتًا"
@@ -9542,6 +9966,10 @@ msgstr "متوقف مؤقتًا. لا يُقرأ شيء من {address} حتى ت
 msgid "Paused. Nothing is read from {provider} until you resume."
 msgstr "متوقف مؤقتًا. لا يُقرأ شيء من {provider} حتى تستأنف."
 
+#: src/features/status/MonitorsPage.tsx
+msgid "Paused. Results are ignored and the component goes back to how you set it."
+msgstr "متوقف مؤقتًا. تُتجاهل النتائج ويعود المكوّن إلى الحالة التي حددتها."
+
 #: src/features/settings/webhooks/DeliverySheet.tsx
 msgid "Payload"
 msgstr "الحمولة"
@@ -9558,6 +9986,14 @@ msgstr "تُحذف عمليات التسليم المعلّقة معه."
 #: src/features/setup/NewsletterStep.tsx
 msgid "People join it on a subscribe form or are added with their consent. Broadcasts go to lists."
 msgstr "ينضمون إليها عبر نموذج اشتراك أو يُضافون بموافقتهم. تُرسل الرسائل الجماعية إلى القوائم."
+
+#: src/features/feedback/FeedbackFormDialog.tsx
+msgid "People send a bug, an idea or praise, with a screenshot and the device details. It lands here."
+msgstr "يرسل الناس خللًا أو فكرة أو إشادة، مع لقطة شاشة وتفاصيل الجهاز. تصل إلى هنا."
+
+#: src/features/contact/ContactsPage.tsx
+msgid "People so far: {shownCount}"
+msgstr "الأشخاص حتى الآن: {shownCount}"
 
 #: src/features/setup/SetupHub.tsx
 msgid "People subscribe on your site; broadcasts go to the list."
@@ -9588,6 +10024,10 @@ msgstr "من كتبوا إلى {product}"
 #: src/features/setup/SetupHub.tsx
 msgid "People write from inside your app, signed in as themselves."
 msgstr "يكتب الناس من داخل تطبيقك، مسجّلين الدخول بأنفسهم."
+
+#: src/features/contact/ContactsPage.tsx
+msgid "People: {shownCount}"
+msgstr "الأشخاص: {shownCount}"
 
 #: src/features/broadcasts/Pace.tsx
 msgid "Per day"
@@ -9621,6 +10061,10 @@ msgstr "إذن الإرسال"
 #: src/features/contact/ContactsPage.tsx
 msgid "Person"
 msgstr "شخص"
+
+#: src/features/docs/PagesTab.tsx
+msgid "Pick a chat channel of the product and paste the snippet. Ratings and questions land in its inbox."
+msgstr "اختر قناة دردشة للمنتج والصق الشيفرة. تصل التقييمات والأسئلة إلى صندوق وارد القناة."
 
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Pick a color"
@@ -9658,6 +10102,18 @@ msgstr "اختر تصميمًا أولًا."
 msgid "Pick a design that renders without errors."
 msgstr "اختر تصميمًا يُعرض بلا أخطاء."
 
+#: src/features/docs/DiscussionsTab.tsx
+msgid "Pick a discussion to read and answer it."
+msgstr "اختر نقاشًا لقراءته والرد عليه."
+
+#: src/features/status/MonitorsPage.tsx
+msgid "Pick a monitor to see what happened."
+msgstr "اختر مراقبًا لترى ما حدث."
+
+#: src/features/docs/PagesTab.tsx
+msgid "Pick a page to see its ratings, discussions and questions."
+msgstr "اختر صفحة لعرض تقييماتها ونقاشاتها وأسئلتها."
+
 #: src/features/feedback/FeedbackList.tsx
 msgid "Pick a piece of feedback"
 msgstr "Pick a piece of feedback"
@@ -9685,6 +10141,10 @@ msgstr "اختر قناة بريد إلكتروني في صندوق الوارد
 #: src/features/migrations/MapStep.tsx
 msgid "Pick an inbox"
 msgstr "اختر صندوق وارد"
+
+#: src/features/status/IncidentsPage.tsx
+msgid "Pick an incident to read it."
+msgstr "اختر حادثًا لقراءته."
 
 #: src/features/status/LinkIncidentDialog.tsx
 msgid "Pick an open incident or maintenance"
@@ -9729,6 +10189,10 @@ msgstr "اختر واحدًا لاحقًا في إعدادات القائمة."
 msgid "Pick the column that holds the e-mail addresses."
 msgstr "اختر العمود الذي يحتوي على عناوين البريد الإلكتروني."
 
+#: src/features/docs/FromDocs.tsx
+msgid "Pick the conversation to answer in public. The next reader finds it under your documentation page."
+msgstr "اختر المحادثة التي ستجيب عنها علنًا. سيجدها القارئ التالي أسفل صفحة وثائقك."
+
 #: src/features/broadcasts/Import.tsx
 msgid "Pick the file to import."
 msgstr "اختر الملف المراد استيراده."
@@ -9748,6 +10212,10 @@ msgstr "اختر صندوق الوارد لـ {address}، ومن في فريقك
 #: src/features/migrations/MapStep.tsx
 msgid "Pick the inboxes for {provider}'s conversations, which member each agent is, and how tags become labels. Changing these after the scan plans the import again in a moment."
 msgstr "اختر صناديق الوارد لمحادثات {provider}، وأي عضو يمثل كل وكيل، وكيف تصبح العلامات وسومًا. تغيير هذه بعد الفحص يعيد تخطيط الاستيراد بعد لحظة."
+
+#: src/features/broadcasts/ListsHome.tsx
+msgid "Pick the list the people join."
+msgstr "اختر القائمة التي ينضم إليها الأشخاص."
 
 #: src/features/contact/MergeContactDialog.tsx
 msgid "Pick the other contact. It is merged into this one and then deleted."
@@ -9790,7 +10258,6 @@ msgid "Pick what Yuva should tell your server about. You can change this later."
 msgstr "اختر ما يجب أن تبلغ Yuva خادمك به. يمكنك تغيير ذلك لاحقًا."
 
 #: src/features/conversation/ConversationMenu.tsx
-#: src/features/inbox/ChatList.tsx
 msgid "Pin to the top"
 msgstr "تثبيت في الأعلى"
 
@@ -9812,17 +10279,16 @@ msgstr "نص عادي مع روابط وأسطر جديدة، بحد أقصى 50
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/status/IncidentDialog.tsx
-#: src/features/status/IncidentsTab.tsx
+#: src/features/status/IncidentsPage.tsx
 msgid "Plan maintenance"
 msgstr "جدولة صيانة"
 
 #: src/features/status/IncidentsPage.tsx
-#: src/features/status/IncidentsTab.tsx
 msgid "Plan maintenance ({maintenanceKey})"
 msgstr "جدولة صيانة ({maintenanceKey})"
 
 #: src/components/common/text.ts
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Planned"
 msgstr "Planned"
 
@@ -9862,11 +10328,7 @@ msgstr "المنفذ"
 msgid "Post an update"
 msgstr "نشر تحديث"
 
-#: src/features/status/StatusPages.tsx
-msgid "Post an update ({incidentKey})"
-msgstr "نشر تحديث ({incidentKey})"
-
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Post an update ({updateKey})"
 msgstr "نشر تحديث ({updateKey})"
 
@@ -9878,7 +10340,6 @@ msgstr "اجمع ملاحظات مستخدمي تطبيقك"
 msgid "Post status update"
 msgstr "نشر تحديث للحالة"
 
-#: src/features/status/IncidentsTab.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Post update"
 msgstr "نشر التحديث"
@@ -9908,12 +10369,10 @@ msgstr "جارٍ التحضير"
 #: src/components/common/Wizard.tsx
 #: src/features/settings/labels/LabelDialog.tsx
 #: src/features/status/PreviewDialog.tsx
-#: src/features/status/StatusPagePane.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Preview"
 msgstr "معاينة"
 
-#: src/features/status/StatusPagePane.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Preview ({previewKey})"
 msgstr "معاينة ({previewKey})"
@@ -9941,24 +10400,32 @@ msgid "Preview the page"
 msgstr "معاينة الصفحة"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Previous or next discussion"
+msgstr "النقاش السابق أو التالي"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Previous or next language"
 msgstr "اللغة السابقة أو التالية"
+
+#: src/features/feedback/Lightbox.tsx
+msgid "Previous screenshot"
+msgstr "لقطة الشاشة السابقة"
 
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Priority"
 msgstr "الأولوية"
+
+#: src/features/conversation/ChatView.tsx
+msgid "Priority set to {level}"
+msgstr "تم ضبط الأولوية على {level}"
 
 #: src/app/Palette.tsx
 #: src/components/common/ShortcutSheet.tsx
 msgid "Priority, inbox, spam and more"
 msgstr "الأولوية وصندوق الوارد والبريد غير المرغوب وغيرها"
 
-#: src/features/broadcasts/Overview.tsx
-msgid "private"
-msgstr "خاص"
-
-#: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/ListPage.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "Private"
 msgstr "خاص"
 
@@ -9968,6 +10435,8 @@ msgstr "pro، team"
 
 #: src/features/contact/ContactsPage.tsx
 #: src/features/inbox/InboxPicker.tsx
+#: src/features/status/CreatePageDialog.tsx
+#: src/features/status/IncidentDialog.tsx
 msgid "Product"
 msgstr "المنتج"
 
@@ -9996,6 +10465,7 @@ msgstr "الخلفية البرمجية للإنتاج"
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/ProductsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Products"
 msgstr "المنتجات"
 
@@ -10025,7 +10495,6 @@ msgstr "Progress (O)"
 msgid "Proton Mail is reachable over IMAP only through Proton Mail Bridge on your own computer, which a server cannot reach. Export the mailbox with Proton Mail's export tool, put the folder in a .zip and upload it as an export file below."
 msgstr "لا يمكن الوصول إلى Proton Mail عبر IMAP إلا عبر Proton Mail Bridge على حاسوبك، وهذا لا يستطيع الخادم الوصول إليه. صدّر صندوق البريد بأداة التصدير في Proton Mail، وضع المجلد في ملف .zip وارفعه كملف تصدير أدناه."
 
-#: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/broadcasts/ListPage.tsx
 msgid "Public"
@@ -10035,10 +10504,6 @@ msgstr "عام"
 msgid "Public address"
 msgstr "العنوان العام"
 
-#: src/features/broadcasts/Overview.tsx
-msgid "public form"
-msgstr "نموذج عام"
-
 #: src/features/settings/channels/PublicKeyField.tsx
 msgid "Public key"
 msgstr "المفتاح العام"
@@ -10047,12 +10512,7 @@ msgstr "المفتاح العام"
 msgid "Public pages that say whether your products work"
 msgstr "صفحات عامة توضح ما إذا كانت منتجاتك تعمل"
 
-#: src/features/docs/discussions/DiscussionsPane.tsx
-msgid "Public threads under your documentation pages, in every state."
-msgstr "نقاشات عامة تحت صفحات وثائقك، بكل حالاتها."
-
-#: src/features/status/IncidentPane.tsx
-#: src/features/status/StatusPagePane.tsx
+#: src/features/status/IncidentDetail.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Publish"
 msgstr "نشر"
@@ -10062,8 +10522,7 @@ msgctxt "sidebar group"
 msgid "Publish"
 msgstr "النشر"
 
-#: src/features/status/IncidentPane.tsx
-#: src/features/status/StatusPagePane.tsx
+#: src/features/status/IncidentDetail.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Publish ({publishKey})"
 msgstr "نشر ({publishKey})"
@@ -10100,7 +10559,7 @@ msgstr "نشر المسودة"
 msgid "Publish this TXT record in your domain’s DNS:"
 msgstr "انشر سجل TXT هذا في DNS لنطاقك:"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Publish update"
 msgstr "نشر التحديث"
 
@@ -10112,8 +10571,6 @@ msgstr "نشر المسودة أو إرسالها"
 msgid "Publish, schedule and unpublish What's new entries"
 msgstr "نشر مداخل «المستجدات» وجدولتها وإلغاء نشرها"
 
-#: src/features/status/StatusColumn.tsx
-#: src/features/status/StatusPagePane.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Published"
 msgstr "منشورة"
@@ -10129,6 +10586,10 @@ msgstr "دفع"
 #: src/features/status/MonitorToken.tsx
 msgid "Push a state"
 msgstr "إرسال حالة"
+
+#: src/features/status/MonitorsPage.tsx
+msgid "Push address"
+msgstr "عنوان الدفع"
 
 #: src/features/settings/notifications/events.ts
 msgid "Push and e-mail"
@@ -10167,6 +10628,10 @@ msgstr "ضع نموذج الاشتراك الخاص بها في موقعك، أ�
 msgid "Put the SDK's conversations view behind a Help button in your app, then send a message from it."
 msgstr "ضع عرض المحادثات في SDK خلف زر مساعدة في تطبيقك، ثم أرسل رسالة منه."
 
+#: src/features/docs/InstallDialog.tsx
+msgid "Put these elements under every page of your documentation. They use a chat channel of the product, so the results land in its inbox."
+msgstr "ضع هذه العناصر أسفل كل صفحة من وثائقك. تستخدم قناة دردشة للمنتج، فتصل النتائج إلى صندوق وارد القناة."
+
 #: src/features/docs/discussions/FromConversation.tsx
 msgid "Question"
 msgstr "سؤال"
@@ -10183,6 +10648,10 @@ msgstr "في قائمة الانتظار. تظهر المحاولة الجديد
 msgid "Quick cleanup"
 msgstr "تنظيف سريع"
 
+#: src/features/conversation/messages/MessageActions.tsx
+msgid "Quote"
+msgstr "اقتباس"
+
 #: src/features/status/ResponseChart.tsx
 msgid "Range"
 msgstr "النطاق"
@@ -10191,7 +10660,7 @@ msgstr "النطاق"
 msgid "Rated bad"
 msgstr "قُيّمت سيئة"
 
-#: src/features/contact/ContactPage.tsx
+#: src/features/contact/ContactDetail.tsx
 msgid "rated good"
 msgstr "قُيّمت جيدة"
 
@@ -10211,21 +10680,21 @@ msgstr "التقييم"
 msgid "Ratings"
 msgstr "التقييمات"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/Toolbar.tsx
 msgid "Ratings over"
 msgstr "التقييمات على مدى"
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "ratings per 1,000 views"
 msgstr "تقييمات لكل 1,000 مشاهدة"
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "Ratings per day"
 msgstr "التقييمات في اليوم"
 
-#: src/features/docs/DocsColumn.tsx
-msgid "Ratings, feedback and discussions from your documentation"
-msgstr "التقييمات والملاحظات والنقاشات من وثائقك"
+#: src/features/docs/DocsPage.tsx
+msgid "Ratings, questions and discussions from the documentation pages on your own site"
+msgstr "تقييمات وأسئلة ونقاشات من صفحات الوثائق على موقعك"
 
 #: src/features/conversation/messages/MessageActions.tsx
 msgid "Read"
@@ -10291,6 +10760,8 @@ msgstr "قراءة صفحات الحالة والمكوّنات والحوادث
 msgid "Read the folders"
 msgstr "قراءة المجلدات"
 
+#: src/features/docs/InstallDialog.tsx
+#: src/features/docs/PagesTab.tsx
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/migrations/SwitchStep.tsx
 #: src/features/migrations/text.ts
@@ -10348,6 +10819,10 @@ msgstr "جاهز للاستيراد"
 msgid "Ready to send"
 msgstr "جاهز للإرسال"
 
+#: src/app/Sidebar.tsx
+msgid "Realtime"
+msgstr "الوقت الفعلي"
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "Received {when}. Enter it in Gmail's forwarding settings, or open the link."
 msgstr "استُلم {when}. أدخله في إعدادات التحويل في Gmail، أو افتح الرابط."
@@ -10369,15 +10844,15 @@ msgstr "يستقبل فقط، بلا حساب SMTP"
 msgid "Receiving"
 msgstr "استقبال"
 
-#: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/docs/DocsPage.tsx
 msgid "Recent activity"
 msgstr "النشاط الأخير"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorChecks.tsx
 msgid "Recent checks"
 msgstr "الفحوصات الأخيرة"
 
-#: src/features/contact/ContactPage.tsx
+#: src/features/contact/ContactDetail.tsx
 msgid "Recent visits"
 msgstr "الزيارات الأخيرة"
 
@@ -10463,13 +10938,13 @@ msgstr "يمكن للصور البعيدة إخبار المرسِل بأنك ف
 #: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
 #: src/features/settings/channels/sections.tsx
-#: src/features/settings/members/MemberList.tsx
 #: src/features/settings/notifications/PushSection.tsx
 #: src/features/settings/profile/Passkeys.tsx
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/status/DomainCard.tsx
 #: src/features/status/MonitorHttpFields.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Remove"
 msgstr "إزالة"
 
@@ -10490,14 +10965,14 @@ msgstr "إزالة {0}؟"
 msgid "Remove {lang}"
 msgstr "إزالة {lang}"
 
-#: src/features/settings/members/MemberList.tsx
 #: src/features/settings/notifications/PushSection.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Remove {name}"
 msgstr "إزالة {name}"
 
-#: src/features/settings/members/MemberList.tsx
-msgid "Remove {name} from the workspace?"
-msgstr "إزالة {name} من مساحة العمل؟"
+#: src/features/team/TeamPage.tsx
+msgid "Remove {name}?"
+msgstr "إزالة {name}؟"
 
 #: src/features/migrations/MapStep.tsx
 msgid "Remove {sender}"
@@ -10518,6 +10993,10 @@ msgstr "إزالة النطاق"
 #: src/features/settings/webhooks/sections.tsx
 msgid "Remove endpoint"
 msgstr "إزالة نقطة النهاية"
+
+#: src/features/team/TeamPage.tsx
+msgid "Remove from the workspace"
+msgstr "إزالة من مساحة العمل"
 
 #: src/features/status/MonitorHttpFields.tsx
 msgid "Remove header {header}"
@@ -10662,7 +11141,7 @@ msgid "Replies to this address are refused until you clear it."
 msgstr "تُرفض الردود على هذا العنوان إلى أن تمسحه."
 
 #: src/features/inbox/ChatsPage.tsx
-#: src/features/team/MemberPage.tsx
+#: src/features/team/TeamPage.tsx
 msgid "replies today"
 msgstr "ردود اليوم"
 
@@ -10806,7 +11285,7 @@ msgstr "التقارير"
 msgid "Reputation impact"
 msgstr "التأثير على السمعة"
 
-#: src/features/team/TeamColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Resend"
 msgstr "إعادة الإرسال"
 
@@ -10816,7 +11295,7 @@ msgstr "إعادة الضبط إلى الافتراضي"
 
 #: src/features/conversation/HeaderActions.tsx
 #: src/features/feedback/FeedbackPage.tsx
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Resolve"
 msgstr "Resolve"
 
@@ -10824,6 +11303,10 @@ msgstr "Resolve"
 #: src/features/feedback/FeedbackPage.tsx
 msgid "Resolve (E)"
 msgstr "Resolve (E)"
+
+#: src/features/status/IncidentDetail.tsx
+msgid "Resolve incident"
+msgstr "حل الحادث"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Resolve or complete"
@@ -10837,38 +11320,53 @@ msgstr "حل أو إكمال"
 msgid "Resolved"
 msgstr "Resolved"
 
+#: src/features/status/IncidentDetail.tsx
+msgid "Resolved at {endedAt}"
+msgstr "تم الحل في {endedAt}"
+
 #. placeholder {0}: took(last)
 #: src/features/status/StatusPages.tsx
 msgid "resolved in {0}"
 msgstr "تم الحل خلال {0}"
 
-#: src/features/status/MonitorsTab.tsx
-msgid "Response · 24 h"
-msgstr "الاستجابة · 24 ساعة"
+#: src/features/feedback/FeedbackPage.tsx
+msgid "Resolved. It moved to the Resolved tab."
+msgstr "تم الحل. انتقلت إلى تبويب المحلولة."
 
 #: src/features/status/ResponseChart.tsx
 msgid "Response time"
 msgstr "زمن الاستجابة"
 
-#: src/features/status/IncidentPane.tsx
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/IncidentDetail.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Response time, last 24 hours"
 msgstr "زمن الاستجابة، آخر 24 ساعة"
 
+#: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/ListSettings.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "Restore"
 msgstr "استعادة"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/ResponseChart.tsx
+msgid "Results"
+msgstr "النتائج"
+
+#: src/features/status/MonitorsPage.tsx
 msgid "Results, last 24 hours"
 msgstr "النتائج، آخر 24 ساعة"
 
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/broadcasts/Overview.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MigrationsPage.tsx
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Resume"
 msgstr "استئناف"
+
+#: src/app/Sidebar.tsx
+msgid "Retention"
+msgstr "الاحتفاظ"
 
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MigrationsPage.tsx
@@ -10889,12 +11387,16 @@ msgstr "يعيدك إلى"
 
 #: src/components/common/Linked.tsx
 #: src/features/broadcasts/Import.tsx
-#: src/features/inbox/ChatList.tsx
 #: src/features/migrations/Wizard.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Review"
 msgstr "مراجعة"
 
+#: src/features/status/StatusPages.tsx
+msgid "Review and post"
+msgstr "مراجعة ونشر"
+
+#: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Review and send"
 msgstr "مراجعة وإرسال"
@@ -10908,12 +11410,10 @@ msgid "Review the key"
 msgstr "مراجعة المفتاح"
 
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/broadcasts/Composer.tsx
+#: src/features/broadcasts/ReviewPanel.tsx
 msgid "Review, then send or schedule"
 msgstr "راجع ثم أرسل أو جدول"
-
-#: src/features/broadcasts/ReviewPanel.tsx
-msgid "Review, then send or schedule ({key})"
-msgstr "راجع ثم أرسل أو جدول ({key})"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Revisions"
@@ -10943,6 +11443,7 @@ msgstr "مباشرة بعد الاشتراك يتلقى الناس رسالة ق
 #: src/app/Palette.tsx
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/feedback/RoadmapCard.tsx
 msgid "Roadmap"
 msgstr "خارطة الطريق"
 
@@ -10950,7 +11451,7 @@ msgstr "خارطة الطريق"
 msgid "Roadmap →"
 msgstr "خارطة الطريق ←"
 
-#: src/features/settings/members/Invites.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Role"
 msgstr "الدور"
 
@@ -10958,7 +11459,7 @@ msgstr "الدور"
 msgid "Role addresses such as postmaster@ or noreply@"
 msgstr "عناوين الأدوار مثل postmaster@ أو noreply@"
 
-#: src/features/settings/members/MemberList.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Role of {name}"
 msgstr "دور {name}"
 
@@ -10993,6 +11494,10 @@ msgstr "وجّه نطاقك"
 #: src/features/setup/email/EmailReceiveStep.tsx
 msgid "Route your mail to Yuva"
 msgstr "وجّه بريدك إلى Yuva"
+
+#: src/features/status/MonitorsPage.tsx
+msgid "Rules"
+msgstr "القواعد"
 
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Run a check"
@@ -11044,8 +11549,8 @@ msgstr "السبت"
 #: src/features/settings/ui.tsx
 #: src/features/settings/workspace/RetentionForm.tsx
 #: src/features/status/ComponentDialogs.tsx
+#: src/features/status/IncidentDetail.tsx
 #: src/features/status/IncidentDialog.tsx
-#: src/features/status/IncidentPane.tsx
 #: src/features/status/MonitorDialog.tsx
 msgid "Save"
 msgstr "حفظ"
@@ -11131,16 +11636,12 @@ msgstr "جدولة"
 msgid "Schedule and send broadcasts, when the workspace lets keys and assistants send them"
 msgstr "جدولة الرسائل الجماعية وإرسالها، عندما تسمح مساحة العمل للمفاتيح والمساعدين بإرسالها"
 
-#: src/features/status/IncidentsPage.tsx
-msgid "Schedule maintenance"
-msgstr "جدولة صيانة"
-
 #: src/components/common/ShortcutSheet.tsx
 msgid "Schedule the entry"
 msgstr "جدولة الإدخال"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/text.ts
-#: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/Overview.tsx
 #: src/features/status/IncidentsPage.tsx
 #: src/features/status/text.tsx
@@ -11152,6 +11653,7 @@ msgid "Scheduled by"
 msgstr "جدولها"
 
 #: src/features/status/Notices.tsx
+#: src/features/status/StatusPages.tsx
 msgid "Scheduled for {due}"
 msgstr "مجدول في {due}"
 
@@ -11175,6 +11677,10 @@ msgstr "التقييم {score} من 5"
 #: src/features/conversation/Feedback.tsx
 msgid "Screen"
 msgstr "الشاشة"
+
+#: src/features/feedback/Lightbox.tsx
+msgid "Screenshot"
+msgstr "لقطة شاشة"
 
 #: src/features/feedback/FeedbackList.tsx
 msgid "Screenshots attached"
@@ -11204,12 +11710,9 @@ msgstr "البحث في جهات الاتصال"
 #: src/app/Palette.tsx
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/inbox/ChatList.tsx
+#: src/features/status/LinkConversationsDialog.tsx
 msgid "Search conversations"
 msgstr "البحث في المحادثات"
-
-#: src/features/inbox/ChatList.tsx
-msgid "Search conversations (/)"
-msgstr "البحث في المحادثات (/)"
 
 #: src/app/Palette.tsx
 msgid "Search conversations for “{search}”"
@@ -11227,10 +11730,6 @@ msgstr "البحث عن رمز تعبيري (بالإنجليزية)"
 msgid "Search feedback"
 msgstr "Search feedback"
 
-#: src/features/feedback/FeedbackList.tsx
-msgid "Search feedback (/)"
-msgstr "البحث في الملاحظات (/)"
-
 #: src/features/conversation/composer/ArticlePicker.tsx
 msgid "Search help articles…"
 msgstr "البحث في مقالات المساعدة…"
@@ -11244,11 +11743,6 @@ msgstr "البحث في الرسائل المحمَّلة"
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Search in this conversation"
 msgstr "البحث في هذه المحادثة"
-
-#. placeholder {0}: keyLabel(SHORTCUTS.find).join("")
-#: src/features/conversation/ChatView.tsx
-msgid "Search in this conversation ({0})"
-msgstr "البحث في هذه المحادثة ({0})"
 
 #: src/features/status/LinkIncidentDialog.tsx
 msgid "Search incidents"
@@ -11303,7 +11797,7 @@ msgstr "الأقسام"
 msgid "Seen {seen}"
 msgstr "شوهد {seen}"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Seen by the monitor"
 msgstr "رآه المراقب"
 
@@ -11378,6 +11872,7 @@ msgid "Send a new code"
 msgstr "إرسال رمز جديد"
 
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/Overview.tsx
 #: src/features/broadcasts/TestSend.tsx
 msgid "Send a test"
@@ -11432,6 +11927,10 @@ msgstr "أرسل الأحداث إلى خادمك"
 msgid "Send feedback from a page"
 msgstr "أرسل ملاحظات من صفحة"
 
+#: src/features/team/TeamPage.tsx
+msgid "Send invite"
+msgstr "إرسال الدعوة"
+
 #: src/features/auth/SignInForm.tsx
 msgid "Send me a code"
 msgstr "أرسل لي رمزًا"
@@ -11474,7 +11973,7 @@ msgid "Send the e-mail after"
 msgstr "إرسال البريد الإلكتروني بعد"
 
 #. placeholder {0}: invite.email
-#: src/features/team/TeamColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Send the invite for {0} again"
 msgstr "إرسال الدعوة إلى {0} مرة أخرى"
 
@@ -11509,7 +12008,6 @@ msgid "Sender identity"
 msgstr "هوية المرسِل"
 
 #: src/components/common/text.ts
-#: src/features/broadcasts/BroadcastList.tsx
 #: src/features/migrations/UploadStep.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -11556,7 +12054,6 @@ msgid "Sending kept failing, so Yuva gave up."
 msgstr "استمر الإرسال في الفشل، فاستسلم Yuva."
 
 #: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Sending pace"
 msgstr "وتيرة الإرسال"
@@ -11614,12 +12111,11 @@ msgid "sent"
 msgstr "مُرسل"
 
 #: src/components/common/Linked.tsx
-#: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/Overview.tsx
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
 #: src/features/status/Notices.tsx
-#: src/features/team/TeamColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Sent"
 msgstr "أُرسل"
 
@@ -11636,10 +12132,6 @@ msgstr "أُرسل"
 #: src/features/migrations/MapStep.tsx
 msgid "Sent {count} messages from this address"
 msgstr "أُرسلت {count} رسالة من هذا العنوان"
-
-#: src/features/team/TeamColumn.tsx
-msgid "Sent {sent}"
-msgstr "أُرسل {sent}"
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "Sent {sentAt}. Waiting for it to arrive…"
@@ -11711,6 +12203,10 @@ msgstr "مستأجر SES"
 msgid "Set by a monitor, {since}"
 msgstr "ضبطه مراقب، {since}"
 
+#: src/features/inbox/InboxPicker.tsx
+msgid "Set by the product in the sidebar"
+msgstr "يحدده المنتج في الشريط الجانبي"
+
 #: src/features/conversation/HeaderActions.tsx
 msgid "Set progress"
 msgstr "Set progress"
@@ -11737,6 +12233,10 @@ msgstr "إعداد البريد الإلكتروني"
 msgid "Set up Yuva"
 msgstr "إعداد Yuva"
 
+#: src/features/status/MonitorsPage.tsx
+msgid "Sets {cname} to {downState} while it is down"
+msgstr "يضبط {cname} على «{downState}» أثناء توقفه"
+
 #: src/features/settings/channels/email/Ses.tsx
 msgid "Setting up the inbox’s Amazon SES tenant…"
 msgstr "جارٍ إعداد مستأجر Amazon SES لصندوق الوارد…"
@@ -11760,7 +12260,7 @@ msgstr "جارٍ الإعداد…"
 #: src/features/settings/ProductsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
 #: src/features/settings/ui.tsx
-#: src/features/status/StatusPagePane.tsx
+#: src/features/status/StatusPages.tsx
 msgid "Settings"
 msgstr "الإعدادات"
 
@@ -11803,20 +12303,20 @@ msgstr "الاختصار"
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/contact/ContactsPage.tsx
-#: src/features/docs/discussions/DiscussionsPane.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/docs/DocsPage.tsx
 #: src/features/inbox/SidePanels.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Show"
 msgstr "إظهار"
-
-#: src/features/broadcasts/BroadcastsColumn.tsx
-#: src/features/broadcasts/Overview.tsx
-msgid "Show archived lists"
-msgstr "إظهار القوائم المؤرشفة"
 
 #: src/features/conversation/messages/EmailBody.tsx
 msgid "Show as sent"
 msgstr "إظهار كمُرسَل"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Show HTTP details"
+msgstr "إظهار تفاصيل HTTP"
 
 #: src/features/inbox/SidePanels.tsx
 #: src/features/migrations/CopyStep.tsx
@@ -12102,19 +12602,15 @@ msgstr "منذ"
 msgid "Since {since}"
 msgstr "منذ {since}"
 
-#: src/features/status/IncidentsTab.tsx
-msgid "since {started}"
-msgstr "بدأ {started}"
-
 #: src/features/migrations/ChooseStep.tsx
 msgid "Since…"
 msgstr "منذ…"
 
-#: src/features/broadcasts/Overview.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "Single opt-in"
 msgstr "تأكيد مفرد"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/Toolbar.tsx
 #: src/features/inbox/SourceFilter.tsx
 #: src/features/setup/SetupLayout.tsx
 msgid "Site"
@@ -12125,6 +12621,7 @@ msgid "Site address"
 msgstr "عنوان الموقع"
 
 #: src/features/broadcasts/FormSnippets.tsx
+#: src/features/docs/InstallDialog.tsx
 #: src/features/setup/InstallStep.tsx
 msgid "Site generator"
 msgstr "مولّد المواقع"
@@ -12183,7 +12680,6 @@ msgstr "مضيف SMTP"
 
 #: src/app/Palette.tsx
 #: src/components/common/ShortcutSheet.tsx
-#: src/features/conversation/ConversationMenu.tsx
 #: src/features/conversation/HeaderActions.tsx
 msgid "Snooze"
 msgstr "غفوة"
@@ -12200,6 +12696,10 @@ msgstr "في غفوة"
 #: src/features/conversation/ConversationStatus.tsx
 msgid "Snoozed until {until}"
 msgstr "في غفوة حتى {until}"
+
+#: src/features/contact/ContactDetail.tsx
+msgid "Some addresses are undeliverable. Clear them under Contact and identities once they work again."
+msgstr "بعض العناوين غير قابلة للتسليم. امسحها ضمن «جهة الاتصال والهويات» عندما تعمل من جديد."
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Some images have no description for people who cannot see them."
@@ -12253,8 +12753,8 @@ msgstr "حدث خطأ في الخادم. حاول مجددًا."
 msgid "Something you can find again if asked, such as an order number or a signed form."
 msgstr "شيء يمكنك العثور عليه مجددًا عند الطلب، مثل رقم طلب أو نموذج موقّع."
 
-#: src/features/docs/discussions/DiscussionsPane.tsx
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/DocsPage.tsx
+#: src/features/docs/Toolbar.tsx
 msgid "Sort"
 msgstr "ترتيب"
 
@@ -12269,6 +12769,10 @@ msgstr "رتّب المحادثات بطريقتك"
 #: src/features/migrations/Wizard.tsx
 msgid "Source"
 msgstr "المصدر"
+
+#: src/app/Sidebar.tsx
+msgid "Sources"
+msgstr "المصادر"
 
 #: src/features/docs/discussions/QueuePane.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
@@ -12304,7 +12808,7 @@ msgstr "ينجح SPF لـ {spfDomain}، وليس لنطاق الإرسال {from
 msgid "SPF passes for {spfDomain}."
 msgstr "ينجح SPF لـ {spfDomain}."
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Stage"
 msgstr "المرحلة"
 
@@ -12352,7 +12856,7 @@ msgstr "ابدأ قائمتك البريدية"
 msgid "Started"
 msgstr "بدأ"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "started {started} · {lasted}"
 msgstr "بدأ {started} · {lasted}"
 
@@ -12387,7 +12891,6 @@ msgstr "STARTTLS (المنفذ 587)"
 #: src/features/migrations/Wizard.tsx
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/IncidentDialog.tsx
-#: src/features/status/MonitorsTab.tsx
 msgid "State"
 msgstr "الحالة"
 
@@ -12401,11 +12904,8 @@ msgstr "حالة {0}"
 msgid "State of {0} while it is open"
 msgstr "حالة {0} ما دام مفتوحًا"
 
-#: src/features/status/MonitorsTab.tsx
-msgid "state pushed by your alerting"
-msgstr "حالة أرسلها نظام التنبيهات لديك"
-
 #: src/features/status/MonitorDialog.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "State while down"
 msgstr "الحالة عند التوقف"
 
@@ -12415,15 +12915,14 @@ msgstr "الحالة عند التوقف"
 #: src/features/broadcasts/Overview.tsx
 #: src/features/feedback/FeedbackList.tsx
 #: src/features/feedback/FeedbackPage.tsx
+#: src/features/home/HomePage.tsx
 #: src/features/migrations/MapStep.tsx
 #: src/features/settings/webhooks/AttemptLog.tsx
 #: src/features/settings/webhooks/events.tsx
-#: src/features/status/StatusColumn.tsx
-#: src/features/status/StatusPagePane.tsx
 msgid "Status"
 msgstr "الحالة"
 
-#: src/features/status/StatusPagePane.tsx
+#: src/features/status/StatusPages.tsx
 msgid "Status page"
 msgstr "صفحة الحالة"
 
@@ -12432,8 +12931,9 @@ msgid "Status page deleted"
 msgstr "حُذفت صفحة الحالة"
 
 #: src/app/Sidebar.tsx
-#: src/features/status/StatusColumn.tsx
-#: src/features/status/StatusPagePane.tsx
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/IncidentsPage.tsx
+#: src/features/status/MonitorsPage.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Status pages"
 msgstr "صفحات الحالة"
@@ -12467,8 +12967,8 @@ msgid "Stop signing"
 msgstr "إيقاف التوقيع"
 
 #: src/features/broadcasts/ListSettings.tsx
-msgid "Stop taking new subscribers."
-msgstr "التوقف عن قبول مشتركين جدد."
+msgid "Stop taking new subscribers. Records and past reports stay, and you can restore it."
+msgstr "توقف عن قبول مشتركين جدد. تبقى السجلات والتقارير السابقة ويمكنك استعادة القائمة."
 
 #: src/features/migrations/ReviewStep.tsx
 msgid "Storage"
@@ -12527,8 +13027,6 @@ msgstr "اشترك في القائمة الآن"
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/Subscribers.tsx
-#: src/features/status/IncidentsTab.tsx
-#: src/features/status/StatusPagePane.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Subscribers"
 msgstr "المشتركون"
@@ -12541,7 +13039,7 @@ msgstr "أُضيف مشتركون"
 msgid "Subscribers confirm their address by mail before they get notices."
 msgstr "يؤكد المشتركون عنوانهم عبر البريد قبل أن تصلهم الإشعارات."
 
-#: src/features/broadcasts/Overview.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "Subscribers over the last 30 days"
 msgstr "المشتركون خلال آخر 30 يومًا"
 
@@ -12554,16 +13052,13 @@ msgid "Succeeded"
 msgstr "نجح"
 
 #: src/features/status/MonitorDialog.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Successes to recover"
 msgstr "نجاحات متتالية حتى التعافي"
 
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "Such as a MERSİS number, trade register or VAT id, if you have one"
 msgstr "مثل رقم MERSİS أو السجل التجاري أو معرّف ضريبة القيمة المضافة، إن وُجد"
-
-#: src/features/conversation/composer/ReplyBox.tsx
-msgid "Suggested by {author}"
-msgstr "اقترحه {author}"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Suggested scopes"
@@ -12573,13 +13068,17 @@ msgstr "النطاقات المقترحة"
 msgid "Suggestion discarded"
 msgstr "أُهمل الاقتراح"
 
-#: src/features/contact/ContactPage.tsx
+#: src/features/contact/ContactDetail.tsx
 msgid "Summary"
 msgstr "الملخص"
 
 #: src/components/common/text.ts
 msgid "Sunday"
 msgstr "الأحد"
+
+#: src/app/Sidebar.tsx
+msgid "Support"
+msgstr "الدعم"
 
 #: src/features/migrations/SourceStep.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
@@ -12646,6 +13145,10 @@ msgstr "علامات تبويب"
 msgid "Tags"
 msgstr "العلامات"
 
+#: src/features/broadcasts/ListSettings.tsx
+msgid "Takes sign-ups again and brings the list back to the broadcast audience picker."
+msgstr "تقبل الاشتراكات من جديد وتعيد القائمة إلى محدد جمهور الرسائل الجماعية."
+
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Taking the recipients: {prepared} so far"
 msgstr "جارٍ أخذ المستلمين: {prepared} حتى الآن"
@@ -12667,8 +13170,7 @@ msgstr "فحص TCP"
 #: src/features/home/HomePage.tsx
 #: src/features/reports/ReportPages.tsx
 #: src/features/settings/SettingsColumn.tsx
-#: src/features/team/MemberPage.tsx
-#: src/features/team/TeamColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Team"
 msgstr "الفريق"
 
@@ -12684,7 +13186,7 @@ msgstr "عضو في الفريق عن {sender}"
 msgid "Team note"
 msgstr "ملاحظة الفريق"
 
-#: src/features/contact/ContactPage.tsx
+#: src/features/contact/ContactDetail.tsx
 msgid "Team notes"
 msgstr "ملاحظات الفريق"
 
@@ -12700,15 +13202,14 @@ msgstr "رد الفريق"
 msgid "Team right now"
 msgstr "الفريق الآن"
 
-#: src/features/settings/members/Invites.tsx
+#: src/features/team/TeamPage.tsx
 msgid "teammate@company.com"
 msgstr "teammate@company.com"
 
 #: src/features/status/StatusPages.tsx
-msgid "Tell your customers whether your product works. Each inbox gets one page, where you open incidents, plan maintenance and set the state of each component."
-msgstr "أخبر عملاءك ما إذا كان منتجك يعمل. لكل صندوق وارد صفحة تفتح فيها الحوادث وتخطط للصيانة وتحدد حالة كل مكوّن."
+msgid "Tell your customers whether your product works. Each product gets one page, where you open incidents, plan maintenance and set the state of each component."
+msgstr "أخبر عملاءك ما إذا كان منتجك يعمل. لكل منتج صفحة واحدة تفتح فيها الحوادث وتخطط للصيانة وتحدد حالة كل مكوّن."
 
-#: src/features/broadcasts/Composer.tsx
 #: src/features/setup/email/EmailLayout.tsx
 msgid "Test"
 msgstr "اختبار"
@@ -12851,6 +13352,10 @@ msgstr "تُخمَّن الأعمدة من صف العناوين. يجب أن ي
 msgid "The component whose state this monitor sets."
 msgstr "المكوّن الذي يضبط هذا المراقب حالته."
 
+#: src/features/status/IncidentDetail.tsx
+msgid "The components are back to operational. It moved to Past."
+msgstr "عادت المكوّنات إلى العمل. انتقل إلى السابقة."
+
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "The confirmation mail is on its way."
 msgstr "رسالة التأكيد في طريقها."
@@ -12867,7 +13372,7 @@ msgstr "حُذفت جهة الاتصال"
 msgid "The conversations stay open. Customers get it right away and it cannot be recalled."
 msgstr "تبقى المحادثات مفتوحة. يصل الرد إلى العملاء فورًا ولا يمكن سحبه."
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "The current address stops working at once. Update whatever calls it."
 msgstr "يتوقف العنوان الحالي عن العمل فورًا. حدّث كل ما يستدعيه."
 
@@ -13007,6 +13512,10 @@ msgstr "أول رسالة في محادثة في صندوق وارد يعرض م
 msgid "the first one"
 msgstr "الأول"
 
+#: src/features/docs/PagesTab.tsx
+msgid "The first rating makes the page appear here."
+msgstr "أول تقييم يجعل الصفحة تظهر هنا."
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "The first thing the chat says"
 msgstr "أول ما تقوله الدردشة"
@@ -13022,6 +13531,10 @@ msgstr "يعرض النموذج مربع موافقة غير محدد ويخزّ
 #: src/features/broadcasts/FormSnippets.tsx
 msgid "The form works on these addresses:"
 msgstr "يعمل النموذج على هذه العناوين:"
+
+#: src/features/status/MonitorsPage.tsx
+msgid "The full address is shown only once, when you make it. Anyone who has it can report for this monitor."
+msgstr "يُعرض العنوان الكامل مرة واحدة فقط عند إنشائه. يمكن لأي شخص يملكه الإبلاغ نيابةً عن هذا المراقب."
 
 #: src/features/oauth/ConsentPage.tsx
 msgid "The full API: MCP, the REST API and live updates, like a member app."
@@ -13197,6 +13710,10 @@ msgstr "رفض صندوق البريد تسجيل الدخول"
 msgid "The mailbox refused the sign-in over IMAP"
 msgstr "رفض صندوق البريد تسجيل الدخول عبر IMAP"
 
+#: src/features/status/IncidentDetail.tsx
+msgid "The maintenance is complete. Everything works as before."
+msgstr "اكتملت الصيانة. كل شيء يعمل كما كان."
+
 #: src/components/common/text.ts
 msgid "The mbox file is compressed inside the zip. Unzip the Takeout archive and upload the .mbox file."
 msgstr "ملف mbox مضغوط داخل ملف zip. فك ضغط أرشيف Takeout وارفع ملف .mbox."
@@ -13257,6 +13774,10 @@ msgstr "أرسلت الصفحة 10 إشعارات خلال الساعة الأخ
 msgid "The page answers at"
 msgstr "تستجيب الصفحة على"
 
+#: src/features/status/StatusPages.tsx
+msgid "The page answers not found until you publish it again."
+msgstr "ترد الصفحة بـ «غير موجودة» إلى أن تنشرها من جديد."
+
 #: src/features/status/PreviewDialog.tsx
 msgid "The page as visitors see it now. Drafts are left out."
 msgstr "الصفحة كما يراها الزوار الآن. المسودات مستثناة."
@@ -13282,8 +13803,8 @@ msgid "The page stops answering on this domain. Its address on this server keeps
 msgstr "ستتوقف الصفحة عن الاستجابة على هذا النطاق. يظل عنوانها على هذا الخادم يعمل."
 
 #: src/features/status/ComponentsTab.tsx
-msgid "The parts of your product. Set a state by hand, or let an incident do it."
-msgstr "أجزاء منتجك. اضبط الحالة يدويًا أو دع حادثًا يفعل ذلك."
+msgid "The parts of your product. Set a state by hand, or let an incident or a monitor do it."
+msgstr "أجزاء منتجك. حدّد الحالة يدويًا، أو دع حادثًا أو مراقبًا يفعل ذلك."
 
 #: src/features/auth/SignInForm.tsx
 msgid "The passkey sign-in did not complete. Try again or use an e-mailed code."
@@ -13324,6 +13845,10 @@ msgstr "يجب أن يكون المنفذ بين 1 و65535."
 #: src/features/settings/webhooks/sections.tsx
 msgid "The previous secret also signs until {rotatedUntil}."
 msgstr "يوقّع السر السابق أيضًا حتى {rotatedUntil}."
+
+#: src/features/status/IncidentDetail.tsx
+msgid "The problem is fixed. Sorry for the trouble."
+msgstr "تم إصلاح المشكلة. نعتذر عن الإزعاج."
 
 #: src/features/migrations/text.ts
 msgid "The provider asked to slow down"
@@ -13584,7 +14109,7 @@ msgstr "المنطقة الزمنية لأشرطة الأيام."
 msgid "Their consent records, for a request about what you hold on them:"
 msgstr "سجلات موافقتهم، للرد على طلب عما تحتفظ به عنهم:"
 
-#: src/features/settings/members/MemberList.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Their conversations stay; they lose access at once."
 msgstr "تبقى محادثاتهم؛ ويفقدون الوصول فورًا."
 
@@ -13605,8 +14130,8 @@ msgid "These choices are kept on this device only."
 msgstr "تُحفظ هذه الاختيارات على هذا الجهاز فقط."
 
 #: src/features/contact/ContactsPage.tsx
-msgid "These look like the same person. Merging keeps the left one and moves addresses, ids and conversations into it."
-msgstr "يبدو أنهما الشخص نفسه. يُبقي الدمج الأول على اليسار وينقل إليه العناوين والمعرّفات والمحادثات."
+msgid "These look like the same person. Merging keeps the left one and moves addresses, ids and conversations into it. Nothing is merged until you have seen what changes."
+msgstr "يبدو أنهما الشخص نفسه. يُبقي الدمج جهة الاتصال على اليسار وينقل إليها العناوين والمعرّفات والمحادثات. لن يُدمج شيء قبل أن ترى ما سيتغيّر."
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "These merge fields have no fallback and would be empty for some recipients:"
@@ -13712,6 +14237,10 @@ msgstr "تمر رسائل هذه القناة الجماعية عبر Amazon SES
 msgid "This conflicts with something that already exists."
 msgstr "يتعارض هذا مع شيء موجود بالفعل."
 
+#: src/features/contact/ContactDetails.tsx
+msgid "This contact has no e-mail address yet. Add one under Contact and identities first."
+msgstr "ليس لجهة الاتصال هذه عنوان بريد إلكتروني بعد. أضف عنوانًا أولًا ضمن «جهة الاتصال والهويات»."
+
 #: src/features/contact/MergePreview.tsx
 msgid "This contact keeps its own value"
 msgstr "تحتفظ جهة الاتصال هذه بقيمتها الخاصة"
@@ -13766,6 +14295,10 @@ msgstr "لدى صندوق الوارد هذا قائمة بهذا الاسم ب�
 msgid "This inbox already has a status page."
 msgstr "لهذا الصندوق الوارد صفحة حالة بالفعل."
 
+#: src/features/docs/InstallDialog.tsx
+msgid "This inbox has no chat channel yet. Add one under <0>Add a channel</0>."
+msgstr "ليس لصندوق الوارد هذا قناة دردشة بعد. أضف واحدة من <0>إضافة قناة</0>."
+
 #: src/features/setup/NewsletterStep.tsx
 msgid "This inbox has no e-mail channel that can send yet. You can create the list now; it sends once an e-mail channel with a reply account is picked in its settings."
 msgstr "ليس لدى صندوق الوارد هذا قناة بريد إلكتروني قادرة على الإرسال بعد. يمكنك إنشاء القائمة الآن؛ وتُرسل بمجرد اختيار قناة بريد إلكتروني بحساب رد في إعداداتها."
@@ -13790,7 +14323,7 @@ msgstr "ليس لدى صندوق الوارد هذا قائمة بريدية ب�
 msgid "This is a compressed archive. Unzip the Takeout archive and upload the .mbox file."
 msgstr "هذا أرشيف مضغوط. فك ضغط أرشيف Takeout وارفع ملف .mbox."
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "This is a draft. Only your team sees it, and it changes no component until you publish it."
 msgstr "هذه مسودة. لا يراها إلا فريقك ولا تغيّر أي مكوّن حتى تنشرها."
 
@@ -13858,9 +14391,9 @@ msgstr "ليس لهذه القائمة قناة بريد إلكتروني قاد
 msgid "This list has no e-mail channel that can send. Until it has one, forms send no confirmation mail, new form subscribers stay waiting for confirmation and nobody gets a welcome mail. Pick an e-mail channel with an SMTP account below, or add the SMTP account in the inbox settings."
 msgstr "ليس لهذه القائمة قناة بريد إلكتروني قادرة على الإرسال. إلى أن تحصل على واحدة، لا ترسل النماذج رسالة تأكيد، ويبقى مشتركو النماذج الجدد بانتظار التأكيد ولا يتلقى أحد رسالة ترحيب. اختر أدناه قناة بريد إلكتروني بحساب SMTP، أو أضف حساب SMTP في إعدادات صندوق الوارد."
 
-#: src/features/broadcasts/ListSettings.tsx
-msgid "This list is archived."
-msgstr "هذه القائمة مؤرشفة."
+#: src/features/broadcasts/ListPage.tsx
+msgid "This list is archived. It takes no new subscribers and broadcasts cannot pick it."
+msgstr "هذه القائمة مؤرشفة. لا تقبل مشتركين جدداً ولا يمكن للرسائل الجماعية اختيارها."
 
 #: src/features/broadcasts/FormSnippets.tsx
 msgid "This list is private, so forms do not offer it. Make it public in the settings to use a form."
@@ -13870,7 +14403,7 @@ msgstr "هذه القائمة خاصة، لذا لا تعرضها النماذج
 msgid "This mailbox connects only with “Sign in with Microsoft”, which this Yuva server does not offer. Ask its operator to set it up."
 msgstr "يتصل صندوق البريد هذا فقط عبر «تسجيل الدخول باستخدام Microsoft»، وهو غير متاح في خادم Yuva هذا. اطلب من مشغّله إعداده."
 
-#: src/features/team/MemberPage.tsx
+#: src/features/team/TeamPage.tsx
 msgid "This member is not in the workspace any more."
 msgstr "هذا العضو لم يعد في مساحة العمل."
 
@@ -13881,6 +14414,10 @@ msgstr "انتهى هذا النقل، لذا لا يمكن رفع المزيد.
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "This month"
 msgstr "هذا الشهر"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "This page is not public yet, so visitors see nothing until you publish the page."
+msgstr "هذه الصفحة ليست عامة بعد، فلا يرى الزوار شيئًا حتى تنشرها."
 
 #: src/components/common/text.ts
 msgid "This person unsubscribed from everything, reported a mail as spam or had their data erased, so the team cannot add them again."
@@ -14042,6 +14579,7 @@ msgid "Time zone"
 msgstr "المنطقة الزمنية"
 
 #: src/features/status/MonitorDialog.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Timeout"
 msgstr "مهلة الانتظار"
 
@@ -14161,6 +14699,7 @@ msgstr "Türkçe"
 #: src/app/Palette.tsx
 #: src/features/conversation/ConversationMenu.tsx
 #: src/features/docs/discussions/FromConversation.tsx
+#: src/features/docs/FromDocs.tsx
 msgid "Turn into a discussion"
 msgstr "تحويل إلى نقاش"
 
@@ -14206,7 +14745,6 @@ msgid "TXT record"
 msgstr "سجل TXT"
 
 #: src/features/inbox/SourceFilter.tsx
-#: src/features/status/MonitorsTab.tsx
 msgid "Type"
 msgstr "النوع"
 
@@ -14240,7 +14778,12 @@ msgstr "بلا إجابة"
 msgid "Unassigned"
 msgstr "غير مسندة"
 
+#: src/features/contact/ContactDetail.tsx
+msgid "Unblock contact"
+msgstr "إلغاء حظر جهة الاتصال"
+
 #: src/features/contact/ContactDetails.tsx
+#: src/features/contact/ContactsPage.tsx
 msgid "Undeliverable"
 msgstr "غير قابل للتسليم"
 
@@ -14299,6 +14842,10 @@ msgstr "أُلغيت المتابعة"
 msgid "Unknown device"
 msgstr "جهاز غير معروف"
 
+#: src/features/feedback/RoadmapCard.tsx
+msgid "Unlink"
+msgstr "إلغاء الربط"
+
 #: src/components/common/Linked.tsx
 msgid "Unlink {name}"
 msgstr "إلغاء ارتباط {name}"
@@ -14321,7 +14868,7 @@ msgstr "فُتح القفل"
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/TestSend.tsx
 #: src/features/contact/ContactCard.tsx
-#: src/features/contact/ContactPage.tsx
+#: src/features/contact/ContactDetail.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/contact/ContactSearch.tsx
 #: src/features/contact/ContactSheet.tsx
@@ -14333,7 +14880,6 @@ msgid "Unnamed contact"
 msgstr "جهة اتصال بلا اسم"
 
 #: src/features/conversation/ConversationMenu.tsx
-#: src/features/inbox/ChatList.tsx
 msgid "Unpin"
 msgstr "إلغاء التثبيت"
 
@@ -14341,15 +14887,17 @@ msgstr "إلغاء التثبيت"
 msgid "Unpinned"
 msgstr "أُلغي التثبيت"
 
-#: src/features/status/StatusPagePane.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Unpublish"
 msgstr "إلغاء النشر"
 
-#: src/features/status/StatusPagePane.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Unpublish ({publishKey})"
 msgstr "إلغاء النشر ({publishKey})"
+
+#: src/features/status/StatusPages.tsx
+msgid "Unpublish {pageName}?"
+msgstr "إلغاء نشر {pageName}؟"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Unpublish or unschedule the entry"
@@ -14359,14 +14907,9 @@ msgstr "إلغاء نشر الإدخال أو إلغاء جدولته"
 msgid "Unpublish the translation"
 msgstr "إلغاء نشر الترجمة"
 
-#: src/features/status/StatusColumn.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Unpublished"
 msgstr "غير منشورة"
-
-#: src/features/status/StatusPagePane.tsx
-msgid "Unpublished, only your team can preview it"
-msgstr "غير منشورة، لا يعاينها إلا فريقك"
 
 #: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
@@ -14433,6 +14976,10 @@ msgstr "ألغى الاشتراك للتو"
 msgid "until {expires}"
 msgstr "حتى {expires}"
 
+#: src/features/broadcasts/ReviewPanel.tsx
+msgid "Until it starts you can go back to a draft."
+msgstr "حتى تبدأ يمكنك العودة إلى مسودة."
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Until they click the link they stay waiting for confirmation and get no other mail. Unconfirmed subscriptions are deleted after 30 days."
 msgstr "إلى أن ينقروا على الرابط يبقون بانتظار التأكيد ولا يتلقون أي بريد آخر. تُحذف الاشتراكات غير المؤكدة بعد 30 يومًا."
@@ -14445,17 +14992,31 @@ msgstr "يبقون بانتظار التأكيد إلى أن ينقروا على
 msgid "Unverified sender"
 msgstr "مرسِل غير موثَّق"
 
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/MonitorsPage.tsx
 #: src/features/status/text.tsx
 msgid "Up"
 msgstr "يعمل"
+
+#: src/features/status/MonitorsPage.tsx
+msgid "Up again"
+msgstr "عاد للعمل"
+
+#: src/features/status/IncidentDetail.tsx
+msgid "Up since {upSince}. Post the all-clear when you are sure."
+msgstr "يعمل منذ {upSince}. انشر إشعار عودة الأمور إلى طبيعتها عندما تتأكد."
 
 #: src/features/broadcasts/Import.tsx
 msgid "Up to {max} and 100,000 rows, with a header row. Excel files in Turkish or Western encodings and columns separated by commas, semicolons or tabs are read as they are."
 msgstr "حتى {max} و100,000 صف، مع صف عناوين. تُقرأ كما هي ملفات Excel بالترميزات التركية أو الغربية والأعمدة المفصولة بفواصل أو فواصل منقوطة أو علامات جدولة."
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Update text"
 msgstr "نص التحديث"
+
+#: src/features/status/IncidentDetail.tsx
+msgid "Updates"
+msgstr "التحديثات"
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Updating"
@@ -14497,14 +15058,13 @@ msgstr "تم رفع {step}%"
 msgid "Uploading…"
 msgstr "جارٍ الرفع…"
 
-#: src/features/status/MonitorsTab.tsx
 #: src/features/status/ResponseChart.tsx
 msgid "Uptime"
 msgstr "وقت التشغيل"
 
 #: src/features/home/HomePage.tsx
-msgid "uptime · 30 days"
-msgstr "وقت التشغيل · 30 يومًا"
+msgid "uptime · {shown} days"
+msgstr "مدة التشغيل · {shown} يومًا"
 
 #: src/features/status/ComponentsTab.tsx
 msgid "Uptime is hidden on this page. Turn it on in the settings to see each day here."
@@ -14706,23 +15266,27 @@ msgstr "صندوق بريد كبير جدًا؟ ابدأ بملف Google Takeout
 msgid "View"
 msgstr "عرض"
 
-#: src/features/status/StatusPagePane.tsx
 #: src/features/status/StatusPages.tsx
 msgid "View page"
 msgstr "عرض الصفحة"
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/status/StatusPages.tsx
+msgid "View page ({openKey})"
+msgstr "عرض الصفحة ({openKey})"
+
+#: src/features/docs/PagesTab.tsx
 msgid "views"
 msgstr "مشاهدات"
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "Views"
 msgstr "المشاهدات"
 
 #: src/components/common/Source.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/contact/ContactsPage.tsx
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/FromDocs.tsx
+#: src/features/docs/PagesTab.tsx
 #: src/features/setup/previews.tsx
 msgid "Visitor"
 msgstr "زائر"
@@ -14732,7 +15296,7 @@ msgid "Visitor · {where}"
 msgstr "زائر · {where}"
 
 #: src/features/broadcasts/Report.tsx
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "visitors"
 msgstr "الزوار"
 
@@ -14787,7 +15351,8 @@ msgstr "زيارات مواقعك بـ utm_campaign={campaign} منذ بدء ا�
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/parts.tsx
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/DomainCard.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Waiting"
 msgstr "في الانتظار"
 
@@ -14795,15 +15360,17 @@ msgstr "في الانتظار"
 msgid "Waiting for {provider}'s limit; continues at {waiting}."
 msgstr "في انتظار حد {provider}؛ يتابع في {waiting}."
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/DocsPage.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "waiting for approval"
 msgstr "بانتظار الموافقة"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/account/AccountPage.tsx
 #: src/features/docs/discussions/DiscussionsPane.tsx
 #: src/features/docs/discussions/parts.tsx
-#: src/features/docs/discussions/ThreadPane.tsx
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/DiscussionsTab.tsx
+#: src/features/docs/DocsPage.tsx
 msgid "Waiting for approval"
 msgstr "بانتظار الموافقة"
 
@@ -14897,6 +15464,10 @@ msgstr "أرسلنا رمزًا جديدًا. لا يعمل إلا أحدث رم
 msgid "Web chat"
 msgstr "دردشة الويب"
 
+#: src/features/feedback/FeedbackFormDialog.tsx
+msgid "Web pages use the chat widget with the feedback form turned on. Apps call the feedback form from the SDK."
+msgstr "تستخدم صفحات الويب أداة الدردشة مع تفعيل نموذج الملاحظات. تستدعي التطبيقات النموذج من SDK."
+
 #: src/features/settings/webhooks/WebhookPage.tsx
 msgid "Webhook endpoint"
 msgstr "نقطة نهاية خطاف الويب"
@@ -14917,6 +15488,10 @@ msgstr "خطافات الويب لـ {0}"
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Webhooks for this inbox"
 msgstr "خطافات الويب لصندوق الوارد هذا"
+
+#: src/features/feedback/FeedbackFormDialog.tsx
+msgid "Website"
+msgstr "موقع الويب"
 
 #: src/features/setup/AddChannelStep.tsx
 msgid "Website addresses"
@@ -14951,7 +15526,7 @@ msgstr "ما سيُنقل"
 msgid "What did they agree to?"
 msgstr "على ماذا وافقوا؟"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "What do customers need to know?"
 msgstr "ماذا يحتاج العملاء إلى معرفته؟"
 
@@ -14963,6 +15538,7 @@ msgstr "ماذا يحتاج هؤلاء العملاء إلى معرفته؟"
 msgid "What each column holds"
 msgstr "ما يحتويه كل عمود"
 
+#: src/features/broadcasts/SubscriberSheet.tsx
 #: src/features/migrations/DoneStep.tsx
 msgid "What happened"
 msgstr "ما حدث"
@@ -15030,6 +15606,7 @@ msgstr "ما تكتبه كثيرًا"
 #: src/app/Palette.tsx
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/home/HomePage.tsx
 #: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/chat/ChatSections.tsx
 msgid "What’s new"
@@ -15060,6 +15637,7 @@ msgid "When did they agree?"
 msgstr "متى وافقوا؟"
 
 #: src/features/status/MonitorDialog.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "When it goes down"
 msgstr "عند التوقف"
 
@@ -15086,6 +15664,10 @@ msgstr "عندما يسندها إليك شخص آخر."
 #: src/features/feedback/FeedbackList.tsx
 msgid "When someone sends feedback, it will be in the list."
 msgstr "When someone sends feedback, it will be in the list."
+
+#: src/features/feedback/RoadmapCard.tsx
+msgid "When this idea ships, you can answer everyone linked to it in one reply."
+msgstr "عندما تصدر هذه الفكرة، يمكنك الرد على كل المرتبطين بها برد واحد."
 
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "When to notify me"
@@ -15159,11 +15741,11 @@ msgstr "أثناء الإيقاف لا تُجرى أي عمليات تسليم."
 msgid "While your status is Away, only new messages in conversations assigned to you and new assignments notify you. A conversation you have open in the panel never notifies you."
 msgstr "عندما تكون حالتك «بعيد»، لا يُشعرك إلا الجديد في المحادثات المسندة إليك والإسنادات الجديدة. المحادثة المفتوحة في اللوحة لا تُشعرك أبدًا."
 
-#: src/features/broadcasts/Overview.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "Who agreed to hear from you, with consent recorded"
 msgstr "من وافق على تلقي رسائلك، مع تسجيل الموافقة"
 
-#: src/features/team/TeamColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Who answers, where, and who is online"
 msgstr "من يجيب وأين ومن متصل"
 
@@ -15171,7 +15753,7 @@ msgstr "من يجيب وأين ومن متصل"
 msgid "Who can reply"
 msgstr "من يمكنه الرد"
 
-#: src/features/team/TeamColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Who is here"
 msgstr "من هنا"
 
@@ -15211,16 +15793,18 @@ msgstr "باسمه ولغته ومنطقته الزمنية"
 msgid "With two-factor sign-in, create an app password in Zoho Accounts › Security › App passwords; otherwise your password works."
 msgstr "مع الدخول بخطوتين، أنشئ كلمة مرور تطبيق في Zoho Accounts › Security › App passwords؛ وإلا فتعمل كلمة مرورك."
 
-#: src/features/settings/members/Invites.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Withdraw"
 msgstr "سحب"
 
-#. placeholder {0}: inv.email
 #. placeholder {0}: invite.email
-#: src/features/settings/members/Invites.tsx
-#: src/features/team/TeamColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Withdraw the invite for {0}"
 msgstr "سحب الدعوة لـ {0}"
+
+#: src/features/team/TeamPage.tsx
+msgid "Withdraw this invite?"
+msgstr "سحب هذه الدعوة؟"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Within {m} minutes"
@@ -15250,7 +15834,7 @@ msgstr "بدون تأكيد يستطيع أي شخص كتابة عنوان شخ�
 msgid "Won't do"
 msgstr "Won't do"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Work is going on"
 msgstr "العمل جارٍ"
 
@@ -15279,10 +15863,6 @@ msgstr "جارٍ العمل…"
 msgid "Workspace"
 msgstr "مساحة العمل"
 
-#: src/features/settings/members/MemberList.tsx
-msgid "Workspace members"
-msgstr "أعضاء مساحة العمل"
-
 #: src/features/auth/CreateWorkspace.tsx
 msgid "Workspace name"
 msgstr "اسم مساحة العمل"
@@ -15302,10 +15882,6 @@ msgstr "مساحة العمل: {name}"
 #: src/app/Sidebar.tsx
 msgid "Workspaces"
 msgstr "مساحات العمل"
-
-#: src/features/contact/ContactsPage.tsx
-msgid "Write"
-msgstr "كتابة"
 
 #: src/features/setup/previews.tsx
 msgid "Write a message…"
@@ -15431,6 +16007,14 @@ msgstr "يمكنك مغادرة هذه الصفحة: ستنتظرك المحاد
 msgid "You can then write, vote and follow discussions there. The team behind {host} sees your name and e-mail address when you write; other readers see only your name."
 msgstr "يمكنك بعد ذلك الكتابة والتصويت ومتابعة النقاشات هناك. يرى الفريق وراء {host} اسمك وعنوان بريدك الإلكتروني عندما تكتب؛ ويرى القرّاء الآخرون اسمك فقط."
 
+#: src/features/team/TeamPage.tsx
+msgid "You cannot change your own role."
+msgstr "لا يمكنك تغيير دورك."
+
+#: src/features/team/TeamPage.tsx
+msgid "You cannot remove yourself."
+msgstr "لا يمكنك إزالة نفسك."
+
 #: src/features/account/AccountPage.tsx
 msgid "You follow no discussions. You follow the ones you start or reply to."
 msgstr "لا تتابع أي نقاشات. تتابع التي تبدأها أو تردّ عليها."
@@ -15442,6 +16026,14 @@ msgstr "تحصل على سر جديد مرة واحدة. لمدة 24 ساعة ت
 #: src/features/account/AccountPage.tsx
 msgid "You get a notification when someone replies in these"
 msgstr "تتلقى إشعارًا عندما يردّ أحد في هذه"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "You get the address to call when you save. It is shown only once."
+msgstr "ستحصل عند الحفظ على العنوان الذي تستدعيه. يظهر مرة واحدة فقط."
+
+#: src/features/status/MonitorDialog.tsx
+msgid "You get the address your alerting calls when you save, for Alertmanager, Grafana or your own script. It is shown only once."
+msgstr "ستحصل عند الحفظ على العنوان الذي يستدعيه نظام التنبيه لديك، لـ Alertmanager أو Grafana أو برنامجك النصي. يظهر مرة واحدة فقط."
 
 #: src/features/auth/CreateWorkspace.tsx
 msgid "You have created as many workspaces as this server allows. Delete one you no longer use, or ask to be invited to another."
@@ -15458,10 +16050,6 @@ msgstr "لم تكتب في أي نقاش بعد."
 #: src/features/inbox/SidePanels.tsx
 msgid "You have read every mention."
 msgstr "قرأت كل الإشارات."
-
-#: src/features/inbox/ChatList.tsx
-msgid "You have read everything."
-msgstr "قرأت كل شيء."
 
 #: src/features/auth/DeleteAccountButton.tsx
 msgid "You leave every workspace and lose your sign-ins, passkeys and notifications. Messages you wrote stay in their conversations, shown as from a deleted member. This cannot be undone."
@@ -15483,6 +16071,10 @@ msgstr "أنت بدأته"
 msgid "You will no longer be able to sign in with it."
 msgstr "لن تتمكن من تسجيل الدخول به بعد الآن."
 
+#: src/features/docs/PagesTab.tsx
+msgid "You write and host them. Yuva adds a rating and a discussion under each page and shows the results here."
+msgstr "أنت تكتبها وتستضيفها. تضيف Yuva تقييمًا ونقاشًا أسفل كل صفحة وتعرض النتائج هنا."
+
 #: src/features/auth/SignInForm.tsx
 msgid "you@company.com"
 msgstr "you@company.com"
@@ -15503,7 +16095,7 @@ msgstr "حسابك"
 msgid "Your admin allowed Yuva"
 msgstr "سمح مسؤولك لـ Yuva"
 
-#: src/features/contact/ContactPage.tsx
+#: src/features/contact/ContactDetail.tsx
 msgid "Your app or widget sends these when it identifies the contact."
 msgstr "يرسل تطبيقك أو أداتك هذه عندما يعرّف جهة الاتصال."
 

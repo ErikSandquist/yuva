@@ -36,7 +36,6 @@ import { useAnalyticsProperties } from "@/features/analytics/properties"
 import { useViewSearch } from "@/features/analytics/state"
 import { useInboxFilter } from "@/features/inbox/inboxFilter"
 import { ProductSwitcher } from "@/features/inbox/ProductSwitcher"
-import { statusLink, useStatusPages } from "@/features/status/queries"
 import { useVersion } from "@/lib/api"
 import { useSession } from "@/lib/session"
 import { cn } from "@/lib/utils"
@@ -149,33 +148,12 @@ export type Child = { key: string; label: string; to: string; current: boolean }
 
 function useStatusChildren(): Child[] {
   const { t } = useLingui()
-  const { pathname, search } = useLocation()
-  const [inboxId] = useInboxFilter()
-  const pages = useStatusPages(inboxId).data ?? []
-  const pageId = useMatch("/status-pages/:pageId/*")?.params.pageId
-  const target = pageId ?? pages[0]?.id
-  const tab = pageId
-    ? (new URLSearchParams(search).get("tab") ?? (pathname.endsWith("/monitors") ? "monitors" : "incidents"))
-    : ""
+  const { pathname } = useLocation()
+  const at = (path: string) => pathname === path || pathname.startsWith(`${path}/`)
   return [
-    {
-      key: "pages",
-      label: t`Pages`,
-      to: "/status",
-      current: pathname === "/status" || (!!pageId && tab !== "incidents" && tab !== "monitors"),
-    },
-    {
-      key: "incidents",
-      label: t`Incidents`,
-      to: target ? statusLink(target) : "/status",
-      current: tab === "incidents",
-    },
-    {
-      key: "monitors",
-      label: t`Monitors`,
-      to: target ? statusLink(target, "monitors") : "/status",
-      current: tab === "monitors",
-    },
+    { key: "pages", label: t`Pages`, to: "/status", current: !at("/incidents") && !at("/monitors") },
+    { key: "incidents", label: t`Incidents`, to: "/incidents", current: at("/incidents") },
+    { key: "monitors", label: t`Monitors`, to: "/monitors", current: at("/monitors") },
   ]
 }
 
@@ -208,8 +186,17 @@ function useAnalyticsChildren(): Child[] {
   const to = (v: string) => (target ? `/analytics/${target}${v ? `/${v}` : ""}${keep}` : "/analytics")
   return [
     { key: "overview", label: t`Overview`, to: to(""), current: view === "overview" },
+    { key: "realtime", label: t`Realtime`, to: to("realtime"), current: view === "realtime" },
     { key: "pages", label: t`Pages`, to: to("pages"), current: view === "pages" },
+    { key: "sources", label: t`Sources`, to: to("sources"), current: view === "sources" },
+    { key: "locations", label: t`Locations`, to: to("locations"), current: view === "locations" },
+    { key: "devices", label: t`Devices`, to: to("devices"), current: view === "devices" },
+    { key: "events", label: t`Events`, to: to("events"), current: view === "events" },
     { key: "goals", label: t`Goals`, to: to("goals"), current: view === "goals" },
+    { key: "funnels", label: t`Funnels`, to: to("funnels"), current: view === "funnels" },
+    { key: "retention", label: t`Retention`, to: to("retention"), current: view === "retention" },
+    { key: "support", label: t`Support`, to: to("support"), current: view === "support" },
+    { key: "settings", label: t`Settings`, to: to("settings"), current: view === "settings" },
   ]
 }
 

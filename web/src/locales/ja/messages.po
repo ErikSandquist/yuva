@@ -19,10 +19,6 @@ msgstr "「このページは役に立ちましたか?」、ドキュメント�
 msgid "(no subject)"
 msgstr "(件名なし)"
 
-#: src/features/settings/members/MemberList.tsx
-msgid "(you)"
-msgstr "(あなた)"
-
 #. placeholder {0}: msg.attachments
 #: src/features/migrations/ReviewStep.tsx
 msgid "{0, plural, one {# attachment} other {# attachments}}"
@@ -78,6 +74,7 @@ msgid "{0} active today"
 msgstr "本日のアクティブ {0}"
 
 #. placeholder {0}: done.length
+#. placeholder {0}: done.size
 #: src/features/inbox/ChatList.tsx
 msgid "{0} closed"
 msgstr "{0} 件が完了"
@@ -88,6 +85,8 @@ msgid "{0} events"
 msgstr "{0} 件のイベント"
 
 #. placeholder {0}: pct.format(good / mine.length)
+#. placeholder {0}: pct.format(good)
+#: src/features/home/HomePage.tsx
 #: src/features/reports/ReportPages.tsx
 msgid "{0} good"
 msgstr "{0} 件が良好"
@@ -206,6 +205,10 @@ msgstr "{attachmentsLeft} 件の添付ファイルは、このサーバーのサ
 msgid "{author}, sent by {by}"
 msgstr "{author}、送信者: {by}"
 
+#: src/features/team/TeamPage.tsx
+msgid "{available} of {total}"
+msgstr "{available} / {total}"
+
 #: src/features/contact/ContactDetails.tsx
 msgid "{bad} bad"
 msgstr "不良 {bad} 件"
@@ -227,6 +230,10 @@ msgstr "{clientName} は接続されています"
 msgid "{closed, plural, one {# closed} other {# closed}}"
 msgstr "{closed, plural, other {完了 # 件}}"
 
+#: src/features/status/MonitorsPage.tsx
+msgid "{comp} is not working"
+msgstr "{comp} が動作していません"
+
 #: src/features/migrations/Wizard.tsx
 msgid "{conversations} conversations, {messages} messages"
 msgstr "{conversations} 件の会話、{messages} 件のメッセージ"
@@ -243,10 +250,6 @@ msgstr "{count, plural, other {# ブランド}}"
 msgid "{count, plural, one {# folder} other {# folders}}"
 msgstr "{count, plural, other {# フォルダー}}"
 
-#: src/features/status/StatusPages.tsx
-msgid "{count, plural, one {# linked conversation} other {# linked conversations}}"
-msgstr "{count, plural, other {リンクされた会話 # 件}}"
-
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "{count, plural, one {# mailbox} other {# mailboxes}}"
 msgstr "{count, plural, other {# メールボックス}}"
@@ -254,14 +257,6 @@ msgstr "{count, plural, other {# メールボックス}}"
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "{count, plural, one {It goes to # recipient.} other {It goes to # recipients.}}"
 msgstr "{count, plural, other {# 件の宛先に送信されます。}}"
-
-#: src/features/broadcasts/ReviewPanel.tsx
-msgid "{count, plural, one {Schedule for # recipient} other {Schedule for # recipients}}"
-msgstr "{count, plural, other {# 件の宛先に配信を予約}}"
-
-#: src/features/broadcasts/ReviewPanel.tsx
-msgid "{count, plural, one {Send to # recipient} other {Send to # recipients}}"
-msgstr "{count, plural, other {# 件の宛先に送信}}"
 
 #: src/features/settings/webhooks/WebhookList.tsx
 msgid "{count} events"
@@ -288,7 +283,7 @@ msgid "{created, plural, one {# new} other {# new}}"
 msgstr "{created, plural, other {新規 # 件}}"
 
 #: src/features/broadcasts/Growth.tsx
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/Toolbar.tsx
 msgid "{d, plural, one {# day} other {# days}}"
 msgstr "{d, plural, other {# 日}}"
 
@@ -303,10 +298,6 @@ msgstr "{days, plural, other {# 日}}"
 #: src/features/home/HomePage.tsx
 msgid "{days, plural, one {median, last # day} other {median, last # days}}"
 msgstr "{days, plural, other {中央値、直近 # 日}}"
-
-#: src/features/docs/DocsPages.tsx
-msgid "{days, plural, one {The last day, over the inboxes you can see.} other {The last # days, over the inboxes you can see.}}"
-msgstr "{days, plural, other {見えている受信トレイ全体の過去 # 日間。}}"
 
 #: src/features/conversation/ConversationStatus.tsx
 msgid "{days, plural, one {Waiting for # day} other {Waiting for # days}}"
@@ -325,12 +316,11 @@ msgstr "{doneParts} / {totalParts} パート"
 msgid "{doneText} of {total}"
 msgstr "{doneText} / {total}"
 
-#: src/features/status/IncidentsTab.tsx
 #: src/features/status/StatusPages.tsx
 msgid "{down, plural, one {# down} other {# down}}"
 msgstr "{down, plural, other {# 件停止}}"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "{down} not helpful"
 msgstr "役に立たなかった: {down}"
 
@@ -342,7 +332,7 @@ msgstr "Yuva に登録済み: {existing}"
 msgid "{feedback, plural, one {# feedback is not resolved yet} other {# feedback are not resolved yet}}"
 msgstr "{feedback, plural, other {未解決のフィードバックが # 件あります}}"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "{feedback} open feedback"
 msgstr "未対応のフィードバック {feedback} 件"
 
@@ -361,6 +351,10 @@ msgstr "{first} が会話を 👍 と評価しました"
 #: src/features/conversation/messages/Thread.tsx
 msgid "{first} rated the conversation 👎"
 msgstr "{first} が会話を 👎 と評価しました"
+
+#: src/features/home/HomePage.tsx
+msgid "{from} – today, {scope}"
+msgstr "{from} 〜 今日、{scope}"
 
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "{from} has an SPF record. Whether it passes is known once the test mail is read."
@@ -442,6 +436,10 @@ msgstr "過去 30 分で {liveText}"
 msgid "{minutes, plural, one {Waiting for # minute} other {Waiting for # minutes}}"
 msgstr "{minutes, plural, other {# 分待ち}}"
 
+#: src/features/status/IncidentDetail.tsx
+msgid "{monitorName} answers normally again"
+msgstr "{monitorName} が再び正常に応答しています"
+
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "{mxDomain} has no MX record, so replies to broadcasts cannot arrive. Publish the MX records of your mail service."
 msgstr "{mxDomain} に MX レコードがないため、一斉配信への返信が届きません。メールサービスの MX レコードを公開してください。"
@@ -494,14 +492,25 @@ msgstr "会話 {n} 件"
 msgid "{n} in 30 days"
 msgstr "30 日間で {n} 件"
 
+#: src/features/inbox/ChatList.tsx
+msgid "{n} marked as read"
+msgstr "{n} 件を既読にしました"
+
+#: src/features/inbox/ChatList.tsx
+msgid "{n} marked as unread"
+msgstr "{n} 件を未読にしました"
+
 #: src/app/UserMenu.tsx
 msgid "{name} · {statusText}"
 msgstr "{name} · {statusText}"
 
-#: src/features/team/MemberPage.tsx
-#: src/features/team/TeamColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "{name} (you)"
 msgstr "{name} (あなた)"
+
+#: src/features/contact/ContactDetail.tsx
+msgid "{name} blocked. Their mail is refused."
+msgstr "{name} をブロックしました。このコンタクトからのメールは拒否されます。"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "{name} can reply"
@@ -552,6 +561,10 @@ msgstr "{name} はこのアドレスでメールを受信します。設定内�
 msgid "{name} replied before you."
 msgstr "{name} が先に返信しました。"
 
+#: src/features/contact/ContactDetail.tsx
+msgid "{name} unblocked"
+msgstr "{name} のブロックを解除しました"
+
 #: src/features/conversation/messages/context.ts
 #: src/features/inbox/SidePanels.tsx
 msgid "{name} via {via}"
@@ -569,21 +582,12 @@ msgstr "{names} に通知されます"
 msgid "{needs, plural, one {# thing needs you today.} other {# things need you today.}}"
 msgstr "{needs, plural, other {今日対応が必要なものが # 件あります。}}"
 
-#: src/features/status/IncidentsTab.tsx
-msgid "{notOk, plural, one {# not operational} other {# not operational}}"
-msgstr "{notOk, plural, other {# 件が正常に動作していません}}"
-
 #: src/features/home/HomePage.tsx
 msgid "{on} of {of} online"
 msgstr "{of} 人中 {on} 人がオンライン"
 
-#: src/features/team/TeamColumn.tsx
-msgid "{open, plural, one {# open now} other {# open now}}"
-msgstr "{open, plural, other {現在 # 件オープン}}"
-
 #: src/components/common/Linked.tsx
 #: src/features/home/HomePage.tsx
-#: src/features/team/TeamColumn.tsx
 msgid "{open, plural, one {# open} other {# open}}"
 msgstr "{open, plural, other {未完了 # 件}}"
 
@@ -599,27 +603,23 @@ msgstr "{out, plural, other {# 行を除外}}"
 msgid "{pct} satisfied"
 msgstr "満足 {pct}"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "{pending} posts waiting for approval"
 msgstr "承認待ちの投稿 {pending} 件"
 
-#: src/features/broadcasts/Overview.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "{pending} waiting · {unsubscribed} unsubscribed"
 msgstr "{pending} 件保留 · {unsubscribed} 件購読解除"
 
-#: src/features/docs/discussions/DiscussionsPane.tsx
 #: src/features/docs/discussions/parts.tsx
 msgid "{pending} waiting for approval"
 msgstr "承認待ち {pending} 件"
-
-#: src/features/broadcasts/BroadcastsColumn.tsx
-msgid "{pending} waiting for confirmation"
-msgstr "確認待ち {pending} 件"
 
 #: src/features/broadcasts/ListSettings.tsx
 msgid "{people, plural, one {Its # subscription and its consent record are deleted.} other {Its # subscriptions and their consent records are deleted.}}"
 msgstr "{people, plural, other {# 件の登録と同意記録を削除します。}}"
 
+#: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/Overview.tsx
 msgid "{people} people"
 msgstr "{people} 人"
@@ -647,6 +647,10 @@ msgstr "{percent}%、{doneText} / {total}"
 #: src/features/migrations/UploadStep.tsx
 msgid "{percent}%, {sent} of {size}"
 msgstr "{percent}%、{sent} / {size}"
+
+#: src/features/inbox/ChatsPage.tsx
+msgid "{product}’s conversations"
+msgstr "{product} の会話"
 
 #: src/features/migrations/text.ts
 msgid "{provider} accepts no passwords over IMAP. This mailbox connects only with “Sign in with Microsoft”: go back and pick Outlook.com and Microsoft 365."
@@ -729,10 +733,6 @@ msgstr "{rated, plural, =0 {まだ評価はありません} other {評価 # 件}
 msgid "{rated, plural, one {# rating} other {# ratings}}"
 msgstr "{rated, plural, other {評価 # 件}}"
 
-#: src/features/broadcasts/BroadcastList.tsx
-msgid "{recipients} recipients"
-msgstr "{recipients} 件の宛先"
-
 #: src/features/broadcasts/Report.tsx
 msgid "{recipients} recipients · {failed} refused by the mail server · {left} skipped · {auto} automatic replies, only counted"
 msgstr "{recipients} 件の宛先 · メールサーバーが拒否 {failed} 件 · スキップ {left} 件 · 自動返信 {auto} 件(集計のみ)"
@@ -740,10 +740,6 @@ msgstr "{recipients} 件の宛先 · メールサーバーが拒否 {failed} 件
 #: src/features/migrations/DoneStep.tsx
 msgid "{removable, plural, one {# imported conversation nobody wrote in since can be removed.} other {# imported conversations nobody wrote in since can be removed.}}"
 msgstr "{removable, plural, other {その後誰も書き込んでいないインポート済みの会話 # 件を削除できます。}}"
-
-#: src/features/team/TeamColumn.tsx
-msgid "{replies, plural, one {# reply today} other {# replies today}}"
-msgstr "{replies, plural, other {今日の返信 # 件}}"
 
 #: src/app/TeamMenu.tsx
 msgid "{replies, plural, one {# reply} other {# replies}}"
@@ -758,6 +754,10 @@ msgstr "{replies} 件の返信"
 msgid "{rest, plural, one {and # more page} other {and # more pages}}"
 msgstr "{rest, plural, other {ほか # ページ}}"
 
+#: src/features/team/TeamPage.tsx
+msgid "{role} · {language} · sent {sent} · expires {expires}"
+msgstr "{role} · {language} · 送信日 {sent} · 有効期限 {expires}"
+
 #: src/features/broadcasts/Import.tsx
 msgid "{rows} rows, read as {encoding}, separated by {delimiter}."
 msgstr "{rows} 行、{encoding} として読み込み、{delimiter} 区切り。"
@@ -770,15 +770,12 @@ msgstr "{rows} 行。"
 msgid "{satisfied} satisfied"
 msgstr "満足 {satisfied}"
 
-#: src/features/broadcasts/BroadcastList.tsx
-msgid "{sent} of {all}"
-msgstr "{sent} / {all}"
-
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/broadcasts/Overview.tsx
 msgid "{sent} of {all} done"
 msgstr "{sent} / {all} 完了"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "{share} helpful"
 msgstr "役に立った割合 {share}"
 
@@ -795,34 +792,30 @@ msgid "{state} since {since}"
 msgstr "{since} から{state}"
 
 #: src/features/broadcasts/AudienceBuilder.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
 msgid "{subscribed} subscribed"
 msgstr "登録 {subscribed} 件"
 
-#: src/features/status/StatusColumn.tsx
 #: src/features/status/StatusPages.tsx
 msgid "{subscribed} subscribers"
 msgstr "購読者 {subscribed} 人"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "{threads} open discussions"
 msgstr "未完了のディスカッション {threads} 件"
 
-#: src/features/broadcasts/Overview.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "{unsubscribed} unsubscribed"
 msgstr "購読解除 {unsubscribed} 件"
 
-#: src/features/status/IncidentsTab.tsx
 #: src/features/status/StatusPages.tsx
 msgid "{up, plural, one {# up} other {# up}}"
 msgstr "{up, plural, other {# 件稼働中}}"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "{up} helpful"
 msgstr "役に立った: {up}"
 
 #: src/features/status/IncidentsPage.tsx
-#: src/features/status/IncidentsTab.tsx
 msgid "{updates, plural, one {# update} other {# updates}}"
 msgstr "{updates, plural, other {# 件の更新}}"
 
@@ -837,8 +830,13 @@ msgstr "{views, plural, other {# 回表示}}"
 #: src/features/account/AccountPage.tsx
 #: src/features/docs/discussions/parts.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/feedback/RoadmapCard.tsx
 msgid "{votes} votes"
 msgstr "{votes} 票"
+
+#: src/features/status/StatusPages.tsx
+msgid "{watching, plural, one {Watched by # monitor} other {Watched by # monitors}}"
+msgstr "{watching, plural, other {#件のモニターが監視中}}"
 
 #: src/features/reports/ReportPages.tsx
 msgid "{who} · answered by {name}"
@@ -870,7 +868,7 @@ msgstr "+ アドレスを追加"
 msgid "+ Add channel"
 msgstr "+ チャンネルを追加"
 
-#: src/features/broadcasts/Overview.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "+{added} this month"
 msgstr "今月 +{added}"
 
@@ -1083,6 +1081,10 @@ msgstr "ディスカッションに承認済みの回答がついたとき"
 msgid "A discussion started"
 msgstr "ディスカッションが開始されたとき"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "A draft incident opens for your team to review. Customers see nothing until a member publishes it."
+msgstr "チームが確認するためのインシデントの下書きが作成されます。メンバーが公開するまで、顧客には何も表示されません。"
+
 #: src/features/status/IncidentDialog.tsx
 msgid "A draft is seen only by your team and changes no component until you publish it."
 msgstr "下書きはチームだけが見られ、公開するまでコンポーネントは変更されません。"
@@ -1131,7 +1133,11 @@ msgstr "連絡先から後続のメッセージがあったとき。"
 msgid "A line that makes people open it"
 msgstr "開きたくなる 1 行"
 
-#: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/features/broadcasts/ListsHome.tsx
+msgid "A list is who agreed to hear from you. Every subscriber keeps a consent record you can export."
+msgstr "リストとは、あなたからの連絡に同意した人たちです。購読者ごとに、エクスポートできる同意の記録が残ります。"
+
+#: src/features/broadcasts/ListParts.tsx
 msgid "A mailing list holds the people who agreed to get your broadcasts. They join on a subscribe form on your site, or your team adds them and records how they agreed. Every step is kept as proof of consent, and everyone can leave with one click."
 msgstr "メーリングリストには、一斉配信の受信に同意した人が登録されます。サイトの登録フォームから参加するか、チームが追加して同意の経緯を記録します。すべての手順が同意の証拠として保存され、誰でもワンクリックで退会できます。"
 
@@ -1142,10 +1148,6 @@ msgstr "メーリングリストは、受信トレイの名前でメールチャ
 #: src/features/setup/SetupHub.tsx
 msgid "A mailing list with subscribe forms, for your broadcasts"
 msgstr "一斉配信用の登録フォーム付きメーリングリスト"
-
-#: src/features/status/MonitorsTab.tsx
-msgid "A member set the component by hand later, so it stays as they left it."
-msgstr "メンバーがあとからコンポーネントを手動で設定したため、その状態のままになります。"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "A merge field without a fallback would be empty for some recipients. Give it a fallback."
@@ -1166,6 +1168,10 @@ msgstr "status.example.com のような、ご自身が管理する名前です�
 #: src/features/setup/StartStep.tsx
 msgid "A new product"
 msgstr "新製品"
+
+#: src/features/docs/PagesTab.tsx
+msgid "A new reader’s first post waits for your approval. You can change this in the inbox settings."
+msgstr "新しい読者の最初の投稿は、あなたの承認を待ちます。受信トレイの設定で変更できます。"
 
 #: src/components/common/ServiceWorkerBridge.tsx
 msgid "A new version of Yuva is ready."
@@ -1362,10 +1368,15 @@ msgstr "Acme サポート"
 msgid "Actions for {0}"
 msgstr "{0} の操作"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/status/DomainCard.tsx
 #: src/features/status/IncidentsPage.tsx
 msgid "Active"
 msgstr "有効"
+
+#: src/features/contact/ContactDetail.tsx
+msgid "Activity"
+msgstr "アクティビティ"
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/contact/ContactDetails.tsx
@@ -1376,6 +1387,10 @@ msgstr "追加"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Add a block"
 msgstr "ブロックを追加"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Add a component"
+msgstr "コンポーネントを追加"
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Add a condition"
@@ -1492,7 +1507,7 @@ msgstr "ヘッダーを追加"
 msgid "Add monitor"
 msgstr "モニターを追加"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Add monitor ({addKey})"
 msgstr "モニターを追加（{addKey}）"
 
@@ -1505,6 +1520,11 @@ msgstr "メモを追加"
 msgid "Add product"
 msgstr "製品を追加"
 
+#: src/features/docs/InstallDialog.tsx
+msgid "Add ratings and discussions to your docs"
+msgstr "ドキュメントに評価とディスカッションを追加"
+
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 #: src/features/broadcasts/Subscribers.tsx
 msgid "Add subscriber"
@@ -1513,10 +1533,6 @@ msgstr "登録者を追加"
 #: src/features/setup/InstallStep.tsx
 msgid "Add the chat to your site"
 msgstr "サイトにチャットを追加"
-
-#: src/features/docs/DocsColumn.tsx
-msgid "Add the page feedback and discussions elements to your documentation site, on one of the inbox's chat channels. Ratings, feedback and discussions then show up here per page."
-msgstr "ページのフィードバックとディスカッションの要素を、受信トレイのチャットチャネルの 1 つに紐づけてドキュメントサイトに追加します。評価、フィードバック、ディスカッションがページごとにここに表示されます。"
 
 #: src/features/setup/InstallStep.tsx
 msgid "Add the SDK and create one client"
@@ -1530,6 +1546,7 @@ msgstr "ターミナルでサーバーを追加します。"
 msgid "Add the site's address."
 msgstr "サイトのアドレスを追加してください。"
 
+#: src/features/docs/PagesTab.tsx
 #: src/features/setup/InstallStep.tsx
 msgid "Add the two elements under every docs page"
 msgstr "すべてのドキュメントページの下に 2 つの要素を追加"
@@ -1537,14 +1554,6 @@ msgstr "すべてのドキュメントページの下に 2 つの要素を追加
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Add to Cursor"
 msgstr "Cursor に追加"
-
-#: src/features/feedback/FeedbackPage.tsx
-msgid "Add to roadmap"
-msgstr "ロードマップに追加"
-
-#: src/features/feedback/FeedbackPage.tsx
-msgid "Add to roadmap (B)"
-msgstr "ロードマップに追加 (B)"
 
 #: src/features/setup/InstallStep.tsx
 msgid "Add Yuva to your app"
@@ -1580,6 +1589,7 @@ msgstr "チームが追加"
 #: src/features/setup/email/EmailLayout.tsx
 #: src/features/status/CreatePageDialog.tsx
 #: src/features/status/MonitorHttpFields.tsx
+#: src/features/status/MonitorsPage.tsx
 #: src/features/status/MonitorToken.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Address"
@@ -1598,11 +1608,11 @@ msgstr "管理者"
 msgid "Admin routing"
 msgstr "管理者ルーティング"
 
-#: src/features/status/IncidentPane.tsx
-msgid "Affected"
-msgstr "影響を受けるもの"
+#: src/features/team/TeamPage.tsx
+msgid "Admins see every inbox and manage products, channels and members."
+msgstr "管理者はすべての受信トレイを見ることができ、プロダクト、チャネル、メンバーを管理します。"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Affects"
 msgstr "影響範囲"
 
@@ -1613,6 +1623,10 @@ msgstr "エージェント"
 #: src/features/migrations/MapStep.tsx
 msgid "Agents"
 msgstr "エージェント"
+
+#: src/features/team/TeamPage.tsx
+msgid "Agents see the inboxes they were given and answer in them."
+msgstr "エージェントは割り当てられた受信トレイを見て、そこで返信します。"
 
 #: src/features/conversation/Collision.tsx
 msgid "Agree who replies."
@@ -1646,6 +1660,7 @@ msgstr "Alertmanager"
 #: src/features/inbox/ChatList.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "All"
 msgstr "すべて"
 
@@ -1654,7 +1669,7 @@ msgstr "すべて"
 msgid "All components"
 msgstr "すべてのコンポーネント"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "All good"
 msgstr "問題なし"
 
@@ -1678,17 +1693,21 @@ msgstr "すべてのメール"
 msgid "All marked as read"
 msgstr "すべて既読にしました"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "All monitors"
+msgstr "すべてのモニター"
+
 #: src/features/settings/inboxes/InboxSecurity.tsx
 msgid "All of its conversations are deleted with it."
 msgstr "その会話もすべて一緒に削除されます。"
 
-#: src/features/status/IncidentsTab.tsx
-msgid "all operational"
-msgstr "すべて正常"
-
 #: src/features/migrations/UploadStep.tsx
 msgid "All parts arrived. Reading the file…"
 msgstr "すべてのパートが届きました。ファイルを読み込んでいます…"
+
+#: src/features/home/HomePage.tsx
+msgid "all products"
+msgstr "すべてのプロダクト"
 
 #: src/features/inbox/InboxPicker.tsx
 #: src/features/inbox/ProductSwitcher.tsx
@@ -1702,7 +1721,7 @@ msgstr "すべてのプロダクト"
 msgid "All scopes"
 msgstr "すべてのスコープ"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/Toolbar.tsx
 msgid "All sites"
 msgstr "すべてのサイト"
 
@@ -1714,7 +1733,6 @@ msgstr "すべてのサイトとアプリ"
 msgid "All systems operational"
 msgstr "すべてのシステムが稼働中"
 
-#: src/features/status/IncidentsTab.tsx
 #: src/features/status/StatusPages.tsx
 msgid "all up"
 msgstr "すべて稼働中"
@@ -1758,6 +1776,7 @@ msgstr "ファイル内で既に出現"
 msgid "Already in Yuva"
 msgstr "Yuva に登録済み"
 
+#: src/features/status/LinkConversationsDialog.tsx
 #: src/features/status/LinkIncidentDialog.tsx
 msgid "Already linked"
 msgstr "すでにリンク済みです"
@@ -1903,6 +1922,14 @@ msgstr "https の画像。"
 msgid "An inbox collects the conversations of one product or brand. Name it after the product your customers know."
 msgstr "受信トレイは、1 つの製品またはブランドの会話をまとめます。お客様がよく知っている製品名を付けてください。"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "An incident is published at once, so customers see it on the page."
+msgstr "インシデントはすぐに公開され、顧客にページ上で表示されます。"
+
+#: src/features/status/MonitorsPage.tsx
+msgid "An incident is still open. Post the all-clear."
+msgstr "インシデントがまだ未解決です。復旧のお知らせを投稿してください。"
+
 #: src/components/common/text.ts
 msgid "An incident or maintenance changed or got an update"
 msgstr "インシデントまたはメンテナンスが変更されたか、更新されました"
@@ -1919,9 +1946,13 @@ msgstr "1 件のインシデントにリンクできる会話は最大 5,000 件
 msgid "An incident was resolved or maintenance completed"
 msgstr "インシデントが解決されたか、メンテナンスが完了しました"
 
-#: src/features/settings/members/Invites.tsx
+#: src/features/team/TeamPage.tsx
 msgid "An invite is accepted when the person signs in with a code sent to that address. It expires after 7 days."
 msgstr "招待は、そのアドレスに届いたコードでサインインすると承諾されます。7 日で期限切れになります。"
+
+#: src/features/team/TeamPage.tsx
+msgid "An owner cannot be removed. Change their role first."
+msgstr "オーナーは削除できません。先にロールを変更してください。"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "An owner or admin can let assistants send on their own with Bots may send."
@@ -1993,6 +2024,10 @@ msgstr "別の受信トレイ"
 msgid "Another page verified this domain first, and only a verified claim holds a name. Remove the domain, or start over once the other page lets it go."
 msgstr "別のページが先にこのドメインを確認済みです。名前を保持できるのは確認済みの申請だけです。ドメインを削除するか、相手のページが手放した後にやり直してください。"
 
+#: src/features/docs/discussions/FromConversation.tsx
+msgid "Another page…"
+msgstr "別のページ…"
+
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "Another SMTP server"
 msgstr "別の SMTP サーバー"
@@ -2046,6 +2081,10 @@ msgstr "HTTP 経由で MCP を扱えるクライアントなら何でも。あ�
 msgid "Any conversation"
 msgstr "任意の会話"
 
+#: src/features/contact/ContactsPage.tsx
+msgid "Any country"
+msgstr "すべての国"
+
 #: src/features/inbox/ChatList.tsx
 msgid "Any label"
 msgstr "任意のラベル"
@@ -2078,7 +2117,7 @@ msgstr "API と MCP"
 msgid "API channel"
 msgstr "API チャネル"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "API key"
 msgstr "API キー"
 
@@ -2090,6 +2129,7 @@ msgstr "API キー"
 
 #: src/components/common/Source.tsx
 #: src/features/conversation/Feedback.tsx
+#: src/features/feedback/FeedbackFormDialog.tsx
 #: src/features/oauth/ConsentPage.tsx
 msgid "App"
 msgstr "アプリ"
@@ -2155,9 +2195,19 @@ msgctxt "mail folder kind"
 msgid "Archive"
 msgstr "アーカイブ"
 
+#: src/features/broadcasts/ListSettings.tsx
+msgid "Archive the list instead to keep the records."
+msgstr "記録を残すには、代わりにリストをアーカイブしてください。"
+
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "Archived"
 msgstr "アーカイブ済み"
+
+#: src/features/broadcasts/ListsHome.tsx
+msgid "Archived lists keep their subscribers and consent records but take no new sign-ups."
+msgstr "アーカイブしたリストは購読者と同意の記録を保持しますが、新しい登録は受け付けません。"
 
 #: src/features/setup/previews.tsx
 msgid "Arrived"
@@ -2174,6 +2224,10 @@ msgstr "転送経由で到着しました。{verifiedAt}。"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Articles"
 msgstr "記事"
+
+#: src/features/docs/PagesTab.tsx
+msgid "Articles you write in Yuva"
+msgstr "Yuvaで書く記事"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "As {name}, since {when}"
@@ -2233,17 +2287,15 @@ msgstr "割り当て(A)"
 
 #: src/app/Palette.tsx
 #: src/components/common/ShortcutSheet.tsx
-#: src/features/conversation/ConversationMenu.tsx
 msgid "Assign or hand to a teammate"
 msgstr "割り当て、またはチームメンバーに引き継ぐ"
 
-#: src/features/conversation/ConversationMenu.tsx
+#: src/features/conversation/ChatView.tsx
 #: src/features/conversation/HeaderActions.tsx
 msgid "Assign to me"
 msgstr "自分に割り当て"
 
 #. placeholder {0}: assignee.name || assignee.email
-#: src/features/conversation/ChatView.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Assigned to {0}"
 msgstr "{0} に割り当て済み"
@@ -2344,7 +2396,7 @@ msgstr "条件 {n} の属性"
 msgid "attribute, e.g. plan"
 msgstr "属性(例: plan)"
 
-#: src/features/contact/ContactsPage.tsx
+#: src/features/contact/ContactDetail.tsx
 #: src/features/contact/MergePreview.tsx
 msgid "Attributes"
 msgstr "属性"
@@ -2368,7 +2420,7 @@ msgstr "誰も返信していない自動返信、ニュースレター、配信
 msgid "Auto-reply"
 msgstr "自動返信"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "automatic"
 msgstr "自動"
 
@@ -2380,7 +2432,7 @@ msgstr "自動メールが自動返信のきっかけになることはありま
 msgid "Available"
 msgstr "利用可能"
 
-#: src/features/team/TeamColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "available now"
 msgstr "今すぐ利用可能"
 
@@ -2397,6 +2449,7 @@ msgstr "不在"
 #: src/components/common/Linked.tsx
 #: src/components/common/Wizard.tsx
 #: src/features/auth/CreateWorkspace.tsx
+#: src/features/broadcasts/ReviewPanel.tsx
 #: src/features/contact/MergeContactDialog.tsx
 msgid "Back"
 msgstr "戻る"
@@ -2461,6 +2514,10 @@ msgstr "それ以前: {0}、{1}"
 msgid "Before you connect"
 msgstr "接続する前に"
 
+#: src/features/broadcasts/Composer.tsx
+msgid "Before you send"
+msgstr "送信前に"
+
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Billing"
 msgstr "請求"
@@ -2474,8 +2531,12 @@ msgstr "請求ボット"
 msgid "Billing events"
 msgstr "請求イベント"
 
+#: src/features/contact/ContactDetail.tsx
+msgid "Block contact"
+msgstr "コンタクトをブロック"
+
 #: src/features/contact/ContactCard.tsx
-#: src/features/contact/ContactPage.tsx
+#: src/features/contact/ContactDetail.tsx
 #: src/features/contact/ContactSheet.tsx
 #: src/features/contact/ContactsPage.tsx
 #: src/features/status/DomainCard.tsx
@@ -2485,6 +2546,10 @@ msgstr "ブロック済み"
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Blocked contacts"
 msgstr "ブロックした連絡先"
+
+#: src/features/contact/ContactDetail.tsx
+msgid "Blocked. Mail from this contact is refused and nothing new reaches the inbox. Unblock them from the menu."
+msgstr "ブロック中です。このコンタクトからのメールは拒否され、受信トレイには何も届きません。メニューからブロックを解除できます。"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Board"
@@ -2603,6 +2668,7 @@ msgstr "メールとヘルプデスクの履歴を取り込みます。移行元
 msgid "Bring your old mail"
 msgstr "過去のメールを取り込む"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/Overview.tsx
 msgid "Broadcast"
@@ -2622,9 +2688,9 @@ msgstr "一斉配信の送信"
 #: src/app/Rail.tsx
 #: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
-#: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/Overview.tsx
 #: src/features/settings/webhooks/events.tsx
 #: src/features/settings/workspace/BroadcastsSettings.tsx
@@ -2661,11 +2727,6 @@ msgstr "アプリやページから送られたバグ、アイデア、称賛"
 msgid "Business hours"
 msgstr "営業時間"
 
-#: src/features/broadcasts/SubscriberSheet.tsx
-msgid "By"
-msgstr "作成者"
-
-#: src/features/status/IncidentsTab.tsx
 #: src/features/status/StatusPages.tsx
 msgid "by e-mail"
 msgstr "メールで"
@@ -2701,14 +2762,18 @@ msgstr "キャンペーン名"
 #: src/components/common/Wizard.tsx
 #: src/features/account/ConnectPage.tsx
 #: src/features/broadcasts/Import.tsx
+#: src/features/broadcasts/ListsHome.tsx
 #: src/features/broadcasts/NewBroadcastDialog.tsx
 #: src/features/broadcasts/Pace.tsx
 #: src/features/broadcasts/ReviewPanel.tsx
+#: src/features/broadcasts/SubscriberSheet.tsx
 #: src/features/contact/ContactDetails.tsx
+#: src/features/contact/ContactNotes.tsx
 #: src/features/contact/ContactsPage.tsx
 #: src/features/conversation/messages/Thread.tsx
 #: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/docs/FromDocs.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
@@ -2716,10 +2781,10 @@ msgstr "キャンペーン名"
 #: src/features/status/AddSubscriberDialog.tsx
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/CreatePageDialog.tsx
+#: src/features/status/IncidentDetail.tsx
 #: src/features/status/IncidentDialog.tsx
-#: src/features/status/IncidentPane.tsx
 #: src/features/status/MonitorDialog.tsx
-#: src/features/team/TeamColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Cancel"
 msgstr "キャンセル"
 
@@ -2803,7 +2868,7 @@ msgstr "From アドレスなしのキャッチオール"
 msgid "Category"
 msgstr "カテゴリ"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Cause found"
 msgstr "原因を特定"
 
@@ -2815,18 +2880,23 @@ msgstr "Cc: {cc}"
 msgid "Certificate"
 msgstr "証明書"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Certificate expired {expires}"
 msgstr "証明書は {expires} に期限切れになりました"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Certificate expires {expires}"
 msgstr "証明書は {expires} に期限切れになります"
+
+#: src/features/feedback/RoadmapCard.tsx
+msgid "Change"
+msgstr "変更"
 
 #: src/features/auth/SignInForm.tsx
 msgid "Change address"
 msgstr "アドレスを変更"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Change pace"
 msgstr "ペースを変更"
@@ -2868,7 +2938,6 @@ msgid "Changing the sending domain turns DKIM signing off until you enable it ag
 msgstr "送信ドメインを変更すると、新しいドメインで再度有効にするまで DKIM 署名がオフになります。"
 
 #: src/features/contact/ContactDetails.tsx
-#: src/features/inbox/ChatList.tsx
 #: src/features/setup/email/EmailLayout.tsx
 #: src/features/setup/SetupLayout.tsx
 msgid "Channel"
@@ -2882,10 +2951,22 @@ msgstr "チャネルを追加しました"
 msgid "Channel removed"
 msgstr "チャネルを削除しました"
 
+#: src/features/feedback/FeedbackFormDialog.tsx
+msgid "Channel settings"
+msgstr "チャンネル設定"
+
 #: src/app/Sidebar.tsx
 #: src/features/settings/ProductsPage.tsx
 msgid "Channels"
 msgstr "チャネル"
+
+#: src/features/docs/InstallDialog.tsx
+msgid "Chat channel"
+msgstr "チャットチャネル"
+
+#: src/features/broadcasts/ReviewPanel.tsx
+msgid "Check"
+msgstr "確認"
 
 #: src/features/settings/channels/email/Deliverability.tsx
 #: src/features/setup/email/EmailTestStep.tsx
@@ -2913,6 +2994,7 @@ msgid "Check DNS and start signing"
 msgstr "DNS を確認して署名を開始"
 
 #: src/features/status/MonitorDialog.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Check every"
 msgstr "チェック間隔"
 
@@ -2941,7 +3023,6 @@ msgid "Check your e-mail"
 msgstr "メールを確認してください"
 
 #: src/features/setup/email/EmailDoneStep.tsx
-#: src/features/status/MonitorsTab.tsx
 msgid "Checked"
 msgstr "確認済み"
 
@@ -2982,7 +3063,7 @@ msgstr "確認中…"
 msgid "Checks"
 msgstr "チェック"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Checks that watch your products and set component states"
 msgstr "製品を監視し、コンポーネントの状態を設定するチェック"
 
@@ -3006,9 +3087,9 @@ msgstr "「アプリパスワードを生成」を選び、名前を「Yuva」�
 msgid "Choose a channel"
 msgstr "チャンネルを選択"
 
-#: src/features/status/MonitorDialog.tsx
-msgid "Choose a component"
-msgstr "コンポーネントを選択"
+#: src/features/docs/discussions/FromConversation.tsx
+msgid "Choose a page"
+msgstr "ページを選択"
 
 #: src/features/setup/email/EmailRepliesStep.tsx
 msgid "Choose a region"
@@ -3047,6 +3128,14 @@ msgstr "claude.ai と Claude Desktop"
 #: src/features/conversation/HeaderActions.tsx
 msgid "Clear"
 msgstr "クリア"
+
+#: src/features/contact/ContactsPage.tsx
+msgid "Clear filters"
+msgstr "フィルターをクリア"
+
+#: src/features/inbox/ChatList.tsx
+msgid "Clear search and filters"
+msgstr "検索とフィルターをクリア"
 
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Clear the answer"
@@ -3107,6 +3196,7 @@ msgstr "クライアントシークレット"
 #: src/components/ui/sheet.tsx
 #: src/features/contact/ContactCard.tsx
 #: src/features/contact/ContactSheet.tsx
+#: src/features/docs/DocsPage.tsx
 #: src/features/migrations/Wizard.tsx
 #: src/features/setup/SetupHub.tsx
 msgid "Close"
@@ -3150,6 +3240,10 @@ msgstr "古い会話を完了にする"
 msgid "Close or reopen"
 msgstr "完了または再開"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Close the discussion"
+msgstr "ディスカッションを閉じる"
+
 #: src/features/conversation/ChatView.tsx
 msgid "Close the search"
 msgstr "検索を閉じる"
@@ -3169,7 +3263,7 @@ msgid "Closed conversations untouched for this many days are deleted with their 
 msgstr "この日数のあいだ操作のない完了済みの会話は、メッセージと添付ファイルごと削除され、これより古い生メールも削除されます。空のままにするとすべて保持します。"
 
 #: src/features/inbox/ChatsPage.tsx
-#: src/features/team/MemberPage.tsx
+#: src/features/team/TeamPage.tsx
 msgid "closed today"
 msgstr "本日完了"
 
@@ -3239,17 +3333,24 @@ msgid "Comparison of condition {n}"
 msgstr "条件 {n} の比較"
 
 #: src/features/settings/inboxes/SenderIdentity.tsx
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Complete"
 msgstr "完了"
+
+#: src/features/status/IncidentDetail.tsx
+msgid "Complete maintenance"
+msgstr "メンテナンスを完了"
 
 #: src/features/migrations/text.ts
 #: src/features/status/text.tsx
 msgid "Completed"
 msgstr "完了"
 
+#: src/features/status/IncidentDetail.tsx
+msgid "Completed at {endedAt}"
+msgstr "{endedAt} に完了"
+
 #: src/features/status/MonitorDialog.tsx
-#: src/features/status/MonitorsTab.tsx
 msgid "Component"
 msgstr "コンポーネント"
 
@@ -3259,9 +3360,7 @@ msgstr "コンポーネントを削除しました"
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/SubscriberSheet.tsx
-#: src/features/status/IncidentPane.tsx
-#: src/features/status/IncidentsTab.tsx
-#: src/features/status/StatusPagePane.tsx
+#: src/features/status/IncidentDetail.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Components"
 msgstr "コンポーネント"
@@ -3312,7 +3411,6 @@ msgid "Confirmation asked"
 msgstr "確認を依頼済み"
 
 #: src/components/common/text.ts
-#: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Confirmation mail sent"
 msgstr "確認メールを送信しました"
 
@@ -3432,6 +3530,7 @@ msgstr "接続が切れました。再接続しています…"
 msgid "Connections"
 msgstr "接続"
 
+#: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/ListSettings.tsx
 #: src/features/status/SubscribersTab.tsx
 msgid "Consent export"
@@ -3445,13 +3544,18 @@ msgstr "同意済み"
 msgid "Consent record"
 msgstr "同意記録"
 
+#: src/features/contact/ContactDetail.tsx
 #: src/features/contact/ContactSheet.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "Contact"
 msgstr "連絡先"
 
-#: src/features/contact/ContactPage.tsx
+#: src/features/contact/ContactsPage.tsx
+msgid "Contact added. Use New conversation to write to them."
+msgstr "コンタクトを追加しました。新しい会話から連絡できます。"
+
+#: src/features/contact/ContactDetail.tsx
 msgid "Contact and identities"
 msgstr "連絡先とアイデンティティ"
 
@@ -3459,7 +3563,6 @@ msgstr "連絡先とアイデンティティ"
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/contact/ContactSheet.tsx
 #: src/features/contact/ContactsPage.tsx
-#: src/features/conversation/ConversationMenu.tsx
 msgid "Contact details"
 msgstr "連絡先の詳細"
 
@@ -3467,7 +3570,11 @@ msgstr "連絡先の詳細"
 msgid "Contact details (C)"
 msgstr "連絡先の詳細(C)"
 
-#: src/features/contact/ContactPage.tsx
+#: src/features/contact/ContactDetail.tsx
+msgid "Contact id copied"
+msgstr "コンタクト ID をコピーしました"
+
+#: src/features/contact/ContactDetail.tsx
 #: src/features/contact/ContactSheet.tsx
 msgid "Contact since {since}"
 msgstr "{since} から連絡先"
@@ -3493,6 +3600,7 @@ msgid "Content"
 msgstr "コンテンツ"
 
 #: src/features/broadcasts/Import.tsx
+#: src/features/broadcasts/ReviewPanel.tsx
 #: src/features/migrations/ChooseStep.tsx
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/migrations/MapStep.tsx
@@ -3523,6 +3631,10 @@ msgstr "新しいメールから続行"
 msgid "Convers."
 msgstr "会話"
 
+#: src/features/conversation/ChatView.tsx
+msgid "Conversation actions"
+msgstr "会話の操作"
+
 #: src/features/conversation/actions.ts
 msgid "Conversation closed"
 msgstr "会話を完了しました"
@@ -3532,22 +3644,27 @@ msgid "Conversation list"
 msgstr "会話リスト"
 
 #: src/features/conversation/actions.ts
+#: src/features/conversation/ChatView.tsx
 msgid "Conversation reopened"
 msgstr "会話を再開しました"
 
-#: src/features/contact/ContactPage.tsx
+#: src/features/contact/ContactDetail.tsx
+msgid "Conversation started"
+msgstr "会話を開始しました"
+
+#: src/features/contact/ContactDetail.tsx
 #: src/features/reports/ReportPages.tsx
 msgid "conversations"
 msgstr "会話"
 
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/contact/ContactDetail.tsx
 #: src/features/contact/ContactDetails.tsx
-#: src/features/contact/ContactPage.tsx
 #: src/features/contact/ContactSheet.tsx
-#: src/features/contact/ContactsPage.tsx
 #: src/features/contact/MergePreview.tsx
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/FromDocs.tsx
+#: src/features/docs/PagesTab.tsx
 #: src/features/home/HomePage.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/DoneStep.tsx
@@ -3563,10 +3680,6 @@ msgstr "会話をコピーしました"
 #: src/features/inbox/ChatsPage.tsx
 msgid "Conversations from every product"
 msgstr "すべての製品の会話"
-
-#: src/features/inbox/ChatsPage.tsx
-msgid "Conversations in {product}"
-msgstr "{product} の会話"
 
 #: src/features/migrations/DoneStep.tsx
 msgid "Conversations nobody wrote in after the import are deleted. Nothing changed in {address}."
@@ -3616,7 +3729,7 @@ msgstr "コピー"
 msgid "Copy a message for your admin"
 msgstr "管理者向けのメッセージをコピー"
 
-#: src/features/contact/ContactsPage.tsx
+#: src/features/contact/ContactDetail.tsx
 msgid "Copy contact id"
 msgstr "連絡先 ID をコピー"
 
@@ -3750,14 +3863,16 @@ msgid "Create list"
 msgstr "リストを作成"
 
 #: src/features/status/CreatePageDialog.tsx
-#: src/features/status/StatusColumn.tsx
 msgid "Create status page"
 msgstr "ステータスページを作成"
 
-#: src/features/status/StatusColumn.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Create status page ({newKey})"
 msgstr "ステータスページを作成（{newKey}）"
+
+#: src/features/status/StatusPages.tsx
+msgid "Create status page for {product}"
+msgstr "{product} のステータスページを作成"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Create the board"
@@ -3816,6 +3931,10 @@ msgstr "カスタム"
 #: src/app/Sidebar.tsx
 msgid "Customers"
 msgstr "顧客"
+
+#: src/features/status/MonitorsPage.tsx
+msgid "Customers cannot see this yet. Tell them with an incident."
+msgstr "顧客にはまだ見えていません。インシデントで知らせましょう。"
 
 #: src/features/setup/ChannelStep.tsx
 #: src/features/setup/SetupHub.tsx
@@ -3876,6 +3995,7 @@ msgstr "有効期限の何日前からチェックを失敗とするか。0 の�
 msgid "Days of history"
 msgstr "履歴の日数"
 
+#: src/features/docs/PagesTab.tsx
 #: src/features/setup/InstallStep.tsx
 msgid "Decide who may write in discussions"
 msgstr "ディスカッションに書き込める人を決める"
@@ -3889,6 +4009,7 @@ msgid "Degraded performance"
 msgstr "パフォーマンス低下"
 
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/ListSettings.tsx
 #: src/features/broadcasts/SubscriberSheet.tsx
 #: src/features/contact/ContactNotes.tsx
@@ -3897,28 +4018,33 @@ msgstr "パフォーマンス低下"
 #: src/features/settings/inboxes/InboxSecurity.tsx
 #: src/features/settings/labels/LabelsPage.tsx
 #: src/features/status/ComponentsTab.tsx
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Delete"
 msgstr "削除"
 
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/broadcasts/Composer.tsx
 msgid "Delete “{name}”?"
 msgstr "「{name}」を削除しますか?"
+
+#: src/features/status/MonitorsPage.tsx
+msgid "Delete ({removeKey})"
+msgstr "削除 ({removeKey})"
 
 #. placeholder {0}: c.name
 #. placeholder {0}: i.title
 #. placeholder {0}: list.name
 #: src/features/broadcasts/ListSettings.tsx
 #: src/features/status/ComponentsTab.tsx
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Delete {0}?"
 msgstr "{0} を削除しますか?"
 
 #: src/features/settings/inboxes/InboxSecurity.tsx
 #: src/features/settings/workspace/DeleteWorkspace.tsx
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Delete {name}?"
 msgstr "{name} を削除しますか?"
 
@@ -3930,12 +4056,12 @@ msgstr "削除までの日数"
 msgid "Delete component"
 msgstr "コンポーネントを削除"
 
-#: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/status/IncidentPane.tsx
+#: src/features/broadcasts/Composer.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Delete draft"
 msgstr "ドラフトを削除"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Delete draft ({removeKey})"
 msgstr "下書きを削除（{removeKey}）"
 
@@ -3955,7 +4081,7 @@ msgstr "キーを削除"
 msgid "Delete list"
 msgstr "リストを削除"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Delete monitor"
 msgstr "モニターを削除"
 
@@ -3991,6 +4117,10 @@ msgstr "エントリを削除"
 #: src/features/settings/labels/LabelsPage.tsx
 msgid "Delete the label {name}?"
 msgstr "ラベル {name} を削除しますか?"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Delete the monitor"
+msgstr "モニターを削除"
 
 #: src/features/migrations/DoneStep.tsx
 msgid "Delete the OAuth client you created for Yuva"
@@ -4044,11 +4174,15 @@ msgstr "アカウントを削除"
 msgid "Delete your account?"
 msgstr "アカウントを削除しますか?"
 
+#: src/features/contact/MergeContactDialog.tsx
+msgid "deleted afterwards"
+msgstr "後で削除されます"
+
 #: src/features/docs/discussions/parts.tsx
 msgid "Deleted by its author."
 msgstr "作成者が削除しました。"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Deleted component"
 msgstr "削除されたコンポーネント"
 
@@ -4136,9 +4270,11 @@ msgstr "デスクトップ通知は許可されています。"
 msgid "Desktop notifications are blocked for this site in the browser's settings, so only the sound plays."
 msgstr "このサイトのデスクトップ通知はブラウザーの設定でブロックされているため、音だけが鳴ります。"
 
+#: src/features/broadcasts/SubscriberSheet.tsx
 #: src/features/contact/ContactCard.tsx
-#: src/features/contact/ContactPage.tsx
+#: src/features/contact/ContactDetail.tsx
 #: src/features/contact/ContactSheet.tsx
+#: src/features/feedback/FeedbackPage.tsx
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/migrations/ImportBanner.tsx
 msgid "Details"
@@ -4152,6 +4288,10 @@ msgstr "Deutsch"
 msgid "Device"
 msgstr "デバイス"
 
+#: src/app/Sidebar.tsx
+msgid "Devices"
+msgstr "デバイス"
+
 #: src/features/contact/ContactVisits.tsx
 msgid "Direct"
 msgstr "直接"
@@ -4160,16 +4300,17 @@ msgstr "直接"
 msgid "Directory (tenant) ID, optional"
 msgstr "ディレクトリ(テナント)ID(任意)"
 
+#: src/features/conversation/composer/ReplyBox.tsx
 #: src/features/conversation/messages/Thread.tsx
 msgid "Discard"
 msgstr "破棄"
 
 #: src/components/common/ShortcutSheet.tsx
-#: src/features/conversation/composer/ReplyBox.tsx
 msgid "Discard the suggested reply"
 msgstr "提案された返信を破棄"
 
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/docs/DocsPage.tsx
 msgid "Discussion"
 msgstr "ディスカッション"
 
@@ -4182,9 +4323,10 @@ msgid "Discussion started"
 msgstr "ディスカッションが開始されました"
 
 #: src/app/Palette.tsx
-#: src/features/docs/discussions/ThreadPane.tsx
-#: src/features/docs/DocsColumn.tsx
-#: src/features/docs/DocsPages.tsx
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/docs/DiscussionsTab.tsx
+#: src/features/docs/DocsPage.tsx
+#: src/features/docs/PagesTab.tsx
 #: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/chat/ChatSections.tsx
 #: src/features/settings/webhooks/events.tsx
@@ -4215,6 +4357,10 @@ msgstr "自分が開始または返信したディスカッション"
 #: src/components/common/Linked.tsx
 msgid "Dismiss"
 msgstr "閉じる"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Display"
+msgstr "表示"
 
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Display name"
@@ -4277,12 +4423,16 @@ msgstr "後で行う"
 #: src/app/Palette.tsx
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/DocsPage.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "Docs"
 msgstr "ドキュメント"
 
-#: src/features/docs/DocsColumn.tsx
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/PagesTab.tsx
+msgid "Docs are the pages you keep on your own site and host yourself. Once Yuva’s two elements are on them, every page shows up here with its ratings, feedback and discussions."
+msgstr "ドキュメントは、自分のサイトで管理し、自分でホストするページです。Yuvaの2つの要素を置くと、各ページが評価、フィードバック、ディスカッションとともにここに表示されます。"
+
+#: src/features/docs/PagesTab.tsx
 msgid "Documentation pages"
 msgstr "ドキュメントページ"
 
@@ -4310,6 +4460,7 @@ msgstr "ドメイン未確認"
 #: src/features/broadcasts/Import.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/conversation/ConversationStatus.tsx
+#: src/features/feedback/FeedbackFormDialog.tsx
 #: src/features/migrations/Wizard.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
@@ -4317,7 +4468,8 @@ msgstr "ドメイン未確認"
 #: src/features/setup/NewsletterStep.tsx
 #: src/features/setup/SetupHub.tsx
 #: src/features/setup/SetupLayout.tsx
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
+#: src/features/status/LinkConversationsDialog.tsx
 #: src/features/status/MonitorToken.tsx
 msgid "Done"
 msgstr "完了"
@@ -4327,13 +4479,19 @@ msgctxt "feedback progress"
 msgid "Done"
 msgstr "完了"
 
-#: src/features/broadcasts/Overview.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "Double opt-in"
 msgstr "ダブルオプトイン"
 
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/MonitorsPage.tsx
 #: src/features/status/text.tsx
 msgid "Down"
 msgstr "ダウン"
+
+#: src/features/status/MonitorsPage.tsx
+msgid "Down since {since}"
+msgstr "{since} から停止中"
 
 #. placeholder {0}: a.filename
 #: src/features/conversation/messages/Attachments.tsx
@@ -4366,9 +4524,10 @@ msgid "Download the rows left out"
 msgstr "除外した行をダウンロード"
 
 #: src/components/common/text.ts
+#: src/features/status/IncidentDetail.tsx
 #: src/features/status/IncidentsPage.tsx
-#: src/features/status/IncidentsTab.tsx
 #: src/features/status/LinkIncidentDialog.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Draft"
 msgstr "ドラフト"
 
@@ -4381,12 +4540,13 @@ msgstr "下書き"
 msgid "Draft author"
 msgstr "ドラフトの作成者"
 
+#: src/features/conversation/composer/ReplyBox.tsx
 #: src/features/conversation/messages/Thread.tsx
 #: src/features/inbox/SidePanels.tsx
 msgid "Draft by {author}"
 msgstr "{author} のドラフト"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Draft deleted"
 msgstr "下書きを削除しました"
 
@@ -4402,7 +4562,6 @@ msgstr "ドラフトの本文"
 msgid "Draft:"
 msgstr "ドラフト:"
 
-#: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/Overview.tsx
 #: src/features/migrations/parts.tsx
 #: src/features/settings/webhooks/events.tsx
@@ -4453,8 +4612,8 @@ msgstr "メール"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 #: src/features/broadcasts/Import.tsx
 #: src/features/contact/ContactDetails.tsx
-#: src/features/settings/members/Invites.tsx
 #: src/features/status/AddSubscriberDialog.tsx
+#: src/features/team/TeamPage.tsx
 msgid "E-mail address"
 msgstr "メールアドレス"
 
@@ -4498,7 +4657,6 @@ msgstr "メール購読者はオフです"
 msgid "E-mail subscribers are off. Nobody can subscribe and no notices go out, but the list is kept."
 msgstr "メール購読者はオフです。購読はできず、通知も送信されませんが、リストは保持されます。"
 
-#: src/features/status/IncidentsTab.tsx
 #: src/features/status/StatusPages.tsx
 msgid "E-mail subscriptions are off"
 msgstr "メール購読はオフです"
@@ -4543,6 +4701,10 @@ msgstr "それぞれ、そのアドレスのメールチャネルがある受信
 msgid "Each message's original source is stored, as for mail that arrives live. Uses more storage."
 msgstr "リアルタイムで届くメールと同様に、各メッセージの元のソースを保存します。ストレージを多く使います。"
 
+#: src/features/status/MonitorsPage.tsx
+msgid "Each monitor sets the state of one component while it is down."
+msgstr "各モニターは、停止している間、1つのコンポーネントの状態を設定します。"
+
 #: src/features/setup/email/EmailAddressStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
 #: src/features/setup/email/EmailRepliesStep.tsx
@@ -4571,9 +4733,13 @@ msgstr "すべてのメッセージとメモを含む各会話"
 #: src/features/settings/canned/CannedRepliesPage.tsx
 #: src/features/settings/labels/LabelsPage.tsx
 #: src/features/status/ComponentsTab.tsx
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Edit"
 msgstr "編集"
+
+#: src/features/status/MonitorsPage.tsx
+msgid "Edit ({editKey})"
+msgstr "編集 ({editKey})"
 
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
 msgid "Edit API key"
@@ -4591,12 +4757,12 @@ msgstr "コンポーネントを編集"
 msgid "Edit design"
 msgstr "デザインを編集"
 
+#: src/features/status/IncidentDetail.tsx
 #: src/features/status/IncidentDialog.tsx
-#: src/features/status/IncidentPane.tsx
 msgid "Edit details"
 msgstr "詳細を編集"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Edit details ({editKey})"
 msgstr "詳細を編集（{editKey}）"
 
@@ -4625,11 +4791,15 @@ msgid "Edit the incident"
 msgstr "インシデントを編集"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Edit the monitor"
+msgstr "モニターを編集"
+
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Edit the title"
 msgstr "タイトルを編集"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Edit this update"
 msgstr "この更新を編集"
 
@@ -4638,7 +4808,7 @@ msgid "Edit, or preview on a desktop, a phone or in dark mode"
 msgstr "編集するか、デスクトップ・スマートフォン・ダークモードでプレビュー"
 
 #: src/features/docs/discussions/ThreadPane.tsx
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "edited"
 msgstr "編集済み"
 
@@ -4750,15 +4920,16 @@ msgstr "エラー"
 msgid "Error or answer"
 msgstr "エラーまたは回答"
 
+#: src/app/Sidebar.tsx
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/settings/webhooks/WebhookWizard.tsx
 msgid "Events"
 msgstr "イベント"
 
-#: src/features/status/MonitorsTab.tsx
-msgid "every {every}"
-msgstr "{every} ごと"
+#: src/features/contact/ContactDetails.tsx
+msgid "Every address of this contact is undeliverable. Clear one first, or write in another channel."
+msgstr "このコンタクトのアドレスはすべて配信不能です。先にどれか一つを解除するか、別のチャネルで連絡してください。"
 
 #: src/features/settings/webhooks/sections.tsx
 msgid "Every attempt has failed since {failingSince}. After 24 hours of failures Yuva turns the endpoint off."
@@ -4796,7 +4967,7 @@ msgstr "すべての言語。言語を追加すると、その言語を使う連
 msgid "Every open conversation has someone."
 msgstr "未完了の会話にはすべて担当者がいます。"
 
-#: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/docs/DiscussionsTab.tsx
 msgid "Every open discussion has an answer."
 msgstr "未完了のディスカッションにはすべて回答があります。"
 
@@ -4884,8 +5055,13 @@ msgid "Expand the sidebar"
 msgstr "サイドバーを広げる"
 
 #: src/features/status/MonitorDialog.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Expected every"
 msgstr "想定間隔"
+
+#: src/features/status/MonitorsPage.tsx
+msgid "Expected status"
+msgstr "期待するステータス"
 
 #: src/features/status/MonitorHttpFields.tsx
 msgid "Expected status from"
@@ -4894,10 +5070,6 @@ msgstr "期待するステータス(下限)"
 #: src/features/status/MonitorHttpFields.tsx
 msgid "Expected status to"
 msgstr "期待するステータス(上限)"
-
-#: src/features/status/MonitorsTab.tsx
-msgid "expects a ping every {every}"
-msgstr "{every} ごとに ping を待機"
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "expired {expires}"
@@ -4911,10 +5083,7 @@ msgstr "有効期限"
 msgid "Expires (optional)"
 msgstr "有効期限(任意)"
 
-#: src/features/settings/members/Invites.tsx
-msgid "expires {expires}"
-msgstr "{expires} に期限切れ"
-
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/reports/ReportPages.tsx
 msgid "Export"
@@ -4942,6 +5111,7 @@ msgstr "外部 ID"
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/setup/email/EmailDoneStep.tsx
 #: src/features/status/MonitorChecks.tsx
+#: src/features/status/ResponseChart.tsx
 msgid "Failed"
 msgstr "失敗"
 
@@ -4971,10 +5141,11 @@ msgid "Fails the monitor at once, without waiting for the grace."
 msgstr "猶予を待たずに、すぐにモニターをダウンさせます。"
 
 #: src/features/status/MonitorDialog.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Failures to go down"
 msgstr "ダウンまでの連続失敗回数"
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/DocsPage.tsx
 msgid "feedback"
 msgstr "フィードバック"
 
@@ -4983,20 +5154,12 @@ msgstr "フィードバック"
 #: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Source.tsx
 #: src/features/contact/ContactCard.tsx
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/PagesTab.tsx
 #: src/features/feedback/FeedbackList.tsx
 #: src/features/feedback/FeedbackPage.tsx
 #: src/features/settings/webhooks/events.tsx
 msgid "Feedback"
 msgstr "フィードバック"
-
-#: src/features/docs/DocsPages.tsx
-msgid "Feedback and discussions from your documentation"
-msgstr "ドキュメントからのフィードバックとディスカッション"
-
-#: src/features/docs/DocsPages.tsx
-msgid "Feedback and discussions per day"
-msgstr "1 日あたりのフィードバックとディスカッション"
 
 #: src/components/common/text.ts
 msgid "Feedback arrived"
@@ -5006,6 +5169,7 @@ msgstr "フィードバックが届きました"
 msgid "Feedback details"
 msgstr "フィードバックの詳細"
 
+#: src/features/feedback/FeedbackFormDialog.tsx
 #: src/features/feedback/FeedbackPage.tsx
 msgid "Feedback form"
 msgstr "フィードバックフォーム"
@@ -5055,6 +5219,10 @@ msgstr "{who} の値で入力しました"
 #: src/features/inbox/SourceFilter.tsx
 msgid "Filter"
 msgstr "フィルター"
+
+#: src/features/contact/ContactsPage.tsx
+msgid "Filter by country"
+msgstr "国で絞り込む"
 
 #: src/features/inbox/ChatList.tsx
 msgid "Filter by label"
@@ -5126,7 +5294,7 @@ msgstr "最初のメッセージ"
 msgid "First name"
 msgstr "名"
 
-#: src/features/contact/ContactPage.tsx
+#: src/features/contact/ContactDetail.tsx
 #: src/features/reports/ReportPages.tsx
 msgid "first reply"
 msgstr "初回返信"
@@ -5144,10 +5312,6 @@ msgstr "{first} での初回返信"
 msgid "First rows of the file"
 msgstr "ファイルの最初の行"
 
-#: src/features/contact/ContactsPage.tsx
-msgid "First seen"
-msgstr "初回確認"
-
 #: src/features/status/IncidentDialog.tsx
 msgid "First update"
 msgstr "最初の更新"
@@ -5156,14 +5320,16 @@ msgstr "最初の更新"
 msgid "First, an e-mail address"
 msgstr "まず、メールアドレスを入力"
 
+#: src/features/broadcasts/ReviewPanel.tsx
 #: src/features/settings/ProductsPage.tsx
 msgid "Fix"
 msgstr "修正"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Fix is out"
 msgstr "修正を公開"
 
+#: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Fix it"
 msgstr "修正"
@@ -5255,6 +5421,7 @@ msgstr "サインイン済みのユーザーには、バックエンドが受信
 msgid "For signed-in users: the identity secret, shown only now"
 msgstr "サインイン済みユーザー向け: アイデンティティシークレット(今回のみ表示)"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
 msgid "Form"
 msgstr "フォーム"
@@ -5266,6 +5433,10 @@ msgstr "形式"
 #: src/features/broadcasts/FormSnippets.tsx
 msgid "Forms run on a website chat channel of this inbox, which lists the sites they may be used on. This inbox has none yet."
 msgstr "フォームは、この受信トレイのウェブサイトチャットチャネルで動作し、使用できるサイトが一覧表示されます。この受信トレイにはまだありません。"
+
+#: src/features/conversation/messages/MessageActions.tsx
+msgid "Forward"
+msgstr "転送"
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "Forward all incoming mail to the address below and keep a copy in the mailbox."
@@ -5301,6 +5472,10 @@ msgstr "転送"
 msgid "Forwarding address"
 msgstr "転送先アドレス"
 
+#: src/features/status/DomainCard.tsx
+msgid "Found"
+msgstr "検出済み"
+
 #: src/features/migrations/SourceStep.tsx
 msgid "Found from the domain's IMAP record."
 msgstr "ドメインの IMAP レコードから検出しました。"
@@ -5333,7 +5508,9 @@ msgstr "差出人(任意)"
 msgid "from {from}"
 msgstr "送信元: {from}"
 
-#: src/features/broadcasts/Overview.tsx
+#: src/features/broadcasts/ListPage.tsx
+#: src/features/broadcasts/ListsHome.tsx
+#: src/features/broadcasts/ReviewPanel.tsx
 msgid "From {from}"
 msgstr "送信元: {from}"
 
@@ -5341,7 +5518,9 @@ msgstr "送信元: {from}"
 msgid "From a blocked contact"
 msgstr "ブロックした連絡先から"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/docs/DocsPage.tsx
 msgid "From a conversation"
 msgstr "会話から"
 
@@ -5360,10 +5539,6 @@ msgstr "差出人アドレス(任意)"
 #: src/features/migrations/parts.tsx
 msgid "From blocked contacts"
 msgstr "ブロックした連絡先から"
-
-#: src/features/broadcasts/Overview.tsx
-msgid "From no sender yet"
-msgstr "送信者はまだありません"
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "From the terminal"
@@ -5395,9 +5570,14 @@ msgstr "完全ガイド(画面とプッシュ通知を含む)"
 msgid "Full name"
 msgstr "氏名"
 
+#: src/features/docs/InstallDialog.tsx
 #: src/features/setup/InstallStep.tsx
 msgid "Fumadocs / React"
 msgstr "Fumadocs / React"
+
+#: src/app/Sidebar.tsx
+msgid "Funnels"
+msgstr "ファネル"
 
 #: src/features/migrations/parts.tsx
 msgid "Further copies of the same message"
@@ -5447,6 +5627,10 @@ msgstr "登録フォームを取得"
 msgid "Give the channel a new forwarding address?"
 msgstr "チャネルに新しい転送先アドレスを発行しますか?"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Give the page a name."
+msgstr "ページに名前を付けてください。"
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "Gmail forwards only new mail that is not spam. If a Workspace admin turned forwarding off, use the admin's routing."
 msgstr "Gmail が転送するのは、スパムではない新着メールのみです。Workspace 管理者が転送をオフにしている場合は、管理者のルーティングを使ってください。"
@@ -5458,6 +5642,10 @@ msgstr "Gmail では、IMAP 経由で他のアプリが 1 日に読み取れる�
 #: src/features/settings/workspace/WorkspacePage.tsx
 msgid "Gmail, Outlook, Yandex, any IMAP"
 msgstr "Gmail、Outlook、Yandex、任意の IMAP"
+
+#: src/features/status/IncidentDetail.tsx
+msgid "go back to operational when you post this"
+msgstr "投稿すると正常稼働に戻ります"
 
 #: src/app/Palette.tsx
 msgid "Go to"
@@ -5508,6 +5696,7 @@ msgid "Google Takeout"
 msgstr "Google Takeout"
 
 #: src/features/status/MonitorDialog.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Grace"
 msgstr "猶予"
 
@@ -5528,6 +5717,7 @@ msgstr "新しい会話に、間隔内で連絡先ごとに 1 回、メールで
 msgid "Group"
 msgstr "グループ"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/Growth.tsx
 #: src/features/broadcasts/ListPage.tsx
 msgid "Growth"
@@ -5556,6 +5746,10 @@ msgstr "ヘッダー"
 #: src/features/status/text.tsx
 msgid "Heartbeat"
 msgstr "ハートビート"
+
+#: src/features/status/MonitorsPage.tsx
+msgid "Heartbeat address"
+msgstr "ハートビートのアドレス"
 
 #: src/features/status/ComponentsTab.tsx
 msgid "Held by an incident, {since}"
@@ -5594,6 +5788,7 @@ msgstr "ヘルプ記事"
 
 #: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "Help center"
 msgstr "ヘルプセンター"
 
@@ -5609,17 +5804,18 @@ msgstr "ヘルプレポート"
 msgid "Help Scout has no read-only permission, so the app could change data; Yuva's connection refuses every request that is not a read."
 msgstr "Help Scout には読み取り専用の権限がないため、アプリはデータを変更できてしまいます。Yuva の接続は、読み取り以外のリクエストをすべて拒否します。"
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "helpful"
 msgstr "役に立った"
 
 #: src/features/conversation/Feedback.tsx
-#: src/features/docs/DocsPages.tsx
 #: src/features/docs/PageContext.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "Helpful"
 msgstr "役に立った"
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/DocsPage.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "helpful share"
 msgstr "役に立った割合"
 
@@ -5658,6 +5854,10 @@ msgstr "非表示"
 msgid "Hide from the page"
 msgstr "ページから非表示にする"
 
+#: src/features/status/MonitorDialog.tsx
+msgid "Hide HTTP details"
+msgstr "HTTPの詳細を隠す"
+
 #: src/features/conversation/messages/EmailBody.tsx
 msgid "Hide quoted text"
 msgstr "引用部分を隠す"
@@ -5676,7 +5876,7 @@ msgstr "選択した投稿を非表示にする"
 msgid "High"
 msgstr "高"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/Toolbar.tsx
 msgid "Highest share of “helpful” first, among pages with at least 5 ratings"
 msgstr "評価が 5 件以上のページのうち、「役に立った」の割合が高い順"
 
@@ -5707,8 +5907,13 @@ msgid "Home"
 msgstr "ホーム"
 
 #: src/features/status/MonitorDialog.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Host"
 msgstr "ホスト"
+
+#: src/features/docs/PagesTab.tsx
+msgid "Hosted by Yuva on its own address. Searched from the chat widget and the reply box. For support answers."
+msgstr "Yuvaが専用のアドレスでホストします。チャットウィジェットや返信ボックスから検索できます。サポートの回答向けです。"
 
 #: src/features/status/DomainCard.tsx
 msgid "Hostname"
@@ -5774,8 +5979,10 @@ msgstr "同意の経緯、または独自の記録(任意)"
 msgid "How they left:"
 msgstr "退会の経緯:"
 
-#: src/features/docs/DocsColumn.tsx
-msgid "How to add them"
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/docs/DocsPage.tsx
+#: src/features/docs/PagesTab.tsx
+msgid "How to add"
 msgstr "追加方法"
 
 #: src/features/migrations/SwitchStep.tsx
@@ -5797,10 +6004,6 @@ msgstr "HTTP チェック"
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "I confirm that this person agreed to get e-mails from this list as described above, and that we can show how and when if asked."
 msgstr "この人が上記のとおりこのリストのメールを受け取ることに同意したこと、および求められればその経緯と日時を示せることを確認します。"
-
-#: src/features/broadcasts/AddSubscriberDialog.tsx
-msgid "I confirm that this person asked to join this list."
-msgstr "この人がこのリストへの参加を希望したことを確認します。"
 
 #: src/components/common/SecretDialog.tsx
 msgid "I saved it"
@@ -5900,20 +6103,25 @@ msgstr "IMAP サーバー"
 msgid "Impact"
 msgstr "影響"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
 #: src/features/broadcasts/ListPage.tsx
-#: src/features/broadcasts/Overview.tsx
 msgid "Import"
 msgstr "インポート"
 
-#: src/features/broadcasts/Import.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "Import a CSV file"
 msgstr "CSV ファイルをインポート"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Import another file"
 msgstr "別のファイルをインポート"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/broadcasts/ListsHome.tsx
+msgid "Import CSV"
+msgstr "CSVをインポート"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Import finished"
@@ -5959,10 +6167,6 @@ msgstr "{address} から履歴をインポート中 · {percent}% · 新着メ�
 #: src/features/broadcasts/Import.tsx
 msgid "Importing…"
 msgstr "インポート中…"
-
-#: src/features/broadcasts/Import.tsx
-msgid "Imports"
-msgstr "インポート"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Imports run one at a time in the workspace. Try again when the other one ends."
@@ -6071,9 +6275,11 @@ msgstr "Zoho Mail で、設定 › メールアカウント › IMAP アクセ�
 
 #: src/app/Palette.tsx
 #: src/app/Sidebar.tsx
+#: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/broadcasts/NewBroadcastDialog.tsx
 #: src/features/contact/ContactDetails.tsx
+#: src/features/docs/InstallDialog.tsx
 #: src/features/inbox/ChatsPage.tsx
 #: src/features/migrations/MapStep.tsx
 #: src/features/migrations/text.ts
@@ -6099,18 +6305,28 @@ msgstr "受信トレイ"
 msgid "Inboxes cut off subjects longer than 80 characters."
 msgstr "受信トレイでは、80 文字を超える件名は切り捨てられます。"
 
+#: src/features/home/HomePage.tsx
 #: src/features/status/text.tsx
 msgid "Incident"
 msgstr "インシデント"
 
+#: src/features/status/MonitorsPage.tsx
+msgid "Incident opened"
+msgstr "インシデントを作成しました"
+
+#: src/features/status/MonitorsPage.tsx
+msgid "Incident: {title} · {state}"
+msgstr "インシデント: {title} · {state}"
+
 #: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
-#: src/features/status/IncidentPane.tsx
 #: src/features/status/IncidentsPage.tsx
-#: src/features/status/IncidentsTab.tsx
-#: src/features/status/StatusPagePane.tsx
 msgid "Incidents"
 msgstr "インシデント"
+
+#: src/features/status/IncidentsPage.tsx
+msgid "Incidents live on a status page. Create one first."
+msgstr "インシデントはステータスページ上で管理されます。まずページを作成してください。"
 
 #: src/features/settings/webhooks/events.tsx
 msgid "Include notes"
@@ -6156,12 +6372,15 @@ msgstr "インストール"
 msgid "Investigating"
 msgstr "調査中"
 
-#: src/features/settings/members/Invites.tsx
-#: src/features/team/TeamColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Invite"
 msgstr "招待"
 
-#: src/features/settings/members/Invites.tsx
+#: src/features/team/TeamPage.tsx
+msgid "Invite a teammate"
+msgstr "チームメイトを招待"
+
+#: src/features/team/TeamPage.tsx
 msgid "Invite language"
 msgstr "招待の言語"
 
@@ -6169,11 +6388,7 @@ msgstr "招待の言語"
 msgid "Invite your team"
 msgstr "チームを招待"
 
-#: src/features/team/TeamColumn.tsx
-msgid "Invited · waiting"
-msgstr "招待済み · 承認待ち"
-
-#: src/features/settings/members/Invites.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Invites"
 msgstr "招待"
 
@@ -6311,7 +6526,7 @@ msgstr "斜体"
 msgid "Its access ends at once. To use it again, connect it again."
 msgstr "アクセスはすぐに終了します。再び使うには、もう一度接続してください。"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Its checks are deleted. An incident it opened is resolved."
 msgstr "チェックは削除されます。このモニターが開いたインシデントは解決されます。"
 
@@ -6332,6 +6547,7 @@ msgid "Its history is deleted. Incidents that named it no longer do."
 msgstr "履歴は削除されます。これを挙げていたインシデントは挙げなくなります。"
 
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/broadcasts/Composer.tsx
 msgid "Its report and the list of recipients are deleted. Conversations opened by replies stay."
 msgstr "レポートと宛先リストが削除されます。返信で始まった会話は残ります。"
 
@@ -6363,6 +6579,10 @@ msgstr "名前のみ保持"
 msgid "Keep this page open. If the connection drops, the upload goes on when it is back; after a reload, pick the same file and only the missing parts are sent."
 msgstr "このページを開いたままにしてください。接続が切れても、復旧後にアップロードが続きます。再読み込みした場合は同じファイルを選ぶと、足りない部分だけが送信されます。"
 
+#: src/features/contact/MergeContactDialog.tsx
+msgid "kept"
+msgstr "残ります"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Kept with every subscription from this file, as the record of their consent."
 msgstr "このファイルからのすべての登録に、同意の記録として保存されます。"
@@ -6370,6 +6590,10 @@ msgstr "このファイルからのすべての登録に、同意の記録とし
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Key"
 msgstr "キー"
+
+#: src/features/home/HomePage.tsx
+msgid "Key figures"
+msgstr "主な数値"
 
 #: src/app/Palette.tsx
 #: src/app/TopBar.tsx
@@ -6436,9 +6660,10 @@ msgstr "ラベルのみ: メールは「すべてのメール」から取り込�
 msgid "Labels"
 msgstr "ラベル"
 
-#: src/features/conversation/HeaderActions.tsx
-msgid "Labels (L)"
-msgstr "ラベル(L)"
+#: src/features/conversation/ChatView.tsx
+#: src/features/inbox/ChatList.tsx
+msgid "Labels changed"
+msgstr "ラベルを変更しました"
 
 #: src/app/UserMenu.tsx
 #: src/components/common/LanguageMenu.tsx
@@ -6446,12 +6671,15 @@ msgstr "ラベル(L)"
 #: src/features/contact/ContactCard.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
-#: src/features/settings/members/Invites.tsx
 #: src/features/settings/ProductsPage.tsx
 #: src/features/setup/NameStep.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Language"
 msgstr "言語"
+
+#: src/features/team/TeamPage.tsx
+msgid "Language of the invite"
+msgstr "招待の言語"
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Language to keep"
@@ -6516,6 +6744,10 @@ msgstr "直近のプッシュに失敗: {failed}"
 msgid "Last read {when}"
 msgstr "最終読み取り {when}"
 
+#: src/features/status/MonitorsPage.tsx
+msgid "Last result {last}"
+msgstr "最後の結果 {last}"
+
 #: src/features/contact/ContactsPage.tsx
 msgid "Last seen"
 msgstr "最終確認"
@@ -6524,7 +6756,7 @@ msgstr "最終確認"
 msgid "Last seen {seen}"
 msgstr "最終閲覧 {seen}"
 
-#: src/features/contact/ContactPage.tsx
+#: src/features/contact/ContactDetail.tsx
 msgid "last seen {seenText}"
 msgstr "最終閲覧 {seenText}"
 
@@ -6580,7 +6812,6 @@ msgstr "テキストを残して、ブロックを削除"
 msgid "Left off the public page and its overall state."
 msgstr "公開ページとその全体の状態から除外されます。"
 
-#: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/broadcasts/Import.tsx
 msgid "Left out"
 msgstr "除外"
@@ -6588,6 +6819,10 @@ msgstr "除外"
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Left out by a condition or language"
 msgstr "条件または言語により除外"
+
+#: src/features/broadcasts/AudienceBuilder.tsx
+msgid "Left out: {left} of {total} people on the lists"
+msgstr "除外: リスト上の{total}人中{left}人"
 
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "Legal name"
@@ -6606,9 +6841,23 @@ msgstr "ライト外観"
 msgid "Limit the pace"
 msgstr "ペースを制限"
 
+#: src/components/common/Linked.tsx
+#: src/features/status/LinkConversationsDialog.tsx
+msgid "Link"
+msgstr "リンク"
+
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/LinkConversationsDialog.tsx
+msgid "Link conversations"
+msgstr "会話をリンク"
+
 #: src/components/common/text.ts
 msgid "Link feedback to ideas, reply to linked customers and manage roadmap boards"
 msgstr "フィードバックをアイデアに紐付け、紐付いた顧客に返信し、ロードマップボードを管理する"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Link feedback to the idea"
+msgstr "フィードバックをアイデアにリンク"
 
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Link for your Microsoft 365 admin"
@@ -6641,8 +6890,13 @@ msgid "Link to a status incident"
 msgstr "ステータスのインシデントにリンク"
 
 #: src/features/conversation/ConversationMenu.tsx
+#: src/features/feedback/RoadmapCard.tsx
 msgid "Link to an idea"
 msgstr "アイデアにリンク"
+
+#: src/features/feedback/RoadmapCard.tsx
+msgid "Link to an idea (B)"
+msgstr "アイデアにリンク (B)"
 
 #: src/features/conversation/ConversationMenu.tsx
 #: src/features/inbox/ChatList.tsx
@@ -6673,6 +6927,10 @@ msgstr "選択した会話を {title} にリンクしました"
 #: src/features/status/LinkIncidentDialog.tsx
 msgid "Linked to {title}"
 msgstr "{title} にリンクしました"
+
+#: src/features/feedback/RoadmapCard.tsx
+msgid "linked with {others} other feedback"
+msgstr "ほか {others} 件のフィードバックとリンク済み"
 
 #: src/features/status/LinkIncidentDialog.tsx
 msgid "Linking…"
@@ -6711,7 +6969,9 @@ msgstr "オリジンは最大 20 件まで指定できます。"
 msgid "List deleted"
 msgstr "リストを削除しました"
 
+#: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/ListSettings.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "List restored"
 msgstr "リストを復元しました"
 
@@ -6728,11 +6988,12 @@ msgid "Listing the tickets…"
 msgstr "チケットを一覧取得中…"
 
 #: src/app/Sidebar.tsx
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/ListPage.tsx
-#: src/features/broadcasts/Overview.tsx
+#: src/features/broadcasts/ListsHome.tsx
 #: src/features/settings/webhooks/events.tsx
 msgid "Lists"
 msgstr "リスト"
@@ -6751,24 +7012,22 @@ msgid "Load images"
 msgstr "画像を読み込む"
 
 #: src/features/account/AccountPage.tsx
-#: src/features/broadcasts/BroadcastList.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/Import.tsx
+#: src/features/broadcasts/ListsHome.tsx
 #: src/features/broadcasts/Overview.tsx
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/Subscribers.tsx
+#: src/features/contact/ContactDetail.tsx
 #: src/features/contact/ContactNotes.tsx
-#: src/features/contact/ContactPage.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/contact/ContactSheet.tsx
 #: src/features/contact/ContactsPage.tsx
 #: src/features/docs/discussions/parts.tsx
-#: src/features/docs/DocsColumn.tsx
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/PagesTab.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
-#: src/features/status/IncidentsTab.tsx
+#: src/features/status/LinkConversationsDialog.tsx
 #: src/features/status/MonitorChecks.tsx
-#: src/features/team/MemberPage.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Load more"
 msgstr "さらに読み込む"
 
@@ -6783,6 +7042,10 @@ msgstr "読み込み中…"
 #: src/features/conversation/Feedback.tsx
 msgid "Locale"
 msgstr "ロケール"
+
+#: src/app/Sidebar.tsx
+msgid "Locations"
+msgstr "場所"
 
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Lock"
@@ -6828,7 +7091,7 @@ msgstr "さらに連絡先を探す"
 msgid "Looking at {where}"
 msgstr "{where} を表示中"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Looking into it"
 msgstr "調査中"
 
@@ -6933,12 +7196,12 @@ msgid "Maildir in a zip"
 msgstr "zip 内の Maildir"
 
 #: src/app/Palette.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
-#: src/features/broadcasts/Overview.tsx
-#: src/features/contact/ContactPage.tsx
+#: src/features/broadcasts/ListsHome.tsx
+#: src/features/contact/ContactDetail.tsx
 msgid "Mailing lists"
 msgstr "メーリングリスト"
 
+#: src/features/home/HomePage.tsx
 #: src/features/status/text.tsx
 msgid "Maintenance"
 msgstr "メンテナンス"
@@ -6951,7 +7214,7 @@ msgstr "大"
 msgid "Major outage"
 msgstr "大規模な障害"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Make a new address for {name}?"
 msgstr "{name} の新しいアドレスを作成しますか？"
 
@@ -6959,7 +7222,7 @@ msgstr "{name} の新しいアドレスを作成しますか？"
 msgid "Make it public"
 msgstr "公開する"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Make new address"
 msgstr "新しいアドレスを作成"
 
@@ -6996,6 +7259,10 @@ msgstr "メーリングリストと登録者を管理"
 #: src/components/common/text.ts
 msgid "Manage status pages, set component states and run incidents"
 msgstr "ステータスページの管理、コンポーネントの状態設定、インシデントの対応"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Manage the changelogs"
+msgstr "変更履歴を管理"
 
 #: src/components/common/text.ts
 msgid "Manage webhooks"
@@ -7055,6 +7322,7 @@ msgstr "この投稿をスパムにしますか?"
 msgid "Markdown works."
 msgstr "Markdown が使えます。"
 
+#: src/features/conversation/ChatView.tsx
 #: src/features/docs/discussions/parts.tsx
 msgid "Marked as spam"
 msgstr "スパムにしました"
@@ -7105,7 +7373,7 @@ msgstr "中央値"
 msgid "Median"
 msgstr "中央値"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "median {median}"
 msgstr "中央値 {median}"
 
@@ -7124,9 +7392,9 @@ msgstr "メンバー"
 
 #: src/app/Palette.tsx
 #: src/features/inbox/SidePanels.tsx
-#: src/features/settings/members/MembersPage.tsx
 #: src/features/settings/ProductsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Members"
 msgstr "メンバー"
 
@@ -7160,8 +7428,6 @@ msgstr "メンション: {names}"
 msgid "Menu"
 msgstr "メニュー"
 
-#: src/features/contact/ContactPage.tsx
-#: src/features/contact/ContactsPage.tsx
 #: src/features/contact/MergeContactDialog.tsx
 msgid "Merge"
 msgstr "統合"
@@ -7184,6 +7450,7 @@ msgid "Merge with another contact"
 msgstr "別の連絡先と統合"
 
 #: src/features/contact/ContactCard.tsx
+#: src/features/contact/ContactDetail.tsx
 #: src/features/contact/ContactsPage.tsx
 msgid "Merge…"
 msgstr "統合…"
@@ -7297,11 +7564,7 @@ msgstr "承認制"
 msgid "Monday"
 msgstr "月曜日"
 
-#: src/features/status/MonitorsTab.tsx
-msgid "Monitor"
-msgstr "モニター"
-
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Monitor deleted"
 msgstr "モニターを削除しました"
 
@@ -7311,14 +7574,16 @@ msgstr "監視中"
 
 #: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
-#: src/features/status/IncidentsTab.tsx
-#: src/features/status/MonitorsTab.tsx
-#: src/features/status/StatusPagePane.tsx
+#: src/features/status/MonitorsPage.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Monitors"
 msgstr "モニター"
 
-#: src/features/contact/ContactsPage.tsx
+#: src/features/status/MonitorsPage.tsx
+msgid "Monitors set the state of a status page component. Create a status page first."
+msgstr "モニターはステータスページのコンポーネントの状態を設定します。先にステータスページを作成してください。"
+
+#: src/features/contact/ContactDetail.tsx
 msgid "More"
 msgstr "その他"
 
@@ -7331,15 +7596,12 @@ msgid "More actions for {address}"
 msgstr "{address} のその他の操作"
 
 #. placeholder {0}: c.name
-#. placeholder {0}: i.title
-#. placeholder {0}: p.name
+#. placeholder {0}: s.group.name
 #: src/features/status/ComponentsTab.tsx
-#: src/features/status/IncidentPane.tsx
-#: src/features/status/StatusPages.tsx
 msgid "More for {0}"
 msgstr "{0} のその他の操作"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "More for {name}"
 msgstr "{name} のその他の操作"
 
@@ -7351,15 +7613,15 @@ msgstr "その他のオプション"
 msgid "More than {count} conversations"
 msgstr "{count} 件を超える会話"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/Toolbar.tsx
 msgid "Most “helpful” ratings first"
 msgstr "「役に立った」が多い順"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/Toolbar.tsx
 msgid "Most “not helpful” ratings first"
 msgstr "「役に立たなかった」が多い順"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/Toolbar.tsx
 msgid "Most active"
 msgstr "最もアクティブ"
 
@@ -7367,23 +7629,23 @@ msgstr "最もアクティブ"
 msgid "Most asked for"
 msgstr "要望の多い順"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/Toolbar.tsx
 msgid "Most disliked"
 msgstr "低評価が多い順"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/Toolbar.tsx
 msgid "Most helpful"
 msgstr "最も役に立った"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/Toolbar.tsx
 msgid "Most liked"
 msgstr "高評価が多い順"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/Toolbar.tsx
 msgid "Most ratings, open feedback, open discussions and waiting posts first"
 msgstr "評価が多い順、次に未対応のフィードバック、未完了のディスカッション、承認待ちの投稿の順"
 
-#: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/docs/DocsPage.tsx
 msgid "Most votes"
 msgstr "投票が多い順"
 
@@ -7424,8 +7686,20 @@ msgid "Move through the ideas"
 msgstr "アイデア間を移動"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the incidents"
+msgstr "インシデント間を移動"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the list"
 msgstr "リストを移動"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move through the lists"
+msgstr "リストを移動"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move through the monitors"
+msgstr "モニター間を移動"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Move through the posts"
@@ -7461,9 +7735,17 @@ msgstr "上へ移動"
 msgid "Moved from {from}"
 msgstr "{from} から移動"
 
+#: src/features/conversation/ChatView.tsx
+msgid "Moved to {to}"
+msgstr "{to} に移動しました"
+
 #: src/features/migrations/MigrationsPage.tsx
 msgid "Moving from Gmail, Google Workspace, Yandex, iCloud, Zoho, Yahoo, Fastmail, GMX or any IMAP server? Yuva copies the mailbox's history into an inbox, quietly and newest first, while your team keeps working. Then you forward the mailbox here and nothing is lost in between."
 msgstr "Gmail、Google Workspace、Yandex、iCloud、Zoho、Yahoo、Fastmail、GMX、または任意の IMAP サーバーから移行しますか?Yuva は、チームが作業を続けている間に、メールボックスの履歴を新しい順に静かに受信トレイへコピーします。その後メールボックスをここに転送すれば、途中で何も失われません。"
+
+#: src/features/feedback/FeedbackPage.tsx
+msgid "Moving the idea to Planned, In progress or Shipped sets this for linked feedback that has no progress yet."
+msgstr "アイデアを「計画中」「進行中」「リリース済み」に移すと、進捗のないリンク済みフィードバックにも反映されます。"
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "MX change"
@@ -7542,7 +7824,7 @@ msgstr "name@example.com"
 msgid "Needed for broadcasts"
 msgstr "一斉配信に必要"
 
-#: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/features/broadcasts/ListParts.tsx
 msgid "Needs a sender"
 msgstr "送信元が必要"
 
@@ -7593,10 +7875,6 @@ msgstr "新規"
 msgid "New"
 msgstr "新規"
 
-#: src/features/status/MonitorsTab.tsx
-msgid "New address"
-msgstr "新しいアドレス"
-
 #: src/features/status/MonitorToken.tsx
 msgid "New address for {name}"
 msgstr "{name} の新しいアドレス"
@@ -7614,16 +7892,10 @@ msgid "New article"
 msgstr "新しい記事"
 
 #: src/components/common/ShortcutSheet.tsx
-#: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/NewBroadcastDialog.tsx
 #: src/features/broadcasts/Overview.tsx
 msgid "New broadcast"
 msgstr "新しい一斉配信"
-
-#: src/features/broadcasts/BroadcastList.tsx
-#: src/features/broadcasts/Overview.tsx
-msgid "New broadcast ({newKey})"
-msgstr "新しい一斉配信({newKey})"
 
 #: src/features/settings/canned/CannedRepliesPage.tsx
 #: src/features/settings/canned/CannedReplyDialog.tsx
@@ -7644,8 +7916,8 @@ msgid "New contacts created"
 msgstr "新しい連絡先を作成"
 
 #: src/features/contact/ContactCard.tsx
+#: src/features/contact/ContactDetail.tsx
 #: src/features/contact/ContactDetails.tsx
-#: src/features/contact/ContactPage.tsx
 #: src/features/contact/ContactSheet.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/inbox/ChatsPage.tsx
@@ -7693,7 +7965,7 @@ msgstr "新しいデザイン"
 msgid "New discussion"
 msgstr "新しいディスカッション"
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/DocsPage.tsx
 msgid "new discussions"
 msgstr "新しいディスカッション"
 
@@ -7704,6 +7976,10 @@ msgstr "新しいエントリ"
 #: src/features/docs/discussions/QueuePane.tsx
 msgid "New idea"
 msgstr "新しいアイデア"
+
+#: src/features/feedback/RoadmapCard.tsx
+msgid "New idea from this"
+msgstr "これから新しいアイデアを作成"
 
 #: src/features/settings/inboxes/InboxSecurity.tsx
 msgid "New identity secret"
@@ -7717,20 +7993,14 @@ msgstr "過去 {days} 日間の新規"
 msgid "New inbox…"
 msgstr "新しい受信トレイ…"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/status/IncidentsPage.tsx
-#: src/features/status/IncidentsTab.tsx
-#: src/features/status/StatusPages.tsx
 msgid "New incident"
 msgstr "新規インシデント"
 
 #: src/features/status/IncidentsPage.tsx
-#: src/features/status/IncidentsTab.tsx
 msgid "New incident ({incidentKey})"
 msgstr "新規インシデント（{incidentKey}）"
-
-#: src/components/common/ShortcutSheet.tsx
-msgid "New incident or status page"
-msgstr "新規インシデントまたはステータスページ"
 
 #: src/features/settings/labels/LabelDialog.tsx
 #: src/features/settings/labels/LabelsPage.tsx
@@ -7741,8 +8011,8 @@ msgstr "新しいラベル"
 msgid "New label “{folder}”"
 msgstr "新しいラベル「{folder}」"
 
-#: src/features/broadcasts/BroadcastsColumn.tsx
-#: src/features/broadcasts/Overview.tsx
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "New list"
 msgstr "新しいリスト"
 
@@ -7763,7 +8033,7 @@ msgstr "未割り当ての会話の新しいメッセージ"
 msgid "New migration"
 msgstr "新しい移行"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "New monitor"
 msgstr "新しいモニター"
 
@@ -7783,11 +8053,15 @@ msgstr "<0>{title}</0> に新しい返信"
 msgid "New signing secret"
 msgstr "新しい署名シークレット"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "New status page"
+msgstr "新しいステータスページ"
+
 #: src/features/broadcasts/Import.tsx
 msgid "New subscribers added"
 msgstr "追加された新しい登録者"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "New update · {stage}"
 msgstr "新しい更新 · {stage}"
 
@@ -7811,7 +8085,7 @@ msgstr "新しい一致(⇧Enter)"
 msgid "Newer ones stay open when the customer wrote last, pending when your team did."
 msgstr "新しいものは、お客様が最後に書き込んだ場合は未完了、チームが書き込んだ場合は保留になります。"
 
-#: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/docs/DocsPage.tsx
 msgid "Newest"
 msgstr "新しい順"
 
@@ -7855,6 +8129,10 @@ msgstr "次回の確認: {next}。"
 msgid "Next mail on {local} ({utc} UTC), at this broadcast’s pace."
 msgstr "次のメールは {local}({utc} UTC)に、この一斉配信のペースで送信されます。"
 
+#: src/features/feedback/Lightbox.tsx
+msgid "Next screenshot"
+msgstr "次のスクリーンショット"
+
 #: src/features/migrations/UploadStep.tsx
 msgid "Next, choose what to bring. The scan reads the file once."
 msgstr "次に、取り込む内容を選びます。スキャンではファイルを 1 回読み込みます。"
@@ -7870,6 +8148,10 @@ msgstr "夜間バックアップ"
 #: src/features/setup/previews.tsx
 msgid "No"
 msgstr "いいえ"
+
+#: src/features/contact/ContactDetails.tsx
+msgid "No {inboxName} id on file. They can only be reached by e-mail until they sign in."
+msgstr "{inboxName} の ID が登録されていません。サインインするまではメールでしか連絡できません。"
 
 #: src/features/migrations/text.ts
 msgid "No {provider} account has that subdomain. Check it in your address: acme in acme.zendesk.com."
@@ -7895,8 +8177,7 @@ msgstr "このプランでは API を利用できません"
 msgid "No App passwords page? Your admin must allow 2-Step Verification and IMAP in the Google Admin console."
 msgstr "アプリパスワードのページがありませんか?管理者が Google 管理コンソールで 2 段階認証プロセスと IMAP を許可する必要があります。"
 
-#: src/features/broadcasts/BroadcastsColumn.tsx
-#: src/features/broadcasts/Overview.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "No archived lists"
 msgstr "アーカイブ済みのリストはありません"
 
@@ -7912,7 +8193,18 @@ msgstr "まだ試行がありません。"
 msgid "No attempts yet."
 msgstr "まだ試行がありません。"
 
-#: src/features/broadcasts/BroadcastList.tsx
+#: src/features/broadcasts/Overview.tsx
+msgid "No broadcast is scheduled."
+msgstr "予定されている配信はありません。"
+
+#: src/features/broadcasts/Overview.tsx
+msgid "No broadcasts for {scope} yet."
+msgstr "{scope}の配信はまだありません。"
+
+#: src/features/broadcasts/Overview.tsx
+msgid "No broadcasts have gone out yet."
+msgstr "まだ配信は送信されていません。"
+
 #: src/features/broadcasts/Overview.tsx
 msgid "No broadcasts yet"
 msgstr "一斉配信はまだありません"
@@ -7952,13 +8244,25 @@ msgstr "チャネルはまだありません。お客様が {0} に書き込め�
 msgid "No chat channel of this inbox allows the page's site with discussions on. Turn discussions on in the inbox settings."
 msgstr "この受信トレイのチャットチャネルに、ディスカッションをオンにしてこのページのサイトを許可しているものはありません。受信トレイの設定でディスカッションをオンにしてください。"
 
+#: src/features/status/IncidentDetail.tsx
+msgid "No component is named."
+msgstr "コンポーネントは指定されていません。"
+
 #: src/features/status/ComponentsTab.tsx
 msgid "No components in this group."
 msgstr "このグループにコンポーネントはありません。"
 
-#: src/features/status/StatusPages.tsx
+#: src/features/home/HomePage.tsx
 msgid "No components yet."
 msgstr "コンポーネントはまだありません。"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "No components yet. Add one to a status page first."
+msgstr "コンポーネントがまだありません。先にステータスページへ追加してください。"
+
+#: src/features/status/StatusPages.tsx
+msgid "No components yet. Add the parts of your product that customers depend on, in the Components tab."
+msgstr "コンポーネントがまだありません。顧客が頼りにする製品の部分を「コンポーネント」タブで追加してください。"
 
 #: src/features/status/ComponentsTab.tsx
 msgid "No components yet. Add the parts of your product that customers depend on."
@@ -7995,13 +8299,21 @@ msgstr "連絡先はまだありません。誰かが書き込むと表示され
 msgid "No conversation is linked yet. Open one and use Link to an incident, or select several in the list."
 msgstr "リンクされた会話はまだありません。会話を開いて「インシデントにリンク」を使うか、リストで複数選択してください。"
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/status/LinkConversationsDialog.tsx
+msgid "No conversation matches."
+msgstr "一致する会話はありません。"
+
+#: src/features/docs/PagesTab.tsx
 msgid "No conversations from this page."
 msgstr "このページからの会話はありません。"
 
 #: src/features/contact/ContactDetails.tsx
 msgid "No conversations here."
 msgstr "ここに会話はありません。"
+
+#: src/features/docs/FromDocs.tsx
+msgid "No conversations to choose from."
+msgstr "選べる会話がありません。"
 
 #: src/features/contact/ContactCard.tsx
 #: src/features/inbox/ChatList.tsx
@@ -8012,7 +8324,7 @@ msgstr "会話はまだありません。"
 msgid "No design yet"
 msgstr "デザインはまだありません"
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "No discussions on this page yet."
 msgstr "このページのディスカッションはまだありません。"
 
@@ -8020,7 +8332,7 @@ msgstr "このページのディスカッションはまだありません。"
 msgid "No discussions under the pages of these sites."
 msgstr "これらのサイトのページにディスカッションはありません。"
 
-#: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/docs/DiscussionsTab.tsx
 msgid "No discussions yet. Readers start them under your documentation pages."
 msgstr "ディスカッションはまだありません。閲覧者がドキュメントページの下で開始します。"
 
@@ -8032,6 +8344,10 @@ msgstr "DKIM 署名が合格していないため、一斉配信は送信でき�
 msgid "No drafts are waiting. Replies an assistant, a bot or a teammate drafts show up here until someone sends or discards them."
 msgstr "待機中のドラフトはありません。アシスタント、ボット、チームメンバーが作成した返信は、送信または破棄されるまでここに表示されます。"
 
+#: src/features/broadcasts/Overview.tsx
+msgid "No drafts."
+msgstr "下書きはありません。"
+
 #: src/features/contact/ContactsPage.tsx
 msgid "no e-mail"
 msgstr "メールなし"
@@ -8040,7 +8356,7 @@ msgstr "メールなし"
 msgid "No e-mail address given"
 msgstr "メールアドレスが指定されていません"
 
-#: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/features/broadcasts/ListParts.tsx
 msgid "No e-mail channel that can send its confirmation and welcome mails"
 msgstr "確認メールとウェルカムメールを送信できるメールチャネルがありません"
 
@@ -8060,7 +8376,7 @@ msgstr "エンドポイントはまだありません。"
 msgid "No events recorded."
 msgstr "記録されたイベントはありません。"
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "No feedback from this page."
 msgstr "このページからのフィードバックはありません。"
 
@@ -8069,13 +8385,17 @@ msgstr "このページからのフィードバックはありません。"
 msgid "No group"
 msgstr "グループなし"
 
-#: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/docs/DiscussionsTab.tsx
 msgid "No hidden discussions."
 msgstr "非表示のディスカッションはありません。"
 
 #: src/features/home/HomePage.tsx
 msgid "No ideas yet. Customers’ votes show up here."
 msgstr "アイデアはまだありません。お客様の投票がここに表示されます。"
+
+#: src/features/contact/ContactDetail.tsx
+msgid "No ids yet. This person has not been identified by an app or widget."
+msgstr "ID はまだありません。この人はアプリやウィジェットから識別されていません。"
 
 #: src/features/status/text.tsx
 msgid "No impact"
@@ -8084,10 +8404,6 @@ msgstr "影響なし"
 #: src/features/broadcasts/Import.tsx
 msgid "No imports yet."
 msgstr "インポートはまだありません。"
-
-#: src/features/status/StatusColumn.tsx
-msgid "No inbox to show a status page for."
-msgstr "ステータスページを表示できる受信トレイがありません。"
 
 #: src/features/status/LinkIncidentDialog.tsx
 msgid "No incident matches."
@@ -8106,7 +8422,7 @@ msgid "No labels yet"
 msgstr "ラベルはまだありません"
 
 #: src/features/conversation/ConversationMenu.tsx
-#: src/features/conversation/HeaderActions.tsx
+#: src/features/inbox/ChatList.tsx
 msgid "No labels yet. Add them in settings."
 msgstr "ラベルはまだありません。設定で追加してください。"
 
@@ -8114,7 +8430,11 @@ msgstr "ラベルはまだありません。設定で追加してください。
 msgid "No limit"
 msgstr "制限なし"
 
-#: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/broadcasts/ListsHome.tsx
+msgid "No lists for {scope} yet"
+msgstr "{scope}のリストはまだありません"
+
+#: src/features/docs/DiscussionsTab.tsx
 msgid "No locked discussions."
 msgstr "ロックされたディスカッションはありません。"
 
@@ -8126,10 +8446,13 @@ msgstr "メールボックスにはもうありません"
 msgid "No mail server was found for {domain}. Pick your provider below, or “Other IMAP server” and enter the server on the next step."
 msgstr "{domain} のメールサーバーが見つかりませんでした。下でプロバイダーを選ぶか、「その他の IMAP サーバー」を選んで次の手順でサーバーを入力してください。"
 
-#: src/features/broadcasts/BroadcastsColumn.tsx
-#: src/features/broadcasts/Overview.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "No mailing lists yet"
 msgstr "メーリングリストはまだありません"
+
+#: src/features/status/IncidentsPage.tsx
+msgid "No maintenance is planned."
+msgstr "予定されているメンテナンスはありません。"
 
 #: src/features/conversation/ChatView.tsx
 msgid "No matches"
@@ -8147,7 +8470,15 @@ msgstr "メンションはありません。"
 msgid "No messages yet"
 msgstr "メッセージはまだありません"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
+msgid "No monitor matches this filter."
+msgstr "このフィルターに一致するモニターはありません。"
+
+#: src/features/status/StatusPages.tsx
+msgid "No monitor watches this page yet"
+msgstr "このページを監視しているモニターはまだありません"
+
+#: src/features/status/MonitorsPage.tsx
 msgid "No monitors yet. Add one to let a check, a job or your monitoring set a component’s state."
 msgstr "モニターはまだありません。チェック、ジョブ、または自前の監視でコンポーネントの状態を設定するには、モニターを追加してください。"
 
@@ -8163,10 +8494,6 @@ msgstr "まだメモであなたにメンションした人はいません。チ
 msgid "No open feedback."
 msgstr "未解決のフィードバックはありません。"
 
-#: src/features/status/IncidentsTab.tsx
-msgid "No open incidents or maintenance."
-msgstr "未解決のインシデントやメンテナンスはありません。"
-
 #: src/features/contact/ContactSearch.tsx
 msgid "No other contact matches."
 msgstr "一致する他の連絡先はありません。"
@@ -8175,11 +8502,11 @@ msgstr "一致する他の連絡先はありません。"
 msgid "No other conversations."
 msgstr "ほかの会話はありません。"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "No pages yet"
 msgstr "ページはまだありません"
 
-#: src/features/settings/members/Invites.tsx
+#: src/features/team/TeamPage.tsx
 msgid "No pending invites."
 msgstr "保留中の招待はありません。"
 
@@ -8195,7 +8522,7 @@ msgstr "公開済みの記事が見つかりません。"
 msgid "No ratings in this period."
 msgstr "この期間の評価はありません。"
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "No ratings in this window."
 msgstr "この期間に評価はありません。"
 
@@ -8216,13 +8543,13 @@ msgstr "返信用アカウントなし"
 msgid "No response times in this range yet."
 msgstr "この期間の応答時間はまだありません。"
 
-#: src/features/status/MonitorsTab.tsx
-msgid "No result yet"
-msgstr "まだ結果がありません"
-
 #: src/app/Palette.tsx
 msgid "No results"
 msgstr "結果なし"
+
+#: src/features/broadcasts/ListsHome.tsx
+msgid "No sender yet"
+msgstr "送信元がまだありません"
 
 #: src/features/settings/channels/ChannelSummary.tsx
 msgid "No settings"
@@ -8240,7 +8567,7 @@ msgstr "SMTP アカウントなし"
 msgid "No status page yet. Create one under Status first."
 msgstr "ステータスページがまだありません。まず「ステータス」で作成してください。"
 
-#: src/features/status/StatusColumn.tsx
+#: src/features/status/StatusPages.tsx
 msgid "No status page yet. Owners and admins create it."
 msgstr "ステータスページはまだありません。オーナーと管理者が作成します。"
 
@@ -8251,7 +8578,6 @@ msgstr "ステータスページはまだありません。オーナーと管理
 msgid "No subject"
 msgstr "件名なし"
 
-#: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/Overview.tsx
 msgid "No subject yet"
 msgstr "件名はまだありません"
@@ -8291,6 +8617,14 @@ msgstr "最後の変更以降、テストは送信されていません。"
 #: src/features/broadcasts/Report.tsx
 msgid "No visits from this campaign yet."
 msgstr "このキャンペーンからの訪問はまだありません。"
+
+#: src/features/contact/ContactDetail.tsx
+msgid "No visits yet."
+msgstr "訪問はまだありません。"
+
+#: src/features/feedback/FeedbackFormDialog.tsx
+msgid "No website chat or app is set up yet."
+msgstr "ウェブサイトのチャットもアプリもまだ設定されていません。"
 
 #: src/features/broadcasts/Import.tsx
 msgid "No welcome mail is sent. Each new address waits for confirmation and joins after clicking the link in the mail."
@@ -8333,6 +8667,10 @@ msgstr "この期間に評価付きのコメントを残した人はいません
 msgid "Nobody matches."
 msgstr "一致する人はいません。"
 
+#: src/features/team/TeamPage.tsx
+msgid "Nobody on the team works on this product yet."
+msgstr "このプロダクトで働いているチームメンバーはまだいません。"
+
 #: src/features/broadcasts/Report.tsx
 msgid "Nobody opened a link yet."
 msgstr "まだ誰もリンクを開いていません。"
@@ -8349,6 +8687,7 @@ msgstr "このメールを受け取る人がいません。登録者のいるリ
 #: src/features/settings/SettingsColumn.tsx
 #: src/features/setup/email/EmailTestStep.tsx
 #: src/features/status/MonitorDialog.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "None"
 msgstr "なし"
 
@@ -8417,13 +8756,17 @@ msgstr "まだ接続されていません。サインインを完了すると、
 msgid "Not delivered"
 msgstr "未配信"
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/status/DomainCard.tsx
+msgid "Not found"
+msgstr "見つかりません"
+
+#: src/features/docs/PagesTab.tsx
 msgid "not helpful"
 msgstr "役に立たなかった"
 
 #: src/features/conversation/Feedback.tsx
-#: src/features/docs/DocsPages.tsx
 #: src/features/docs/PageContext.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "Not helpful"
 msgstr "役に立たなかった"
 
@@ -8444,17 +8787,17 @@ msgstr "このサーバーでは利用できません"
 msgid "Not on any mailing list."
 msgstr "どのメーリングリストにも属していません。"
 
+#: src/features/feedback/RoadmapCard.tsx
+msgid "Not on the roadmap yet. Link it to an idea, so you can tell everyone who asked when it ships."
+msgstr "まだロードマップにありません。アイデアにリンクすると、リリース時に依頼した全員へ知らせられます。"
+
 #: src/features/status/StatusPages.tsx
 msgid "not posted yet"
 msgstr "未投稿"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "not public"
 msgstr "非公開"
-
-#: src/features/status/IncidentsTab.tsx
-msgid "not public yet"
-msgstr "未公開"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Not ready"
@@ -8532,6 +8875,7 @@ msgid "Note, only the team sees it"
 msgstr "メモ(チームのみ閲覧可)"
 
 #: src/features/contact/ContactCard.tsx
+#: src/features/contact/ContactDetail.tsx
 #: src/features/contact/ContactSheet.tsx
 msgid "Notes"
 msgstr "メモ"
@@ -8557,15 +8901,19 @@ msgid "Nothing from the file is added, and the uploaded file is deleted."
 msgstr "ファイルの内容は何も追加されず、アップロードしたファイルは削除されます。"
 
 #: src/features/status/MonitorChecks.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Nothing has arrived yet."
 msgstr "まだ何も届いていません。"
+
+#: src/features/status/IncidentsPage.tsx
+msgid "Nothing has been resolved yet."
+msgstr "解決済みのものはまだありません。"
 
 #: src/features/broadcasts/Report.tsx
 msgid "Nothing has happened yet."
 msgstr "まだ何も起きていません。"
 
 #: src/features/broadcasts/Overview.tsx
-#: src/features/status/IncidentsPage.tsx
 msgid "Nothing here."
 msgstr "何もありません。"
 
@@ -8602,7 +8950,6 @@ msgid "Nothing is lost: when it continues, copying picks up where it stopped."
 msgstr "何も失われません。再開すると、コピーは中断した場所から続きます。"
 
 #: src/features/feedback/FeedbackList.tsx
-#: src/features/status/IncidentsTab.tsx
 msgid "Nothing is resolved yet."
 msgstr "解決済みのものはまだありません。"
 
@@ -8614,10 +8961,14 @@ msgstr "予定されているものはありません。"
 msgid "Nothing is snoozed."
 msgstr "スヌーズ中のものはありません。"
 
-#: src/features/docs/discussions/DiscussionsPane.tsx
 #: src/features/docs/discussions/QueuePane.tsx
+#: src/features/docs/DiscussionsTab.tsx
 msgid "Nothing is waiting for approval."
 msgstr "承認待ちのものはありません。"
+
+#: src/features/status/IncidentsPage.tsx
+msgid "Nothing is wrong right now. Open an incident when something breaks."
+msgstr "現在、問題はありません。不具合が起きたらインシデントを作成してください。"
 
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing matches these filters."
@@ -8633,8 +8984,16 @@ msgid "Nothing needs you"
 msgstr "対応待ちはありません"
 
 #: src/features/home/HomePage.tsx
+msgid "Nothing needs you in {scoped}"
+msgstr "{scoped} で対応が必要なものはありません"
+
+#: src/features/home/HomePage.tsx
 msgid "Nothing needs you today."
 msgstr "今日対応が必要なものはありません。"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Nothing opens by itself. Open an incident from the monitor when you want one."
+msgstr "自動では何も作成されません。必要なときにモニターからインシデントを作成してください。"
 
 #: src/features/account/AccountPage.tsx
 msgid "Nothing unread."
@@ -8727,6 +9086,7 @@ msgid "Offline"
 msgstr "オフライン"
 
 #: src/features/status/MonitorChecks.tsx
+#: src/features/status/ResponseChart.tsx
 msgid "OK"
 msgstr "OK"
 
@@ -8753,6 +9113,10 @@ msgstr "以前の訪問"
 #: src/features/home/HomePage.tsx
 msgid "oldest {oldestFor}"
 msgstr "最古 {oldestFor}"
+
+#: src/features/home/HomePage.tsx
+msgid "oldest {oldestFor}, {oldestWho}"
+msgstr "最も古い {oldestFor}、{oldestWho}"
 
 #: src/features/home/HomePage.tsx
 msgid "oldest {oldestFor}, in {oldestInbox}"
@@ -8786,11 +9150,6 @@ msgstr "複数のリストに登録、メールは 1 通のみ"
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "On Team and Enterprise plans an owner adds it once in <0>Organization settings › Connectors</0>; members then find it under Connectors and click Connect."
 msgstr "Team プランと Enterprise プランでは、オーナーが <0>組織の設定 › コネクタ</0> で 1 回追加します。メンバーはコネクタの下で見つけて接続をクリックします。"
-
-#. placeholder {0}: c.idea.title
-#: src/features/feedback/FeedbackPage.tsx
-msgid "On the roadmap: {0}"
-msgstr "ロードマップ上: {0}"
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "On the web"
@@ -8874,7 +9233,7 @@ msgstr "オンライン状態"
 msgid "Only {0}"
 msgstr "{0} のみ"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Only a draft can be deleted. It was never shown on the page."
 msgstr "削除できるのは下書きだけです。ページには一度も表示されていません。"
 
@@ -8885,6 +9244,10 @@ msgstr "削除できるのは下書きだけです。代わりに更新を投稿
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Only add people who agreed to get this list. What you enter here is kept as their consent record."
 msgstr "このリストの受信に同意した人だけを追加してください。ここに入力した内容は、同意記録として保存されます。"
+
+#: src/features/team/TeamPage.tsx
+msgid "Only an owner can change an owner's role."
+msgstr "オーナーのロールを変更できるのはオーナーだけです。"
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Only contacts whose language is one of these."
@@ -8930,10 +9293,6 @@ msgstr "オーナーのみワークスペースを削除できます。"
 msgid "Only pages on these addresses can open the chat. Enter scheme and host, without a path."
 msgstr "これらのアドレスのページだけがチャットを開けます。パスなしで、スキームとホストを入力してください。"
 
-#: src/features/broadcasts/Composer.tsx
-msgid "Only people who subscribed get it. Unsubscribed, unconfirmed, bounced and blocked addresses are always left out."
-msgstr "登録した人だけが受け取ります。配信停止済み、未確認、バウンス、ブロックされたアドレスは常に除外されます。"
-
 #: src/features/migrations/ChooseStep.tsx
 msgid "Only read requests are sent. You can close this page; the scan goes on and the list in Settings shows when it is done."
 msgstr "読み取りリクエストのみ送信されます。このページを閉じてもスキャンは続き、完了すると設定のリストに表示されます。"
@@ -8966,13 +9325,21 @@ msgstr "永続 ID に同意してサインインした後の訪問のみ。"
 msgid "Only while the panel is open in this browser. Away, you are alerted only about conversations assigned to you."
 msgstr "このブラウザーでパネルを開いている間のみ。不在のときは、自分に割り当てられた会話のみ通知します。"
 
-#: src/features/broadcasts/Composer.tsx
+#: src/features/status/StatusPages.tsx
+msgid "only your team can preview it"
+msgstr "プレビューできるのはチームのみです"
+
 #: src/features/broadcasts/NewBroadcastDialog.tsx
 msgid "Only your team sees it."
 msgstr "チームのみ閲覧できます。"
 
+#: src/features/team/TeamPage.tsx
+msgid "open"
+msgstr "未完了"
+
 #: src/components/common/text.ts
 #: src/features/account/AccountPage.tsx
+#: src/features/broadcasts/Overview.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/conversation/ConversationStatus.tsx
@@ -8981,7 +9348,7 @@ msgstr "チームのみ閲覧できます。"
 #: src/features/home/HomePage.tsx
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/settings/channels/chat/ChatFields.tsx
-#: src/features/status/IncidentsTab.tsx
+#: src/features/status/StatusPages.tsx
 msgid "Open"
 msgstr "未完了"
 
@@ -8989,6 +9356,10 @@ msgstr "未完了"
 #: src/features/conversation/messages/Attachments.tsx
 msgid "Open {0}"
 msgstr "{0} を開く"
+
+#: src/features/status/IncidentDetail.tsx
+msgid "Open {name} in Monitors"
+msgstr "モニターで {name} を開く"
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "Open {provider}'s mail settings and find forwarding, or a filter that forwards all incoming mail."
@@ -8998,6 +9369,7 @@ msgstr "{provider} のメール設定を開き、転送、または受信メー�
 msgid "Open a draft incident"
 msgstr "インシデントの下書きを開く"
 
+#: src/features/docs/PagesTab.tsx
 #: src/features/setup/InstallStep.tsx
 msgid "Open a page of your docs"
 msgstr "ドキュメントのページを開く"
@@ -9014,9 +9386,15 @@ msgstr "アカウントセキュリティを開く"
 msgid "Open Account security in your Yahoo account."
 msgstr "Yahoo アカウントでアカウントセキュリティを開きます。"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/status/IncidentDialog.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Open an incident"
 msgstr "インシデントを開く"
+
+#: src/features/status/MonitorsPage.tsx
+msgid "Open an incident ({incidentKey})"
+msgstr "インシデントを作成 ({incidentKey})"
 
 #: src/features/migrations/text.ts
 msgid "Open App passwords"
@@ -9051,16 +9429,23 @@ msgstr "会話を開く"
 msgid "Open conversations"
 msgstr "未完了の会話"
 
-#: src/features/team/MemberPage.tsx
-#: src/features/team/TeamColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Open conversations assigned"
 msgstr "割り当て済みの未完了の会話"
+
+#: src/features/status/LinkConversationsDialog.tsx
+msgid "Open conversations of this product that may be about {title}."
+msgstr "「{title}」に関連しそうな、この製品の未対応の会話。"
 
 #: src/components/common/Linked.tsx
 msgid "Open conversations that get this reply: {open}"
 msgstr "この返信を受け取る開いている会話: {open}"
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/discussions/QueuePane.tsx
+msgid "Open discussion"
+msgstr "ディスカッションを開く"
+
+#: src/features/docs/PagesTab.tsx
 msgid "open discussions"
 msgstr "未完了のディスカッション"
 
@@ -9068,11 +9453,11 @@ msgstr "未完了のディスカッション"
 msgid "Open Enterprise applications"
 msgstr "エンタープライズ アプリケーションを開く"
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "open feedback"
 msgstr "未対応のフィードバック"
 
-#: src/features/contact/ContactsPage.tsx
+#: src/features/contact/ContactDetail.tsx
 msgid "Open full page"
 msgstr "フルページで開く"
 
@@ -9088,7 +9473,15 @@ msgstr "Google Takeout を開き、「すべて選択解除」を選んでから
 msgid "Open Google's confirmation page"
 msgstr "Google の確認ページを開く"
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/PagesTab.tsx
+msgid "Open Help center"
+msgstr "ヘルプセンターを開く"
+
+#: src/features/feedback/RoadmapCard.tsx
+msgid "Open idea"
+msgstr "アイデアを開く"
+
+#: src/features/docs/PagesTab.tsx
 msgid "Open in Analytics"
 msgstr "アナリティクスで開く"
 
@@ -9096,7 +9489,7 @@ msgstr "アナリティクスで開く"
 msgid "Open inbox →"
 msgstr "受信トレイを開く →"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Open incident"
 msgstr "インシデントを開く"
 
@@ -9179,6 +9572,10 @@ msgstr "受信トレイを開く"
 msgid "Open the inbox settings"
 msgstr "受信トレイの設定を開く"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the list"
+msgstr "リストを開く"
+
 #: src/features/migrations/text.ts
 msgid "Open the Microsoft Entra admin center or the Azure portal, go to App registrations and choose New registration. Name it “Yuva”."
 msgstr "Microsoft Entra 管理センターまたは Azure portal を開き、アプリの登録 から 新規登録 を選びます。名前は「Yuva」にします。"
@@ -9203,19 +9600,27 @@ msgstr "公開中の更新履歴を開く"
 msgid "Open the public help center"
 msgstr "公開ヘルプセンターを開く"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the public page"
+msgstr "公開ページを開く"
+
 #: src/features/broadcasts/Report.tsx
 msgid "Open the reply"
 msgstr "返信を開く"
 
-#: src/components/common/ShortcutSheet.tsx
-msgid "Open the status page"
-msgstr "ステータスページを開く"
+#: src/features/broadcasts/FormSnippets.tsx
+msgid "Open the settings"
+msgstr "設定を開く"
+
+#: src/features/team/TeamPage.tsx
+msgid "Open the unassigned queue"
+msgstr "未割り当てのキューを開く"
 
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "Open the workspace settings"
 msgstr "ワークスペースの設定を開く"
 
-#: src/features/team/MemberPage.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Open what they see"
 msgstr "相手に見える画面を開く"
 
@@ -9236,11 +9641,11 @@ msgstr "サイトを開く"
 msgid "Open Zoho Accounts"
 msgstr "Zoho Accounts を開く"
 
-#: src/features/team/MemberPage.tsx
+#: src/features/team/TeamPage.tsx
 msgid "open, assigned"
 msgstr "未完了、割り当て済み"
 
-#: src/features/team/TeamColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "open, unassigned"
 msgstr "未完了、未割り当て"
 
@@ -9322,6 +9727,10 @@ msgstr "その他の IMAP サーバー"
 msgid "Other MCP client"
 msgstr "その他の MCP クライアント"
 
+#: src/features/status/MonitorsPage.tsx
+msgid "Our monitor {monitor} has seen a problem since {at}. We are looking into it."
+msgstr "モニター「{monitor}」が {at} から問題を検知しています。調査中です。"
+
 #: src/features/migrations/text.ts
 msgid "Outlook.com and Microsoft 365"
 msgstr "Outlook.com と Microsoft 365"
@@ -9355,7 +9764,8 @@ msgid "Over time"
 msgstr "時間の推移"
 
 #: src/app/Sidebar.tsx
-#: src/features/docs/DocsColumn.tsx
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/StatusPages.tsx
 msgid "Overview"
 msgstr "概要"
 
@@ -9371,22 +9781,21 @@ msgstr "専用テナント"
 msgid "Owner"
 msgstr "オーナー"
 
-#: src/features/broadcasts/BroadcastsColumn.tsx
-#: src/features/broadcasts/Overview.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "Owners and admins create lists, add subscribers and send broadcasts."
 msgstr "オーナーと管理者がリストを作成し、登録者を追加し、一斉配信を送信します。"
 
-#: src/features/settings/members/MembersPage.tsx
-msgid "Owners and admins see every inbox; agents see the inboxes they were given."
-msgstr "オーナーと管理者はすべての受信トレイを見られます。エージェントは割り当てられた受信トレイのみ見られます。"
+#: src/features/team/TeamPage.tsx
+msgid "Owners and admins see every inbox; agents see the inboxes they were given. Only owners and admins can invite, change roles or remove members."
+msgstr "オーナーと管理者はすべての受信トレイを見ることができ、エージェントは割り当てられた受信トレイを見ます。招待、ロールの変更、メンバーの削除ができるのはオーナーと管理者だけです。"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Owners and admins see every inbox; members see the inboxes they are given."
 msgstr "オーナーと管理者はすべての受信トレイを見られます。メンバーは割り当てられた受信トレイのみ見られます。"
 
-#: src/features/broadcasts/BroadcastList.tsx
-msgid "Owners and admins write and send broadcasts. You see the broadcasts of your inboxes, so you know what a reply answers."
-msgstr "オーナーと管理者が一斉配信を作成して送信します。あなたは自分の受信トレイの一斉配信を確認できるため、返信が何に対するものか分かります。"
+#: src/features/team/TeamPage.tsx
+msgid "Owners can do everything, including billing and deleting the workspace."
+msgstr "オーナーは、請求やワークスペースの削除を含め、すべてを行えます。"
 
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Pace (mails a second)"
@@ -9395,13 +9804,11 @@ msgstr "ペース(1 秒あたりの通数)"
 #: src/features/broadcasts/SubscriberSheet.tsx
 #: src/features/conversation/Feedback.tsx
 #: src/features/docs/discussions/FromConversation.tsx
-#: src/features/docs/discussions/ThreadPane.tsx
 #: src/features/status/SettingsTab.tsx
 msgid "Page"
 msgstr "ページ"
 
 #: src/components/common/ShortcutSheet.tsx
-#: src/features/status/StatusPages.tsx
 msgid "Page settings"
 msgstr "ページの設定"
 
@@ -9410,9 +9817,19 @@ msgid "Page where they agreed (optional)"
 msgstr "同意したページ(任意)"
 
 #: src/app/Sidebar.tsx
-#: src/features/docs/DocsColumn.tsx
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/docs/DocsPage.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "Pages"
 msgstr "ページ"
+
+#: src/features/docs/PagesTab.tsx
+msgid "Pages live on your own site. Articles hosted by Yuva are in <0>Help center</0>."
+msgstr "ページは自分のサイトにあります。Yuvaがホストする記事は<0>ヘルプセンター</0>にあります。"
+
+#: src/features/docs/PagesTab.tsx
+msgid "Pages on your own site"
+msgstr "自分のサイトのページ"
 
 #: src/features/settings/channels/chat/ChatInstall.tsx
 msgid "Pages that embed the old key can no longer start chats until you update the snippet. Visitors already chatting keep their session."
@@ -9463,8 +9880,8 @@ msgstr "パスワード"
 msgid "Password set"
 msgstr "パスワードを設定しました"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/status/IncidentsPage.tsx
-#: src/features/status/IncidentsTab.tsx
 msgid "Past"
 msgstr "過去"
 
@@ -9481,9 +9898,10 @@ msgid "Paste this before the closing body tag of your pages"
 msgstr "ページの閉じる body タグの直前に貼り付けてください"
 
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/broadcasts/Overview.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MigrationsPage.tsx
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Pause"
 msgstr "一時停止"
 
@@ -9491,6 +9909,11 @@ msgstr "一時停止"
 msgid "Pause or resume sending"
 msgstr "送信の一時停止または再開"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Pause or resume the monitor"
+msgstr "モニターを一時停止または再開"
+
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/text.ts
 #: src/features/migrations/text.ts
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -9498,6 +9921,7 @@ msgstr "送信の一時停止または再開"
 #: src/features/setup/email/EmailDoneStep.tsx
 #: src/features/setup/email/EmailTestStep.tsx
 #: src/features/status/MonitorDialog.tsx
+#: src/features/status/MonitorsPage.tsx
 #: src/features/status/text.tsx
 msgid "Paused"
 msgstr "一時停止中"
@@ -9542,6 +9966,10 @@ msgstr "一時停止中。再開するまで {address} からは何も読み取�
 msgid "Paused. Nothing is read from {provider} until you resume."
 msgstr "一時停止中。再開するまで {provider} からは何も読み取りません。"
 
+#: src/features/status/MonitorsPage.tsx
+msgid "Paused. Results are ignored and the component goes back to how you set it."
+msgstr "一時停止中です。結果は無視され、コンポーネントは設定した状態に戻ります。"
+
 #: src/features/settings/webhooks/DeliverySheet.tsx
 msgid "Payload"
 msgstr "ペイロード"
@@ -9558,6 +9986,14 @@ msgstr "保留中の配信も一緒に破棄されます。"
 #: src/features/setup/NewsletterStep.tsx
 msgid "People join it on a subscribe form or are added with their consent. Broadcasts go to lists."
 msgstr "登録フォームから参加するか、同意を得て追加されます。一斉配信はリストに送信します。"
+
+#: src/features/feedback/FeedbackFormDialog.tsx
+msgid "People send a bug, an idea or praise, with a screenshot and the device details. It lands here."
+msgstr "バグ、アイデア、称賛がスクリーンショットとデバイス情報つきで届きます。ここに表示されます。"
+
+#: src/features/contact/ContactsPage.tsx
+msgid "People so far: {shownCount}"
+msgstr "ここまでの人数: {shownCount}"
 
 #: src/features/setup/SetupHub.tsx
 msgid "People subscribe on your site; broadcasts go to the list."
@@ -9588,6 +10024,10 @@ msgstr "{product} に連絡した人"
 #: src/features/setup/SetupHub.tsx
 msgid "People write from inside your app, signed in as themselves."
 msgstr "アプリの中から、本人としてサインインした状態で書き込みます。"
+
+#: src/features/contact/ContactsPage.tsx
+msgid "People: {shownCount}"
+msgstr "人数: {shownCount}"
 
 #: src/features/broadcasts/Pace.tsx
 msgid "Per day"
@@ -9621,6 +10061,10 @@ msgstr "送信の許可"
 #: src/features/contact/ContactsPage.tsx
 msgid "Person"
 msgstr "人物"
+
+#: src/features/docs/PagesTab.tsx
+msgid "Pick a chat channel of the product and paste the snippet. Ratings and questions land in its inbox."
+msgstr "プロダクトのチャットチャネルを選び、コードを貼り付けます。評価と質問はその受信トレイに届きます。"
 
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Pick a color"
@@ -9658,6 +10102,18 @@ msgstr "先にデザインを選択してください。"
 msgid "Pick a design that renders without errors."
 msgstr "エラーなくレンダリングされるデザインを選択してください。"
 
+#: src/features/docs/DiscussionsTab.tsx
+msgid "Pick a discussion to read and answer it."
+msgstr "読んで回答するディスカッションを選んでください。"
+
+#: src/features/status/MonitorsPage.tsx
+msgid "Pick a monitor to see what happened."
+msgstr "モニターを選ぶと、何が起きたか確認できます。"
+
+#: src/features/docs/PagesTab.tsx
+msgid "Pick a page to see its ratings, discussions and questions."
+msgstr "ページを選ぶと、その評価、ディスカッション、質問が表示されます。"
+
 #: src/features/feedback/FeedbackList.tsx
 msgid "Pick a piece of feedback"
 msgstr "フィードバックを選択してください"
@@ -9685,6 +10141,10 @@ msgstr "この受信トレイのメールチャネルから、SMTP アカウン�
 #: src/features/migrations/MapStep.tsx
 msgid "Pick an inbox"
 msgstr "受信トレイを選択"
+
+#: src/features/status/IncidentsPage.tsx
+msgid "Pick an incident to read it."
+msgstr "インシデントを選ぶと内容を確認できます。"
 
 #: src/features/status/LinkIncidentDialog.tsx
 msgid "Pick an open incident or maintenance"
@@ -9729,6 +10189,10 @@ msgstr "あとでリストの設定から選べます。"
 msgid "Pick the column that holds the e-mail addresses."
 msgstr "メールアドレスが入っている列を選択してください。"
 
+#: src/features/docs/FromDocs.tsx
+msgid "Pick the conversation to answer in public. The next reader finds it under your documentation page."
+msgstr "公開で回答する会話を選んでください。次の読者はドキュメントページの下でそれを見つけます。"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Pick the file to import."
 msgstr "インポートするファイルを選択してください。"
@@ -9748,6 +10212,10 @@ msgstr "{address} の受信トレイ、チーム内の誰が何を書いたか�
 #: src/features/migrations/MapStep.tsx
 msgid "Pick the inboxes for {provider}'s conversations, which member each agent is, and how tags become labels. Changing these after the scan plans the import again in a moment."
 msgstr "{provider} の会話の受信トレイ、各エージェントがどのメンバーか、タグをラベルにする方法を選択します。スキャン後にこれらを変更すると、少し後にインポートが再計画されます。"
+
+#: src/features/broadcasts/ListsHome.tsx
+msgid "Pick the list the people join."
+msgstr "人々が参加するリストを選んでください。"
 
 #: src/features/contact/MergeContactDialog.tsx
 msgid "Pick the other contact. It is merged into this one and then deleted."
@@ -9790,7 +10258,6 @@ msgid "Pick what Yuva should tell your server about. You can change this later."
 msgstr "Yuva がサーバーに通知する内容を選択してください。後から変更できます。"
 
 #: src/features/conversation/ConversationMenu.tsx
-#: src/features/inbox/ChatList.tsx
 msgid "Pin to the top"
 msgstr "先頭に固定"
 
@@ -9812,17 +10279,16 @@ msgstr "リンクと改行を含められるプレーンテキスト。最大5,0
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/status/IncidentDialog.tsx
-#: src/features/status/IncidentsTab.tsx
+#: src/features/status/IncidentsPage.tsx
 msgid "Plan maintenance"
 msgstr "メンテナンスを計画"
 
 #: src/features/status/IncidentsPage.tsx
-#: src/features/status/IncidentsTab.tsx
 msgid "Plan maintenance ({maintenanceKey})"
 msgstr "メンテナンスを計画（{maintenanceKey}）"
 
 #: src/components/common/text.ts
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Planned"
 msgstr "計画済み"
 
@@ -9862,11 +10328,7 @@ msgstr "ポート"
 msgid "Post an update"
 msgstr "更新を投稿"
 
-#: src/features/status/StatusPages.tsx
-msgid "Post an update ({incidentKey})"
-msgstr "アップデートを投稿 ({incidentKey})"
-
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Post an update ({updateKey})"
 msgstr "更新を投稿（{updateKey}）"
 
@@ -9878,7 +10340,6 @@ msgstr "アプリのユーザー向けにフィードバックを投稿"
 msgid "Post status update"
 msgstr "ステータスの更新を投稿"
 
-#: src/features/status/IncidentsTab.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Post update"
 msgstr "更新を投稿"
@@ -9908,12 +10369,10 @@ msgstr "準備中"
 #: src/components/common/Wizard.tsx
 #: src/features/settings/labels/LabelDialog.tsx
 #: src/features/status/PreviewDialog.tsx
-#: src/features/status/StatusPagePane.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Preview"
 msgstr "プレビュー"
 
-#: src/features/status/StatusPagePane.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Preview ({previewKey})"
 msgstr "プレビュー（{previewKey}）"
@@ -9941,24 +10400,32 @@ msgid "Preview the page"
 msgstr "ページをプレビュー"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Previous or next discussion"
+msgstr "前または次のディスカッション"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Previous or next language"
 msgstr "前または次の言語"
+
+#: src/features/feedback/Lightbox.tsx
+msgid "Previous screenshot"
+msgstr "前のスクリーンショット"
 
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Priority"
 msgstr "優先度"
+
+#: src/features/conversation/ChatView.tsx
+msgid "Priority set to {level}"
+msgstr "優先度を {level} に設定しました"
 
 #: src/app/Palette.tsx
 #: src/components/common/ShortcutSheet.tsx
 msgid "Priority, inbox, spam and more"
 msgstr "優先度、受信トレイ、スパムなど"
 
-#: src/features/broadcasts/Overview.tsx
-msgid "private"
-msgstr "非公開"
-
-#: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/ListPage.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "Private"
 msgstr "非公開"
 
@@ -9968,6 +10435,8 @@ msgstr "pro、team"
 
 #: src/features/contact/ContactsPage.tsx
 #: src/features/inbox/InboxPicker.tsx
+#: src/features/status/CreatePageDialog.tsx
+#: src/features/status/IncidentDialog.tsx
 msgid "Product"
 msgstr "製品"
 
@@ -9996,6 +10465,7 @@ msgstr "本番バックエンド"
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/ProductsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Products"
 msgstr "製品"
 
@@ -10025,7 +10495,6 @@ msgstr "進捗 (O)"
 msgid "Proton Mail is reachable over IMAP only through Proton Mail Bridge on your own computer, which a server cannot reach. Export the mailbox with Proton Mail's export tool, put the folder in a .zip and upload it as an export file below."
 msgstr "Proton Mail は、お使いのコンピューター上の Proton Mail Bridge 経由でのみ IMAP で到達できますが、サーバーからは届きません。Proton Mail のエクスポートツールでメールボックスをエクスポートし、フォルダーを .zip にして、下でエクスポートファイルとしてアップロードしてください。"
 
-#: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/ListForm.tsx
 #: src/features/broadcasts/ListPage.tsx
 msgid "Public"
@@ -10035,10 +10504,6 @@ msgstr "公開"
 msgid "Public address"
 msgstr "公開アドレス"
 
-#: src/features/broadcasts/Overview.tsx
-msgid "public form"
-msgstr "公開フォーム"
-
 #: src/features/settings/channels/PublicKeyField.tsx
 msgid "Public key"
 msgstr "公開キー"
@@ -10047,12 +10512,7 @@ msgstr "公開キー"
 msgid "Public pages that say whether your products work"
 msgstr "製品が動いているかを知らせる公開ページ"
 
-#: src/features/docs/discussions/DiscussionsPane.tsx
-msgid "Public threads under your documentation pages, in every state."
-msgstr "ドキュメントページ下の公開スレッド(すべての状態)。"
-
-#: src/features/status/IncidentPane.tsx
-#: src/features/status/StatusPagePane.tsx
+#: src/features/status/IncidentDetail.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Publish"
 msgstr "公開"
@@ -10062,8 +10522,7 @@ msgctxt "sidebar group"
 msgid "Publish"
 msgstr "公開"
 
-#: src/features/status/IncidentPane.tsx
-#: src/features/status/StatusPagePane.tsx
+#: src/features/status/IncidentDetail.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Publish ({publishKey})"
 msgstr "公開（{publishKey}）"
@@ -10100,7 +10559,7 @@ msgstr "下書きを公開"
 msgid "Publish this TXT record in your domain’s DNS:"
 msgstr "この TXT レコードをドメインの DNS に公開してください:"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Publish update"
 msgstr "アップデートを公開"
 
@@ -10112,8 +10571,6 @@ msgstr "公開、または下書きを提出"
 msgid "Publish, schedule and unpublish What's new entries"
 msgstr "「新着情報」のエントリを公開・予約・非公開にする"
 
-#: src/features/status/StatusColumn.tsx
-#: src/features/status/StatusPagePane.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Published"
 msgstr "公開中"
@@ -10129,6 +10586,10 @@ msgstr "プッシュ"
 #: src/features/status/MonitorToken.tsx
 msgid "Push a state"
 msgstr "状態を送信"
+
+#: src/features/status/MonitorsPage.tsx
+msgid "Push address"
+msgstr "プッシュ用アドレス"
 
 #: src/features/settings/notifications/events.ts
 msgid "Push and e-mail"
@@ -10167,6 +10628,10 @@ msgstr "サイトに登録フォームを設置するか、連絡を希望する
 msgid "Put the SDK's conversations view behind a Help button in your app, then send a message from it."
 msgstr "アプリのヘルプボタンから SDK の会話ビューを開き、そこからメッセージを送信してください。"
 
+#: src/features/docs/InstallDialog.tsx
+msgid "Put these elements under every page of your documentation. They use a chat channel of the product, so the results land in its inbox."
+msgstr "これらの要素をドキュメントの各ページの下に置きます。プロダクトのチャットチャネルを使うため、結果はその受信トレイに届きます。"
+
 #: src/features/docs/discussions/FromConversation.tsx
 msgid "Question"
 msgstr "質問"
@@ -10183,6 +10648,10 @@ msgstr "キューに追加しました。新しい試行は、まもなく下に
 msgid "Quick cleanup"
 msgstr "クイッククリーンアップ"
 
+#: src/features/conversation/messages/MessageActions.tsx
+msgid "Quote"
+msgstr "引用"
+
 #: src/features/status/ResponseChart.tsx
 msgid "Range"
 msgstr "期間"
@@ -10191,7 +10660,7 @@ msgstr "期間"
 msgid "Rated bad"
 msgstr "低評価"
 
-#: src/features/contact/ContactPage.tsx
+#: src/features/contact/ContactDetail.tsx
 msgid "rated good"
 msgstr "高評価"
 
@@ -10211,21 +10680,21 @@ msgstr "評価"
 msgid "Ratings"
 msgstr "評価"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/Toolbar.tsx
 msgid "Ratings over"
 msgstr "評価の推移"
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "ratings per 1,000 views"
 msgstr "1,000 表示あたりの評価"
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "Ratings per day"
 msgstr "1 日あたりの評価"
 
-#: src/features/docs/DocsColumn.tsx
-msgid "Ratings, feedback and discussions from your documentation"
-msgstr "ドキュメントからの評価、フィードバック、ディスカッション"
+#: src/features/docs/DocsPage.tsx
+msgid "Ratings, questions and discussions from the documentation pages on your own site"
+msgstr "自分のサイトのドキュメントページに寄せられた評価、質問、ディスカッション"
 
 #: src/features/conversation/messages/MessageActions.tsx
 msgid "Read"
@@ -10291,6 +10760,8 @@ msgstr "ステータスページ、コンポーネント、インシデントを
 msgid "Read the folders"
 msgstr "フォルダーを読み取り"
 
+#: src/features/docs/InstallDialog.tsx
+#: src/features/docs/PagesTab.tsx
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/migrations/SwitchStep.tsx
 #: src/features/migrations/text.ts
@@ -10348,6 +10819,10 @@ msgstr "インポート可能"
 msgid "Ready to send"
 msgstr "送信可能"
 
+#: src/app/Sidebar.tsx
+msgid "Realtime"
+msgstr "リアルタイム"
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "Received {when}. Enter it in Gmail's forwarding settings, or open the link."
 msgstr "{when} に受信。Gmail の転送設定に入力するか、リンクを開いてください。"
@@ -10369,15 +10844,15 @@ msgstr "受信のみ、SMTP アカウントなし"
 msgid "Receiving"
 msgstr "受信中"
 
-#: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/docs/DocsPage.tsx
 msgid "Recent activity"
 msgstr "最近のアクティビティ"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorChecks.tsx
 msgid "Recent checks"
 msgstr "最近のチェック"
 
-#: src/features/contact/ContactPage.tsx
+#: src/features/contact/ContactDetail.tsx
 msgid "Recent visits"
 msgstr "最近の訪問"
 
@@ -10463,13 +10938,13 @@ msgstr "リモート画像により、メールを開いたことが送信者に
 #: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
 #: src/features/settings/channels/sections.tsx
-#: src/features/settings/members/MemberList.tsx
 #: src/features/settings/notifications/PushSection.tsx
 #: src/features/settings/profile/Passkeys.tsx
 #: src/features/settings/webhooks/sections.tsx
 #: src/features/settings/webhooks/WebhookPage.tsx
 #: src/features/status/DomainCard.tsx
 #: src/features/status/MonitorHttpFields.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Remove"
 msgstr "削除"
 
@@ -10490,14 +10965,14 @@ msgstr "{0} を削除しますか？"
 msgid "Remove {lang}"
 msgstr "{lang} を削除"
 
-#: src/features/settings/members/MemberList.tsx
 #: src/features/settings/notifications/PushSection.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Remove {name}"
 msgstr "{name} を削除"
 
-#: src/features/settings/members/MemberList.tsx
-msgid "Remove {name} from the workspace?"
-msgstr "{name} をワークスペースから削除しますか?"
+#: src/features/team/TeamPage.tsx
+msgid "Remove {name}?"
+msgstr "{name} を削除しますか?"
 
 #: src/features/migrations/MapStep.tsx
 msgid "Remove {sender}"
@@ -10518,6 +10993,10 @@ msgstr "ドメインを削除"
 #: src/features/settings/webhooks/sections.tsx
 msgid "Remove endpoint"
 msgstr "エンドポイントを削除"
+
+#: src/features/team/TeamPage.tsx
+msgid "Remove from the workspace"
+msgstr "ワークスペースから削除"
 
 #: src/features/status/MonitorHttpFields.tsx
 msgid "Remove header {header}"
@@ -10662,7 +11141,7 @@ msgid "Replies to this address are refused until you clear it."
 msgstr "このアドレス宛ての返信は、解除するまで拒否されます。"
 
 #: src/features/inbox/ChatsPage.tsx
-#: src/features/team/MemberPage.tsx
+#: src/features/team/TeamPage.tsx
 msgid "replies today"
 msgstr "本日の返信"
 
@@ -10806,7 +11285,7 @@ msgstr "レポート"
 msgid "Reputation impact"
 msgstr "評価への影響"
 
-#: src/features/team/TeamColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Resend"
 msgstr "再送信"
 
@@ -10816,7 +11295,7 @@ msgstr "デフォルトに戻す"
 
 #: src/features/conversation/HeaderActions.tsx
 #: src/features/feedback/FeedbackPage.tsx
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Resolve"
 msgstr "解決にする"
 
@@ -10824,6 +11303,10 @@ msgstr "解決にする"
 #: src/features/feedback/FeedbackPage.tsx
 msgid "Resolve (E)"
 msgstr "解決にする (E)"
+
+#: src/features/status/IncidentDetail.tsx
+msgid "Resolve incident"
+msgstr "インシデントを解決"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Resolve or complete"
@@ -10837,38 +11320,53 @@ msgstr "解決または完了"
 msgid "Resolved"
 msgstr "解決済み"
 
+#: src/features/status/IncidentDetail.tsx
+msgid "Resolved at {endedAt}"
+msgstr "{endedAt} に解決"
+
 #. placeholder {0}: took(last)
 #: src/features/status/StatusPages.tsx
 msgid "resolved in {0}"
 msgstr "{0} で解決"
 
-#: src/features/status/MonitorsTab.tsx
-msgid "Response · 24 h"
-msgstr "応答 · 24 時間"
+#: src/features/feedback/FeedbackPage.tsx
+msgid "Resolved. It moved to the Resolved tab."
+msgstr "解決済みにしました。「解決済み」タブに移動しました。"
 
 #: src/features/status/ResponseChart.tsx
 msgid "Response time"
 msgstr "応答時間"
 
-#: src/features/status/IncidentPane.tsx
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/IncidentDetail.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Response time, last 24 hours"
 msgstr "応答時間、過去 24 時間"
 
+#: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/ListSettings.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "Restore"
 msgstr "復元"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/ResponseChart.tsx
+msgid "Results"
+msgstr "結果"
+
+#: src/features/status/MonitorsPage.tsx
 msgid "Results, last 24 hours"
 msgstr "結果、過去 24 時間"
 
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/broadcasts/Overview.tsx
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MigrationsPage.tsx
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Resume"
 msgstr "再開"
+
+#: src/app/Sidebar.tsx
+msgid "Retention"
+msgstr "リテンション"
 
 #: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MigrationsPage.tsx
@@ -10889,12 +11387,16 @@ msgstr "戻り先"
 
 #: src/components/common/Linked.tsx
 #: src/features/broadcasts/Import.tsx
-#: src/features/inbox/ChatList.tsx
 #: src/features/migrations/Wizard.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
 msgid "Review"
 msgstr "確認"
 
+#: src/features/status/StatusPages.tsx
+msgid "Review and post"
+msgstr "確認して投稿"
+
+#: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Review and send"
 msgstr "確認して送信"
@@ -10908,12 +11410,10 @@ msgid "Review the key"
 msgstr "キーを確認"
 
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/broadcasts/Composer.tsx
+#: src/features/broadcasts/ReviewPanel.tsx
 msgid "Review, then send or schedule"
 msgstr "確認してから送信または予約"
-
-#: src/features/broadcasts/ReviewPanel.tsx
-msgid "Review, then send or schedule ({key})"
-msgstr "確認してから送信または予約({key})"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Revisions"
@@ -10943,6 +11443,7 @@ msgstr "登録直後に、確認用の短いメールが配信停止リンク付
 #: src/app/Palette.tsx
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/feedback/RoadmapCard.tsx
 msgid "Roadmap"
 msgstr "ロードマップ"
 
@@ -10950,7 +11451,7 @@ msgstr "ロードマップ"
 msgid "Roadmap →"
 msgstr "ロードマップ →"
 
-#: src/features/settings/members/Invites.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Role"
 msgstr "ロール"
 
@@ -10958,7 +11459,7 @@ msgstr "ロール"
 msgid "Role addresses such as postmaster@ or noreply@"
 msgstr "postmaster@ や noreply@ などの役割アドレス"
 
-#: src/features/settings/members/MemberList.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Role of {name}"
 msgstr "{name} のロール"
 
@@ -10993,6 +11494,10 @@ msgstr "ドメインをルーティング"
 #: src/features/setup/email/EmailReceiveStep.tsx
 msgid "Route your mail to Yuva"
 msgstr "メールを Yuva にルーティング"
+
+#: src/features/status/MonitorsPage.tsx
+msgid "Rules"
+msgstr "ルール"
 
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Run a check"
@@ -11044,8 +11549,8 @@ msgstr "土曜日"
 #: src/features/settings/ui.tsx
 #: src/features/settings/workspace/RetentionForm.tsx
 #: src/features/status/ComponentDialogs.tsx
+#: src/features/status/IncidentDetail.tsx
 #: src/features/status/IncidentDialog.tsx
-#: src/features/status/IncidentPane.tsx
 #: src/features/status/MonitorDialog.tsx
 msgid "Save"
 msgstr "保存"
@@ -11131,16 +11636,12 @@ msgstr "予約"
 msgid "Schedule and send broadcasts, when the workspace lets keys and assistants send them"
 msgstr "ワークスペースがキーとアシスタントによる送信を許可している場合に、一斉配信を予約・送信"
 
-#: src/features/status/IncidentsPage.tsx
-msgid "Schedule maintenance"
-msgstr "メンテナンスを予約"
-
 #: src/components/common/ShortcutSheet.tsx
 msgid "Schedule the entry"
 msgstr "エントリを予約"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/text.ts
-#: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/Overview.tsx
 #: src/features/status/IncidentsPage.tsx
 #: src/features/status/text.tsx
@@ -11152,6 +11653,7 @@ msgid "Scheduled by"
 msgstr "予約者"
 
 #: src/features/status/Notices.tsx
+#: src/features/status/StatusPages.tsx
 msgid "Scheduled for {due}"
 msgstr "{due}に送信予定"
 
@@ -11175,6 +11677,10 @@ msgstr "スコア 5 点中 {score} 点"
 #: src/features/conversation/Feedback.tsx
 msgid "Screen"
 msgstr "画面"
+
+#: src/features/feedback/Lightbox.tsx
+msgid "Screenshot"
+msgstr "スクリーンショット"
 
 #: src/features/feedback/FeedbackList.tsx
 msgid "Screenshots attached"
@@ -11204,12 +11710,9 @@ msgstr "連絡先を検索"
 #: src/app/Palette.tsx
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/inbox/ChatList.tsx
+#: src/features/status/LinkConversationsDialog.tsx
 msgid "Search conversations"
 msgstr "会話を検索"
-
-#: src/features/inbox/ChatList.tsx
-msgid "Search conversations (/)"
-msgstr "会話を検索 (/)"
 
 #: src/app/Palette.tsx
 msgid "Search conversations for “{search}”"
@@ -11227,10 +11730,6 @@ msgstr "絵文字を検索(英語)"
 msgid "Search feedback"
 msgstr "フィードバックを検索"
 
-#: src/features/feedback/FeedbackList.tsx
-msgid "Search feedback (/)"
-msgstr "フィードバックを検索 (/)"
-
 #: src/features/conversation/composer/ArticlePicker.tsx
 msgid "Search help articles…"
 msgstr "ヘルプ記事を検索…"
@@ -11244,11 +11743,6 @@ msgstr "読み込み済みのメッセージ内を検索"
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Search in this conversation"
 msgstr "この会話内を検索"
-
-#. placeholder {0}: keyLabel(SHORTCUTS.find).join("")
-#: src/features/conversation/ChatView.tsx
-msgid "Search in this conversation ({0})"
-msgstr "この会話内を検索({0})"
 
 #: src/features/status/LinkIncidentDialog.tsx
 msgid "Search incidents"
@@ -11303,7 +11797,7 @@ msgstr "セクション"
 msgid "Seen {seen}"
 msgstr "{seen} に確認"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Seen by the monitor"
 msgstr "モニターが確認"
 
@@ -11378,6 +11872,7 @@ msgid "Send a new code"
 msgstr "新しいコードを送信"
 
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/Overview.tsx
 #: src/features/broadcasts/TestSend.tsx
 msgid "Send a test"
@@ -11432,6 +11927,10 @@ msgstr "自分のサーバーにイベントを送信"
 msgid "Send feedback from a page"
 msgstr "ページからフィードバックを送信"
 
+#: src/features/team/TeamPage.tsx
+msgid "Send invite"
+msgstr "招待を送信"
+
 #: src/features/auth/SignInForm.tsx
 msgid "Send me a code"
 msgstr "コードを送信"
@@ -11474,7 +11973,7 @@ msgid "Send the e-mail after"
 msgstr "メールを送るまでの時間"
 
 #. placeholder {0}: invite.email
-#: src/features/team/TeamColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Send the invite for {0} again"
 msgstr "{0} への招待を再送信"
 
@@ -11509,7 +12008,6 @@ msgid "Sender identity"
 msgstr "送信者 ID"
 
 #: src/components/common/text.ts
-#: src/features/broadcasts/BroadcastList.tsx
 #: src/features/migrations/UploadStep.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -11556,7 +12054,6 @@ msgid "Sending kept failing, so Yuva gave up."
 msgstr "送信が失敗し続けたため、Yuva は中止しました。"
 
 #: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Sending pace"
 msgstr "送信ペース"
@@ -11614,12 +12111,11 @@ msgid "sent"
 msgstr "送信済み"
 
 #: src/components/common/Linked.tsx
-#: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/Overview.tsx
 #: src/features/broadcasts/Report.tsx
 #: src/features/conversation/messages/MessageActions.tsx
 #: src/features/status/Notices.tsx
-#: src/features/team/TeamColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Sent"
 msgstr "送信済み"
 
@@ -11636,10 +12132,6 @@ msgstr "送信済み"
 #: src/features/migrations/MapStep.tsx
 msgid "Sent {count} messages from this address"
 msgstr "このアドレスから {count} 件のメッセージを送信しました"
-
-#: src/features/team/TeamColumn.tsx
-msgid "Sent {sent}"
-msgstr "{sent} に送信"
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "Sent {sentAt}. Waiting for it to arrive…"
@@ -11711,6 +12203,10 @@ msgstr "SES テナント"
 msgid "Set by a monitor, {since}"
 msgstr "モニターが設定、{since}"
 
+#: src/features/inbox/InboxPicker.tsx
+msgid "Set by the product in the sidebar"
+msgstr "サイドバーの製品で決まります"
+
 #: src/features/conversation/HeaderActions.tsx
 msgid "Set progress"
 msgstr "進捗を設定"
@@ -11737,6 +12233,10 @@ msgstr "メールを設定"
 msgid "Set up Yuva"
 msgstr "Yuva をセットアップ"
 
+#: src/features/status/MonitorsPage.tsx
+msgid "Sets {cname} to {downState} while it is down"
+msgstr "停止中は {cname} を「{downState}」に設定します"
+
 #: src/features/settings/channels/email/Ses.tsx
 msgid "Setting up the inbox’s Amazon SES tenant…"
 msgstr "受信トレイの Amazon SES テナントを設定中…"
@@ -11760,7 +12260,7 @@ msgstr "設定中…"
 #: src/features/settings/ProductsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
 #: src/features/settings/ui.tsx
-#: src/features/status/StatusPagePane.tsx
+#: src/features/status/StatusPages.tsx
 msgid "Settings"
 msgstr "設定"
 
@@ -11803,20 +12303,20 @@ msgstr "ショートカット"
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/contact/ContactsPage.tsx
-#: src/features/docs/discussions/DiscussionsPane.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/docs/DocsPage.tsx
 #: src/features/inbox/SidePanels.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Show"
 msgstr "表示"
-
-#: src/features/broadcasts/BroadcastsColumn.tsx
-#: src/features/broadcasts/Overview.tsx
-msgid "Show archived lists"
-msgstr "アーカイブ済みのリストを表示"
 
 #: src/features/conversation/messages/EmailBody.tsx
 msgid "Show as sent"
 msgstr "送信済みとして表示"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "Show HTTP details"
+msgstr "HTTPの詳細を表示"
 
 #: src/features/inbox/SidePanels.tsx
 #: src/features/migrations/CopyStep.tsx
@@ -12102,19 +12602,15 @@ msgstr "開始"
 msgid "Since {since}"
 msgstr "{since} から"
 
-#: src/features/status/IncidentsTab.tsx
-msgid "since {started}"
-msgstr "{started} から"
-
 #: src/features/migrations/ChooseStep.tsx
 msgid "Since…"
 msgstr "開始…"
 
-#: src/features/broadcasts/Overview.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "Single opt-in"
 msgstr "シングルオプトイン"
 
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/Toolbar.tsx
 #: src/features/inbox/SourceFilter.tsx
 #: src/features/setup/SetupLayout.tsx
 msgid "Site"
@@ -12125,6 +12621,7 @@ msgid "Site address"
 msgstr "サイトのアドレス"
 
 #: src/features/broadcasts/FormSnippets.tsx
+#: src/features/docs/InstallDialog.tsx
 #: src/features/setup/InstallStep.tsx
 msgid "Site generator"
 msgstr "サイトジェネレーター"
@@ -12183,7 +12680,6 @@ msgstr "SMTP ホスト"
 
 #: src/app/Palette.tsx
 #: src/components/common/ShortcutSheet.tsx
-#: src/features/conversation/ConversationMenu.tsx
 #: src/features/conversation/HeaderActions.tsx
 msgid "Snooze"
 msgstr "スヌーズ"
@@ -12200,6 +12696,10 @@ msgstr "スヌーズ中"
 #: src/features/conversation/ConversationStatus.tsx
 msgid "Snoozed until {until}"
 msgstr "{until} までスヌーズ"
+
+#: src/features/contact/ContactDetail.tsx
+msgid "Some addresses are undeliverable. Clear them under Contact and identities once they work again."
+msgstr "配信不能のアドレスがあります。使えるようになったら「コンタクトと ID」で解除してください。"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Some images have no description for people who cannot see them."
@@ -12253,8 +12753,8 @@ msgstr "サーバーで問題が発生しました。もう一度お試しくだ
 msgid "Something you can find again if asked, such as an order number or a signed form."
 msgstr "求められたときに見つけられるもの(注文番号や署名済みフォームなど)。"
 
-#: src/features/docs/discussions/DiscussionsPane.tsx
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/DocsPage.tsx
+#: src/features/docs/Toolbar.tsx
 msgid "Sort"
 msgstr "並べ替え"
 
@@ -12269,6 +12769,10 @@ msgstr "会話を自分好みに整理"
 #: src/features/migrations/Wizard.tsx
 msgid "Source"
 msgstr "ソース"
+
+#: src/app/Sidebar.tsx
+msgid "Sources"
+msgstr "流入元"
 
 #: src/features/docs/discussions/QueuePane.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
@@ -12304,7 +12808,7 @@ msgstr "SPF は送信ドメイン {from} ではなく {spfDomain} で合格し�
 msgid "SPF passes for {spfDomain}."
 msgstr "{spfDomain} の SPF は合格しています。"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Stage"
 msgstr "ステージ"
 
@@ -12352,7 +12856,7 @@ msgstr "メーリングリストを始めましょう"
 msgid "Started"
 msgstr "開始済み"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "started {started} · {lasted}"
 msgstr "{started} 開始 · {lasted}"
 
@@ -12387,7 +12891,6 @@ msgstr "STARTTLS(ポート 587)"
 #: src/features/migrations/Wizard.tsx
 #: src/features/status/ComponentDialogs.tsx
 #: src/features/status/IncidentDialog.tsx
-#: src/features/status/MonitorsTab.tsx
 msgid "State"
 msgstr "状態"
 
@@ -12401,11 +12904,8 @@ msgstr "{0} の状態"
 msgid "State of {0} while it is open"
 msgstr "{0} が開いている間の状態"
 
-#: src/features/status/MonitorsTab.tsx
-msgid "state pushed by your alerting"
-msgstr "アラート側から送られた状態"
-
 #: src/features/status/MonitorDialog.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "State while down"
 msgstr "ダウン時の状態"
 
@@ -12415,15 +12915,14 @@ msgstr "ダウン時の状態"
 #: src/features/broadcasts/Overview.tsx
 #: src/features/feedback/FeedbackList.tsx
 #: src/features/feedback/FeedbackPage.tsx
+#: src/features/home/HomePage.tsx
 #: src/features/migrations/MapStep.tsx
 #: src/features/settings/webhooks/AttemptLog.tsx
 #: src/features/settings/webhooks/events.tsx
-#: src/features/status/StatusColumn.tsx
-#: src/features/status/StatusPagePane.tsx
 msgid "Status"
 msgstr "ステータス"
 
-#: src/features/status/StatusPagePane.tsx
+#: src/features/status/StatusPages.tsx
 msgid "Status page"
 msgstr "ステータスページ"
 
@@ -12432,8 +12931,9 @@ msgid "Status page deleted"
 msgstr "ステータスページを削除しました"
 
 #: src/app/Sidebar.tsx
-#: src/features/status/StatusColumn.tsx
-#: src/features/status/StatusPagePane.tsx
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/IncidentsPage.tsx
+#: src/features/status/MonitorsPage.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Status pages"
 msgstr "ステータスページ"
@@ -12467,8 +12967,8 @@ msgid "Stop signing"
 msgstr "署名を停止"
 
 #: src/features/broadcasts/ListSettings.tsx
-msgid "Stop taking new subscribers."
-msgstr "新しい登録者の受け付けを停止します。"
+msgid "Stop taking new subscribers. Records and past reports stay, and you can restore it."
+msgstr "新しい購読者の受け付けを止めます。記録と過去のレポートは残り、リストは復元できます。"
 
 #: src/features/migrations/ReviewStep.tsx
 msgid "Storage"
@@ -12527,8 +13027,6 @@ msgstr "たった今リストに登録"
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/Subscribers.tsx
-#: src/features/status/IncidentsTab.tsx
-#: src/features/status/StatusPagePane.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Subscribers"
 msgstr "登録者"
@@ -12541,7 +13039,7 @@ msgstr "登録者を追加しました"
 msgid "Subscribers confirm their address by mail before they get notices."
 msgstr "購読者は、通知を受け取る前にメールでアドレスを確認します。"
 
-#: src/features/broadcasts/Overview.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "Subscribers over the last 30 days"
 msgstr "過去 30 日間の購読者"
 
@@ -12554,16 +13052,13 @@ msgid "Succeeded"
 msgstr "成功"
 
 #: src/features/status/MonitorDialog.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Successes to recover"
 msgstr "復旧までの連続成功回数"
 
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "Such as a MERSİS number, trade register or VAT id, if you have one"
 msgstr "MERSİS 番号、商業登記番号、VAT ID など(お持ちの場合)"
-
-#: src/features/conversation/composer/ReplyBox.tsx
-msgid "Suggested by {author}"
-msgstr "{author} の提案"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Suggested scopes"
@@ -12573,13 +13068,17 @@ msgstr "推奨スコープ"
 msgid "Suggestion discarded"
 msgstr "提案を破棄しました"
 
-#: src/features/contact/ContactPage.tsx
+#: src/features/contact/ContactDetail.tsx
 msgid "Summary"
 msgstr "概要"
 
 #: src/components/common/text.ts
 msgid "Sunday"
 msgstr "日曜日"
+
+#: src/app/Sidebar.tsx
+msgid "Support"
+msgstr "サポート"
 
 #: src/features/migrations/SourceStep.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
@@ -12646,6 +13145,10 @@ msgstr "タブ"
 msgid "Tags"
 msgstr "タグ"
 
+#: src/features/broadcasts/ListSettings.tsx
+msgid "Takes sign-ups again and brings the list back to the broadcast audience picker."
+msgstr "登録の受け付けを再開し、リストを配信のオーディエンス選択に戻します。"
+
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Taking the recipients: {prepared} so far"
 msgstr "宛先を確定中: これまでに {prepared} 件"
@@ -12667,8 +13170,7 @@ msgstr "TCP チェック"
 #: src/features/home/HomePage.tsx
 #: src/features/reports/ReportPages.tsx
 #: src/features/settings/SettingsColumn.tsx
-#: src/features/team/MemberPage.tsx
-#: src/features/team/TeamColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Team"
 msgstr "チーム"
 
@@ -12684,7 +13186,7 @@ msgstr "{sender} のチームメンバー"
 msgid "Team note"
 msgstr "チームメモ"
 
-#: src/features/contact/ContactPage.tsx
+#: src/features/contact/ContactDetail.tsx
 msgid "Team notes"
 msgstr "チームメモ"
 
@@ -12700,15 +13202,14 @@ msgstr "チームの返信"
 msgid "Team right now"
 msgstr "現在のチーム"
 
-#: src/features/settings/members/Invites.tsx
+#: src/features/team/TeamPage.tsx
 msgid "teammate@company.com"
 msgstr "teammate@company.com"
 
 #: src/features/status/StatusPages.tsx
-msgid "Tell your customers whether your product works. Each inbox gets one page, where you open incidents, plan maintenance and set the state of each component."
-msgstr "製品が正常に動いているかを顧客に伝えましょう。受信箱ごとに 1 つのページがあり、インシデントの登録、メンテナンスの計画、各コンポーネントの状態設定ができます。"
+msgid "Tell your customers whether your product works. Each product gets one page, where you open incidents, plan maintenance and set the state of each component."
+msgstr "製品が動いているかどうかを顧客に伝えましょう。製品ごとに1つのページがあり、そこでインシデントの作成、メンテナンスの計画、各コンポーネントの状態設定を行います。"
 
-#: src/features/broadcasts/Composer.tsx
 #: src/features/setup/email/EmailLayout.tsx
 msgid "Test"
 msgstr "テスト"
@@ -12851,6 +13352,10 @@ msgstr "列はヘッダー行から推測されます。1 つはメールアド�
 msgid "The component whose state this monitor sets."
 msgstr "このモニターが状態を設定するコンポーネント。"
 
+#: src/features/status/IncidentDetail.tsx
+msgid "The components are back to operational. It moved to Past."
+msgstr "コンポーネントは正常稼働に戻りました。「過去」に移動しました。"
+
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "The confirmation mail is on its way."
 msgstr "確認メールを送信中です。"
@@ -12867,7 +13372,7 @@ msgstr "連絡先が削除されました"
 msgid "The conversations stay open. Customers get it right away and it cannot be recalled."
 msgstr "会話は開いたままです。お客様にはすぐに届き、取り消すことはできません。"
 
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "The current address stops working at once. Update whatever calls it."
 msgstr "現在のアドレスはすぐに使えなくなります。呼び出している箇所をすべて更新してください。"
 
@@ -13007,6 +13512,10 @@ msgstr "対応可能な人を表示する受信トレイでの、会話の最初
 msgid "the first one"
 msgstr "最初のもの"
 
+#: src/features/docs/PagesTab.tsx
+msgid "The first rating makes the page appear here."
+msgstr "最初の評価で、このページがここに表示されます。"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "The first thing the chat says"
 msgstr "チャットが最初に伝える内容"
@@ -13022,6 +13531,10 @@ msgstr "フォームにはチェックなしの同意ボックスが表示され
 #: src/features/broadcasts/FormSnippets.tsx
 msgid "The form works on these addresses:"
 msgstr "フォームは次のアドレスで動作します:"
+
+#: src/features/status/MonitorsPage.tsx
+msgid "The full address is shown only once, when you make it. Anyone who has it can report for this monitor."
+msgstr "完全なアドレスは作成時に一度だけ表示されます。アドレスを知っていれば、誰でもこのモニターの結果を送信できます。"
 
 #: src/features/oauth/ConsentPage.tsx
 msgid "The full API: MCP, the REST API and live updates, like a member app."
@@ -13197,6 +13710,10 @@ msgstr "メールボックスがサインインを拒否しました"
 msgid "The mailbox refused the sign-in over IMAP"
 msgstr "メールボックスが IMAP でのサインインを拒否しました"
 
+#: src/features/status/IncidentDetail.tsx
+msgid "The maintenance is complete. Everything works as before."
+msgstr "メンテナンスが完了しました。すべて元どおり動作しています。"
+
 #: src/components/common/text.ts
 msgid "The mbox file is compressed inside the zip. Unzip the Takeout archive and upload the .mbox file."
 msgstr "mbox ファイルは zip 内で圧縮されています。Takeout のアーカイブを展開して、.mbox ファイルをアップロードしてください。"
@@ -13257,6 +13774,10 @@ msgstr "このページは過去1時間にすでに10件の通知を送信して
 msgid "The page answers at"
 msgstr "ページの公開先"
 
+#: src/features/status/StatusPages.tsx
+msgid "The page answers not found until you publish it again."
+msgstr "再び公開するまで、ページは「見つかりません」と応答します。"
+
 #: src/features/status/PreviewDialog.tsx
 msgid "The page as visitors see it now. Drafts are left out."
 msgstr "訪問者に今見えているページです。下書きは含まれません。"
@@ -13282,8 +13803,8 @@ msgid "The page stops answering on this domain. Its address on this server keeps
 msgstr "このドメインではページが応答しなくなります。このサーバー上のアドレスは引き続き使えます。"
 
 #: src/features/status/ComponentsTab.tsx
-msgid "The parts of your product. Set a state by hand, or let an incident do it."
-msgstr "製品の各部分です。状態を手動で設定するか、インシデントに任せます。"
+msgid "The parts of your product. Set a state by hand, or let an incident or a monitor do it."
+msgstr "製品の構成要素です。状態は手動で設定するか、インシデントやモニターに任せられます。"
 
 #: src/features/auth/SignInForm.tsx
 msgid "The passkey sign-in did not complete. Try again or use an e-mailed code."
@@ -13324,6 +13845,10 @@ msgstr "ポートは 1 から 65535 にしてください。"
 #: src/features/settings/webhooks/sections.tsx
 msgid "The previous secret also signs until {rotatedUntil}."
 msgstr "以前のシークレットも {rotatedUntil} まで署名に使われます。"
+
+#: src/features/status/IncidentDetail.tsx
+msgid "The problem is fixed. Sorry for the trouble."
+msgstr "問題は解決しました。ご不便をおかけしました。"
 
 #: src/features/migrations/text.ts
 msgid "The provider asked to slow down"
@@ -13584,7 +14109,7 @@ msgstr "日別バーのタイムゾーン。"
 msgid "Their consent records, for a request about what you hold on them:"
 msgstr "その人の同意記録(保有情報についての請求に対応するため):"
 
-#: src/features/settings/members/MemberList.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Their conversations stay; they lose access at once."
 msgstr "会話は残りますが、アクセスはすぐに失われます。"
 
@@ -13605,8 +14130,8 @@ msgid "These choices are kept on this device only."
 msgstr "これらの選択は、このデバイスにのみ保存されます。"
 
 #: src/features/contact/ContactsPage.tsx
-msgid "These look like the same person. Merging keeps the left one and moves addresses, ids and conversations into it."
-msgstr "同一人物のようです。統合すると左側が残り、アドレス、ID、会話がそこに移されます。"
+msgid "These look like the same person. Merging keeps the left one and moves addresses, ids and conversations into it. Nothing is merged until you have seen what changes."
+msgstr "同じ人のようです。統合すると左側が残り、アドレス、ID、会話がそこに移ります。変更内容を確認するまで何も統合されません。"
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "These merge fields have no fallback and would be empty for some recipients:"
@@ -13712,6 +14237,10 @@ msgstr "このチャネルの一斉配信は Amazon SES を経由し、SES が E
 msgid "This conflicts with something that already exists."
 msgstr "すでに存在するものと競合しています。"
 
+#: src/features/contact/ContactDetails.tsx
+msgid "This contact has no e-mail address yet. Add one under Contact and identities first."
+msgstr "このコンタクトにはまだメールアドレスがありません。先に「コンタクトと ID」で追加してください。"
+
 #: src/features/contact/MergePreview.tsx
 msgid "This contact keeps its own value"
 msgstr "この連絡先は自分の値を保持します"
@@ -13766,6 +14295,10 @@ msgstr "この受信トレイには同じ名前のリストがすでにありま
 msgid "This inbox already has a status page."
 msgstr "この受信トレイにはすでにステータスページがあります。"
 
+#: src/features/docs/InstallDialog.tsx
+msgid "This inbox has no chat channel yet. Add one under <0>Add a channel</0>."
+msgstr "この受信トレイにはまだチャットチャネルがありません。<0>チャネルを追加</0>から追加してください。"
+
 #: src/features/setup/NewsletterStep.tsx
 msgid "This inbox has no e-mail channel that can send yet. You can create the list now; it sends once an e-mail channel with a reply account is picked in its settings."
 msgstr "この受信トレイには、送信できるメールチャネルがまだありません。リストは今作成できます。返信用アカウント付きのメールチャネルをリストの設定で選ぶと、送信されます。"
@@ -13790,7 +14323,7 @@ msgstr "この受信トレイにはメーリングリストがまだありませ
 msgid "This is a compressed archive. Unzip the Takeout archive and upload the .mbox file."
 msgstr "これは圧縮アーカイブです。Takeout のアーカイブを展開して、.mbox ファイルをアップロードしてください。"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "This is a draft. Only your team sees it, and it changes no component until you publish it."
 msgstr "これは下書きです。チームだけが見られ、公開するまでコンポーネントは変更されません。"
 
@@ -13858,9 +14391,9 @@ msgstr "このリストには送信できるメールチャネルがないため
 msgid "This list has no e-mail channel that can send. Until it has one, forms send no confirmation mail, new form subscribers stay waiting for confirmation and nobody gets a welcome mail. Pick an e-mail channel with an SMTP account below, or add the SMTP account in the inbox settings."
 msgstr "このリストには送信できるメールチャネルがありません。設定するまで、フォームは確認メールを送らず、新しいフォーム登録者は確認待ちのままで、誰もウェルカムメールを受け取りません。下で SMTP アカウント付きのメールチャネルを選ぶか、受信トレイの設定で SMTP アカウントを追加してください。"
 
-#: src/features/broadcasts/ListSettings.tsx
-msgid "This list is archived."
-msgstr "このリストはアーカイブされています。"
+#: src/features/broadcasts/ListPage.tsx
+msgid "This list is archived. It takes no new subscribers and broadcasts cannot pick it."
+msgstr "このリストはアーカイブされています。新しい購読者は受け付けず、配信でも選べません。"
 
 #: src/features/broadcasts/FormSnippets.tsx
 msgid "This list is private, so forms do not offer it. Make it public in the settings to use a form."
@@ -13870,7 +14403,7 @@ msgstr "このリストは非公開のため、フォームには表示されま
 msgid "This mailbox connects only with “Sign in with Microsoft”, which this Yuva server does not offer. Ask its operator to set it up."
 msgstr "このメールボックスは「Microsoft でサインイン」でのみ接続できますが、この Yuva サーバーは対応していません。運用担当者に設定を依頼してください。"
 
-#: src/features/team/MemberPage.tsx
+#: src/features/team/TeamPage.tsx
 msgid "This member is not in the workspace any more."
 msgstr "このメンバーはもうワークスペースにいません。"
 
@@ -13881,6 +14414,10 @@ msgstr "この移行は終了したため、これ以上アップロードでき
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "This month"
 msgstr "今月"
+
+#: src/features/status/IncidentDialog.tsx
+msgid "This page is not public yet, so visitors see nothing until you publish the page."
+msgstr "このページはまだ公開されていないため、公開するまで訪問者には何も表示されません。"
 
 #: src/components/common/text.ts
 msgid "This person unsubscribed from everything, reported a mail as spam or had their data erased, so the team cannot add them again."
@@ -14042,6 +14579,7 @@ msgid "Time zone"
 msgstr "タイムゾーン"
 
 #: src/features/status/MonitorDialog.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Timeout"
 msgstr "タイムアウト"
 
@@ -14161,6 +14699,7 @@ msgstr "Türkçe"
 #: src/app/Palette.tsx
 #: src/features/conversation/ConversationMenu.tsx
 #: src/features/docs/discussions/FromConversation.tsx
+#: src/features/docs/FromDocs.tsx
 msgid "Turn into a discussion"
 msgstr "ディスカッションにする"
 
@@ -14206,7 +14745,6 @@ msgid "TXT record"
 msgstr "TXT レコード"
 
 #: src/features/inbox/SourceFilter.tsx
-#: src/features/status/MonitorsTab.tsx
 msgid "Type"
 msgstr "種類"
 
@@ -14240,7 +14778,12 @@ msgstr "未回答"
 msgid "Unassigned"
 msgstr "未割り当て"
 
+#: src/features/contact/ContactDetail.tsx
+msgid "Unblock contact"
+msgstr "コンタクトのブロックを解除"
+
 #: src/features/contact/ContactDetails.tsx
+#: src/features/contact/ContactsPage.tsx
 msgid "Undeliverable"
 msgstr "配信不能"
 
@@ -14299,6 +14842,10 @@ msgstr "フォローを解除しました"
 msgid "Unknown device"
 msgstr "不明なデバイス"
 
+#: src/features/feedback/RoadmapCard.tsx
+msgid "Unlink"
+msgstr "リンクを解除"
+
 #: src/components/common/Linked.tsx
 msgid "Unlink {name}"
 msgstr "{name} のリンクを解除"
@@ -14321,7 +14868,7 @@ msgstr "ロックを解除しました"
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/TestSend.tsx
 #: src/features/contact/ContactCard.tsx
-#: src/features/contact/ContactPage.tsx
+#: src/features/contact/ContactDetail.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/contact/ContactSearch.tsx
 #: src/features/contact/ContactSheet.tsx
@@ -14333,7 +14880,6 @@ msgid "Unnamed contact"
 msgstr "名前のない連絡先"
 
 #: src/features/conversation/ConversationMenu.tsx
-#: src/features/inbox/ChatList.tsx
 msgid "Unpin"
 msgstr "固定を解除"
 
@@ -14341,15 +14887,17 @@ msgstr "固定を解除"
 msgid "Unpinned"
 msgstr "固定を解除しました"
 
-#: src/features/status/StatusPagePane.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Unpublish"
 msgstr "非公開にする"
 
-#: src/features/status/StatusPagePane.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Unpublish ({publishKey})"
 msgstr "非公開にする（{publishKey}）"
+
+#: src/features/status/StatusPages.tsx
+msgid "Unpublish {pageName}?"
+msgstr "{pageName} の公開を取り消しますか？"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Unpublish or unschedule the entry"
@@ -14359,14 +14907,9 @@ msgstr "エントリを非公開にする、または予約を取り消す"
 msgid "Unpublish the translation"
 msgstr "翻訳を非公開にする"
 
-#: src/features/status/StatusColumn.tsx
 #: src/features/status/StatusPages.tsx
 msgid "Unpublished"
 msgstr "非公開"
-
-#: src/features/status/StatusPagePane.tsx
-msgid "Unpublished, only your team can preview it"
-msgstr "非公開、プレビューできるのはチームだけです"
 
 #: src/features/feedback/FeedbackList.tsx
 #: src/features/inbox/ChatList.tsx
@@ -14433,6 +14976,10 @@ msgstr "今配信停止した"
 msgid "until {expires}"
 msgstr "{expires} まで"
 
+#: src/features/broadcasts/ReviewPanel.tsx
+msgid "Until it starts you can go back to a draft."
+msgstr "開始するまでは下書きに戻せます。"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Until they click the link they stay waiting for confirmation and get no other mail. Unconfirmed subscriptions are deleted after 30 days."
 msgstr "リンクをクリックするまで確認待ちのままで、他のメールは届きません。未確認の登録は 30 日後に削除されます。"
@@ -14445,17 +14992,31 @@ msgstr "リンクをクリックするまで、確認待ちの状態のままで
 msgid "Unverified sender"
 msgstr "未確認の送信者"
 
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/status/MonitorsPage.tsx
 #: src/features/status/text.tsx
 msgid "Up"
 msgstr "アップ"
+
+#: src/features/status/MonitorsPage.tsx
+msgid "Up again"
+msgstr "復旧しました"
+
+#: src/features/status/IncidentDetail.tsx
+msgid "Up since {upSince}. Post the all-clear when you are sure."
+msgstr "{upSince} から稼働中です。確信できたら復旧のお知らせを投稿してください。"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Up to {max} and 100,000 rows, with a header row. Excel files in Turkish or Western encodings and columns separated by commas, semicolons or tabs are read as they are."
 msgstr "最大 {max}、100,000 行、ヘッダー行あり。トルコ語や西欧の文字コードの Excel ファイル、カンマ・セミコロン・タブ区切りの列は、そのまま読み取られます。"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Update text"
 msgstr "更新の本文"
+
+#: src/features/status/IncidentDetail.tsx
+msgid "Updates"
+msgstr "アップデート"
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Updating"
@@ -14497,14 +15058,13 @@ msgstr "アップロード済み {step}%"
 msgid "Uploading…"
 msgstr "アップロード中…"
 
-#: src/features/status/MonitorsTab.tsx
 #: src/features/status/ResponseChart.tsx
 msgid "Uptime"
 msgstr "稼働率"
 
 #: src/features/home/HomePage.tsx
-msgid "uptime · 30 days"
-msgstr "稼働率 · 30 日間"
+msgid "uptime · {shown} days"
+msgstr "稼働率 · {shown}日間"
 
 #: src/features/status/ComponentsTab.tsx
 msgid "Uptime is hidden on this page. Turn it on in the settings to see each day here."
@@ -14706,23 +15266,27 @@ msgstr "非常に大きなメールボックスですか?Google Takeout ファ�
 msgid "View"
 msgstr "表示"
 
-#: src/features/status/StatusPagePane.tsx
 #: src/features/status/StatusPages.tsx
 msgid "View page"
 msgstr "ページを表示"
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/status/StatusPages.tsx
+msgid "View page ({openKey})"
+msgstr "ページを表示 ({openKey})"
+
+#: src/features/docs/PagesTab.tsx
 msgid "views"
 msgstr "表示回数"
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "Views"
 msgstr "表示"
 
 #: src/components/common/Source.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/contact/ContactsPage.tsx
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/FromDocs.tsx
+#: src/features/docs/PagesTab.tsx
 #: src/features/setup/previews.tsx
 msgid "Visitor"
 msgstr "訪問者"
@@ -14732,7 +15296,7 @@ msgid "Visitor · {where}"
 msgstr "訪問者 · {where}"
 
 #: src/features/broadcasts/Report.tsx
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "visitors"
 msgstr "訪問者"
 
@@ -14787,7 +15351,8 @@ msgstr "送信開始以降の、utm_campaign={campaign} が付いたサイトへ
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/migrations/parts.tsx
-#: src/features/status/MonitorsTab.tsx
+#: src/features/status/DomainCard.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "Waiting"
 msgstr "待機中"
 
@@ -14795,15 +15360,17 @@ msgstr "待機中"
 msgid "Waiting for {provider}'s limit; continues at {waiting}."
 msgstr "{provider} の上限を待機中。{waiting} に再開します。"
 
-#: src/features/docs/DocsPages.tsx
+#: src/features/docs/DocsPage.tsx
+#: src/features/docs/PagesTab.tsx
 msgid "waiting for approval"
 msgstr "承認待ち"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/account/AccountPage.tsx
 #: src/features/docs/discussions/DiscussionsPane.tsx
 #: src/features/docs/discussions/parts.tsx
-#: src/features/docs/discussions/ThreadPane.tsx
-#: src/features/docs/DocsColumn.tsx
+#: src/features/docs/DiscussionsTab.tsx
+#: src/features/docs/DocsPage.tsx
 msgid "Waiting for approval"
 msgstr "承認待ち"
 
@@ -14897,6 +15464,10 @@ msgstr "新しいコードを送信しました。最新のコードだけが有
 msgid "Web chat"
 msgstr "ウェブチャット"
 
+#: src/features/feedback/FeedbackFormDialog.tsx
+msgid "Web pages use the chat widget with the feedback form turned on. Apps call the feedback form from the SDK."
+msgstr "ウェブページはフィードバックフォームをオンにしたチャットウィジェットを使います。アプリは SDK からフォームを呼び出します。"
+
 #: src/features/settings/webhooks/WebhookPage.tsx
 msgid "Webhook endpoint"
 msgstr "Webhook エンドポイント"
@@ -14917,6 +15488,10 @@ msgstr "{0} の Webhook"
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Webhooks for this inbox"
 msgstr "この受信トレイの Webhook"
+
+#: src/features/feedback/FeedbackFormDialog.tsx
+msgid "Website"
+msgstr "ウェブサイト"
 
 #: src/features/setup/AddChannelStep.tsx
 msgid "Website addresses"
@@ -14951,7 +15526,7 @@ msgstr "取り込まれるもの"
 msgid "What did they agree to?"
 msgstr "何に同意しましたか?"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "What do customers need to know?"
 msgstr "お客様が知っておくべきことは何ですか？"
 
@@ -14963,6 +15538,7 @@ msgstr "このお客様に伝えるべきことは何ですか？"
 msgid "What each column holds"
 msgstr "各列の内容"
 
+#: src/features/broadcasts/SubscriberSheet.tsx
 #: src/features/migrations/DoneStep.tsx
 msgid "What happened"
 msgstr "起きたこと"
@@ -15030,6 +15606,7 @@ msgstr "よく書く内容"
 #: src/app/Palette.tsx
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/home/HomePage.tsx
 #: src/features/settings/channels/ChannelPage.tsx
 #: src/features/settings/channels/chat/ChatSections.tsx
 msgid "What’s new"
@@ -15060,6 +15637,7 @@ msgid "When did they agree?"
 msgstr "いつ同意しましたか?"
 
 #: src/features/status/MonitorDialog.tsx
+#: src/features/status/MonitorsPage.tsx
 msgid "When it goes down"
 msgstr "ダウンしたとき"
 
@@ -15086,6 +15664,10 @@ msgstr "他の人があなたに割り当てたとき。"
 #: src/features/feedback/FeedbackList.tsx
 msgid "When someone sends feedback, it will be in the list."
 msgstr "フィードバックが送信されると、ここに表示されます。"
+
+#: src/features/feedback/RoadmapCard.tsx
+msgid "When this idea ships, you can answer everyone linked to it in one reply."
+msgstr "このアイデアがリリースされたら、リンクした全員に 1 通で返信できます。"
 
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "When to notify me"
@@ -15159,11 +15741,11 @@ msgstr "オフの間は、配信は行われません。"
 msgid "While your status is Away, only new messages in conversations assigned to you and new assignments notify you. A conversation you have open in the panel never notifies you."
 msgstr "ステータスが不在の間は、自分に割り当てられた会話の新着メッセージと新しい割り当てのみ通知されます。パネルで開いている会話が通知されることはありません。"
 
-#: src/features/broadcasts/Overview.tsx
+#: src/features/broadcasts/ListsHome.tsx
 msgid "Who agreed to hear from you, with consent recorded"
 msgstr "配信に同意した人（同意の記録付き）"
 
-#: src/features/team/TeamColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Who answers, where, and who is online"
 msgstr "誰が、どこで返信し、誰がオンラインか"
 
@@ -15171,7 +15753,7 @@ msgstr "誰が、どこで返信し、誰がオンラインか"
 msgid "Who can reply"
 msgstr "返信できる人"
 
-#: src/features/team/TeamColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Who is here"
 msgstr "ここにいる人"
 
@@ -15211,16 +15793,18 @@ msgstr "独自の名前、言語、タイムゾーンで"
 msgid "With two-factor sign-in, create an app password in Zoho Accounts › Security › App passwords; otherwise your password works."
 msgstr "2 段階認証の場合は、Zoho Accounts › セキュリティ › アプリパスワード でアプリパスワードを作成します。そうでなければ通常のパスワードが使えます。"
 
-#: src/features/settings/members/Invites.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Withdraw"
 msgstr "取り下げ"
 
-#. placeholder {0}: inv.email
 #. placeholder {0}: invite.email
-#: src/features/settings/members/Invites.tsx
-#: src/features/team/TeamColumn.tsx
+#: src/features/team/TeamPage.tsx
 msgid "Withdraw the invite for {0}"
 msgstr "{0} への招待を取り下げる"
+
+#: src/features/team/TeamPage.tsx
+msgid "Withdraw this invite?"
+msgstr "この招待を取り消しますか?"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Within {m} minutes"
@@ -15250,7 +15834,7 @@ msgstr "確認なしでは、誰でも他人のアドレスをフォームに入
 msgid "Won't do"
 msgstr "対応しない"
 
-#: src/features/status/IncidentPane.tsx
+#: src/features/status/IncidentDetail.tsx
 msgid "Work is going on"
 msgstr "作業中"
 
@@ -15279,10 +15863,6 @@ msgstr "作業中…"
 msgid "Workspace"
 msgstr "ワークスペース"
 
-#: src/features/settings/members/MemberList.tsx
-msgid "Workspace members"
-msgstr "ワークスペースのメンバー"
-
 #: src/features/auth/CreateWorkspace.tsx
 msgid "Workspace name"
 msgstr "ワークスペース名"
@@ -15302,10 +15882,6 @@ msgstr "ワークスペース: {name}"
 #: src/app/Sidebar.tsx
 msgid "Workspaces"
 msgstr "ワークスペース"
-
-#: src/features/contact/ContactsPage.tsx
-msgid "Write"
-msgstr "作成"
 
 #: src/features/setup/previews.tsx
 msgid "Write a message…"
@@ -15431,6 +16007,14 @@ msgstr "このページを離れてもかまいません。会話は会話リス
 msgid "You can then write, vote and follow discussions there. The team behind {host} sees your name and e-mail address when you write; other readers see only your name."
 msgstr "そこで書き込み、投票し、ディスカッションをフォローできます。書き込むと、{host} のチームにはあなたの名前とメールアドレスが表示されます。他の閲覧者には名前のみ表示されます。"
 
+#: src/features/team/TeamPage.tsx
+msgid "You cannot change your own role."
+msgstr "自分自身のロールは変更できません。"
+
+#: src/features/team/TeamPage.tsx
+msgid "You cannot remove yourself."
+msgstr "自分自身を削除することはできません。"
+
 #: src/features/account/AccountPage.tsx
 msgid "You follow no discussions. You follow the ones you start or reply to."
 msgstr "フォローしているディスカッションはありません。自分が開始または返信したものをフォローします。"
@@ -15442,6 +16026,14 @@ msgstr "新しいシークレットは一度だけ発行されます。24 時間
 #: src/features/account/AccountPage.tsx
 msgid "You get a notification when someone replies in these"
 msgstr "これらに返信があると通知を受け取ります"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "You get the address to call when you save. It is shown only once."
+msgstr "保存すると、呼び出すアドレスが発行されます。表示されるのは一度だけです。"
+
+#: src/features/status/MonitorDialog.tsx
+msgid "You get the address your alerting calls when you save, for Alertmanager, Grafana or your own script. It is shown only once."
+msgstr "保存すると、Alertmanager、Grafana、または独自スクリプトなどのアラート側が呼び出すアドレスが発行されます。表示されるのは一度だけです。"
 
 #: src/features/auth/CreateWorkspace.tsx
 msgid "You have created as many workspaces as this server allows. Delete one you no longer use, or ask to be invited to another."
@@ -15458,10 +16050,6 @@ msgstr "まだどのディスカッションにも書き込んでいません。
 #: src/features/inbox/SidePanels.tsx
 msgid "You have read every mention."
 msgstr "すべてのメンションを読みました。"
-
-#: src/features/inbox/ChatList.tsx
-msgid "You have read everything."
-msgstr "すべて読みました。"
 
 #: src/features/auth/DeleteAccountButton.tsx
 msgid "You leave every workspace and lose your sign-ins, passkeys and notifications. Messages you wrote stay in their conversations, shown as from a deleted member. This cannot be undone."
@@ -15483,6 +16071,10 @@ msgstr "あなたが開始しました"
 msgid "You will no longer be able to sign in with it."
 msgstr "これでサインインできなくなります。"
 
+#: src/features/docs/PagesTab.tsx
+msgid "You write and host them. Yuva adds a rating and a discussion under each page and shows the results here."
+msgstr "ページの執筆とホストはあなたが行います。Yuvaは各ページの下に評価とディスカッションを追加し、結果をここに表示します。"
+
 #: src/features/auth/SignInForm.tsx
 msgid "you@company.com"
 msgstr "you@company.com"
@@ -15503,7 +16095,7 @@ msgstr "あなたのアカウント"
 msgid "Your admin allowed Yuva"
 msgstr "管理者が Yuva を許可しました"
 
-#: src/features/contact/ContactPage.tsx
+#: src/features/contact/ContactDetail.tsx
 msgid "Your app or widget sends these when it identifies the contact."
 msgstr "アプリまたはウィジェットが連絡先を識別するときに送信します。"
 

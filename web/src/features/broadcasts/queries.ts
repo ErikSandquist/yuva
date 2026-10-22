@@ -7,7 +7,6 @@ import { useSession } from "@/lib/session"
 
 export const GROWTH_WINDOWS: GrowthDays[] = [30, 90]
 
-export const useShowArchived = store(false)
 export const useGrowthDays = store<GrowthDays>(30)
 
 export function listLink(id: string, tab?: string) {
@@ -53,6 +52,15 @@ export function useSetList() {
     void qc.invalidateQueries({ queryKey: ["ws", ws, "lists", "pages"] })
     void qc.invalidateQueries({ queryKey: ["ws", ws, "lists", "contact"] })
   }
+}
+
+export function useArchiveList(listId: string) {
+  const setList = useSetList()
+  return useMutation({
+    mutationFn: (archived: boolean) =>
+      unwrap(api.PATCH("/v1/lists/{listId}", { params: { path: { listId } }, body: { archived } })),
+    onSuccess: setList,
+  })
 }
 
 export function useGrowth(id: string, days: GrowthDays) {
@@ -127,6 +135,12 @@ export function useInboxChannels(inboxId: string) {
       unwrap(api.GET("/v1/inboxes/{inboxId}/channels", { params: { path: { inboxId } } })).then((r) => r.items),
     enabled: !!inboxId,
   })
+}
+
+export function useSender(inboxId: string, channelId?: string) {
+  const channels = useInboxChannels(inboxId).data ?? []
+  const c = channels.find((x) => x.id === channelId) ?? channels.find((x) => x.kind === "email")
+  return c?.email ? c.email.from_address || c.email.address : undefined
 }
 
 export function useDeleteList() {

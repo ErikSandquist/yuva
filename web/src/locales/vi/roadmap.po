@@ -7,6 +7,10 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: vi\n"
 
+#: src/features/roadmap/CreateBoardDialog.tsx
+msgid "{inboxName} has no web chat channel. Add one first, because the public board embeds it."
+msgstr "{inboxName} chưa có kênh chat web. Hãy thêm một kênh trước, vì bảng công khai nhúng kênh này."
+
 #: src/features/roadmap/Board.tsx
 msgid "{linked, plural, one {# feedback} other {# feedback}}"
 msgstr "{linked, plural, other {# phản hồi}}"
@@ -29,9 +33,25 @@ msgid "A reader's posts wait for a member until one of theirs is approved. Signe
 msgstr "Bài đăng của người đọc chờ một thành viên duyệt cho đến khi một bài của họ được chấp thuận. Người dùng đã đăng nhập vào ứng dụng của bạn đăng ngay lập tức."
 
 #: src/features/roadmap/CreateBoardDialog.tsx
+msgid "Add a web chat channel"
+msgstr "Thêm kênh chat web"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
 #: src/features/roadmap/Settings.tsx
 msgid "Address"
 msgstr "Địa chỉ"
+
+#: src/features/roadmap/BoardBar.tsx
+msgid "All boards"
+msgstr "Tất cả bảng"
+
+#: src/features/roadmap/Settings.tsx
+msgid "All changes saved."
+msgstr "Đã lưu mọi thay đổi."
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "All feedback from {inboxName} that fits is already linked."
+msgstr "Mọi phản hồi phù hợp từ {inboxName} đều đã được liên kết."
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Already linked"
@@ -89,13 +109,16 @@ msgstr "Đếm lượt xem trang của bảng công khai mà không dùng cookie
 
 #: src/features/roadmap/CreateBoardDialog.tsx
 #: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
 msgid "Create board"
 msgstr "Tạo bảng"
 
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Create board ({newKey})"
 msgstr "Tạo bảng ({newKey})"
+
+#: src/features/roadmap/BoardBar.tsx
+msgid "Create board for {name}"
+msgstr "Tạo bảng cho {name}"
 
 #: src/features/roadmap/NewIdeaDialog.tsx
 msgid "Create idea"
@@ -123,17 +146,21 @@ msgstr "Xóa bảng cùng các ý tưởng, phiếu bầu, câu trả lời và 
 msgid "Description"
 msgstr "Mô tả"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Dismiss"
+msgstr "Bỏ qua"
+
 #: src/features/roadmap/Board.tsx
 msgid "Done"
 msgstr "Xong"
 
-#: src/features/roadmap/MoveDialog.tsx
-msgid "Every linked feedback that does not have it yet gets the progress {progress}. Linked feedback: {linked}"
-msgstr "Mọi phản hồi đã liên kết chưa có tiến độ {progress} sẽ nhận tiến độ đó. Phản hồi đã liên kết: {linked}"
-
 #: src/features/roadmap/Settings.tsx
 msgid "Everyone's posts are published at once, except those of authors you marked as spam."
 msgstr "Bài đăng của mọi người được đăng ngay, trừ bài của những tác giả bạn đã đánh dấu là thư rác."
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Good news: “{title}” has shipped. Thank you for asking for it."
+msgstr "Tin vui: “{title}” đã được phát hành. Cảm ơn bạn đã đề xuất."
 
 #: src/features/roadmap/Board.tsx
 msgid "Hidden"
@@ -155,21 +182,30 @@ msgstr "Ý tưởng khách hàng bình chọn, cùng phản hồi đằng sau ch
 msgid "Ideas, votes and stages for {inboxName}, with the feedback behind each idea. It stays private until you make it public."
 msgstr "Ý tưởng, phiếu bầu và giai đoạn cho {inboxName}, cùng các phản hồi đằng sau mỗi ý tưởng. Bảng vẫn ở chế độ riêng tư cho đến khi bạn công khai."
 
-#: src/features/roadmap/RoadmapColumn.tsx
-msgid "Ideas: {ideas}"
-msgstr "Ý tưởng: {ideas}"
-
 #: src/features/roadmap/NewIdeaDialog.tsx
 msgid "It goes into Ideas on the board, where customers can vote on it."
 msgstr "Nó vào mục Ý tưởng trên bảng, nơi khách hàng có thể bình chọn."
 
-#: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/NewIdeaDialog.tsx
+msgid "It goes into Ideas on the board. The board is private, so only your team sees it."
+msgstr "Ý tưởng sẽ vào mục Ý tưởng trên bảng. Bảng ở chế độ riêng tư nên chỉ nhóm của bạn thấy."
+
+#: src/features/roadmap/IdeaFeedback.tsx
 msgid "It was unlinked from the idea."
 msgstr "Đã gỡ liên kết khỏi ý tưởng."
 
 #: src/features/roadmap/Settings.tsx
 msgid "Its ideas, votes, replies and stage history are deleted with it."
 msgstr "Các ý tưởng, phiếu bầu, câu trả lời và lịch sử giai đoạn của bảng sẽ bị xóa cùng với nó."
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgctxt "link feedback to the idea"
+msgid "Link"
+msgstr "Liên kết"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Link feedback"
+msgstr "Liên kết phản hồi"
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Link this feedback to an idea…"
@@ -179,13 +215,21 @@ msgstr "Liên kết phản hồi này với một ý tưởng…"
 msgid "Link to an idea"
 msgstr "Liên kết với ý tưởng"
 
-#: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Linked"
+msgstr "Đã liên kết"
+
+#: src/features/roadmap/IdeaFeedback.tsx
 msgid "Linked feedback"
 msgstr "Phản hồi đã liên kết"
 
 #: src/features/roadmap/IdeaPane.tsx
 msgid "Linked feedback set to {progress}: {set}"
 msgstr "Phản hồi đã liên kết được đặt thành {progress}: {set}"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Linked feedback that gets the progress {progress}: {gets} of {linked}."
+msgstr "Phản hồi đã liên kết sẽ nhận tiến độ {progress}: {gets} trên {linked}."
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Linked to {title}"
@@ -195,19 +239,19 @@ msgstr "Đã liên kết với {title}"
 msgid "Load more"
 msgstr "Tải thêm"
 
-#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Make private"
 msgstr "Đặt riêng tư"
 
-#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Make private ({publicKey})"
 msgstr "Đặt riêng tư ({publicKey})"
 
-#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Make public"
 msgstr "Công khai"
 
-#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Make public ({publicKey})"
 msgstr "Công khai ({publicKey})"
 
@@ -254,25 +298,37 @@ msgstr "Ý tưởng mới"
 msgid "New idea from this feedback"
 msgstr "Ý tưởng mới từ phản hồi này"
 
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/pages.tsx
+msgid "No board is public yet. Make one public under Settings."
+msgstr "Chưa có bảng nào công khai. Hãy đặt một bảng ở chế độ công khai trong Cài đặt."
+
+#: src/features/roadmap/pages.tsx
 msgid "No board yet. Owners and admins create it."
 msgstr "Chưa có bảng. Chủ sở hữu và quản trị viên tạo bảng."
 
-#: src/features/roadmap/IdeaPane.tsx
-msgid "No feedback is linked yet. Open a piece of feedback and use Link to an idea."
-msgstr "Chưa có phản hồi nào được liên kết. Hãy mở một phản hồi và dùng “Liên kết với ý tưởng”."
+#: src/features/roadmap/MoveDialog.tsx
+msgid "No feedback is linked to this idea yet."
+msgstr "Chưa có phản hồi nào được liên kết với ý tưởng này."
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "No feedback is linked yet. Use Link feedback, or open a piece of feedback and choose Link to an idea."
+msgstr "Chưa có phản hồi nào được liên kết. Dùng Liên kết phản hồi, hoặc mở một phản hồi và chọn Liên kết với ý tưởng."
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "No idea matches."
 msgstr "Không có ý tưởng nào khớp."
 
-#: src/features/roadmap/RoadmapColumn.tsx
-msgid "No inbox to show a board for."
-msgstr "Không có hộp thư đến nào để hiển thị bảng."
+#: src/features/roadmap/Board.tsx
+msgid "No ideas yet. New ones land here."
+msgstr "Chưa có ý tưởng nào. Ý tưởng mới sẽ xuất hiện ở đây."
 
 #: src/features/roadmap/Settings.tsx
 msgid "None"
 msgstr "Không có"
+
+#: src/features/roadmap/Board.tsx
+msgid "Nothing here yet."
+msgstr "Ở đây chưa có gì."
 
 #: src/features/roadmap/Settings.tsx
 msgid "Off"
@@ -282,7 +338,7 @@ msgstr "Tắt"
 msgid "On: anyone with the address reads the board, and signed-in readers vote and suggest ideas. Off: only your team sees it, as a tool to sort feedback."
 msgstr "Bật: ai có địa chỉ đều đọc được bảng, và người đọc đã đăng nhập có thể bỏ phiếu và đề xuất ý tưởng. Tắt: chỉ nhóm của bạn thấy, như một công cụ để phân loại phản hồi."
 
-#: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/IdeaFeedback.tsx
 msgid "One reply, written once, goes to every open feedback conversation linked to this idea, as you, on each conversation’s own channel."
 msgstr "Một câu trả lời, viết một lần, được gửi đến mọi cuộc trò chuyện phản hồi đang mở đã liên kết với ý tưởng này, với tư cách bạn, qua kênh riêng của từng cuộc trò chuyện."
 
@@ -290,9 +346,22 @@ msgstr "Một câu trả lời, viết một lần, được gửi đến mọi 
 msgid "Open"
 msgstr "Mở"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgctxt "open the feedback"
+msgid "Open"
+msgstr "Mở"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Open Analytics"
+msgstr "Mở phân tích"
+
 #: src/features/roadmap/IdeaPane.tsx
 msgid "Open on the public board"
 msgstr "Mở trên bảng công khai"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Open Roadmap"
+msgstr "Mở lộ trình"
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Pick an idea of this inbox’s board"
@@ -302,17 +371,11 @@ msgstr "Chọn một ý tưởng từ bảng của hộp thư đến này"
 msgid "Posted as your public reply on the idea. Markdown works."
 msgstr "Được đăng dưới dạng câu trả lời công khai của bạn cho ý tưởng. Hỗ trợ Markdown."
 
-#: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Private"
 msgstr "Riêng tư"
 
-#: src/features/roadmap/pages.tsx
-msgid "Private, only your team sees it"
-msgstr "Riêng tư, chỉ nhóm của bạn thấy"
-
-#: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/BoardBar.tsx
 #: src/features/roadmap/Settings.tsx
 msgid "Public"
 msgstr "Công khai"
@@ -329,19 +392,37 @@ msgstr "Người đọc không thể đề xuất ý tưởng. Phiếu bầu và
 msgid "Readers suggested new ideas. Review them before they show on the public board."
 msgstr "Độc giả đã đề xuất ý tưởng mới. Hãy duyệt chúng trước khi hiển thị trên bảng công khai."
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Reply to everyone"
+msgstr "Trả lời tất cả"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Reply to linked ({key})"
+msgstr "Trả lời các cuộc đã liên kết ({key})"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Resolved feedback does not get it: {closed}"
+msgstr "Phản hồi đã giải quyết sẽ không nhận được: {closed}"
+
 #: src/features/roadmap/Board.tsx
 msgid "Review"
 msgstr "Xem lại"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Review the reply"
+msgstr "Xem lại câu trả lời"
+
 #: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
 msgid "Roadmap"
 msgstr "Lộ trình"
 
-#: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Roadmap boards"
 msgstr "Bảng lộ trình"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Save"
+msgstr "Lưu"
 
 #: src/features/roadmap/Settings.tsx
 msgid "Saved"
@@ -355,9 +436,13 @@ msgstr "Tìm ý tưởng"
 msgid "Settings"
 msgstr "Cài đặt"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Shipped. Open feedback linked to it: {open}. A reply is ready to send."
+msgstr "Đã phát hành. Phản hồi đang mở liên kết với ý tưởng: {open}. Một câu trả lời đã sẵn sàng để gửi."
+
 #: src/features/roadmap/pages.tsx
-msgid "Show your customers what you are building, and link the feedback behind each idea. Create a board for an inbox to sort ideas into stages."
-msgstr "Cho khách hàng thấy bạn đang xây dựng gì và liên kết phản hồi đằng sau mỗi ý tưởng. Tạo một bảng cho hộp thư để sắp xếp ý tưởng theo giai đoạn."
+msgid "Show your customers what you are building, and link the feedback behind each idea. Create a board for {missingName} to sort ideas into stages."
+msgstr "Cho khách hàng thấy bạn đang xây dựng gì và liên kết các phản hồi đứng sau mỗi ý tưởng. Tạo bảng cho {missingName} để sắp xếp ý tưởng theo từng giai đoạn."
 
 #: src/features/roadmap/Settings.tsx
 msgid "Shown under the name on the public board."
@@ -404,6 +489,10 @@ msgstr "Tiến độ của các phản hồi đã liên kết không thay đổi
 msgid "The public board embeds this chat, and ideas your team starts are filed on it."
 msgstr "Bảng công khai nhúng cuộc trò chuyện này, và các ý tưởng nhóm bạn bắt đầu được lưu vào đó."
 
+#: src/features/roadmap/MoveDialog.tsx
+msgid "The rest already have it."
+msgstr "Những phản hồi còn lại đã có sẵn."
+
 #: src/features/roadmap/pages.tsx
 msgid "This board no longer exists or you cannot see it."
 msgstr "Bảng này không còn tồn tại hoặc bạn không thể xem."
@@ -412,14 +501,18 @@ msgstr "Bảng này không còn tồn tại hoặc bạn không thể xem."
 msgid "This inbox has no roadmap board. Create one under Roadmap first."
 msgstr "Hộp thư đến này chưa có bảng lộ trình. Hãy tạo một bảng trước trong Lộ trình."
 
-#: src/features/roadmap/CreateBoardDialog.tsx
-msgid "This inbox has no web chat channel. Add one first, because the public board embeds it."
-msgstr "Hộp thư đến này chưa có kênh trò chuyện web. Hãy thêm một kênh trước, vì bảng công khai nhúng nó."
-
 #: src/features/roadmap/LinkIdeaDialog.tsx
 #: src/features/roadmap/NewIdeaDialog.tsx
 msgid "Title"
 msgstr "Tiêu đề"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Unlink"
+msgstr "Hủy liên kết"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Unlinked feedback from {inboxName}"
+msgstr "Phản hồi chưa liên kết từ {inboxName}"
 
 #: src/features/roadmap/Settings.tsx
 msgid "Use 3 to 48 letters, numbers and inner hyphens."
@@ -437,6 +530,6 @@ msgstr "Chế độ hiển thị"
 msgid "Waiting for approval"
 msgstr "Đang chờ duyệt"
 
-#: src/features/roadmap/RoadmapColumn.tsx
-msgid "Waiting for approval: {pending}"
-msgstr "Đang chờ duyệt: {pending}"
+#: src/features/roadmap/Settings.tsx
+msgid "You have unsaved changes."
+msgstr "Bạn có thay đổi chưa lưu."

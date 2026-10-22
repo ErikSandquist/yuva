@@ -77,8 +77,8 @@ msgid "Another help center already uses this address, now or before."
 msgstr "Toinen ohjekeskus käyttää tätä osoitetta nyt tai aiemmin."
 
 #: src/features/help/pages.tsx
-msgid "Answer common questions once, in writing. Each product gets its own help center with articles, collections and a report of what people search for."
-msgstr "Vastaa yleisiin kysymyksiin kerran, kirjallisesti. Jokaisella tuotteella on oma ohjekeskus, jossa on artikkeleita, kokoelmia ja raportti siitä, mitä ihmiset hakevat."
+msgid "Answer common questions once, in writing. Each product gets its own help center with articles, collections and a report of what people search for. Pages are hosted by Yuva, so there is nothing to install on your site."
+msgstr "Vastaa yleisiin kysymyksiin kerran, kirjallisesti. Jokaisella tuotteella on oma ohjekeskus, jossa on artikkeleita, kokoelmia ja raportti siitä, mitä ihmiset etsivät. Yuva isännöi sivut, joten sivustollesi ei tarvitse asentaa mitään."
 
 #: src/features/help/pages.tsx
 msgid "Answer common questions once, in writing. Pick an inbox’s help center to write articles, group them in collections and see what customers search for."
@@ -162,6 +162,7 @@ msgstr "Luettelo"
 msgid "Cancel"
 msgstr "Peruuta"
 
+#: src/features/help/ArticleEditor.tsx
 #: src/features/help/ArticlesTab.tsx
 msgid "Changed"
 msgstr "Muutettu"
@@ -226,11 +227,6 @@ msgstr "Luo ohjekeskus"
 #: src/features/help/HelpColumn.tsx
 msgid "Create help center ({newKey})"
 msgstr "Luo ohjekeskus ({newKey})"
-
-#. placeholder {0}: inbox.name
-#: src/features/help/pages.tsx
-msgid "Create one for {0}"
-msgstr "Luo yksi tuotteelle {0}"
 
 #: src/features/help/CollectionsTab.tsx
 #: src/features/help/SettingsTab.tsx
@@ -342,11 +338,16 @@ msgstr "Ryhmittele artikkelit, jotta kävijät voivat selata. Kokoelmassa voi ol
 msgid "Heading"
 msgstr "Otsikko"
 
+#: src/features/help/CenterBar.tsx
 #: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 #: src/features/help/SettingsTab.tsx
 msgid "Help center"
 msgstr "Ohjekeskus"
+
+#: src/features/help/pages.tsx
+msgid "Help center created. Write the first article, then publish it."
+msgstr "Ohjekeskus luotu. Kirjoita ensimmäinen artikkeli ja julkaise se."
 
 #: src/features/help/SettingsTab.tsx
 msgid "Help center deleted"
@@ -445,7 +446,10 @@ msgid "Main language"
 msgstr "Pääkieli"
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+msgid "Mark up to date"
+msgstr "Merkitse ajan tasalle"
+
+#: src/features/help/ArticleEditor.tsx
 msgid "More"
 msgstr "Lisää"
 
@@ -522,6 +526,11 @@ msgstr "Ei luonnoksia. Kaikki kirjoitettu on julkaistu."
 msgid "No earlier versions yet."
 msgstr "Ei vielä aiempia versioita."
 
+#. placeholder {0}: target.inbox.name
+#: src/features/help/pages.tsx
+msgid "No help center for {0} yet"
+msgstr "Tuotteelle {0} ei ole vielä ohjekeskusta"
+
 #: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 msgid "No help center yet. Owners and admins create it."
@@ -540,6 +549,7 @@ msgstr "Ei mitään"
 msgid "not named"
 msgstr "nimeämätön"
 
+#: src/features/help/ArticleEditor.tsx
 #: src/features/help/ArticlesTab.tsx
 msgid "Not written"
 msgstr "Kirjoittamatta"
@@ -555,6 +565,10 @@ msgstr "{answers} vastauksesta"
 #: src/features/help/SettingsTab.tsx
 msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish and unpublish too."
 msgstr "Pois: edustajat kirjoittavat luonnoksia ja lähettävät ne, omistajat ja ylläpitäjät julkaisevat. Päällä: myös edustajat, joilla on pääsy saapuneisiin, julkaisevat ja poistavat julkaisun."
+
+#: src/features/help/SettingsTab.tsx
+msgid "On: anyone with the address can read the help center. Off: only your team can preview it."
+msgstr "Päällä: kuka tahansa osoitteen tietävä voi lukea ohjekeskusta. Pois: vain tiimisi voi esikatsella sitä."
 
 #: src/features/help/ArticleEditor.tsx
 msgid "One path per line, such as /billing/*. The chat widget suggests this article on matching pages."
@@ -618,6 +632,10 @@ msgstr "Esikatselu"
 msgid "Preview ({alt} P)"
 msgstr "Esikatselu ({alt} P)"
 
+#: src/features/help/pages.tsx
+msgid "Preview ({previewKey})"
+msgstr "Esikatselu ({previewKey})"
+
 #. placeholder {0}: center.name
 #: src/features/help/pages.tsx
 msgid "Preview of {0}"
@@ -632,22 +650,27 @@ msgid "Public address"
 msgstr "Julkinen osoite"
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "Publish"
 msgstr "Julkaise"
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "Publish ({publishKey})"
 msgstr "Julkaise ({publishKey})"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/CenterBar.tsx
 #: src/features/help/HelpColumn.tsx
-#: src/features/help/pages.tsx
 #: src/features/help/Revisions.tsx
+#: src/features/help/SettingsTab.tsx
 #: src/features/help/text.tsx
 msgid "Published"
 msgstr "Julkaistu"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Publishing"
+msgstr "Julkaisu"
 
 #: src/features/help/text.tsx
 msgid "Question mark"
@@ -758,6 +781,10 @@ msgstr "Kilpi"
 msgid "Show"
 msgstr "Näytä"
 
+#: src/features/help/ArticleEditor.tsx
+msgid "Show original"
+msgstr "Näytä alkuperäinen"
+
 #: src/features/help/SettingsTab.tsx
 msgid "Shown under the name on the home page."
 msgstr "Näytetään nimen alla etusivulla."
@@ -831,6 +858,10 @@ msgid "The main language has no text for this article yet."
 msgstr "Pääkielellä ei vielä ole tekstiä tälle artikkelille."
 
 #: src/features/help/ArticleEditor.tsx
+msgid "The original changed after this translation was written. Compare them, then mark it up to date."
+msgstr "Alkuperäinen muuttui tämän käännöksen kirjoittamisen jälkeen. Vertaa niitä ja merkitse käännös sitten ajan tasalle."
+
+#: src/features/help/ArticleEditor.tsx
 msgid "The page stops working for visitors. The draft stays, and you can publish it again."
 msgstr "Sivu lakkaa toimimasta kävijöille. Luonnos säilyy, ja voit julkaista sen uudelleen."
 
@@ -880,15 +911,24 @@ msgid "Type a word to search for."
 msgstr "Kirjoita hakusana."
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "Unpublish"
 msgstr "Poista julkaisu"
+
+#: src/features/help/CenterBar.tsx
+msgid "Unpublish ({publishKey})"
+msgstr "Poista julkaisu ({publishKey})"
+
+#: src/features/help/CenterBar.tsx
+msgid "Unpublish this help center?"
+msgstr "Perutaanko tämän ohjekeskuksen julkaisu?"
 
 #: src/features/help/ArticleEditor.tsx
 msgid "Unpublish this translation?"
 msgstr "Poistetaanko tämän käännöksen julkaisu?"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/CenterBar.tsx
 #: src/features/help/HelpColumn.tsx
 msgid "Unpublished"
 msgstr "Julkaisematon"
@@ -896,10 +936,6 @@ msgstr "Julkaisematon"
 #: src/features/help/text.tsx
 msgid "Unpublished changes"
 msgstr "Julkaisemattomat muutokset"
-
-#: src/features/help/pages.tsx
-msgid "Unpublished, only your team can preview it"
-msgstr "Julkaisematon, vain tiimisi voi esikatsella"
 
 #: src/features/help/ArticleEditor.tsx
 msgid "Unsaved changes"
@@ -929,11 +965,11 @@ msgstr "Versio palautettu luonnokseen"
 msgid "View"
 msgstr "Näytä"
 
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "View site"
 msgstr "Näytä sivusto"
 
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "View site ({openKey})"
 msgstr "Näytä sivusto ({openKey})"
 
@@ -945,13 +981,13 @@ msgstr "Katselut"
 msgid "Views · 7 days"
 msgstr "Katselut · 7 päivää"
 
+#: src/features/help/CenterBar.tsx
+msgid "Visitors can no longer open it and the chat widget stops suggesting its articles. Your articles stay as they are."
+msgstr "Kävijät eivät voi enää avata sitä, eikä chat-widget ehdota sen artikkeleita. Artikkelisi säilyvät ennallaan."
+
 #: src/features/help/ReportTab.tsx
 msgid "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
 msgstr "Mitä kävijät lukevat ja hakevat. Katselut ovat likimääräisiä, ja luvut päätyvät tälle sivulle minuutin kuluessa."
-
-#: src/features/help/SettingsTab.tsx
-msgid "Who can publish"
-msgstr "Kuka saa julkaista"
 
 #: src/features/help/ReportTab.tsx
 msgid "Words visitors typed that found nothing. A new article for each is the fastest fix."
@@ -965,6 +1001,10 @@ msgstr "Kirjoita"
 #: src/features/help/ArticleEditor.tsx
 msgid "Write the answer in Markdown…"
 msgstr "Kirjoita vastaus Markdownilla…"
+
+#: src/features/help/CenterBar.tsx
+msgid "Written here, shown on pages Yuva hosts, searched from the chat widget and the reply box. Documentation pages on your own site live under <0>Docs</0>."
+msgstr "Kirjoitetaan tässä, näytetään Yuvan isännöimillä sivuilla ja haetaan chat-widgetistä ja vastauskentästä. Oman sivustosi dokumentaatiosivut ovat kohdassa <0>Docs</0>."
 
 #: src/features/help/SettingsTab.tsx
 msgid "Your product."

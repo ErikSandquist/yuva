@@ -77,8 +77,8 @@ msgid "Another help center already uses this address, now or before."
 msgstr "Ezt a címet másik súgóközpont használja vagy használta."
 
 #: src/features/help/pages.tsx
-msgid "Answer common questions once, in writing. Each product gets its own help center with articles, collections and a report of what people search for."
-msgstr "Válaszolj a gyakori kérdésekre egyszer, írásban. Minden termék saját súgóközpontot kap cikkekkel, gyűjteményekkel és egy jelentéssel arról, mit keresnek az emberek."
+msgid "Answer common questions once, in writing. Each product gets its own help center with articles, collections and a report of what people search for. Pages are hosted by Yuva, so there is nothing to install on your site."
+msgstr "Válaszoljon a gyakori kérdésekre egyszer, írásban. Minden termék saját súgóközpontot kap cikkekkel, gyűjteményekkel és jelentéssel arról, mit keresnek az emberek. Az oldalakat a Yuva üzemelteti, a webhelyén nem kell semmit telepíteni."
 
 #: src/features/help/pages.tsx
 msgid "Answer common questions once, in writing. Pick an inbox’s help center to write articles, group them in collections and see what customers search for."
@@ -162,6 +162,7 @@ msgstr "Felsorolás"
 msgid "Cancel"
 msgstr "Mégse"
 
+#: src/features/help/ArticleEditor.tsx
 #: src/features/help/ArticlesTab.tsx
 msgid "Changed"
 msgstr "Módosítva"
@@ -226,11 +227,6 @@ msgstr "Súgóközpont létrehozása"
 #: src/features/help/HelpColumn.tsx
 msgid "Create help center ({newKey})"
 msgstr "Súgóközpont létrehozása ({newKey})"
-
-#. placeholder {0}: inbox.name
-#: src/features/help/pages.tsx
-msgid "Create one for {0}"
-msgstr "Hozz létre egyet ehhez: {0}"
 
 #: src/features/help/CollectionsTab.tsx
 #: src/features/help/SettingsTab.tsx
@@ -342,11 +338,16 @@ msgstr "Csoportosítsa a cikkeket, hogy a látogatók böngészhessenek. Egy gy�
 msgid "Heading"
 msgstr "Címsor"
 
+#: src/features/help/CenterBar.tsx
 #: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 #: src/features/help/SettingsTab.tsx
 msgid "Help center"
 msgstr "Súgóközpont"
+
+#: src/features/help/pages.tsx
+msgid "Help center created. Write the first article, then publish it."
+msgstr "A súgóközpont létrejött. Írja meg az első cikket, majd tegye közzé."
 
 #: src/features/help/SettingsTab.tsx
 msgid "Help center deleted"
@@ -445,7 +446,10 @@ msgid "Main language"
 msgstr "Fő nyelv"
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+msgid "Mark up to date"
+msgstr "Megjelölés naprakészként"
+
+#: src/features/help/ArticleEditor.tsx
 msgid "More"
 msgstr "Továbbiak"
 
@@ -522,6 +526,11 @@ msgstr "Nincs piszkozat. Minden megírt tartalom közzé van téve."
 msgid "No earlier versions yet."
 msgstr "Még nincs korábbi változat."
 
+#. placeholder {0}: target.inbox.name
+#: src/features/help/pages.tsx
+msgid "No help center for {0} yet"
+msgstr "A(z) {0} számára még nincs súgóközpont"
+
 #: src/features/help/HelpColumn.tsx
 #: src/features/help/pages.tsx
 msgid "No help center yet. Owners and admins create it."
@@ -540,6 +549,7 @@ msgstr "Nincs"
 msgid "not named"
 msgstr "nincs elnevezve"
 
+#: src/features/help/ArticleEditor.tsx
 #: src/features/help/ArticlesTab.tsx
 msgid "Not written"
 msgstr "Nincs megírva"
@@ -555,6 +565,10 @@ msgstr "{answers} válaszból"
 #: src/features/help/SettingsTab.tsx
 msgid "Off: agents write drafts and submit them, and owners and admins publish. On: agents with access to the inbox publish and unpublish too."
 msgstr "Ki: az ügynökök piszkozatot írnak és beküldik, a tulajdonosok és adminisztrátorok teszik közzé. Be: a postafiókhoz hozzáférő ügynökök is közzétesznek és visszavonnak."
+
+#: src/features/help/SettingsTab.tsx
+msgid "On: anyone with the address can read the help center. Off: only your team can preview it."
+msgstr "Be: bárki elolvashatja a súgóközpontot, aki ismeri a címet. Ki: csak a csapata tekintheti meg előnézetben."
 
 #: src/features/help/ArticleEditor.tsx
 msgid "One path per line, such as /billing/*. The chat widget suggests this article on matching pages."
@@ -618,6 +632,10 @@ msgstr "Előnézet"
 msgid "Preview ({alt} P)"
 msgstr "Előnézet ({alt} P)"
 
+#: src/features/help/pages.tsx
+msgid "Preview ({previewKey})"
+msgstr "Előnézet ({previewKey})"
+
 #. placeholder {0}: center.name
 #: src/features/help/pages.tsx
 msgid "Preview of {0}"
@@ -632,22 +650,27 @@ msgid "Public address"
 msgstr "Nyilvános cím"
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "Publish"
 msgstr "Közzététel"
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "Publish ({publishKey})"
 msgstr "Közzététel ({publishKey})"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/CenterBar.tsx
 #: src/features/help/HelpColumn.tsx
-#: src/features/help/pages.tsx
 #: src/features/help/Revisions.tsx
+#: src/features/help/SettingsTab.tsx
 #: src/features/help/text.tsx
 msgid "Published"
 msgstr "Közzétéve"
+
+#: src/features/help/SettingsTab.tsx
+msgid "Publishing"
+msgstr "Közzététel"
 
 #: src/features/help/text.tsx
 msgid "Question mark"
@@ -758,6 +781,10 @@ msgstr "Pajzs"
 msgid "Show"
 msgstr "Megjelenítés"
 
+#: src/features/help/ArticleEditor.tsx
+msgid "Show original"
+msgstr "Eredeti megjelenítése"
+
 #: src/features/help/SettingsTab.tsx
 msgid "Shown under the name on the home page."
 msgstr "A kezdőlapon a név alatt jelenik meg."
@@ -831,6 +858,10 @@ msgid "The main language has no text for this article yet."
 msgstr "A fő nyelvnek még nincs szövege ehhez a cikkhez."
 
 #: src/features/help/ArticleEditor.tsx
+msgid "The original changed after this translation was written. Compare them, then mark it up to date."
+msgstr "Az eredeti megváltozott a fordítás megírása után. Hasonlítsa össze őket, majd jelölje naprakészként."
+
+#: src/features/help/ArticleEditor.tsx
 msgid "The page stops working for visitors. The draft stays, and you can publish it again."
 msgstr "Az oldal nem működik tovább a látogatóknak. A piszkozat megmarad, és újra közzéteheti."
 
@@ -880,15 +911,24 @@ msgid "Type a word to search for."
 msgstr "Írjon be egy keresendő szót."
 
 #: src/features/help/ArticleEditor.tsx
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "Unpublish"
 msgstr "Közzététel visszavonása"
+
+#: src/features/help/CenterBar.tsx
+msgid "Unpublish ({publishKey})"
+msgstr "Közzététel visszavonása ({publishKey})"
+
+#: src/features/help/CenterBar.tsx
+msgid "Unpublish this help center?"
+msgstr "Visszavonja a súgóközpont közzétételét?"
 
 #: src/features/help/ArticleEditor.tsx
 msgid "Unpublish this translation?"
 msgstr "Visszavonja ennek a fordításnak a közzétételét?"
 
 #: src/features/help/ArticleEditor.tsx
+#: src/features/help/CenterBar.tsx
 #: src/features/help/HelpColumn.tsx
 msgid "Unpublished"
 msgstr "Nincs közzétéve"
@@ -896,10 +936,6 @@ msgstr "Nincs közzétéve"
 #: src/features/help/text.tsx
 msgid "Unpublished changes"
 msgstr "Közzé nem tett módosítások"
-
-#: src/features/help/pages.tsx
-msgid "Unpublished, only your team can preview it"
-msgstr "Nincs közzétéve, csak a csapata tekintheti meg"
 
 #: src/features/help/ArticleEditor.tsx
 msgid "Unsaved changes"
@@ -929,11 +965,11 @@ msgstr "A változat visszaállítva a piszkozatba"
 msgid "View"
 msgstr "Megtekintés"
 
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "View site"
 msgstr "Webhely megtekintése"
 
-#: src/features/help/pages.tsx
+#: src/features/help/CenterBar.tsx
 msgid "View site ({openKey})"
 msgstr "Webhely megtekintése ({openKey})"
 
@@ -945,13 +981,13 @@ msgstr "Megtekintések"
 msgid "Views · 7 days"
 msgstr "Megtekintések · 7 nap"
 
+#: src/features/help/CenterBar.tsx
+msgid "Visitors can no longer open it and the chat widget stops suggesting its articles. Your articles stay as they are."
+msgstr "A látogatók többé nem nyithatják meg, és a csevegőmodul nem javasolja a cikkeit. A cikkei változatlanok maradnak."
+
 #: src/features/help/ReportTab.tsx
 msgid "What visitors read and search for. Views are approximate, and counts reach this page within a minute."
 msgstr "Mit olvasnak és keresnek a látogatók. A megtekintések hozzávetőlegesek, a számok egy percen belül ideérnek."
-
-#: src/features/help/SettingsTab.tsx
-msgid "Who can publish"
-msgstr "Ki tehet közzé"
 
 #: src/features/help/ReportTab.tsx
 msgid "Words visitors typed that found nothing. A new article for each is the fastest fix."
@@ -965,6 +1001,10 @@ msgstr "Írás"
 #: src/features/help/ArticleEditor.tsx
 msgid "Write the answer in Markdown…"
 msgstr "Írja meg a választ Markdownban…"
+
+#: src/features/help/CenterBar.tsx
+msgid "Written here, shown on pages Yuva hosts, searched from the chat widget and the reply box. Documentation pages on your own site live under <0>Docs</0>."
+msgstr "Itt íródik, a Yuva által üzemeltetett oldalakon jelenik meg, és a csevegőmodulból és a válaszmezőből kereshető. A saját webhelyén lévő dokumentációs oldalak a <0>Docs</0> alatt vannak."
 
 #: src/features/help/SettingsTab.tsx
 msgid "Your product."

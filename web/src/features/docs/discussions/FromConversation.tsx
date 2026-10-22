@@ -15,7 +15,9 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
+import { useDocsPages } from "@/features/docs/queries"
 import { conversationPage, pageLabel } from "@/features/docs/PageContext"
 import { threadLink } from "@/features/docs/discussions/queries"
 import { Field } from "@/features/settings/ui"
@@ -44,6 +46,8 @@ function firstLine(text: string) {
   return words.length > 120 ? words.slice(0, 120).join("").trim() + "…" : line.trim()
 }
 
+const OTHER = "__other"
+
 function isUrl(v: string) {
   try {
     const u = new URL(v)
@@ -51,6 +55,58 @@ function isUrl(v: string) {
   } catch {
     return false
   }
+}
+
+function PagePicker({ inboxId, value, onChange }: { inboxId: string; value: string; onChange: (url: string) => void }) {
+  const { t } = useLingui()
+  const known = (useDocsPages(inboxId, "", 90, "activity").data?.pages.flatMap((p) => p.items) ?? []).slice(0, 50)
+  const [other, setOther] = useState(false)
+  const typed = other || known.length === 0
+  return (
+    <>
+      {known.length > 0 && (
+        <Select
+          value={other ? OTHER : value}
+          items={{
+            ...Object.fromEntries(known.map((k) => [k.page, pageLabel(k.page, k.title)])),
+            [OTHER]: t`Another page…`,
+          }}
+          onValueChange={(v) => {
+            const next = String(v ?? "")
+            setOther(next === OTHER)
+            onChange(next === OTHER ? "" : next)
+          }}
+        >
+          <SelectTrigger id="discussion-page" className="w-full" data-testid="discussion-dialog-page-select">
+            <SelectValue placeholder={t`Choose a page`} />
+          </SelectTrigger>
+          <SelectContent>
+            {known.map((k) => (
+              <SelectItem key={k.page} value={k.page}>
+                {pageLabel(k.page, k.title)}
+              </SelectItem>
+            ))}
+            <SelectItem value={OTHER}>
+              <Trans>Another page…</Trans>
+            </SelectItem>
+          </SelectContent>
+        </Select>
+      )}
+      {typed && (
+        <Input
+          id={known.length > 0 ? undefined : "discussion-page"}
+          type="url"
+          required
+          maxLength={2000}
+          value={value}
+          placeholder="https://docs.example.com/guide"
+          aria-label={t`Page`}
+          onChange={(e) => onChange(e.target.value)}
+          data-testid="discussion-dialog-page-input"
+        />
+      )}
+    </>
+  )
 }
 
 export function FromConversationDialog({
@@ -138,16 +194,7 @@ export function FromConversationDialog({
               htmlFor="discussion-page"
               hint={<Trans>The documentation page to put it under, on a site of this inbox.</Trans>}
             >
-              <Input
-                id="discussion-page"
-                type="url"
-                required
-                maxLength={2000}
-                value={pageUrl}
-                placeholder="https://docs.example.com/guide"
-                onChange={(e) => setPageUrl(e.target.value)}
-                data-testid="discussion-dialog-page-input"
-              />
+              <PagePicker inboxId={c.inbox_id} value={pageUrl} onChange={setPageUrl} />
             </Field>
           )}
           <Field label={<Trans>Title</Trans>} htmlFor="discussion-title">

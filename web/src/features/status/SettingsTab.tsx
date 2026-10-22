@@ -1,6 +1,6 @@
 import { Trans, useLingui } from "@lingui/react/macro"
 import { MailWarningIcon } from "lucide-react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router"
 
 import { CopyButton, ErrorLine, Notice, toast, useConfirm } from "@/components/common"
@@ -14,7 +14,8 @@ import { useInboxChannels } from "@/features/broadcasts/queries"
 import { DomainCard } from "@/features/status/DomainCard"
 import { validSlug } from "@/features/status/CreatePageDialog"
 import { useDeleteStatusPage, usePatchStatusPage } from "@/features/status/queries"
-import { Card, ChoiceSelect, Field, FormActions, FormCard, Section, ToggleRow } from "@/features/settings/ui"
+import { Card, ChoiceSelect, Field, Section, ToggleRow } from "@/features/settings/ui"
+import { ChoiceChips } from "@/features/status/Choice"
 import type { StatusPage, StatusPageUpdate } from "@/lib/api"
 
 const COLOR_RE = /^#[0-9a-fA-F]{6}$/
@@ -25,177 +26,226 @@ function zones(current: string) {
   return all.includes(current) ? all : [current, ...all]
 }
 
-function General({ page }: { page: StatusPage }) {
-  const { t } = useLingui()
+function useAutosave(page: StatusPage) {
   const patch = usePatchStatusPage(page.id)
-  const [name, setName] = useState(page.name)
-  const [description, setDescription] = useState(page.description)
-  const [slug, setSlug] = useState(page.slug)
-  const [logo, setLogo] = useState(page.logo_url ?? "")
-  const [color, setColor] = useState(page.accent_color ?? "")
-  const [site, setSite] = useState(page.site_url ?? "")
-  const [support, setSupport] = useState(page.support_url ?? "")
-  const [locale, setLocale] = useState(page.locale)
-  const [timezone, setTimezone] = useState(page.timezone)
-  const [days, setDays] = useState(String(page.history_days))
-  const [uptime, setUptime] = useState(page.show_uptime)
+  const [saved, setSaved] = useState(0)
+  const save = (body: StatusPageUpdate) => patch.mutate(body, { onSuccess: () => setSaved((n) => n + 1) })
+  return { save, patch, saved }
+}
 
+type Autosave = ReturnType<typeof useAutosave>
+
+function Commit({
+  id,
+  label,
+  hint,
+  value,
+  onCommit,
+  error,
+  multiline,
+  type,
+  placeholder,
+  maxLength,
+  testId,
+  spellCheck,
+}: {
+  id: string
+  label: React.ReactNode
+  hint?: React.ReactNode
+  value: string
+  onCommit: (v: string) => void
+  error?: (v: string) => React.ReactNode
+  multiline?: boolean
+  type?: string
+  placeholder?: string
+  maxLength?: number
+  testId: string
+  spellCheck?: boolean
+}) {
+  const [text, setText] = useState(value)
+  const [seen, setSeen] = useState(value)
+  if (value !== seen) {
+    setSeen(value)
+    setText(value)
+  }
+  const problem = error?.(text)
+  const commit = () => {
+    if (text !== value && !problem) onCommit(text)
+  }
+  return (
+    <Field label={label} htmlFor={id} hint={hint} error={problem || undefined}>
+      {multiline ? (
+        <Textarea
+          id={id}
+          value={text}
+          maxLength={maxLength}
+          onChange={(e) => setText(e.target.value)}
+          onBlur={commit}
+          data-testid={testId}
+        />
+      ) : (
+        <Input
+          id={id}
+          type={type}
+          value={text}
+          maxLength={maxLength}
+          placeholder={placeholder}
+          spellCheck={spellCheck}
+          autoCapitalize={spellCheck === false ? "none" : undefined}
+          aria-invalid={!!problem}
+          onChange={(e) => setText(e.target.value)}
+          onBlur={commit}
+          onKeyDown={(e) => e.key === "Enter" && e.currentTarget.blur()}
+          data-testid={testId}
+        />
+      )}
+    </Field>
+  )
+}
+
+function PageCard({ page, auto }: { page: StatusPage; auto: Autosave }) {
+  const { save } = auto
   const link = (v: string) => (v.trim() ? v.trim() : null)
-  const body: StatusPageUpdate = {}
-  if (name.trim() !== page.name) body.name = name.trim()
-  if (description.trim() !== page.description) body.description = description.trim()
-  if (slug !== page.slug) body.slug = slug
-  if (link(logo) !== (page.logo_url ?? null)) body.logo_url = link(logo)
-  if (link(color) !== (page.accent_color ?? null)) body.accent_color = link(color)
-  if (link(site) !== (page.site_url ?? null)) body.site_url = link(site)
-  if (link(support) !== (page.support_url ?? null)) body.support_url = link(support)
-  if (locale !== page.locale) body.locale = locale
-  if (timezone !== page.timezone) body.timezone = timezone
-  if (Number(days) !== page.history_days) body.history_days = Number(days)
-  if (uptime !== page.show_uptime) body.show_uptime = uptime
-  const dirty = Object.keys(body).length > 0
-  const daysOk = Number.isInteger(Number(days)) && Number(days) >= 7 && Number(days) <= 90
-  const colorOk = !color || COLOR_RE.test(color)
-  const ok = !!name.trim() && validSlug(slug) && daysOk && colorOk
+  const address = page.url
+  return (
+    <Section title={<Trans>Page</Trans>}>
+      <Card>
+        <Commit
+          id="status-name"
+          label={<Trans>Name</Trans>}
+          value={page.name}
+          maxLength={100}
+          error={(v) => (v.trim() ? undefined : <Trans>Give the page a name.</Trans>)}
+          onCommit={(v) => save({ name: v.trim() })}
+          testId="status-setting-name"
+        />
+        <Commit
+          id="status-description"
+          label={<Trans>Description</Trans>}
+          hint={<Trans>Shown under the name on the public page.</Trans>}
+          value={page.description}
+          multiline
+          maxLength={1000}
+          onCommit={(v) => save({ description: v.trim() })}
+          testId="status-setting-description"
+        />
+        <Commit
+          id="status-slug"
+          label={<Trans>Address</Trans>}
+          value={page.slug}
+          maxLength={48}
+          spellCheck={false}
+          hint={<Trans>The page is at {address}. The old address keeps redirecting if you change it.</Trans>}
+          error={(v) =>
+            v && !validSlug(v) ? <Trans>Use 3 to 48 letters, numbers and inner hyphens.</Trans> : undefined
+          }
+          onCommit={(v) => save({ slug: v.toLowerCase() })}
+          testId="status-setting-slug"
+        />
+        <div className="grid gap-5 sm:grid-cols-2">
+          <Commit
+            id="status-logo"
+            label={<Trans>Logo URL</Trans>}
+            hint={<Trans>An https image.</Trans>}
+            type="url"
+            placeholder="https://"
+            value={page.logo_url ?? ""}
+            onCommit={(v) => save({ logo_url: link(v) })}
+            testId="status-setting-logo"
+          />
+          <Accent page={page} onCommit={(v) => save({ accent_color: link(v) })} />
+          <Commit
+            id="status-site"
+            label={<Trans>Site link</Trans>}
+            hint={<Trans>Your product.</Trans>}
+            type="url"
+            placeholder="https://"
+            value={page.site_url ?? ""}
+            onCommit={(v) => save({ site_url: link(v) })}
+            testId="status-setting-site"
+          />
+          <Commit
+            id="status-support"
+            label={<Trans>Support link</Trans>}
+            hint={<Trans>A page or a mailto: link where customers get help.</Trans>}
+            placeholder="https://"
+            value={page.support_url ?? ""}
+            onCommit={(v) => save({ support_url: link(v) })}
+            testId="status-setting-support"
+          />
+        </div>
+      </Card>
+    </Section>
+  )
+}
+
+function Accent({ page, onCommit }: { page: StatusPage; onCommit: (v: string) => void }) {
+  const { t } = useLingui()
+  const value = page.accent_color ?? ""
+  const [color, setColor] = useState(value)
+  const [seen, setSeen] = useState(value)
+  if (value !== seen) {
+    setSeen(value)
+    setColor(value)
+  }
+  const ok = !color || COLOR_RE.test(color)
+  const commit = () => {
+    if (color !== value && ok) onCommit(color)
+  }
+  return (
+    <Field
+      label={<Trans>Accent colour</Trans>}
+      htmlFor="status-color"
+      error={!ok ? <Trans>Use a colour like #2563eb.</Trans> : undefined}
+    >
+      <div className="flex items-center gap-2">
+        <input
+          type="color"
+          aria-label={t`Pick a colour`}
+          value={COLOR_RE.test(color) ? color : "#2563eb"}
+          onChange={(e) => setColor(e.target.value)}
+          onBlur={commit}
+          className="size-9 shrink-0 cursor-pointer rounded-xl border border-input bg-background p-1"
+        />
+        <Input
+          id="status-color"
+          value={color}
+          maxLength={7}
+          placeholder="#2563eb"
+          spellCheck={false}
+          aria-invalid={!ok}
+          onChange={(e) => setColor(e.target.value)}
+          onBlur={commit}
+          onKeyDown={(e) => e.key === "Enter" && e.currentTarget.blur()}
+          data-testid="status-setting-color"
+        />
+      </div>
+    </Field>
+  )
+}
+
+function DisplayCard({ page, auto }: { page: StatusPage; auto: Autosave }) {
+  const { t } = useLingui()
+  const { save, patch } = auto
   const locales: [string, string][] = [
     ["en", t`English`],
     ["tr", t`Türkçe`],
     ["de", t`Deutsch`],
   ]
   if (!locales.some(([v]) => v === page.locale)) locales.push([page.locale, page.locale])
-  const address = page.url.slice(0, page.url.length - page.slug.length) + slug
-
   return (
-    <Section title={<Trans>Page</Trans>}>
-      <FormCard
-        onSubmit={() =>
-          ok &&
-          patch.mutate(body, {
-            onSuccess: (saved) => {
-              setName(saved.name)
-              setSlug(saved.slug)
-              toast(t`Saved`)
-            },
-          })
-        }
-        footer={
-          <FormActions
-            pending={patch.isPending}
-            saved={patch.isSuccess && !dirty}
-            error={patch.error}
-            disabled={!dirty || !ok}
-          />
-        }
-      >
-        <Field label={<Trans>Name</Trans>} htmlFor="status-name">
-          <Input
-            id="status-name"
-            value={name}
-            maxLength={100}
-            onChange={(e) => setName(e.target.value)}
-            data-testid="status-setting-name"
-          />
-        </Field>
-        <Field
-          label={<Trans>Description</Trans>}
-          htmlFor="status-description"
-          hint={<Trans>Shown under the name on the public page.</Trans>}
-        >
-          <Textarea
-            id="status-description"
-            value={description}
-            maxLength={1000}
-            onChange={(e) => setDescription(e.target.value)}
-            data-testid="status-setting-description"
-          />
-        </Field>
-        <Field
-          label={<Trans>Address</Trans>}
-          htmlFor="status-slug"
-          hint={<Trans>The page is at {address}. The old address keeps redirecting if you change it.</Trans>}
-          error={slug && !validSlug(slug) ? <Trans>Use 3 to 48 letters, numbers and inner hyphens.</Trans> : undefined}
-        >
-          <Input
-            id="status-slug"
-            value={slug}
-            maxLength={48}
-            spellCheck={false}
-            autoCapitalize="none"
-            onChange={(e) => setSlug(e.target.value.toLowerCase())}
-            data-testid="status-setting-slug"
+    <Section title={<Trans>Display</Trans>}>
+      <Card>
+        <Field label={<Trans>Language</Trans>} hint={<Trans>The language of the page’s words.</Trans>}>
+          <ChoiceChips
+            value={page.locale}
+            onChange={(locale) => save({ locale })}
+            options={locales}
+            label={t`Language`}
+            disabled={patch.isPending}
           />
         </Field>
         <div className="grid gap-5 sm:grid-cols-2">
-          <Field label={<Trans>Logo URL</Trans>} htmlFor="status-logo" hint={<Trans>An https image.</Trans>}>
-            <Input
-              id="status-logo"
-              type="url"
-              value={logo}
-              placeholder="https://"
-              onChange={(e) => setLogo(e.target.value)}
-              data-testid="status-setting-logo"
-            />
-          </Field>
-          <Field
-            label={<Trans>Accent colour</Trans>}
-            htmlFor="status-color"
-            error={!colorOk ? <Trans>Use a colour like #2563eb.</Trans> : undefined}
-          >
-            <div className="flex items-center gap-2">
-              <input
-                type="color"
-                aria-label={t`Pick a colour`}
-                value={COLOR_RE.test(color) ? color : "#2563eb"}
-                onChange={(e) => setColor(e.target.value)}
-                className="size-9 shrink-0 cursor-pointer rounded-xl border border-input bg-background p-1"
-              />
-              <Input
-                id="status-color"
-                value={color}
-                maxLength={7}
-                placeholder="#2563eb"
-                spellCheck={false}
-                onChange={(e) => setColor(e.target.value)}
-                data-testid="status-setting-color"
-              />
-            </div>
-          </Field>
-          <Field label={<Trans>Site link</Trans>} htmlFor="status-site" hint={<Trans>Your product.</Trans>}>
-            <Input
-              id="status-site"
-              type="url"
-              value={site}
-              placeholder="https://"
-              onChange={(e) => setSite(e.target.value)}
-              data-testid="status-setting-site"
-            />
-          </Field>
-          <Field
-            label={<Trans>Support link</Trans>}
-            htmlFor="status-support"
-            hint={<Trans>A page or a mailto: link where customers get help.</Trans>}
-          >
-            <Input
-              id="status-support"
-              value={support}
-              placeholder="https://"
-              onChange={(e) => setSupport(e.target.value)}
-              data-testid="status-setting-support"
-            />
-          </Field>
-          <Field
-            label={<Trans>Language</Trans>}
-            htmlFor="status-locale"
-            hint={<Trans>The language of the page’s words.</Trans>}
-          >
-            <ChoiceSelect
-              id="status-locale"
-              value={locale}
-              onChange={setLocale}
-              options={locales}
-              label={t`Language`}
-            />
-          </Field>
           <Field
             label={<Trans>Time zone</Trans>}
             htmlFor="status-timezone"
@@ -204,8 +254,8 @@ function General({ page }: { page: StatusPage }) {
             <NativeSelect
               id="status-timezone"
               className="w-full"
-              value={timezone}
-              onChange={(e) => setTimezone(e.target.value)}
+              value={page.timezone}
+              onChange={(e) => save({ timezone: e.target.value })}
               data-testid="status-setting-timezone"
             >
               {zones(page.timezone).map((z) => (
@@ -215,27 +265,30 @@ function General({ page }: { page: StatusPage }) {
               ))}
             </NativeSelect>
           </Field>
-          <Field
+          <Commit
+            id="status-days"
             label={<Trans>Days of history</Trans>}
-            htmlFor="status-days"
             hint={<Trans>7 to 90.</Trans>}
-            error={!daysOk ? <Trans>Use a whole number from 7 to 90.</Trans> : undefined}
-          >
-            <Input
-              id="status-days"
-              type="number"
-              min={7}
-              max={90}
-              value={days}
-              onChange={(e) => setDays(e.target.value)}
-              data-testid="status-setting-days"
-            />
-          </Field>
+            type="number"
+            value={String(page.history_days)}
+            error={(v) =>
+              Number.isInteger(Number(v)) && Number(v) >= 7 && Number(v) <= 90 ? undefined : (
+                <Trans>Use a whole number from 7 to 90.</Trans>
+              )
+            }
+            onCommit={(v) => save({ history_days: Number(v) })}
+            testId="status-setting-days"
+          />
         </div>
         <ToggleRow title={<Trans>Show uptime</Trans>} hint={<Trans>A percentage next to each component.</Trans>}>
-          <Switch checked={uptime} onCheckedChange={setUptime} data-testid="status-setting-uptime" />
+          <Switch
+            checked={page.show_uptime}
+            disabled={patch.isPending}
+            onCheckedChange={(show_uptime) => save({ show_uptime })}
+            data-testid="status-setting-uptime"
+          />
         </ToggleRow>
-      </FormCard>
+      </Card>
     </Section>
   )
 }
@@ -406,12 +459,36 @@ function Danger({ page }: { page: StatusPage }) {
 }
 
 export function SettingsTab({ page }: { page: StatusPage }) {
+  const auto = useAutosave(page)
+  const [shown, setShown] = useState(false)
+  const [seen, setSeen] = useState(0)
+  if (auto.saved !== seen) {
+    setSeen(auto.saved)
+    setShown(true)
+  }
+  useEffect(() => {
+    if (!shown) return
+    const timer = window.setTimeout(() => setShown(false), 2500)
+    return () => window.clearTimeout(timer)
+  }, [shown, seen])
   return (
-    <div className="flex flex-col gap-8" data-testid="status-settings">
-      <Address page={page} />
-      <General page={page} />
-      <DomainCard page={page} />
+    <div className="flex flex-col gap-6" data-testid="status-settings">
+      <div className="flex min-h-5 items-center">
+        {auto.patch.error ? (
+          <ErrorLine error={auto.patch.error} />
+        ) : (
+          shown && (
+            <span className="text-body text-muted-foreground" role="status" data-testid="status-saved">
+              <Trans>Saved</Trans>
+            </span>
+          )
+        )}
+      </div>
+      <PageCard page={page} auto={auto} />
+      <DisplayCard page={page} auto={auto} />
       <EmailSubscribers page={page} />
+      <DomainCard page={page} />
+      <Address page={page} />
       <Danger page={page} />
     </div>
   )

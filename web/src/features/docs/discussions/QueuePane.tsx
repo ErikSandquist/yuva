@@ -4,18 +4,16 @@ import { useEffect, useRef } from "react"
 import { Link, useNavigate } from "react-router"
 
 import { ErrorLine } from "@/components/common"
-import { framePad } from "@/features/status/PageFrame"
 import { AuthorAvatar } from "@/components/common/DiscussionAuthor"
 import { DISCUSSION_KEYS, keyLabel } from "@/components/common/ShortcutSheet"
 import { formatShort } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
-import { DocsFrame, DocsSitePicker, usePickedSite } from "@/features/docs/DocsColumn"
+import { usePickedSite } from "@/features/docs/Toolbar"
 import { pageLabel } from "@/features/docs/PageContext"
 import { AuthorName, ListSkeleton, LoadMore, PostBody, TeamTag, useModeration } from "@/features/docs/discussions/parts"
-import { threadLink, useQueue } from "@/features/docs/discussions/queries"
-import { ideaLink } from "@/features/roadmap/queries"
+import { useQueue } from "@/features/docs/discussions/queries"
 import { useInboxFilter } from "@/features/inbox/inboxFilter"
-import { Card, EmptyRow } from "@/features/settings/ui"
+import { EmptyRow } from "@/features/settings/ui"
 import { useHotkeys } from "@/hooks/use-hotkeys"
 import { useResetState } from "@/hooks/use-reset-state"
 import type { Discussion, DiscussionPostItem } from "@/lib/api"
@@ -23,15 +21,15 @@ import { cn } from "@/lib/utils"
 
 const FROM = "/docs/discussions/queue"
 
-const hrefOf = (d: Discussion) => (d.kind === "idea" && d.board_id ? ideaLink(d.board_id, d.id) : threadLink(d.id))
-
 function QueueItem({
   item,
   cursor,
+  href,
   onAct,
 }: {
   item: DiscussionPostItem
   cursor: boolean
+  href: string
   onAct: (to: "published" | "hidden" | "spam") => void
 }) {
   const { t, i18n } = useLingui()
@@ -39,12 +37,12 @@ function QueueItem({
   const hint = (label: string, key: string) => `${label} (${keyLabel(key).join("")})`
   return (
     <li
-      className={cn("flex flex-col gap-2.5 px-4 py-3.5", cursor && "bg-muted/60 ring-2 ring-ring ring-inset")}
+      className={cn("flex flex-col gap-2.5 rounded-xl border bg-background px-4 py-3.5", cursor && "ring-2 ring-ring")}
       data-testid="queue-item"
       data-post-id={post.id}
     >
       <div className="flex min-w-0 flex-col gap-0.5">
-        <span className="text-caption font-medium text-faint">
+        <span className="flex items-center gap-2 text-caption font-medium text-faint">
           {post.opening ? (
             d.kind === "idea" ? (
               <Trans>New idea</Trans>
@@ -54,9 +52,17 @@ function QueueItem({
           ) : (
             <Trans>Reply</Trans>
           )}
+          <Link
+            to={href}
+            state={{ from: FROM }}
+            className="ms-auto font-normal text-muted-foreground hover:text-foreground hover:underline"
+            data-testid="queue-open"
+          >
+            <Trans>Open discussion</Trans>
+          </Link>
         </span>
         <Link
-          to={hrefOf(d)}
+          to={href}
           state={{ from: FROM }}
           className="min-w-0 truncate text-body font-medium hover:underline"
           data-testid="queue-thread"
@@ -118,7 +124,7 @@ function QueueItem({
   )
 }
 
-export function QueuePane() {
+export function QueueList({ hrefOf, keyboard }: { hrefOf: (d: Discussion) => string; keyboard: boolean }) {
   const navigate = useNavigate()
   const [inboxId] = useInboxFilter()
   const site = usePickedSite(inboxId)
@@ -136,54 +142,57 @@ export function QueuePane() {
   const act = (to: "published" | "hidden" | "spam") => target && moderation.act(target.post, to)
   const down = () => setCursor(Math.min(items.length - 1, cursor + 1))
   const up = () => setCursor(Math.max(0, cursor - 1))
-  useHotkeys({
-    [DISCUSSION_KEYS.next]: down,
-    [DISCUSSION_KEYS.previous]: up,
-    ArrowDown: down,
-    ArrowUp: up,
-    Enter: () => target && navigate(hrefOf(target.discussion), { state: { from: FROM } }),
-    [DISCUSSION_KEYS.approve]: () => act("published"),
-    [DISCUSSION_KEYS.hide]: () => act("hidden"),
-    [DISCUSSION_KEYS.spam]: () => act("spam"),
-  })
+  useHotkeys(
+    {
+      [DISCUSSION_KEYS.next]: down,
+      [DISCUSSION_KEYS.previous]: up,
+      ArrowDown: down,
+      ArrowUp: up,
+      Enter: () => target && navigate(hrefOf(target.discussion), { state: { from: FROM } }),
+      [DISCUSSION_KEYS.approve]: () => act("published"),
+      [DISCUSSION_KEYS.hide]: () => act("hidden"),
+      [DISCUSSION_KEYS.spam]: () => act("spam"),
+    },
+    keyboard
+  )
   return (
-    <DocsFrame testId="discussion-queue">
-      <div className={cn(framePad, "max-w-[900px]")}>
-        <p className="text-body text-muted-foreground">
-          <Trans>
-            Readers' posts wait here until a member approves one of theirs; after that, they publish at once. Oldest
-            first.
-          </Trans>
-        </p>
-        <DocsSitePicker className="hidden phone:flex" />
-        <Card flush data-testid="queue">
-          {queue.isPending ? (
-            <ListSkeleton />
-          ) : queue.error ? (
-            <ErrorLine error={queue.error} className="p-4" />
-          ) : items.length === 0 ? (
+    <div className="mx-auto flex w-full max-w-[860px] flex-col gap-3 p-6 pb-16 phone:px-4 phone:pt-4">
+      <p className="text-body text-muted-foreground">
+        <Trans>
+          Readers' posts wait here until a member approves one of theirs; after that, they publish at once. Oldest
+          first.
+        </Trans>
+      </p>
+      <div className="flex flex-col gap-3" data-testid="queue">
+        {queue.isPending ? (
+          <ListSkeleton />
+        ) : queue.error ? (
+          <ErrorLine error={queue.error} className="p-4" />
+        ) : items.length === 0 ? (
+          <div className="rounded-xl border bg-background">
             <EmptyRow>
               <Trans>Nothing is waiting for approval.</Trans>
             </EmptyRow>
-          ) : (
-            <ul ref={list} className="divide-y">
-              {items.map((it, i) => (
-                <QueueItem
-                  key={it.post.id}
-                  item={it}
-                  cursor={i === cursor}
-                  onAct={(to) => {
-                    setCursor(i)
-                    moderation.act(it.post, to)
-                  }}
-                />
-              ))}
-            </ul>
-          )}
-          <LoadMore list={queue} />
-        </Card>
+          </div>
+        ) : (
+          <ul ref={list} className="flex flex-col gap-3">
+            {items.map((it, i) => (
+              <QueueItem
+                key={it.post.id}
+                item={it}
+                cursor={i === cursor}
+                href={hrefOf(it.discussion)}
+                onAct={(to) => {
+                  setCursor(i)
+                  moderation.act(it.post, to)
+                }}
+              />
+            ))}
+          </ul>
+        )}
+        <LoadMore list={queue} />
       </div>
       {moderation.dialog}
-    </DocsFrame>
+    </div>
   )
 }

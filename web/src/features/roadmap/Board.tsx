@@ -8,22 +8,25 @@ import {
   type DragEndEvent,
 } from "@dnd-kit/core"
 import { Plural, Trans, useLingui } from "@lingui/react/macro"
-import { ArrowRightLeftIcon, CheckIcon, HourglassIcon } from "lucide-react"
+import { ArrowRightLeftIcon, CheckIcon, HourglassIcon, MessageSquareIcon } from "lucide-react"
 import { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router"
 
 import { ErrorLine, toast } from "@/components/common"
-import { AuthorName } from "@/features/docs/discussions/parts"
 import { ROADMAP_KEYS } from "@/components/common/ShortcutSheet"
 import { IDEA_STAGES, useEnumText, useErrorText } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Skeleton } from "@/components/ui/skeleton"
+import { AuthorName } from "@/features/docs/discussions/parts"
 import { useModerate } from "@/features/docs/discussions/queries"
+import { Ago, look } from "@/features/inbox/PageFrame"
 import { MoveDialog } from "@/features/roadmap/MoveDialog"
 import { ideaLink, useScopeIdeas } from "@/features/roadmap/queries"
-import { FrameButton, ProductTag } from "@/features/status/PageFrame"
+import { STAGE_DOT } from "@/features/roadmap/stages"
+import { ProductTag } from "@/features/status/PageFrame"
 import { useHotkeys } from "@/hooks/use-hotkeys"
+import { useIsPhone } from "@/hooks/use-media-query"
 import type { Discussion, Inbox, IdeaStage, RoadmapBoard } from "@/lib/api"
 import { cn } from "@/lib/utils"
 import { useInboxes } from "@/lib/workspace"
@@ -41,25 +44,19 @@ function useScopeLists(scope?: string) {
   }
 }
 
-const STAGE_DOT: Record<IdeaStage, string> = {
-  ideas: "bg-faint",
-  planned: "bg-blue-600 dark:bg-blue-400",
-  in_progress: "bg-warning",
-  shipped: "bg-success",
-  closed: "bg-muted-foreground/40",
-}
-
 function Card({
   idea,
   inbox,
   current,
   cursor,
+  all,
   onMove,
 }: {
   idea: Discussion
   inbox?: Inbox
   current: boolean
   cursor: boolean
+  all: boolean
   onMove: (to: IdeaStage) => void
 }) {
   const { t, i18n } = useLingui()
@@ -98,7 +95,7 @@ function Card({
       </span>
       <div className="flex min-w-0 flex-1 flex-col gap-1">
         <Link
-          to={ideaLink(idea.board_id ?? "", idea.id)}
+          to={ideaLink(idea.board_id ?? "", idea.id, all)}
           className="line-clamp-3 pe-5 text-[14px] leading-[1.35] font-medium break-words outline-none hover:underline focus-visible:underline"
           data-testid="idea-card-link"
         >
@@ -106,7 +103,11 @@ function Card({
         </Link>
         <span className="flex flex-wrap items-center gap-x-2 gap-y-1 text-small text-faint tabular-nums">
           {inbox && <ProductTag name={inbox.name} color={inbox.branding.color} />}
-          <span data-testid="idea-card-linked">
+          <span
+            className={cn("inline-flex items-center gap-1", linked > 0 && "font-medium text-brand")}
+            data-testid="idea-card-linked"
+          >
+            {linked > 0 && <MessageSquareIcon className="size-3.5" aria-hidden />}
             <Plural value={linked} one="# feedback" other="# feedback" />
           </span>
           {pending > 0 && (
@@ -127,7 +128,7 @@ function Card({
             <Button
               variant="ghost"
               size="icon-xs"
-              className="absolute end-1.5 top-1.5 text-faint opacity-0 group-hover:opacity-100 focus-visible:opacity-100 aria-expanded:opacity-100"
+              className="absolute end-1.5 top-1.5 text-faint opacity-0 group-hover:opacity-100 focus-visible:opacity-100 aria-expanded:opacity-100 [@media(hover:none)]:opacity-100"
             />
           }
           aria-label={t`Move ${title} to a stage`}
@@ -159,6 +160,7 @@ function StageColumn({
   inboxOf,
   ideaId,
   cursorId,
+  all,
   onMove,
 }: {
   stage: IdeaStage
@@ -168,6 +170,7 @@ function StageColumn({
   inboxOf: (idea: Discussion) => Inbox | undefined
   ideaId?: string
   cursorId: string | null
+  all: boolean
   onMove: (m: Move) => void
 }) {
   const text = useEnumText()
@@ -205,9 +208,15 @@ function StageColumn({
               inbox={inboxOf(idea)}
               current={idea.id === ideaId}
               cursor={idea.id === cursorId}
+              all={all}
               onMove={(to) => onMove({ idea, to })}
             />
           ))}
+          {items.length === 0 && (
+            <li className="px-2 py-3.5 text-center text-body text-faint" data-testid="stage-empty">
+              {stage === "ideas" ? <Trans>No ideas yet. New ones land here.</Trans> : <Trans>Nothing here yet.</Trans>}
+            </li>
+          )}
         </ul>
       )}
       {list.hasNextPage && (
@@ -220,86 +229,110 @@ function StageColumn({
   )
 }
 
-function Pending({ scope, inScope }: { scope?: string; inScope: (idea: Discussion) => boolean }) {
+function Pending({
+  scope,
+  inScope,
+  inboxOf,
+  all,
+}: {
+  scope?: string
+  inScope: (idea: Discussion) => boolean
+  inboxOf: (idea: Discussion) => Inbox | undefined
+  all: boolean
+}) {
   const { t } = useLingui()
   const errorText = useErrorText()
   const list = useScopeIdeas(scope, { state: "pending" })
   const moderate = useModerate()
-  const [open, setOpen] = useState(false)
+  const phone = useIsPhone()
+  const [folded, setFolded] = useState<boolean | null>(null)
+  const open = !(folded ?? phone)
   const items = (list.data?.pages.flatMap((p) => p.items) ?? []).filter(inScope)
   if (items.length === 0) return null
   return (
     <section
-      className="flex flex-col gap-3 rounded-xl border bg-card px-4 py-3"
+      className="flex shrink-0 flex-col gap-3 rounded-xl border bg-card px-4 py-3"
       aria-label={t`Waiting for approval`}
       data-testid="pending-strip"
     >
-      <h2 className="flex items-center gap-3 text-body">
+      <h2 className="flex flex-wrap items-center gap-3 text-body">
         <span className="grid h-5.5 min-w-8 place-items-center rounded-full bg-brand px-1.5 text-caption font-semibold text-white tabular-nums">
           {items.length}
         </span>
-        <span className="flex-1">
+        <span className="min-w-0 flex-1 basis-64">
           <Trans>Readers suggested new ideas. Review them before they show on the public board.</Trans>
         </span>
-        <FrameButton
-          className="h-[30px] px-2.5"
+        <Button
+          variant="outline"
+          className={look.btnSm}
           aria-expanded={open}
-          onClick={() => setOpen((o) => !o)}
+          onClick={() => setFolded(open)}
           data-testid="pending-review"
         >
           {open ? <Trans>Done</Trans> : <Trans>Review</Trans>}
-        </FrameButton>
+        </Button>
       </h2>
       {open && (
-        <ul className="flex gap-2 overflow-x-auto pb-1">
-          {items.map((idea) => (
-            <li
-              key={idea.id}
-              className="flex w-64 shrink-0 flex-col gap-1.5 rounded-[10px] border bg-card p-2.5"
-              data-testid="pending-idea"
-            >
-              <Link
-                to={ideaLink(idea.board_id ?? "", idea.id)}
-                className="line-clamp-2 text-body font-medium break-words hover:underline"
+        <ul className="flex gap-2.5 overflow-x-auto pb-1">
+          {items.map((idea) => {
+            const inbox = inboxOf(idea)
+            return (
+              <li
+                key={idea.id}
+                className="flex w-72 shrink-0 flex-col gap-1.5 rounded-[10px] border bg-background p-3"
+                data-testid="pending-idea"
               >
-                {idea.title}
-              </Link>
-              <span className="truncate text-caption text-faint">
-                <AuthorName author={idea.author} className="font-normal" />
-              </span>
-              <span className="-mx-1 flex gap-0.5">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="text-success hover:text-success"
-                  disabled={moderate.isPending}
-                  onClick={() =>
-                    moderate.mutate(
-                      { postId: idea.opening_post_id, to: "published" },
-                      { onSuccess: () => toast(t`Approved`), onError: (e) => toast(errorText(e)) }
-                    )
-                  }
-                  data-testid="pending-approve"
+                <span className="flex min-w-0 items-center gap-1.5 text-caption text-faint">
+                  {inbox && <ProductTag name={inbox.name} color={inbox.branding.color} />}
+                  <span className="min-w-0 truncate">
+                    <AuthorName author={idea.author} className="font-normal" />
+                  </span>
+                  <span aria-hidden>·</span>
+                  <Ago iso={idea.created_at} className="shrink-0" />
+                </span>
+                <Link
+                  to={ideaLink(idea.board_id ?? "", idea.id, all)}
+                  className="line-clamp-2 leading-[1.35] font-medium break-words hover:underline"
                 >
-                  <CheckIcon />
-                  <Trans>Approve</Trans>
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  disabled={moderate.isPending}
-                  onClick={() =>
-                    moderate.mutate(
-                      { postId: idea.opening_post_id, to: "hidden" },
-                      { onSuccess: () => toast(t`Hidden`), onError: (e) => toast(errorText(e)) }
-                    )
-                  }
-                >
-                  <Trans>Hide</Trans>
-                </Button>
-              </span>
-            </li>
-          ))}
+                  {idea.title}
+                </Link>
+                {idea.body && (
+                  <p className="line-clamp-3 text-small leading-[1.4] break-words text-muted-foreground">{idea.body}</p>
+                )}
+                <span className="-mx-1 mt-auto flex gap-1.5 pt-1">
+                  <Button
+                    size="sm"
+                    className="h-[30px] rounded-lg px-3"
+                    disabled={moderate.isPending}
+                    onClick={() =>
+                      moderate.mutate(
+                        { postId: idea.opening_post_id, to: "published" },
+                        { onSuccess: () => toast(t`Approved`), onError: (e) => toast(errorText(e)) }
+                      )
+                    }
+                    data-testid="pending-approve"
+                  >
+                    <Trans>Approve</Trans>
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="h-[30px] rounded-lg px-2.5 font-normal"
+                    disabled={moderate.isPending}
+                    onClick={() =>
+                      moderate.mutate(
+                        { postId: idea.opening_post_id, to: "hidden" },
+                        { onSuccess: () => toast(t`Hidden`), onError: (e) => toast(errorText(e)) }
+                      )
+                    }
+                    data-testid="pending-hide"
+                  >
+                    <Trans>Hide</Trans>
+                  </Button>
+                </span>
+              </li>
+            )
+          })}
         </ul>
       )}
     </section>
@@ -309,12 +342,14 @@ function Pending({ scope, inScope }: { scope?: string; inScope: (idea: Discussio
 export function Board({
   boards,
   ideaId,
+  all,
   moving,
   onMoving,
   onMoved,
 }: {
   boards: RoadmapBoard[]
   ideaId?: string
+  all: boolean
   moving: Move | null
   onMoving: (m: Move | null) => void
   onMoved: (idea: Discussion, stage: IdeaStage) => void
@@ -325,7 +360,7 @@ export function Board({
   const ids = new Set(boards.map((b) => b.id))
   const inScope = (idea: Discussion) => !!idea.board_id && ids.has(idea.board_id)
   const inboxes = new Map((useInboxes().data ?? []).map((i) => [i.id, i]))
-  const inboxOfBoard = new Map(boards.map((b) => [b.id, inboxes.get(b.inbox_id)]))
+  const inboxOfBoard = new Map(boards.map((b) => [b.id, boards.length > 1 ? inboxes.get(b.inbox_id) : undefined]))
   const inboxOf = (idea: Discussion) => (idea.board_id ? inboxOfBoard.get(idea.board_id) : undefined)
   const lists = useScopeLists(scope)
   const count = (stage: IdeaStage) => boards.reduce((n, b) => n + b.counts[stage], 0)
@@ -378,7 +413,7 @@ export function Board({
       [ROADMAP_KEYS.previousColumn]: () => step(-1, 0),
       ...(cursorIdea
         ? {
-            [ROADMAP_KEYS.open]: () => navigate(ideaLink(cursorIdea.board_id ?? "", cursorIdea.id)),
+            [ROADMAP_KEYS.open]: () => navigate(ideaLink(cursorIdea.board_id ?? "", cursorIdea.id, all)),
             [ROADMAP_KEYS.move]: () => onMoving({ idea: cursorIdea, to: cursorIdea.stage ?? "ideas" }),
             [ROADMAP_KEYS.moveBack]: () => shift(-1),
             [ROADMAP_KEYS.moveForward]: () => shift(1),
@@ -391,7 +426,7 @@ export function Board({
   return (
     <>
       <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-4 overflow-y-auto p-6 phone:px-4 phone:pt-4">
-        <Pending scope={scope} inScope={inScope} />
+        <Pending scope={scope} inScope={inScope} inboxOf={inboxOf} all={all} />
         <DndContext sensors={sensors} onDragEnd={onDragEnd}>
           <div className="flex min-h-0 flex-1 snap-x items-stretch gap-4 overflow-x-auto" data-testid="board-columns">
             {stages.map((stage, i) => (
@@ -404,6 +439,7 @@ export function Board({
                 items={columns[i] ?? []}
                 ideaId={ideaId}
                 cursorId={cursorId}
+                all={all}
                 onMove={onMoving}
               />
             ))}

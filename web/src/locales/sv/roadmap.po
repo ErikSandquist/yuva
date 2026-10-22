@@ -7,6 +7,10 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: sv\n"
 
+#: src/features/roadmap/CreateBoardDialog.tsx
+msgid "{inboxName} has no web chat channel. Add one first, because the public board embeds it."
+msgstr "{inboxName} har ingen webbchattkanal. Lägg först till en, eftersom den offentliga tavlan bäddar in den."
+
 #: src/features/roadmap/Board.tsx
 msgid "{linked, plural, one {# feedback} other {# feedback}}"
 msgstr "{linked, plural, one {# feedback} other {# feedback}}"
@@ -29,9 +33,25 @@ msgid "A reader's posts wait for a member until one of theirs is approved. Signe
 msgstr "En läsares inlägg väntar på en medlem tills ett av hens inlägg godkänns. Inloggade användare av din app publicerar direkt."
 
 #: src/features/roadmap/CreateBoardDialog.tsx
+msgid "Add a web chat channel"
+msgstr "Lägg till en webbchattkanal"
+
+#: src/features/roadmap/CreateBoardDialog.tsx
 #: src/features/roadmap/Settings.tsx
 msgid "Address"
 msgstr "Adress"
+
+#: src/features/roadmap/BoardBar.tsx
+msgid "All boards"
+msgstr "Alla tavlor"
+
+#: src/features/roadmap/Settings.tsx
+msgid "All changes saved."
+msgstr "Alla ändringar är sparade."
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "All feedback from {inboxName} that fits is already linked."
+msgstr "All feedback från {inboxName} som passar är redan länkad."
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Already linked"
@@ -89,13 +109,16 @@ msgstr "Räknar sidvisningar på den offentliga tavlan utan cookies."
 
 #: src/features/roadmap/CreateBoardDialog.tsx
 #: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
 msgid "Create board"
 msgstr "Skapa tavla"
 
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Create board ({newKey})"
 msgstr "Skapa tavla ({newKey})"
+
+#: src/features/roadmap/BoardBar.tsx
+msgid "Create board for {name}"
+msgstr "Skapa tavla för {name}"
 
 #: src/features/roadmap/NewIdeaDialog.tsx
 msgid "Create idea"
@@ -123,17 +146,21 @@ msgstr "Raderar tavlan med dess idéer, röster, svar och fashistorik. Länkad f
 msgid "Description"
 msgstr "Beskrivning"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Dismiss"
+msgstr "Avfärda"
+
 #: src/features/roadmap/Board.tsx
 msgid "Done"
 msgstr "Klart"
 
-#: src/features/roadmap/MoveDialog.tsx
-msgid "Every linked feedback that does not have it yet gets the progress {progress}. Linked feedback: {linked}"
-msgstr "Varje länkad feedback som ännu inte har framsteget {progress} får det. Länkad feedback: {linked}"
-
 #: src/features/roadmap/Settings.tsx
 msgid "Everyone's posts are published at once, except those of authors you marked as spam."
 msgstr "Allas inlägg publiceras direkt, utom de från författare du markerat som skräppost."
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Good news: “{title}” has shipped. Thank you for asking for it."
+msgstr "Goda nyheter: ”{title}” är levererad. Tack för att du bad om den."
 
 #: src/features/roadmap/Board.tsx
 msgid "Hidden"
@@ -155,21 +182,30 @@ msgstr "Idéer som dina kunder röstar på, med feedbacken bakom dem"
 msgid "Ideas, votes and stages for {inboxName}, with the feedback behind each idea. It stays private until you make it public."
 msgstr "Idéer, röster och faser för {inboxName}, med feedbacken bakom varje idé. Den förblir privat tills du gör den offentlig."
 
-#: src/features/roadmap/RoadmapColumn.tsx
-msgid "Ideas: {ideas}"
-msgstr "Idéer: {ideas}"
-
 #: src/features/roadmap/NewIdeaDialog.tsx
 msgid "It goes into Ideas on the board, where customers can vote on it."
 msgstr "Den hamnar under Idéer på tavlan, där kunder kan rösta på den."
 
-#: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/NewIdeaDialog.tsx
+msgid "It goes into Ideas on the board. The board is private, so only your team sees it."
+msgstr "Den hamnar i Idéer på tavlan. Tavlan är privat, så bara ditt team ser den."
+
+#: src/features/roadmap/IdeaFeedback.tsx
 msgid "It was unlinked from the idea."
 msgstr "Länken till idén togs bort."
 
 #: src/features/roadmap/Settings.tsx
 msgid "Its ideas, votes, replies and stage history are deleted with it."
 msgstr "Dess idéer, röster, svar och fashistorik raderas tillsammans med den."
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgctxt "link feedback to the idea"
+msgid "Link"
+msgstr "Länka"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Link feedback"
+msgstr "Länka feedback"
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Link this feedback to an idea…"
@@ -179,13 +215,21 @@ msgstr "Länka den här feedbacken till en idé…"
 msgid "Link to an idea"
 msgstr "Länka till en idé"
 
-#: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Linked"
+msgstr "Länkad"
+
+#: src/features/roadmap/IdeaFeedback.tsx
 msgid "Linked feedback"
 msgstr "Länkad feedback"
 
 #: src/features/roadmap/IdeaPane.tsx
 msgid "Linked feedback set to {progress}: {set}"
 msgstr "Länkad feedback satt till {progress}: {set}"
+
+#: src/features/roadmap/MoveDialog.tsx
+msgid "Linked feedback that gets the progress {progress}: {gets} of {linked}."
+msgstr "Länkad feedback som får förloppet {progress}: {gets} av {linked}."
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Linked to {title}"
@@ -195,19 +239,19 @@ msgstr "Länkad till {title}"
 msgid "Load more"
 msgstr "Ladda fler"
 
-#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Make private"
 msgstr "Gör privat"
 
-#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Make private ({publicKey})"
 msgstr "Gör privat ({publicKey})"
 
-#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Make public"
 msgstr "Gör offentlig"
 
-#: src/features/roadmap/pages.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Make public ({publicKey})"
 msgstr "Gör offentlig ({publicKey})"
 
@@ -254,25 +298,37 @@ msgstr "Ny idé"
 msgid "New idea from this feedback"
 msgstr "Ny idé från den här feedbacken"
 
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/pages.tsx
+msgid "No board is public yet. Make one public under Settings."
+msgstr "Ingen tavla är offentlig än. Gör en offentlig under Inställningar."
+
+#: src/features/roadmap/pages.tsx
 msgid "No board yet. Owners and admins create it."
 msgstr "Ingen tavla ännu. Ägare och administratörer skapar den."
 
-#: src/features/roadmap/IdeaPane.tsx
-msgid "No feedback is linked yet. Open a piece of feedback and use Link to an idea."
-msgstr "Ingen feedback är länkad ännu. Öppna en feedback och använd ”Länka till en idé”."
+#: src/features/roadmap/MoveDialog.tsx
+msgid "No feedback is linked to this idea yet."
+msgstr "Ingen feedback är länkad till den här idén än."
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "No feedback is linked yet. Use Link feedback, or open a piece of feedback and choose Link to an idea."
+msgstr "Ingen feedback är länkad än. Använd Länka feedback, eller öppna en feedback och välj Länka till en idé."
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "No idea matches."
 msgstr "Ingen idé matchar."
 
-#: src/features/roadmap/RoadmapColumn.tsx
-msgid "No inbox to show a board for."
-msgstr "Ingen inkorg att visa en tavla för."
+#: src/features/roadmap/Board.tsx
+msgid "No ideas yet. New ones land here."
+msgstr "Inga idéer än. Nya hamnar här."
 
 #: src/features/roadmap/Settings.tsx
 msgid "None"
 msgstr "Inga"
+
+#: src/features/roadmap/Board.tsx
+msgid "Nothing here yet."
+msgstr "Inget här än."
 
 #: src/features/roadmap/Settings.tsx
 msgid "Off"
@@ -282,7 +338,7 @@ msgstr "Av"
 msgid "On: anyone with the address reads the board, and signed-in readers vote and suggest ideas. Off: only your team sees it, as a tool to sort feedback."
 msgstr "På: alla som har adressen läser tavlan, och inloggade läsare röstar och föreslår idéer. Av: bara ditt team ser den, som ett verktyg för att sortera feedback."
 
-#: src/features/roadmap/IdeaPane.tsx
+#: src/features/roadmap/IdeaFeedback.tsx
 msgid "One reply, written once, goes to every open feedback conversation linked to this idea, as you, on each conversation’s own channel."
 msgstr "Ett svar, skrivet en gång, går till varje öppen feedbackkonversation som är länkad till den här idén, som dig, på varje konversations egen kanal."
 
@@ -290,9 +346,22 @@ msgstr "Ett svar, skrivet en gång, går till varje öppen feedbackkonversation 
 msgid "Open"
 msgstr "Öppna"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgctxt "open the feedback"
+msgid "Open"
+msgstr "Öppna"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Open Analytics"
+msgstr "Öppna Analytics"
+
 #: src/features/roadmap/IdeaPane.tsx
 msgid "Open on the public board"
 msgstr "Öppna på den offentliga tavlan"
+
+#: src/features/roadmap/LinkIdeaDialog.tsx
+msgid "Open Roadmap"
+msgstr "Öppna färdplanen"
 
 #: src/features/roadmap/LinkIdeaDialog.tsx
 msgid "Pick an idea of this inbox’s board"
@@ -302,17 +371,11 @@ msgstr "Välj en idé från den här inkorgens tavla"
 msgid "Posted as your public reply on the idea. Markdown works."
 msgstr "Publiceras som ditt offentliga svar på idén. Markdown fungerar."
 
-#: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Private"
 msgstr "Privat"
 
-#: src/features/roadmap/pages.tsx
-msgid "Private, only your team sees it"
-msgstr "Privat, bara ditt team ser den"
-
-#: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/BoardBar.tsx
 #: src/features/roadmap/Settings.tsx
 msgid "Public"
 msgstr "Offentlig"
@@ -329,19 +392,37 @@ msgstr "Läsare kan inte föreslå idéer. Röster och svar fungerar fortfarande
 msgid "Readers suggested new ideas. Review them before they show on the public board."
 msgstr "Läsare har föreslagit nya idéer. Granska dem innan de visas på den offentliga tavlan."
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Reply to everyone"
+msgstr "Svara alla"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Reply to linked ({key})"
+msgstr "Svara de länkade ({key})"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Resolved feedback does not get it: {closed}"
+msgstr "Löst feedback får den inte: {closed}"
+
 #: src/features/roadmap/Board.tsx
 msgid "Review"
 msgstr "Granskning"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Review the reply"
+msgstr "Granska svaret"
+
 #: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
 msgid "Roadmap"
 msgstr "Färdplan"
 
-#: src/features/roadmap/pages.tsx
-#: src/features/roadmap/RoadmapColumn.tsx
+#: src/features/roadmap/BoardBar.tsx
 msgid "Roadmap boards"
 msgstr "Färdplanstavlor"
+
+#: src/features/roadmap/Settings.tsx
+msgid "Save"
+msgstr "Spara"
 
 #: src/features/roadmap/Settings.tsx
 msgid "Saved"
@@ -355,9 +436,13 @@ msgstr "Sök idéer"
 msgid "Settings"
 msgstr "Inställningar"
 
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Shipped. Open feedback linked to it: {open}. A reply is ready to send."
+msgstr "Levererad. Öppen feedback länkad till den: {open}. Ett svar är redo att skickas."
+
 #: src/features/roadmap/pages.tsx
-msgid "Show your customers what you are building, and link the feedback behind each idea. Create a board for an inbox to sort ideas into stages."
-msgstr "Visa dina kunder vad du bygger och länka feedbacken bakom varje idé. Skapa en tavla för en brevlåda för att sortera idéer i steg."
+msgid "Show your customers what you are building, and link the feedback behind each idea. Create a board for {missingName} to sort ideas into stages."
+msgstr "Visa dina kunder vad du bygger och länka feedbacken bakom varje idé. Skapa en tavla för {missingName} för att sortera idéer i steg."
 
 #: src/features/roadmap/Settings.tsx
 msgid "Shown under the name on the public board."
@@ -404,6 +489,10 @@ msgstr "Framstegen för den länkade feedbacken ändras inte. Länkad feedback: 
 msgid "The public board embeds this chat, and ideas your team starts are filed on it."
 msgstr "Den offentliga tavlan bäddar in den här chatten, och idéer som ditt team startar arkiveras på den."
 
+#: src/features/roadmap/MoveDialog.tsx
+msgid "The rest already have it."
+msgstr "Resten har den redan."
+
 #: src/features/roadmap/pages.tsx
 msgid "This board no longer exists or you cannot see it."
 msgstr "Den här tavlan finns inte längre, eller så kan du inte se den."
@@ -412,14 +501,18 @@ msgstr "Den här tavlan finns inte längre, eller så kan du inte se den."
 msgid "This inbox has no roadmap board. Create one under Roadmap first."
 msgstr "Den här inkorgen har ingen färdplanstavla. Skapa först en under Färdplan."
 
-#: src/features/roadmap/CreateBoardDialog.tsx
-msgid "This inbox has no web chat channel. Add one first, because the public board embeds it."
-msgstr "Den här inkorgen har ingen webbchattkanal. Lägg först till en, eftersom den offentliga tavlan bäddar in den."
-
 #: src/features/roadmap/LinkIdeaDialog.tsx
 #: src/features/roadmap/NewIdeaDialog.tsx
 msgid "Title"
 msgstr "Titel"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Unlink"
+msgstr "Koppla bort"
+
+#: src/features/roadmap/IdeaFeedback.tsx
+msgid "Unlinked feedback from {inboxName}"
+msgstr "Olänkad feedback från {inboxName}"
 
 #: src/features/roadmap/Settings.tsx
 msgid "Use 3 to 48 letters, numbers and inner hyphens."
@@ -437,6 +530,6 @@ msgstr "Synlighet"
 msgid "Waiting for approval"
 msgstr "Väntar på godkännande"
 
-#: src/features/roadmap/RoadmapColumn.tsx
-msgid "Waiting for approval: {pending}"
-msgstr "Väntar på godkännande: {pending}"
+#: src/features/roadmap/Settings.tsx
+msgid "You have unsaved changes."
+msgstr "Du har osparade ändringar."

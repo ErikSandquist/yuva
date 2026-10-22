@@ -1,5 +1,5 @@
 import { Trans, useLingui } from "@lingui/react/macro"
-import { CheckIcon, ListFilterIcon, MegaphoneIcon, PlusIcon } from "lucide-react"
+import { CheckIcon, ChevronDownIcon, ListFilterIcon, MegaphoneIcon } from "lucide-react"
 import { useMemo, useSyncExternalStore } from "react"
 
 import { hostOf, SOURCE_FILTERS, SourceIcon, useSourceText } from "@/components/common"
@@ -7,6 +7,7 @@ import { popupClass } from "@/components/ui/dropdown-menu"
 import { Item } from "@/components/ui/item"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Separator } from "@/components/ui/separator"
+import { look } from "@/features/inbox/PageFrame"
 import { useBroadcasts } from "@/features/broadcasts/broadcastQueries"
 import { useDocsSites } from "@/features/docs/queries"
 import type { ChannelKind } from "@/lib/api"
@@ -156,25 +157,25 @@ export function SourceFilter({
         render={
           <button
             type="button"
-            className={cn(
-              "inline-flex min-w-0 shrink items-center gap-1.5 rounded-lg border px-2.5 transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring",
-              placeholder ? "h-[30px] max-w-36 shrink-0 gap-1 text-body" : "h-8 max-w-40 text-small",
-              active
-                ? "border-brand/40 bg-brand-wash font-medium text-brand"
-                : "border-dashed border-input text-muted-foreground hover:border-faint hover:text-foreground"
-            )}
+            className={
+              placeholder
+                ? cn(active ? look.chipOn : look.chip, "min-w-0 max-w-44")
+                : cn(
+                    "inline-flex h-8 max-w-40 min-w-0 shrink items-center gap-1.5 rounded-lg border px-2.5 text-small transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                    active
+                      ? "border-brand/40 bg-brand-wash font-medium text-brand"
+                      : "border-dashed border-input text-muted-foreground hover:border-faint hover:text-foreground"
+                  )
+            }
           />
         }
         aria-label={t`Filter by type, site and broadcast`}
         title={t`Filter by type, site and broadcast`}
         data-testid="source-filter"
       >
-        {placeholder && !active ? (
-          <PlusIcon className="size-3.5 shrink-0" />
-        ) : (
-          <ListFilterIcon className="size-3.5 shrink-0" />
-        )}
+        <ListFilterIcon className="size-3.5 shrink-0" />
         <span className="truncate">{active ? summary : (placeholder ?? <Trans>Filter</Trans>)}</span>
+        {placeholder && <ChevronDownIcon className="size-3.5 shrink-0 text-faint" />}
       </PopoverTrigger>
       <PopoverContent
         align="start"

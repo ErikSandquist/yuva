@@ -8,22 +8,17 @@ import { TopBar } from "@/app/TopBar"
 import { SidebarProvider, useSidebar } from "@/components/ui/sidebar"
 import { BroadcastsColumn } from "@/features/broadcasts/BroadcastsColumn"
 import { ContactsColumn } from "@/features/contact/ContactsColumn"
-import { DocsColumn } from "@/features/docs/DocsColumn"
 import { FeedbackList } from "@/features/feedback/FeedbackList"
 import { ChatList } from "@/features/inbox/ChatList"
 import { setRailView, useRailView } from "@/features/inbox/railView"
 import { AssistantsPanel, MentionsPanel } from "@/features/inbox/SidePanels"
 import { ReportsColumn } from "@/features/reports/ReportsColumn"
 import { SettingsColumn } from "@/features/settings/SettingsColumn"
-import { StatusColumn } from "@/features/status/StatusColumn"
-import { TeamColumn } from "@/features/team/TeamColumn"
 import { useIsPhone } from "@/hooks/use-media-query"
 import { useSession } from "@/lib/session"
 import { cn } from "@/lib/utils"
 
 const HelpColumn = lazy(() => import("@/features/help/HelpColumn"))
-const RoadmapColumn = lazy(() => import("@/features/roadmap/RoadmapColumn"))
-const ChangelogColumn = lazy(() => import("@/features/changelog/ChangelogColumn"))
 const AnalyticsColumn = lazy(() => import("@/features/analytics/AnalyticsColumn"))
 
 function LeftColumn() {
@@ -55,24 +50,11 @@ function SectionColumn() {
       {section === "mentions" && <MentionsPanel />}
       {section === "assistants" && <AssistantsPanel />}
       {section === "contacts" && <ContactsColumn />}
-      {section === "team" && <TeamColumn />}
       {section === "reports" && <ReportsColumn />}
-      {section === "docs" && <DocsColumn />}
       {section === "broadcasts" && <BroadcastsColumn />}
-      {section === "status" && <StatusColumn />}
       {section === "knowledge" && (
         <Suspense fallback={<div className="flex-1 bg-background" />}>
           <HelpColumn />
-        </Suspense>
-      )}
-      {section === "board" && (
-        <Suspense fallback={<div className="flex-1 bg-background" />}>
-          <RoadmapColumn />
-        </Suspense>
-      )}
-      {section === "updates" && (
-        <Suspense fallback={<div className="flex-1 bg-background" />}>
-          <ChangelogColumn />
         </Suspense>
       )}
       {section === "analytics" && (
@@ -142,14 +124,30 @@ export function Layout() {
   const section = useSection()
   useMentionsView(pathname, canManage)
   if (!phone) {
-    const frame = isChats(pathname, canManage) || pathname === "/feedback" || pathname.startsWith("/feedback/")
+    const frame =
+      isChats(pathname, canManage) ||
+      pathname === "/feedback" ||
+      pathname.startsWith("/feedback/") ||
+      section === "board" ||
+      section === "docs" ||
+      section === "status"
     return (
       <Desktop frame={frame}>
         <Outlet />
       </Desktop>
     )
   }
-  if (section === "home") {
+  if (
+    section === "home" ||
+    section === "board" ||
+    section === "docs" ||
+    section === "status" ||
+    pathname === "/team" ||
+    pathname === "/updates" ||
+    pathname === "/updates/changelogs" ||
+    pathname === "/broadcasts" ||
+    pathname === "/broadcasts/lists"
+  ) {
     return (
       <Phone>
         <div className="flex min-h-0 min-w-0 flex-1 flex-col">

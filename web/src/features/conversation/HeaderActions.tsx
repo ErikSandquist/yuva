@@ -1,23 +1,12 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro"
-import {
-  CheckIcon,
-  ChevronDownIcon,
-  ClockIcon,
-  FlagIcon,
-  RotateCcwIcon,
-  TagIcon,
-  UserRoundCheckIcon,
-  UserRoundPlusIcon,
-} from "lucide-react"
+import { CheckIcon, ChevronDownIcon, FlagIcon, UserRoundCheckIcon } from "lucide-react"
 import { useState, type RefObject } from "react"
 
-import { Dot, Kbd, MemberAvatar } from "@/components/common"
+import { MemberAvatar } from "@/components/common"
 import { useEnumText } from "@/components/common/text"
-import { keyLabel, SHORTCUTS } from "@/components/common/ShortcutSheet"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
-  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
@@ -37,11 +26,9 @@ import { useCounts } from "@/features/inbox/queries"
 import type { Conversation, ConversationUpdate, FeedbackProgress } from "@/lib/api"
 import { useSession } from "@/lib/session"
 import { cn } from "@/lib/utils"
-import { useAssignableMembers, useLabels } from "@/lib/workspace"
+import { useAssignableMembers } from "@/lib/workspace"
 
-export type HeaderMenu = "snooze" | "hand" | "labels" | "progress" | null
-
-const iconButton = <Button variant="ghost" size="icon-sm" />
+export type HeaderMenu = "snooze" | "hand" | "progress" | null
 
 function useSnoozeTimes() {
   const { t, i18n } = useLingui()
@@ -69,27 +56,25 @@ export function SnoozeMenu({
   open,
   onOpenChange,
   anchor,
-  labelled,
 }: {
   name: string
   actions: ConversationActions
   open: boolean
   onOpenChange: (open: boolean) => void
   anchor?: RefObject<Element | null>
-  labelled?: boolean
 }) {
   const { t } = useLingui()
   return (
     <DropdownMenu open={open} onOpenChange={onOpenChange}>
       <DropdownMenuTrigger
-        render={labelled ? <Button variant="outline" className={look.btnSm} /> : iconButton}
-        aria-label={labelled ? undefined : t`Snooze (S)`}
+        render={<Button variant="outline" className={look.btnSm} />}
         title={t`Snooze (S)`}
         data-testid="snooze-menu"
       >
-        {labelled ? <Trans>Snooze</Trans> : <ClockIcon />}
+        <Trans>Snooze</Trans>
+        <ChevronDownIcon className="text-faint" />
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" anchor={anchor} className="w-[280px] max-w-[calc(100vw-32px)]">
+      <DropdownMenuContent align="start" anchor={anchor} className="w-[280px] max-w-[calc(100vw-32px)]">
         <SnoozeTimes name={name} actions={actions} />
       </DropdownMenuContent>
     </DropdownMenu>
@@ -123,14 +108,14 @@ export function HandMenu({
   open,
   onOpenChange,
   anchor,
-  labelled,
+  label,
 }: {
   c: Conversation
   actions: ConversationActions
   open: boolean
   onOpenChange: (open: boolean) => void
   anchor?: RefObject<Element | null>
-  labelled?: React.ReactNode
+  label: React.ReactNode
 }) {
   const { t } = useLingui()
   const { membership } = useSession()
@@ -151,22 +136,15 @@ export function HandMenu({
       }}
     >
       <PopoverTrigger
-        render={labelled ? <Button variant="outline" className={cn(look.btnSm, "max-w-44 gap-1")} /> : iconButton}
-        aria-label={labelled ? undefined : t`Assign (A)`}
+        render={<Button variant="outline" className={cn(look.btnSm, "max-w-44 gap-1")} />}
         title={t`Assign (A)`}
         data-testid="hand-menu"
       >
-        {labelled ? (
-          <>
-            <span className="min-w-0 truncate">{labelled}</span>
-            <ChevronDownIcon className="text-faint" />
-          </>
-        ) : (
-          <UserRoundPlusIcon />
-        )}
+        <span className="min-w-0 truncate">{label}</span>
+        <ChevronDownIcon className="text-faint" />
       </PopoverTrigger>
       <PopoverContent
-        align="end"
+        align="start"
         anchor={anchor}
         sideOffset={6}
         className={cn(popupClass, "w-[300px] max-w-[calc(100vw-32px)] gap-0 rounded-xl p-1.5 ring-0")}
@@ -249,57 +227,6 @@ export function HandMenu({
   )
 }
 
-export function LabelsMenu({
-  c,
-  update,
-  open,
-  onOpenChange,
-}: {
-  c: Conversation
-  update: (body: ConversationUpdate) => void
-  open: boolean
-  onOpenChange: (open: boolean) => void
-}) {
-  const { t } = useLingui()
-  const labels = useLabels().data ?? []
-  const current = new Set(c.labels)
-  return (
-    <DropdownMenu open={open} onOpenChange={onOpenChange}>
-      <DropdownMenuTrigger
-        render={iconButton}
-        aria-label={t`Labels (L)`}
-        title={t`Labels (L)`}
-        data-testid="labels-menu"
-      >
-        <TagIcon />
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="max-h-[60svh] min-w-52">
-        {labels.length === 0 && (
-          <p className="px-2.5 py-1.5 text-body text-muted-foreground">
-            <Trans>No labels yet. Add them in settings.</Trans>
-          </p>
-        )}
-        {labels.map((l) => (
-          <DropdownMenuCheckboxItem
-            key={l.id}
-            checked={current.has(l.id)}
-            closeOnClick={false}
-            onCheckedChange={(on) => {
-              const next = new Set(current)
-              if (on) next.add(l.id)
-              else next.delete(l.id)
-              update({ labels: [...next] })
-            }}
-          >
-            <Dot color={l.color} />
-            {l.name}
-          </DropdownMenuCheckboxItem>
-        ))}
-      </DropdownMenuContent>
-    </DropdownMenu>
-  )
-}
-
 const PROGRESS: FeedbackProgress[] = ["planned", "in_progress", "done", "wont_do"]
 
 export function ProgressMenu({
@@ -320,19 +247,16 @@ export function ProgressMenu({
   return (
     <DropdownMenu open={open} onOpenChange={onOpenChange}>
       <DropdownMenuTrigger
-        render={<Button variant="outline" size="sm" />}
-        aria-label={t`Progress (O)`}
+        render={<Button variant="outline" className={look.btnSm} />}
         title={t`Progress (O)`}
         data-testid="progress-menu"
         data-progress={current}
       >
         <Icon />
-        <span className="phone:hidden @max-xl/person:hidden">
-          {current ? text.progress[current] : <Trans>Set progress</Trans>}
-        </span>
-        <ChevronDownIcon className="phone:hidden @max-xl/person:hidden" />
+        {current ? text.progress[current] : <Trans>Set progress</Trans>}
+        <ChevronDownIcon className="text-faint" />
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="min-w-48">
+      <DropdownMenuContent align="start" className="min-w-48">
         <DropdownMenuGroup>
           <DropdownMenuLabel>
             <Trans>Progress</Trans>
@@ -361,51 +285,18 @@ export function ProgressMenu({
   )
 }
 
-export function CloseButton({ c, actions, ink }: { c: Conversation; actions: ConversationActions; ink?: boolean }) {
+export function CloseButton({ c, actions }: { c: Conversation; actions: ConversationActions }) {
   const { t } = useLingui()
   const feedback = c.kind === "feedback"
-  if (ink) {
-    const closed = c.status === "closed"
-    return (
-      <Button
-        className={look.btnInkSm}
-        onClick={closed ? actions.reopen : actions.close}
-        title={closed ? undefined : feedback ? t`Resolve (E)` : t`Close (E)`}
-        data-testid={closed ? "reopen-conversation" : "close-conversation"}
-      >
-        {closed ? (
-          <Trans>Reopen</Trans>
-        ) : feedback ? (
-          <Trans>Resolve</Trans>
-        ) : (
-          <Trans context="conversation">Close</Trans>
-        )}
-      </Button>
-    )
-  }
-  if (c.status === "closed") {
-    return (
-      <Button variant="outline" size="sm" onClick={actions.reopen} data-testid="reopen-conversation">
-        <RotateCcwIcon />
-        <span className="phone:hidden @max-xl/person:hidden">
-          <Trans>Reopen</Trans>
-        </span>
-      </Button>
-    )
-  }
+  const closed = c.status === "closed"
   return (
     <Button
-      variant="outline"
-      size="sm"
-      onClick={actions.close}
-      title={feedback ? t`Resolve (E)` : t`Close (E)`}
-      data-testid="close-conversation"
+      className={look.btnInkSm}
+      onClick={closed ? actions.reopen : actions.close}
+      title={closed ? undefined : feedback ? t`Resolve (E)` : t`Close (E)`}
+      data-testid={closed ? "reopen-conversation" : "close-conversation"}
     >
-      <CheckIcon />
-      <span className="phone:hidden @max-xl/person:hidden">
-        {feedback ? <Trans>Resolve</Trans> : <Trans context="conversation">Close</Trans>}
-      </span>
-      <Kbd className="phone:hidden @max-xl/person:hidden">{keyLabel(SHORTCUTS.close)[0]}</Kbd>
+      {closed ? <Trans>Reopen</Trans> : feedback ? <Trans>Resolve</Trans> : <Trans context="conversation">Close</Trans>}
     </Button>
   )
 }

@@ -3,27 +3,20 @@ import { ArrowRightIcon, ExternalLinkIcon, GlobeIcon } from "lucide-react"
 import { useState } from "react"
 import { useLocation } from "react-router"
 
-import { toast } from "@/components/common"
-import { LinkedConversations } from "@/components/common/Linked"
 import { ROADMAP_KEYS, keyLabel } from "@/components/common/ShortcutSheet"
-import { formatDateTime, IDEA_STAGES, useEnumText, useErrorText } from "@/components/common/text"
+import { formatDateTime, IDEA_STAGES, useEnumText } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Thread } from "@/features/docs/discussions/ThreadPane"
 import { useDiscussion } from "@/features/docs/discussions/queries"
+import { IdeaFeedback } from "@/features/roadmap/IdeaFeedback"
 import { MoveDialog } from "@/features/roadmap/MoveDialog"
-import {
-  boardLink,
-  useLinkedFeedback,
-  useLinkIdea,
-  useReplyCounts,
-  useReplyOutcomes,
-  useReplyToLinked,
-  useStageChanges,
-} from "@/features/roadmap/queries"
+import { boardLink, useStageChanges } from "@/features/roadmap/queries"
+import { STAGE_DOT } from "@/features/roadmap/stages"
 import { Card, EmptyRow, Section } from "@/features/settings/ui"
 import { useHotkeys } from "@/hooks/use-hotkeys"
 import type { Discussion, IdeaStage, RoadmapBoard } from "@/lib/api"
+import { cn } from "@/lib/utils"
 import { useMemberMap } from "@/lib/workspace"
 
 function History({ idea }: { idea: Discussion }) {
@@ -76,60 +69,13 @@ function History({ idea }: { idea: Discussion }) {
   )
 }
 
-function Linked({
-  idea,
-  replyId,
-  onReply,
-  offer,
-}: {
-  idea: Discussion
-  replyId: string
-  onReply: (id: string) => void
-  offer: number
-}) {
-  const { t } = useLingui()
-  const errorText = useErrorText()
-  const list = useLinkedFeedback(idea.id)
-  const { unlink } = useLinkIdea()
-  return (
-    <LinkedConversations
-      list={list}
-      title={<Trans>Linked feedback</Trans>}
-      empty={<Trans>No feedback is linked yet. Open a piece of feedback and use Link to an idea.</Trans>}
-      description={
-        <Trans>
-          One reply, written once, goes to every open feedback conversation linked to this idea, as you, on each
-          conversation’s own channel.
-        </Trans>
-      }
-      unlinked={t`It was unlinked from the idea.`}
-      replyKey={ROADMAP_KEYS.replyLinked}
-      replyId={replyId}
-      hooks={{
-        useSend: () => useReplyToLinked(idea.id),
-        useCounts: (id) => useReplyCounts(idea.id, id),
-        useOutcomes: (id, enabled) => useReplyOutcomes(idea.id, id, enabled),
-      }}
-      rowLink={(c) => `/feedback/${c.id}`}
-      busy={unlink.isPending}
-      openReply={offer}
-      onUnlink={(c) =>
-        unlink.mutate({ ideaId: idea.id, conversationId: c.id }, { onError: (e) => toast(errorText(e)) })
-      }
-      onReply={onReply}
-      onDismissReply={() => onReply("")}
-    />
-  )
-}
-
-export function IdeaPane({ board, ideaId }: { board: RoadmapBoard; ideaId: string }) {
+export function IdeaPane({ board, ideaId, all }: { board: RoadmapBoard; ideaId: string; all: boolean }) {
   const { t } = useLingui()
   const location = useLocation()
   const text = useEnumText()
   const detail = useDiscussion(ideaId)
   const idea = detail.data?.discussion
   const [moving, setMoving] = useState<IdeaStage | null>(null)
-  const [replyId, setReplyId] = useState("")
   const [offer, setOffer] = useState((location.state as { offerReply?: boolean } | null)?.offerReply ? 1 : 0)
   const stage = idea?.stage
   const shift = (d: number) => {
@@ -151,7 +97,7 @@ export function IdeaPane({ board, ideaId }: { board: RoadmapBoard; ideaId: strin
       <Thread
         embedded
         discussionId={ideaId}
-        back={{ to: boardLink(board.id), label: t`Board` }}
+        back={{ to: all ? "/board" : boardLink(board.id), label: t`Board` }}
         actions={(d) => (
           <>
             <Button
@@ -161,6 +107,7 @@ export function IdeaPane({ board, ideaId }: { board: RoadmapBoard; ideaId: strin
               title={`${t`Move to a stage`} (${keyLabel(ROADMAP_KEYS.move).join("")})`}
               data-testid="idea-stage"
             >
+              {d.stage && <span aria-hidden className={cn("size-[7px] shrink-0 rounded-full", STAGE_DOT[d.stage])} />}
               {d.stage ? text.stage[d.stage] : null}
               <ArrowRightIcon className="rtl:rotate-180" />
             </Button>
@@ -179,12 +126,8 @@ export function IdeaPane({ board, ideaId }: { board: RoadmapBoard; ideaId: strin
             )}
           </>
         )}
-        after={(d) => (
-          <>
-            <Linked idea={d} replyId={replyId} onReply={setReplyId} offer={offer} />
-            <History idea={d} />
-          </>
-        )}
+        before={(d) => <IdeaFeedback idea={d} board={board} offer={offer} />}
+        after={(d) => <History idea={d} />}
       />
       {moving && idea && (
         <MoveDialog
