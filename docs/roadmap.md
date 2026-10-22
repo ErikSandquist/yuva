@@ -127,7 +127,7 @@ Status: done in `v0.0.4`; plan in issue #17, decisions in `architecture.md` › 
 Accept: Claude Code and claude.ai triage an inbox and draft replies a member sends from the panel;
 a prompt-injection e-mail sends nothing; a headless chat works with the panel turned off.
 
-## M10 — Native apps for members (0.0.32)
+## M10 — Native apps for members (0.0.33)
 
 Status: planned; iOS in issue #18, Android in issue #19.
 
@@ -493,8 +493,8 @@ address get `429`.
 
 ## M23 — MCP coverage
 
-Status: planned for `v0.0.32`; issues #107, #108, #109, decisions in `architecture.md` › MCP coverage
-(M23).
+Status: released in `v0.0.32`, acceptance on a running instance pending; issues #107, #108, #109,
+decisions in `architecture.md` › MCP coverage (M23).
 
 - Sender identity, e-mail channel and deliverability records, mailing lists, subscribers and CSV
   imports through MCP, with consent and attestation taken from the person and a confirmed count to

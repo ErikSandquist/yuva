@@ -2,8 +2,8 @@ apiVersion: v2
 name: yuva
 description: Open-source customer messaging - e-mail, live chat and in-app conversations in one inbox.
 type: application
-version: 0.0.31
-appVersion: "0.0.31"
+version: 0.0.32
+appVersion: "0.0.32"
 kubeVersion: ">=1.25.0-0"
 home: https://github.com/productdevbook/yuva
 sources:
