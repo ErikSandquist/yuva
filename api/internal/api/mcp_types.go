@@ -264,11 +264,25 @@ type mcpInbox struct {
 	Timezone             string    `json:"timezone"`
 	Mode                 string    `json:"mode" jsonschema:"live or async"`
 	ExpectedReplyMinutes *int32    `json:"expected_reply_minutes,omitempty"`
+	Sender               mcpSender `json:"sender" jsonschema:"who sends the inbox's list mail; every broadcast's footer shows it"`
+	SenderReady          bool      `json:"sender_ready" jsonschema:"the legal name and postal address are set, so broadcasts are not blocked by the sender identity"`
+}
+
+type mcpSender struct {
+	LegalName     string `json:"legal_name,omitempty"`
+	PostalAddress string `json:"postal_address,omitempty"`
+	Registration  string `json:"registration,omitempty" jsonschema:"such as a MERSİS number or VAT id"`
+	Contact       string `json:"contact,omitempty" jsonschema:"an e-mail address, phone or URL"`
 }
 
 func inboxOut(in oas.Inbox) mcpInbox {
 	return mcpInbox{
 		ID: in.Id, Name: in.Name, Slug: in.Slug, DefaultLocale: in.DefaultLocale, Timezone: in.Timezone, Mode: string(in.Mode),
 		ExpectedReplyMinutes: in.ExpectedReplyMinutes,
+		Sender: mcpSender{
+			LegalName: deref(in.Sender.LegalName), PostalAddress: deref(in.Sender.PostalAddress), Registration: deref(in.Sender.Registration),
+			Contact: deref(in.Sender.Contact),
+		},
+		SenderReady: senderReady(in.Sender.LegalName, in.Sender.PostalAddress),
 	}
 }

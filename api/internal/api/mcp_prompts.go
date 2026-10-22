@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"net/url"
+	"strconv"
 	"strings"
 	"uuid"
 
@@ -206,16 +207,21 @@ func addBroadcastPrompts(srv *mcp.Server, c *mcpCall) {
 	if toolsListed(c.p, "list_mailing_lists", "list_email_templates", "create_design", "update_design", "preview_design", "create_broadcast_draft", "get_broadcast") {
 		srv.AddPrompt(&mcp.Prompt{
 			Name: "draft_newsletter", Title: "Draft a newsletter",
-			Description: "Write a newsletter from a brief into a design and a draft broadcast to a mailing list, and report its review. Nothing is scheduled or sent.",
+			Description: "Write a newsletter from a brief into a design and a draft broadcast to a mailing list, and report its review; the list, its subscribers and the sender identity are set up first when they are missing. Nothing is scheduled or sent.",
 			Arguments: []*mcp.PromptArgument{
 				{Name: "brief", Description: "What the newsletter says: the news, links, the call to action.", Required: true},
-				{Name: "list_id", Description: "The mailing list it goes to.", Required: true},
+				{Name: "list_id", Description: "The mailing list it goes to; a new list is made when empty."},
 				{Name: "inbox_id", Description: "The inbox it is sent for; the list's inbox when empty."},
 				{Name: "template", Description: "A template slug from list_email_templates; the best fit for the brief when empty."},
 				{Name: "locale", Description: "en, tr or de; the inbox's language when empty."},
 			},
 		}, func(_ context.Context, req *mcp.GetPromptRequest) (*mcp.GetPromptResult, error) {
-			return draftNewsletterPrompt(req.Params.Arguments), nil
+			return draftNewsletterPrompt(req.Params.Arguments, newsletterSetup{
+				sender:    toolsListed(c.p, "list_inboxes", "update_inbox_sender"),
+				list:      toolsListed(c.p, "create_mailing_list"),
+				importCSV: toolsListed(c.p, "create_list_import", "get_list_import", "start_list_import"),
+				add:       toolsListed(c.p, "add_subscription"),
+			}), nil
 		})
 	}
 	if toolsListed(c.p, "get_broadcast_report", "get_broadcast") {
@@ -241,7 +247,11 @@ func addBroadcastPrompts(srv *mcp.Server, c *mcpCall) {
 	}
 }
 
-func draftNewsletterPrompt(args map[string]string) *mcp.GetPromptResult {
+type newsletterSetup struct {
+	sender, list, importCSV, add bool
+}
+
+func draftNewsletterPrompt(args map[string]string, can newsletterSetup) *mcp.GetPromptResult {
 	list := args["list_id"]
 	inbox := "the list's inbox_id"
 	if v := args["inbox_id"]; v != "" {
@@ -255,14 +265,43 @@ func draftNewsletterPrompt(args map[string]string) *mcp.GetPromptResult {
 	if v := args["template"]; v != "" {
 		template = "the template " + v
 	}
-	return promptResult("Draft a newsletter to list "+list,
-		"Draft a newsletter to the mailing list "+list+" from this brief:\n\n"+args["brief"],
-		"1. Call list_mailing_lists and find the list "+list+": note its inbox_id and channel_id, the e-mail channel it sends through. Send for "+inbox+".\n"+
-			"2. The language is "+language+". Call list_email_templates with it and pick "+template+".\n"+
-			"3. Call create_design with that template, the language as locale, the inbox_id and a name for the newsletter.\n"+
-			"4. Fill the design from the brief: change the texts, headings, buttons and links of its blocks, remove blocks the brief has nothing for, keep the block ids, the theme and the footer, and save it with update_design and the version create_design returned. Write in that language. Invent no facts, prices, dates or links the brief does not give. Merge fields need a fallback, such as {{ contact.first_name | \"there\" }}.\n"+
-			"5. Call preview_design with the design_id and the list_id, read the text part and the warnings and fix what they point out with update_design.\n"+
-			"6. Call create_broadcast_draft with the inbox_id, the channel_id, a name, a subject (under 80 characters) and a preheader you write in that language, the design_id and list_ids ["+list+"].\n"+
-			"7. Call get_broadcast with its id and report the review: what is ready, what blocks scheduling and how to fix it, and the recipient count.",
+	var setup []string
+	find := "Call list_mailing_lists and find the list " + list + ": note its inbox_id and channel_id, the e-mail channel it sends through. Send for " + inbox + "."
+	target, lists := "the mailing list "+list, "["+list+"]"
+	if list == "" {
+		target, lists = "a mailing list", "[the list's id]"
+		find = "Call list_mailing_lists for " + inbox + " and ask me which list it goes to; note its id, inbox_id and channel_id, the e-mail channel it sends through."
+		if can.list {
+			find = "Call list_mailing_lists for " + inbox + " and ask me which list it goes to. When there is none, ask me for its name and description and create it with create_mailing_list and the inbox's e-mail channel as channel_id. Note its id, inbox_id and channel_id."
+		}
+	}
+	setup = append(setup, find)
+	var subscribers []string
+	if can.importCSV {
+		subscribers = append(subscribers, "to import a CSV I give you, call create_list_import with its text and the attestation and consent_source I state, word for word (ask me for both; never write them yourself), read the counts with get_list_import until it is ready, show me counts.valid and the refused rows, and call start_list_import with confirm_count equal to counts.valid only after I confirm that number")
+	}
+	if can.add {
+		subscribers = append(subscribers, "to add a few addresses, call add_subscription for each; confirmed stays false, which mails them a confirmation, unless I state that they already agreed and tell you the statement and where they agreed")
+	}
+	if len(subscribers) > 0 {
+		setup = append(setup, "When the list has no subscribers yet, ask me where they come from: "+strings.Join(subscribers, "; ")+".")
+	}
+	if can.sender {
+		setup = append(setup, "Call list_inboxes and look at the inbox's sender_ready. When it is false, ask me for the sender's legal name and postal address (a registration and a contact if I have them) and set them with update_inbox_sender exactly as I give them; never invent, guess or complete a value.")
+	}
+	steps := append(setup,
+		"The language is "+language+". Call list_email_templates with it and pick "+template+".",
+		"Call create_design with that template, the language as locale, the inbox_id and a name for the newsletter.",
+		"Fill the design from the brief: change the texts, headings, buttons and links of its blocks, remove blocks the brief has nothing for, keep the block ids, the theme and the footer, and save it with update_design and the version create_design returned. Write in that language. Invent no facts, prices, dates or links the brief does not give. Merge fields need a fallback, such as {{ contact.first_name | \"there\" }}.",
+		"Call preview_design with the design_id and the list_id, read the text part and the warnings and fix what they point out with update_design.",
+		"Call create_broadcast_draft with the inbox_id, the channel_id, a name, a subject (under 80 characters) and a preheader you write in that language, the design_id and list_ids "+lists+".",
+		"Call get_broadcast with its id and report the review: what is ready, what blocks scheduling and how to fix it, and the recipient count.",
+	)
+	for i := range steps {
+		steps[i] = strconv.Itoa(i+1) + ". " + steps[i]
+	}
+	return promptResult("Draft a newsletter to "+target,
+		"Draft a newsletter to "+target+" from this brief:\n\n"+args["brief"],
+		strings.Join(steps, "\n"),
 		"Do not schedule it: never call schedule_broadcast here, and send a test with send_test_broadcast only when I ask. End by showing me the subject, the preheader, the text part and the panel_url, and ask me to review the draft in Yuva.")
 }

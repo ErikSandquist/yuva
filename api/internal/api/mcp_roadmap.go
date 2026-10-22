@@ -209,6 +209,15 @@ func (c *mcpCall) listIdeas(ctx context.Context, prm oas.ListDiscussionsParams) 
 	return out, nil
 }
 
+type createRoadmapBoardIn struct {
+	InboxID     uuid.UUID `json:"inbox_id"`
+	ChannelID   uuid.UUID `json:"channel_id" jsonschema:"a chat channel of the same inbox, from list_channels"`
+	Name        string    `json:"name"`
+	Slug        string    `json:"slug" jsonschema:"a-z, 0-9 and inner hyphens, 3 to 48 characters, unique across the server; part of the board's address"`
+	Description string    `json:"description,omitempty"`
+	Suggestions string    `json:"suggestions,omitempty" jsonschema:"whether readers may suggest ideas: moderated (default, a member approves a new reader's idea), open or off"`
+}
+
 var mcpRoadmapTools = []mcpTool{
 	defineTool("list_roadmap_ideas", "List roadmap ideas",
 		"Lists the ideas of the roadmap boards you can see: title, stage, votes, replies and how much feedback is linked. Search the titles with query before linking feedback. Needs conversations:read and roadmap:read. Maps to GET /v1/discussions with kind=idea.",
@@ -297,6 +306,18 @@ var mcpRoadmapTools = []mcpTool{
 				}
 			}
 			return out, nil
+		}),
+	defineTool("create_roadmap_board", "Create a roadmap board",
+		"Creates a roadmap board for an inbox's product. It stays private, a triage tool for the team, until a member makes it public in Yuva. Owners, admins and keys with roadmap:write; not OAuth connections. Maps to POST /v1/roadmap-boards.",
+		additive, map[string][]any{"suggestions": {"moderated", "open", "off"}}, publicSetupTool("CreateRoadmapBoard"),
+		func(ctx context.Context, c *mcpCall, in createRoadmapBoardIn) (mcpRoadmapBoard, error) {
+			res, err := c.s.CreateRoadmapBoard(ctx, oas.CreateRoadmapBoardRequestObject{Body: &oas.RoadmapBoardCreate{InboxId: in.InboxID, ChannelId: in.ChannelID,
+				Name: in.Name, Slug: in.Slug, Description: optString[string](in.Description), Suggestions: optString[oas.RoadmapSuggestions](in.Suggestions)}})
+			if err != nil {
+				return mcpRoadmapBoard{}, err
+			}
+			b := oas.RoadmapBoard(res.(oas.CreateRoadmapBoard201JSONResponse))
+			return mcpRoadmapBoard{ID: b.Id, InboxID: b.InboxId, Name: b.Name, URL: b.Url, Public: b.Public, Counts: b.Counts}, nil
 		}),
 }
 

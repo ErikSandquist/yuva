@@ -157,6 +157,58 @@ func (c *mcpCall) statusIncidentUpdate(ctx context.Context, page, incident uuid.
 	return incidentOutMCP(oas.StatusIncident(res.(oas.CreateStatusIncidentUpdate201JSONResponse))), nil
 }
 
+type createStatusPageIn struct {
+	InboxID     uuid.UUID `json:"inbox_id"`
+	Name        string    `json:"name"`
+	Slug        string    `json:"slug" jsonschema:"a-z, 0-9 and inner hyphens, 3 to 48 characters, unique across the server; part of the page's address"`
+	Description string    `json:"description,omitempty"`
+	Locale      string    `json:"locale,omitempty" jsonschema:"the language of the page's words (en, tr, de); the inbox's when empty"`
+	Timezone    string    `json:"timezone,omitempty" jsonschema:"an IANA time zone for the day bars"`
+	SiteURL     string    `json:"site_url,omitempty" jsonschema:"the product's http(s) address"`
+	SupportURL  string    `json:"support_url,omitempty" jsonschema:"an http(s) or mailto: address where customers get help"`
+}
+
+type createStatusComponentIn struct {
+	PageID      uuid.UUID `json:"page_id"`
+	Name        string    `json:"name"`
+	Description string    `json:"description,omitempty"`
+	Hidden      *bool     `json:"hidden,omitempty" jsonschema:"left off the public page and out of its overall state"`
+}
+
+type createStatusMonitorIn struct {
+	PageID           uuid.UUID `json:"page_id"`
+	ComponentID      uuid.UUID `json:"component_id" jsonschema:"the component whose state the monitor sets"`
+	Kind             string    `json:"kind" jsonschema:"heartbeat: the host calls Yuva on a schedule; push: the host's monitoring sends its state"`
+	Name             string    `json:"name"`
+	Interval         int32     `json:"interval,omitempty" jsonschema:"heartbeat: seconds between beats, 30 to 30 days; 300 when empty"`
+	Grace            int32     `json:"grace,omitempty" jsonschema:"heartbeat: seconds a beat may be late; 60 when empty"`
+	FailureState     string    `json:"failure_state,omitempty" jsonschema:"the state a failing monitor sets; major_outage when empty"`
+	OnFailure        string    `json:"on_failure,omitempty" jsonschema:"none, or draft: failing opens a draft incident a member publishes; draft when empty"`
+	FailureThreshold int32     `json:"failure_threshold,omitempty" jsonschema:"failures in a row that fail it; 1 when empty"`
+}
+
+type mcpStatusMonitorCreated struct {
+	mcpStatusMonitor
+	Token string `json:"token,omitempty" jsonschema:"a secret shown only now: hand it to the person for their monitoring and never repeat it elsewhere"`
+	URL   string `json:"url,omitempty" jsonschema:"where the host calls; it contains the token"`
+}
+
+type updateIncidentIn struct {
+	PageID     uuid.UUID `json:"page_id"`
+	IncidentID uuid.UUID `json:"incident_id"`
+	Title      *string   `json:"title,omitempty"`
+	Impact     string    `json:"impact,omitempty"`
+}
+
+func monitorOutMCP(m oas.StatusMonitor) mcpStatusMonitor {
+	item := mcpStatusMonitor{ID: m.Id, ComponentID: m.ComponentId, Kind: string(m.Kind), Name: m.Name, State: string(m.State),
+		Since: m.StateSince, Paused: m.Paused, LastResult: m.LastResultAt, IncidentID: m.IncidentId}
+	if m.LastMessage != nil {
+		item.CustomerContent = &mcpMonitorContent{LastMessage: *m.LastMessage}
+	}
+	return item
+}
+
 var mcpStatusTools = []mcpTool{
 	defineTool("list_status_pages", "List status pages",
 		"Lists the public status pages you can see with their overall state and whether they are published. Maps to GET /v1/status-pages.",
@@ -280,5 +332,72 @@ var mcpStatusTools = []mcpTool{
 				state = oas.StatusCompleted
 			}
 			return c.statusIncidentUpdate(ctx, in.PageID, in.IncidentID, in.Body, &state, nil)
+		}),
+	defineTool("create_status_page", "Create a status page",
+		"Creates a status page for an inbox's product. It stays unpublished: nobody outside the team sees it until a member publishes it in Yuva. Then add its components with create_status_component. Owners, admins and keys with status:manage. Maps to POST /v1/status-pages.",
+		additive, nil, mcpTool{ops: []string{"CreateStatusPage"}, allow: mayManage, denied: errManagersOnly},
+		func(ctx context.Context, c *mcpCall, in createStatusPageIn) (mcpStatusPage, error) {
+			body := oas.StatusPageCreate{InboxId: in.InboxID, Name: in.Name, Slug: in.Slug, Description: optString[string](in.Description),
+				Locale: optString[string](in.Locale), Timezone: optString[string](in.Timezone), SiteUrl: optString[string](in.SiteURL),
+				SupportUrl: optString[string](in.SupportURL)}
+			res, err := c.s.CreateStatusPage(ctx, oas.CreateStatusPageRequestObject{Body: &body})
+			if err != nil {
+				return mcpStatusPage{}, err
+			}
+			return statusPageOutMCP(oas.StatusPage(res.(oas.CreateStatusPage201JSONResponse))), nil
+		}),
+	defineTool("create_status_component", "Add a status page component",
+		"Adds a component (a part of the product that can be up or down) to a status page, operational at first. Owners, admins and keys with status:manage. Maps to POST /v1/status-pages/{id}/components.",
+		additive, nil, mcpTool{ops: []string{"CreateStatusComponent"}, allow: mayManage, denied: errManagersOnly},
+		func(ctx context.Context, c *mcpCall, in createStatusComponentIn) (mcpStatusComponent, error) {
+			res, err := c.s.CreateStatusComponent(ctx, oas.CreateStatusComponentRequestObject{PageId: in.PageID,
+				Body: &oas.StatusComponentCreate{Name: in.Name, Description: optString[string](in.Description), Hidden: in.Hidden}})
+			if err != nil {
+				return mcpStatusComponent{}, err
+			}
+			cp := oas.StatusComponent(res.(oas.CreateStatusComponent201JSONResponse))
+			return mcpStatusComponent{ID: cp.Id, Name: cp.Name, State: string(cp.State), Since: cp.StateSince, Source: string(cp.StateSource), Hidden: cp.Hidden}, nil
+		}),
+	defineTool("create_status_monitor", "Add a status monitor",
+		"Adds a heartbeat or push monitor that sets a component's state from the host's own monitoring. The answer carries the monitor's token and url once; give them to the person to put in their monitoring and do not repeat them. A failing monitor opens at most a draft incident that a member publishes. Owners, admins and keys with status:manage. Maps to POST /v1/status-pages/{id}/monitors.",
+		additive, map[string][]any{"kind": {"heartbeat", "push"}, "failure_state": {"degraded", "partial_outage", "major_outage"}, "on_failure": {"none", "draft"}},
+		mcpTool{ops: []string{"CreateStatusMonitor"}, allow: mayManage, denied: errManagersOnly},
+		func(ctx context.Context, c *mcpCall, in createStatusMonitorIn) (mcpStatusMonitorCreated, error) {
+			body := oas.StatusMonitorCreate{ComponentId: in.ComponentID, Kind: oas.StatusMonitorKind(in.Kind), Name: in.Name,
+				FailureState: optString[oas.StatusMonitorFailureState](in.FailureState), OnFailure: optString[oas.StatusMonitorOnFailure](in.OnFailure)}
+			if in.Interval != 0 {
+				body.Interval = &in.Interval
+			}
+			if in.Grace != 0 {
+				body.Grace = &in.Grace
+			}
+			if in.FailureThreshold != 0 {
+				body.FailureThreshold = &in.FailureThreshold
+			}
+			res, err := c.s.CreateStatusMonitor(ctx, oas.CreateStatusMonitorRequestObject{PageId: in.PageID, Body: &body})
+			if err != nil {
+				return mcpStatusMonitorCreated{}, err
+			}
+			m := oas.StatusMonitorWithToken(res.(oas.CreateStatusMonitor201JSONResponse))
+			out := mcpStatusMonitorCreated{mcpStatusMonitor: monitorOutMCP(oas.StatusMonitor{
+				Id: m.Id, ComponentId: m.ComponentId, Kind: m.Kind, Name: m.Name, State: m.State, StateSince: m.StateSince, Paused: m.Paused,
+				LastResultAt: m.LastResultAt, IncidentId: m.IncidentId, LastMessage: m.LastMessage,
+			})}
+			out.Token, out.URL = deref(m.Token), deref(m.Url)
+			return out, nil
+		}),
+	defineTool("update_incident", "Change an incident's title or impact",
+		"Changes the title or impact of an open incident, a draft or a published one; the public page shows a change to a published incident at once. The text goes through post_incident_update. A resolved incident is refused. Maps to PATCH /v1/status-pages/{id}/incidents/{id}.",
+		idempotent, map[string][]any{"impact": statusImpactEnum}, mcpTool{ops: []string{"UpdateStatusIncident"}},
+		func(ctx context.Context, c *mcpCall, in updateIncidentIn) (mcpIncident, error) {
+			body := oas.StatusIncidentPatch{Title: in.Title, Impact: optString[oas.StatusIncidentImpact](in.Impact)}
+			if body.Title == nil && body.Impact == nil {
+				return mcpIncident{}, errNothingToUpdate
+			}
+			res, err := c.s.UpdateStatusIncident(ctx, oas.UpdateStatusIncidentRequestObject{PageId: in.PageID, IncidentId: in.IncidentID, Body: &body})
+			if err != nil {
+				return mcpIncident{}, err
+			}
+			return incidentOutMCP(oas.StatusIncident(res.(oas.UpdateStatusIncident200JSONResponse))), nil
 		}),
 }

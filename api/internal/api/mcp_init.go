@@ -57,9 +57,9 @@ var setupIntegrations = []setupIntegration{
 		How:     "an API key with analytics:write on the server, or the Go package", Guide: docsBase + "analytics-server/"},
 	{ID: "newsletter", Title: "Newsletters", What: "Mailing lists with recorded consent, a subscribe form and broadcasts.",
 		Signals: "a newsletter form, or Mailchimp, ConvertKit, Brevo, Resend audiences or Buttondown",
-		How:     "a mailing list, get_install_snippet with a subscribe- framework, and the draft_newsletter prompt", Scope: "broadcasts:write", Guide: docsBase + "lists/"},
+		How:     "create_mailing_list, update_inbox_sender with the person's own values, subscribers from create_list_import, add_subscription or a subscribe form (get_install_snippet with a subscribe- framework), then the draft_newsletter prompt", Scope: "lists:write and broadcasts:write", Guide: docsBase + "lists/"},
 	{ID: "email_inbox", Title: "Support e-mail", What: "A support address whose mail and replies live in the inbox.",
-		Signals: "a support@ or help@ address in the code, footer or docs", How: "an e-mail channel in the inbox settings", Guide: docsBase + "email/"},
+		Signals: "a support@ or help@ address in the code, footer or docs", How: "create_email_channel, then the person sets its SMTP account in the panel; get_deliverability and create_dkim_key for the DNS records", Scope: "inboxes:manage", Guide: docsBase + "email/"},
 	{ID: "move_history", Title: "Bring the history over", What: "Copies old support mail or help-desk tickets into the inbox, reading only.",
 		Signals: "an existing help desk (Zendesk, Help Scout) or a support mailbox (Gmail, Outlook, IMAP)",
 		How:     "the move_to_yuva prompt", Scope: "migrations:manage", Guide: docsBase + "migrate/"},
@@ -95,6 +95,7 @@ type setupStateOut struct {
 	Inboxes       []setupInbox       `json:"inboxes"`
 	Properties    []setupProperty    `json:"analytics_properties"`
 	Lists         []setupList        `json:"mailing_lists"`
+	NoSender      []setupInbox       `json:"inboxes_without_sender,omitempty" jsonschema:"inboxes with mailing lists but no sender identity (legal name and postal address); their broadcasts are blocked until update_inbox_sender sets it from the person's own values"`
 	NotVisible    []string           `json:"not_visible,omitempty" jsonschema:"parts this connection cannot read, with the scope to grant"`
 	Integrations  []setupIntegration `json:"integrations" jsonschema:"what Yuva can add to a project, how to tell it fits and how to set it up"`
 }
@@ -124,7 +125,7 @@ var issueAreas = []any{"widget", "js-sdk", "swift-sdk", "kotlin-sdk", "go-sdk", 
 
 var mcpInitTools = []mcpTool{
 	defineTool("get_setup_state", "See what Yuva is set up",
-		"Returns what this workspace already has (inboxes and their channels, analytics properties, mailing lists) and the catalog of what Yuva can add to a project: what each part does, what in a codebase suggests it fits, and the prompt or tools that set it up. Use it with the init prompt to recommend a plan for the project you are working in. Read only.",
+		"Returns what this workspace already has (inboxes and their channels, analytics properties, mailing lists, inboxes whose lists lack a sender identity) and the catalog of what Yuva can add to a project: what each part does, what in a codebase suggests it fits, and the prompt or tools that set it up. Use it with the init prompt to recommend a plan for the project you are working in. Read only.",
 		readOnly, nil, mcpTool{},
 		func(ctx context.Context, c *mcpCall, _ setupStateIn) (setupStateOut, error) {
 			return c.setupState(ctx)
@@ -209,6 +210,22 @@ func (c *mcpCall) setupState(ctx context.Context) (setupStateOut, error) {
 	}
 	for _, l := range parts.lists[:min(len(parts.lists), maxPageSize)] {
 		out.Lists = append(out.Lists, setupList{ID: l.ID, Name: l.Name, InboxID: *l.InboxID})
+	}
+	withLists := map[uuid.UUID]bool{}
+	for _, l := range parts.lists {
+		withLists[*l.InboxID] = true
+	}
+	for _, in := range parts.inboxes {
+		if !withLists[in.ID] {
+			continue
+		}
+		row, err := c.s.st.GetInbox(ctx, store.GetInboxParams{WorkspaceID: c.p.workspaceID, ID: in.ID})
+		if err != nil {
+			return out, err
+		}
+		if !senderReady(row.SenderLegalName, row.SenderPostalAddress) {
+			out.NoSender = append(out.NoSender, setupInbox{ID: in.ID, Name: in.Name})
+		}
 	}
 	return out, nil
 }

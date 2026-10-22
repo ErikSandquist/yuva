@@ -212,6 +212,24 @@ func (c *mcpCall) helpDraft(a oas.HelpArticle, locale string) (mcpHelpDraft, err
 	return mcpHelpDraft{}, errInternal
 }
 
+type createHelpCenterIn struct {
+	InboxID       uuid.UUID `json:"inbox_id"`
+	Name          string    `json:"name"`
+	Slug          string    `json:"slug" jsonschema:"a-z, 0-9 and inner hyphens, 3 to 48 characters, unique across the server; part of the center's address"`
+	Description   string    `json:"description,omitempty" jsonschema:"shown on the center's home page"`
+	DefaultLocale string    `json:"default_locale,omitempty" jsonschema:"a BCP 47 tag; the inbox's language when empty"`
+	Locales       []string  `json:"locales,omitempty" jsonschema:"the languages articles can be written in; the default one is added"`
+	SiteURL       string    `json:"site_url,omitempty" jsonschema:"the product's http(s) address"`
+}
+
+type createHelpCollectionIn struct {
+	CenterID    uuid.UUID  `json:"center_id" jsonschema:"a help center from list_help_centers"`
+	Name        string     `json:"name"`
+	Description string     `json:"description,omitempty"`
+	Locale      string     `json:"locale,omitempty" jsonschema:"the language of name and description; the center's default when empty"`
+	ParentID    *uuid.UUID `json:"parent_id,omitempty" jsonschema:"a top-level collection of the same center, to make this one a sub-collection"`
+}
+
 var mcpHelpTools = []mcpTool{
 	defineTool("list_help_centers", "List help centers",
 		"Lists the help centers of the inboxes you can see with their languages, whether they are published and how many articles they hold. Maps to GET /v1/help-centers.",
@@ -352,6 +370,50 @@ var mcpHelpTools = []mcpTool{
 			}
 			for _, q := range r.NoResultQueries {
 				out.CustomerContent.NoResultQueries = append(out.CustomerContent.NoResultQueries, mcpHelpQuery{Query: q.Query, Locale: q.Locale, Searches: q.Searches})
+			}
+			return out, nil
+		}),
+	defineTool("create_help_center", "Create a help center",
+		"Creates a help center for an inbox's product. It stays unpublished until a member publishes it in Yuva. Then add collections with create_help_collection and drafts with draft_help_article. Owners, admins and keys with help:publish; not OAuth connections. Maps to POST /v1/help-centers.",
+		additive, nil, publicSetupTool("CreateHelpCenter"),
+		func(ctx context.Context, c *mcpCall, in createHelpCenterIn) (mcpHelpCenter, error) {
+			body := oas.HelpCenterCreate{InboxId: in.InboxID, Name: in.Name, Slug: in.Slug, Description: optString[string](in.Description),
+				DefaultLocale: optString[string](in.DefaultLocale), SiteUrl: optString[string](in.SiteURL)}
+			if in.Locales != nil {
+				body.Locales = &in.Locales
+			}
+			res, err := c.s.CreateHelpCenter(ctx, oas.CreateHelpCenterRequestObject{Body: &body})
+			if err != nil {
+				return mcpHelpCenter{}, err
+			}
+			return helpCenterOutMCP(oas.HelpCenter(res.(oas.CreateHelpCenter201JSONResponse))), nil
+		}),
+	defineTool("create_help_collection", "Create a help collection",
+		"Adds a collection (a group of articles) to a help center, named in one language. Maps to POST /v1/help-centers/{id}/collections.",
+		additive, nil, mcpTool{ops: []string{"CreateHelpCollection"}},
+		func(ctx context.Context, c *mcpCall, in createHelpCollectionIn) (mcpHelpCollection, error) {
+			locale := in.Locale
+			if locale == "" && keyMayCall(c.p, "GetHelpCenter") != nil {
+				return mcpHelpCollection{}, errValidation("locale is required: this connection cannot read the help center's default locale")
+			}
+			if locale == "" {
+				res, err := c.s.GetHelpCenter(ctx, oas.GetHelpCenterRequestObject{CenterId: in.CenterID})
+				if err != nil {
+					return mcpHelpCollection{}, err
+				}
+				locale = oas.HelpCenter(res.(oas.GetHelpCenter200JSONResponse)).DefaultLocale
+			}
+			res, err := c.s.CreateHelpCollection(ctx, oas.CreateHelpCollectionRequestObject{CenterId: in.CenterID, Body: &oas.HelpCollectionCreate{
+				ParentId:     in.ParentID,
+				Translations: map[string]oas.HelpCollectionTranslationInput{locale: {Name: in.Name, Description: optString[string](in.Description)}},
+			}})
+			if err != nil {
+				return mcpHelpCollection{}, err
+			}
+			col := oas.HelpCollection(res.(oas.CreateHelpCollection201JSONResponse))
+			out := mcpHelpCollection{ID: col.Id, ParentID: col.ParentId, Number: col.Number, Names: []string{}, Articles: col.ArticleCount}
+			for l, t := range col.Translations {
+				out.Names = append(out.Names, l+": "+t.Name)
 			}
 			return out, nil
 		}),

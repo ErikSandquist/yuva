@@ -479,7 +479,7 @@ var mcpTools = append([]mcpTool{
 			return c.conversation(ctx, in.ConversationID, in.Cursor, in.Limit)
 		}),
 	defineTool("list_inboxes", "List inboxes",
-		"Lists the inboxes you can see with their language, timezone and mode. Maps to GET /v1/inboxes.",
+		"Lists the inboxes you can see with their language, timezone, mode and sender identity; sender_ready false means broadcasts from the inbox are blocked until update_inbox_sender sets the legal name and postal address. Maps to GET /v1/inboxes.",
 		readOnly, nil, mcpTool{ops: []string{"ListInboxes"}},
 		func(ctx context.Context, c *mcpCall, _ noInput) (mcpPage[mcpInbox], error) {
 			res, err := c.s.ListInboxes(ctx, oas.ListInboxesRequestObject{})
@@ -536,11 +536,7 @@ var mcpTools = append([]mcpTool{
 			}
 			out := mcpPage[mcpMailingList]{Items: []mcpMailingList{}}
 			for _, l := range res.(oas.ListMailingLists200JSONResponse).Items {
-				out.Items = append(out.Items, mcpMailingList{
-					ID: l.Id, InboxID: l.InboxId, ChannelID: l.ChannelId, Name: l.Name, Description: l.Description, Public: l.Public,
-					Commercial: l.Commercial, DoubleOptIn: l.DoubleOptIn,
-					SenderReady: l.SenderReady, Subscribed: l.Counts.Subscribed, Pending: l.Counts.Pending,
-				})
+				out.Items = append(out.Items, mailingListOut(l))
 			}
 			return out, nil
 		}),
@@ -639,7 +635,7 @@ var mcpTools = append([]mcpTool{
 			return c.createMessage(ctx, in.ConversationID, oas.MessageCreate{Kind: oas.MessageCreateKindNote, Body: &in.Body})
 		}),
 	defineTool("assign", "Assign a conversation",
-		"Assigns a conversation to a member, or unassigns it. Maps to PATCH /v1/conversations/{id}.",
+		"Assigns a conversation to a member from list_members, or unassigns it. Maps to PATCH /v1/conversations/{id}.",
 		idempotent, nil, mcpTool{ops: []string{"UpdateConversation"}},
 		func(ctx context.Context, c *mcpCall, in assignIn) (mcpConversation, error) {
 			b := oas.ConversationUpdate{AssigneeId: nullable.NewNullNullable[uuid.UUID]()}
@@ -730,4 +726,4 @@ var mcpTools = append([]mcpTool{
 			}
 			return contactOut(oas.Contact(res.(oas.MergeContact200JSONResponse))), nil
 		}),
-}, slices.Concat(mcpSetupTools, mcpBroadcastTools, mcpMigrationTools, mcpAnalyticsTools, mcpStatusTools, mcpHelpTools, mcpRoadmapTools, mcpChangelogTools, mcpInitTools)...)
+}, slices.Concat(mcpSetupTools, mcpContactTools, mcpListTools, mcpBroadcastTools, mcpDesignTools, mcpMigrationTools, mcpAnalyticsTools, mcpStatusTools, mcpHelpTools, mcpRoadmapTools, mcpChangelogTools, mcpInitTools)...)

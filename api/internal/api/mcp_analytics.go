@@ -647,6 +647,33 @@ func analyticsTool(t mcpTool) mcpTool {
 	return t
 }
 
+type createFunnelIn struct {
+	PropertyID uuid.UUID   `json:"property_id"`
+	Name       string      `json:"name"`
+	Steps      []uuid.UUID `json:"steps" jsonschema:"goal ids from list_goals, in the order visitors go through them"`
+}
+
+type retentionIn struct {
+	PropertyID uuid.UUID `json:"property_id"`
+	Grain      string    `json:"grain,omitempty" jsonschema:"day, week (default) or month"`
+	From       string    `json:"from,omitempty" jsonschema:"the first cohort's day, YYYY-MM-DD; 30 days, 12 weeks or 12 months back when empty"`
+	To         string    `json:"to,omitempty" jsonschema:"the last cohort's day, YYYY-MM-DD; today when empty"`
+}
+
+type mcpCohort struct {
+	Cohort   string  `json:"cohort" jsonschema:"the day, week or month the cohort's visitors were first seen"`
+	Visitors int64   `json:"visitors" jsonschema:"the cohort's size"`
+	Periods  []int64 `json:"periods" jsonschema:"visitors of the cohort seen in each period from its own, the first being its size"`
+}
+
+type mcpRetention struct {
+	Grain   string      `json:"grain"`
+	From    string      `json:"from"`
+	To      string      `json:"to"`
+	BuiltAt *time.Time  `json:"built_at,omitempty" jsonschema:"when the numbers were last rebuilt; absent before the first build"`
+	Cohorts []mcpCohort `json:"cohorts"`
+}
+
 var mcpAnalyticsTools = []mcpTool{
 	defineTool("list_properties", "List analytics properties",
 		"Lists the websites and apps the workspace measures with Yuva Analytics that you can see: domains, platforms, time zone, linked inbox and today's visitors. Maps to GET /v1/analytics/properties.",
@@ -830,6 +857,43 @@ var mcpAnalyticsTools = []mcpTool{
 				Placement: sn.placement, GuideURL: sn.guide, ServerURL: server, PublicKey: p.PublicKey, Domains: []string{}}
 			for _, d := range p.Domains {
 				out.Domains = append(out.Domains, string(d))
+			}
+			return out, nil
+		}),
+	defineTool("create_funnel", "Create a funnel",
+		"Creates a funnel over a property's goals, in the order visitors go through them; read it with funnel_report. Owners, admins and keys with analytics:manage. Maps to POST /v1/analytics/properties/{id}/funnels.",
+		additive, nil, analyticsTool(mcpTool{ops: []string{"CreateAnalyticsFunnel"}, allow: func(p principal) bool { return requireAnalyticsManager(p) == nil }, denied: errNotManager}),
+		func(ctx context.Context, c *mcpCall, in createFunnelIn) (mcpFunnel, error) {
+			res, err := c.s.CreateAnalyticsFunnel(ctx, oas.CreateAnalyticsFunnelRequestObject{PropertyId: in.PropertyID, Body: &oas.AnalyticsFunnelCreate{Name: in.Name, Steps: in.Steps}})
+			if err != nil {
+				return mcpFunnel{}, err
+			}
+			f := oas.AnalyticsFunnel(res.(oas.CreateAnalyticsFunnel201JSONResponse))
+			return mcpFunnel{ID: f.Id, Name: f.Name, Steps: f.Steps}, nil
+		}),
+	defineTool("analytics_retention", "Retention of returning visitors",
+		"Cohorts of visitors by the day, week or month they were first seen, and how many of each came back in the periods after. Only visitors with a persistent id are counted, so a property with cookieless collection shows few. Maps to GET /v1/analytics/properties/{id}/retention.",
+		readOnly, map[string][]any{"grain": {"day", "week", "month"}}, analyticsTool(mcpTool{ops: []string{"GetAnalyticsRetention"}}),
+		func(ctx context.Context, c *mcpCall, in retentionIn) (mcpRetention, error) {
+			params := oas.GetAnalyticsRetentionParams{Grain: optString[oas.GetAnalyticsRetentionParamsGrain](in.Grain)}
+			for dst, v := range map[**openapi_types.Date]string{&params.From: in.From, &params.To: in.To} {
+				if v == "" {
+					continue
+				}
+				d, err := time.Parse(time.DateOnly, v)
+				if err != nil {
+					return mcpRetention{}, errValidation("from and to are days, YYYY-MM-DD")
+				}
+				*dst = &openapi_types.Date{Time: d}
+			}
+			res, err := c.s.GetAnalyticsRetention(ctx, oas.GetAnalyticsRetentionRequestObject{PropertyId: in.PropertyID, Params: params})
+			if err != nil {
+				return mcpRetention{}, err
+			}
+			r := oas.AnalyticsRetention(res.(oas.GetAnalyticsRetention200JSONResponse))
+			out := mcpRetention{Grain: string(r.Grain), From: r.From.String(), To: r.To.String(), BuiltAt: r.BuiltAt, Cohorts: []mcpCohort{}}
+			for _, co := range r.Cohorts {
+				out.Cohorts = append(out.Cohorts, mcpCohort{Cohort: co.Cohort.String(), Visitors: co.Visitors, Periods: co.Periods})
 			}
 			return out, nil
 		}),

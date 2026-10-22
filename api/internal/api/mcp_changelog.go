@@ -223,6 +223,15 @@ func chLabels(in []string) []oas.ChangelogLabel {
 	return out
 }
 
+type createChangelogIn struct {
+	InboxID       uuid.UUID `json:"inbox_id"`
+	Name          string    `json:"name"`
+	Slug          string    `json:"slug" jsonschema:"a-z, 0-9 and inner hyphens, 3 to 48 characters, unique across the server; part of the page's address"`
+	Description   string    `json:"description,omitempty" jsonschema:"shown on the changelog's home page"`
+	DefaultLocale string    `json:"default_locale,omitempty" jsonschema:"a BCP 47 tag; the inbox's language when empty"`
+	Locales       []string  `json:"locales,omitempty" jsonschema:"the languages entries can be written in; the default one is added"`
+}
+
 var mcpChangelogTools = []mcpTool{
 	defineTool("list_whats_new_entries", "List What's new entries",
 		"Lists the entries of a What's new changelog, newest first, with their state, labels and a title per language, and the changelog itself. Look here before drafting a new entry. Maps to GET /v1/changelogs/{id}/entries.",
@@ -351,6 +360,21 @@ var mcpChangelogTools = []mcpTool{
 				}
 			}
 			return c.whatsNewPutDraft(ctx, cl.Id, in.EntryID, put)
+		}),
+	defineTool("create_changelog", "Create a What's new page",
+		"Creates a What's new changelog for an inbox's product. It stays unpublished until a member publishes it in Yuva. Then add entries with draft_whats_new_entry. Owners, admins and keys with changelog:publish; not OAuth connections. Maps to POST /v1/changelogs.",
+		additive, nil, publicSetupTool("CreateChangelog"),
+		func(ctx context.Context, c *mcpCall, in createChangelogIn) (mcpChangelogRef, error) {
+			body := oas.ChangelogCreate{InboxId: in.InboxID, Name: in.Name, Slug: in.Slug, Description: optString[string](in.Description),
+				DefaultLocale: optString[string](in.DefaultLocale)}
+			if in.Locales != nil {
+				body.Locales = &in.Locales
+			}
+			res, err := c.s.CreateChangelog(ctx, oas.CreateChangelogRequestObject{Body: &body})
+			if err != nil {
+				return mcpChangelogRef{}, err
+			}
+			return changelogRefMCP(oas.Changelog(res.(oas.CreateChangelog201JSONResponse))), nil
 		}),
 }
 

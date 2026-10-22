@@ -409,6 +409,10 @@ func (s *Server) UpdateListImport(ctx context.Context, req oas.UpdateListImportR
 }
 
 func (s *Server) StartListImport(ctx context.Context, req oas.StartListImportRequestObject) (oas.StartListImportResponseObject, error) {
+	return s.startListImport(ctx, req, nil)
+}
+
+func (s *Server) startListImport(ctx context.Context, req oas.StartListImportRequestObject, expectValid *int64) (oas.StartListImportResponseObject, error) {
 	p := principalFrom(ctx)
 	var (
 		imp  store.ListImport
@@ -430,6 +434,9 @@ func (s *Server) StartListImport(ctx context.Context, req oas.StartListImportReq
 			return errEmailColumnRequired
 		}
 		counts := oas.ListImportCounts{Valid: importCounts(cur.Counts).Valid}
+		if expectValid != nil && counts.Valid != *expectValid {
+			return errImportCountChanged
+		}
 		imp, err = q.StartListImport(ctx, store.StartListImportParams{WorkspaceID: p.workspaceID, ID: cur.ID, Counts: mustJSON(counts), Now: new(s.now())})
 		if store.IsUniqueViolation(err) {
 			return errImportRunning

@@ -541,6 +541,73 @@ re-checks its token every 30 seconds and ends when the token stops working. The 
 - Rate limit per token or key (600 requests a minute, `429` with `Retry-After`), counted per grant
   for Connected apps.
 
+#### MCP coverage (M23)
+
+An assistant can do through MCP what a member does to answer customers, set a product up and prepare
+mail, so it never has to stop and send the person to the panel for an ordinary step. Each tool calls
+the `/v1` operation with the caller's principal, so roles, scopes and inbox limits are the API's;
+writes that only owners and admins may make through `/v1` are listed only to them and to keys.
+
+- **Left out on purpose:** credentials and access (API keys, OAuth grants, members' roles, invites,
+  passkeys, push subscriptions, webhooks, rotating any secret, key or token), workspace settings and
+  deletion, every delete beyond the existing `remove_migration_history`, consent and analytics
+  exports and analytics data deletion, migration file uploads, typing and read markers, raw message and
+  attachment downloads, SMTP and other passwords, and every publish a milestone keeps for members
+  (help articles, What's new entries, incidents under the draft rule). Unsubscribing is a state
+  change, not a delete.
+- **Sender identity (#109).** `update_inbox_sender` (`UpdateInbox` with `sender` only: legal name,
+  postal address, registration, contact; owners, admins and keys with `inboxes:manage`). Its
+  description says every value comes from the person and is never invented. `list_inboxes` returns
+  each inbox's `sender` and `sender_ready`; `get_setup_state` names inboxes with lists but no sender.
+- **E-mail channel (#107).** `create_email_channel` (`CreateChannel` with kind `email`): the address and
+  name, no SMTP account, as `create_migration` does; the answer carries the forwarding address for
+  inbound mail and `channel_settings_url` where the person sets SMTP. `get_deliverability`
+  (`GetDeliverability`, and `CheckDeliverability` with `check: true`) returns the DKIM record to add
+  and what each check found or is missing; `create_dkim_key` (`CreateDkimKey`) makes the key whose record it lists.
+- **Lists and subscribers (#107).** `create_mailing_list`, `update_mailing_list` (`lists:write`,
+  owners, admins and keys); `list_subscriptions` (`ListSubscriptions`, addresses and names in
+  `customer_content`); `add_subscription` (`CreateSubscription`; `consent.confirmed` false unless the
+  person states that the subscriber already agreed, with the statement and where they agreed in their
+  own words, where they agreed going into the consent's `reference`); `unsubscribe` (`UpdateSubscription` state `unsubscribed`).
+- **CSV import (#107).** `create_list_import` takes the CSV as text (at most 5 MB, the same multipart
+  upload the panel sends) with `attestation` and `consent_source`, which the description says to take
+  from the person word for word and never to write; `get_list_import`, `list_list_imports`,
+  `update_list_import_mapping`, `get_list_import_errors` (the refused rows, `customer_content`),
+  `cancel_list_import`. Through `/mcp` the CSV text and `data_base64` below fit only up to about 5 MB
+  (the request limit is 8 MiB). `start_list_import` needs `confirm_count` equal to the import's `counts.valid`,
+  as the person was shown, and answers `409 count_mismatch` otherwise.
+- **E-mail images (#108).** `list_email_images` (`ListEmailImages`) and `upload_email_image`
+  (`UploadEmailImage`'s code): `url` (`https` only, fetched through the webhook client that refuses
+  private and reserved addresses, 10 seconds, the upload's size and type limits) or `data_base64`;
+  the answer is the image id `update_design` takes. Owners, admins and keys, `broadcasts:write`.
+- **Designs and broadcasts.** `list_designs`, `get_design` (`ListEmailDesigns`, `GetEmailDesign`,
+  `broadcasts:read`), `duplicate_design` (`broadcasts:write`); `pause_broadcast`, `resume_broadcast`,
+  `unschedule_broadcast` and `cancel_broadcast` (`destructiveHint`, needs `confirm_name` equal to the
+  broadcast's name) with `broadcasts:send`, listed under the same rule as `schedule_broadcast`.
+  Asking the operator to allow broadcasts stays in the panel: `RequestBroadcastApproval` takes the
+  owner's session only.
+- **Team, contacts, conversations.** `list_members` (`ListMembers`: id, name, role; addresses only to
+  owners and admins), so `assign` has ids. `search_contacts` (`ListContacts`), `create_contact`,
+  `update_contact` (names and attributes; `contacts:write`), `list_contact_notes`,
+  `add_contact_note`, `list_contact_subscriptions`. `start_conversation` (`CreateConversation`): the
+  first outgoing message is a draft unless the caller may deliver and `send: true` is given.
+  `list_drafts` (`ListDrafts`) lists drafts waiting for review. `create_label`, `create_canned_reply`,
+  `update_canned_reply`.
+- **Discussions.** `list_discussions`, `get_discussion` (posts in `customer_content`). Replying stays
+  with members: `CreateDiscussionPost` needs a member and takes no key or token.
+- **Setting up the other products.** `create_status_page`, `create_status_component`,
+  `create_status_monitor`, `update_incident` (a draft's or a published incident's title and impact;
+  text goes through `post_incident_update`); `create_help_center`, `create_help_collection`;
+  `create_changelog`; `create_roadmap_board`; `create_funnel` and `analytics_retention`. Each takes the
+  scope and role of its `/v1` operation (`status:manage`, `help:write`, `changelog:write`,
+  `roadmap:write`, `analytics:manage`, `analytics:read`); creating a help center needs `help:publish`
+  and a changelog `changelog:publish`, and help centers, changelogs and boards take no OAuth token,
+  only owners, admins and keys. Nothing created here is published. `create_status_monitor` returns the
+  push token and URL once, for the person to put in their job.
+- The server instructions name each group's tools, and the prompts use them: `draft_newsletter`
+  creates a list, imports or adds subscribers and fixes the sender before the draft when they are
+  missing, and still never schedules.
+
 ### Identity
 
 The host app's backend knows who its user is; Yuva trusts it through a short-lived identity token:

@@ -490,3 +490,27 @@ list is not offered. Claude Code drafts an entry and a German translation throug
 or schedule it. A key with the named `changelog:publish` publishes one. An agent of another inbox and
 another workspace see none of it in the panel, the API or MCP. 121 page requests in a minute from one
 address get `429`.
+
+## M23 — MCP coverage
+
+Status: planned for `v0.0.32`; issues #107, #108, #109, decisions in `architecture.md` › MCP coverage
+(M23).
+
+- Sender identity, e-mail channel and deliverability records, mailing lists, subscribers and CSV
+  imports through MCP, with consent and attestation taken from the person and a confirmed count to
+  start an import.
+- E-mail images from a public URL or bytes, so a design gets the sender's logo.
+- Designs and broadcast control (pause, resume, unschedule, cancel), members for assigning,
+  contacts and their notes, starting a conversation, drafts waiting for review, labels and canned
+  replies, reading discussions, and creating status pages, help centers, changelogs, roadmap boards and
+  funnels.
+- Left out on purpose: credentials, access, webhooks, workspace settings, deletes, exports, passwords
+  and every publish a milestone keeps for members.
+
+Accept: Claude Code, connected as an owner to a fresh workspace, creates an inbox with an e-mail
+channel, sets the sender identity from values the person typed, shows the DNS records, creates a
+mailing list, imports a 3-row CSV with the attestation the person typed and starts it only with the
+confirmed count, uploads a logo from a public URL into an `announcement` design, and drafts a
+broadcast whose review has no `sender_identity_missing`. A URL on a private address is refused. An
+agent sees none of the owner-only tools; a token without `lists:write` gets `insufficient_scope`
+naming it. `start_conversation` with `send: true` leaves a draft while `bots_may_send` is off.

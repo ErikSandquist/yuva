@@ -54,19 +54,20 @@ func slugify(s string) string {
 }
 
 type mcpChannel struct {
-	ID             uuid.UUID `json:"id"`
-	InboxID        uuid.UUID `json:"inbox_id"`
-	Kind           string    `json:"kind" jsonschema:"email, chat (web widget and documentation pages), app (mobile SDKs) or api"`
-	Name           string    `json:"name"`
-	PublicKey      string    `json:"public_key,omitempty" jsonschema:"the chat or app channel's key for the widget and the SDKs; not a secret"`
-	AllowedOrigins []string  `json:"allowed_origins,omitempty" jsonschema:"the only origins whose pages may use a chat channel"`
-	AllowAnonymous *bool     `json:"allow_anonymous,omitempty" jsonschema:"visitors without an identity token may chat"`
-	Discussions    string    `json:"discussions,omitempty" jsonschema:"off, moderated or open: discussions on documentation pages"`
-	Greeting       string    `json:"greeting,omitempty" jsonschema:"shown before the first message; the inbox's greeting when empty"`
-	Platforms      []string  `json:"platforms,omitempty" jsonschema:"ios and android, for an app channel"`
-	EmailAddress   string    `json:"email_address,omitempty" jsonschema:"the address an e-mail channel receives mail at"`
-	FromAddress    string    `json:"from_address,omitempty" jsonschema:"the address replies are sent from, when it differs"`
-	CreatedAt      time.Time `json:"created_at"`
+	ID                uuid.UUID `json:"id"`
+	InboxID           uuid.UUID `json:"inbox_id"`
+	Kind              string    `json:"kind" jsonschema:"email, chat (web widget and documentation pages), app (mobile SDKs) or api"`
+	Name              string    `json:"name"`
+	PublicKey         string    `json:"public_key,omitempty" jsonschema:"the chat or app channel's key for the widget and the SDKs; not a secret"`
+	AllowedOrigins    []string  `json:"allowed_origins,omitempty" jsonschema:"the only origins whose pages may use a chat channel"`
+	AllowAnonymous    *bool     `json:"allow_anonymous,omitempty" jsonschema:"visitors without an identity token may chat"`
+	Discussions       string    `json:"discussions,omitempty" jsonschema:"off, moderated or open: discussions on documentation pages"`
+	Greeting          string    `json:"greeting,omitempty" jsonschema:"shown before the first message; the inbox's greeting when empty"`
+	Platforms         []string  `json:"platforms,omitempty" jsonschema:"ios and android, for an app channel"`
+	EmailAddress      string    `json:"email_address,omitempty" jsonschema:"the address an e-mail channel receives mail at"`
+	FromAddress       string    `json:"from_address,omitempty" jsonschema:"the address replies are sent from, when it differs"`
+	ForwardingAddress string    `json:"forwarding_address,omitempty" jsonschema:"an e-mail channel's second address: the mailbox forwards its mail here, keeping a copy, so it reaches Yuva"`
+	CreatedAt         time.Time `json:"created_at"`
 }
 
 func channelOut(ch oas.Channel) mcpChannel {
@@ -91,6 +92,7 @@ func channelOut(ch oas.Channel) mcpChannel {
 		if e.FromAddress != nil {
 			out.FromAddress = string(*e.FromAddress)
 		}
+		out.ForwardingAddress = deref(ch.ForwardingAddress)
 	}
 	return out
 }
