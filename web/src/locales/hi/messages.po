@@ -2689,7 +2689,6 @@ msgstr "ब्रॉडकास्ट भेजना"
 #: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/Overview.tsx
 #: src/features/settings/webhooks/events.tsx
@@ -3059,6 +3058,7 @@ msgstr "सर्वर पर क्या है, यह जाँचा ज�
 msgid "Checking…"
 msgstr "जाँच हो रही है…"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/status/ResponseChart.tsx
 msgid "Checks"
 msgstr "जाँचें"
@@ -4258,7 +4258,7 @@ msgid "Design"
 msgstr "डिज़ाइन"
 
 #: src/app/Sidebar.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/components/common/ShortcutSheet.tsx
 msgid "Designs"
 msgstr "डिज़ाइन"
 
@@ -5582,6 +5582,10 @@ msgstr "फ़नल"
 #: src/features/migrations/parts.tsx
 msgid "Further copies of the same message"
 msgstr "उसी संदेश की और प्रतियाँ"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Gallery"
+msgstr "गैलरी"
 
 #: src/app/Sidebar.tsx
 #: src/features/migrations/MigrationsPage.tsx
@@ -6991,7 +6995,6 @@ msgstr "टिकट सूचीबद्ध हो रहे हैं…"
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/ListsHome.tsx
 #: src/features/settings/webhooks/events.tsx
@@ -7678,6 +7681,10 @@ msgid "Move through the broadcasts"
 msgstr "ब्रॉडकास्ट के बीच चलें"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the designs"
+msgstr "डिज़ाइनों में आगे बढ़ें"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the entries"
 msgstr "प्रविष्टियों में आगे-पीछे जाएँ"
 
@@ -7750,6 +7757,10 @@ msgstr "विचार को योजनाबद्ध, प्रगति �
 #: src/features/migrations/SwitchStep.tsx
 msgid "MX change"
 msgstr "MX बदलाव"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "My designs"
+msgstr "मेरे डिज़ाइन"
 
 #: src/features/account/AccountPage.tsx
 msgid "My discussions"
@@ -7957,6 +7968,7 @@ msgstr "नई बातचीत आपकी बातचीत सूची �
 msgid "New counts every subscription that day, confirmed or not. The confirmation rate is the share of people asked to confirm who did."
 msgstr "नया उस दिन की हर सब्सक्रिप्शन गिनता है, पुष्टि हुई हो या नहीं। पुष्टि दर उन लोगों का हिस्सा है जिनसे पुष्टि माँगी गई और उन्होंने की।"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/DesignPicker.tsx
 msgid "New design"
 msgstr "नया डिज़ाइन"
@@ -9536,6 +9548,7 @@ msgstr "कॉन्टैक्ट खोलें"
 msgid "Open the conversation"
 msgstr "बातचीत खोलें"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Open the design"
 msgstr "डिज़ाइन खोलें"
@@ -11718,6 +11731,10 @@ msgstr "बातचीत खोजें"
 msgid "Search conversations for “{search}”"
 msgstr "“{search}” के लिए बातचीत खोजें"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Search designs"
+msgstr "डिज़ाइन खोजें"
+
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "Search emoji"
 msgstr "इमोजी खोजें"
@@ -12309,6 +12326,10 @@ msgstr "शॉर्टकट"
 #: src/features/status/MonitorsPage.tsx
 msgid "Show"
 msgstr "दिखाएँ"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Show archived designs"
+msgstr "आर्काइव किए डिज़ाइन दिखाएँ"
 
 #: src/features/conversation/messages/EmailBody.tsx
 msgid "Show as sent"

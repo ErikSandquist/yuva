@@ -31,7 +31,6 @@ msgstr "Judul yang jelas"
 msgid "A design can hold at most 200 blocks."
 msgstr "Desain dapat memuat paling banyak 200 blok."
 
-#: src/features/designs/DesignsList.tsx
 #: src/features/designs/GalleryPage.tsx
 msgid "A design is the look of a mail: start from a template, then use it for your broadcasts."
 msgstr "Desain adalah tampilan email: mulai dari templat, lalu gunakan untuk siaran massal Anda."
@@ -96,6 +95,10 @@ msgstr "Alamat"
 msgid "Alignment"
 msgstr "Perataan"
 
+#: src/features/designs/GalleryPage.tsx
+msgid "All"
+msgstr "Semua"
+
 #: src/features/designs/designer/Inspector.tsx
 msgid "Also shown when a mail app blocks images."
 msgstr "Juga ditampilkan saat aplikasi email memblokir gambar."
@@ -108,7 +111,7 @@ msgstr "Gambar yang diunggah, dengan tautan jika mau"
 msgid "Animated GIFs can be at most 1,200 pixels wide."
 msgstr "GIF animasi paling lebar 1.200 piksel."
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/text.ts
 msgid "Announcement"
 msgstr "Pengumuman"
 
@@ -173,7 +176,7 @@ msgstr "Merek"
 msgid "Browse the gallery"
 msgstr "Jelajahi galeri"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Build it yourself from blocks"
 msgstr "Buat sendiri dari blok"
 
@@ -200,7 +203,7 @@ msgid "Buttons"
 msgstr "Tombol"
 
 #: src/features/designs/designer/ImageLibrary.tsx
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Cancel"
 msgstr "Batal"
 
@@ -211,6 +214,10 @@ msgstr "Tengah"
 #: src/features/designs/designer/DesignerPage.tsx
 msgid "Changed elsewhere"
 msgstr "Diubah di tempat lain"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Check"
+msgstr "Periksa"
 
 #: src/features/designs/designer/DesignerPage.tsx
 msgid "Checks"
@@ -225,6 +232,7 @@ msgstr "Pilih gambar"
 msgid "Clear formatting"
 msgstr "Hapus pemformatan"
 
+#: src/features/designs/designer/DesignerPage.tsx
 #: src/features/designs/designer/ImageLibrary.tsx
 msgid "Close"
 msgstr "Tutup"
@@ -272,7 +280,7 @@ msgstr "Salinan dibuat"
 msgid "Corner radius"
 msgstr "Radius sudut"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Create and edit"
 msgstr "Buat dan edit"
 
@@ -303,7 +311,6 @@ msgstr "Spasi default"
 
 #: src/features/designs/designer/Canvas.tsx
 #: src/features/designs/designer/ImageLibrary.tsx
-#: src/features/designs/designer/Inspector.tsx
 msgid "Delete"
 msgstr "Hapus"
 
@@ -314,6 +321,10 @@ msgstr "Hapus {name}"
 #: src/features/designs/designer/ImageLibrary.tsx
 msgid "Delete anyway"
 msgstr "Tetap hapus"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Delete block"
+msgstr "Hapus blok"
 
 #: src/features/designs/designer/ImageLibrary.tsx
 msgid "Delete this image?"
@@ -344,6 +355,10 @@ msgstr "Desain diarsipkan"
 msgid "Design name"
 msgstr "Nama desain"
 
+#: src/features/designs/GalleryPage.tsx
+msgid "Design restored"
+msgstr "Desain dipulihkan"
+
 #: src/features/designs/designer/DesignerPage.tsx
 msgid "Design settings"
 msgstr "Pengaturan desain"
@@ -361,7 +376,7 @@ msgstr "Desain"
 msgid "Desktop"
 msgstr "Desktop"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/text.ts
 msgid "Digest"
 msgstr "Rangkuman"
 
@@ -412,7 +427,6 @@ msgstr "Duplikat"
 msgid "E-mail address"
 msgstr "Alamat email"
 
-#: src/features/designs/DesignsList.tsx
 #: src/features/designs/GalleryPage.tsx
 msgid "E-mail designs"
 msgstr "Desain email"
@@ -433,7 +447,7 @@ msgstr "Edit"
 msgid "Empty"
 msgstr "Kosong"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Empty page"
 msgstr "Halaman kosong"
 
@@ -449,7 +463,7 @@ msgstr "Akhir"
 msgid "English"
 msgstr "Inggris"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/text.ts
 msgid "Event"
 msgstr "Peristiwa"
 
@@ -460,6 +474,10 @@ msgstr "Di mana saja"
 #: src/features/designs/text.ts
 msgid "First name"
 msgstr "Nama depan"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Fix"
+msgstr "Perbaiki"
 
 #: src/features/designs/designer/ThemePanel.tsx
 msgid "Fonts already on people’s devices; mails load no web fonts."
@@ -484,6 +502,7 @@ msgid "Full width"
 msgstr "Lebar penuh"
 
 #: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Gallery"
 msgstr "Galeri"
 
@@ -567,7 +586,7 @@ msgid "Images can be at most 10 MB."
 msgstr "Gambar paling besar 10 MB."
 
 #: src/features/designs/designer/ThemePanel.tsx
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Inbox"
 msgstr "Kotak masuk"
 
@@ -584,8 +603,8 @@ msgid "It adds nothing to the message, so screen readers skip it."
 msgstr "Tidak menambahkan apa pun ke pesan, jadi pembaca layar melewatinya."
 
 #: src/features/designs/designer/DesignerPage.tsx
-msgid "It leaves the list of designs. Its versions are kept, and saving it again brings it back."
-msgstr "Keluar dari daftar desain. Versinya tetap disimpan, dan menyimpannya lagi mengembalikannya."
+msgid "It leaves the list of designs. Its versions are kept. Drafts that use it still send, and you can restore it from the archive."
+msgstr "Desain ini hilang dari daftar desain. Versinya tetap disimpan. Draf yang memakainya tetap terkirim, dan Anda dapat memulihkannya dari arsip."
 
 #: src/features/designs/designer/ConflictDialog.tsx
 msgid "It was saved {when} in another tab or by someone else, after you started editing. Your changes are kept on this device until you choose."
@@ -599,7 +618,7 @@ msgstr "Miring"
 msgid "Its address stops working at once."
 msgstr "Alamatnya berhenti berfungsi seketika."
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Its images are copied into your workspace’s images. You can change everything after."
 msgstr "Gambarnya disalin ke gambar ruang kerja Anda. Anda dapat mengubah semuanya sesudahnya."
 
@@ -618,6 +637,10 @@ msgstr "Disimpan dari konflik"
 #: src/features/designs/designer/DesignerPage.tsx
 msgid "Keyboard shortcuts"
 msgstr "Pintasan keyboard"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Kind"
+msgstr "Jenis"
 
 #: src/features/designs/designer/Inspector.tsx
 msgid "Large"
@@ -684,7 +707,6 @@ msgid "List name"
 msgstr "Nama milis"
 
 #: src/features/designs/designer/ImageLibrary.tsx
-#: src/features/designs/DesignsList.tsx
 #: src/features/designs/GalleryPage.tsx
 msgid "Load more"
 msgstr "Muat lebih banyak"
@@ -747,7 +769,7 @@ msgstr "Pindah ke bawah"
 msgid "Move up"
 msgstr "Pindah ke atas"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Name"
 msgstr "Nama"
 
@@ -756,27 +778,19 @@ msgid "Network"
 msgstr "Jaringan"
 
 #: src/features/designs/GalleryPage.tsx
-msgid "New blank design"
-msgstr "Desain kosong baru"
-
-#: src/features/designs/DesignsList.tsx
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "New design"
 msgstr "Desain baru"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/text.ts
 msgid "Newsletter"
 msgstr "Buletin"
 
-#: src/features/designs/DesignsList.tsx
-msgid "No archived designs"
-msgstr "Tidak ada desain yang diarsipkan"
-
-#: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
 msgid "No designs match."
 msgstr "Tidak ada desain yang cocok."
 
-#: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
 msgid "No designs yet"
 msgstr "Belum ada desain"
 
@@ -787,6 +801,10 @@ msgstr "Belum ada gambar. Unggah yang pertama."
 #: src/features/designs/designer/DesignerPage.tsx
 msgid "No problems found."
 msgstr "Tidak ada masalah ditemukan."
+
+#: src/features/designs/GalleryPage.tsx
+msgid "No templates of this kind"
+msgstr "Tidak ada templat jenis ini"
 
 #: src/features/designs/designer/Versions.tsx
 msgid "No versions yet. One is kept after ten minutes of editing."
@@ -816,7 +834,7 @@ msgstr "Offline, disimpan di perangkat ini"
 msgid "Offline. Your changes are kept on this device and saved when you are back."
 msgstr "Offline. Perubahan Anda disimpan di perangkat ini dan tersimpan saat Anda kembali."
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/text.ts
 msgid "Onboarding"
 msgstr "Orientasi"
 
@@ -824,10 +842,13 @@ msgstr "Orientasi"
 msgid "One under the other on narrow screens."
 msgstr "Bertumpuk di layar sempit."
 
-#: src/features/designs/DesignsList.tsx
 #: src/features/designs/GalleryPage.tsx
 msgid "Owners and admins make e-mail designs and send broadcasts."
 msgstr "Pemilik dan admin membuat desain email dan mengirim siaran massal."
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Owners and admins make e-mail designs and send broadcasts. Archiving keeps the versions."
+msgstr "Pemilik dan admin membuat desain email dan mengirim siaran massal. Pengarsipan tetap menyimpan versi."
 
 #: src/features/designs/designer/ThemePanel.tsx
 msgid "Page background"
@@ -865,6 +886,7 @@ msgstr "PNG, JPEG, GIF, atau WebP hingga 10 MB. Unggahan dibuat selebar paling b
 msgid "Preferences link"
 msgstr "Tautan preferensi"
 
+#: src/features/designs/designer/DesignerPage.tsx
 #: src/features/designs/designer/Preview.tsx
 #: src/features/designs/designer/Versions.tsx
 msgid "Preview"
@@ -875,14 +897,19 @@ msgid "Preview of {name}"
 msgstr "Pratinjau {name}"
 
 #: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Preview of {title}"
 msgstr "Pratinjau {title}"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Preview size"
+msgstr "Ukuran pratinjau"
 
 #: src/features/designs/designer/ThemePanel.tsx
 msgid "Preview text"
 msgstr "Teks pratinjau"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/text.ts
 msgid "Product"
 msgstr "Produk"
 
@@ -916,6 +943,7 @@ msgid "Replace"
 msgstr "Ganti"
 
 #: src/features/designs/designer/Versions.tsx
+#: src/features/designs/GalleryPage.tsx
 msgid "Restore"
 msgstr "Pulihkan"
 
@@ -979,7 +1007,7 @@ msgstr "Menyimpan…"
 msgid "Scheduled to send"
 msgstr "Dijadwalkan kirim"
 
-#: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
 msgid "Search designs"
 msgstr "Cari desain"
 
@@ -991,6 +1019,10 @@ msgstr "Teks sekunder"
 #: src/features/designs/text.ts
 msgid "Section"
 msgstr "Bagian"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Select a block to change it. Design settings apply to the whole mail."
+msgstr "Pilih blok untuk mengubahnya. Pengaturan desain berlaku untuk seluruh email."
 
 #: src/features/designs/designer/ThemePanel.tsx
 msgid "Select a block to change it. These settings apply to the whole mail."
@@ -1012,7 +1044,7 @@ msgstr "Bentuk"
 msgid "Show"
 msgstr "Tampilkan"
 
-#: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
 msgid "Show archived designs"
 msgstr "Tampilkan desain yang diarsipkan"
 
@@ -1083,7 +1115,7 @@ msgstr "Tumpuk di ponsel"
 msgid "Start"
 msgstr "Mulai"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Start from an empty mail with simple colours."
 msgstr "Mulai dari email kosong dengan warna sederhana."
 
@@ -1102,6 +1134,10 @@ msgstr "Keluarkan dari desain ini dulu, atau arsipkan:"
 #: src/features/designs/GalleryPage.tsx
 msgid "Template language"
 msgstr "Bahasa templat"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Templates are copied into your workspace, images included. You can change everything after."
+msgstr "Templat disalin beserta gambarnya ke ruang kerja Anda. Anda dapat mengubah semuanya sesudahnya."
 
 #: src/features/designs/designer/Canvas.tsx
 #: src/features/designs/designer/Inspector.tsx
@@ -1123,6 +1159,7 @@ msgid "Text formatting"
 msgstr "Pemformatan teks"
 
 #: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Text in English"
 msgstr "Teks dalam bahasa Inggris"
 
@@ -1138,7 +1175,7 @@ msgstr "Lebar kolom harus berjumlah 100."
 msgid "The inbox has no legal name or postal address for the footer. Add them in the inbox settings before sending."
 msgstr "Kotak masuk tidak punya nama hukum atau alamat pos untuk footer. Tambahkan di pengaturan kotak masuk sebelum mengirim."
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "The inbox’s sender details fill the footer every mail gets."
 msgstr "Detail pengirim kotak masuk mengisi footer yang didapat setiap email."
 
@@ -1239,6 +1276,14 @@ msgstr "Tiga"
 msgid "Top"
 msgstr "Teratas"
 
+#: src/features/designs/GalleryPage.tsx
+msgid "Try another kind."
+msgstr "Coba jenis lain."
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Try another word, or show archived designs."
+msgstr "Coba kata lain, atau tampilkan desain yang diarsipkan."
+
 #: src/features/designs/text.ts
 msgid "Turkish"
 msgstr "Turki"
@@ -1271,7 +1316,7 @@ msgstr "Urungkan"
 msgid "Unsubscribe link"
 msgstr "Tautan berhenti berlangganan"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Untitled design"
 msgstr "Desain tanpa judul"
 
@@ -1287,7 +1332,7 @@ msgstr "Unggah gambar, atau letakkan di sini"
 msgid "Uploading…"
 msgstr "Mengunggah…"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Use “{title}”"
 msgstr "Gunakan “{title}”"
 
@@ -1317,7 +1362,7 @@ msgid "When it is empty, write"
 msgstr "Jika kosong, tulis"
 
 #: src/features/designs/designer/ThemePanel.tsx
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Whole workspace"
 msgstr "Seluruh ruang kerja"
 

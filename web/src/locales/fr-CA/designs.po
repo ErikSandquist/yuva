@@ -31,7 +31,6 @@ msgstr "Un titre clair"
 msgid "A design can hold at most 200 blocks."
 msgstr "Un design peut contenir 200 blocs au maximum."
 
-#: src/features/designs/DesignsList.tsx
 #: src/features/designs/GalleryPage.tsx
 msgid "A design is the look of a mail: start from a template, then use it for your broadcasts."
 msgstr "Un design est l’aspect d’un courriel : partez d’un modèle, puis utilisez-le pour vos envois en masse."
@@ -96,6 +95,10 @@ msgstr "Adresse"
 msgid "Alignment"
 msgstr "Alignement"
 
+#: src/features/designs/GalleryPage.tsx
+msgid "All"
+msgstr "Tout"
+
 #: src/features/designs/designer/Inspector.tsx
 msgid "Also shown when a mail app blocks images."
 msgstr "Aussi affiché quand une app de messagerie bloque les images."
@@ -108,7 +111,7 @@ msgstr "Une image importée, avec un lien si vous voulez"
 msgid "Animated GIFs can be at most 1,200 pixels wide."
 msgstr "Les GIF animés peuvent faire 1 200 pixels de large au maximum."
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/text.ts
 msgid "Announcement"
 msgstr "Annonce"
 
@@ -173,7 +176,7 @@ msgstr "Marque"
 msgid "Browse the gallery"
 msgstr "Parcourir la galerie"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Build it yourself from blocks"
 msgstr "Construisez-le vous-même avec des blocs"
 
@@ -200,7 +203,7 @@ msgid "Buttons"
 msgstr "Boutons"
 
 #: src/features/designs/designer/ImageLibrary.tsx
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -211,6 +214,10 @@ msgstr "Centre"
 #: src/features/designs/designer/DesignerPage.tsx
 msgid "Changed elsewhere"
 msgstr "Modifié ailleurs"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Check"
+msgstr "À vérifier"
 
 #: src/features/designs/designer/DesignerPage.tsx
 msgid "Checks"
@@ -225,6 +232,7 @@ msgstr "Choisir une image"
 msgid "Clear formatting"
 msgstr "Effacer la mise en forme"
 
+#: src/features/designs/designer/DesignerPage.tsx
 #: src/features/designs/designer/ImageLibrary.tsx
 msgid "Close"
 msgstr "Fermer"
@@ -272,7 +280,7 @@ msgstr "Copie créée"
 msgid "Corner radius"
 msgstr "Rayon des coins"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Create and edit"
 msgstr "Créer et modifier"
 
@@ -303,7 +311,6 @@ msgstr "Espacement par défaut"
 
 #: src/features/designs/designer/Canvas.tsx
 #: src/features/designs/designer/ImageLibrary.tsx
-#: src/features/designs/designer/Inspector.tsx
 msgid "Delete"
 msgstr "Supprimer"
 
@@ -314,6 +321,10 @@ msgstr "Supprimer {name}"
 #: src/features/designs/designer/ImageLibrary.tsx
 msgid "Delete anyway"
 msgstr "Supprimer quand même"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Delete block"
+msgstr "Supprimer le bloc"
 
 #: src/features/designs/designer/ImageLibrary.tsx
 msgid "Delete this image?"
@@ -344,6 +355,10 @@ msgstr "Design archivé"
 msgid "Design name"
 msgstr "Nom du design"
 
+#: src/features/designs/GalleryPage.tsx
+msgid "Design restored"
+msgstr "Design restauré"
+
 #: src/features/designs/designer/DesignerPage.tsx
 msgid "Design settings"
 msgstr "Paramètres du design"
@@ -361,7 +376,7 @@ msgstr "Designs"
 msgid "Desktop"
 msgstr "Ordinateur"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/text.ts
 msgid "Digest"
 msgstr "Récapitulatif"
 
@@ -412,7 +427,6 @@ msgstr "Dupliquer"
 msgid "E-mail address"
 msgstr "Adresse courriel"
 
-#: src/features/designs/DesignsList.tsx
 #: src/features/designs/GalleryPage.tsx
 msgid "E-mail designs"
 msgstr "Designs d’courriel"
@@ -433,7 +447,7 @@ msgstr "Modifier"
 msgid "Empty"
 msgstr "Vide"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Empty page"
 msgstr "Page vide"
 
@@ -449,7 +463,7 @@ msgstr "Fin"
 msgid "English"
 msgstr "Anglais"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/text.ts
 msgid "Event"
 msgstr "Événement"
 
@@ -460,6 +474,10 @@ msgstr "Partout"
 #: src/features/designs/text.ts
 msgid "First name"
 msgstr "Prénom"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Fix"
+msgstr "Corriger"
 
 #: src/features/designs/designer/ThemePanel.tsx
 msgid "Fonts already on people’s devices; mails load no web fonts."
@@ -484,6 +502,7 @@ msgid "Full width"
 msgstr "Pleine largeur"
 
 #: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Gallery"
 msgstr "Galerie"
 
@@ -567,7 +586,7 @@ msgid "Images can be at most 10 MB."
 msgstr "Les images peuvent faire 10 Mo au maximum."
 
 #: src/features/designs/designer/ThemePanel.tsx
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Inbox"
 msgstr "Boîte"
 
@@ -584,8 +603,8 @@ msgid "It adds nothing to the message, so screen readers skip it."
 msgstr "Il n’ajoute rien au message, donc les lecteurs d’écran l’ignorent."
 
 #: src/features/designs/designer/DesignerPage.tsx
-msgid "It leaves the list of designs. Its versions are kept, and saving it again brings it back."
-msgstr "Il quitte la liste des designs. Ses versions sont conservées, et l’enregistrer à nouveau le ramène."
+msgid "It leaves the list of designs. Its versions are kept. Drafts that use it still send, and you can restore it from the archive."
+msgstr "Il quitte la liste des designs. Ses versions sont conservées. Les brouillons qui l’utilisent partent toujours, et vous pouvez le restaurer depuis les archives."
 
 #: src/features/designs/designer/ConflictDialog.tsx
 msgid "It was saved {when} in another tab or by someone else, after you started editing. Your changes are kept on this device until you choose."
@@ -599,7 +618,7 @@ msgstr "Italique"
 msgid "Its address stops working at once."
 msgstr "Son adresse cesse de fonctionner aussitôt."
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Its images are copied into your workspace’s images. You can change everything after."
 msgstr "Ses images sont copiées dans les images de votre espace de travail. Vous pourrez tout modifier ensuite."
 
@@ -618,6 +637,10 @@ msgstr "Conservée d’un conflit"
 #: src/features/designs/designer/DesignerPage.tsx
 msgid "Keyboard shortcuts"
 msgstr "Raccourcis clavier"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Kind"
+msgstr "Type"
 
 #: src/features/designs/designer/Inspector.tsx
 msgid "Large"
@@ -684,7 +707,6 @@ msgid "List name"
 msgstr "Nom de la liste"
 
 #: src/features/designs/designer/ImageLibrary.tsx
-#: src/features/designs/DesignsList.tsx
 #: src/features/designs/GalleryPage.tsx
 msgid "Load more"
 msgstr "Charger plus"
@@ -747,7 +769,7 @@ msgstr "Descendre"
 msgid "Move up"
 msgstr "Monter"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Name"
 msgstr "Nom"
 
@@ -756,27 +778,19 @@ msgid "Network"
 msgstr "Réseau"
 
 #: src/features/designs/GalleryPage.tsx
-msgid "New blank design"
-msgstr "Nouveau design vierge"
-
-#: src/features/designs/DesignsList.tsx
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "New design"
 msgstr "Nouveau design"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/text.ts
 msgid "Newsletter"
 msgstr "Newsletter"
 
-#: src/features/designs/DesignsList.tsx
-msgid "No archived designs"
-msgstr "Aucun design archivé"
-
-#: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
 msgid "No designs match."
 msgstr "Aucun design ne correspond."
 
-#: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
 msgid "No designs yet"
 msgstr "Aucun design pour l’instant"
 
@@ -787,6 +801,10 @@ msgstr "Aucune image pour l’instant. Importez la première."
 #: src/features/designs/designer/DesignerPage.tsx
 msgid "No problems found."
 msgstr "Aucun problème trouvé."
+
+#: src/features/designs/GalleryPage.tsx
+msgid "No templates of this kind"
+msgstr "Aucun modèle de ce type"
 
 #: src/features/designs/designer/Versions.tsx
 msgid "No versions yet. One is kept after ten minutes of editing."
@@ -816,7 +834,7 @@ msgstr "Hors ligne, conservé sur cet appareil"
 msgid "Offline. Your changes are kept on this device and saved when you are back."
 msgstr "Hors ligne. Vos modifications sont conservées sur cet appareil et enregistrées à votre retour."
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/text.ts
 msgid "Onboarding"
 msgstr "Prise en main"
 
@@ -824,10 +842,13 @@ msgstr "Prise en main"
 msgid "One under the other on narrow screens."
 msgstr "L’un sous l’autre sur les écrans étroits."
 
-#: src/features/designs/DesignsList.tsx
 #: src/features/designs/GalleryPage.tsx
 msgid "Owners and admins make e-mail designs and send broadcasts."
 msgstr "Les propriétaires et admins créent des designs d’courriel et envoient des envois en masse."
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Owners and admins make e-mail designs and send broadcasts. Archiving keeps the versions."
+msgstr "Les propriétaires et admins créent des designs d’e-mail et envoient des envois en masse. L’archivage conserve les versions."
 
 #: src/features/designs/designer/ThemePanel.tsx
 msgid "Page background"
@@ -865,6 +886,7 @@ msgstr "PNG, JPEG, GIF ou WebP jusqu’à 10 Mo. Les images importées sont cré
 msgid "Preferences link"
 msgstr "Lien de préférences"
 
+#: src/features/designs/designer/DesignerPage.tsx
 #: src/features/designs/designer/Preview.tsx
 #: src/features/designs/designer/Versions.tsx
 msgid "Preview"
@@ -875,14 +897,19 @@ msgid "Preview of {name}"
 msgstr "Aperçu de {name}"
 
 #: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Preview of {title}"
 msgstr "Aperçu de {title}"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Preview size"
+msgstr "Taille de l’aperçu"
 
 #: src/features/designs/designer/ThemePanel.tsx
 msgid "Preview text"
 msgstr "Texte d’aperçu"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/text.ts
 msgid "Product"
 msgstr "Produit"
 
@@ -916,6 +943,7 @@ msgid "Replace"
 msgstr "Remplacer"
 
 #: src/features/designs/designer/Versions.tsx
+#: src/features/designs/GalleryPage.tsx
 msgid "Restore"
 msgstr "Restaurer"
 
@@ -979,7 +1007,7 @@ msgstr "Enregistrement…"
 msgid "Scheduled to send"
 msgstr "Programmé pour envoi"
 
-#: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
 msgid "Search designs"
 msgstr "Rechercher des designs"
 
@@ -991,6 +1019,10 @@ msgstr "Texte secondaire"
 #: src/features/designs/text.ts
 msgid "Section"
 msgstr "Section"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Select a block to change it. Design settings apply to the whole mail."
+msgstr "Sélectionnez un bloc pour le modifier. Les paramètres du design s’appliquent à tout l’e-mail."
 
 #: src/features/designs/designer/ThemePanel.tsx
 msgid "Select a block to change it. These settings apply to the whole mail."
@@ -1012,7 +1044,7 @@ msgstr "Forme"
 msgid "Show"
 msgstr "Afficher"
 
-#: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
 msgid "Show archived designs"
 msgstr "Afficher les designs archivés"
 
@@ -1083,7 +1115,7 @@ msgstr "Empiler sur téléphone"
 msgid "Start"
 msgstr "Démarrer"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Start from an empty mail with simple colours."
 msgstr "Partir d’un courriel vide avec des couleurs simples."
 
@@ -1102,6 +1134,10 @@ msgstr "Retirez-le d’abord de ces designs, ou archivez-les :"
 #: src/features/designs/GalleryPage.tsx
 msgid "Template language"
 msgstr "Langue du modèle"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Templates are copied into your workspace, images included. You can change everything after."
+msgstr "Les modèles sont copiés dans votre espace de travail, images comprises. Vous pourrez tout modifier ensuite."
 
 #: src/features/designs/designer/Canvas.tsx
 #: src/features/designs/designer/Inspector.tsx
@@ -1123,6 +1159,7 @@ msgid "Text formatting"
 msgstr "Mise en forme du texte"
 
 #: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Text in English"
 msgstr "Texte en anglais"
 
@@ -1138,7 +1175,7 @@ msgstr "Les largeurs de colonnes doivent totaliser 100."
 msgid "The inbox has no legal name or postal address for the footer. Add them in the inbox settings before sending."
 msgstr "La boîte n’a pas de raison sociale ni d’adresse postale pour le pied de page. Ajoutez-les dans les paramètres de la boîte avant d’envoyer."
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "The inbox’s sender details fill the footer every mail gets."
 msgstr "Les coordonnées d’expéditeur de la boîte remplissent le pied de page que reçoit chaque courriel."
 
@@ -1239,6 +1276,14 @@ msgstr "Trois"
 msgid "Top"
 msgstr "Haut"
 
+#: src/features/designs/GalleryPage.tsx
+msgid "Try another kind."
+msgstr "Essayez un autre type."
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Try another word, or show archived designs."
+msgstr "Essayez un autre mot, ou affichez les designs archivés."
+
 #: src/features/designs/text.ts
 msgid "Turkish"
 msgstr "Turc"
@@ -1271,7 +1316,7 @@ msgstr "Annuler"
 msgid "Unsubscribe link"
 msgstr "Lien de désabonnement"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Untitled design"
 msgstr "Design sans titre"
 
@@ -1287,7 +1332,7 @@ msgstr "Importez des images, ou déposez-les ici"
 msgid "Uploading…"
 msgstr "Import…"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Use “{title}”"
 msgstr "Utiliser « {title} »"
 
@@ -1317,7 +1362,7 @@ msgid "When it is empty, write"
 msgstr "Quand c’est vide, écrire"
 
 #: src/features/designs/designer/ThemePanel.tsx
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Whole workspace"
 msgstr "Tout l’espace de travail"
 

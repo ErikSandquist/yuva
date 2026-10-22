@@ -5,27 +5,27 @@ import { ErrorLine, Notice } from "@/components/common"
 import { MailFrame } from "@/components/common/MailFrame"
 import { cn } from "@/lib/utils"
 
-export type PreviewMode = "desktop" | "phone" | "dark"
-
 export function Preview({
-  mode,
+  phone,
+  dark,
   html,
   loading,
   error,
   stale,
 }: {
-  mode: PreviewMode
+  phone: boolean
+  dark: boolean
   html: string | undefined
   loading: boolean
   error: unknown
   stale: boolean
 }) {
   const { t } = useLingui()
-  const phone = mode === "phone"
   return (
     <div
-      className={cn("flex min-h-full flex-col items-center px-4 py-6", mode === "dark" ? "bg-[#0d0d10]" : "bg-surface")}
-      data-testid={`preview-${mode}`}
+      className={cn("flex min-h-full flex-col items-center px-4 py-6", dark ? "bg-[#0d0d10]" : "bg-surface")}
+      data-testid={`preview-${phone ? "phone" : "desktop"}`}
+      data-dark={dark || undefined}
     >
       {error ? (
         <Notice tone="danger" icon={TriangleAlertIcon} className="mb-4 w-full max-w-xl">
@@ -43,7 +43,7 @@ export function Preview({
           )}
         >
           <div className={cn("overflow-hidden", phone && "rounded-[36px]")}>
-            <MailFrame html={html} dark={mode === "dark"} title={t`Preview`} />
+            <MailFrame html={html} dark={dark} title={t`Preview`} />
           </div>
         </div>
       ) : loading ? (

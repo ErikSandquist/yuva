@@ -2689,7 +2689,6 @@ msgstr "Gửi thư hàng loạt"
 #: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/Overview.tsx
 #: src/features/settings/webhooks/events.tsx
@@ -3059,6 +3058,7 @@ msgstr "Đang kiểm tra những gì có trên máy chủ"
 msgid "Checking…"
 msgstr "Đang kiểm tra…"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/status/ResponseChart.tsx
 msgid "Checks"
 msgstr "Lần kiểm tra"
@@ -4258,7 +4258,7 @@ msgid "Design"
 msgstr "Thiết kế"
 
 #: src/app/Sidebar.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/components/common/ShortcutSheet.tsx
 msgid "Designs"
 msgstr "Thiết kế"
 
@@ -5582,6 +5582,10 @@ msgstr "Phễu"
 #: src/features/migrations/parts.tsx
 msgid "Further copies of the same message"
 msgstr "Các bản sao khác của cùng một tin nhắn"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Gallery"
+msgstr "Thư viện"
 
 #: src/app/Sidebar.tsx
 #: src/features/migrations/MigrationsPage.tsx
@@ -6991,7 +6995,6 @@ msgstr "Đang liệt kê các phiếu…"
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/ListsHome.tsx
 #: src/features/settings/webhooks/events.tsx
@@ -7678,6 +7681,10 @@ msgid "Move through the broadcasts"
 msgstr "Di chuyển giữa các thư hàng loạt"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the designs"
+msgstr "Di chuyển giữa các thiết kế"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the entries"
 msgstr "Di chuyển giữa các mục"
 
@@ -7750,6 +7757,10 @@ msgstr "Chuyển ý tưởng sang Đã lên kế hoạch, Đang làm hoặc Đã
 #: src/features/migrations/SwitchStep.tsx
 msgid "MX change"
 msgstr "Thay đổi MX"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "My designs"
+msgstr "Thiết kế của tôi"
 
 #: src/features/account/AccountPage.tsx
 msgid "My discussions"
@@ -7957,6 +7968,7 @@ msgstr "Các cuộc trò chuyện mới hiện ở đầu danh sách cuộc trò
 msgid "New counts every subscription that day, confirmed or not. The confirmation rate is the share of people asked to confirm who did."
 msgstr "Mới tính mọi đăng ký trong ngày đó, đã xác nhận hay chưa. Tỷ lệ xác nhận là phần trăm số người được yêu cầu xác nhận đã xác nhận."
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/DesignPicker.tsx
 msgid "New design"
 msgstr "Thiết kế mới"
@@ -9536,6 +9548,7 @@ msgstr "Mở liên hệ"
 msgid "Open the conversation"
 msgstr "Mở cuộc trò chuyện"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Open the design"
 msgstr "Mở thiết kế"
@@ -11718,6 +11731,10 @@ msgstr "Tìm cuộc trò chuyện"
 msgid "Search conversations for “{search}”"
 msgstr "Tìm cuộc trò chuyện cho “{search}”"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Search designs"
+msgstr "Tìm thiết kế"
+
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "Search emoji"
 msgstr "Tìm emoji"
@@ -12309,6 +12326,10 @@ msgstr "Phím tắt"
 #: src/features/status/MonitorsPage.tsx
 msgid "Show"
 msgstr "Hiện"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Show archived designs"
+msgstr "Hiện thiết kế đã lưu trữ"
 
 #: src/features/conversation/messages/EmailBody.tsx
 msgid "Show as sent"

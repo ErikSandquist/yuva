@@ -41,7 +41,7 @@ export function useTemplates(locale: EmailTemplateLocale) {
   })
 }
 
-export function useDesigns(inboxId: string, q: string, archived: boolean) {
+export function useDesigns(inboxId: string, q: string, archived: boolean, enabled = true) {
   const { workspaceId: ws } = useSession()
   return useInfiniteQuery({
     queryKey: k.pages(ws, inboxId, q, archived),
@@ -62,6 +62,7 @@ export function useDesigns(inboxId: string, q: string, archived: boolean) {
     initialPageParam: undefined as string | undefined,
     getNextPageParam: (last) => last.next_cursor,
     placeholderData: keepPreviousData,
+    enabled,
   })
 }
 
@@ -121,6 +122,17 @@ export function useArchiveDesign() {
       void qc.invalidateQueries({ queryKey: k.one(ws, id) })
       void qc.invalidateQueries({ queryKey: [...k.all(ws), "pages"] })
     },
+  })
+}
+
+export function useRestoreDesign() {
+  const refresh = useRefreshDesigns()
+  return useMutation({
+    mutationFn: async (id: string) => {
+      const d = await unwrap(api.GET("/v1/email-designs/{designId}", { params: { path: { designId: id } } }))
+      return saveDesign(id, { name: d.name, inbox_id: d.inbox_id, document: d.document, base_version: d.version })
+    },
+    onSuccess: (d) => refresh(d),
   })
 }
 

@@ -2689,7 +2689,6 @@ msgstr "Množično pošiljanje"
 #: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/Overview.tsx
 #: src/features/settings/webhooks/events.tsx
@@ -3059,6 +3058,7 @@ msgstr "Preverjanje, kaj je na strežniku"
 msgid "Checking…"
 msgstr "Preverjanje …"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/status/ResponseChart.tsx
 msgid "Checks"
 msgstr "Preverjanja"
@@ -4258,7 +4258,7 @@ msgid "Design"
 msgstr "Oblika"
 
 #: src/app/Sidebar.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/components/common/ShortcutSheet.tsx
 msgid "Designs"
 msgstr "Oblike"
 
@@ -5582,6 +5582,10 @@ msgstr "Lijaki"
 #: src/features/migrations/parts.tsx
 msgid "Further copies of the same message"
 msgstr "Nadaljnje kopije istega sporočila"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Gallery"
+msgstr "Galerija"
 
 #: src/app/Sidebar.tsx
 #: src/features/migrations/MigrationsPage.tsx
@@ -6991,7 +6995,6 @@ msgstr "Izpisovanje zahtevkov …"
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/ListsHome.tsx
 #: src/features/settings/webhooks/events.tsx
@@ -7678,6 +7681,10 @@ msgid "Move through the broadcasts"
 msgstr "Pomikaj se po množičnih sporočilih"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the designs"
+msgstr "Premikanje po oblikah"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the entries"
 msgstr "Pomikaj se po zapisih"
 
@@ -7750,6 +7757,10 @@ msgstr "Premik ideje v Načrtovano, V teku ali Izdano to nastavi za povezane pov
 #: src/features/migrations/SwitchStep.tsx
 msgid "MX change"
 msgstr "Sprememba MX"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "My designs"
+msgstr "Moje oblike"
 
 #: src/features/account/AccountPage.tsx
 msgid "My discussions"
@@ -7957,6 +7968,7 @@ msgstr "Novi pogovori se prikažejo na vrhu vašega seznama pogovorov."
 msgid "New counts every subscription that day, confirmed or not. The confirmation rate is the share of people asked to confirm who did."
 msgstr "Novi šteje vsako naročnino tistega dne, potrjeno ali ne. Stopnja potrditve je delež ljudi, ki so bili pozvani k potrditvi in so potrdili."
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/DesignPicker.tsx
 msgid "New design"
 msgstr "Nova oblika"
@@ -9536,6 +9548,7 @@ msgstr "Odpri stik"
 msgid "Open the conversation"
 msgstr "Odpri pogovor"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Open the design"
 msgstr "Odpri obliko"
@@ -11718,6 +11731,10 @@ msgstr "Išči pogovore"
 msgid "Search conversations for “{search}”"
 msgstr "Išči pogovore za »{search}«"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Search designs"
+msgstr "Išči oblike"
+
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "Search emoji"
 msgstr "Išči emoji"
@@ -12309,6 +12326,10 @@ msgstr "Bližnjica"
 #: src/features/status/MonitorsPage.tsx
 msgid "Show"
 msgstr "Pokaži"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Show archived designs"
+msgstr "Pokaži arhivirane oblike"
 
 #: src/features/conversation/messages/EmailBody.tsx
 msgid "Show as sent"

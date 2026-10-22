@@ -2689,7 +2689,6 @@ msgstr "Invio di massa"
 #: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/Overview.tsx
 #: src/features/settings/webhooks/events.tsx
@@ -3059,6 +3058,7 @@ msgstr "Controllo di ciò che c’è sul server"
 msgid "Checking…"
 msgstr "Controllo…"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/status/ResponseChart.tsx
 msgid "Checks"
 msgstr "Controlli"
@@ -4258,7 +4258,7 @@ msgid "Design"
 msgstr "Design"
 
 #: src/app/Sidebar.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/components/common/ShortcutSheet.tsx
 msgid "Designs"
 msgstr "Design"
 
@@ -5582,6 +5582,10 @@ msgstr "Funnel"
 #: src/features/migrations/parts.tsx
 msgid "Further copies of the same message"
 msgstr "Altre copie dello stesso messaggio"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Gallery"
+msgstr "Galleria"
 
 #: src/app/Sidebar.tsx
 #: src/features/migrations/MigrationsPage.tsx
@@ -6991,7 +6995,6 @@ msgstr "Elenco dei ticket…"
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/ListsHome.tsx
 #: src/features/settings/webhooks/events.tsx
@@ -7678,6 +7681,10 @@ msgid "Move through the broadcasts"
 msgstr "Scorri gli invii"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the designs"
+msgstr "Scorri i design"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the entries"
 msgstr "Spostati tra le voci"
 
@@ -7750,6 +7757,10 @@ msgstr "Spostare l’idea su Pianificata, In corso o Rilasciata lo imposta per i
 #: src/features/migrations/SwitchStep.tsx
 msgid "MX change"
 msgstr "Modifica MX"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "My designs"
+msgstr "I miei design"
 
 #: src/features/account/AccountPage.tsx
 msgid "My discussions"
@@ -7957,6 +7968,7 @@ msgstr "Le nuove conversazioni compaiono in cima alla tua lista di conversazioni
 msgid "New counts every subscription that day, confirmed or not. The confirmation rate is the share of people asked to confirm who did."
 msgstr "«Nuovi» conta ogni iscrizione di quel giorno, confermata o no. Il tasso di conferma è la quota di persone a cui è stato chiesto di confermare che l’hanno fatto."
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/DesignPicker.tsx
 msgid "New design"
 msgstr "Nuovo design"
@@ -9536,6 +9548,7 @@ msgstr "Apri il contatto"
 msgid "Open the conversation"
 msgstr "Apri la conversazione"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Open the design"
 msgstr "Apri il design"
@@ -11718,6 +11731,10 @@ msgstr "Cerca conversazioni"
 msgid "Search conversations for “{search}”"
 msgstr "Cerca «{search}» nelle conversazioni"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Search designs"
+msgstr "Cerca design"
+
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "Search emoji"
 msgstr "Cerca emoji"
@@ -12309,6 +12326,10 @@ msgstr "Scorciatoia"
 #: src/features/status/MonitorsPage.tsx
 msgid "Show"
 msgstr "Mostra"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Show archived designs"
+msgstr "Mostra i design archiviati"
 
 #: src/features/conversation/messages/EmailBody.tsx
 msgid "Show as sent"

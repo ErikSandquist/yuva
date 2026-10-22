@@ -2689,7 +2689,6 @@ msgstr "일괄 발송 전송"
 #: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/Overview.tsx
 #: src/features/settings/webhooks/events.tsx
@@ -3059,6 +3058,7 @@ msgstr "서버에 있는 항목 확인 중"
 msgid "Checking…"
 msgstr "확인 중…"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/status/ResponseChart.tsx
 msgid "Checks"
 msgstr "확인"
@@ -4258,7 +4258,7 @@ msgid "Design"
 msgstr "디자인"
 
 #: src/app/Sidebar.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/components/common/ShortcutSheet.tsx
 msgid "Designs"
 msgstr "디자인"
 
@@ -5582,6 +5582,10 @@ msgstr "퍼널"
 #: src/features/migrations/parts.tsx
 msgid "Further copies of the same message"
 msgstr "같은 메시지의 추가 사본"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Gallery"
+msgstr "갤러리"
 
 #: src/app/Sidebar.tsx
 #: src/features/migrations/MigrationsPage.tsx
@@ -6991,7 +6995,6 @@ msgstr "티켓을 불러오는 중…"
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/ListsHome.tsx
 #: src/features/settings/webhooks/events.tsx
@@ -7678,6 +7681,10 @@ msgid "Move through the broadcasts"
 msgstr "일괄 발송 사이 이동"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the designs"
+msgstr "디자인 사이 이동"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the entries"
 msgstr "항목 사이 이동"
 
@@ -7750,6 +7757,10 @@ msgstr "아이디어를 계획됨, 진행 중, 출시됨으로 옮기면 아직 
 #: src/features/migrations/SwitchStep.tsx
 msgid "MX change"
 msgstr "MX 변경"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "My designs"
+msgstr "내 디자인"
 
 #: src/features/account/AccountPage.tsx
 msgid "My discussions"
@@ -7957,6 +7968,7 @@ msgstr "새 대화는 대화 목록 맨 위에 표시됩니다."
 msgid "New counts every subscription that day, confirmed or not. The confirmation rate is the share of people asked to confirm who did."
 msgstr "신규는 그날의 모든 구독을 확인 여부와 관계없이 셉니다. 확인율은 확인을 요청받은 사람 중 확인한 사람의 비율입니다."
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/DesignPicker.tsx
 msgid "New design"
 msgstr "새 디자인"
@@ -9536,6 +9548,7 @@ msgstr "연락처 열기"
 msgid "Open the conversation"
 msgstr "대화 열기"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Open the design"
 msgstr "디자인 열기"
@@ -11718,6 +11731,10 @@ msgstr "대화 검색"
 msgid "Search conversations for “{search}”"
 msgstr "\"{search}\" 대화 검색"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Search designs"
+msgstr "디자인 검색"
+
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "Search emoji"
 msgstr "이모지 검색"
@@ -12309,6 +12326,10 @@ msgstr "단축키"
 #: src/features/status/MonitorsPage.tsx
 msgid "Show"
 msgstr "보기"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Show archived designs"
+msgstr "보관된 디자인 보기"
 
 #: src/features/conversation/messages/EmailBody.tsx
 msgid "Show as sent"

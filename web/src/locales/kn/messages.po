@@ -2689,7 +2689,6 @@ msgstr "ಬ್ರಾಡ್‌ಕಾಸ್ಟ್ ಕಳುಹಿಸುವಿಕ�
 #: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/Overview.tsx
 #: src/features/settings/webhooks/events.tsx
@@ -3059,6 +3058,7 @@ msgstr "ಸರ್ವರ್‌ನಲ್ಲಿ ಏನಿದೆ ಎಂದು ಪರ
 msgid "Checking…"
 msgstr "ಪರಿಶೀಲಿಸಲಾಗುತ್ತಿದೆ…"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/status/ResponseChart.tsx
 msgid "Checks"
 msgstr "ಪರಿಶೀಲನೆಗಳು"
@@ -4258,7 +4258,7 @@ msgid "Design"
 msgstr "ವಿನ್ಯಾಸ"
 
 #: src/app/Sidebar.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/components/common/ShortcutSheet.tsx
 msgid "Designs"
 msgstr "ವಿನ್ಯಾಸಗಳು"
 
@@ -5582,6 +5582,10 @@ msgstr "ಫನೆಲ್‌ಗಳು"
 #: src/features/migrations/parts.tsx
 msgid "Further copies of the same message"
 msgstr "ಅದೇ ಸಂದೇಶದ ಹೆಚ್ಚುವರಿ ಪ್ರತಿಗಳು"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Gallery"
+msgstr "ಗ್ಯಾಲರಿ"
 
 #: src/app/Sidebar.tsx
 #: src/features/migrations/MigrationsPage.tsx
@@ -6991,7 +6995,6 @@ msgstr "ಟಿಕೆಟ್‌ಗಳನ್ನು ಪಟ್ಟಿ ಮಾಡಲಾ�
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/ListsHome.tsx
 #: src/features/settings/webhooks/events.tsx
@@ -7678,6 +7681,10 @@ msgid "Move through the broadcasts"
 msgstr "ಬ್ರಾಡ್‌ಕಾಸ್ಟ್‌ಗಳ ನಡುವೆ ಚಲಿಸಿ"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the designs"
+msgstr "ವಿನ್ಯಾಸಗಳ ನಡುವೆ ಸಾಗಿ"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the entries"
 msgstr "ನಮೂದುಗಳಲ್ಲಿ ಮುಂದೆ-ಹಿಂದೆ ಹೋಗಿ"
 
@@ -7750,6 +7757,10 @@ msgstr "ಕಲ್ಪನೆಯನ್ನು ಯೋಜಿತ, ಪ್ರಗತಿಯ
 #: src/features/migrations/SwitchStep.tsx
 msgid "MX change"
 msgstr "MX ಬದಲಾವಣೆ"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "My designs"
+msgstr "ನನ್ನ ವಿನ್ಯಾಸಗಳು"
 
 #: src/features/account/AccountPage.tsx
 msgid "My discussions"
@@ -7957,6 +7968,7 @@ msgstr "ಹೊಸ ಸಂಭಾಷಣೆಗಳು ನಿಮ್ಮ ಸಂಭಾಷ
 msgid "New counts every subscription that day, confirmed or not. The confirmation rate is the share of people asked to confirm who did."
 msgstr "ಹೊಸದು ಆ ದಿನದ ಪ್ರತಿ ಚಂದಾದಾರಿಕೆಯನ್ನು, ದೃಢೀಕರಿಸಿದ್ದು ಅಥವಾ ಇಲ್ಲದ್ದನ್ನು ಎಣಿಸುತ್ತದೆ. ದೃಢೀಕರಣ ದರವೆಂದರೆ ದೃಢೀಕರಿಸಲು ಕೇಳಲ್ಪಟ್ಟವರಲ್ಲಿ ದೃಢೀಕರಿಸಿದವರ ಪಾಲು."
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/DesignPicker.tsx
 msgid "New design"
 msgstr "ಹೊಸ ವಿನ್ಯಾಸ"
@@ -9536,6 +9548,7 @@ msgstr "ಸಂಪರ್ಕ ತೆರೆಯಿರಿ"
 msgid "Open the conversation"
 msgstr "ಸಂಭಾಷಣೆ ತೆರೆಯಿರಿ"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Open the design"
 msgstr "ವಿನ್ಯಾಸ ತೆರೆಯಿರಿ"
@@ -11718,6 +11731,10 @@ msgstr "ಸಂಭಾಷಣೆಗಳನ್ನು ಹುಡುಕಿ"
 msgid "Search conversations for “{search}”"
 msgstr "“{search}” ಗಾಗಿ ಸಂಭಾಷಣೆಗಳನ್ನು ಹುಡುಕಿ"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Search designs"
+msgstr "ವಿನ್ಯಾಸಗಳನ್ನು ಹುಡುಕಿ"
+
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "Search emoji"
 msgstr "ಎಮೋಜಿ ಹುಡುಕಿ"
@@ -12309,6 +12326,10 @@ msgstr "ಶಾರ್ಟ್‌ಕಟ್"
 #: src/features/status/MonitorsPage.tsx
 msgid "Show"
 msgstr "ತೋರಿಸಿ"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Show archived designs"
+msgstr "ಆರ್ಕೈವ್ ಮಾಡಿದ ವಿನ್ಯಾಸಗಳನ್ನು ತೋರಿಸಿ"
 
 #: src/features/conversation/messages/EmailBody.tsx
 msgid "Show as sent"

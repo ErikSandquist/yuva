@@ -31,7 +31,6 @@ msgstr "Selkeä otsikko"
 msgid "A design can hold at most 200 blocks."
 msgstr "Ulkoasussa voi olla enintään 200 lohkoa."
 
-#: src/features/designs/DesignsList.tsx
 #: src/features/designs/GalleryPage.tsx
 msgid "A design is the look of a mail: start from a template, then use it for your broadcasts."
 msgstr "Ulkoasu on viestin ilme: aloita mallista ja käytä sitä sitten joukkolähetyksiisi."
@@ -96,6 +95,10 @@ msgstr "Osoite"
 msgid "Alignment"
 msgstr "Tasaus"
 
+#: src/features/designs/GalleryPage.tsx
+msgid "All"
+msgstr "Kaikki"
+
 #: src/features/designs/designer/Inspector.tsx
 msgid "Also shown when a mail app blocks images."
 msgstr "Näytetään myös, kun sähköpostisovellus estää kuvat."
@@ -108,7 +111,7 @@ msgstr "Ladattu kuva, halutessasi linkillä"
 msgid "Animated GIFs can be at most 1,200 pixels wide."
 msgstr "Animoidut GIF-kuvat voivat olla enintään 1 200 pikseliä leveitä."
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/text.ts
 msgid "Announcement"
 msgstr "Tiedote"
 
@@ -173,7 +176,7 @@ msgstr "Brändi"
 msgid "Browse the gallery"
 msgstr "Selaa galleriaa"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Build it yourself from blocks"
 msgstr "Rakenna itse lohkoista"
 
@@ -200,7 +203,7 @@ msgid "Buttons"
 msgstr "Painikkeet"
 
 #: src/features/designs/designer/ImageLibrary.tsx
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Cancel"
 msgstr "Peruuta"
 
@@ -211,6 +214,10 @@ msgstr "Keskitetty"
 #: src/features/designs/designer/DesignerPage.tsx
 msgid "Changed elsewhere"
 msgstr "Muutettu muualla"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Check"
+msgstr "Tarkista"
 
 #: src/features/designs/designer/DesignerPage.tsx
 msgid "Checks"
@@ -225,6 +232,7 @@ msgstr "Valitse kuva"
 msgid "Clear formatting"
 msgstr "Tyhjennä muotoilu"
 
+#: src/features/designs/designer/DesignerPage.tsx
 #: src/features/designs/designer/ImageLibrary.tsx
 msgid "Close"
 msgstr "Sulje"
@@ -272,7 +280,7 @@ msgstr "Kopio tehty"
 msgid "Corner radius"
 msgstr "Kulmien pyöristys"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Create and edit"
 msgstr "Luo ja muokkaa"
 
@@ -303,7 +311,6 @@ msgstr "Oletusvälit"
 
 #: src/features/designs/designer/Canvas.tsx
 #: src/features/designs/designer/ImageLibrary.tsx
-#: src/features/designs/designer/Inspector.tsx
 msgid "Delete"
 msgstr "Poista"
 
@@ -314,6 +321,10 @@ msgstr "Poista {name}"
 #: src/features/designs/designer/ImageLibrary.tsx
 msgid "Delete anyway"
 msgstr "Poista silti"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Delete block"
+msgstr "Poista lohko"
 
 #: src/features/designs/designer/ImageLibrary.tsx
 msgid "Delete this image?"
@@ -344,6 +355,10 @@ msgstr "Ulkoasu arkistoitu"
 msgid "Design name"
 msgstr "Ulkoasun nimi"
 
+#: src/features/designs/GalleryPage.tsx
+msgid "Design restored"
+msgstr "Ulkoasu palautettu"
+
 #: src/features/designs/designer/DesignerPage.tsx
 msgid "Design settings"
 msgstr "Ulkoasun asetukset"
@@ -361,7 +376,7 @@ msgstr "Ulkoasut"
 msgid "Desktop"
 msgstr "Työpöytä"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/text.ts
 msgid "Digest"
 msgstr "Koonti"
 
@@ -412,7 +427,6 @@ msgstr "Monista"
 msgid "E-mail address"
 msgstr "Sähköpostiosoite"
 
-#: src/features/designs/DesignsList.tsx
 #: src/features/designs/GalleryPage.tsx
 msgid "E-mail designs"
 msgstr "Sähköpostiulkoasut"
@@ -433,7 +447,7 @@ msgstr "Muokkaa"
 msgid "Empty"
 msgstr "Tyhjä"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Empty page"
 msgstr "Tyhjä sivu"
 
@@ -449,7 +463,7 @@ msgstr "Loppu"
 msgid "English"
 msgstr "englanti"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/text.ts
 msgid "Event"
 msgstr "Tapahtuma"
 
@@ -460,6 +474,10 @@ msgstr "Kaikkialla"
 #: src/features/designs/text.ts
 msgid "First name"
 msgstr "Etunimi"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Fix"
+msgstr "Korjaa"
 
 #: src/features/designs/designer/ThemePanel.tsx
 msgid "Fonts already on people’s devices; mails load no web fonts."
@@ -484,6 +502,7 @@ msgid "Full width"
 msgstr "Koko leveys"
 
 #: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Gallery"
 msgstr "Galleria"
 
@@ -567,7 +586,7 @@ msgid "Images can be at most 10 MB."
 msgstr "Kuvat voivat olla enintään 10 Mt."
 
 #: src/features/designs/designer/ThemePanel.tsx
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Inbox"
 msgstr "Postilaatikko"
 
@@ -584,8 +603,8 @@ msgid "It adds nothing to the message, so screen readers skip it."
 msgstr "Se ei lisää viestiin mitään, joten ruudunlukijat ohittavat sen."
 
 #: src/features/designs/designer/DesignerPage.tsx
-msgid "It leaves the list of designs. Its versions are kept, and saving it again brings it back."
-msgstr "Se poistuu ulkoasujen listalta. Sen versiot säilytetään, ja sen tallentaminen uudelleen tuo sen takaisin."
+msgid "It leaves the list of designs. Its versions are kept. Drafts that use it still send, and you can restore it from the archive."
+msgstr "Se poistuu ulkoasujen luettelosta. Sen versiot säilyvät. Sitä käyttävät luonnokset lähtevät silti, ja voit palauttaa sen arkistosta."
 
 #: src/features/designs/designer/ConflictDialog.tsx
 msgid "It was saved {when} in another tab or by someone else, after you started editing. Your changes are kept on this device until you choose."
@@ -599,7 +618,7 @@ msgstr "Kursivoitu"
 msgid "Its address stops working at once."
 msgstr "Sen osoite lakkaa toimimasta heti."
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Its images are copied into your workspace’s images. You can change everything after."
 msgstr "Sen kuvat kopioidaan työtilasi kuviin. Voit muuttaa kaiken jälkeenpäin."
 
@@ -618,6 +637,10 @@ msgstr "Säilytetty ristiriidasta"
 #: src/features/designs/designer/DesignerPage.tsx
 msgid "Keyboard shortcuts"
 msgstr "Pikanäppäimet"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Kind"
+msgstr "Tyyppi"
 
 #: src/features/designs/designer/Inspector.tsx
 msgid "Large"
@@ -684,7 +707,6 @@ msgid "List name"
 msgstr "Listan nimi"
 
 #: src/features/designs/designer/ImageLibrary.tsx
-#: src/features/designs/DesignsList.tsx
 #: src/features/designs/GalleryPage.tsx
 msgid "Load more"
 msgstr "Lataa lisää"
@@ -747,7 +769,7 @@ msgstr "Siirrä alas"
 msgid "Move up"
 msgstr "Siirrä ylös"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Name"
 msgstr "Nimi"
 
@@ -756,27 +778,19 @@ msgid "Network"
 msgstr "Verkko"
 
 #: src/features/designs/GalleryPage.tsx
-msgid "New blank design"
-msgstr "Uusi tyhjä ulkoasu"
-
-#: src/features/designs/DesignsList.tsx
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "New design"
 msgstr "Uusi ulkoasu"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/text.ts
 msgid "Newsletter"
 msgstr "Uutiskirje"
 
-#: src/features/designs/DesignsList.tsx
-msgid "No archived designs"
-msgstr "Ei arkistoituja ulkoasuja"
-
-#: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
 msgid "No designs match."
 msgstr "Mikään ulkoasu ei täsmää."
 
-#: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
 msgid "No designs yet"
 msgstr "Ei vielä ulkoasuja"
 
@@ -787,6 +801,10 @@ msgstr "Ei vielä kuvia. Lataa ensimmäinen."
 #: src/features/designs/designer/DesignerPage.tsx
 msgid "No problems found."
 msgstr "Ongelmia ei löytynyt."
+
+#: src/features/designs/GalleryPage.tsx
+msgid "No templates of this kind"
+msgstr "Tämän tyyppisiä malleja ei ole"
 
 #: src/features/designs/designer/Versions.tsx
 msgid "No versions yet. One is kept after ten minutes of editing."
@@ -816,7 +834,7 @@ msgstr "Offline, säilytetty tällä laitteella"
 msgid "Offline. Your changes are kept on this device and saved when you are back."
 msgstr "Offline. Muutoksesi säilytetään tällä laitteella ja tallennetaan, kun olet takaisin."
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/text.ts
 msgid "Onboarding"
 msgstr "Perehdytys"
 
@@ -824,10 +842,13 @@ msgstr "Perehdytys"
 msgid "One under the other on narrow screens."
 msgstr "Päällekkäin kapeilla näytöillä."
 
-#: src/features/designs/DesignsList.tsx
 #: src/features/designs/GalleryPage.tsx
 msgid "Owners and admins make e-mail designs and send broadcasts."
 msgstr "Omistajat ja ylläpitäjät tekevät sähköpostiulkoasuja ja lähettävät joukkolähetyksiä."
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Owners and admins make e-mail designs and send broadcasts. Archiving keeps the versions."
+msgstr "Omistajat ja ylläpitäjät tekevät sähköpostiulkoasuja ja lähettävät joukkolähetyksiä. Arkistointi säilyttää versiot."
 
 #: src/features/designs/designer/ThemePanel.tsx
 msgid "Page background"
@@ -865,6 +886,7 @@ msgstr "PNG, JPEG, GIF tai WebP, enintään 10 Mt. Lataukset tehdään enintää
 msgid "Preferences link"
 msgstr "Asetuslinkki"
 
+#: src/features/designs/designer/DesignerPage.tsx
 #: src/features/designs/designer/Preview.tsx
 #: src/features/designs/designer/Versions.tsx
 msgid "Preview"
@@ -875,14 +897,19 @@ msgid "Preview of {name}"
 msgstr "Esikatselu: {name}"
 
 #: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Preview of {title}"
 msgstr "Esikatselu: {title}"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Preview size"
+msgstr "Esikatselun koko"
 
 #: src/features/designs/designer/ThemePanel.tsx
 msgid "Preview text"
 msgstr "Esikatseluteksti"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/text.ts
 msgid "Product"
 msgstr "Tuote"
 
@@ -916,6 +943,7 @@ msgid "Replace"
 msgstr "Korvaa"
 
 #: src/features/designs/designer/Versions.tsx
+#: src/features/designs/GalleryPage.tsx
 msgid "Restore"
 msgstr "Palauta"
 
@@ -979,7 +1007,7 @@ msgstr "Tallennetaan …"
 msgid "Scheduled to send"
 msgstr "Ajastettu lähetettäväksi"
 
-#: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
 msgid "Search designs"
 msgstr "Hae ulkoasuja"
 
@@ -991,6 +1019,10 @@ msgstr "Toissijainen teksti"
 #: src/features/designs/text.ts
 msgid "Section"
 msgstr "Osio"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Select a block to change it. Design settings apply to the whole mail."
+msgstr "Valitse lohko muuttaaksesi sitä. Ulkoasun asetukset koskevat koko viestiä."
 
 #: src/features/designs/designer/ThemePanel.tsx
 msgid "Select a block to change it. These settings apply to the whole mail."
@@ -1012,7 +1044,7 @@ msgstr "Muoto"
 msgid "Show"
 msgstr "Näytä"
 
-#: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
 msgid "Show archived designs"
 msgstr "Näytä arkistoidut ulkoasut"
 
@@ -1083,7 +1115,7 @@ msgstr "Pinoa puhelimissa"
 msgid "Start"
 msgstr "Aloita"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Start from an empty mail with simple colours."
 msgstr "Aloita tyhjästä viestistä, jossa on yksinkertaiset värit."
 
@@ -1102,6 +1134,10 @@ msgstr "Poista se ensin näistä ulkoasuista tai arkistoi ne:"
 #: src/features/designs/GalleryPage.tsx
 msgid "Template language"
 msgstr "Mallin kieli"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Templates are copied into your workspace, images included. You can change everything after."
+msgstr "Mallit kopioidaan työtilaasi kuvineen. Voit muuttaa kaiken jälkeenpäin."
 
 #: src/features/designs/designer/Canvas.tsx
 #: src/features/designs/designer/Inspector.tsx
@@ -1123,6 +1159,7 @@ msgid "Text formatting"
 msgstr "Tekstin muotoilu"
 
 #: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Text in English"
 msgstr "Teksti englanniksi"
 
@@ -1138,7 +1175,7 @@ msgstr "Sarakkeiden leveyksien summan on oltava 100."
 msgid "The inbox has no legal name or postal address for the footer. Add them in the inbox settings before sending."
 msgstr "Postilaatikolla ei ole virallista nimeä tai postiosoitetta alatunnistetta varten. Lisää ne postilaatikon asetuksissa ennen lähettämistä."
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "The inbox’s sender details fill the footer every mail gets."
 msgstr "Postilaatikon lähettäjän tiedot täyttävät jokaisen viestin alatunnisteen."
 
@@ -1239,6 +1276,14 @@ msgstr "Kolme"
 msgid "Top"
 msgstr "Kärki"
 
+#: src/features/designs/GalleryPage.tsx
+msgid "Try another kind."
+msgstr "Kokeile toista tyyppiä."
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Try another word, or show archived designs."
+msgstr "Kokeile toista sanaa tai näytä arkistoidut ulkoasut."
+
 #: src/features/designs/text.ts
 msgid "Turkish"
 msgstr "turkki"
@@ -1271,7 +1316,7 @@ msgstr "Kumoa"
 msgid "Unsubscribe link"
 msgstr "Poistumislinkki"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Untitled design"
 msgstr "Nimetön ulkoasu"
 
@@ -1287,7 +1332,7 @@ msgstr "Lataa kuvia tai pudota ne tähän"
 msgid "Uploading…"
 msgstr "Ladataan …"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Use “{title}”"
 msgstr "Käytä ”{title}”"
 
@@ -1317,7 +1362,7 @@ msgid "When it is empty, write"
 msgstr "Kun se on tyhjä, kirjoita"
 
 #: src/features/designs/designer/ThemePanel.tsx
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Whole workspace"
 msgstr "Koko työtila"
 

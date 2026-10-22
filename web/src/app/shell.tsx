@@ -77,7 +77,6 @@ export function isSectionHome(pathname: string) {
   return (
     pathname === "/" ||
     pathname === "/conversations" ||
-    pathname === "/broadcasts/designs" ||
     pathname === "/broadcasts/lists" ||
     routed.some((s) => pathname === `/${s}`)
   )

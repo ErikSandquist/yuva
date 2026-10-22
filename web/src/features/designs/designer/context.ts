@@ -1,12 +1,15 @@
 import { createContext, useContext } from "react"
 
 import type { Block, Doc } from "@/features/designs/doc"
-import type { EmailDesignIssue, EmailImage } from "@/lib/api"
+import type { EmailDesignIssue, EmailImage, EmailThemeColors } from "@/lib/api"
 
 export type DropTarget = { container: string; index: number }
 
+export type View = { phone: boolean; dark: boolean; colors: EmailThemeColors }
+
 export type Designer = {
   doc: Doc
+  view: View
   selected: string | null
   select: (id: string | null) => void
   setDoc: (fn: (d: Doc) => Doc, key?: string) => void

@@ -31,7 +31,6 @@ msgstr "Jasan naslov"
 msgid "A design can hold at most 200 blocks."
 msgstr "Dizajn može imati najviše 200 blokova."
 
-#: src/features/designs/DesignsList.tsx
 #: src/features/designs/GalleryPage.tsx
 msgid "A design is the look of a mail: start from a template, then use it for your broadcasts."
 msgstr "Dizajn je izgled poruke: počnite s predloškom pa ga koristite za svoje masovne poruke."
@@ -96,6 +95,10 @@ msgstr "Adresa"
 msgid "Alignment"
 msgstr "Poravnanje"
 
+#: src/features/designs/GalleryPage.tsx
+msgid "All"
+msgstr "Sve"
+
 #: src/features/designs/designer/Inspector.tsx
 msgid "Also shown when a mail app blocks images."
 msgstr "Prikazuje se i kad aplikacija za poštu blokira slike."
@@ -108,7 +111,7 @@ msgstr "Učitana slika, po želji s poveznicom"
 msgid "Animated GIFs can be at most 1,200 pixels wide."
 msgstr "Animirani GIF-ovi mogu biti široki najviše 1200 piksela."
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/text.ts
 msgid "Announcement"
 msgstr "Najava"
 
@@ -173,7 +176,7 @@ msgstr "Marka"
 msgid "Browse the gallery"
 msgstr "Pregledaj galeriju"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Build it yourself from blocks"
 msgstr "Izgradite ga sami od blokova"
 
@@ -200,7 +203,7 @@ msgid "Buttons"
 msgstr "Gumbi"
 
 #: src/features/designs/designer/ImageLibrary.tsx
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Cancel"
 msgstr "Odustani"
 
@@ -211,6 +214,10 @@ msgstr "Središnje"
 #: src/features/designs/designer/DesignerPage.tsx
 msgid "Changed elsewhere"
 msgstr "Promijenjeno drugdje"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Check"
+msgstr "Provjeri"
 
 #: src/features/designs/designer/DesignerPage.tsx
 msgid "Checks"
@@ -225,6 +232,7 @@ msgstr "Odaberi sliku"
 msgid "Clear formatting"
 msgstr "Očisti oblikovanje"
 
+#: src/features/designs/designer/DesignerPage.tsx
 #: src/features/designs/designer/ImageLibrary.tsx
 msgid "Close"
 msgstr "Zatvori"
@@ -272,7 +280,7 @@ msgstr "Kopija izrađena"
 msgid "Corner radius"
 msgstr "Polumjer kutova"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Create and edit"
 msgstr "Izrađuj i uređuj"
 
@@ -303,7 +311,6 @@ msgstr "Zadani razmak"
 
 #: src/features/designs/designer/Canvas.tsx
 #: src/features/designs/designer/ImageLibrary.tsx
-#: src/features/designs/designer/Inspector.tsx
 msgid "Delete"
 msgstr "Izbriši"
 
@@ -314,6 +321,10 @@ msgstr "Izbriši {name}"
 #: src/features/designs/designer/ImageLibrary.tsx
 msgid "Delete anyway"
 msgstr "Ipak izbriši"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Delete block"
+msgstr "Izbriši blok"
 
 #: src/features/designs/designer/ImageLibrary.tsx
 msgid "Delete this image?"
@@ -344,6 +355,10 @@ msgstr "Dizajn arhiviran"
 msgid "Design name"
 msgstr "Naziv dizajna"
 
+#: src/features/designs/GalleryPage.tsx
+msgid "Design restored"
+msgstr "Dizajn je vraćen"
+
 #: src/features/designs/designer/DesignerPage.tsx
 msgid "Design settings"
 msgstr "Postavke dizajna"
@@ -361,7 +376,7 @@ msgstr "Dizajni"
 msgid "Desktop"
 msgstr "Računalo"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/text.ts
 msgid "Digest"
 msgstr "Sažetak"
 
@@ -412,7 +427,6 @@ msgstr "Dupliciraj"
 msgid "E-mail address"
 msgstr "E-adresa"
 
-#: src/features/designs/DesignsList.tsx
 #: src/features/designs/GalleryPage.tsx
 msgid "E-mail designs"
 msgstr "Dizajni e-pošte"
@@ -433,7 +447,7 @@ msgstr "Uredi"
 msgid "Empty"
 msgstr "Prazno"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Empty page"
 msgstr "Prazna stranica"
 
@@ -449,7 +463,7 @@ msgstr "Kraj"
 msgid "English"
 msgstr "engleski"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/text.ts
 msgid "Event"
 msgstr "Događaj"
 
@@ -460,6 +474,10 @@ msgstr "Svugdje"
 #: src/features/designs/text.ts
 msgid "First name"
 msgstr "Ime"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Fix"
+msgstr "Popravi"
 
 #: src/features/designs/designer/ThemePanel.tsx
 msgid "Fonts already on people’s devices; mails load no web fonts."
@@ -484,6 +502,7 @@ msgid "Full width"
 msgstr "Puna širina"
 
 #: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Gallery"
 msgstr "Galerija"
 
@@ -567,7 +586,7 @@ msgid "Images can be at most 10 MB."
 msgstr "Slike mogu imati najviše 10 MB."
 
 #: src/features/designs/designer/ThemePanel.tsx
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Inbox"
 msgstr "Pretinac"
 
@@ -584,8 +603,8 @@ msgid "It adds nothing to the message, so screen readers skip it."
 msgstr "Ne dodaje ništa poruci pa ga čitači zaslona preskaču."
 
 #: src/features/designs/designer/DesignerPage.tsx
-msgid "It leaves the list of designs. Its versions are kept, and saving it again brings it back."
-msgstr "Nestaje s popisa dizajna. Njegove verzije se čuvaju, a ponovno spremanje vraća ga."
+msgid "It leaves the list of designs. Its versions are kept. Drafts that use it still send, and you can restore it from the archive."
+msgstr "Nestaje s popisa dizajna. Njegove verzije ostaju. Skice koje ga koriste i dalje se šalju, a možete ga vratiti iz arhive."
 
 #: src/features/designs/designer/ConflictDialog.tsx
 msgid "It was saved {when} in another tab or by someone else, after you started editing. Your changes are kept on this device until you choose."
@@ -599,7 +618,7 @@ msgstr "Kurziv"
 msgid "Its address stops working at once."
 msgstr "Njegova adresa odmah prestaje raditi."
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Its images are copied into your workspace’s images. You can change everything after."
 msgstr "Njegove slike kopiraju se u slike vašeg radnog prostora. Poslije možete promijeniti sve."
 
@@ -618,6 +637,10 @@ msgstr "Zadržano iz sukoba"
 #: src/features/designs/designer/DesignerPage.tsx
 msgid "Keyboard shortcuts"
 msgstr "Tipkovnički prečaci"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Kind"
+msgstr "Vrsta"
 
 #: src/features/designs/designer/Inspector.tsx
 msgid "Large"
@@ -684,7 +707,6 @@ msgid "List name"
 msgstr "Naziv popisa"
 
 #: src/features/designs/designer/ImageLibrary.tsx
-#: src/features/designs/DesignsList.tsx
 #: src/features/designs/GalleryPage.tsx
 msgid "Load more"
 msgstr "Učitaj više"
@@ -747,7 +769,7 @@ msgstr "Pomakni dolje"
 msgid "Move up"
 msgstr "Pomakni gore"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Name"
 msgstr "Naziv"
 
@@ -756,27 +778,19 @@ msgid "Network"
 msgstr "Mreža"
 
 #: src/features/designs/GalleryPage.tsx
-msgid "New blank design"
-msgstr "Novi prazni dizajn"
-
-#: src/features/designs/DesignsList.tsx
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "New design"
 msgstr "Novi dizajn"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/text.ts
 msgid "Newsletter"
 msgstr "Bilten"
 
-#: src/features/designs/DesignsList.tsx
-msgid "No archived designs"
-msgstr "Nema arhiviranih dizajna"
-
-#: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
 msgid "No designs match."
 msgstr "Nijedan dizajn se ne podudara."
 
-#: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
 msgid "No designs yet"
 msgstr "Još nema dizajna"
 
@@ -787,6 +801,10 @@ msgstr "Još nema slika. Učitajte prvu."
 #: src/features/designs/designer/DesignerPage.tsx
 msgid "No problems found."
 msgstr "Nema pronađenih problema."
+
+#: src/features/designs/GalleryPage.tsx
+msgid "No templates of this kind"
+msgstr "Nema predložaka ove vrste"
 
 #: src/features/designs/designer/Versions.tsx
 msgid "No versions yet. One is kept after ten minutes of editing."
@@ -816,7 +834,7 @@ msgstr "Izvan mreže, čuva se na ovom uređaju"
 msgid "Offline. Your changes are kept on this device and saved when you are back."
 msgstr "Izvan mreže. Vaše promjene čuvaju se na ovom uređaju i spremaju kad se vratite."
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/text.ts
 msgid "Onboarding"
 msgstr "Uvođenje"
 
@@ -824,10 +842,13 @@ msgstr "Uvođenje"
 msgid "One under the other on narrow screens."
 msgstr "Jedan ispod drugog na uskim zaslonima."
 
-#: src/features/designs/DesignsList.tsx
 #: src/features/designs/GalleryPage.tsx
 msgid "Owners and admins make e-mail designs and send broadcasts."
 msgstr "Vlasnici i administratori izrađuju dizajne e-pošte i šalju masovne poruke."
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Owners and admins make e-mail designs and send broadcasts. Archiving keeps the versions."
+msgstr "Vlasnici i administratori izrađuju dizajne e-pošte i šalju masovne poruke. Arhiviranje čuva verzije."
 
 #: src/features/designs/designer/ThemePanel.tsx
 msgid "Page background"
@@ -865,6 +886,7 @@ msgstr "PNG, JPEG, GIF ili WebP do 10 MB. Učitane slike izrađuju se široke na
 msgid "Preferences link"
 msgstr "Poveznica postavki"
 
+#: src/features/designs/designer/DesignerPage.tsx
 #: src/features/designs/designer/Preview.tsx
 #: src/features/designs/designer/Versions.tsx
 msgid "Preview"
@@ -875,14 +897,19 @@ msgid "Preview of {name}"
 msgstr "Pregled: {name}"
 
 #: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Preview of {title}"
 msgstr "Pregled {title}"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Preview size"
+msgstr "Veličina pregleda"
 
 #: src/features/designs/designer/ThemePanel.tsx
 msgid "Preview text"
 msgstr "Tekst pregleda"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/text.ts
 msgid "Product"
 msgstr "Proizvod"
 
@@ -916,6 +943,7 @@ msgid "Replace"
 msgstr "Zamijeni"
 
 #: src/features/designs/designer/Versions.tsx
+#: src/features/designs/GalleryPage.tsx
 msgid "Restore"
 msgstr "Vrati"
 
@@ -979,7 +1007,7 @@ msgstr "Spremanje…"
 msgid "Scheduled to send"
 msgstr "Zakazano za slanje"
 
-#: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
 msgid "Search designs"
 msgstr "Traži dizajne"
 
@@ -991,6 +1019,10 @@ msgstr "Sekundarni tekst"
 #: src/features/designs/text.ts
 msgid "Section"
 msgstr "Odjeljak"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Select a block to change it. Design settings apply to the whole mail."
+msgstr "Odaberite blok da ga promijenite. Postavke dizajna vrijede za cijelu poruku."
 
 #: src/features/designs/designer/ThemePanel.tsx
 msgid "Select a block to change it. These settings apply to the whole mail."
@@ -1012,7 +1044,7 @@ msgstr "Oblik"
 msgid "Show"
 msgstr "Prikaži"
 
-#: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
 msgid "Show archived designs"
 msgstr "Prikaži arhivirane dizajne"
 
@@ -1083,7 +1115,7 @@ msgstr "Slaži jedno ispod drugog na telefonima"
 msgid "Start"
 msgstr "Započni"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Start from an empty mail with simple colours."
 msgstr "Počnite s praznom porukom s jednostavnim bojama."
 
@@ -1102,6 +1134,10 @@ msgstr "Prvo ga uklonite iz ovih dizajna ili ih arhivirajte:"
 #: src/features/designs/GalleryPage.tsx
 msgid "Template language"
 msgstr "Jezik predloška"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Templates are copied into your workspace, images included. You can change everything after."
+msgstr "Predlošci se kopiraju u vaš radni prostor zajedno sa slikama. Poslije možete promijeniti sve."
 
 #: src/features/designs/designer/Canvas.tsx
 #: src/features/designs/designer/Inspector.tsx
@@ -1123,6 +1159,7 @@ msgid "Text formatting"
 msgstr "Oblikovanje teksta"
 
 #: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Text in English"
 msgstr "Tekst na engleskom"
 
@@ -1138,7 +1175,7 @@ msgstr "Širine stupaca moraju se zbrajati u 100."
 msgid "The inbox has no legal name or postal address for the footer. Add them in the inbox settings before sending."
 msgstr "Pretinac nema pravni naziv ni poštansku adresu za podnožje. Dodajte ih u postavkama pretinca prije slanja."
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "The inbox’s sender details fill the footer every mail gets."
 msgstr "Podaci o pošiljatelju pretinca popunjavaju podnožje koje dobiva svaka poruka."
 
@@ -1239,6 +1276,14 @@ msgstr "Tri"
 msgid "Top"
 msgstr "Vrh"
 
+#: src/features/designs/GalleryPage.tsx
+msgid "Try another kind."
+msgstr "Pokušajte s drugom vrstom."
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Try another word, or show archived designs."
+msgstr "Pokušajte s drugom riječi ili prikažite arhivirane dizajne."
+
 #: src/features/designs/text.ts
 msgid "Turkish"
 msgstr "turski"
@@ -1271,7 +1316,7 @@ msgstr "Poništi"
 msgid "Unsubscribe link"
 msgstr "Poveznica za odjavu"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Untitled design"
 msgstr "Dizajn bez naziva"
 
@@ -1287,7 +1332,7 @@ msgstr "Učitajte slike ili ih ispustite ovdje"
 msgid "Uploading…"
 msgstr "Učitavanje…"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Use “{title}”"
 msgstr "Koristi „{title}”"
 
@@ -1317,7 +1362,7 @@ msgid "When it is empty, write"
 msgstr "Kad je prazno, napišite"
 
 #: src/features/designs/designer/ThemePanel.tsx
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Whole workspace"
 msgstr "Cijeli radni prostor"
 

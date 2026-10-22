@@ -2689,7 +2689,6 @@ msgstr "ஒளிபரப்பு அனுப்புதல்"
 #: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/Overview.tsx
 #: src/features/settings/webhooks/events.tsx
@@ -3059,6 +3058,7 @@ msgstr "சேவையகத்தில் உள்ளவற்றைச் �
 msgid "Checking…"
 msgstr "சரிபார்க்கிறது…"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/status/ResponseChart.tsx
 msgid "Checks"
 msgstr "சோதனைகள்"
@@ -4258,7 +4258,7 @@ msgid "Design"
 msgstr "வடிவமைப்பு"
 
 #: src/app/Sidebar.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/components/common/ShortcutSheet.tsx
 msgid "Designs"
 msgstr "வடிவமைப்புகள்"
 
@@ -5582,6 +5582,10 @@ msgstr "புனல்கள்"
 #: src/features/migrations/parts.tsx
 msgid "Further copies of the same message"
 msgstr "அதே செய்தியின் மேலும் நகல்கள்"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Gallery"
+msgstr "தொகுப்பு"
 
 #: src/app/Sidebar.tsx
 #: src/features/migrations/MigrationsPage.tsx
@@ -6991,7 +6995,6 @@ msgstr "டிக்கெட்டுகளைப் பட்டியலி�
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/ListsHome.tsx
 #: src/features/settings/webhooks/events.tsx
@@ -7678,6 +7681,10 @@ msgid "Move through the broadcasts"
 msgstr "ஒளிபரப்புகளில் நகருங்கள்"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the designs"
+msgstr "வடிவமைப்புகளுக்கிடையே செல்"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the entries"
 msgstr "உள்ளீடுகளுக்கு இடையே செல்"
 
@@ -7750,6 +7757,10 @@ msgstr "யோசனையை திட்டமிடப்பட்டது, 
 #: src/features/migrations/SwitchStep.tsx
 msgid "MX change"
 msgstr "MX மாற்றம்"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "My designs"
+msgstr "என் வடிவமைப்புகள்"
 
 #: src/features/account/AccountPage.tsx
 msgid "My discussions"
@@ -7957,6 +7968,7 @@ msgstr "புதிய உரையாடல்கள் உங்கள் உ
 msgid "New counts every subscription that day, confirmed or not. The confirmation rate is the share of people asked to confirm who did."
 msgstr "புதியவை அந்த நாளின் ஒவ்வொரு சந்தாவையும் எண்ணும், உறுதிப்படுத்தப்பட்டதோ இல்லையோ. உறுதிப்படுத்தல் விகிதம் என்பது உறுதிப்படுத்தக் கேட்கப்பட்டவர்களில் உறுதிப்படுத்தியவர்களின் பங்கு."
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/DesignPicker.tsx
 msgid "New design"
 msgstr "புதிய வடிவமைப்பு"
@@ -9536,6 +9548,7 @@ msgstr "தொடர்பைத் திற"
 msgid "Open the conversation"
 msgstr "உரையாடலைத் திற"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Open the design"
 msgstr "வடிவமைப்பைத் திற"
@@ -11718,6 +11731,10 @@ msgstr "உரையாடல்களைத் தேடு"
 msgid "Search conversations for “{search}”"
 msgstr "“{search}” என உரையாடல்களைத் தேடு"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Search designs"
+msgstr "வடிவமைப்புகளைத் தேடு"
+
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "Search emoji"
 msgstr "ஈமோஜியைத் தேடு"
@@ -12309,6 +12326,10 @@ msgstr "குறுக்குவழி"
 #: src/features/status/MonitorsPage.tsx
 msgid "Show"
 msgstr "காட்டு"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Show archived designs"
+msgstr "காப்பகப்படுத்தப்பட்ட வடிவமைப்புகளைக் காட்டு"
 
 #: src/features/conversation/messages/EmailBody.tsx
 msgid "Show as sent"

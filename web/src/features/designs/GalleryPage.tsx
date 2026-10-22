@@ -1,176 +1,50 @@
 import "@/features/designs/i18n"
 
 import { Trans, useLingui } from "@lingui/react/macro"
-import {
-  ArchiveIcon,
-  FilePlusIcon,
-  LanguagesIcon,
-  LayoutTemplateIcon,
-  LoaderIcon,
-  TriangleAlertIcon,
-} from "lucide-react"
-import { useState } from "react"
+import { ArchiveIcon, LanguagesIcon, LayoutTemplateIcon, SearchIcon, TriangleAlertIcon } from "lucide-react"
+import { useRef, useState } from "react"
 import { Link, useLocation, useNavigate, useSearchParams } from "react-router"
 
-import { Dot, ErrorLine, Notice, Segmented } from "@/components/common"
+import { ErrorLine, Notice, Segmented, toast } from "@/components/common"
 import { PaneEmpty } from "@/components/common/Column"
 import { MailFrame } from "@/components/common/MailFrame"
+import { DESIGN_KEYS } from "@/components/common/ShortcutSheet"
 import { formatShort } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Skeleton } from "@/components/ui/skeleton"
+import { Switch } from "@/components/ui/switch"
+import { keyHint } from "@/features/broadcasts/BroadcastParts"
+import { NewDesignDialog, type NewDesign } from "@/features/designs/NewDesignDialog"
 import {
   designLink,
-  useCreateDesign,
   useDesign,
   useDesigns,
   useRender,
+  useRestoreDesign,
   useShowArchivedDesigns,
   useTemplates,
 } from "@/features/designs/queries"
-import { useTemplateLocales } from "@/features/designs/text"
+import { useCategory, useTemplateLocales } from "@/features/designs/text"
 import { useInboxFilter } from "@/features/inbox/inboxFilter"
+import { look } from "@/features/inbox/PageFrame"
 import { FrameButton, FrameTabs, framePad, PageFrame } from "@/features/status/PageFrame"
+import { useDebounced } from "@/hooks/use-debounced"
+import { useHotkeys } from "@/hooks/use-hotkeys"
+import { useRowFocus } from "@/hooks/use-row-focus"
 import type { EmailDesignSummary, EmailTemplate, EmailTemplateLocale } from "@/lib/api"
 import { useSession } from "@/lib/session"
+import { cn } from "@/lib/utils"
 import { useInboxes } from "@/lib/workspace"
 
-const WORKSPACE = "workspace"
 const LOCALES: EmailTemplateLocale[] = ["en", "tr", "de"]
-
-type Choice = { template: EmailTemplate | null }
-
-function CreateDialog({
-  choice,
-  locale,
-  onClose,
-}: {
-  choice: Choice
-  locale: EmailTemplateLocale
-  onClose: () => void
-}) {
-  const { t } = useLingui()
-  const navigate = useNavigate()
-  const inboxes = useInboxes().data ?? []
-  const create = useCreateDesign()
-  const tpl = choice.template
-  const title = tpl?.name ?? ""
-  const [name, setName] = useState(tpl ? tpl.name : t`Untitled design`)
-  const [inbox, setInbox] = useState(inboxes.length === 1 ? inboxes[0].id : WORKSPACE)
-  const items: Record<string, string> = {
-    [WORKSPACE]: t`Whole workspace`,
-    ...Object.fromEntries(inboxes.map((i) => [i.id, i.name])),
-  }
-  const submit = () => {
-    if (!name.trim()) return
-    create.mutate(
-      {
-        name: name.trim(),
-        inbox_id: inbox === WORKSPACE ? undefined : inbox,
-        template: tpl ? { slug: tpl.slug, locale } : undefined,
-      },
-      { onSuccess: (d) => navigate(designLink(d.id)) }
-    )
-  }
-  return (
-    <Dialog open onOpenChange={(o) => !o && onClose()}>
-      <DialogContent data-testid="create-design-dialog">
-        <form
-          className="flex flex-col gap-5"
-          onSubmit={(e) => {
-            e.preventDefault()
-            submit()
-          }}
-        >
-          <DialogHeader>
-            <DialogTitle>{tpl ? <Trans>Use “{title}”</Trans> : <Trans>New blank design</Trans>}</DialogTitle>
-            <DialogDescription>
-              {tpl ? (
-                <Trans>Its images are copied into your workspace’s images. You can change everything after.</Trans>
-              ) : (
-                <Trans>Start from an empty mail with simple colours.</Trans>
-              )}
-            </DialogDescription>
-          </DialogHeader>
-          <div className="flex flex-col gap-2">
-            <Label htmlFor="design-name-new">
-              <Trans>Name</Trans>
-            </Label>
-            <Input
-              id="design-name-new"
-              value={name}
-              maxLength={200}
-              autoFocus
-              onChange={(e) => setName(e.target.value)}
-              data-testid="new-design-name"
-            />
-          </div>
-          {inboxes.length > 0 && (
-            <div className="flex flex-col gap-2">
-              <Label>
-                <Trans>Inbox</Trans>
-              </Label>
-              <Select value={inbox} items={items} onValueChange={(v) => setInbox(String(v ?? WORKSPACE))}>
-                <SelectTrigger className="w-full min-w-0" aria-label={t`Inbox`} data-testid="new-design-inbox">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value={WORKSPACE}>{t`Whole workspace`}</SelectItem>
-                  {inboxes.map((i) => (
-                    <SelectItem key={i.id} value={i.id}>
-                      <Dot color={i.branding.color} className="mt-1.5 size-2 rounded-[3px]" />
-                      {i.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <p className="text-small text-faint">
-                <Trans>The inbox’s sender details fill the footer every mail gets.</Trans>
-              </p>
-            </div>
-          )}
-          <ErrorLine error={create.error} />
-          <DialogFooter>
-            <Button type="button" variant="ghost" onClick={onClose}>
-              <Trans>Cancel</Trans>
-            </Button>
-            <Button type="submit" disabled={!name.trim() || create.isPending} data-testid="create-design">
-              {create.isPending && <LoaderIcon className="animate-spin" />}
-              <Trans>Create and edit</Trans>
-            </Button>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
-  )
-}
-
-function useCategory() {
-  const { t } = useLingui()
-  const names: Record<string, string> = {
-    newsletter: t`Newsletter`,
-    product: t`Product`,
-    announcement: t`Announcement`,
-    onboarding: t`Onboarding`,
-    event: t`Event`,
-    digest: t`Digest`,
-  }
-  return (c: string) => names[c] ?? c
-}
+const KINDS = ["newsletter", "product", "announcement", "onboarding", "event", "digest"]
 
 const sheet = "relative h-[260px] w-[184px] overflow-hidden rounded-t-md bg-white shadow-[0_4px_14px_rgb(0_0_0/0.08)]"
 const box =
   "relative flex h-[297px] justify-center overflow-hidden rounded-xl border bg-surface pt-[18px] transition-colors group-hover:border-faint"
+const grid = "grid grid-cols-[repeat(auto-fill,minmax(15rem,1fr))] gap-x-4 gap-y-5"
 
 function TemplateCard({ tpl, locale, onUse }: { tpl: EmailTemplate; locale: EmailTemplateLocale; onUse: () => void }) {
   const { t } = useLingui()
@@ -224,15 +98,20 @@ function DesignCard({ d }: { d: EmailDesignSummary }) {
   const { t, i18n } = useLingui()
   const inbox = (useInboxes().data ?? []).find((i) => i.id === d.inbox_id)
   const design = useDesign(d.id)
+  const restore = useRestoreDesign()
   const render = useRender(
     design.data ? { document: design.data.document, ...(d.inbox_id ? { inbox_id: d.inbox_id } : {}) } : null
   )
   const name = d.name
+  const archived = !!d.archived_at
   return (
-    <li>
+    <li className="flex flex-col gap-2">
       <Link
         to={designLink(d.id)}
-        className="group flex flex-col gap-2.5 rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        className={cn(
+          "group flex flex-col gap-2.5 rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-ring",
+          archived && "opacity-60"
+        )}
         data-testid="design-card"
       >
         <span className={box}>
@@ -253,7 +132,7 @@ function DesignCard({ d }: { d: EmailDesignSummary }) {
               <Skeleton className="h-full w-full rounded-none" />
             )}
           </span>
-          {d.archived_at && (
+          {archived && (
             <span className="absolute top-2.5 end-2.5 inline-flex items-center gap-1 rounded-md bg-background/90 px-1.5 py-0.5 text-caption text-muted-foreground">
               <ArchiveIcon className="size-3" />
               <Trans>Archived</Trans>
@@ -273,57 +152,190 @@ function DesignCard({ d }: { d: EmailDesignSummary }) {
           </span>
         </span>
       </Link>
+      {archived && (
+        <div className="flex justify-end">
+          <Button
+            variant="outline"
+            className={look.btnSm}
+            disabled={restore.isPending}
+            onClick={() => restore.mutate(d.id, { onSuccess: () => toast(t`Design restored`) })}
+            data-testid="design-restore"
+          >
+            <Trans>Restore</Trans>
+          </Button>
+        </div>
+      )}
+      <ErrorLine error={restore.error} />
     </li>
   )
 }
 
-function MyDesigns() {
+function Mine({ onNew }: { onNew: () => void }) {
+  const { t } = useLingui()
   const [inboxId] = useInboxFilter()
-  const [archived] = useShowArchivedDesigns()
-  const designs = useDesigns(inboxId, "", archived)
-  const items = designs.data?.pages.flatMap((p) => p.items) ?? []
-  if (designs.isPending)
-    return (
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(15rem,1fr))] gap-4">
-        {[0, 1, 2].map((i) => (
-          <Skeleton key={i} className="h-[297px] rounded-xl" />
-        ))}
-      </div>
-    )
+  const [archived, setArchived] = useShowArchivedDesigns()
+  const [q, setQ] = useState("")
+  const query = useDebounced(q.trim(), 250)
+  const live = useDesigns(inboxId, query, false)
+  const gone = useDesigns(inboxId, query, true, archived)
+  const lists = archived ? [live, gone] : [live]
+  const items = lists
+    .flatMap((l) => l.data?.pages.flatMap((p) => p.items) ?? [])
+    .sort((a, b) => b.updated_at.localeCompare(a.updated_at))
+  const pending = lists.some((l) => l.isPending)
+  const error = lists.find((l) => l.error)?.error
+  const more = lists.filter((l) => l.hasNextPage)
+  const list = useRowFocus<HTMLUListElement>()
+  const search = useRef<HTMLInputElement>(null)
+  useHotkeys({
+    [DESIGN_KEYS.search]: () => search.current?.focus(),
+    [DESIGN_KEYS.archived]: () => setArchived(!archived),
+  })
   return (
     <>
-      <ErrorLine error={designs.error} />
-      {items.length === 0 ? (
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+        <div className="relative min-w-0 flex-1 basis-60 sm:max-w-[300px] sm:flex-none">
+          <SearchIcon className="pointer-events-none absolute top-1/2 start-3 size-4 -translate-y-1/2 text-faint" />
+          <Input
+            ref={search}
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+            onKeyDown={(e) => e.key === "Escape" && search.current?.blur()}
+            placeholder={t`Search designs`}
+            aria-label={t`Search designs`}
+            title={keyHint(t`Search designs`, DESIGN_KEYS.search)}
+            className="ps-9"
+            data-testid="designs-search"
+          />
+        </div>
+        <Label
+          className="ms-auto gap-3 font-normal text-muted-foreground"
+          title={keyHint(t`Show archived designs`, DESIGN_KEYS.archived)}
+        >
+          <Trans>Show archived designs</Trans>
+          <Switch checked={archived} onCheckedChange={setArchived} data-testid="designs-archived" />
+        </Label>
+      </div>
+      <ErrorLine error={error} />
+      {pending ? (
+        <div className={grid}>
+          {[0, 1, 2].map((i) => (
+            <Skeleton key={i} className="h-[297px] rounded-xl" />
+          ))}
+        </div>
+      ) : items.length === 0 ? (
         <div
-          className="flex flex-col items-center gap-3 rounded-xl border border-dashed px-6 py-12 text-center"
+          className="flex flex-col items-center gap-2 rounded-xl border border-dashed px-6 py-12 text-center text-body text-muted-foreground"
           data-testid="designs-home-empty"
         >
           <LayoutTemplateIcon className="size-6 text-faint" />
-          <p className="max-w-md text-body text-muted-foreground">
-            <Trans>A design is the look of a mail: start from a template, then use it for your broadcasts.</Trans>
+          <p className="font-semibold text-foreground">
+            {query ? <Trans>No designs match.</Trans> : <Trans>No designs yet</Trans>}
           </p>
-          <Button size="sm" variant="outline" render={<Link to="/broadcasts/designs/new" />}>
-            <Trans>Browse the gallery</Trans>
-          </Button>
+          <p className="max-w-md">
+            {query ? (
+              <Trans>Try another word, or show archived designs.</Trans>
+            ) : (
+              <Trans>A design is the look of a mail: start from a template, then use it for your broadcasts.</Trans>
+            )}
+          </p>
+          {!query && (
+            <div className="mt-1 flex gap-2">
+              <FrameButton render={<Link to="/broadcasts/designs/new" />}>
+                <Trans>Browse the gallery</Trans>
+              </FrameButton>
+              <FrameButton ink onClick={onNew}>
+                <Trans>New design</Trans>
+              </FrameButton>
+            </div>
+          )}
         </div>
       ) : (
-        <ul className="grid grid-cols-[repeat(auto-fill,minmax(15rem,1fr))] gap-x-4 gap-y-5" data-testid="design-grid">
+        <ul ref={list} className={grid} aria-label={t`Designs`} data-testid="design-grid">
           {items.map((d) => (
             <DesignCard key={d.id} d={d} />
           ))}
         </ul>
       )}
-      {designs.hasNextPage && (
+      {more.length > 0 && (
         <Button
           variant="ghost"
           size="sm"
           className="self-center"
-          onClick={() => void designs.fetchNextPage()}
-          disabled={designs.isFetchingNextPage}
+          onClick={() => more.forEach((l) => void l.fetchNextPage())}
+          disabled={more.some((l) => l.isFetchingNextPage)}
         >
           <Trans>Load more</Trans>
         </Button>
       )}
+      <p className="text-small text-faint">
+        <Trans>Owners and admins make e-mail designs and send broadcasts. Archiving keeps the versions.</Trans>
+      </p>
+    </>
+  )
+}
+
+function Gallery({ locale, onUse }: { locale: EmailTemplateLocale; onUse: (tpl: EmailTemplate) => void }) {
+  const { t } = useLingui()
+  const category = useCategory()
+  const templates = useTemplates(locale)
+  const [kind, setKind] = useState("all")
+  const all = templates.data ?? []
+  const kinds = [
+    ...KINDS.filter((k) => all.some((x) => x.category === k)),
+    ...new Set(all.map((x) => x.category).filter((c) => !KINDS.includes(c))),
+  ]
+  const shown = kind === "all" ? all : all.filter((x) => x.category === kind)
+  const english = shown.some((x) => !x.locales.includes(locale))
+  return (
+    <>
+      <div className="flex flex-wrap items-center gap-2" role="group" aria-label={t`Kind`}>
+        {["all", ...kinds].map((k) => (
+          <button
+            key={k}
+            type="button"
+            aria-pressed={kind === k}
+            onClick={() => setKind(k)}
+            className={kind === k ? look.chipOn : look.chip}
+            data-testid={`template-kind-${k}`}
+          >
+            {k === "all" ? <Trans>All</Trans> : category(k)}
+          </button>
+        ))}
+        {english && (
+          <span className="ms-auto inline-flex items-center gap-1.5 text-small text-faint">
+            <LanguagesIcon className="size-3.5" />
+            <Trans>Text in English</Trans>
+          </span>
+        )}
+      </div>
+      <ErrorLine error={templates.error} />
+      {!templates.isPending && shown.length === 0 && !templates.error ? (
+        <div
+          className="flex flex-col items-center gap-2 rounded-xl border border-dashed px-6 py-12 text-center text-body text-muted-foreground"
+          data-testid="templates-empty"
+        >
+          <p className="font-semibold text-foreground">
+            <Trans>No templates of this kind</Trans>
+          </p>
+          <p>
+            <Trans>Try another kind.</Trans>
+          </p>
+        </div>
+      ) : (
+        <ul className={grid} data-testid="template-grid">
+          {templates.isPending
+            ? Array.from({ length: 6 }, (_, i) => (
+                <li key={i}>
+                  <Skeleton className="h-[297px] w-full rounded-xl" />
+                </li>
+              ))
+            : shown.map((tpl) => <TemplateCard key={tpl.slug} tpl={tpl} locale={locale} onUse={() => onUse(tpl)} />)}
+        </ul>
+      )}
+      <p className="text-small text-faint">
+        <Trans>Templates are copied into your workspace, images included. You can change everything after.</Trans>
+      </p>
     </>
   )
 }
@@ -331,6 +343,7 @@ function MyDesigns() {
 export default function GalleryPage() {
   const { t, i18n } = useLingui()
   const { canManage } = useSession()
+  const navigate = useNavigate()
   const [params, setParams] = useSearchParams()
   const localeNames = useTemplateLocales()
   const wanted = params.get("locale") as EmailTemplateLocale | null
@@ -339,18 +352,26 @@ export default function GalleryPage() {
     : "en"
   const [locale, setLocale] = useState<EmailTemplateLocale>(wanted && LOCALES.includes(wanted) ? wanted : fallback)
   const templates = useTemplates(locale)
-  const [choice, setChoice] = useState<Choice | null>(null)
+  const [choice, setChoice] = useState<NewDesign | null>(null)
   const slug = params.get("template")
   const asked = slug ? templates.data?.find((x) => x.slug === slug) : undefined
   const unknown = !!slug && !!templates.data && !asked
   const gallery = useLocation().pathname.endsWith("/new")
+  useHotkeys(
+    {
+      [DESIGN_KEYS.create]: () => setChoice("choose"),
+      [DESIGN_KEYS.mine]: () => navigate("/broadcasts/designs"),
+      [DESIGN_KEYS.gallery]: () => navigate("/broadcasts/designs/new"),
+    },
+    canManage
+  )
   if (!canManage)
     return (
       <PaneEmpty icon={LayoutTemplateIcon} title={<Trans>E-mail designs</Trans>} testId="designs-read-only">
         <Trans>Owners and admins make e-mail designs and send broadcasts.</Trans>
       </PaneEmpty>
     )
-  const open = choice ?? (asked ? { template: asked } : null)
+  const open: NewDesign | null = choice ?? (asked ? { use: asked } : null)
   const close = () => {
     setChoice(null)
     if (slug) setParams({}, { replace: true })
@@ -362,27 +383,27 @@ export default function GalleryPage() {
   return (
     <PageFrame
       testId="design-gallery"
-      back={gallery ? { to: "/broadcasts/designs", label: t`Designs` } : undefined}
       title={<Trans>Designs</Trans>}
       description={<Trans>E-mail layouts you reuse across broadcasts</Trans>}
       actions={
-        gallery ? (
-          <>
+        <>
+          {gallery && (
             <Segmented
               value={locale}
               onChange={setLocale}
               label={t`Template language`}
               items={localeNames.map((l) => ({ ...l, testId: `template-locale-${l.value}` }))}
             />
-            <FrameButton ink onClick={() => setChoice({ template: null })} data-testid="designs-home-new">
-              <Trans>New design</Trans>
-            </FrameButton>
-          </>
-        ) : (
-          <FrameButton ink render={<Link to="/broadcasts/designs/new" />} data-testid="designs-home-new">
+          )}
+          <FrameButton
+            ink
+            onClick={() => setChoice("choose")}
+            title={keyHint(t`New design`, DESIGN_KEYS.create)}
+            data-testid="designs-home-new"
+          >
             <Trans>New design</Trans>
           </FrameButton>
-        )
+        </>
       }
       tabs={<FrameTabs label={t`Designs`} items={tabs} current={gallery ? "gallery" : "mine"} />}
     >
@@ -394,46 +415,20 @@ export default function GalleryPage() {
             </p>
           </Notice>
         )}
-        {!gallery && <MyDesigns />}
-        {gallery && (
-          <ul
-            className="grid grid-cols-[repeat(auto-fill,minmax(15rem,1fr))] gap-x-4 gap-y-5"
-            data-testid="template-grid"
-          >
-            {templates.isPending
-              ? Array.from({ length: 6 }, (_, i) => (
-                  <li key={i}>
-                    <Skeleton className="h-[297px] w-full rounded-xl" />
-                  </li>
-                ))
-              : (templates.data ?? []).map((tpl) => (
-                  <TemplateCard key={tpl.slug} tpl={tpl} locale={locale} onUse={() => setChoice({ template: tpl })} />
-                ))}
-            <li>
-              <button
-                type="button"
-                onClick={() => setChoice({ template: null })}
-                className="group flex w-full flex-col gap-2.5 rounded-xl text-start outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                data-testid="template-blank"
-              >
-                <span className="flex h-[297px] flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed text-muted-foreground transition-colors group-hover:border-brand group-hover:text-brand">
-                  <FilePlusIcon className="size-7" />
-                </span>
-                <span className="flex min-w-0 flex-col leading-snug">
-                  <span className="truncate text-body font-semibold">
-                    <Trans>Empty page</Trans>
-                  </span>
-                  <span className="truncate text-caption text-faint">
-                    <Trans>Build it yourself from blocks</Trans>
-                  </span>
-                </span>
-              </button>
-            </li>
-          </ul>
+        {gallery ? (
+          <Gallery locale={locale} onUse={(tpl) => setChoice({ use: tpl })} />
+        ) : (
+          <Mine onNew={() => setChoice("choose")} />
         )}
-        {gallery && <ErrorLine error={templates.error} />}
       </div>
-      {open && <CreateDialog key={open.template?.slug ?? "blank"} choice={open} locale={locale} onClose={close} />}
+      {open && (
+        <NewDesignDialog
+          key={open === "choose" ? "choose" : open.use.slug}
+          mode={open}
+          locale={locale}
+          onClose={close}
+        />
+      )}
     </PageFrame>
   )
 }

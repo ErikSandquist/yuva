@@ -615,19 +615,6 @@ export function Inspector({ block }: { block: Block }) {
             <Button variant="ghost" size="icon-sm" aria-label={t`Move down`} onClick={() => d.nudge(block.id, 1)}>
               <ArrowDownIcon />
             </Button>
-            <Button variant="ghost" size="icon-sm" aria-label={t`Duplicate`} onClick={() => d.duplicate(block.id)}>
-              <CopyIcon />
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon-sm"
-              aria-label={t`Delete`}
-              className="hover:text-destructive"
-              onClick={() => d.remove(block.id)}
-              data-testid="inspector-delete"
-            >
-              <Trash2Icon />
-            </Button>
           </div>
         )}
       </div>
@@ -635,6 +622,28 @@ export function Inspector({ block }: { block: Block }) {
       <fieldset disabled={d.readOnly} className="flex min-w-0 flex-col">
         <Fields block={block} />
         <Layout block={block} />
+        {!d.readOnly && (
+          <div className="flex gap-2 px-4 py-4">
+            <Button
+              variant="outline"
+              className="flex-1"
+              onClick={() => d.duplicate(block.id)}
+              data-testid="inspector-duplicate"
+            >
+              <CopyIcon />
+              <Trans>Duplicate</Trans>
+            </Button>
+            <Button
+              variant="outline"
+              className="flex-1 hover:text-destructive"
+              onClick={() => d.remove(block.id)}
+              data-testid="inspector-delete"
+            >
+              <Trash2Icon />
+              <Trans>Delete block</Trans>
+            </Button>
+          </div>
+        )}
       </fieldset>
     </div>
   )

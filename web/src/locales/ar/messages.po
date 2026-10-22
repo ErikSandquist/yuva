@@ -2689,7 +2689,6 @@ msgstr "إرسال الرسائل الجماعية"
 #: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/Overview.tsx
 #: src/features/settings/webhooks/events.tsx
@@ -3059,6 +3058,7 @@ msgstr "جارٍ فحص ما على الخادم"
 msgid "Checking…"
 msgstr "جارٍ الفحص…"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/status/ResponseChart.tsx
 msgid "Checks"
 msgstr "الفحوصات"
@@ -4258,7 +4258,7 @@ msgid "Design"
 msgstr "التصميم"
 
 #: src/app/Sidebar.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/components/common/ShortcutSheet.tsx
 msgid "Designs"
 msgstr "التصاميم"
 
@@ -5582,6 +5582,10 @@ msgstr "مسارات التحويل"
 #: src/features/migrations/parts.tsx
 msgid "Further copies of the same message"
 msgstr "نسخ أخرى من الرسالة نفسها"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Gallery"
+msgstr "المعرض"
 
 #: src/app/Sidebar.tsx
 #: src/features/migrations/MigrationsPage.tsx
@@ -6991,7 +6995,6 @@ msgstr "جارٍ سرد التذاكر…"
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/ListsHome.tsx
 #: src/features/settings/webhooks/events.tsx
@@ -7678,6 +7681,10 @@ msgid "Move through the broadcasts"
 msgstr "التنقل بين الرسائل الجماعية"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the designs"
+msgstr "التنقل بين التصاميم"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the entries"
 msgstr "التنقل بين الإدخالات"
 
@@ -7750,6 +7757,10 @@ msgstr "نقل الفكرة إلى مخطط لها أو قيد التنفيذ أ
 #: src/features/migrations/SwitchStep.tsx
 msgid "MX change"
 msgstr "تغيير MX"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "My designs"
+msgstr "تصاميمي"
 
 #: src/features/account/AccountPage.tsx
 msgid "My discussions"
@@ -7957,6 +7968,7 @@ msgstr "تظهر المحادثات الجديدة أعلى قائمة محاد�
 msgid "New counts every subscription that day, confirmed or not. The confirmation rate is the share of people asked to confirm who did."
 msgstr "يحتسب الجديد كل اشتراك في ذلك اليوم، مؤكدًا أو لا. معدل التأكيد هو حصة من طُلب منهم التأكيد ففعلوا."
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/DesignPicker.tsx
 msgid "New design"
 msgstr "تصميم جديد"
@@ -9536,6 +9548,7 @@ msgstr "فتح جهة الاتصال"
 msgid "Open the conversation"
 msgstr "فتح المحادثة"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Open the design"
 msgstr "فتح التصميم"
@@ -11718,6 +11731,10 @@ msgstr "البحث في المحادثات"
 msgid "Search conversations for “{search}”"
 msgstr "البحث في المحادثات عن «{search}»"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Search designs"
+msgstr "البحث في التصاميم"
+
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "Search emoji"
 msgstr "البحث عن رمز تعبيري"
@@ -12309,6 +12326,10 @@ msgstr "الاختصار"
 #: src/features/status/MonitorsPage.tsx
 msgid "Show"
 msgstr "إظهار"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Show archived designs"
+msgstr "إظهار التصاميم المؤرشفة"
 
 #: src/features/conversation/messages/EmailBody.tsx
 msgid "Show as sent"

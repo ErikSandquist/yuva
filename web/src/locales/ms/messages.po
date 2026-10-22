@@ -2689,7 +2689,6 @@ msgstr "Penghantaran siaran"
 #: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/Overview.tsx
 #: src/features/settings/webhooks/events.tsx
@@ -3059,6 +3058,7 @@ msgstr "Menyemak apa yang ada pada pelayan"
 msgid "Checking…"
 msgstr "Menyemak…"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/status/ResponseChart.tsx
 msgid "Checks"
 msgstr "Semakan"
@@ -4258,7 +4258,7 @@ msgid "Design"
 msgstr "Reka bentuk"
 
 #: src/app/Sidebar.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/components/common/ShortcutSheet.tsx
 msgid "Designs"
 msgstr "Reka bentuk"
 
@@ -5582,6 +5582,10 @@ msgstr "Corong"
 #: src/features/migrations/parts.tsx
 msgid "Further copies of the same message"
 msgstr "Salinan lanjut mesej yang sama"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Gallery"
+msgstr "Galeri"
 
 #: src/app/Sidebar.tsx
 #: src/features/migrations/MigrationsPage.tsx
@@ -6991,7 +6995,6 @@ msgstr "Menyenaraikan tiket…"
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/ListsHome.tsx
 #: src/features/settings/webhooks/events.tsx
@@ -7678,6 +7681,10 @@ msgid "Move through the broadcasts"
 msgstr "Bergerak antara siaran"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the designs"
+msgstr "Bergerak antara reka bentuk"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the entries"
 msgstr "Bergerak antara entri"
 
@@ -7750,6 +7757,10 @@ msgstr "Memindahkan idea ke Dirancang, Sedang dijalankan atau Dikeluarkan meneta
 #: src/features/migrations/SwitchStep.tsx
 msgid "MX change"
 msgstr "Perubahan MX"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "My designs"
+msgstr "Reka bentuk saya"
 
 #: src/features/account/AccountPage.tsx
 msgid "My discussions"
@@ -7957,6 +7968,7 @@ msgstr "Perbualan baharu muncul di bahagian atas senarai perbualan anda."
 msgid "New counts every subscription that day, confirmed or not. The confirmation rate is the share of people asked to confirm who did."
 msgstr "Baharu mengira setiap langganan pada hari itu, disahkan atau tidak. Kadar pengesahan ialah bahagian orang yang diminta mengesahkan yang berbuat demikian."
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/DesignPicker.tsx
 msgid "New design"
 msgstr "Reka bentuk baharu"
@@ -9536,6 +9548,7 @@ msgstr "Buka kenalan"
 msgid "Open the conversation"
 msgstr "Buka perbualan"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Open the design"
 msgstr "Buka reka bentuk"
@@ -11718,6 +11731,10 @@ msgstr "Cari perbualan"
 msgid "Search conversations for “{search}”"
 msgstr "Cari perbualan untuk “{search}”"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Search designs"
+msgstr "Cari reka bentuk"
+
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "Search emoji"
 msgstr "Cari emoji"
@@ -12309,6 +12326,10 @@ msgstr "Pintasan"
 #: src/features/status/MonitorsPage.tsx
 msgid "Show"
 msgstr "Tunjuk"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Show archived designs"
+msgstr "Tunjuk reka bentuk diarkibkan"
 
 #: src/features/conversation/messages/EmailBody.tsx
 msgid "Show as sent"

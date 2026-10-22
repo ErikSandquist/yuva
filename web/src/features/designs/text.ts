@@ -33,6 +33,19 @@ export function useBlockNames(): Record<BlockType, string> {
   }
 }
 
+export function useCategory() {
+  const { t } = useLingui()
+  const names: Record<string, string> = {
+    newsletter: t`Newsletter`,
+    product: t`Product`,
+    announcement: t`Announcement`,
+    onboarding: t`Onboarding`,
+    event: t`Event`,
+    digest: t`Digest`,
+  }
+  return (c: string) => names[c] ?? c
+}
+
 export function useBlockHints(): Record<BlockType, string> {
   const { t } = useLingui()
   return {

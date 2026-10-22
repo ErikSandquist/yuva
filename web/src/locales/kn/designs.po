@@ -31,7 +31,6 @@ msgstr "ಸ್ಪಷ್ಟ ಶೀರ್ಷಿಕೆ"
 msgid "A design can hold at most 200 blocks."
 msgstr "ಒಂದು ವಿನ್ಯಾಸ ಗರಿಷ್ಠ 200 ಬ್ಲಾಕ್‌ಗಳನ್ನು ಹೊಂದಬಹುದು."
 
-#: src/features/designs/DesignsList.tsx
 #: src/features/designs/GalleryPage.tsx
 msgid "A design is the look of a mail: start from a template, then use it for your broadcasts."
 msgstr "ವಿನ್ಯಾಸ ಎಂದರೆ ಮೇಲ್‌ನ ನೋಟ: ಟೆಂಪ್ಲೇಟ್‌ನಿಂದ ಆರಂಭಿಸಿ, ನಂತರ ನಿಮ್ಮ ಬ್ರಾಡ್‌ಕಾಸ್ಟ್‌ಗಳಿಗೆ ಬಳಸಿ."
@@ -96,6 +95,10 @@ msgstr "ವಿಳಾಸ"
 msgid "Alignment"
 msgstr "ಜೋಡಣೆ"
 
+#: src/features/designs/GalleryPage.tsx
+msgid "All"
+msgstr "ಎಲ್ಲಾ"
+
 #: src/features/designs/designer/Inspector.tsx
 msgid "Also shown when a mail app blocks images."
 msgstr "ಮೇಲ್ ಆ್ಯಪ್ ಚಿತ್ರಗಳನ್ನು ತಡೆದಾಗಲೂ ತೋರಿಸಲಾಗುತ್ತದೆ."
@@ -108,7 +111,7 @@ msgstr "ಅಪ್‌ಲೋಡ್ ಮಾಡಿದ ಚಿತ್ರ, ಬೇಕಾ�
 msgid "Animated GIFs can be at most 1,200 pixels wide."
 msgstr "ಅನಿಮೇಟೆಡ್ GIF ಗಳು ಗರಿಷ್ಠ 1,200 ಪಿಕ್ಸೆಲ್ ಅಗಲ ಇರಬಹುದು."
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/text.ts
 msgid "Announcement"
 msgstr "ಪ್ರಕಟಣೆ"
 
@@ -173,7 +176,7 @@ msgstr "ಬ್ರ್ಯಾಂಡ್"
 msgid "Browse the gallery"
 msgstr "ಗ್ಯಾಲರಿ ನೋಡಿ"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Build it yourself from blocks"
 msgstr "ಬ್ಲಾಕ್‌ಗಳಿಂದ ನೀವೇ ನಿರ್ಮಿಸಿ"
 
@@ -200,7 +203,7 @@ msgid "Buttons"
 msgstr "ಬಟನ್‌ಗಳು"
 
 #: src/features/designs/designer/ImageLibrary.tsx
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Cancel"
 msgstr "ರದ್ದುಗೊಳಿಸಿ"
 
@@ -211,6 +214,10 @@ msgstr "ಮಧ್ಯ"
 #: src/features/designs/designer/DesignerPage.tsx
 msgid "Changed elsewhere"
 msgstr "ಬೇರೆಡೆ ಬದಲಾಗಿದೆ"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Check"
+msgstr "ಪರಿಶೀಲಿಸಿ"
 
 #: src/features/designs/designer/DesignerPage.tsx
 msgid "Checks"
@@ -225,6 +232,7 @@ msgstr "ಚಿತ್ರ ಆರಿಸಿ"
 msgid "Clear formatting"
 msgstr "ಫಾರ್ಮ್ಯಾಟಿಂಗ್ ತೆರವುಗೊಳಿಸಿ"
 
+#: src/features/designs/designer/DesignerPage.tsx
 #: src/features/designs/designer/ImageLibrary.tsx
 msgid "Close"
 msgstr "ಮುಚ್ಚಿ"
@@ -272,7 +280,7 @@ msgstr "ಪ್ರತಿ ಮಾಡಲಾಗಿದೆ"
 msgid "Corner radius"
 msgstr "ಮೂಲೆ ತ್ರಿಜ್ಯ"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Create and edit"
 msgstr "ರಚಿಸಿ ಮತ್ತು ಸಂಪಾದಿಸಿ"
 
@@ -303,7 +311,6 @@ msgstr "ಡೀಫಾಲ್ಟ್ ಅಂತರ"
 
 #: src/features/designs/designer/Canvas.tsx
 #: src/features/designs/designer/ImageLibrary.tsx
-#: src/features/designs/designer/Inspector.tsx
 msgid "Delete"
 msgstr "ಅಳಿಸಿ"
 
@@ -314,6 +321,10 @@ msgstr "{name} ಅಳಿಸಿ"
 #: src/features/designs/designer/ImageLibrary.tsx
 msgid "Delete anyway"
 msgstr "ಹೇಗಿದ್ದರೂ ಅಳಿಸಿ"
+
+#: src/features/designs/designer/Inspector.tsx
+msgid "Delete block"
+msgstr "ಬ್ಲಾಕ್ ಅಳಿಸಿ"
 
 #: src/features/designs/designer/ImageLibrary.tsx
 msgid "Delete this image?"
@@ -344,6 +355,10 @@ msgstr "ವಿನ್ಯಾಸ ಆರ್ಕೈವ್ ಮಾಡಲಾಗಿದೆ"
 msgid "Design name"
 msgstr "ವಿನ್ಯಾಸದ ಹೆಸರು"
 
+#: src/features/designs/GalleryPage.tsx
+msgid "Design restored"
+msgstr "ವಿನ್ಯಾಸ ಮರುಸ್ಥಾಪಿಸಲಾಗಿದೆ"
+
 #: src/features/designs/designer/DesignerPage.tsx
 msgid "Design settings"
 msgstr "ವಿನ್ಯಾಸ ಸೆಟ್ಟಿಂಗ್‌ಗಳು"
@@ -361,7 +376,7 @@ msgstr "ವಿನ್ಯಾಸಗಳು"
 msgid "Desktop"
 msgstr "ಡೆಸ್ಕ್‌ಟಾಪ್"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/text.ts
 msgid "Digest"
 msgstr "ಡೈಜೆಸ್ಟ್"
 
@@ -412,7 +427,6 @@ msgstr "ನಕಲು ಮಾಡಿ"
 msgid "E-mail address"
 msgstr "ಇಮೇಲ್ ವಿಳಾಸ"
 
-#: src/features/designs/DesignsList.tsx
 #: src/features/designs/GalleryPage.tsx
 msgid "E-mail designs"
 msgstr "ಇಮೇಲ್ ವಿನ್ಯಾಸಗಳು"
@@ -433,7 +447,7 @@ msgstr "ಸಂಪಾದಿಸಿ"
 msgid "Empty"
 msgstr "ಖಾಲಿ"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Empty page"
 msgstr "ಖಾಲಿ ಪುಟ"
 
@@ -449,7 +463,7 @@ msgstr "ಕೊನೆ"
 msgid "English"
 msgstr "ಇಂಗ್ಲಿಷ್"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/text.ts
 msgid "Event"
 msgstr "ಈವೆಂಟ್"
 
@@ -460,6 +474,10 @@ msgstr "ಎಲ್ಲೆಡೆ"
 #: src/features/designs/text.ts
 msgid "First name"
 msgstr "ಮೊದಲ ಹೆಸರು"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Fix"
+msgstr "ಸರಿಪಡಿಸಿ"
 
 #: src/features/designs/designer/ThemePanel.tsx
 msgid "Fonts already on people’s devices; mails load no web fonts."
@@ -484,6 +502,7 @@ msgid "Full width"
 msgstr "ಪೂರ್ಣ ಅಗಲ"
 
 #: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Gallery"
 msgstr "ಗ್ಯಾಲರಿ"
 
@@ -567,7 +586,7 @@ msgid "Images can be at most 10 MB."
 msgstr "ಚಿತ್ರಗಳು ಗರಿಷ್ಠ 10 MB ಇರಬಹುದು."
 
 #: src/features/designs/designer/ThemePanel.tsx
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Inbox"
 msgstr "ಇನ್‌ಬಾಕ್ಸ್"
 
@@ -584,8 +603,8 @@ msgid "It adds nothing to the message, so screen readers skip it."
 msgstr "ಇದು ಸಂದೇಶಕ್ಕೆ ಏನನ್ನೂ ಸೇರಿಸುವುದಿಲ್ಲ, ಹಾಗಾಗಿ ಸ್ಕ್ರೀನ್ ರೀಡರ್‌ಗಳು ಅದನ್ನು ಬಿಡುತ್ತವೆ."
 
 #: src/features/designs/designer/DesignerPage.tsx
-msgid "It leaves the list of designs. Its versions are kept, and saving it again brings it back."
-msgstr "ಇದು ವಿನ್ಯಾಸಗಳ ಪಟ್ಟಿಯಿಂದ ಹೊರಹೋಗುತ್ತದೆ. ಅದರ ಆವೃತ್ತಿಗಳನ್ನು ಇಡಲಾಗುತ್ತದೆ, ಮತ್ತು ಮತ್ತೆ ಉಳಿಸಿದರೆ ಅದನ್ನು ಮರಳಿ ತರುತ್ತದೆ."
+msgid "It leaves the list of designs. Its versions are kept. Drafts that use it still send, and you can restore it from the archive."
+msgstr "ಇದು ವಿನ್ಯಾಸಗಳ ಪಟ್ಟಿಯಿಂದ ಹೊರಹೋಗುತ್ತದೆ. ಇದರ ಆವೃತ್ತಿಗಳು ಉಳಿಯುತ್ತವೆ. ಇದನ್ನು ಬಳಸುವ ಕರಡುಗಳು ಇನ್ನೂ ಕಳುಹಿಸಲ್ಪಡುತ್ತವೆ, ಮತ್ತು ಆರ್ಕೈವ್‌ನಿಂದ ಇದನ್ನು ಮರುಸ್ಥಾಪಿಸಬಹುದು."
 
 #: src/features/designs/designer/ConflictDialog.tsx
 msgid "It was saved {when} in another tab or by someone else, after you started editing. Your changes are kept on this device until you choose."
@@ -599,7 +618,7 @@ msgstr "ಇಟಾಲಿಕ್"
 msgid "Its address stops working at once."
 msgstr "ಅದರ ವಿಳಾಸ ತಕ್ಷಣ ಕೆಲಸ ಮಾಡುವುದನ್ನು ನಿಲ್ಲಿಸುತ್ತದೆ."
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Its images are copied into your workspace’s images. You can change everything after."
 msgstr "ಅದರ ಚಿತ್ರಗಳನ್ನು ನಿಮ್ಮ ವರ್ಕ್‌ಸ್ಪೇಸ್‌ನ ಚಿತ್ರಗಳಿಗೆ ನಕಲಿಸಲಾಗುತ್ತದೆ. ನಂತರ ಎಲ್ಲವನ್ನೂ ಬದಲಾಯಿಸಬಹುದು."
 
@@ -618,6 +637,10 @@ msgstr "ಸಂಘರ್ಷದಿಂದ ಉಳಿಸಲಾಗಿದೆ"
 #: src/features/designs/designer/DesignerPage.tsx
 msgid "Keyboard shortcuts"
 msgstr "ಕೀಬೋರ್ಡ್ ಶಾರ್ಟ್‌ಕಟ್‌ಗಳು"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Kind"
+msgstr "ಪ್ರಕಾರ"
 
 #: src/features/designs/designer/Inspector.tsx
 msgid "Large"
@@ -684,7 +707,6 @@ msgid "List name"
 msgstr "ಪಟ್ಟಿ ಹೆಸರು"
 
 #: src/features/designs/designer/ImageLibrary.tsx
-#: src/features/designs/DesignsList.tsx
 #: src/features/designs/GalleryPage.tsx
 msgid "Load more"
 msgstr "ಇನ್ನಷ್ಟು ಲೋಡ್ ಮಾಡಿ"
@@ -747,7 +769,7 @@ msgstr "ಕೆಳಗೆ ಸರಿಸಿ"
 msgid "Move up"
 msgstr "ಮೇಲೆ ಸರಿಸಿ"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Name"
 msgstr "ಹೆಸರು"
 
@@ -756,27 +778,19 @@ msgid "Network"
 msgstr "ನೆಟ್‌ವರ್ಕ್"
 
 #: src/features/designs/GalleryPage.tsx
-msgid "New blank design"
-msgstr "ಹೊಸ ಖಾಲಿ ವಿನ್ಯಾಸ"
-
-#: src/features/designs/DesignsList.tsx
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "New design"
 msgstr "ಹೊಸ ವಿನ್ಯಾಸ"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/text.ts
 msgid "Newsletter"
 msgstr "ನ್ಯೂಸ್‌ಲೆಟರ್"
 
-#: src/features/designs/DesignsList.tsx
-msgid "No archived designs"
-msgstr "ಆರ್ಕೈವ್ ಮಾಡಿದ ವಿನ್ಯಾಸಗಳಿಲ್ಲ"
-
-#: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
 msgid "No designs match."
 msgstr "ಯಾವ ವಿನ್ಯಾಸವೂ ಹೊಂದುವುದಿಲ್ಲ."
 
-#: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
 msgid "No designs yet"
 msgstr "ಇನ್ನೂ ವಿನ್ಯಾಸಗಳಿಲ್ಲ"
 
@@ -787,6 +801,10 @@ msgstr "ಇನ್ನೂ ಚಿತ್ರಗಳಿಲ್ಲ. ಮೊದಲನೆಯ
 #: src/features/designs/designer/DesignerPage.tsx
 msgid "No problems found."
 msgstr "ಸಮಸ್ಯೆಗಳು ಕಂಡುಬಂದಿಲ್ಲ."
+
+#: src/features/designs/GalleryPage.tsx
+msgid "No templates of this kind"
+msgstr "ಈ ರೀತಿಯ ಟೆಂಪ್ಲೇಟ್‌ಗಳಿಲ್ಲ"
 
 #: src/features/designs/designer/Versions.tsx
 msgid "No versions yet. One is kept after ten minutes of editing."
@@ -816,7 +834,7 @@ msgstr "ಆಫ್‌ಲೈನ್, ಈ ಸಾಧನದಲ್ಲಿ ಇರಿಸ�
 msgid "Offline. Your changes are kept on this device and saved when you are back."
 msgstr "ಆಫ್‌ಲೈನ್. ನಿಮ್ಮ ಬದಲಾವಣೆಗಳನ್ನು ಈ ಸಾಧನದಲ್ಲಿ ಇಡಲಾಗುತ್ತದೆ ಮತ್ತು ನೀವು ಮರಳಿದಾಗ ಉಳಿಸಲಾಗುತ್ತದೆ."
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/text.ts
 msgid "Onboarding"
 msgstr "ಆನ್‌ಬೋರ್ಡಿಂಗ್"
 
@@ -824,10 +842,13 @@ msgstr "ಆನ್‌ಬೋರ್ಡಿಂಗ್"
 msgid "One under the other on narrow screens."
 msgstr "ಕಿರಿದಾದ ಪರದೆಗಳಲ್ಲಿ ಒಂದರ ಕೆಳಗೆ ಇನ್ನೊಂದು."
 
-#: src/features/designs/DesignsList.tsx
 #: src/features/designs/GalleryPage.tsx
 msgid "Owners and admins make e-mail designs and send broadcasts."
 msgstr "ಮಾಲೀಕರು ಮತ್ತು ನಿರ್ವಾಹಕರು ಇಮೇಲ್ ವಿನ್ಯಾಸಗಳನ್ನು ಮಾಡುತ್ತಾರೆ ಮತ್ತು ಬ್ರಾಡ್‌ಕಾಸ್ಟ್‌ಗಳನ್ನು ಕಳುಹಿಸುತ್ತಾರೆ."
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Owners and admins make e-mail designs and send broadcasts. Archiving keeps the versions."
+msgstr "ಮಾಲೀಕರು ಮತ್ತು ನಿರ್ವಾಹಕರು ಇಮೇಲ್ ವಿನ್ಯಾಸಗಳನ್ನು ಮಾಡುತ್ತಾರೆ ಮತ್ತು ಬ್ರಾಡ್‌ಕಾಸ್ಟ್‌ಗಳನ್ನು ಕಳುಹಿಸುತ್ತಾರೆ. ಆರ್ಕೈವ್ ಮಾಡಿದರೆ ಆವೃತ್ತಿಗಳು ಉಳಿಯುತ್ತವೆ."
 
 #: src/features/designs/designer/ThemePanel.tsx
 msgid "Page background"
@@ -865,6 +886,7 @@ msgstr "10 MB ವರೆಗಿನ PNG, JPEG, GIF ಅಥವಾ WebP. ಅಪ್‌�
 msgid "Preferences link"
 msgstr "ಆದ್ಯತೆಗಳ ಲಿಂಕ್"
 
+#: src/features/designs/designer/DesignerPage.tsx
 #: src/features/designs/designer/Preview.tsx
 #: src/features/designs/designer/Versions.tsx
 msgid "Preview"
@@ -875,14 +897,19 @@ msgid "Preview of {name}"
 msgstr "{name} ಮುನ್ನೋಟ"
 
 #: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Preview of {title}"
 msgstr "{title} ನ ಪೂರ್ವವೀಕ್ಷಣೆ"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Preview size"
+msgstr "ಪೂರ್ವವೀಕ್ಷಣೆಯ ಗಾತ್ರ"
 
 #: src/features/designs/designer/ThemePanel.tsx
 msgid "Preview text"
 msgstr "ಪೂರ್ವವೀಕ್ಷಣೆ ಪಠ್ಯ"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/text.ts
 msgid "Product"
 msgstr "ಉತ್ಪನ್ನ"
 
@@ -916,6 +943,7 @@ msgid "Replace"
 msgstr "ಬದಲಾಯಿಸಿ"
 
 #: src/features/designs/designer/Versions.tsx
+#: src/features/designs/GalleryPage.tsx
 msgid "Restore"
 msgstr "ಮರುಸ್ಥಾಪಿಸಿ"
 
@@ -979,7 +1007,7 @@ msgstr "ಉಳಿಸಲಾಗುತ್ತಿದೆ…"
 msgid "Scheduled to send"
 msgstr "ಕಳುಹಿಸಲು ಶೆಡ್ಯೂಲ್ ಮಾಡಲಾಗಿದೆ"
 
-#: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
 msgid "Search designs"
 msgstr "ವಿನ್ಯಾಸಗಳನ್ನು ಹುಡುಕಿ"
 
@@ -991,6 +1019,10 @@ msgstr "ದ್ವಿತೀಯ ಪಠ್ಯ"
 #: src/features/designs/text.ts
 msgid "Section"
 msgstr "ವಿಭಾಗ"
+
+#: src/features/designs/designer/DesignerPage.tsx
+msgid "Select a block to change it. Design settings apply to the whole mail."
+msgstr "ಬದಲಾಯಿಸಲು ಬ್ಲಾಕ್ ಆರಿಸಿ. ವಿನ್ಯಾಸ ಸೆಟ್ಟಿಂಗ್‌ಗಳು ಇಡೀ ಮೇಲ್‌ಗೆ ಅನ್ವಯಿಸುತ್ತವೆ."
 
 #: src/features/designs/designer/ThemePanel.tsx
 msgid "Select a block to change it. These settings apply to the whole mail."
@@ -1012,7 +1044,7 @@ msgstr "ಆಕಾರ"
 msgid "Show"
 msgstr "ತೋರಿಸಿ"
 
-#: src/features/designs/DesignsList.tsx
+#: src/features/designs/GalleryPage.tsx
 msgid "Show archived designs"
 msgstr "ಆರ್ಕೈವ್ ಮಾಡಿದ ವಿನ್ಯಾಸಗಳನ್ನು ತೋರಿಸಿ"
 
@@ -1083,7 +1115,7 @@ msgstr "ಫೋನ್‌ಗಳಲ್ಲಿ ಜೋಡಿಸಿ"
 msgid "Start"
 msgstr "ಆರಂಭಿಸಿ"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Start from an empty mail with simple colours."
 msgstr "ಸರಳ ಬಣ್ಣಗಳಿರುವ ಖಾಲಿ ಮೇಲ್‌ನಿಂದ ಆರಂಭಿಸಿ."
 
@@ -1102,6 +1134,10 @@ msgstr "ಮೊದಲು ಅದನ್ನು ಈ ವಿನ್ಯಾಸಗಳಿಂ
 #: src/features/designs/GalleryPage.tsx
 msgid "Template language"
 msgstr "ಟೆಂಪ್ಲೇಟ್ ಭಾಷೆ"
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Templates are copied into your workspace, images included. You can change everything after."
+msgstr "ಟೆಂಪ್ಲೇಟ್‌ಗಳು ಚಿತ್ರಗಳ ಸಮೇತ ನಿಮ್ಮ ವರ್ಕ್‌ಸ್ಪೇಸ್‌ಗೆ ನಕಲಾಗುತ್ತವೆ. ನಂತರ ಎಲ್ಲವನ್ನೂ ಬದಲಾಯಿಸಬಹುದು."
 
 #: src/features/designs/designer/Canvas.tsx
 #: src/features/designs/designer/Inspector.tsx
@@ -1123,6 +1159,7 @@ msgid "Text formatting"
 msgstr "ಪಠ್ಯ ಫಾರ್ಮ್ಯಾಟಿಂಗ್"
 
 #: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Text in English"
 msgstr "ಇಂಗ್ಲಿಷ್‌ನಲ್ಲಿ ಪಠ್ಯ"
 
@@ -1138,7 +1175,7 @@ msgstr "ಕಾಲಮ್ ಅಗಲಗಳು ಕೂಡಿ 100 ಆಗಬೇಕು."
 msgid "The inbox has no legal name or postal address for the footer. Add them in the inbox settings before sending."
 msgstr "ಅಡಿಟಿಪ್ಪಣಿಗೆ ಇನ್‌ಬಾಕ್ಸ್‌ಗೆ ಕಾನೂನುಬದ್ಧ ಹೆಸರು ಅಥವಾ ಅಂಚೆ ವಿಳಾಸವಿಲ್ಲ. ಕಳುಹಿಸುವ ಮೊದಲು ಇನ್‌ಬಾಕ್ಸ್ ಸೆಟ್ಟಿಂಗ್‌ಗಳಲ್ಲಿ ಸೇರಿಸಿ."
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "The inbox’s sender details fill the footer every mail gets."
 msgstr "ಇನ್‌ಬಾಕ್ಸ್‌ನ ಕಳುಹಿಸುವವರ ವಿವರಗಳು ಪ್ರತಿ ಮೇಲ್‌ಗೂ ಸಿಗುವ ಅಡಿಟಿಪ್ಪಣಿಯನ್ನು ತುಂಬುತ್ತವೆ."
 
@@ -1239,6 +1276,14 @@ msgstr "ಮೂರು"
 msgid "Top"
 msgstr "ಅಗ್ರ"
 
+#: src/features/designs/GalleryPage.tsx
+msgid "Try another kind."
+msgstr "ಬೇರೆ ರೀತಿಯನ್ನು ಪ್ರಯತ್ನಿಸಿ."
+
+#: src/features/designs/GalleryPage.tsx
+msgid "Try another word, or show archived designs."
+msgstr "ಬೇರೆ ಪದವನ್ನು ಪ್ರಯತ್ನಿಸಿ, ಅಥವಾ ಆರ್ಕೈವ್ ಮಾಡಿದ ವಿನ್ಯಾಸಗಳನ್ನು ತೋರಿಸಿ."
+
 #: src/features/designs/text.ts
 msgid "Turkish"
 msgstr "ಟರ್ಕಿಶ್"
@@ -1271,7 +1316,7 @@ msgstr "ರದ್ದುಮಾಡಿ"
 msgid "Unsubscribe link"
 msgstr "ಚಂದಾದಾರಿಕೆ ರದ್ದತಿ ಲಿಂಕ್"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Untitled design"
 msgstr "ಹೆಸರಿಲ್ಲದ ವಿನ್ಯಾಸ"
 
@@ -1287,7 +1332,7 @@ msgstr "ಚಿತ್ರಗಳನ್ನು ಅಪ್‌ಲೋಡ್ ಮಾಡಿ,
 msgid "Uploading…"
 msgstr "ಅಪ್‌ಲೋಡ್ ಮಾಡಲಾಗುತ್ತಿದೆ…"
 
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Use “{title}”"
 msgstr "“{title}” ಬಳಸಿ"
 
@@ -1317,7 +1362,7 @@ msgid "When it is empty, write"
 msgstr "ಖಾಲಿ ಇದ್ದಾಗ, ಬರೆಯಿರಿ"
 
 #: src/features/designs/designer/ThemePanel.tsx
-#: src/features/designs/GalleryPage.tsx
+#: src/features/designs/NewDesignDialog.tsx
 msgid "Whole workspace"
 msgstr "ಇಡೀ ವರ್ಕ್‌ಸ್ಪೇಸ್"
 

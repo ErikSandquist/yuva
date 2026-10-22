@@ -2689,7 +2689,6 @@ msgstr "一斉配信の送信"
 #: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/Overview.tsx
 #: src/features/settings/webhooks/events.tsx
@@ -3059,6 +3058,7 @@ msgstr "サーバー上のデータを確認しています"
 msgid "Checking…"
 msgstr "確認中…"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/status/ResponseChart.tsx
 msgid "Checks"
 msgstr "チェック"
@@ -4258,7 +4258,7 @@ msgid "Design"
 msgstr "デザイン"
 
 #: src/app/Sidebar.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/components/common/ShortcutSheet.tsx
 msgid "Designs"
 msgstr "デザイン"
 
@@ -5582,6 +5582,10 @@ msgstr "ファネル"
 #: src/features/migrations/parts.tsx
 msgid "Further copies of the same message"
 msgstr "同じメッセージの追加コピー"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Gallery"
+msgstr "ギャラリー"
 
 #: src/app/Sidebar.tsx
 #: src/features/migrations/MigrationsPage.tsx
@@ -6991,7 +6995,6 @@ msgstr "チケットを一覧取得中…"
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/ListsHome.tsx
 #: src/features/settings/webhooks/events.tsx
@@ -7678,6 +7681,10 @@ msgid "Move through the broadcasts"
 msgstr "一斉配信を移動"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the designs"
+msgstr "デザインを移動"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the entries"
 msgstr "エントリを移動"
 
@@ -7750,6 +7757,10 @@ msgstr "アイデアを「計画中」「進行中」「リリース済み」に
 #: src/features/migrations/SwitchStep.tsx
 msgid "MX change"
 msgstr "MX の変更"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "My designs"
+msgstr "自分のデザイン"
 
 #: src/features/account/AccountPage.tsx
 msgid "My discussions"
@@ -7957,6 +7968,7 @@ msgstr "新しい会話は、会話リストの先頭に表示されます。"
 msgid "New counts every subscription that day, confirmed or not. The confirmation rate is the share of people asked to confirm who did."
 msgstr "「新規」は、その日の確認済みかどうかにかかわらずすべての登録を数えます。確認率は、確認を求めた人のうち確認した人の割合です。"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/DesignPicker.tsx
 msgid "New design"
 msgstr "新しいデザイン"
@@ -9536,6 +9548,7 @@ msgstr "連絡先を開く"
 msgid "Open the conversation"
 msgstr "会話を開く"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Open the design"
 msgstr "デザインを開く"
@@ -11718,6 +11731,10 @@ msgstr "会話を検索"
 msgid "Search conversations for “{search}”"
 msgstr "「{search}」で会話を検索"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Search designs"
+msgstr "デザインを検索"
+
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "Search emoji"
 msgstr "絵文字を検索"
@@ -12309,6 +12326,10 @@ msgstr "ショートカット"
 #: src/features/status/MonitorsPage.tsx
 msgid "Show"
 msgstr "表示"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Show archived designs"
+msgstr "アーカイブ済みのデザインを表示"
 
 #: src/features/conversation/messages/EmailBody.tsx
 msgid "Show as sent"

@@ -2689,7 +2689,6 @@ msgstr "బ్రాడ్‌కాస్ట్ పంపడం"
 #: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/Overview.tsx
 #: src/features/settings/webhooks/events.tsx
@@ -3059,6 +3058,7 @@ msgstr "సర్వర్‌లో ఉన్నవాటిని తనిఖ�
 msgid "Checking…"
 msgstr "తనిఖీ చేస్తోంది…"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/status/ResponseChart.tsx
 msgid "Checks"
 msgstr "తనిఖీలు"
@@ -4258,7 +4258,7 @@ msgid "Design"
 msgstr "డిజైన్"
 
 #: src/app/Sidebar.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/components/common/ShortcutSheet.tsx
 msgid "Designs"
 msgstr "డిజైన్‌లు"
 
@@ -5582,6 +5582,10 @@ msgstr "ఫన్నెల్‌లు"
 #: src/features/migrations/parts.tsx
 msgid "Further copies of the same message"
 msgstr "అదే సందేశం యొక్క మరిన్ని కాపీలు"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Gallery"
+msgstr "గ్యాలరీ"
 
 #: src/app/Sidebar.tsx
 #: src/features/migrations/MigrationsPage.tsx
@@ -6991,7 +6995,6 @@ msgstr "టిక్కెట్‌లను జాబితా చేస్త�
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/ListsHome.tsx
 #: src/features/settings/webhooks/events.tsx
@@ -7678,6 +7681,10 @@ msgid "Move through the broadcasts"
 msgstr "బ్రాడ్‌కాస్ట్‌ల మధ్య కదలండి"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the designs"
+msgstr "డిజైన్‌ల మధ్య కదలండి"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the entries"
 msgstr "ఎంట్రీల మధ్య ముందుకు వెనక్కు వెళ్లండి"
 
@@ -7750,6 +7757,10 @@ msgstr "ఆలోచనను ప్రణాళికలో, జరుగుత
 #: src/features/migrations/SwitchStep.tsx
 msgid "MX change"
 msgstr "MX మార్పు"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "My designs"
+msgstr "నా డిజైన్‌లు"
 
 #: src/features/account/AccountPage.tsx
 msgid "My discussions"
@@ -7957,6 +7968,7 @@ msgstr "కొత్త సంభాషణలు మీ సంభాషణ ల�
 msgid "New counts every subscription that day, confirmed or not. The confirmation rate is the share of people asked to confirm who did."
 msgstr "కొత్తవి ఆ రోజు ప్రతి సబ్‌స్క్రిప్షన్‌ను లెక్కిస్తాయి, నిర్ధారించినా లేకపోయినా. నిర్ధారణ రేటు అంటే నిర్ధారించమని అడిగిన వారిలో నిర్ధారించిన వారి వాటా."
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/DesignPicker.tsx
 msgid "New design"
 msgstr "కొత్త డిజైన్"
@@ -9536,6 +9548,7 @@ msgstr "కాంటాక్ట్‌ను తెరవండి"
 msgid "Open the conversation"
 msgstr "సంభాషణను తెరవండి"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Open the design"
 msgstr "డిజైన్‌ను తెరవండి"
@@ -11718,6 +11731,10 @@ msgstr "సంభాషణలను శోధించండి"
 msgid "Search conversations for “{search}”"
 msgstr "“{search}” కోసం సంభాషణలను శోధించండి"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Search designs"
+msgstr "డిజైన్‌లను శోధించండి"
+
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "Search emoji"
 msgstr "ఎమోజీని శోధించండి"
@@ -12309,6 +12326,10 @@ msgstr "షార్ట్‌కట్"
 #: src/features/status/MonitorsPage.tsx
 msgid "Show"
 msgstr "చూపండి"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Show archived designs"
+msgstr "ఆర్కైవ్ చేసిన డిజైన్‌లను చూపండి"
 
 #: src/features/conversation/messages/EmailBody.tsx
 msgid "Show as sent"

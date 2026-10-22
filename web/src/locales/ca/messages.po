@@ -2689,7 +2689,6 @@ msgstr "Enviament d'enviaments massius"
 #: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/Overview.tsx
 #: src/features/settings/webhooks/events.tsx
@@ -3059,6 +3058,7 @@ msgstr "Comprovant què hi ha al servidor"
 msgid "Checking…"
 msgstr "Comprovant…"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/status/ResponseChart.tsx
 msgid "Checks"
 msgstr "Comprovacions"
@@ -4258,7 +4258,7 @@ msgid "Design"
 msgstr "Disseny"
 
 #: src/app/Sidebar.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/components/common/ShortcutSheet.tsx
 msgid "Designs"
 msgstr "Dissenys"
 
@@ -5582,6 +5582,10 @@ msgstr "Embuts"
 #: src/features/migrations/parts.tsx
 msgid "Further copies of the same message"
 msgstr "Més còpies del mateix missatge"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Gallery"
+msgstr "Galeria"
 
 #: src/app/Sidebar.tsx
 #: src/features/migrations/MigrationsPage.tsx
@@ -6991,7 +6995,6 @@ msgstr "Enumerant els tiquets…"
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/ListsHome.tsx
 #: src/features/settings/webhooks/events.tsx
@@ -7678,6 +7681,10 @@ msgid "Move through the broadcasts"
 msgstr "Desplaça't pels enviaments massius"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the designs"
+msgstr "Mou-te pels dissenys"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the entries"
 msgstr "Mou-te per les entrades"
 
@@ -7750,6 +7757,10 @@ msgstr "Moure la idea a Planificada, En curs o Llançada aplica aquest estat als
 #: src/features/migrations/SwitchStep.tsx
 msgid "MX change"
 msgstr "Canvi d'MX"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "My designs"
+msgstr "Els meus dissenys"
 
 #: src/features/account/AccountPage.tsx
 msgid "My discussions"
@@ -7957,6 +7968,7 @@ msgstr "Les converses noves apareixen a dalt de la teva llista de converses."
 msgid "New counts every subscription that day, confirmed or not. The confirmation rate is the share of people asked to confirm who did."
 msgstr "Nou compta cada subscripció d'aquell dia, confirmada o no. El percentatge de confirmació és la proporció de persones a les quals es va demanar que confirmessin i ho van fer."
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/DesignPicker.tsx
 msgid "New design"
 msgstr "Disseny nou"
@@ -9536,6 +9548,7 @@ msgstr "Obre el contacte"
 msgid "Open the conversation"
 msgstr "Obre la conversa"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Open the design"
 msgstr "Obre el disseny"
@@ -11718,6 +11731,10 @@ msgstr "Cerca converses"
 msgid "Search conversations for “{search}”"
 msgstr "Cerca converses per «{search}»"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Search designs"
+msgstr "Cerca dissenys"
+
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "Search emoji"
 msgstr "Cerca emojis"
@@ -12309,6 +12326,10 @@ msgstr "Drecera"
 #: src/features/status/MonitorsPage.tsx
 msgid "Show"
 msgstr "Mostra"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Show archived designs"
+msgstr "Mostra els dissenys arxivats"
 
 #: src/features/conversation/messages/EmailBody.tsx
 msgid "Show as sent"

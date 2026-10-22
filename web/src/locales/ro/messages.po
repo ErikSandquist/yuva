@@ -2689,7 +2689,6 @@ msgstr "Trimitere în masă"
 #: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/Overview.tsx
 #: src/features/settings/webhooks/events.tsx
@@ -3059,6 +3058,7 @@ msgstr "Se verifică ce este pe server"
 msgid "Checking…"
 msgstr "Se verifică…"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/status/ResponseChart.tsx
 msgid "Checks"
 msgstr "Verificări"
@@ -4258,7 +4258,7 @@ msgid "Design"
 msgstr "Design"
 
 #: src/app/Sidebar.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/components/common/ShortcutSheet.tsx
 msgid "Designs"
 msgstr "Designuri"
 
@@ -5582,6 +5582,10 @@ msgstr "Pâlnii"
 #: src/features/migrations/parts.tsx
 msgid "Further copies of the same message"
 msgstr "Alte copii ale aceluiași mesaj"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Gallery"
+msgstr "Galerie"
 
 #: src/app/Sidebar.tsx
 #: src/features/migrations/MigrationsPage.tsx
@@ -6991,7 +6995,6 @@ msgstr "Se listează tichetele…"
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/ListsHome.tsx
 #: src/features/settings/webhooks/events.tsx
@@ -7678,6 +7681,10 @@ msgid "Move through the broadcasts"
 msgstr "Navighează prin mesajele în masă"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the designs"
+msgstr "Navighează prin designuri"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the entries"
 msgstr "Parcurge intrările"
 
@@ -7750,6 +7757,10 @@ msgstr "Mutarea ideii în Planificat, În lucru sau Livrat setează asta pentru 
 #: src/features/migrations/SwitchStep.tsx
 msgid "MX change"
 msgstr "Schimbare MX"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "My designs"
+msgstr "Designurile mele"
 
 #: src/features/account/AccountPage.tsx
 msgid "My discussions"
@@ -7957,6 +7968,7 @@ msgstr "Conversațiile noi apar în partea de sus a listei tale de conversații.
 msgid "New counts every subscription that day, confirmed or not. The confirmation rate is the share of people asked to confirm who did."
 msgstr "Noi numără fiecare abonare din acea zi, confirmată sau nu. Rata de confirmare este proporția celor cărora li s-a cerut confirmarea și au confirmat."
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/DesignPicker.tsx
 msgid "New design"
 msgstr "Design nou"
@@ -9536,6 +9548,7 @@ msgstr "Deschide contactul"
 msgid "Open the conversation"
 msgstr "Deschide conversația"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Open the design"
 msgstr "Deschide designul"
@@ -11718,6 +11731,10 @@ msgstr "Caută conversații"
 msgid "Search conversations for “{search}”"
 msgstr "Caută conversații pentru „{search}”"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Search designs"
+msgstr "Caută designuri"
+
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "Search emoji"
 msgstr "Caută emoji"
@@ -12309,6 +12326,10 @@ msgstr "Comandă rapidă"
 #: src/features/status/MonitorsPage.tsx
 msgid "Show"
 msgstr "Arată"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Show archived designs"
+msgstr "Arată designurile arhivate"
 
 #: src/features/conversation/messages/EmailBody.tsx
 msgid "Show as sent"

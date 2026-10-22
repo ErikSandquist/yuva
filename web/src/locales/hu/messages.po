@@ -2689,7 +2689,6 @@ msgstr "Tömeges küldés"
 #: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/Overview.tsx
 #: src/features/settings/webhooks/events.tsx
@@ -3059,6 +3058,7 @@ msgstr "Annak ellenőrzése, mi van a szerveren"
 msgid "Checking…"
 msgstr "Ellenőrzés…"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/status/ResponseChart.tsx
 msgid "Checks"
 msgstr "Ellenőrzések"
@@ -4258,7 +4258,7 @@ msgid "Design"
 msgstr "Dizájn"
 
 #: src/app/Sidebar.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/components/common/ShortcutSheet.tsx
 msgid "Designs"
 msgstr "Dizájnok"
 
@@ -5582,6 +5582,10 @@ msgstr "Tölcsérek"
 #: src/features/migrations/parts.tsx
 msgid "Further copies of the same message"
 msgstr "Ugyanazon üzenet további másolatai"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Gallery"
+msgstr "Galéria"
 
 #: src/app/Sidebar.tsx
 #: src/features/migrations/MigrationsPage.tsx
@@ -6991,7 +6995,6 @@ msgstr "Jegyek listázása…"
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/ListsHome.tsx
 #: src/features/settings/webhooks/events.tsx
@@ -7678,6 +7681,10 @@ msgid "Move through the broadcasts"
 msgstr "Mozgás a tömeges levelek között"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the designs"
+msgstr "Lépkedés a dizájnok között"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the entries"
 msgstr "Lépkedés a bejegyzések között"
 
@@ -7750,6 +7757,10 @@ msgstr "Ha az ötletet Tervezett, Folyamatban vagy Kiadva állapotba tolod, a m�
 #: src/features/migrations/SwitchStep.tsx
 msgid "MX change"
 msgstr "MX-módosítás"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "My designs"
+msgstr "Saját dizájnok"
 
 #: src/features/account/AccountPage.tsx
 msgid "My discussions"
@@ -7957,6 +7968,7 @@ msgstr "Az új beszélgetések a beszélgetéslistád tetején jelennek meg."
 msgid "New counts every subscription that day, confirmed or not. The confirmation rate is the share of people asked to confirm who did."
 msgstr "Az Új minden aznapi feliratkozást számol, megerősítettet vagy nem. A megerősítési arány a megerősítésre kért személyek közül a megerősítők hányada."
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/DesignPicker.tsx
 msgid "New design"
 msgstr "Új dizájn"
@@ -9536,6 +9548,7 @@ msgstr "Kontakt megnyitása"
 msgid "Open the conversation"
 msgstr "Beszélgetés megnyitása"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Open the design"
 msgstr "Dizájn megnyitása"
@@ -11718,6 +11731,10 @@ msgstr "Beszélgetések keresése"
 msgid "Search conversations for “{search}”"
 msgstr "Beszélgetések keresése erre: „{search}”"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Search designs"
+msgstr "Dizájnok keresése"
+
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "Search emoji"
 msgstr "Emoji keresése"
@@ -12309,6 +12326,10 @@ msgstr "Gyorsbillentyű"
 #: src/features/status/MonitorsPage.tsx
 msgid "Show"
 msgstr "Megjelenítés"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Show archived designs"
+msgstr "Archivált dizájnok megjelenítése"
 
 #: src/features/conversation/messages/EmailBody.tsx
 msgid "Show as sent"

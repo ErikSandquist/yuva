@@ -102,6 +102,14 @@ export const LIST_KEYS = {
   export: "E",
 } as const
 
+export const DESIGN_KEYS = {
+  create: "c",
+  mine: "1",
+  gallery: "2",
+  archived: "a",
+  search: "/",
+} as const
+
 export const STATUS_KEYS = {
   overview: "1",
   components: "2",
@@ -207,6 +215,7 @@ export const DESIGNER_KEYS = {
   theme: "t",
   image: "i",
   versions: "v",
+  checks: "c",
 } as const
 
 export function keyLabel(k: string): string[] {
@@ -354,6 +363,18 @@ export function ShortcutSheet({
         [k(LIST_KEYS.settings), t`Settings`],
         [k(LIST_KEYS.add), t`Add subscriber`],
         [k(LIST_KEYS.export), t`Export`],
+      ],
+    },
+    {
+      title: t`Designs`,
+      items: [
+        [["↑", "↓"], t`Move through the designs`],
+        [["↵"], t`Open the design`],
+        [k(DESIGN_KEYS.create), t`New design`],
+        [k(DESIGN_KEYS.mine), t`My designs`],
+        [k(DESIGN_KEYS.gallery), t`Gallery`],
+        [k(DESIGN_KEYS.search), t`Search designs`],
+        [k(DESIGN_KEYS.archived), t`Show archived designs`],
       ],
     },
     {
@@ -505,6 +526,7 @@ export function ShortcutSheet({
         [k(DESIGNER_KEYS.theme), t`Colours, fonts and width`],
         [k(DESIGNER_KEYS.image), t`Choose the selected block’s image`],
         [k(DESIGNER_KEYS.versions), t`Versions`],
+        [k(DESIGNER_KEYS.checks), t`Checks`],
         [
           [DESIGNER_KEYS.edit, DESIGNER_KEYS.desktop, DESIGNER_KEYS.phone, DESIGNER_KEYS.dark],
           t`Edit, or preview on a desktop, a phone or in dark mode`,

@@ -6,7 +6,6 @@ import { isChats, isInboxRoot, isSectionHome } from "@/app/shell"
 import { AppSidebar } from "@/app/Sidebar"
 import { TopBar } from "@/app/TopBar"
 import { SidebarProvider, useSidebar } from "@/components/ui/sidebar"
-import { BroadcastsColumn } from "@/features/broadcasts/BroadcastsColumn"
 import { ContactsColumn } from "@/features/contact/ContactsColumn"
 import { FeedbackList } from "@/features/feedback/FeedbackList"
 import { ChatList } from "@/features/inbox/ChatList"
@@ -51,7 +50,6 @@ function SectionColumn() {
       {section === "assistants" && <AssistantsPanel />}
       {section === "contacts" && <ContactsColumn />}
       {section === "reports" && <ReportsColumn />}
-      {section === "broadcasts" && <BroadcastsColumn />}
       {section === "knowledge" && (
         <Suspense fallback={<div className="flex-1 bg-background" />}>
           <HelpColumn />
@@ -146,7 +144,8 @@ export function Layout() {
     pathname === "/updates" ||
     pathname === "/updates/changelogs" ||
     pathname === "/broadcasts" ||
-    pathname === "/broadcasts/lists"
+    pathname === "/broadcasts/lists" ||
+    pathname === "/broadcasts/designs"
   ) {
     return (
       <Phone>

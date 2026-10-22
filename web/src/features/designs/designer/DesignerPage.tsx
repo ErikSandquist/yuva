@@ -28,11 +28,15 @@ import {
   KeyboardIcon,
   LayersIcon,
   LoaderIcon,
+  MonitorIcon,
+  MoonIcon,
   PaletteIcon,
   Redo2Icon,
   SaveIcon,
+  SmartphoneIcon,
   TriangleAlertIcon,
   Undo2Icon,
+  XIcon,
 } from "lucide-react"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { Link, Navigate, useNavigate, useParams } from "react-router"
@@ -41,6 +45,7 @@ import { useShell } from "@/app/shell"
 import { ErrorLine, Kbd, Notice, Segmented, toast, useConfirm } from "@/components/common"
 import { DESIGNER_KEYS, mod } from "@/components/common/ShortcutSheet"
 import { formatBytes } from "@/components/common/text"
+import { keyHint } from "@/features/broadcasts/BroadcastParts"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -49,9 +54,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { Label } from "@/components/ui/label"
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet"
 import { Skeleton } from "@/components/ui/skeleton"
+import { Switch } from "@/components/ui/switch"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import {
   children,
@@ -74,8 +81,9 @@ import {
   type BlockType,
   type Doc,
 } from "@/features/designs/doc"
+import { derivedDark } from "@/features/designs/colors"
 import { readDraft, serialize, stateOf, useAutosave, type SaveStatus } from "@/features/designs/designer/autosave"
-import { BlockList, EmptyCanvas, FONTS, RequiredFooter } from "@/features/designs/designer/Canvas"
+import { BlockList, EmptyCanvas, FONTS, PHONE_WIDTH, RequiredFooter } from "@/features/designs/designer/Canvas"
 import { ConflictDialog } from "@/features/designs/designer/ConflictDialog"
 import { DesignerContext, type Designer, type DropTarget } from "@/features/designs/designer/context"
 import { clearActiveEditor, TextToolbar } from "@/features/designs/designer/editor"
@@ -84,9 +92,9 @@ import { BlockIcon } from "@/features/designs/designer/icons"
 import { ImageLibrary } from "@/features/designs/designer/ImageLibrary"
 import { Inspector } from "@/features/designs/designer/Inspector"
 import { BlockPalette, Layers } from "@/features/designs/designer/Panels"
-import { Preview, type PreviewMode } from "@/features/designs/designer/Preview"
+import { Preview } from "@/features/designs/designer/Preview"
 import { ThemePanel } from "@/features/designs/designer/ThemePanel"
-import { Versions } from "@/features/designs/designer/Versions"
+import { Versions, VersionsPanel } from "@/features/designs/designer/Versions"
 import {
   conflictOf,
   designLink,
@@ -107,7 +115,7 @@ import type { EmailDesign, EmailDesignIssue } from "@/lib/api"
 import { useSession } from "@/lib/session"
 import { cn } from "@/lib/utils"
 
-type Mode = "edit" | PreviewMode
+type RightTab = "block" | "design" | "versions"
 
 const CLIP = 102 * 1024
 const NEAR = 90 * 1024
@@ -296,86 +304,116 @@ function SizeMeter({ size }: { size: number | undefined }) {
   )
 }
 
-function Checks({
+type Level = "ok" | "warn" | "bad"
+
+function levelOf(issues: EmailDesignIssue[], size: number | undefined): Level {
+  if (issues.some((i) => !isWarning(i)) || (size ?? 0) > CLIP) return "bad"
+  return issues.length > 0 || (size ?? 0) > NEAR ? "warn" : "ok"
+}
+
+const LEVEL_TONE: Record<Level, string> = {
+  ok: "bg-success text-white",
+  warn: "bg-warning text-white",
+  bad: "bg-destructive text-white",
+}
+
+function ChecksButton({
+  count,
+  level,
+  open,
+  onClick,
+}: {
+  count: number
+  level: Level
+  open: boolean
+  onClick: () => void
+}) {
+  return (
+    <Button
+      variant="ghost"
+      size="sm"
+      className={cn("gap-1.5 px-2.5", open && "bg-muted")}
+      aria-expanded={open}
+      onClick={onClick}
+      data-testid="checks"
+    >
+      <Trans>Checks</Trans>
+      <span
+        className={cn(
+          "inline-flex h-[18px] min-w-[18px] items-center justify-center rounded-full px-1.5 text-[11px] font-semibold tabular-nums",
+          LEVEL_TONE[level]
+        )}
+        data-testid="checks-count"
+      >
+        {count}
+      </span>
+    </Button>
+  )
+}
+
+function ChecksStrip({
   size,
   issues,
-  open,
-  onOpenChange,
-  onShow,
   doc,
+  onShow,
+  onClose,
 }: {
   size: number | undefined
   issues: EmailDesignIssue[]
-  open: boolean
-  onOpenChange: (o: boolean) => void
-  onShow: (id: string) => void
   doc: Doc
+  onShow: (issue: EmailDesignIssue, block: Block | null) => void
+  onClose: () => void
 }) {
-  const { t, i18n } = useLingui()
+  const { t } = useLingui()
   const text = useIssueText()
   const names = useBlockNames()
-  const errors = issues.filter((i) => !isWarning(i)).length
-  const warnings = issues.length - errors
-  const tone =
-    errors > 0 || (size ?? 0) > CLIP
-      ? "text-destructive"
-      : warnings > 0 || (size ?? 0) > NEAR
-        ? "text-warning"
-        : "text-success"
   return (
-    <Popover open={open} onOpenChange={onOpenChange}>
-      <PopoverTrigger
-        render={<Button variant="ghost" size="sm" className="gap-1.5 px-2.5" data-testid="checks" />}
-        aria-label={t`Checks`}
-      >
-        {errors + warnings > 0 ? <TriangleAlertIcon className={tone} /> : <CheckIcon className={tone} />}
-        <span className="tabular-nums">
-          {size !== undefined ? formatBytes(size, i18n.locale) : "…"}
-          {errors + warnings > 0 && ` · ${errors + warnings}`}
-        </span>
-      </PopoverTrigger>
-      <PopoverContent align="end" className="w-96 max-w-[calc(100vw-2rem)] gap-4">
-        <SizeMeter size={size} />
-        {issues.length === 0 ? (
-          <p className="flex items-center gap-2 text-small text-success">
-            <CheckIcon className="size-4" />
-            <Trans>No problems found.</Trans>
-          </p>
-        ) : (
-          <ul className="flex max-h-80 flex-col gap-1.5 overflow-y-auto" data-testid="checks-list">
-            {issues.map((i, n) => {
-              const b = i.block_id ? findBlock(doc, i.block_id) : null
-              return (
-                <li key={n} className="flex gap-2 rounded-lg bg-surface px-2.5 py-2 text-small">
-                  {isWarning(i) ? (
-                    <TriangleAlertIcon className="mt-0.5 size-3.5 shrink-0 text-warning" />
-                  ) : (
-                    <CircleAlertIcon className="mt-0.5 size-3.5 shrink-0 text-destructive" />
+    <section
+      className="flex max-h-[40svh] shrink-0 flex-col gap-3 overflow-y-auto border-b bg-surface px-4 py-3"
+      aria-label={t`Checks`}
+      data-testid="checks-strip"
+    >
+      <div className="flex items-start gap-3">
+        <div className="max-w-md flex-1">
+          <SizeMeter size={size} />
+        </div>
+        <Button variant="ghost" size="icon-sm" aria-label={t`Close`} onClick={onClose}>
+          <XIcon />
+        </Button>
+      </div>
+      {issues.length === 0 ? (
+        <p className="flex items-center gap-2 text-small text-success">
+          <CheckIcon className="size-4" />
+          <Trans>No problems found.</Trans>
+        </p>
+      ) : (
+        <ul className="flex flex-col gap-1.5" data-testid="checks-list">
+          {issues.map((i, n) => {
+            const b = i.block_id ? findBlock(doc, i.block_id) : null
+            const error = !isWarning(i)
+            return (
+              <li key={n} className="flex items-center gap-3 rounded-lg bg-background px-2.5 py-2 text-small">
+                <span
+                  className={cn(
+                    "inline-flex min-w-12 shrink-0 justify-center rounded-full px-2 py-px text-caption font-semibold whitespace-nowrap",
+                    error ? "bg-destructive/12 text-destructive" : "bg-warning/15 text-warning"
                   )}
-                  <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-                    {b && <span className="text-caption font-medium text-faint">{names[b.type]}</span>}
-                    <span>{text(i)}</span>
-                  </span>
-                  {b && (
-                    <Button
-                      variant="link"
-                      size="sm"
-                      className="h-auto self-start text-small"
-                      onClick={() => {
-                        onShow(b.id)
-                        onOpenChange(false)
-                      }}
-                    >
-                      <Trans>Show</Trans>
-                    </Button>
-                  )}
-                </li>
-              )
-            })}
-          </ul>
-        )}
-      </PopoverContent>
-    </Popover>
+                >
+                  {error ? <Trans>Fix</Trans> : <Trans>Check</Trans>}
+                </span>
+                <span className="min-w-0 flex-1">
+                  {b && <span className="font-medium text-faint">{names[b.type]}: </span>}
+                  {text(i)}
+                </span>
+                <Button variant="outline" size="sm" onClick={() => onShow(i, b)}>
+                  <Trans>Show</Trans>
+                </Button>
+              </li>
+            )
+          })}
+        </ul>
+      )}
+    </section>
   )
 }
 
@@ -441,7 +479,10 @@ function DesignerScreen({ initial, ws }: { initial: EmailDesign; ws: string }) {
   const [selectedRaw, setSelected] = useState<string | null>(null)
   const selected = selectedRaw && findBlock(doc, selectedRaw) ? selectedRaw : null
   const selectedBlock = selected ? findBlock(doc, selected) : null
-  const [mode, setMode] = useState<Mode>("edit")
+  const [preview, setPreview] = useState(false)
+  const [phoneView, setPhoneView] = useState(false)
+  const [dark, setDark] = useState(false)
+  const [rtab, setRtab] = useState<RightTab>("block")
   const [left, setLeft] = useState<"blocks" | "layers">("blocks")
   const [sheet, setSheet] = useState<null | "blocks" | "layers" | "style">(null)
   const [library, setLibrary] = useState<string | null>(null)
@@ -463,10 +504,10 @@ function DesignerScreen({ initial, ws }: { initial: EmailDesign; ws: string }) {
   const palette = useRef<HTMLDivElement>(null)
 
   const renderInput = useMemo(
-    () => ({ document: doc, inbox_id: state.inbox_id, dark: mode === "dark" || undefined }),
-    [doc, state.inbox_id, mode]
+    () => ({ document: doc, inbox_id: state.inbox_id, dark: (preview && dark) || undefined }),
+    [doc, state.inbox_id, preview, dark]
   )
-  const debounced = useDebounced(renderInput, mode === "edit" ? 2000 : 400)
+  const debounced = useDebounced(renderInput, preview ? 400 : 2000)
   const render = useRender(debounced)
   const stale = debounced !== renderInput || render.isPlaceholderData || render.isFetching
 
@@ -488,6 +529,12 @@ function DesignerScreen({ initial, ws }: { initial: EmailDesign; ws: string }) {
     if (!id) clearActiveEditor()
   }, [])
 
+  const [seen, setSeen] = useState(selected)
+  if (selected !== seen) {
+    setSeen(selected)
+    if (selected) setRtab("block")
+  }
+
   const add = (type: BlockType, at?: DropTarget) => {
     if (readOnly) return
     if (countBlocks(doc) >= MAX_BLOCKS) {
@@ -505,8 +552,14 @@ function DesignerScreen({ initial, ws }: { initial: EmailDesign; ws: string }) {
     )
   }
 
+  const colors = useMemo(
+    () => (dark ? { ...derivedDark(doc.theme.colors), ...doc.theme.dark } : doc.theme.colors),
+    [dark, doc.theme.colors, doc.theme.dark]
+  )
+
   const ctx: Designer = {
     doc,
+    view: { phone: phoneView, dark, colors },
     selected,
     select,
     setDoc: commitDoc,
@@ -660,13 +713,18 @@ function DesignerScreen({ initial, ws }: { initial: EmailDesign; ws: string }) {
         setSelected(null)
         return
       }
-      if (e.key === DESIGNER_KEYS.edit) setMode("edit")
-      else if (e.key === DESIGNER_KEYS.desktop) setMode("desktop")
-      else if (e.key === DESIGNER_KEYS.phone) setMode("phone")
-      else if (e.key === DESIGNER_KEYS.dark) setMode("dark")
+      if (e.key === DESIGNER_KEYS.edit) setPreview(false)
+      else if (e.key === DESIGNER_KEYS.desktop) {
+        setPreview(true)
+        setPhoneView(false)
+      } else if (e.key === DESIGNER_KEYS.phone) {
+        setPreview(true)
+        setPhoneView(true)
+      } else if (e.key === DESIGNER_KEYS.dark) setDark((v) => !v)
       else if (e.key === DESIGNER_KEYS.add) {
         e.preventDefault()
-        setMode("edit")
+        setPreview(false)
+        setRtab("block")
         if (phone) setSheet("blocks")
         else {
           setLeft("blocks")
@@ -674,9 +732,13 @@ function DesignerScreen({ initial, ws }: { initial: EmailDesign; ws: string }) {
         }
       } else if (e.key === DESIGNER_KEYS.theme) {
         setSelected(null)
+        setRtab("design")
         if (phone) setSheet("style")
-      } else if (e.key === DESIGNER_KEYS.versions) setVersionsOpen(true)
-      else if (e.key === DESIGNER_KEYS.image && selectedBlock?.type === "image") setLibrary(selectedBlock.id)
+      } else if (e.key === DESIGNER_KEYS.checks) setChecksOpen((o) => !o)
+      else if (e.key === DESIGNER_KEYS.versions) {
+        if (phone) setVersionsOpen(true)
+        else setRtab("versions")
+      } else if (e.key === DESIGNER_KEYS.image && selectedBlock?.type === "image") setLibrary(selectedBlock.id)
       else if (e.key === "?") shell.openShortcuts()
       else return
       e.preventDefault()
@@ -737,17 +799,37 @@ function DesignerScreen({ initial, ws }: { initial: EmailDesign; ws: string }) {
   const issueCount = allIssues.length
   const size = render.data?.size_bytes
   const theme = doc.theme
-  const showLeft = !phone && mode === "edit"
-  const right = selectedBlock ? (
-    <Inspector key={selectedBlock.id} block={selectedBlock} />
-  ) : (
-    <ThemePanel inboxId={state.inbox_id} onInbox={(id) => history.commit({ ...state, inbox_id: id })} />
+  const level = levelOf(allIssues, size)
+  const showLeft = !phone && !preview
+  const canvasWidth = phoneView ? PHONE_WIDTH : theme.width
+  const emptyBlock = (
+    <p className="px-4 py-8 text-center text-small text-faint" data-testid="inspector-empty">
+      <Trans>Select a block to change it. Design settings apply to the whole mail.</Trans>
+    </p>
   )
+  const design = <ThemePanel inboxId={state.inbox_id} onInbox={(id) => history.commit({ ...state, inbox_id: id })} />
+  const block = selectedBlock ? <Inspector key={selectedBlock.id} block={selectedBlock} /> : emptyBlock
+  const right = selectedBlock ? block : design
+
+  const showIssue = (_: EmailDesignIssue, b: Block | null) => {
+    setPreview(false)
+    if (phone) setChecksOpen(false)
+    if (!b) {
+      setSelected(null)
+      setRtab("design")
+      if (phone) setSheet("style")
+      return
+    }
+    setSelected(b.id)
+    requestAnimationFrame(() =>
+      document.querySelector(`[data-block="${b.id}"]`)?.scrollIntoView({ block: "center", behavior: "smooth" })
+    )
+  }
 
   const canvas = (
     <div
       className="min-h-full px-6 py-8 phone:px-3 phone:py-5"
-      style={{ background: theme.colors.page }}
+      style={{ background: colors.page }}
       onClick={() => select(null)}
       data-testid="canvas"
     >
@@ -755,12 +837,12 @@ function DesignerScreen({ initial, ws }: { initial: EmailDesign; ws: string }) {
         className="mx-auto max-w-full overflow-visible shadow-[0_1px_3px_rgb(0_0_0/0.06),0_12px_32px_-16px_rgb(0_0_0/0.18)]"
         style={
           {
-            width: theme.width,
-            background: theme.colors.card,
+            width: canvasWidth,
+            background: colors.card,
             borderRadius: theme.radius ?? 0,
             fontFamily: FONTS[theme.font],
-            color: theme.colors.text,
-            "--email-link": theme.colors.link,
+            color: colors.text,
+            "--email-link": colors.link,
           } as React.CSSProperties
         }
         dir={theme.direction === "rtl" ? "rtl" : theme.direction === "ltr" ? "ltr" : undefined}
@@ -774,16 +856,61 @@ function DesignerScreen({ initial, ws }: { initial: EmailDesign; ws: string }) {
           </div>
         )}
       </div>
-      <RequiredFooter doc={doc} />
+      <RequiredFooter />
     </div>
   )
 
-  const modes = [
-    { value: "edit" as const, label: t`Edit`, testId: "mode-edit" },
-    { value: "desktop" as const, label: t`Desktop`, testId: "mode-desktop" },
-    { value: "phone" as const, label: t`Phone`, testId: "mode-phone" },
-    { value: "dark" as const, label: t`Dark`, testId: "mode-dark" },
-  ]
+  const viewControls = (
+    <div className="flex min-w-0 shrink-0 items-center gap-2 phone:w-full phone:justify-between">
+      <Segmented
+        value={preview ? "preview" : "edit"}
+        onChange={(v) => setPreview(v === "preview")}
+        label={t`View`}
+        items={[
+          { value: "edit", label: t`Edit`, testId: "mode-edit" },
+          { value: "preview", label: t`Preview`, testId: "mode-preview" },
+        ]}
+      />
+      <Segmented
+        value={phoneView ? "phone" : "desktop"}
+        onChange={(v) => setPhoneView(v === "phone")}
+        label={t`Preview size`}
+        items={[
+          {
+            value: "desktop",
+            label: (
+              <>
+                <MonitorIcon className="hidden size-4 phone:block" />
+                <span className="phone:sr-only">
+                  <Trans>Desktop</Trans>
+                </span>
+              </>
+            ),
+            testId: "mode-desktop",
+          },
+          {
+            value: "phone",
+            label: (
+              <>
+                <SmartphoneIcon className="hidden size-4 phone:block" />
+                <span className="phone:sr-only">
+                  <Trans>Phone</Trans>
+                </span>
+              </>
+            ),
+            testId: "mode-phone",
+          },
+        ]}
+      />
+      <Label className="gap-2 font-normal">
+        <MoonIcon className="size-4 text-muted-foreground" />
+        <span className="phone:sr-only">
+          <Trans>Dark</Trans>
+        </span>
+        <Switch checked={dark} onCheckedChange={setDark} data-testid="mode-dark" />
+      </Label>
+    </div>
+  )
 
   return (
     <DesignerContext.Provider value={ctx}>
@@ -810,12 +937,12 @@ function DesignerScreen({ initial, ws }: { initial: EmailDesign; ws: string }) {
               onBlur={() => !state.name.trim() && history.commit({ ...state, name: initial.name })}
               aria-label={t`Design name`}
               readOnly={readOnly}
-              className="h-8 min-w-0 flex-1 rounded-lg bg-transparent px-2 text-body font-semibold outline-none hover:bg-muted focus:bg-muted sm:max-w-80"
+              className="h-8 min-w-0 flex-1 rounded-lg bg-transparent px-2 text-body font-semibold outline-none hover:bg-muted focus:bg-muted sm:max-w-64 sm:flex-none sm:basis-56"
               data-testid="design-name"
             />
             <StatusLine status={save.status} onRetry={() => void save.flush()} onChecks={() => setChecksOpen(true)} />
             <div className="flex-1 phone:hidden" />
-            {!phone && <Segmented value={mode} onChange={setMode} label={t`View`} items={modes} className="shrink-0" />}
+            {!phone && viewControls}
             <div className="flex-1 phone:hidden" />
             <IconButton
               label={t`Undo`}
@@ -836,27 +963,24 @@ function DesignerScreen({ initial, ws }: { initial: EmailDesign; ws: string }) {
               <Redo2Icon />
             </IconButton>
             {!phone && (
-              <Checks
-                size={size}
-                issues={allIssues}
+              <ChecksButton
+                count={issueCount}
+                level={level}
                 open={checksOpen}
-                onOpenChange={setChecksOpen}
-                onShow={(id) => {
-                  setMode("edit")
-                  setSelected(id)
-                  requestAnimationFrame(() =>
-                    document
-                      .querySelector(`[data-block="${id}"]`)
-                      ?.scrollIntoView({ block: "center", behavior: "smooth" })
-                  )
-                }}
-                doc={doc}
+                onClick={() => setChecksOpen((o) => !o)}
               />
             )}
             {!phone && (
-              <IconButton label={t`Versions`} keys={["V"]} onClick={() => setVersionsOpen(true)} testId="versions-open">
-                <HistoryIcon />
-              </IconButton>
+              <Button
+                variant="ghost"
+                size="sm"
+                className={cn("gap-1.5 px-2.5", rtab === "versions" && "bg-muted")}
+                title={keyHint(t`Versions`, DESIGNER_KEYS.versions)}
+                onClick={() => setRtab("versions")}
+                data-testid="versions-open"
+              >
+                <Trans>Versions</Trans>
+              </Button>
             )}
             <DropdownMenu>
               <DropdownMenuTrigger
@@ -869,7 +993,7 @@ function DesignerScreen({ initial, ws }: { initial: EmailDesign; ws: string }) {
               <DropdownMenuContent align="end" className="min-w-64">
                 {phone && (
                   <>
-                    <DropdownMenuItem onClick={() => setChecksOpen(true)}>
+                    <DropdownMenuItem onClick={() => setChecksOpen((o) => !o)}>
                       <TriangleAlertIcon />
                       <span className="flex-1">
                         <Trans>Checks</Trans>
@@ -923,7 +1047,7 @@ function DesignerScreen({ initial, ws }: { initial: EmailDesign; ws: string }) {
                   onClick={() =>
                     confirm({
                       title: t`Archive this design?`,
-                      description: t`It leaves the list of designs. Its versions are kept, and saving it again brings it back.`,
+                      description: t`It leaves the list of designs. Its versions are kept. Drafts that use it still send, and you can restore it from the archive.`,
                       confirm: t`Archive`,
                       run: () =>
                         archive.mutate(initial.id, {
@@ -947,17 +1071,15 @@ function DesignerScreen({ initial, ws }: { initial: EmailDesign; ws: string }) {
               </Button>
             )}
           </header>
-          {phone && (
-            <div className="border-b px-2 py-1.5">
-              <Segmented
-                value={mode}
-                onChange={setMode}
-                label={t`View`}
-                items={modes}
-                className="w-full"
-                itemClassName="flex-1 px-1"
-              />
-            </div>
+          {phone && <div className="border-b px-2 py-1.5">{viewControls}</div>}
+          {checksOpen && (
+            <ChecksStrip
+              size={size}
+              issues={allIssues}
+              doc={doc}
+              onShow={showIssue}
+              onClose={() => setChecksOpen(false)}
+            />
           )}
           {readOnly && (
             <Notice tone="warning" icon={TriangleAlertIcon} className="m-3 mb-0" data-testid="designer-read-only">
@@ -996,7 +1118,7 @@ function DesignerScreen({ initial, ws }: { initial: EmailDesign; ws: string }) {
               </aside>
             )}
             <main className="flex min-w-0 flex-1 flex-col">
-              {mode === "edit" ? (
+              {!preview ? (
                 <>
                   {!readOnly && <TextToolbar owner={selected} slot={setToolSlot} />}
                   <div className="min-h-0 flex-1 overflow-y-auto">{canvas}</div>
@@ -1004,7 +1126,8 @@ function DesignerScreen({ initial, ws }: { initial: EmailDesign; ws: string }) {
               ) : (
                 <div className="min-h-0 flex-1 overflow-y-auto">
                   <Preview
-                    mode={mode}
+                    phone={phoneView}
+                    dark={dark}
                     html={render.data?.html}
                     loading={render.isPending}
                     error={render.error}
@@ -1040,11 +1163,36 @@ function DesignerScreen({ initial, ws }: { initial: EmailDesign; ws: string }) {
               )}
             </main>
             {!phone && (
-              <aside
-                className="w-80 shrink-0 overflow-y-auto border-s max-[1100px]:w-72"
-                aria-label={selectedBlock ? t`Block settings` : t`Design settings`}
-              >
-                {right}
+              <aside className="flex w-80 shrink-0 flex-col border-s max-[1100px]:w-72" aria-label={t`Designer`}>
+                <Tabs value={rtab} onValueChange={(v) => setRtab(v as RightTab)} className="min-h-0 flex-1 gap-0">
+                  <TabsList variant="line" className="h-10 w-full shrink-0 gap-0 border-b px-1">
+                    <TabsTrigger value="block" className="px-1 text-small" data-testid="tab-block">
+                      <Trans>Block settings</Trans>
+                    </TabsTrigger>
+                    <TabsTrigger value="design" className="px-1 text-small" data-testid="tab-design">
+                      <Trans>Design settings</Trans>
+                    </TabsTrigger>
+                    <TabsTrigger value="versions" className="px-1 text-small" data-testid="tab-versions">
+                      <Trans>Versions</Trans>
+                    </TabsTrigger>
+                  </TabsList>
+                  <TabsContent value="block" className="min-h-0 flex-1 overflow-y-auto">
+                    {block}
+                  </TabsContent>
+                  <TabsContent value="design" className="min-h-0 flex-1 overflow-y-auto">
+                    {design}
+                  </TabsContent>
+                  <TabsContent value="versions" className="min-h-0 flex-1 overflow-y-auto">
+                    <VersionsPanel
+                      designId={initial.id}
+                      inboxId={state.inbox_id}
+                      current={save.version()}
+                      onRestore={restore}
+                      restoring={restoring}
+                      error={restoreError}
+                    />
+                  </TabsContent>
+                </Tabs>
               </aside>
             )}
           </div>
@@ -1090,29 +1238,6 @@ function DesignerScreen({ initial, ws }: { initial: EmailDesign; ws: string }) {
           </SheetContent>
         </Sheet>
       )}
-      {phone && (
-        <Sheet open={checksOpen} onOpenChange={setChecksOpen}>
-          <SheetContent className="w-full">
-            <SheetHeader>
-              <SheetTitle className="text-title">
-                <Trans>Checks</Trans>
-              </SheetTitle>
-            </SheetHeader>
-            <div className="flex flex-col gap-4 overflow-y-auto p-4">
-              <SizeMeter size={size} />
-              <PhoneIssues
-                issues={allIssues}
-                doc={doc}
-                onShow={(id) => {
-                  setChecksOpen(false)
-                  setMode("edit")
-                  setSelected(id)
-                }}
-              />
-            </div>
-          </SheetContent>
-        </Sheet>
-      )}
       <ImageLibrary
         open={library !== null}
         onOpenChange={(o) => !o && setLibrary(null)}
@@ -1132,7 +1257,7 @@ function DesignerScreen({ initial, ws }: { initial: EmailDesign; ws: string }) {
         }}
       />
       <Versions
-        open={versionsOpen}
+        open={phone && versionsOpen}
         onOpenChange={setVersionsOpen}
         designId={initial.id}
         inboxId={state.inbox_id}
@@ -1154,44 +1279,5 @@ function DesignerScreen({ initial, ws }: { initial: EmailDesign; ws: string }) {
         {save.status === "saved" ? t`Saved` : ""}
       </span>
     </DesignerContext.Provider>
-  )
-}
-
-function PhoneIssues({ issues, doc, onShow }: { issues: EmailDesignIssue[]; doc: Doc; onShow: (id: string) => void }) {
-  const text = useIssueText()
-  const names = useBlockNames()
-  if (issues.length === 0)
-    return (
-      <p className="flex items-center gap-2 text-small text-success">
-        <CheckIcon className="size-4" />
-        <Trans>No problems found.</Trans>
-      </p>
-    )
-  return (
-    <ul className="flex flex-col gap-1.5">
-      {issues.map((i, n) => {
-        const b = i.block_id ? findBlock(doc, i.block_id) : null
-        return (
-          <li key={n}>
-            <button
-              type="button"
-              disabled={!b}
-              onClick={() => b && onShow(b.id)}
-              className="flex w-full gap-2 rounded-lg bg-surface px-2.5 py-2 text-start text-small"
-            >
-              {isWarning(i) ? (
-                <TriangleAlertIcon className="mt-0.5 size-3.5 shrink-0 text-warning" />
-              ) : (
-                <CircleAlertIcon className="mt-0.5 size-3.5 shrink-0 text-destructive" />
-              )}
-              <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-                {b && <span className="text-caption font-medium text-faint">{names[b.type]}</span>}
-                <span>{text(i)}</span>
-              </span>
-            </button>
-          </li>
-        )
-      })}
-    </ul>
   )
 }

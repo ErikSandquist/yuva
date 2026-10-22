@@ -16,13 +16,15 @@ import { createPortal } from "react-dom"
 
 import { Button } from "@/components/ui/button"
 import { textOn } from "@/features/designs/colors"
-import { childContainers, containerOf, ROOT, type Block, type BlockOf, type Doc } from "@/features/designs/doc"
+import { childContainers, containerOf, ROOT, type Block, type BlockOf } from "@/features/designs/doc"
 import { useDesigner } from "@/features/designs/designer/context"
 import { RichEditor } from "@/features/designs/designer/editor"
 import { BlockIcon } from "@/features/designs/designer/icons"
 import { isWarning, useBlockNames, useNetworkNames } from "@/features/designs/text"
 import type { EmailFont } from "@/lib/api"
 import { cn } from "@/lib/utils"
+
+export const PHONE_WIDTH = 375
 
 export const FONTS: Record<EmailFont, string> = {
   system: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
@@ -199,6 +201,7 @@ function BlockView({
   const issues = d.issues.get(block.id) ?? []
   const errors = issues.filter((i) => !isWarning(i))
   const [top, right, bottom, left] = block.padding ?? defaultPadding(block, nested)
+  const hiddenHere = block.hide === (d.view.phone ? "mobile" : "desktop")
   return (
     <div
       ref={(el) => {
@@ -275,7 +278,18 @@ function BlockView({
           </>,
           d.toolSlot
         )}
-      <BlockBody block={block} />
+      {hiddenHere && (
+        <span
+          className="absolute top-1 end-1.5 z-20 inline-flex items-center gap-1 rounded-full bg-card px-2 py-0.5 font-sans text-[11px] leading-4 font-medium text-muted-foreground shadow-sm"
+          data-testid="hidden-tag"
+        >
+          <EyeOffIcon className="size-3" />
+          {d.view.phone ? <Trans>Hidden on phones</Trans> : <Trans>Hidden on wide screens</Trans>}
+        </span>
+      )}
+      <div className={cn(hiddenHere && "opacity-35")}>
+        <BlockBody block={block} />
+      </div>
     </div>
   )
 }
@@ -350,7 +364,7 @@ function HeadingBody({ block }: { block: BlockOf<"heading"> }) {
       style={{
         ...HEADING[block.level],
         fontFamily: FONTS[theme.heading_font ?? theme.font],
-        color: block.color ?? theme.colors.text,
+        color: block.color ?? d.view.colors.text,
         textAlign: alignOf(block),
       }}
     >
@@ -377,7 +391,7 @@ function TextBody({ block }: { block: BlockOf<"text"> }) {
       style={{
         fontSize: block.size ?? 16,
         lineHeight: 1.6,
-        color: block.color ?? d.doc.theme.colors.text,
+        color: block.color ?? d.view.colors.text,
         textAlign: alignOf(block),
       }}
     >
@@ -401,7 +415,7 @@ function FooterBody({ block }: { block: BlockOf<"footer"> }) {
   return (
     <div
       className={richClass}
-      style={{ fontSize: 13, lineHeight: 1.6, color: d.doc.theme.colors.muted, textAlign: alignOf(block) }}
+      style={{ fontSize: 13, lineHeight: 1.6, color: d.view.colors.muted, textAlign: alignOf(block) }}
     >
       <RichEditor
         mode="rich"
@@ -457,7 +471,7 @@ function ButtonBody({ block }: { block: BlockOf<"button"> }) {
   const { t } = useLingui()
   const d = useDesigner()
   const theme = d.doc.theme
-  const bg = block.color ?? theme.colors.accent
+  const bg = block.color ?? d.view.colors.accent
   return (
     <div style={{ textAlign: alignOf(block) }}>
       <span
@@ -488,11 +502,11 @@ function ButtonBody({ block }: { block: BlockOf<"button"> }) {
 }
 
 function DividerBody({ block }: { block: BlockOf<"divider"> }) {
-  const { doc } = useDesigner()
+  const d = useDesigner()
   return (
     <div
       style={{
-        borderTop: `${block.thickness ?? 1}px solid ${block.color ?? doc.theme.colors.border}`,
+        borderTop: `${block.thickness ?? 1}px solid ${block.color ?? d.view.colors.border}`,
         width: `${block.width ?? 100}%`,
         ...margins(alignOf(block)),
       }}
@@ -538,7 +552,7 @@ function SocialIcon({ network, color }: { network: string; color: string }) {
 }
 
 function SocialBody({ block }: { block: BlockOf<"social"> }) {
-  const { doc } = useDesigner()
+  const d = useDesigner()
   const names = useNetworkNames()
   const align = alignOf(block)
   return (
@@ -548,7 +562,7 @@ function SocialBody({ block }: { block: BlockOf<"social"> }) {
     >
       {block.items.map((it, i) =>
         block.style === "text" ? (
-          <span key={i} className="text-[14px] underline underline-offset-2" style={{ color: doc.theme.colors.link }}>
+          <span key={i} className="text-[14px] underline underline-offset-2" style={{ color: d.view.colors.link }}>
             {names[it.network]}
           </span>
         ) : (
@@ -559,11 +573,12 @@ function SocialBody({ block }: { block: BlockOf<"social"> }) {
   )
 }
 
-export function RequiredFooter({ doc }: { doc: Doc }) {
+export function RequiredFooter() {
+  const { doc, view } = useDesigner()
   return (
     <div
       className="mx-auto mt-4 flex max-w-full items-start gap-2 px-6 text-center font-sans text-caption"
-      style={{ width: doc.theme.width, color: doc.theme.colors.muted }}
+      style={{ width: view.phone ? PHONE_WIDTH : doc.theme.width, color: view.colors.muted }}
       data-testid="required-footer"
     >
       <LockIcon className="mt-0.5 size-3 shrink-0" />

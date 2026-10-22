@@ -2689,7 +2689,6 @@ msgstr "群發傳送"
 #: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/Overview.tsx
 #: src/features/settings/webhooks/events.tsx
@@ -3059,6 +3058,7 @@ msgstr "正在檢查伺服器上的內容"
 msgid "Checking…"
 msgstr "檢查中…"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/status/ResponseChart.tsx
 msgid "Checks"
 msgstr "檢查"
@@ -4258,7 +4258,7 @@ msgid "Design"
 msgstr "設計"
 
 #: src/app/Sidebar.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/components/common/ShortcutSheet.tsx
 msgid "Designs"
 msgstr "設計"
 
@@ -5582,6 +5582,10 @@ msgstr "漏斗"
 #: src/features/migrations/parts.tsx
 msgid "Further copies of the same message"
 msgstr "同一封郵件的更多副本"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Gallery"
+msgstr "範本庫"
 
 #: src/app/Sidebar.tsx
 #: src/features/migrations/MigrationsPage.tsx
@@ -6991,7 +6995,6 @@ msgstr "正在列出工單…"
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/ListsHome.tsx
 #: src/features/settings/webhooks/events.tsx
@@ -7678,6 +7681,10 @@ msgid "Move through the broadcasts"
 msgstr "在群發之間移動"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the designs"
+msgstr "在設計之間移動"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the entries"
 msgstr "在項目之間移動"
 
@@ -7750,6 +7757,10 @@ msgstr "將想法移到「已規劃」「進行中」或「已發布」，會為
 #: src/features/migrations/SwitchStep.tsx
 msgid "MX change"
 msgstr "MX 變更"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "My designs"
+msgstr "我的設計"
 
 #: src/features/account/AccountPage.tsx
 msgid "My discussions"
@@ -7957,6 +7968,7 @@ msgstr "新對話會顯示在你的對話列表頂部。"
 msgid "New counts every subscription that day, confirmed or not. The confirmation rate is the share of people asked to confirm who did."
 msgstr "「新增」統計當天每一個訂閱,無論是否已確認。確認率是被要求確認的人中確認了的比例。"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/DesignPicker.tsx
 msgid "New design"
 msgstr "新建設計"
@@ -9536,6 +9548,7 @@ msgstr "開啟聯絡人"
 msgid "Open the conversation"
 msgstr "開啟對話"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Open the design"
 msgstr "開啟設計"
@@ -11718,6 +11731,10 @@ msgstr "搜尋對話"
 msgid "Search conversations for “{search}”"
 msgstr "搜尋包含「{search}」的對話"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Search designs"
+msgstr "搜尋設計"
+
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "Search emoji"
 msgstr "搜尋表情符號"
@@ -12309,6 +12326,10 @@ msgstr "快捷鍵"
 #: src/features/status/MonitorsPage.tsx
 msgid "Show"
 msgstr "顯示"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Show archived designs"
+msgstr "顯示已歸檔的設計"
 
 #: src/features/conversation/messages/EmailBody.tsx
 msgid "Show as sent"

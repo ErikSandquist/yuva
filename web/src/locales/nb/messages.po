@@ -2689,7 +2689,6 @@ msgstr "Masseutsendelse"
 #: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/Overview.tsx
 #: src/features/settings/webhooks/events.tsx
@@ -3059,6 +3058,7 @@ msgstr "Sjekker hva som er på serveren"
 msgid "Checking…"
 msgstr "Sjekker …"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/status/ResponseChart.tsx
 msgid "Checks"
 msgstr "Sjekker"
@@ -4258,7 +4258,7 @@ msgid "Design"
 msgstr "Design"
 
 #: src/app/Sidebar.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/components/common/ShortcutSheet.tsx
 msgid "Designs"
 msgstr "Design"
 
@@ -5582,6 +5582,10 @@ msgstr "Trakter"
 #: src/features/migrations/parts.tsx
 msgid "Further copies of the same message"
 msgstr "Flere kopier av samme melding"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Gallery"
+msgstr "Galleri"
 
 #: src/app/Sidebar.tsx
 #: src/features/migrations/MigrationsPage.tsx
@@ -6991,7 +6995,6 @@ msgstr "Lister sakene …"
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/ListsHome.tsx
 #: src/features/settings/webhooks/events.tsx
@@ -7678,6 +7681,10 @@ msgid "Move through the broadcasts"
 msgstr "Gå gjennom utsendelsene"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the designs"
+msgstr "Gå gjennom designene"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the entries"
 msgstr "Gå gjennom innleggene"
 
@@ -7750,6 +7757,10 @@ msgstr "Flyttes ideen til Planlagt, Pågår eller Levert, får tilknyttede tilba
 #: src/features/migrations/SwitchStep.tsx
 msgid "MX change"
 msgstr "MX-endring"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "My designs"
+msgstr "Mine design"
 
 #: src/features/account/AccountPage.tsx
 msgid "My discussions"
@@ -7957,6 +7968,7 @@ msgstr "Nye samtaler vises øverst i samtalelisten din."
 msgid "New counts every subscription that day, confirmed or not. The confirmation rate is the share of people asked to confirm who did."
 msgstr "Nye teller hvert abonnement den dagen, bekreftet eller ikke. Bekreftelsesraten er andelen av de som ble bedt om å bekrefte som gjorde det."
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/DesignPicker.tsx
 msgid "New design"
 msgstr "Nytt design"
@@ -9536,6 +9548,7 @@ msgstr "Åpne kontakten"
 msgid "Open the conversation"
 msgstr "Åpne samtalen"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Open the design"
 msgstr "Åpne designet"
@@ -11718,6 +11731,10 @@ msgstr "Søk i samtaler"
 msgid "Search conversations for “{search}”"
 msgstr "Søk i samtaler etter «{search}»"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Search designs"
+msgstr "Søk i design"
+
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "Search emoji"
 msgstr "Søk etter emoji"
@@ -12309,6 +12326,10 @@ msgstr "Hurtigtast"
 #: src/features/status/MonitorsPage.tsx
 msgid "Show"
 msgstr "Vis"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Show archived designs"
+msgstr "Vis arkiverte design"
 
 #: src/features/conversation/messages/EmailBody.tsx
 msgid "Show as sent"

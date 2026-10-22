@@ -2689,7 +2689,6 @@ msgstr "Hromadné odesílání"
 #: src/app/Sidebar.tsx
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/Overview.tsx
 #: src/features/settings/webhooks/events.tsx
@@ -3059,6 +3058,7 @@ msgstr "Kontroluje se, co je na serveru"
 msgid "Checking…"
 msgstr "Kontroluje se…"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/status/ResponseChart.tsx
 msgid "Checks"
 msgstr "Kontroly"
@@ -4258,7 +4258,7 @@ msgid "Design"
 msgstr "Návrh"
 
 #: src/app/Sidebar.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/components/common/ShortcutSheet.tsx
 msgid "Designs"
 msgstr "Návrhy"
 
@@ -5582,6 +5582,10 @@ msgstr "Trychtýře"
 #: src/features/migrations/parts.tsx
 msgid "Further copies of the same message"
 msgstr "Další kopie stejné zprávy"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Gallery"
+msgstr "Galerie"
 
 #: src/app/Sidebar.tsx
 #: src/features/migrations/MigrationsPage.tsx
@@ -6991,7 +6995,6 @@ msgstr "Vypisují se tikety…"
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
-#: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/ListsHome.tsx
 #: src/features/settings/webhooks/events.tsx
@@ -7678,6 +7681,10 @@ msgid "Move through the broadcasts"
 msgstr "Procházet hromadné zprávy"
 
 #: src/components/common/ShortcutSheet.tsx
+msgid "Move through the designs"
+msgstr "Procházet návrhy"
+
+#: src/components/common/ShortcutSheet.tsx
 msgid "Move through the entries"
 msgstr "Procházet záznamy"
 
@@ -7750,6 +7757,10 @@ msgstr "Přesunutí nápadu do Plánováno, Rozpracováno nebo Vydáno nastaví 
 #: src/features/migrations/SwitchStep.tsx
 msgid "MX change"
 msgstr "Změna MX"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "My designs"
+msgstr "Moje návrhy"
 
 #: src/features/account/AccountPage.tsx
 msgid "My discussions"
@@ -7957,6 +7968,7 @@ msgstr "Nové konverzace se zobrazují nahoře ve vašem seznamu konverzací."
 msgid "New counts every subscription that day, confirmed or not. The confirmation rate is the share of people asked to confirm who did."
 msgstr "Nové počítá každý odběr toho dne, potvrzený či ne. Míra potvrzení je podíl těch, které jste vyzvali k potvrzení a kteří potvrdili."
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/DesignPicker.tsx
 msgid "New design"
 msgstr "Nový návrh"
@@ -9536,6 +9548,7 @@ msgstr "Otevřít kontakt"
 msgid "Open the conversation"
 msgstr "Otevřít konverzaci"
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Open the design"
 msgstr "Otevřít návrh"
@@ -11718,6 +11731,10 @@ msgstr "Hledat konverzace"
 msgid "Search conversations for “{search}”"
 msgstr "Hledat konverzace pro „{search}“"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Search designs"
+msgstr "Hledat návrhy"
+
 #: src/features/conversation/composer/EmojiPanel.tsx
 msgid "Search emoji"
 msgstr "Hledat emoji"
@@ -12309,6 +12326,10 @@ msgstr "Zkratka"
 #: src/features/status/MonitorsPage.tsx
 msgid "Show"
 msgstr "Zobrazit"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Show archived designs"
+msgstr "Zobrazit archivované návrhy"
 
 #: src/features/conversation/messages/EmailBody.tsx
 msgid "Show as sent"
