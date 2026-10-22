@@ -733,9 +733,7 @@ export interface paths {
          *     `approval_requested` until the operator answers. `409 invalid_state` unless the status is
          *     `approval_required`.
          *
-         *     Owners only, with a member session or an OAuth token with `workspace:manage` (a person stands
-         *     behind both); API keys are refused (`403 member_session_required`). The answers come from
-         *     the owner, never from an assistant.
+         *     Owners only, with a member session.
          */
         post: operations["requestBroadcastApproval"];
         delete?: never;
@@ -2500,12 +2498,7 @@ export interface paths {
          * Reply as a member
          * @description A reply to the thread (`parent_post_id` absent) or to one of its replies, published at once,
          *     also in locked threads. Replies are one level deep: a reply to a reply answers
-         *     `400 validation_failed`. Followers are notified.
-         *
-         *     Members, and OAuth tokens with `messages:write`, which reply as their member; the post's
-         *     `author.via` names the client. A token issued for `/mcp` replies only while the
-         *     workspace's `bots_may_send` is on (`403 bot_sending_disabled`). API keys are refused
-         *     (`403 member_session_required`): a post has no bot author.
+         *     `400 validation_failed`. Followers are notified. Member sessions only.
          */
         post: operations["createDiscussionPost"];
         delete?: never;
@@ -2527,17 +2520,13 @@ export interface paths {
          * @description Marks a published reply to the thread itself (not a reply to a reply, not the opening post)
          *     as its answer, replacing an earlier one (`400 validation_failed` otherwise), also in locked
          *     threads. Followers are told once (`discussion.answered`). Ideas have no accepted answer
-         *     (`409 not_supported`). Marking the reply that is already the answer changes nothing.
-         *     Members and OAuth tokens with `messages:write`, as for `createDiscussionPost`; API keys are
-         *     refused (`403 member_session_required`).
+         *     (`409 not_supported`). Member sessions only.
          */
         put: operations["acceptDiscussionAnswer"];
         post?: never;
         /**
          * Clear the accepted answer
-         * @description Clearing a thread without an answer changes nothing. Members and OAuth tokens with
-         *     `messages:write`, as for `createDiscussionPost`; API keys are refused
-         *     (`403 member_session_required`).
+         * @description Member sessions only.
          */
         delete: operations["clearDiscussionAnswer"];
         options?: never;
@@ -10012,8 +10001,7 @@ export interface components {
          *       message e-mail and raw source; list labels and canned replies.
          *     - `conversations:write`: create, update (status, assignee, snooze, priority, labels), move
          *       and bulk-update conversations.
-         *     - `messages:write`: outgoing and incoming messages, drafts: create, edit, discard; for
-         *       OAuth tokens also replies to reader threads and their accepted answer.
+         *     - `messages:write`: outgoing and incoming messages, drafts: create, edit, discard.
          *     - `drafts:send`: send a draft (`POST /v1/messages/{id}/send`), together with
          *       `messages:write`.
          *     - `notes:write`: notes.
@@ -10025,8 +10013,7 @@ export interface components {
          *     - `labels:write`: create, update and delete labels.
          *     - `canned_replies:write`: create, update and delete canned replies.
          *     - `webhooks:manage`: webhooks, their deliveries and attempts.
-         *     - `workspace:manage`: update the workspace, usage; for an owner's OAuth token also asking
-         *       the operator to allow broadcasts.
+         *     - `workspace:manage`: update the workspace, usage.
          *     - `feedback:write`: feedback.
          *     - `lists:read`: mailing lists, subscriptions, growth, consent exports.
          *     - `lists:write`: create, change and delete lists; add, unsubscribe and delete
@@ -13887,11 +13874,6 @@ export interface components {
             member_id?: string;
             /** Format: uuid */
             contact_id?: string;
-            /**
-             * @description The OAuth client a member wrote this with (its name at the time), as in
-             *     "Ayşe via Claude Code"; absent for the panel and on `/client/v1`.
-             */
-            via?: string;
         };
         /**
          * @description A thread on a documentation page (`kind: page`) or a roadmap idea (`kind: idea`). Its
