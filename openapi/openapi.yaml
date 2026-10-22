@@ -28099,7 +28099,7 @@ components:
       examples: ["#2563eb"]
     StatusPage:
       type: object
-      required: [id, inbox_id, name, description, slug, url, locale, timezone, history_days, show_uptime, show_response_times, published, state, email_subscribers, created_at, updated_at]
+      required: [id, inbox_id, name, description, slug, url, locale, timezone, history_days, show_uptime, show_response_times, show_name, show_follow, published, state, email_subscribers, created_at, updated_at]
       properties:
         id:
           type: string
@@ -28144,6 +28144,18 @@ components:
           description: |
             Whether the public page and its JSON show the last 24 hours of response times of components
             with an `http` or `tcp` monitor, aggregated (median per step, median and p95).
+        show_name:
+          type: boolean
+          description: |
+            Whether the header shows the page name next to the logo. With `false` and a `logo_url`, the
+            header shows only the logo, whose alt text is then the name; without a logo the name always
+            shows.
+        show_follow:
+          type: boolean
+          description: |
+            Whether the page shows the Follow and embed section (Atom feed, badge, JSON and embed code),
+            its link in the header, the feed and badge links in the footer, and the feed link on incident
+            pages. The feed, badge and JSON addresses answer either way.
         published:
           type: boolean
         state:
@@ -28365,6 +28377,12 @@ components:
         show_response_times:
           type: boolean
           description: Default `false`.
+        show_name:
+          type: boolean
+          description: Default `true`.
+        show_follow:
+          type: boolean
+          description: Default `true`.
         published:
           type: boolean
           description: Default `false`.
@@ -28408,6 +28426,10 @@ components:
         show_uptime:
           type: boolean
         show_response_times:
+          type: boolean
+        show_name:
+          type: boolean
+        show_follow:
           type: boolean
         published:
           type: boolean

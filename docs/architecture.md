@@ -2047,7 +2047,10 @@ incident before a customer writes, and the conversations an outage brings are an
   (unique across the server, `a-z0-9-`, 3–48 characters, reserved words refused), logo (storage), accent
   colour, site and support links, locale (`en`, `tr`, `de`, …; the page's words follow it), time zone,
   `history_days` (90), whether uptime is shown, whether response times are shown (`show_response_times`,
-  off by default), and `published`. An unpublished page answers 404 to
+  off by default), whether the header shows the name next to a logo (`show_name`, on by default; off
+  leaves only the logo, with the name as its alt text), whether the page shows the Follow and embed
+  section with its header link, the footer's feed and badge links and the incident pages' feed link
+  (`show_follow`, on by default; the addresses keep answering), and `published`. An unpublished page answers 404 to
   everyone but members, who preview it in the panel. Renaming a slug keeps the old one in
   `status_page_slugs`: it stays reserved for that page, its public paths (page, history, incidents, feed,
   badge, JSON) answer `301` to the current slug, and it is freed only when the page is deleted; a page

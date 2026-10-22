@@ -460,6 +460,54 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/me/mentions/seen": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Mark all your mentions seen
+         * @description Marks every mention `GET /v1/me/mentions` would list as unseen for the calling member as
+         *     seen, without opening the conversations. It records the mentions only: the read cursors
+         *     and "marked unread" flags of the conversations stay as they are, so messages around a
+         *     mention stay unread. Nothing is sent over realtime. Member sessions only.
+         */
+        post: operations["markMentionsSeen"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/mentions/{noteId}/seen": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Mark one mention seen
+         * @description Marks one mention seen without opening its conversation; the read cursor and "marked
+         *     unread" flag stay as they are. Idempotent: an already seen mention gives `marked: 0`.
+         *     Answers `404 not_found` when the note does not mention the member, was written by the
+         *     member, or is in a conversation the member cannot see or in another workspace.
+         *     Opening the conversation still marks its mentions seen through the read cursor. Member
+         *     sessions only.
+         */
+        post: operations["markMentionSeen"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/account": {
         parameters: {
             query?: never;
@@ -685,7 +733,9 @@ export interface paths {
          *     `approval_requested` until the operator answers. `409 invalid_state` unless the status is
          *     `approval_required`.
          *
-         *     Owners only, with a member session.
+         *     Owners only, with a member session or an OAuth token with `workspace:manage` (a person stands
+         *     behind both); API keys are refused (`403 member_session_required`). The answers come from
+         *     the owner, never from an assistant.
          */
         post: operations["requestBroadcastApproval"];
         delete?: never;
@@ -2450,7 +2500,12 @@ export interface paths {
          * Reply as a member
          * @description A reply to the thread (`parent_post_id` absent) or to one of its replies, published at once,
          *     also in locked threads. Replies are one level deep: a reply to a reply answers
-         *     `400 validation_failed`. Followers are notified. Member sessions only.
+         *     `400 validation_failed`. Followers are notified.
+         *
+         *     Members, and OAuth tokens with `messages:write`, which reply as their member; the post's
+         *     `author.via` names the client. A token issued for `/mcp` replies only while the
+         *     workspace's `bots_may_send` is on (`403 bot_sending_disabled`). API keys are refused
+         *     (`403 member_session_required`): a post has no bot author.
          */
         post: operations["createDiscussionPost"];
         delete?: never;
@@ -2472,13 +2527,17 @@ export interface paths {
          * @description Marks a published reply to the thread itself (not a reply to a reply, not the opening post)
          *     as its answer, replacing an earlier one (`400 validation_failed` otherwise), also in locked
          *     threads. Followers are told once (`discussion.answered`). Ideas have no accepted answer
-         *     (`409 not_supported`). Member sessions only.
+         *     (`409 not_supported`). Marking the reply that is already the answer changes nothing.
+         *     Members and OAuth tokens with `messages:write`, as for `createDiscussionPost`; API keys are
+         *     refused (`403 member_session_required`).
          */
         put: operations["acceptDiscussionAnswer"];
         post?: never;
         /**
          * Clear the accepted answer
-         * @description Member sessions only.
+         * @description Clearing a thread without an answer changes nothing. Members and OAuth tokens with
+         *     `messages:write`, as for `createDiscussionPost`; API keys are refused
+         *     (`403 member_session_required`).
          */
         delete: operations["clearDiscussionAnswer"];
         options?: never;
@@ -9953,7 +10012,8 @@ export interface components {
          *       message e-mail and raw source; list labels and canned replies.
          *     - `conversations:write`: create, update (status, assignee, snooze, priority, labels), move
          *       and bulk-update conversations.
-         *     - `messages:write`: outgoing and incoming messages, drafts: create, edit, discard.
+         *     - `messages:write`: outgoing and incoming messages, drafts: create, edit, discard; for
+         *       OAuth tokens also replies to reader threads and their accepted answer.
          *     - `drafts:send`: send a draft (`POST /v1/messages/{id}/send`), together with
          *       `messages:write`.
          *     - `notes:write`: notes.
@@ -9965,7 +10025,8 @@ export interface components {
          *     - `labels:write`: create, update and delete labels.
          *     - `canned_replies:write`: create, update and delete canned replies.
          *     - `webhooks:manage`: webhooks, their deliveries and attempts.
-         *     - `workspace:manage`: update the workspace, usage.
+         *     - `workspace:manage`: update the workspace, usage; for an owner's OAuth token also asking
+         *       the operator to allow broadcasts.
          *     - `feedback:write`: feedback.
          *     - `lists:read`: mailing lists, subscriptions, growth, consent exports.
          *     - `lists:write`: create, change and delete lists; add, unsubscribe and delete
@@ -11370,6 +11431,18 @@ export interface components {
              */
             unseen: number;
         };
+        MentionsSeen: {
+            /**
+             * Format: int64
+             * @description Mentions that were unseen and are marked now.
+             */
+            marked: number;
+            /**
+             * Format: int64
+             * @description Unseen mentions left over all pages.
+             */
+            unseen: number;
+        };
         /**
          * @description `bot`: written with an API key. `assistant`: written by a member through an OAuth client.
          *     `member`: written by a member in the panel.
@@ -11424,6 +11497,14 @@ export interface components {
              * @description Median seconds from the contact's first message to that reply; absent when `first_replies` is 0.
              */
             median_first_reply_seconds?: number;
+            /**
+             * Format: int64
+             * @description Median seconds, over conversations closed in the window, from the first message the
+             *     contact sent after the conversation's previous close (the first one ever when it was
+             *     never closed before) to the last close in the window. Conversations without such a
+             *     message are left out. Follows `inbox_id`; absent when none was closed.
+             */
+            median_resolution_seconds?: number;
             ratings: components["schemas"]["RatingStats"];
             /** @description Per member, by member id. */
             members: components["schemas"]["MemberStats"][];
@@ -13806,6 +13887,11 @@ export interface components {
             member_id?: string;
             /** Format: uuid */
             contact_id?: string;
+            /**
+             * @description The OAuth client a member wrote this with (its name at the time), as in
+             *     "Ayşe via Claude Code"; absent for the panel and on `/client/v1`.
+             */
+            via?: string;
         };
         /**
          * @description A thread on a documentation page (`kind: page`) or a roadmap idea (`kind: idea`). Its
@@ -17199,6 +17285,18 @@ export interface components {
              *     with an `http` or `tcp` monitor, aggregated (median per step, median and p95).
              */
             show_response_times: boolean;
+            /**
+             * @description Whether the header shows the page name next to the logo. With `false` and a `logo_url`, the
+             *     header shows only the logo, whose alt text is then the name; without a logo the name always
+             *     shows.
+             */
+            show_name: boolean;
+            /**
+             * @description Whether the page shows the Follow and embed section (Atom feed, badge, JSON and embed code),
+             *     its link in the header, the feed and badge links in the footer, and the feed link on incident
+             *     pages. The feed, badge and JSON addresses answer either way.
+             */
+            show_follow: boolean;
             published: boolean;
             state: components["schemas"]["StatusComponentStateValue"];
             email_subscribers: components["schemas"]["StatusEmailSubscribers"];
@@ -17360,6 +17458,10 @@ export interface components {
             show_uptime?: boolean;
             /** @description Default `false`. */
             show_response_times?: boolean;
+            /** @description Default `true`. */
+            show_name?: boolean;
+            /** @description Default `true`. */
+            show_follow?: boolean;
             /** @description Default `false`. */
             published?: boolean;
         };
@@ -17380,6 +17482,8 @@ export interface components {
             history_days?: number;
             show_uptime?: boolean;
             show_response_times?: boolean;
+            show_name?: boolean;
+            show_follow?: boolean;
             published?: boolean;
             email_subscribers?: components["schemas"]["StatusEmailSubscribersUpdate"];
             /**
@@ -21544,6 +21648,63 @@ export interface operations {
             400: components["responses"]["Problem"];
             401: components["responses"]["Problem"];
             403: components["responses"]["Problem"];
+        };
+    };
+    markMentionsSeen: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description How many mentions were marked. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MentionsSeen"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+        };
+    };
+    markMentionSeen: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                noteId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The result, with the unseen mentions left. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MentionsSeen"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
         };
     };
     getReaderAccount: {

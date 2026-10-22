@@ -177,7 +177,7 @@ type statusPageView struct {
 	State, StateClass, Headline, OldestDay    string
 	Open, Maint, Recent                       []incidentView
 	Groups                                    []groupView
-	ShowBars                                  bool
+	ShowBars, ShowName, ShowFollow            bool
 	Legend                                    []legendView
 	Cells                                     []cellView
 	Num                                       map[string]string
@@ -532,7 +532,7 @@ func (s *Server) statusView(snap *statusSnap, view string) statusPageView {
 		JSONURL: s.auth.PublicURL + clientStatusPrefix + pg.Slug, State: w.States[state], StateClass: state,
 		Headline: w.Headlines[state], Updated: snap.at(snap.now), Script: template.JS(statusScript),
 		FontSans: snap.url(publicFontPath("Geist")), FontMono: snap.url(publicFontPath("GeistMono")),
-		Mark: yuvaMark, YuvaSite: yuvaSite}
+		Mark: yuvaMark, YuvaSite: yuvaSite, ShowFollow: pg.ShowFollow}
 	v.FeedPath, v.JSONPath = urlPath(v.FeedURL), clientStatusPrefix+pg.Slug
 	v.EmbedCode = `<iframe src="` + snap.url("") + `" title="` + pg.Name + `" width="100%" height="640" style="border:0"></iframe>`
 	v.TimesIn = fillHTML(w.TimesIn, template.HTML(`<span data-zone>`+template.HTMLEscapeString(pg.Timezone)+`</span>`))
@@ -550,6 +550,7 @@ func (s *Server) statusView(snap *statusSnap, view string) statusPageView {
 	if pg.LogoUrl != nil {
 		v.Logo = *pg.LogoUrl
 	}
+	v.ShowName = pg.ShowName || v.Logo == ""
 	if pg.SiteUrl != nil {
 		v.Site = *pg.SiteUrl
 	}
@@ -659,7 +660,11 @@ func (s *Server) statusView(snap *statusSnap, view string) statusPageView {
 		if v.SubscribeURL != "" {
 			subscribe = "subscribe"
 		}
-		v.Num = sectionNumbers("components", response, "recent", subscribe, "follow")
+		follow := ""
+		if v.ShowFollow {
+			follow = "follow"
+		}
+		v.Num = sectionNumbers("components", response, "recent", subscribe, follow)
 		if response != "" {
 			v.Response = snap.pageResponse(v.Num["response"])
 		}
@@ -811,6 +816,10 @@ func (s *Server) incidentDetail(ctx context.Context, snap *statusSnap, v *status
 			v.Affected = append(v.Affected, affectedView{Name: snap.componentName(id)})
 		}
 	}
+	stay := ""
+	if v.SubscribeURL != "" || v.ShowFollow {
+		stay = "stay"
+	}
 	response := ""
 	if snap.page.ShowResponseTimes && inc.State != incScheduled {
 		var monitored []uuid.UUID
@@ -875,11 +884,11 @@ func (s *Server) incidentDetail(ctx context.Context, snap *statusSnap, v *status
 		if len(charts) > 0 {
 			response = "response"
 		}
-		v.Num = sectionNumbers(response, "updates", "affected", "stay")
+		v.Num = sectionNumbers(response, "updates", "affected", stay)
 		v.Response = newResponseView(w, w.ResponseDuring, v.Num["response"], charts)
 		return nil
 	}
-	v.Num = sectionNumbers(response, "updates", "affected", "stay")
+	v.Num = sectionNumbers(response, "updates", "affected", stay)
 	return nil
 }
 

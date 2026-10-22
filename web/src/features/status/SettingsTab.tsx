@@ -288,6 +288,28 @@ function DisplayCard({ page, auto }: { page: StatusPage; auto: Autosave }) {
             data-testid="status-setting-uptime"
           />
         </ToggleRow>
+        <ToggleRow
+          title={<Trans>Show the name next to the logo</Trans>}
+          hint={<Trans>Turn off when the logo already contains the name.</Trans>}
+        >
+          <Switch
+            checked={page.show_name}
+            disabled={patch.isPending}
+            onCheckedChange={(show_name) => save({ show_name })}
+            data-testid="status-setting-show-name"
+          />
+        </ToggleRow>
+        <ToggleRow
+          title={<Trans>Show feed, badge and embed</Trans>}
+          hint={<Trans>The Follow and embed section and the feed and badge links.</Trans>}
+        >
+          <Switch
+            checked={page.show_follow}
+            disabled={patch.isPending}
+            onCheckedChange={(show_follow) => save({ show_follow })}
+            data-testid="status-setting-follow"
+          />
+        </ToggleRow>
       </Card>
     </Section>
   )

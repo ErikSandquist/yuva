@@ -12668,6 +12668,10 @@ msgstr "Arşivlenmiş tasarımları göster"
 msgid "Show as sent"
 msgstr "Gönderildiği gibi göster"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Show feed, badge and embed"
+msgstr "Akışı, rozeti ve yerleştirmeyi göster"
+
 #: src/features/inbox/AssistantsPage.tsx
 msgid "Show full draft"
 msgstr "Taslağın tamamını göster"
@@ -12725,6 +12729,10 @@ msgstr "Konuşma ekranını gösterin"
 #: src/features/reports/ReportPages.tsx
 msgid "Show the last 30 days"
 msgstr "Son 30 günü göster"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Show the name next to the logo"
+msgstr "Adı logonun yanında göster"
 
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Show the number of new updates on the chat button"
@@ -13898,6 +13906,10 @@ msgstr "Sohbetin ilk söylediği"
 #: src/features/migrations/text.ts
 msgid "The folder was recreated and read again"
 msgstr "Klasör yeniden oluşturuldu ve baştan okundu"
+
+#: src/features/status/SettingsTab.tsx
+msgid "The Follow and embed section and the feed and badge links."
+msgstr "Takip et ve yerleştir bölümü ile akış ve rozet bağlantıları."
 
 #: src/features/broadcasts/FormSnippets.tsx
 msgid "The form shows an unticked consent box and stores the exact words the person agreed to. It works only on the sites the chat channel allows; the channel key is public."
@@ -15116,6 +15128,10 @@ msgstr "Kapat"
 #: src/features/broadcasts/ListForm.tsx
 msgid "Turn off for service announcements to existing customers. Consent is needed either way; this is recorded in the consent export."
 msgstr "Mevcut müşterilere hizmet duyuruları için kapatın. İzin her iki durumda da gerekir; bu seçim izin kayıtlarına yazılır."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Turn off when the logo already contains the name."
+msgstr "Logo adı zaten içeriyorsa kapatın."
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Turn on"

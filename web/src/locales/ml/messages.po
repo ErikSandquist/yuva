@@ -12668,6 +12668,10 @@ msgstr "ആർക്കൈവ് ചെയ്ത ഡിസൈനുകൾ കാ
 msgid "Show as sent"
 msgstr "അയച്ചതായി കാണിക്കുക"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Show feed, badge and embed"
+msgstr "ഫീഡ്, ബാഡ്ജ്, എംബെഡ് എന്നിവ കാണിക്കുക"
+
 #: src/features/inbox/AssistantsPage.tsx
 msgid "Show full draft"
 msgstr "പൂർണ്ണ ഡ്രാഫ്റ്റ് കാണിക്കുക"
@@ -12725,6 +12729,10 @@ msgstr "സംഭാഷണ സ്ക്രീൻ കാണിക്കുക"
 #: src/features/reports/ReportPages.tsx
 msgid "Show the last 30 days"
 msgstr "കഴിഞ്ഞ 30 ദിവസം കാണിക്കുക"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Show the name next to the logo"
+msgstr "ലോഗോയ്ക്ക് അരികിൽ പേര് കാണിക്കുക"
 
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Show the number of new updates on the chat button"
@@ -13898,6 +13906,10 @@ msgstr "ചാറ്റ് ആദ്യം പറയുന്നത്"
 #: src/features/migrations/text.ts
 msgid "The folder was recreated and read again"
 msgstr "ഫോൾഡർ വീണ്ടും ഉണ്ടാക്കി വീണ്ടും വായിച്ചു"
+
+#: src/features/status/SettingsTab.tsx
+msgid "The Follow and embed section and the feed and badge links."
+msgstr "ഫോളോ, എംബെഡ് വിഭാഗവും ഫീഡിന്റെയും ബാഡ്ജിന്റെയും ലിങ്കുകളും."
 
 #: src/features/broadcasts/FormSnippets.tsx
 msgid "The form shows an unticked consent box and stores the exact words the person agreed to. It works only on the sites the chat channel allows; the channel key is public."
@@ -15116,6 +15128,10 @@ msgstr "ഓഫാക്കുക"
 #: src/features/broadcasts/ListForm.tsx
 msgid "Turn off for service announcements to existing customers. Consent is needed either way; this is recorded in the consent export."
 msgstr "നിലവിലുള്ള ഉപഭോക്താക്കൾക്കുള്ള സേവന അറിയിപ്പുകൾക്ക് ഓഫാക്കുക. എന്തായാലും സമ്മതം ആവശ്യമാണ്; ഇത് സമ്മത എക്സ്പോർട്ടിൽ രേഖപ്പെടുത്തുന്നു."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Turn off when the logo already contains the name."
+msgstr "ലോഗോയിൽ ഇതിനകം പേര് ഉണ്ടെങ്കിൽ ഇത് ഓഫാക്കുക."
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Turn on"

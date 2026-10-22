@@ -12668,6 +12668,10 @@ msgstr "แสดงดีไซน์ที่เก็บถาวร"
 msgid "Show as sent"
 msgstr "แสดงว่าส่งแล้ว"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Show feed, badge and embed"
+msgstr "แสดงฟีด ป้าย และการฝัง"
+
 #: src/features/inbox/AssistantsPage.tsx
 msgid "Show full draft"
 msgstr "แสดงฉบับร่างทั้งหมด"
@@ -12725,6 +12729,10 @@ msgstr "แสดงหน้าจอการสนทนา"
 #: src/features/reports/ReportPages.tsx
 msgid "Show the last 30 days"
 msgstr "แสดง 30 วันที่ผ่านมา"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Show the name next to the logo"
+msgstr "แสดงชื่อข้างโลโก้"
 
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Show the number of new updates on the chat button"
@@ -13898,6 +13906,10 @@ msgstr "สิ่งแรกที่แชตพูด"
 #: src/features/migrations/text.ts
 msgid "The folder was recreated and read again"
 msgstr "สร้างโฟลเดอร์ใหม่และอ่านอีกครั้งแล้ว"
+
+#: src/features/status/SettingsTab.tsx
+msgid "The Follow and embed section and the feed and badge links."
+msgstr "ส่วนติดตามและฝัง รวมถึงลิงก์ไปยังฟีดและป้าย"
 
 #: src/features/broadcasts/FormSnippets.tsx
 msgid "The form shows an unticked consent box and stores the exact words the person agreed to. It works only on the sites the chat channel allows; the channel key is public."
@@ -15116,6 +15128,10 @@ msgstr "ปิด"
 #: src/features/broadcasts/ListForm.tsx
 msgid "Turn off for service announcements to existing customers. Consent is needed either way; this is recorded in the consent export."
 msgstr "ปิดสำหรับประกาศบริการถึงลูกค้าที่มีอยู่ ไม่ว่าอย่างไรก็ต้องมีความยินยอม สิ่งนี้ถูกบันทึกในไฟล์ส่งออกความยินยอม"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Turn off when the logo already contains the name."
+msgstr "ปิดเมื่อโลโก้มีชื่ออยู่แล้ว"
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Turn on"

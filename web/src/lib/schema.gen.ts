@@ -733,7 +733,9 @@ export interface paths {
          *     `approval_requested` until the operator answers. `409 invalid_state` unless the status is
          *     `approval_required`.
          *
-         *     Owners only, with a member session.
+         *     Owners only, with a member session or an OAuth token with `workspace:manage` (a person stands
+         *     behind both); API keys are refused (`403 member_session_required`). The answers come from
+         *     the owner, never from an assistant.
          */
         post: operations["requestBroadcastApproval"];
         delete?: never;
@@ -2498,7 +2500,12 @@ export interface paths {
          * Reply as a member
          * @description A reply to the thread (`parent_post_id` absent) or to one of its replies, published at once,
          *     also in locked threads. Replies are one level deep: a reply to a reply answers
-         *     `400 validation_failed`. Followers are notified. Member sessions only.
+         *     `400 validation_failed`. Followers are notified.
+         *
+         *     Members, and OAuth tokens with `messages:write`, which reply as their member; the post's
+         *     `author.via` names the client. A token issued for `/mcp` replies only while the
+         *     workspace's `bots_may_send` is on (`403 bot_sending_disabled`). API keys are refused
+         *     (`403 member_session_required`): a post has no bot author.
          */
         post: operations["createDiscussionPost"];
         delete?: never;
@@ -2520,13 +2527,17 @@ export interface paths {
          * @description Marks a published reply to the thread itself (not a reply to a reply, not the opening post)
          *     as its answer, replacing an earlier one (`400 validation_failed` otherwise), also in locked
          *     threads. Followers are told once (`discussion.answered`). Ideas have no accepted answer
-         *     (`409 not_supported`). Member sessions only.
+         *     (`409 not_supported`). Marking the reply that is already the answer changes nothing.
+         *     Members and OAuth tokens with `messages:write`, as for `createDiscussionPost`; API keys are
+         *     refused (`403 member_session_required`).
          */
         put: operations["acceptDiscussionAnswer"];
         post?: never;
         /**
          * Clear the accepted answer
-         * @description Member sessions only.
+         * @description Clearing a thread without an answer changes nothing. Members and OAuth tokens with
+         *     `messages:write`, as for `createDiscussionPost`; API keys are refused
+         *     (`403 member_session_required`).
          */
         delete: operations["clearDiscussionAnswer"];
         options?: never;
@@ -10001,7 +10012,8 @@ export interface components {
          *       message e-mail and raw source; list labels and canned replies.
          *     - `conversations:write`: create, update (status, assignee, snooze, priority, labels), move
          *       and bulk-update conversations.
-         *     - `messages:write`: outgoing and incoming messages, drafts: create, edit, discard.
+         *     - `messages:write`: outgoing and incoming messages, drafts: create, edit, discard; for
+         *       OAuth tokens also replies to reader threads and their accepted answer.
          *     - `drafts:send`: send a draft (`POST /v1/messages/{id}/send`), together with
          *       `messages:write`.
          *     - `notes:write`: notes.
@@ -10013,7 +10025,8 @@ export interface components {
          *     - `labels:write`: create, update and delete labels.
          *     - `canned_replies:write`: create, update and delete canned replies.
          *     - `webhooks:manage`: webhooks, their deliveries and attempts.
-         *     - `workspace:manage`: update the workspace, usage.
+         *     - `workspace:manage`: update the workspace, usage; for an owner's OAuth token also asking
+         *       the operator to allow broadcasts.
          *     - `feedback:write`: feedback.
          *     - `lists:read`: mailing lists, subscriptions, growth, consent exports.
          *     - `lists:write`: create, change and delete lists; add, unsubscribe and delete
@@ -13874,6 +13887,11 @@ export interface components {
             member_id?: string;
             /** Format: uuid */
             contact_id?: string;
+            /**
+             * @description The OAuth client a member wrote this with (its name at the time), as in
+             *     "Ayşe via Claude Code"; absent for the panel and on `/client/v1`.
+             */
+            via?: string;
         };
         /**
          * @description A thread on a documentation page (`kind: page`) or a roadmap idea (`kind: idea`). Its
@@ -17267,6 +17285,18 @@ export interface components {
              *     with an `http` or `tcp` monitor, aggregated (median per step, median and p95).
              */
             show_response_times: boolean;
+            /**
+             * @description Whether the header shows the page name next to the logo. With `false` and a `logo_url`, the
+             *     header shows only the logo, whose alt text is then the name; without a logo the name always
+             *     shows.
+             */
+            show_name: boolean;
+            /**
+             * @description Whether the page shows the Follow and embed section (Atom feed, badge, JSON and embed code),
+             *     its link in the header, the feed and badge links in the footer, and the feed link on incident
+             *     pages. The feed, badge and JSON addresses answer either way.
+             */
+            show_follow: boolean;
             published: boolean;
             state: components["schemas"]["StatusComponentStateValue"];
             email_subscribers: components["schemas"]["StatusEmailSubscribers"];
@@ -17428,6 +17458,10 @@ export interface components {
             show_uptime?: boolean;
             /** @description Default `false`. */
             show_response_times?: boolean;
+            /** @description Default `true`. */
+            show_name?: boolean;
+            /** @description Default `true`. */
+            show_follow?: boolean;
             /** @description Default `false`. */
             published?: boolean;
         };
@@ -17448,6 +17482,8 @@ export interface components {
             history_days?: number;
             show_uptime?: boolean;
             show_response_times?: boolean;
+            show_name?: boolean;
+            show_follow?: boolean;
             published?: boolean;
             email_subscribers?: components["schemas"]["StatusEmailSubscribersUpdate"];
             /**

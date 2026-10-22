@@ -12668,6 +12668,10 @@ msgstr "הצגת עיצובים בארכיון"
 msgid "Show as sent"
 msgstr "הצגה כנשלח"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Show feed, badge and embed"
+msgstr "הצגת פיד, תג והטמעה"
+
 #: src/features/inbox/AssistantsPage.tsx
 msgid "Show full draft"
 msgstr "הצגת הטיוטה המלאה"
@@ -12725,6 +12729,10 @@ msgstr "הצגת מסך השיחה"
 #: src/features/reports/ReportPages.tsx
 msgid "Show the last 30 days"
 msgstr "הצג את 30 הימים האחרונים"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Show the name next to the logo"
+msgstr "הצגת השם לצד הלוגו"
 
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Show the number of new updates on the chat button"
@@ -13898,6 +13906,10 @@ msgstr "הדבר הראשון שהצ׳אט אומר"
 #: src/features/migrations/text.ts
 msgid "The folder was recreated and read again"
 msgstr "התיקייה נוצרה מחדש ונקראה שוב"
+
+#: src/features/status/SettingsTab.tsx
+msgid "The Follow and embed section and the feed and badge links."
+msgstr "אזור המעקב וההטמעה והקישורים לפיד ולתג."
 
 #: src/features/broadcasts/FormSnippets.tsx
 msgid "The form shows an unticked consent box and stores the exact words the person agreed to. It works only on the sites the chat channel allows; the channel key is public."
@@ -15116,6 +15128,10 @@ msgstr "כיבוי"
 #: src/features/broadcasts/ListForm.tsx
 msgid "Turn off for service announcements to existing customers. Consent is needed either way; this is recorded in the consent export."
 msgstr "כבה להודעות שירות ללקוחות קיימים. נדרשת הסכמה בכל מקרה; זה נרשם בייצוא ההסכמות."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Turn off when the logo already contains the name."
+msgstr "כבה כשהלוגו כבר כולל את השם."
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Turn on"

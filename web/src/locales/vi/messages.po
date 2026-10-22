@@ -12668,6 +12668,10 @@ msgstr "Hiện thiết kế đã lưu trữ"
 msgid "Show as sent"
 msgstr "Hiện như đã gửi"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Show feed, badge and embed"
+msgstr "Hiện nguồn cấp, huy hiệu và mã nhúng"
+
 #: src/features/inbox/AssistantsPage.tsx
 msgid "Show full draft"
 msgstr "Hiện toàn bộ bản nháp"
@@ -12725,6 +12729,10 @@ msgstr "Hiện màn hình cuộc trò chuyện"
 #: src/features/reports/ReportPages.tsx
 msgid "Show the last 30 days"
 msgstr "Hiện 30 ngày qua"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Show the name next to the logo"
+msgstr "Hiện tên bên cạnh logo"
 
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Show the number of new updates on the chat button"
@@ -13898,6 +13906,10 @@ msgstr "Điều đầu tiên chat nói"
 #: src/features/migrations/text.ts
 msgid "The folder was recreated and read again"
 msgstr "Thư mục đã được tạo lại và đọc lại"
+
+#: src/features/status/SettingsTab.tsx
+msgid "The Follow and embed section and the feed and badge links."
+msgstr "Phần theo dõi và nhúng cùng các liên kết đến nguồn cấp và huy hiệu."
 
 #: src/features/broadcasts/FormSnippets.tsx
 msgid "The form shows an unticked consent box and stores the exact words the person agreed to. It works only on the sites the chat channel allows; the channel key is public."
@@ -15116,6 +15128,10 @@ msgstr "Tắt"
 #: src/features/broadcasts/ListForm.tsx
 msgid "Turn off for service announcements to existing customers. Consent is needed either way; this is recorded in the consent export."
 msgstr "Tắt cho thông báo dịch vụ gửi khách hàng hiện có. Dù thế nào cũng cần sự đồng ý; điều này được ghi trong bản xuất sự đồng ý."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Turn off when the logo already contains the name."
+msgstr "Tắt khi logo đã có sẵn tên."
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Turn on"

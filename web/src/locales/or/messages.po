@@ -12668,6 +12668,10 @@ msgstr "ଆର୍କାଇଭ୍ ଡିଜାଇନ୍ ଦେଖାନ୍ତୁ"
 msgid "Show as sent"
 msgstr "ପଠାଯାଇଥିବା ଭାବେ ଦେଖାନ୍ତୁ"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Show feed, badge and embed"
+msgstr "ଫିଡ୍, ବ୍ୟାଜ୍ ଏବଂ ଏମ୍ବେଡ୍ ଦେଖାନ୍ତୁ"
+
 #: src/features/inbox/AssistantsPage.tsx
 msgid "Show full draft"
 msgstr "ପୂରା ଡ୍ରାଫ୍ଟ ଦେଖାନ୍ତୁ"
@@ -12725,6 +12729,10 @@ msgstr "କଥାବାର୍ତ୍ତା ସ୍କ୍ରିନ୍ ଦେଖା�
 #: src/features/reports/ReportPages.tsx
 msgid "Show the last 30 days"
 msgstr "ଗତ 30 ଦିନ ଦେଖାନ୍ତୁ"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Show the name next to the logo"
+msgstr "ଲୋଗୋ ପାଖରେ ନାମ ଦେଖାନ୍ତୁ"
 
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Show the number of new updates on the chat button"
@@ -13898,6 +13906,10 @@ msgstr "ଚ୍ୟାଟ୍ ପ୍ରଥମେ ଯାହା କହେ"
 #: src/features/migrations/text.ts
 msgid "The folder was recreated and read again"
 msgstr "ଫୋଲ୍ଡର ପୁଣି ତିଆରି ହେଲା ଓ ପୁଣି ପଢ଼ାଗଲା"
+
+#: src/features/status/SettingsTab.tsx
+msgid "The Follow and embed section and the feed and badge links."
+msgstr "ଫଲୋ ଏବଂ ଏମ୍ବେଡ୍ ବିଭାଗ ଏବଂ ଫିଡ୍ ଓ ବ୍ୟାଜ୍‌ର ଲିଙ୍କ।"
 
 #: src/features/broadcasts/FormSnippets.tsx
 msgid "The form shows an unticked consent box and stores the exact words the person agreed to. It works only on the sites the chat channel allows; the channel key is public."
@@ -15116,6 +15128,10 @@ msgstr "ବନ୍ଦ କରନ୍ତୁ"
 #: src/features/broadcasts/ListForm.tsx
 msgid "Turn off for service announcements to existing customers. Consent is needed either way; this is recorded in the consent export."
 msgstr "ଅସ୍ତିତ୍ୱରେ ଥିବା ଗ୍ରାହକଙ୍କୁ ସେବା ଘୋଷଣା ପାଇଁ ବନ୍ଦ କରନ୍ତୁ। ଉଭୟ କ୍ଷେତ୍ରରେ ସମ୍ମତି ଦରକାର; ଏହା ସମ୍ମତି ଏକ୍ସପୋର୍ଟରେ ଦର୍ଜ ହୁଏ।"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Turn off when the logo already contains the name."
+msgstr "ଲୋଗୋରେ ପୂର୍ବରୁ ନାମ ଥିଲେ ଏହାକୁ ବନ୍ଦ କରନ୍ତୁ।"
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Turn on"
