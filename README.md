@@ -34,50 +34,16 @@ You host it yourself: one Docker image and Postgres.
 
 ## Features
 
-**Conversations**
+| | |
+|---|---|
+| **Conversations** | One inbox per product with its own branding, language, hours and team. [E-mail](docs/email.md), [live chat](docs/widget.md), [in-app messages](docs/mobile.md) and app feedback in one thread, with notes, labels, mentions and bot drafts a member reviews. |
+| **Reach** | [Mailing lists](docs/lists.md) with consent records and [imports](docs/importing.md), [e-mail designs](docs/designs.md) from templates, [broadcasts](docs/broadcasts.md) with approval and reports, and a [deliverability check](docs/deliverability.md). |
+| **Publish** | [Help center](docs/help-center.md), [documentation pages](docs/documentation-pages.md), [status pages](docs/status-pages.md) on your own domain, a [roadmap board](docs/roadmap-board.md) and [What's new](docs/whats-new.md). |
+| **Insights** | [Cookieless analytics](docs/analytics.md) for websites and apps, and a [support report](docs/analytics-support.md) that ranks pages by the conversations they cause. |
+| **Move in** | [Migrations](docs/migrate.md) of history and live mail from Gmail, Microsoft 365, Yandex, iCloud, Zoho, any IMAP server, Zendesk and Help Scout. The old mailbox is only read. |
+| **Build on it** | A REST [API](openapi/openapi.yaml) with scoped keys, signed [webhooks](docs/webhooks.md), [identity tokens](docs/identity.md), [headless](docs/headless.md) mode, and an [MCP server](docs/mcp.md) with OAuth for Claude, Cursor, VS Code and other assistants. |
 
-- One inbox per product, each with its own branding, language, hours and team.
-- [E-mail](docs/email.md), [live chat](docs/widget.md) and [in-app messages](docs/mobile.md) in one
-  conversation, with attachments, notes, labels, canned replies and @mentions for teammates.
-- [Feedback](docs/mobile.md) from your apps, with progress (planned, in progress, done) the sender
-  can follow.
-- Bots and assistants write [drafts](docs/headless.md#a-bot-that-answers-with-drafts) that a member
-  reviews and sends.
-
-**Reach**
-
-- [Mailing lists](docs/lists.md) with consent records, [imports](docs/importing.md) and exports.
-- [E-mail designs](docs/designs.md) built from blocks and a theme, starting from the templates that ship with Yuva.
-- [Broadcasts](docs/broadcasts.md) with scheduling, approval and reports, and a
-  [deliverability check](docs/deliverability.md) for your sending domain.
-
-**Help and publishing**
-
-- [Help center](docs/help-center.md) with search and a report of what readers look for.
-- [Documentation pages](docs/documentation-pages.md) with discussions and "Was this page helpful?".
-- [Status pages](docs/status-pages.md) with components, incidents, heartbeats, e-mail subscribers
-  and your own domain.
-- [Roadmap board](docs/roadmap-board.md) with votes, and [What's new](docs/whats-new.md) for release
-  notes.
-
-**Insights**
-
-- [Cookieless analytics](docs/analytics.md) for websites and apps, with a
-  [support report](docs/analytics-support.md) that ranks pages by the conversations they cause.
-
-**Move to Yuva**
-
-- [Migrations](docs/migrate.md) of mail history and then live mail from Gmail, Google Workspace,
-  Outlook and Microsoft 365, Yandex, iCloud, Zoho, Yahoo, Fastmail, GMX, any IMAP server, Zendesk
-  and Help Scout. The old mailbox is only read.
-
-**Build on it**
-
-- A REST [API](openapi/openapi.yaml) with scoped keys, signed [webhooks](docs/webhooks.md), an event
-  feed and [identity tokens](docs/identity.md) for your signed-in users.
-- [Headless](docs/headless.md) mode: use the API without the panel.
-- An [MCP server](docs/mcp.md) with OAuth, so Claude, Cursor, VS Code and other assistants can triage
-  the inbox, draft replies, set up channels and read analytics.
+Built with Go, Postgres and a React panel, shipped as one Docker image.
 
 <table>
   <tr>
@@ -149,22 +115,16 @@ Working projects are in [examples](examples).
 
 ## Documentation
 
-| | |
-|---|---|
-| **Run it** | [Install](docs/install.md) · [Configuration](docs/configuration.md) · [Operations](docs/operations.md) |
-| **Conversations** | [E-mail](docs/email.md) · [Web widget](docs/widget.md) · [Mobile SDKs](docs/mobile.md) · [Identity tokens](docs/identity.md) |
-| **Reach** | [Mailing lists](docs/lists.md) · [Importing](docs/importing.md) · [Designs](docs/designs.md) · [Broadcasts](docs/broadcasts.md) · [Deliverability](docs/deliverability.md) |
-| **Publish** | [Help center](docs/help-center.md) · [Documentation pages](docs/documentation-pages.md) · [Status pages](docs/status-pages.md) · [Roadmap board](docs/roadmap-board.md) · [What's new](docs/whats-new.md) |
-| **Analytics** | [Overview](docs/analytics.md) · [Apps](docs/analytics-apps.md) · [Events](docs/analytics-events.md) · [Consent](docs/analytics-consent.md) · [Privacy](docs/analytics-privacy.md) · [Sharing](docs/analytics-sharing.md) |
-| **Move** | [Move to Yuva](docs/migrate.md) · [Files](docs/migrate-files.md) · [Operators](docs/migrate-operators.md) |
-| **Build** | [Headless](docs/headless.md) · [Webhooks](docs/webhooks.md) · [MCP](docs/mcp.md) · [API contract](openapi/openapi.yaml) · [Examples](examples) |
-| **Project** | [Architecture](docs/architecture.md) · [Roadmap](docs/roadmap.md) · [Changelog](CHANGELOG.md) |
-
-The guides are also in [Turkish](docs/tr) and [German](docs/de).
+Guides, the API reference and examples are at [useyuva.com/docs](https://useyuva.com/docs/), and in
+[docs/](docs) (also in [Turkish](docs/tr) and [German](docs/de)). How it is built:
+[architecture](docs/architecture.md). What is next: [roadmap](docs/roadmap.md). What changed:
+[changelog](CHANGELOG.md).
 
 ## Community and contributing
 
 Read [CONTRIBUTING.md](CONTRIBUTING.md) first; contributions are made under the [CLA](CLA.md).
+For a local server with Postgres and Mailpit, which catches every mail it sends, run
+`docker compose -f deploy/compose.yaml up -d`.
 Ask questions and report bugs in [issues](https://github.com/productdevbook/yuva/issues), and follow
 [@useyuva](https://x.com/useyuva) for news.
 
