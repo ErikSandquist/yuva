@@ -2656,6 +2656,10 @@ msgstr "तुमच्या AI सहाय्यकात Yuva"
 msgid "Yuva is pre-alpha. Every release, the roadmap and the code are public, so you can see exactly where it stands."
 msgstr "Yuva प्री-अल्फा आहे. प्रत्येक रिलीज, रोडमॅप आणि कोड सार्वजनिक आहेत, त्यामुळे ते नेमके कुठे आहे ते तुम्ही पाहू शकता."
 
+#: src/layouts/Footer.astro
+msgid "Yuva on X"
+msgstr "X वर Yuva"
+
 #: src/copy/status.ts
 msgid "Yuva opens a connection to a host and port and checks that it answers."
 msgstr "Yuva एका होस्ट आणि पोर्टशी कनेक्शन उघडते आणि तो उत्तर देतो का ते तपासते."

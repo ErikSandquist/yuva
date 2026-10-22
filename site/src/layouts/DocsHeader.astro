@@ -7,6 +7,7 @@ import { appUrl, home, links, type Locale } from "@/lib/routes"
 import Cross from "@/ui/Cross.astro"
 import DocsSearch from "@/ui/DocsSearch.astro"
 import GitHubIcon from "@/ui/GitHubIcon.astro"
+import XIcon from "@/ui/XIcon.astro"
 import ThemeToggle from "@/ui/ThemeToggle.astro"
 import LangMenu from "@/ui/LangMenu.astro"
 import Logo from "@/ui/Logo.astro"
@@ -66,6 +67,13 @@ const tab =
           aria-label="GitHub"
         >
           <GitHubIcon size={18} />
+        </a>
+        <a
+          class="hidden size-9 place-items-center rounded-md text-ink-soft hover:bg-paper-deep hover:text-ink md:grid"
+          href={links.x}
+          aria-label="X"
+        >
+          <XIcon size={16} />
         </a>
         <a
           class="hidden h-9 items-center rounded-full px-3 text-sm font-medium text-ink-soft hover:bg-paper-deep hover:text-ink md:inline-flex"

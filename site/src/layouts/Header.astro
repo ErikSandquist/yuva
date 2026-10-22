@@ -5,6 +5,7 @@ import { appUrl, bcp47, brand, brandAssets, home, languageName, links, locales, 
 import Icon from "@/ui/Icon.astro"
 import Cross from "@/ui/Cross.astro"
 import GitHubIcon from "@/ui/GitHubIcon.astro"
+import XIcon from "@/ui/XIcon.astro"
 import ThemeToggle from "@/ui/ThemeToggle.astro"
 import LangMenu from "@/ui/LangMenu.astro"
 import Logo from "@/ui/Logo.astro"
@@ -142,6 +143,13 @@ const item =
         aria-label="GitHub"
       >
         <GitHubIcon size={16} />
+      </a>
+      <a
+        class="hidden size-8 place-items-center rounded-md text-ink-soft hover:bg-paper-deep hover:text-ink lg:grid"
+        href={links.x}
+        aria-label="X"
+      >
+        <XIcon size={14} />
       </a>
       <a
         class="hidden h-9 items-center rounded-full px-3 text-sm font-medium text-ink-soft transition-colors hover:bg-paper-deep hover:text-ink lg:inline-flex"

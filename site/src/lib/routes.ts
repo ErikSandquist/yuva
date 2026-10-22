@@ -143,8 +143,10 @@ export const VERSION = "0.0.32"
 
 export const REPO = "https://github.com/productdevbook/yuva"
 export const doc = (name: string) => `${REPO}/blob/main/${name}`
+export const X_URL = "https://x.com/useyuva"
 export const links = {
   repo: REPO,
+  x: X_URL,
   docs: "/docs/",
   api: "/docs/api/",
   install: "/docs/install/",

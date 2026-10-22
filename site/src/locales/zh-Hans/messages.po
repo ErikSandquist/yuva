@@ -2656,6 +2656,10 @@ msgstr "你的 AI 助手中的 Yuva"
 msgid "Yuva is pre-alpha. Every release, the roadmap and the code are public, so you can see exactly where it stands."
 msgstr "Yuva 处于预览前期。每个版本、路线图和代码都是公开的，所以你能清楚看到它的进展。"
 
+#: src/layouts/Footer.astro
+msgid "Yuva on X"
+msgstr "Yuva 的 X 账号"
+
 #: src/copy/status.ts
 msgid "Yuva opens a connection to a host and port and checks that it answers."
 msgstr "Yuva 会打开到某个主机和端口的连接，并检查它是否响应。"

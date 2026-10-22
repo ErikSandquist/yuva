@@ -2656,6 +2656,10 @@ msgstr "Yuva trong trợ lý AI của bạn"
 msgid "Yuva is pre-alpha. Every release, the roadmap and the code are public, so you can see exactly where it stands."
 msgstr "Yuva đang ở giai đoạn tiền alpha. Mọi bản phát hành, lộ trình và mã nguồn đều công khai, nên bạn thấy chính xác nó đang ở đâu."
 
+#: src/layouts/Footer.astro
+msgid "Yuva on X"
+msgstr "Yuva trên X"
+
 #: src/copy/status.ts
 msgid "Yuva opens a connection to a host and port and checks that it answers."
 msgstr "Yuva mở kết nối tới một máy chủ và cổng và kiểm tra xem nó có phản hồi không."

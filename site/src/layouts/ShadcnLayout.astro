@@ -8,6 +8,7 @@ import { appUrl, docsRoot, home, links, type Locale } from "@/lib/routes"
 import { byGroup, groupOrder, shadcnHref, shadcnPaths } from "@/lib/shadcn"
 import Cross from "@/ui/Cross.astro"
 import GitHubIcon from "@/ui/GitHubIcon.astro"
+import XIcon from "@/ui/XIcon.astro"
 import LangMenu from "@/ui/LangMenu.astro"
 import Logo from "@/ui/Logo.astro"
 import ShadcnNav from "@/ui/ShadcnNav.astro"
@@ -70,6 +71,13 @@ const strip = "relative flex h-11 items-center gap-2 border-b border-rule px-5 t
           aria-label="GitHub"
         >
           <GitHubIcon size={18} />
+        </a>
+        <a
+          class="hidden size-9 place-items-center rounded-md text-ink-soft hover:bg-paper-deep hover:text-ink md:grid"
+          href={links.x}
+          aria-label="X"
+        >
+          <XIcon size={16} />
         </a>
         <a
           class="hidden h-9 items-center rounded-full bg-signal px-4 text-sm font-medium text-white hover:bg-signal/90 md:inline-flex"
