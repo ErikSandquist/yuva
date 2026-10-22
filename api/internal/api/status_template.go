@@ -177,8 +177,8 @@ var statusTemplate = template.Must(template.New("status").Parse(`<!doctype html>
 </div>{{end}}
 </div></section>{{end}}
 <header class="band"><div class="col bar">{{template "x"}}
-<a class="brandmark" href="{{.Home}}">{{if .Logo}}<img src="{{.Logo}}" alt="">{{end}}<span class="name">{{.Name}}</span><span class="label">{{.W.Status}}</span></a>
-<nav class="top">{{if ne .View "page"}}<a href="{{.Home}}"><span class="fl">←</span> {{.W.Back}}</a>{{end}}{{if ne .View "history"}}<a href="{{.HistoryURL}}">{{.W.History}}</a>{{end}}{{if eq .View "page"}}<a href="#follow">{{.W.Follow}}</a>{{end}}
+<a class="brandmark" href="{{.Home}}">{{if .Logo}}<img src="{{.Logo}}" alt="{{if not .ShowName}}{{.Name}}{{end}}">{{end}}{{if .ShowName}}<span class="name">{{.Name}}</span>{{end}}<span class="label">{{.W.Status}}</span></a>
+<nav class="top">{{if ne .View "page"}}<a href="{{.Home}}"><span class="fl">←</span> {{.W.Back}}</a>{{end}}{{if ne .View "history"}}<a href="{{.HistoryURL}}">{{.W.History}}</a>{{end}}{{if and (eq .View "page") .ShowFollow}}<a href="#follow">{{.W.Follow}}</a>{{end}}
 {{if .Site}}<a href="{{.Site}}" rel="noopener">{{.W.Site}}</a>{{end}}{{if .Support}}<a href="{{.Support}}" rel="noopener">{{.W.Support}}</a>{{end}}
 {{if and .Self (gt (len .Langs) 1)}}<form class="lang" method="get" action="{{.Self}}">{{range .Keep}}<input type="hidden" name="{{.Name}}" value="{{.Value}}">{{end}}<label><span class="sr">{{.W.Language}}</span><svg class="globe" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="8" cy="8" r="6.3"/><path d="M1.7 8h12.6M8 1.7c1.8 1.8 2.6 3.9 2.6 6.3S9.8 12.5 8 14.3M8 1.7C6.2 3.5 5.4 5.6 5.4 8s.8 4.5 2.6 6.3"/></svg><select name="lang" data-lang>{{range .Langs}}<option value="{{.Code}}" lang="{{.Code}}"{{if .On}} selected{{end}}>{{.Name}}</option>{{end}}</select><svg class="chev" viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4.5l3 3 3-3"/></svg></label><button class="go" type="submit">{{.W.Apply}}</button></form>{{end}}
 </nav></div></header>
@@ -196,7 +196,7 @@ var statusTemplate = template.Must(template.New("status").Parse(`<!doctype html>
 <div class="body">{{if .Body}}<p>{{.Body}}</p>{{end}}</div></article>{{end}}</div></div></section>
 <section class="band"><div class="col grid">{{template "x"}}
 <div class="pad"><span class="label">{{.Num.affected}} — {{.W.Affected}}</span>{{range .Affected}}<div class="aff"><b>{{.Name}}</b><span class="sm soft">{{.Text}}</span></div>{{else}}<span class="soft">–</span>{{end}}</div>
-<div class="pad"><span class="label">{{.Num.stay}} — {{.W.StayInformed}}</span><span class="soft">{{.W.StayText}}</span><span class="links">{{if .SubscribeURL}}<a class="accent" href="{{.SubscribeURL}}" target="_top">{{.W.SubscribeHead}} <span class="fl">→</span></a>{{end}}<a class="accent" href="{{.FeedURL}}">{{.W.Feed}} <span class="fl">→</span></a></span></div>
+{{if .Num.stay}}<div class="pad"><span class="label">{{.Num.stay}} — {{.W.StayInformed}}</span><span class="soft">{{.W.StayText}}</span><span class="links">{{if .SubscribeURL}}<a class="accent" href="{{.SubscribeURL}}" target="_top">{{.W.SubscribeHead}} <span class="fl">→</span></a>{{end}}{{if .ShowFollow}}<a class="accent" href="{{.FeedURL}}">{{.W.Feed}} <span class="fl">→</span></a>{{end}}</span></div>{{end}}
 </div></section>
 {{else if eq .View "history"}}
 <section class="band"><div class="col grid">{{template "x"}}
@@ -233,16 +233,16 @@ var statusTemplate = template.Must(template.New("status").Parse(`<!doctype html>
 <form class="sub-form" method="get" action="{{.SubscribeURL}}" target="_top">{{if .Picks}}<div class="picks">{{range .Picks}}<label class="chip"><input type="checkbox" name="components" value="{{.ID}}"><span>{{.Name}}</span></label>{{end}}</div>{{end}}<button class="btn" type="submit">{{.W.SubscribeGo}}</button></form>
 <p class="sm soft">{{if .Picks}}{{.W.SubscribeText}}{{else}}{{.W.Subscribe}}{{end}}</p></div>{{end}}
 </div></section>
-<section class="band" id="follow"><div class="col">{{template "x"}}<div class="head"><span class="label">{{.Num.follow}} — {{.W.FollowEmbed}}</span></div>
+{{if .ShowFollow}}<section class="band" id="follow"><div class="col">{{template "x"}}<div class="head"><span class="label">{{.Num.follow}} — {{.W.FollowEmbed}}</span></div>
 <div class="grid g4">
 <div class="follow"><b>{{.W.Feed}}</b><span class="sm soft">{{.W.FeedText}}</span><a class="mono accent" href="{{.FeedURL}}">{{.FeedPath}}</a></div>
 <div class="follow"><b>{{.W.Badge}}</b><span class="sm soft">{{.W.BadgeText}}</span><a href="{{.BadgeURL}}"><img src="{{.BadgeURL}}" alt="{{.State}}" height="20"></a></div>
 <div class="follow"><b>JSON</b><span class="sm soft">{{.W.JSONText}}</span><a class="mono accent" href="{{.JSONURL}}">{{.JSONPath}}</a></div>
 <div class="follow"><b>{{.W.Embed}}</b><span class="sm soft">{{.W.EmbedText}}</span><code>{{.EmbedCode}}</code></div>
-</div></div></section>
+</div></div></section>{{end}}
 {{end}}
 </main>
 <footer><div class="col foot"><span>{{.TimesIn}} <a class="powered" href="{{.YuvaSite}}" rel="noopener">{{.Mark}}{{.W.Powered}}</a></span>
-<span class="links">{{if .Support}}<a href="{{.Support}}" rel="noopener">{{.W.Support}}</a>{{end}}<a href="{{.FeedURL}}">feed.atom</a><a href="{{.BadgeURL}}">badge.svg</a><span>{{.W.Updated}}: <time datetime="{{.Updated.ISO}}" data-local>{{.Updated.Text}}</time></span></span></div></footer>
+<span class="links">{{if .Support}}<a href="{{.Support}}" rel="noopener">{{.W.Support}}</a>{{end}}{{if .ShowFollow}}<a href="{{.FeedURL}}">feed.atom</a><a href="{{.BadgeURL}}">badge.svg</a>{{end}}<span>{{.W.Updated}}: <time datetime="{{.Updated.ISO}}" data-local>{{.Updated.Text}}</time></span></span></div></footer>
 <script>{{.Script}}</script>
 </body></html>`))

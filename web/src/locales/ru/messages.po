@@ -12668,6 +12668,10 @@ msgstr "Показать архивные дизайны"
 msgid "Show as sent"
 msgstr "Показывать как отправленное"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Show feed, badge and embed"
+msgstr "Показывать ленту, значок и встраивание"
+
 #: src/features/inbox/AssistantsPage.tsx
 msgid "Show full draft"
 msgstr "Показать весь черновик"
@@ -12725,6 +12729,10 @@ msgstr "Показать экран диалога"
 #: src/features/reports/ReportPages.tsx
 msgid "Show the last 30 days"
 msgstr "Показать последние 30 дней"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Show the name next to the logo"
+msgstr "Показывать название рядом с логотипом"
 
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Show the number of new updates on the chat button"
@@ -13898,6 +13906,10 @@ msgstr "Первое, что говорит чат"
 #: src/features/migrations/text.ts
 msgid "The folder was recreated and read again"
 msgstr "Папка создана заново и прочитана снова"
+
+#: src/features/status/SettingsTab.tsx
+msgid "The Follow and embed section and the feed and badge links."
+msgstr "Раздел «Подписаться и встроить» и ссылки на ленту и значок."
 
 #: src/features/broadcasts/FormSnippets.tsx
 msgid "The form shows an unticked consent box and stores the exact words the person agreed to. It works only on the sites the chat channel allows; the channel key is public."
@@ -15116,6 +15128,10 @@ msgstr "Выключить"
 #: src/features/broadcasts/ListForm.tsx
 msgid "Turn off for service announcements to existing customers. Consent is needed either way; this is recorded in the consent export."
 msgstr "Выключите для служебных объявлений существующим клиентам. Согласие нужно в любом случае; это записывается в экспорт согласий."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Turn off when the logo already contains the name."
+msgstr "Выключите, если логотип уже содержит название."
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Turn on"

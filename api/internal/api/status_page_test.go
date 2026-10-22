@@ -188,3 +188,49 @@ func TestStatusFontsServedLocally(t *testing.T) {
 		t.Fatalf("unknown font %d", r.status)
 	}
 }
+
+func TestStatusPageShowNameAndFollow(t *testing.T) {
+	t.Parallel()
+	h := newHarness(t)
+	st := newStatusTeam(t, h)
+	pg := st.owner.expect(http.StatusOK, "PATCH", st.path(""), map[string]any{"published": true, "logo_url": "https://example.com/logo.svg"})
+	if pg.body["show_name"] != true || pg.body["show_follow"] != true {
+		t.Fatalf("show_name and show_follow are not on by default: %s", pg.raw)
+	}
+	page := string(publicStatus(t, h, "/status/"+st.slug).raw)
+	for _, want := range []string{`alt=""`, `<span class="name">Acme</span>`, `href="#follow"`, `id="follow"`, `>feed.atom</a>`, `>badge.svg</a>`} {
+		if !strings.Contains(page, want) {
+			t.Fatalf("the default page lacks %s: %s", want, page)
+		}
+	}
+
+	pg = st.owner.expect(http.StatusOK, "PATCH", st.path(""), map[string]any{"show_name": false, "show_follow": false})
+	if pg.body["show_name"] != false || pg.body["show_follow"] != false {
+		t.Fatalf("settings not saved: %s", pg.raw)
+	}
+	page = string(publicStatus(t, h, "/status/"+st.slug).raw)
+	if !strings.Contains(page, `alt="Acme"`) || !strings.Contains(page, `rel="alternate"`) {
+		t.Fatalf("the logo lost its name or the feed lost its discovery link: %s", page)
+	}
+	for _, gone := range []string{`class="name"`, `href="#follow"`, `id="follow"`, `>feed.atom</a>`, `>badge.svg</a>`} {
+		if strings.Contains(page, gone) {
+			t.Fatalf("the page still shows %s: %s", gone, page)
+		}
+	}
+	for _, p := range []string{"/feed.atom", "/badge.svg"} {
+		if r := publicStatus(t, h, "/status/"+st.slug+p); r.status != http.StatusOK {
+			t.Fatalf("%s answers %d while the page hides its link", p, r.status)
+		}
+	}
+	inc := st.owner.expect(http.StatusCreated, "POST", st.path("/incidents"), map[string]any{
+		"title": "API slow", "message": "Looking.", "publish": true, "components": []map[string]any{{"component_id": st.api, "state": "degraded"}},
+	})
+	if incident := string(publicStatus(t, h, "/status/"+st.slug+"/incidents/"+inc.str("id")).raw); strings.Contains(incident, "Stay informed") {
+		t.Fatalf("the incident page offers a feed while the page hides it and has no e-mail: %s", incident)
+	}
+
+	st.owner.expect(http.StatusOK, "PATCH", st.path(""), map[string]any{"logo_url": nil})
+	if page = string(publicStatus(t, h, "/status/"+st.slug).raw); !strings.Contains(page, `<span class="name">Acme</span>`) {
+		t.Fatalf("a page without a logo hides its name: %s", page)
+	}
+}

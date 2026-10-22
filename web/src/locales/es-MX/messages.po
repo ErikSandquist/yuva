@@ -12668,6 +12668,10 @@ msgstr "Mostrar diseños archivados"
 msgid "Show as sent"
 msgstr "Mostrar como enviado"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Show feed, badge and embed"
+msgstr "Mostrar el feed, la insignia y el código para insertar"
+
 #: src/features/inbox/AssistantsPage.tsx
 msgid "Show full draft"
 msgstr "Mostrar el borrador completo"
@@ -12725,6 +12729,10 @@ msgstr "Mostrar la pantalla de conversación"
 #: src/features/reports/ReportPages.tsx
 msgid "Show the last 30 days"
 msgstr "Mostrar los últimos 30 días"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Show the name next to the logo"
+msgstr "Mostrar el nombre junto al logotipo"
 
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Show the number of new updates on the chat button"
@@ -13898,6 +13906,10 @@ msgstr "Lo primero que dice el chat"
 #: src/features/migrations/text.ts
 msgid "The folder was recreated and read again"
 msgstr "Se volvió a crear la carpeta y se leyó de nuevo"
+
+#: src/features/status/SettingsTab.tsx
+msgid "The Follow and embed section and the feed and badge links."
+msgstr "La sección para seguir la página e insertar su contenido, además de los enlaces al feed y a la insignia."
 
 #: src/features/broadcasts/FormSnippets.tsx
 msgid "The form shows an unticked consent box and stores the exact words the person agreed to. It works only on the sites the chat channel allows; the channel key is public."
@@ -15116,6 +15128,10 @@ msgstr "Desactivar"
 #: src/features/broadcasts/ListForm.tsx
 msgid "Turn off for service announcements to existing customers. Consent is needed either way; this is recorded in the consent export."
 msgstr "Desactívalo para avisos de servicio a clientes existentes. El consentimiento hace falta en ambos casos; queda registrado en la exportación de consentimientos."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Turn off when the logo already contains the name."
+msgstr "Desactívalo cuando el logotipo ya incluya el nombre."
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Turn on"

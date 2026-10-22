@@ -12668,6 +12668,10 @@ msgstr "Tunjuk reka bentuk diarkibkan"
 msgid "Show as sent"
 msgstr "Tunjuk sebagai dihantar"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Show feed, badge and embed"
+msgstr "Tunjukkan suapan, lencana dan benaman"
+
 #: src/features/inbox/AssistantsPage.tsx
 msgid "Show full draft"
 msgstr "Tunjuk draf penuh"
@@ -12725,6 +12729,10 @@ msgstr "Tunjuk skrin perbualan"
 #: src/features/reports/ReportPages.tsx
 msgid "Show the last 30 days"
 msgstr "Tunjukkan 30 hari lepas"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Show the name next to the logo"
+msgstr "Tunjukkan nama di sebelah logo"
 
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Show the number of new updates on the chat button"
@@ -13898,6 +13906,10 @@ msgstr "Perkara pertama yang dikatakan sembang"
 #: src/features/migrations/text.ts
 msgid "The folder was recreated and read again"
 msgstr "Folder dicipta semula dan dibaca semula"
+
+#: src/features/status/SettingsTab.tsx
+msgid "The Follow and embed section and the feed and badge links."
+msgstr "Bahagian ikuti dan benamkan, serta pautan suapan dan lencana."
 
 #: src/features/broadcasts/FormSnippets.tsx
 msgid "The form shows an unticked consent box and stores the exact words the person agreed to. It works only on the sites the chat channel allows; the channel key is public."
@@ -15116,6 +15128,10 @@ msgstr "Matikan"
 #: src/features/broadcasts/ListForm.tsx
 msgid "Turn off for service announcements to existing customers. Consent is needed either way; this is recorded in the consent export."
 msgstr "Matikan untuk pengumuman perkhidmatan kepada pelanggan sedia ada. Persetujuan diperlukan dalam kedua-dua keadaan; ini direkodkan dalam eksport persetujuan."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Turn off when the logo already contains the name."
+msgstr "Matikan apabila logo sudah mengandungi nama."
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Turn on"

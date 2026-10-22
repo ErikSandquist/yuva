@@ -12668,6 +12668,10 @@ msgstr "アーカイブ済みのデザインを表示"
 msgid "Show as sent"
 msgstr "送信済みとして表示"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Show feed, badge and embed"
+msgstr "フィード、バッジ、埋め込みを表示"
+
 #: src/features/inbox/AssistantsPage.tsx
 msgid "Show full draft"
 msgstr "ドラフト全文を表示"
@@ -12725,6 +12729,10 @@ msgstr "会話画面を表示"
 #: src/features/reports/ReportPages.tsx
 msgid "Show the last 30 days"
 msgstr "直近 30 日を表示"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Show the name next to the logo"
+msgstr "ロゴの横に名前を表示"
 
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Show the number of new updates on the chat button"
@@ -13898,6 +13906,10 @@ msgstr "チャットが最初に伝える内容"
 #: src/features/migrations/text.ts
 msgid "The folder was recreated and read again"
 msgstr "フォルダーを再作成して再度読み取りました"
+
+#: src/features/status/SettingsTab.tsx
+msgid "The Follow and embed section and the feed and badge links."
+msgstr "フォローと埋め込みのセクションと、フィードとバッジへのリンク。"
 
 #: src/features/broadcasts/FormSnippets.tsx
 msgid "The form shows an unticked consent box and stores the exact words the person agreed to. It works only on the sites the chat channel allows; the channel key is public."
@@ -15116,6 +15128,10 @@ msgstr "オフにする"
 #: src/features/broadcasts/ListForm.tsx
 msgid "Turn off for service announcements to existing customers. Consent is needed either way; this is recorded in the consent export."
 msgstr "既存のお客様へのサービスのお知らせではオフにします。どちらの場合も同意は必要で、同意のエクスポートに記録されます。"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Turn off when the logo already contains the name."
+msgstr "ロゴにすでに名前が含まれている場合はオフにします。"
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Turn on"

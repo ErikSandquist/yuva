@@ -18178,6 +18178,16 @@ type StatusPage struct {
 	OwnDomains *StatusOwnDomains `json:"own_domains,omitempty"`
 	Published  bool              `json:"published"`
 
+	// ShowFollow Whether the page shows the Follow and embed section (Atom feed, badge, JSON and embed code),
+	// its link in the header, the feed and badge links in the footer, and the feed link on incident
+	// pages. The feed, badge and JSON addresses answer either way.
+	ShowFollow bool `json:"show_follow"`
+
+	// ShowName Whether the header shows the page name next to the logo. With `false` and a `logo_url`, the
+	// header shows only the logo, whose alt text is then the name; without a logo the name always
+	// shows.
+	ShowName bool `json:"show_name"`
+
 	// ShowResponseTimes Whether the public page and its JSON show the last 24 hours of response times of components
 	// with an `http` or `tcp` monitor, aggregated (median per step, median and p95).
 	ShowResponseTimes bool    `json:"show_response_times"`
@@ -18224,6 +18234,12 @@ type StatusPageCreate struct {
 
 	// Published Default `false`.
 	Published *bool `json:"published,omitempty"`
+
+	// ShowFollow Default `true`.
+	ShowFollow *bool `json:"show_follow,omitempty"`
+
+	// ShowName Default `true`.
+	ShowName *bool `json:"show_name,omitempty"`
 
 	// ShowResponseTimes Default `false`.
 	ShowResponseTimes *bool `json:"show_response_times,omitempty"`
@@ -18307,6 +18323,8 @@ type StatusPageUpdate struct {
 	LogoUrl           nullable.Nullable[string] `json:"logo_url,omitempty"`
 	Name              *string                   `json:"name,omitempty"`
 	Published         *bool                     `json:"published,omitempty"`
+	ShowFollow        *bool                     `json:"show_follow,omitempty"`
+	ShowName          *bool                     `json:"show_name,omitempty"`
 	ShowResponseTimes *bool                     `json:"show_response_times,omitempty"`
 	ShowUptime        *bool                     `json:"show_uptime,omitempty"`
 	SiteUrl           nullable.Nullable[string] `json:"site_url,omitempty"`

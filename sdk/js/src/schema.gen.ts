@@ -17199,6 +17199,18 @@ export interface components {
              *     with an `http` or `tcp` monitor, aggregated (median per step, median and p95).
              */
             show_response_times: boolean;
+            /**
+             * @description Whether the header shows the page name next to the logo. With `false` and a `logo_url`, the
+             *     header shows only the logo, whose alt text is then the name; without a logo the name always
+             *     shows.
+             */
+            show_name: boolean;
+            /**
+             * @description Whether the page shows the Follow and embed section (Atom feed, badge, JSON and embed code),
+             *     its link in the header, the feed and badge links in the footer, and the feed link on incident
+             *     pages. The feed, badge and JSON addresses answer either way.
+             */
+            show_follow: boolean;
             published: boolean;
             state: components["schemas"]["StatusComponentStateValue"];
             email_subscribers: components["schemas"]["StatusEmailSubscribers"];
@@ -17360,6 +17372,10 @@ export interface components {
             show_uptime?: boolean;
             /** @description Default `false`. */
             show_response_times?: boolean;
+            /** @description Default `true`. */
+            show_name?: boolean;
+            /** @description Default `true`. */
+            show_follow?: boolean;
             /** @description Default `false`. */
             published?: boolean;
         };
@@ -17380,6 +17396,8 @@ export interface components {
             history_days?: number;
             show_uptime?: boolean;
             show_response_times?: boolean;
+            show_name?: boolean;
+            show_follow?: boolean;
             published?: boolean;
             email_subscribers?: components["schemas"]["StatusEmailSubscribersUpdate"];
             /**

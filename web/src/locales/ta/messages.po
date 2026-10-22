@@ -12668,6 +12668,10 @@ msgstr "காப்பகப்படுத்தப்பட்ட வடி�
 msgid "Show as sent"
 msgstr "அனுப்பியதாகக் காட்டு"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Show feed, badge and embed"
+msgstr "ஊட்டம், பேட்ஜ், உட்பொதிவைக் காட்டு"
+
 #: src/features/inbox/AssistantsPage.tsx
 msgid "Show full draft"
 msgstr "முழு வரைவையும் காட்டு"
@@ -12725,6 +12729,10 @@ msgstr "உரையாடல் திரையைக் காட்டு"
 #: src/features/reports/ReportPages.tsx
 msgid "Show the last 30 days"
 msgstr "கடந்த 30 நாட்களைக் காட்டு"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Show the name next to the logo"
+msgstr "லோகோவின் அருகில் பெயரைக் காட்டு"
 
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Show the number of new updates on the chat button"
@@ -13898,6 +13906,10 @@ msgstr "அரட்டை முதலில் சொல்வது"
 #: src/features/migrations/text.ts
 msgid "The folder was recreated and read again"
 msgstr "கோப்புறை மீண்டும் உருவாக்கப்பட்டு மீண்டும் படிக்கப்பட்டது"
+
+#: src/features/status/SettingsTab.tsx
+msgid "The Follow and embed section and the feed and badge links."
+msgstr "பின்தொடர் மற்றும் உட்பொதி பகுதியும் ஊட்டம், பேட்ஜ் இணைப்புகளும்."
 
 #: src/features/broadcasts/FormSnippets.tsx
 msgid "The form shows an unticked consent box and stores the exact words the person agreed to. It works only on the sites the chat channel allows; the channel key is public."
@@ -15116,6 +15128,10 @@ msgstr "அணை"
 #: src/features/broadcasts/ListForm.tsx
 msgid "Turn off for service announcements to existing customers. Consent is needed either way; this is recorded in the consent export."
 msgstr "ஏற்கெனவே உள்ள வாடிக்கையாளர்களுக்குச் சேவை அறிவிப்புகளுக்கு அணையுங்கள். எப்படியும் ஒப்புதல் தேவை; இது ஒப்புதல் ஏற்றுமதியில் பதிவாகும்."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Turn off when the logo already contains the name."
+msgstr "லோகோவில் ஏற்கெனவே பெயர் இருந்தால் இதை அணைக்கவும்."
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Turn on"

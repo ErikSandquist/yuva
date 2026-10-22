@@ -12668,6 +12668,10 @@ msgstr "Arată designurile arhivate"
 msgid "Show as sent"
 msgstr "Arată ca trimis"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Show feed, badge and embed"
+msgstr "Arată fluxul, insigna și încorporarea"
+
 #: src/features/inbox/AssistantsPage.tsx
 msgid "Show full draft"
 msgstr "Arată toată ciorna"
@@ -12725,6 +12729,10 @@ msgstr "Arată ecranul conversației"
 #: src/features/reports/ReportPages.tsx
 msgid "Show the last 30 days"
 msgstr "Arată ultimele 30 de zile"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Show the name next to the logo"
+msgstr "Arată numele lângă siglă"
 
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Show the number of new updates on the chat button"
@@ -13898,6 +13906,10 @@ msgstr "Primul lucru pe care îl spune chatul"
 #: src/features/migrations/text.ts
 msgid "The folder was recreated and read again"
 msgstr "Dosarul a fost recreat și citit din nou"
+
+#: src/features/status/SettingsTab.tsx
+msgid "The Follow and embed section and the feed and badge links."
+msgstr "Secțiunea de urmărire și încorporare și linkurile către flux și insignă."
 
 #: src/features/broadcasts/FormSnippets.tsx
 msgid "The form shows an unticked consent box and stores the exact words the person agreed to. It works only on the sites the chat channel allows; the channel key is public."
@@ -15116,6 +15128,10 @@ msgstr "Dezactivează"
 #: src/features/broadcasts/ListForm.tsx
 msgid "Turn off for service announcements to existing customers. Consent is needed either way; this is recorded in the consent export."
 msgstr "Dezactivează pentru anunțuri de serviciu către clienții existenți. Consimțământul este necesar oricum; este înregistrat în exportul de consimțăminte."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Turn off when the logo already contains the name."
+msgstr "Dezactivează când sigla conține deja numele."
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Turn on"

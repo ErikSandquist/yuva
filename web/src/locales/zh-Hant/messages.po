@@ -12668,6 +12668,10 @@ msgstr "顯示已歸檔的設計"
 msgid "Show as sent"
 msgstr "顯示為已傳送"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Show feed, badge and embed"
+msgstr "顯示訂閱來源、徽章和嵌入"
+
 #: src/features/inbox/AssistantsPage.tsx
 msgid "Show full draft"
 msgstr "顯示完整草稿"
@@ -12725,6 +12729,10 @@ msgstr "顯示對話介面"
 #: src/features/reports/ReportPages.tsx
 msgid "Show the last 30 days"
 msgstr "顯示最近 30 天"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Show the name next to the logo"
+msgstr "在 Logo 旁顯示名稱"
 
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Show the number of new updates on the chat button"
@@ -13898,6 +13906,10 @@ msgstr "聊天說的第一句話"
 #: src/features/migrations/text.ts
 msgid "The folder was recreated and read again"
 msgstr "資料夾已重新建立並重新讀取"
+
+#: src/features/status/SettingsTab.tsx
+msgid "The Follow and embed section and the feed and badge links."
+msgstr "「追蹤與嵌入」區塊以及訂閱來源和徽章連結。"
 
 #: src/features/broadcasts/FormSnippets.tsx
 msgid "The form shows an unticked consent box and stores the exact words the person agreed to. It works only on the sites the chat channel allows; the channel key is public."
@@ -15116,6 +15128,10 @@ msgstr "關閉"
 #: src/features/broadcasts/ListForm.tsx
 msgid "Turn off for service announcements to existing customers. Consent is needed either way; this is recorded in the consent export."
 msgstr "對現有客戶的服務通知請關閉。無論如何都需要同意;這會記錄在同意記錄匯出中。"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Turn off when the logo already contains the name."
+msgstr "Logo 已包含名稱時請關閉。"
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Turn on"

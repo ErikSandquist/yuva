@@ -12668,6 +12668,10 @@ msgstr "Näytä arkistoidut ulkoasut"
 msgid "Show as sent"
 msgstr "Näytä lähetettynä"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Show feed, badge and embed"
+msgstr "Näytä syöte, merkki ja upotus"
+
 #: src/features/inbox/AssistantsPage.tsx
 msgid "Show full draft"
 msgstr "Näytä koko luonnos"
@@ -12725,6 +12729,10 @@ msgstr "Näytä keskusteluruutu"
 #: src/features/reports/ReportPages.tsx
 msgid "Show the last 30 days"
 msgstr "Näytä viimeiset 30 päivää"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Show the name next to the logo"
+msgstr "Näytä nimi logon vieressä"
 
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Show the number of new updates on the chat button"
@@ -13898,6 +13906,10 @@ msgstr "Ensimmäinen asia, jonka chat sanoo"
 #: src/features/migrations/text.ts
 msgid "The folder was recreated and read again"
 msgstr "Kansio luotiin uudelleen ja luettiin uudelleen"
+
+#: src/features/status/SettingsTab.tsx
+msgid "The Follow and embed section and the feed and badge links."
+msgstr "Seuraa ja upota -osio sekä syötteen ja merkin linkit."
 
 #: src/features/broadcasts/FormSnippets.tsx
 msgid "The form shows an unticked consent box and stores the exact words the person agreed to. It works only on the sites the chat channel allows; the channel key is public."
@@ -15116,6 +15128,10 @@ msgstr "Poista käytöstä"
 #: src/features/broadcasts/ListForm.tsx
 msgid "Turn off for service announcements to existing customers. Consent is needed either way; this is recorded in the consent export."
 msgstr "Poista käytöstä palveluiden ilmoituksille nykyisille asiakkaille. Suostumus tarvitaan joka tapauksessa; se kirjataan suostumusten vientiin."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Turn off when the logo already contains the name."
+msgstr "Poista käytöstä, kun logo sisältää jo nimen."
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Turn on"

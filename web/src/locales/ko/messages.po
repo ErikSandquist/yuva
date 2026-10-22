@@ -12668,6 +12668,10 @@ msgstr "보관된 디자인 보기"
 msgid "Show as sent"
 msgstr "발송됨으로 표시"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Show feed, badge and embed"
+msgstr "피드, 배지, 삽입 표시"
+
 #: src/features/inbox/AssistantsPage.tsx
 msgid "Show full draft"
 msgstr "초안 전체 보기"
@@ -12725,6 +12729,10 @@ msgstr "대화 화면 표시"
 #: src/features/reports/ReportPages.tsx
 msgid "Show the last 30 days"
 msgstr "최근 30일 보기"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Show the name next to the logo"
+msgstr "로고 옆에 이름 표시"
 
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Show the number of new updates on the chat button"
@@ -13898,6 +13906,10 @@ msgstr "채팅이 처음 건네는 말"
 #: src/features/migrations/text.ts
 msgid "The folder was recreated and read again"
 msgstr "폴더를 다시 만들고 다시 읽었습니다"
+
+#: src/features/status/SettingsTab.tsx
+msgid "The Follow and embed section and the feed and badge links."
+msgstr "팔로우 및 삽입 섹션과 피드 및 배지 링크입니다."
 
 #: src/features/broadcasts/FormSnippets.tsx
 msgid "The form shows an unticked consent box and stores the exact words the person agreed to. It works only on the sites the chat channel allows; the channel key is public."
@@ -15116,6 +15128,10 @@ msgstr "끄기"
 #: src/features/broadcasts/ListForm.tsx
 msgid "Turn off for service announcements to existing customers. Consent is needed either way; this is recorded in the consent export."
 msgstr "기존 고객에게 보내는 서비스 공지에는 끄세요. 어느 쪽이든 동의는 필요하며, 동의 내보내기에 기록됩니다."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Turn off when the logo already contains the name."
+msgstr "로고에 이미 이름이 들어 있으면 끄세요."
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Turn on"

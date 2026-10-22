@@ -12668,6 +12668,10 @@ msgstr "Pokaži arhivirane oblike"
 msgid "Show as sent"
 msgstr "Pokaži kot poslano"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Show feed, badge and embed"
+msgstr "Pokaži vir, značko in vdelavo"
+
 #: src/features/inbox/AssistantsPage.tsx
 msgid "Show full draft"
 msgstr "Pokaži celoten osnutek"
@@ -12725,6 +12729,10 @@ msgstr "Pokaži zaslon pogovora"
 #: src/features/reports/ReportPages.tsx
 msgid "Show the last 30 days"
 msgstr "Prikaži zadnjih 30 dni"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Show the name next to the logo"
+msgstr "Pokaži ime poleg logotipa"
 
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Show the number of new updates on the chat button"
@@ -13898,6 +13906,10 @@ msgstr "Prva stvar, ki jo klepet pove"
 #: src/features/migrations/text.ts
 msgid "The folder was recreated and read again"
 msgstr "Mapa je bila znova ustvarjena in znova prebrana"
+
+#: src/features/status/SettingsTab.tsx
+msgid "The Follow and embed section and the feed and badge links."
+msgstr "Razdelek za spremljanje in vdelavo ter povezavi do vira in značke."
 
 #: src/features/broadcasts/FormSnippets.tsx
 msgid "The form shows an unticked consent box and stores the exact words the person agreed to. It works only on the sites the chat channel allows; the channel key is public."
@@ -15116,6 +15128,10 @@ msgstr "Izklopi"
 #: src/features/broadcasts/ListForm.tsx
 msgid "Turn off for service announcements to existing customers. Consent is needed either way; this is recorded in the consent export."
 msgstr "Izklopite za servisna obvestila obstoječim strankam. Soglasje je potrebno tako ali tako; zabeleži se v izvozu soglasij."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Turn off when the logo already contains the name."
+msgstr "Izklopite, ko logotip že vsebuje ime."
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Turn on"

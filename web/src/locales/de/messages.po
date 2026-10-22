@@ -12668,6 +12668,10 @@ msgstr "Archivierte Designs anzeigen"
 msgid "Show as sent"
 msgstr "Als gesendet anzeigen"
 
+#: src/features/status/SettingsTab.tsx
+msgid "Show feed, badge and embed"
+msgstr "Feed, Badge und Einbettung anzeigen"
+
 #: src/features/inbox/AssistantsPage.tsx
 msgid "Show full draft"
 msgstr "Ganzen Entwurf anzeigen"
@@ -12725,6 +12729,10 @@ msgstr "Den Unterhaltungsbildschirm anzeigen"
 #: src/features/reports/ReportPages.tsx
 msgid "Show the last 30 days"
 msgstr "Letzte 30 Tage anzeigen"
+
+#: src/features/status/SettingsTab.tsx
+msgid "Show the name next to the logo"
+msgstr "Namen neben dem Logo anzeigen"
 
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Show the number of new updates on the chat button"
@@ -13898,6 +13906,10 @@ msgstr "Das Erste, was der Chat sagt"
 #: src/features/migrations/text.ts
 msgid "The folder was recreated and read again"
 msgstr "Der Ordner wurde neu angelegt und erneut gelesen"
+
+#: src/features/status/SettingsTab.tsx
+msgid "The Follow and embed section and the feed and badge links."
+msgstr "Der Abschnitt „Folgen und einbetten“ sowie die Links zu Feed und Badge."
 
 #: src/features/broadcasts/FormSnippets.tsx
 msgid "The form shows an unticked consent box and stores the exact words the person agreed to. It works only on the sites the chat channel allows; the channel key is public."
@@ -15116,6 +15128,10 @@ msgstr "Ausschalten"
 #: src/features/broadcasts/ListForm.tsx
 msgid "Turn off for service announcements to existing customers. Consent is needed either way; this is recorded in the consent export."
 msgstr "Schalten Sie es für Service-Mitteilungen an bestehende Kunden aus. Eine Einwilligung ist in jedem Fall nötig; sie wird im Einwilligungs-Export festgehalten."
+
+#: src/features/status/SettingsTab.tsx
+msgid "Turn off when the logo already contains the name."
+msgstr "Schalten Sie es aus, wenn das Logo den Namen schon enthält."
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Turn on"

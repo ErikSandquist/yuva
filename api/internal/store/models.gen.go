@@ -2099,6 +2099,8 @@ type StatusPage struct {
 	CfCheckedAt        *time.Time
 	DomainClaimedAt    *time.Time
 	ShowResponseTimes  bool
+	ShowName           bool
+	ShowFollow         bool
 }
 
 type StatusPageSlug struct {
