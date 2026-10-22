@@ -135,13 +135,17 @@ func (s *Server) domainLive(domain, state, cfStatus, cfSSL *string) bool {
 
 func (s *Server) statusURLFor(slug string, domain, state, cfStatus, cfSSL *string, path string) string {
 	if s.domainLive(domain, state, cfStatus, cfSSL) {
-		scheme := "https"
-		if u, err := url.Parse(s.auth.PublicURL); err == nil && u.Scheme == "http" {
-			scheme = "http"
-		}
-		return scheme + "://" + *domain + path
+		return s.domainURL(*domain, path)
 	}
 	return s.statusURL(slug, path)
+}
+
+func (s *Server) domainURL(domain, path string) string {
+	scheme := "https"
+	if u, err := url.Parse(s.auth.PublicURL); err == nil && u.Scheme == "http" {
+		scheme = "http"
+	}
+	return scheme + "://" + domain + path
 }
 
 func (s *Server) pageURL(pg store.StatusPage, path string) string {

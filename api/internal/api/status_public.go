@@ -233,16 +233,21 @@ func writeStatusAnswer(w http.ResponseWriter, e statusCacheEntry) {
 }
 
 // statusRequest is what a public answer depends on besides the page: the view, the incident, the
-// language a visitor picked with ?lang= ("" for the page's own) and the history filter.
+// language a visitor picked with ?lang= ("" for the page's own), the history filter and the own
+// domain the request came in on ("" elsewhere).
 type statusRequest struct {
 	view     string
 	incident uuid.UUID
 	lang     string
 	filter   string
+	host     string
 }
 
 func statusRequestFor(r *http.Request, pg store.StatusPage, view string) statusRequest {
 	req := statusRequest{view: view}
+	if on, _ := r.Context().Value(statusHostKey{}).(statusOn); on.domain {
+		req.host = on.host
+	}
 	q := r.URL.Query()
 	if code := q.Get("lang"); code != "" {
 		if w, ok := statusLanguage(code); ok && w.Lang != statusWordsFor(pg.Locale).Lang {
@@ -258,7 +263,7 @@ func statusRequestFor(r *http.Request, pg store.StatusPage, view string) statusR
 func (s *Server) statusAnswer(ctx context.Context, pg store.StatusPage, req statusRequest) (statusCacheEntry, error) {
 	now := s.now()
 	view := req.view
-	key := pg.ID.String() + "|" + view + "|" + req.incident.String() + "|" + statusWordsFor(pg.Locale).Lang + "|" + req.lang + "|" + req.filter
+	key := pg.ID.String() + "|" + view + "|" + req.incident.String() + "|" + statusWordsFor(pg.Locale).Lang + "|" + req.lang + "|" + req.filter + "|" + req.host
 	if e, ok := s.statusCache.get(key, pg.ChangedAt, now); ok {
 		return e, nil
 	}
@@ -276,6 +281,10 @@ func (s *Server) statusAnswer(ctx context.Context, pg store.StatusPage, req stat
 	snap, err := s.statusSnapshot(ctx, s.st.Queries, pg, now)
 	if err != nil {
 		return statusCacheEntry{}, err
+	}
+	if req.host != "" {
+		snap.url = func(path string) string { return s.domainURL(req.host, path) }
+		snap.out = snap.json()
 	}
 	if req.lang != "" {
 		snap.words, snap.lang = statusWordsFor(req.lang), req.lang

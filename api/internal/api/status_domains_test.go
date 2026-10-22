@@ -6,6 +6,8 @@ import (
 	"io"
 	"net"
 	"net/http"
+	"net/url"
+	"regexp"
 	"strings"
 	"sync"
 	"testing"
@@ -550,6 +552,55 @@ func TestStatusDomainURLWaitsForCloudflare(t *testing.T) {
 	st.check(t, h)
 	if u := st.owner.expect(http.StatusOK, "GET", st.path(""), nil).str("url"); u != "http://"+name {
 		t.Fatalf("url %s once the certificate is active", u)
+	}
+}
+
+func TestStatusDomainAssetsSameOrigin(t *testing.T) {
+	dns := newFakeDNS()
+	cf := cfsaastest.New(t, "zone1", "token1")
+	h := domainHarness(t, dns, func(s *api.StatusSettings) { s.Domains = "cloudflare"; s.Cloudflare = cf.Client() })
+	st := newStatusTeam(t, h)
+	st.owner.expect(http.StatusOK, "PATCH", st.path(""), map[string]any{"published": true})
+	name := unique("d") + ".example.org"
+	dns.set(name, testStatusCNAME, customDomain(t, st.owner.expect(http.StatusOK, "PATCH", st.path(""), map[string]any{"custom_domain": name}))["txt_value"].(string))
+	if d := st.check(t, h); d["state"] != "verified" {
+		t.Fatalf("not verified: %v", d)
+	}
+	fonts := regexp.MustCompile(`url\("([^"]+\.woff2)"\)`)
+	_, def, _ := onHost(t, h, "127.0.0.1", "/status/"+st.slug)
+
+	code, body, hdr := onHost(t, h, name, "/")
+	if code != http.StatusOK {
+		t.Fatalf("page on the domain: %d", code)
+	}
+	if csp := hdr.Get("Content-Security-Policy"); !strings.Contains(csp, "font-src 'self'") || strings.Contains(csp, "font-src 'self' ") {
+		t.Fatalf("CSP %q", csp)
+	}
+	found := fonts.FindAllStringSubmatch(body, -1)
+	if len(found) != 2 {
+		t.Fatalf("font URLs %v in %s", found, body)
+	}
+	for _, m := range found {
+		u, err := url.Parse(m[1])
+		if err != nil || (u.Host != "" && u.Host != name) || !strings.HasPrefix(u.Path, "/fonts/") {
+			t.Fatalf("font URL %s on %s", m[1], name)
+		}
+		code, _, fh := onHost(t, h, name, u.Path)
+		if code != http.StatusOK || fh.Get("Content-Type") != "font/woff2" {
+			t.Fatalf("font %s on the domain: %d %s", u.Path, code, fh.Get("Content-Type"))
+		}
+	}
+	if !strings.Contains(body, `href="http://`+name+`/feed.atom"`) || !strings.Contains(body, `src="http://`+name+`/badge.svg"`) {
+		t.Fatalf("feed and badge not on %s: %s", name, body)
+	}
+	if strings.Count(body, "/status/"+st.slug) != strings.Count(body, "/client/v1/status/"+st.slug) {
+		t.Fatalf("page on the domain links the status URL: %s", body)
+	}
+
+	for _, m := range fonts.FindAllStringSubmatch(def, -1) {
+		if !strings.Contains(m[1], "/status/"+st.slug+"/fonts/") {
+			t.Fatalf("font URL %s at the status URL", m[1])
+		}
 	}
 }
 
