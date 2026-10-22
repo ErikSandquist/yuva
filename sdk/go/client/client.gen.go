@@ -14636,6 +14636,15 @@ type MentionPage struct {
 	Unseen int64 `json:"unseen"`
 }
 
+// MentionsSeen defines model for MentionsSeen.
+type MentionsSeen struct {
+	// Marked Mentions that were unseen and are seen now.
+	Marked int64 `json:"marked"`
+
+	// Unseen Unseen mentions left (0 unless one arrived meanwhile).
+	Unseen int64 `json:"unseen"`
+}
+
 // Message defines model for Message.
 type Message struct {
 	Attachments []Attachment  `json:"attachments"`
@@ -17155,6 +17164,10 @@ type Stats struct {
 
 	// MedianFirstReplySeconds Median seconds from the contact's first message to that reply; absent when `first_replies` is 0.
 	MedianFirstReplySeconds *int64 `json:"median_first_reply_seconds,omitempty"`
+
+	// MedianResolutionSeconds Median seconds from a conversation's first message to its last close in the window,
+	// over conversations closed in the window; absent when none was. Follows `inbox_id`.
+	MedianResolutionSeconds *int64 `json:"median_resolution_seconds,omitempty"`
 
 	// Members Per member, by member id.
 	Members []MemberStats `json:"members"`
@@ -21641,6 +21654,24 @@ type ListMentionsParams struct {
 
 	// Limit Page size, 1 to 100; 25 by default.
 	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// MarkMentionsSeenParams defines parameters for MarkMentionsSeen.
+type MarkMentionsSeenParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// MarkMentionSeenParams defines parameters for MarkMentionSeen.
+type MarkMentionSeenParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
 
 	// YuvaWorkspace The workspace to act on; see "Workspace selection".
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
@@ -33138,6 +33169,28 @@ type ClientInterface interface {
 	//
 	// Corresponds with GET /v1/me/mentions (the `ListMentions` operationId).
 	ListMentions(ctx context.Context, params *ListMentionsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// MarkMentionsSeen Mark all your mentions seen
+	//
+	// Marks every mention `GET /v1/me/mentions` would list as unseen for the calling member as
+	// seen, without opening the conversations: in each conversation the read cursor moves
+	// forward to the latest unseen mention (never backward), so messages after it stay unread.
+	// Conversations the member cannot see are left alone. Each moved cursor sends a
+	// `conversation.read` event. Member sessions only.
+	//
+	// Corresponds with POST /v1/me/mentions/seen (the `MarkMentionsSeen` operationId).
+	MarkMentionsSeen(ctx context.Context, params *MarkMentionsSeenParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// MarkMentionSeen Mark one mention seen
+	//
+	// Moves the calling member's read cursor in the note's conversation forward to the note
+	// without opening it (the cursor never moves backward, so an already seen mention changes
+	// nothing). Answers `404 not_found` when the note does not mention the member, was written
+	// by the member, or is in a conversation the member cannot see. Sends `conversation.read`
+	// when the cursor moves. Member sessions only.
+	//
+	// Corresponds with POST /v1/me/mentions/{noteId}/seen (the `MarkMentionSeen` operationId).
+	MarkMentionSeen(ctx context.Context, noteId uuid.UUID, params *MarkMentionSeenParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetNotificationSettings Your notification settings
 	//
@@ -45377,6 +45430,48 @@ func (c *Client) UpdateMe(ctx context.Context, body UpdateMeJSONRequestBody, req
 // Corresponds with GET /v1/me/mentions (the `ListMentions` operationId).
 func (c *Client) ListMentions(ctx context.Context, params *ListMentionsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListMentionsRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// MarkMentionsSeen Mark all your mentions seen
+//
+// Marks every mention `GET /v1/me/mentions` would list as unseen for the calling member as
+// seen, without opening the conversations: in each conversation the read cursor moves
+// forward to the latest unseen mention (never backward), so messages after it stay unread.
+// Conversations the member cannot see are left alone. Each moved cursor sends a
+// `conversation.read` event. Member sessions only.
+//
+// Corresponds with POST /v1/me/mentions/seen (the `MarkMentionsSeen` operationId).
+func (c *Client) MarkMentionsSeen(ctx context.Context, params *MarkMentionsSeenParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewMarkMentionsSeenRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// MarkMentionSeen Mark one mention seen
+//
+// Moves the calling member's read cursor in the note's conversation forward to the note
+// without opening it (the cursor never moves backward, so an already seen mention changes
+// nothing). Answers `404 not_found` when the note does not mention the member, was written
+// by the member, or is in a conversation the member cannot see. Sends `conversation.read`
+// when the cursor moves. Member sessions only.
+//
+// Corresponds with POST /v1/me/mentions/{noteId}/seen (the `MarkMentionSeen` operationId).
+func (c *Client) MarkMentionSeen(ctx context.Context, noteId uuid.UUID, params *MarkMentionSeenParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewMarkMentionSeenRequest(c.Server, noteId, params)
 	if err != nil {
 		return nil, err
 	}
@@ -68531,6 +68626,119 @@ func NewListMentionsRequest(server string, params *ListMentionsParams) (*http.Re
 	return req, nil
 }
 
+// NewMarkMentionsSeenRequest constructs an http.Request for the MarkMentionsSeen method
+func NewMarkMentionsSeenRequest(server string, params *MarkMentionsSeenParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/me/mentions/seen")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewMarkMentionSeenRequest constructs an http.Request for the MarkMentionSeen method
+func NewMarkMentionSeenRequest(server string, noteId uuid.UUID, params *MarkMentionSeenParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "noteId", noteId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/me/mentions/%s/seen", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
 // NewGetNotificationSettingsRequest constructs an http.Request for the GetNotificationSettings method
 func NewGetNotificationSettingsRequest(server string, params *GetNotificationSettingsParams) (*http.Request, error) {
 	var err error
@@ -81840,6 +82048,32 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with GET /v1/me/mentions (the `ListMentions` operationId).
 	ListMentionsWithResponse(ctx context.Context, params *ListMentionsParams, reqEditors ...RequestEditorFn) (*ListMentionsResponse, error)
+
+	// MarkMentionsSeenWithResponse Mark all your mentions seen
+	//
+	// Marks every mention `GET /v1/me/mentions` would list as unseen for the calling member as
+	// seen, without opening the conversations: in each conversation the read cursor moves
+	// forward to the latest unseen mention (never backward), so messages after it stay unread.
+	// Conversations the member cannot see are left alone. Each moved cursor sends a
+	// `conversation.read` event. Member sessions only.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/me/mentions/seen (the `MarkMentionsSeen` operationId).
+	MarkMentionsSeenWithResponse(ctx context.Context, params *MarkMentionsSeenParams, reqEditors ...RequestEditorFn) (*MarkMentionsSeenResponse, error)
+
+	// MarkMentionSeenWithResponse Mark one mention seen
+	//
+	// Moves the calling member's read cursor in the note's conversation forward to the note
+	// without opening it (the cursor never moves backward, so an already seen mention changes
+	// nothing). Answers `404 not_found` when the note does not mention the member, was written
+	// by the member, or is in a conversation the member cannot see. Sends `conversation.read`
+	// when the cursor moves. Member sessions only.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/me/mentions/{noteId}/seen (the `MarkMentionSeen` operationId).
+	MarkMentionSeenWithResponse(ctx context.Context, noteId uuid.UUID, params *MarkMentionSeenParams, reqEditors ...RequestEditorFn) (*MarkMentionSeenResponse, error)
 
 	// GetNotificationSettingsWithResponse Your notification settings
 	//
@@ -104866,6 +105100,123 @@ func (r ListMentionsResponse) ContentType() string {
 	return ""
 }
 
+type MarkMentionsSeenResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *MentionsSeen
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r MarkMentionsSeenResponse) GetJSON200() *MentionsSeen {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r MarkMentionsSeenResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r MarkMentionsSeenResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetBody returns the raw response body bytes
+func (r MarkMentionsSeenResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r MarkMentionsSeenResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r MarkMentionsSeenResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r MarkMentionsSeenResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type MarkMentionSeenResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ConversationRead
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r MarkMentionSeenResponse) GetJSON200() *ConversationRead {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r MarkMentionSeenResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r MarkMentionSeenResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r MarkMentionSeenResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r MarkMentionSeenResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r MarkMentionSeenResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r MarkMentionSeenResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r MarkMentionSeenResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type GetNotificationSettingsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -121259,6 +121610,44 @@ func (c *ClientWithResponses) ListMentionsWithResponse(ctx context.Context, para
 		return nil, err
 	}
 	return ParseListMentionsResponse(rsp)
+}
+
+// MarkMentionsSeenWithResponse Mark all your mentions seen
+//
+// Marks every mention `GET /v1/me/mentions` would list as unseen for the calling member as
+// seen, without opening the conversations: in each conversation the read cursor moves
+// forward to the latest unseen mention (never backward), so messages after it stay unread.
+// Conversations the member cannot see are left alone. Each moved cursor sends a
+// `conversation.read` event. Member sessions only.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/me/mentions/seen (the `MarkMentionsSeen` operationId).
+func (c *ClientWithResponses) MarkMentionsSeenWithResponse(ctx context.Context, params *MarkMentionsSeenParams, reqEditors ...RequestEditorFn) (*MarkMentionsSeenResponse, error) {
+	rsp, err := c.MarkMentionsSeen(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseMarkMentionsSeenResponse(rsp)
+}
+
+// MarkMentionSeenWithResponse Mark one mention seen
+//
+// Moves the calling member's read cursor in the note's conversation forward to the note
+// without opening it (the cursor never moves backward, so an already seen mention changes
+// nothing). Answers `404 not_found` when the note does not mention the member, was written
+// by the member, or is in a conversation the member cannot see. Sends `conversation.read`
+// when the cursor moves. Member sessions only.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/me/mentions/{noteId}/seen (the `MarkMentionSeen` operationId).
+func (c *ClientWithResponses) MarkMentionSeenWithResponse(ctx context.Context, noteId uuid.UUID, params *MarkMentionSeenParams, reqEditors ...RequestEditorFn) (*MarkMentionSeenResponse, error) {
+	rsp, err := c.MarkMentionSeen(ctx, noteId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseMarkMentionSeenResponse(rsp)
 }
 
 // GetNotificationSettingsWithResponse Your notification settings
@@ -140856,6 +141245,93 @@ func ParseListMentionsResponse(rsp *http.Response) (*ListMentionsResponse, error
 			return nil, err
 		}
 		response.ApplicationproblemJSON403 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseMarkMentionsSeenResponse parses an HTTP response from a MarkMentionsSeenWithResponse call
+func ParseMarkMentionsSeenResponse(rsp *http.Response) (*MarkMentionsSeenResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &MarkMentionsSeenResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest MentionsSeen
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseMarkMentionSeenResponse parses an HTTP response from a MarkMentionSeenWithResponse call
+func ParseMarkMentionSeenResponse(rsp *http.Response) (*MarkMentionSeenResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &MarkMentionSeenResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ConversationRead
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
 
 	}
 

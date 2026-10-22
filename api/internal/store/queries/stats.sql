@@ -48,3 +48,32 @@ JOIN messages o ON o.workspace_id = @workspace_id AND o.conversation_id = a.conv
     AND o.created_at > a.asked_at
 GROUP BY a.conversation_id, a.asked_at
 HAVING min(o.created_at) >= @since AND min(o.created_at) <= @until;
+
+-- name: StatsResolutions :many
+SELECT f.started_at::timestamptz AS started_at, x.closed_at::timestamptz AS closed_at
+FROM (
+    SELECT m.conversation_id, max(m.created_at) AS closed_at
+    FROM messages m
+    JOIN conversations c ON c.workspace_id = m.workspace_id AND c.id = m.conversation_id
+    WHERE m.workspace_id = @workspace_id AND m.created_at >= @since AND m.created_at <= @until
+      AND m.kind = 'event' AND m.event->>'type' = 'status_changed' AND m.event->>'status' = 'closed' AND m.imported_at IS NULL
+      AND (sqlc.narg(inbox_id)::uuid IS NULL OR c.inbox_id = sqlc.narg(inbox_id)::uuid)
+      AND (@all_inboxes::bool OR EXISTS (
+          SELECT 1 FROM inbox_viewers iv
+          WHERE iv.workspace_id = c.workspace_id AND iv.inbox_id = c.inbox_id AND iv.viewer_id = @viewer_id::uuid))
+    GROUP BY m.conversation_id
+) x
+JOIN LATERAL (
+    SELECT max(p.created_at) AS closed_at
+    FROM messages p
+    WHERE p.workspace_id = @workspace_id AND p.conversation_id = x.conversation_id
+      AND p.kind = 'event' AND p.event->>'type' = 'status_changed' AND p.event->>'status' = 'closed'
+      AND p.imported_at IS NULL AND p.created_at < x.closed_at
+) pc ON true
+JOIN LATERAL (
+    SELECT min(i.created_at) AS started_at
+    FROM messages i
+    WHERE i.workspace_id = @workspace_id AND i.conversation_id = x.conversation_id
+      AND i.kind = 'message' AND i.direction = 'in' AND NOT i.draft AND i.imported_at IS NULL
+      AND (pc.closed_at IS NULL OR i.created_at > pc.closed_at) AND i.created_at <= x.closed_at
+) f ON f.started_at IS NOT NULL;

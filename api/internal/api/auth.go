@@ -67,6 +67,8 @@ var operationAccess = map[string]access{
 	"UnpinConversation":      accessMember,
 	"SetMemberTyping":        accessMember,
 	"ListMentions":           accessMember,
+	"MarkMentionSeen":        accessMember,
+	"MarkMentionsSeen":       accessMember,
 
 	"GetVapidPublicKey":          accessPerson,
 	"ListPushSubscriptions":      accessPerson,

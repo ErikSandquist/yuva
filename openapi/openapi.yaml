@@ -1082,6 +1082,64 @@ paths:
           $ref: "#/components/responses/Problem"
         "403":
           $ref: "#/components/responses/Problem"
+  /v1/me/mentions/seen:
+    post:
+      operationId: markMentionsSeen
+      summary: Mark all your mentions seen
+      description: |
+        Marks every mention `GET /v1/me/mentions` would list as unseen for the calling member as
+        seen, without opening the conversations. It records the mentions only: the read cursors
+        and "marked unread" flags of the conversations stay as they are, so messages around a
+        mention stay unread. Nothing is sent over realtime. Member sessions only.
+      tags: [notifications]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+      responses:
+        "200":
+          description: How many mentions were marked.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MentionsSeen"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+  /v1/me/mentions/{noteId}/seen:
+    post:
+      operationId: markMentionSeen
+      summary: Mark one mention seen
+      description: |
+        Marks one mention seen without opening its conversation; the read cursor and "marked
+        unread" flag stay as they are. Idempotent: an already seen mention gives `marked: 0`.
+        Answers `404 not_found` when the note does not mention the member, was written by the
+        member, or is in a conversation the member cannot see or in another workspace.
+        Opening the conversation still marks its mentions seen through the read cursor. Member
+        sessions only.
+      tags: [notifications]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - name: noteId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: The result, with the unseen mentions left.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MentionsSeen"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
   /v1/account:
     get:
       operationId: getReaderAccount
@@ -19243,6 +19301,18 @@ components:
           type: integer
           format: int64
           description: Unseen mentions over all pages.
+    MentionsSeen:
+      type: object
+      required: [marked, unseen]
+      properties:
+        marked:
+          type: integer
+          format: int64
+          description: Mentions that were unseen and are marked now.
+        unseen:
+          type: integer
+          format: int64
+          description: Unseen mentions left over all pages.
     DraftAuthorKind:
       type: string
       description: |
@@ -19309,6 +19379,14 @@ components:
           type: integer
           format: int64
           description: Median seconds from the contact's first message to that reply; absent when `first_replies` is 0.
+        median_resolution_seconds:
+          type: integer
+          format: int64
+          description: |
+            Median seconds, over conversations closed in the window, from the first message the
+            contact sent after the conversation's previous close (the first one ever when it was
+            never closed before) to the last close in the window. Conversations without such a
+            message are left out. Follows `inbox_id`; absent when none was closed.
         ratings:
           $ref: "#/components/schemas/RatingStats"
         members:

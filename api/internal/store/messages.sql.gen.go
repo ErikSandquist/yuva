@@ -78,27 +78,22 @@ func (q *Queries) CountDrafts(ctx context.Context, arg CountDraftsParams) (int64
 }
 
 const countUnseenMentions = `-- name: CountUnseenMentions :one
-SELECT count(*) FROM messages m
-JOIN conversations c ON c.workspace_id = m.workspace_id AND c.id = m.conversation_id
-LEFT JOIN conversation_reads r
-       ON r.workspace_id = m.workspace_id AND r.conversation_id = m.conversation_id AND r.member_id = $1
-WHERE m.workspace_id = $2 AND m.kind = 'note' AND NOT m.draft
-  AND m.mentions @> ARRAY[$1::uuid]
-  AND m.author_member_id IS DISTINCT FROM $1::uuid
+SELECT count(*) FROM member_mentions v
+WHERE v.workspace_id = $1 AND v.member_id = $2 AND v.mentions @> ARRAY[$2::uuid]
+  AND NOT v.seen
   AND ($3::bool OR EXISTS (
       SELECT 1 FROM inbox_viewers iv
-      WHERE iv.workspace_id = c.workspace_id AND iv.inbox_id = c.inbox_id AND iv.viewer_id = $1))
-  AND (r.last_read_at IS NULL OR (r.last_read_at, r.last_read_message_id) < (m.created_at, m.id))
+      WHERE iv.workspace_id = v.workspace_id AND iv.inbox_id = v.inbox_id AND iv.viewer_id = $2))
 `
 
 type CountUnseenMentionsParams struct {
-	MemberID    uuid.UUID
 	WorkspaceID uuid.UUID
+	MemberID    interface{}
 	AllInboxes  bool
 }
 
 func (q *Queries) CountUnseenMentions(ctx context.Context, arg CountUnseenMentionsParams) (int64, error) {
-	row := q.db.QueryRow(ctx, countUnseenMentions, arg.MemberID, arg.WorkspaceID, arg.AllInboxes)
+	row := q.db.QueryRow(ctx, countUnseenMentions, arg.WorkspaceID, arg.MemberID, arg.AllInboxes)
 	var count int64
 	err := row.Scan(&count)
 	return count, err
@@ -376,6 +371,30 @@ func (q *Queries) GetLatestMessagePosition(ctx context.Context, arg GetLatestMes
 	row := q.db.QueryRow(ctx, getLatestMessagePosition, arg.WorkspaceID, arg.ConversationID)
 	var i GetLatestMessagePositionRow
 	err := row.Scan(&i.ID, &i.CreatedAt)
+	return i, err
+}
+
+const getMentionNote = `-- name: GetMentionNote :one
+SELECT v.message_id, v.conversation_id FROM member_mentions v
+WHERE v.workspace_id = $1 AND v.member_id = $2 AND v.mentions @> ARRAY[$2::uuid]
+  AND v.message_id = $3
+`
+
+type GetMentionNoteParams struct {
+	WorkspaceID uuid.UUID
+	MemberID    interface{}
+	ID          uuid.UUID
+}
+
+type GetMentionNoteRow struct {
+	MessageID      uuid.UUID
+	ConversationID uuid.UUID
+}
+
+func (q *Queries) GetMentionNote(ctx context.Context, arg GetMentionNoteParams) (GetMentionNoteRow, error) {
+	row := q.db.QueryRow(ctx, getMentionNote, arg.WorkspaceID, arg.MemberID, arg.ID)
+	var i GetMentionNoteRow
+	err := row.Scan(&i.MessageID, &i.ConversationID)
 	return i, err
 }
 
@@ -833,27 +852,23 @@ const listMentions = `-- name: ListMentions :many
 SELECT m.id, m.conversation_id, m.author_type, m.author_member_id, m.author_api_key_id, m.via,
        left(m.body, 1000)::text AS body, m.created_at,
        coalesce(ak.bot_name, ak.name, '')::text AS bot_name, coalesce(ak.bot_avatar_url, '')::text AS bot_avatar_url,
-       (r.last_read_at IS NOT NULL AND (r.last_read_at, r.last_read_message_id) >= (m.created_at, m.id))::bool AS seen
-FROM messages m
-JOIN conversations c ON c.workspace_id = m.workspace_id AND c.id = m.conversation_id
-LEFT JOIN conversation_reads r
-       ON r.workspace_id = m.workspace_id AND r.conversation_id = m.conversation_id AND r.member_id = $1
+       v.seen::bool AS seen
+FROM member_mentions v
+JOIN messages m ON m.workspace_id = v.workspace_id AND m.id = v.message_id
 LEFT JOIN api_keys ak ON ak.workspace_id = m.workspace_id AND ak.id = m.author_api_key_id
-WHERE m.workspace_id = $2 AND m.kind = 'note' AND NOT m.draft
-  AND m.mentions @> ARRAY[$1::uuid]
-  AND m.author_member_id IS DISTINCT FROM $1::uuid
+WHERE v.workspace_id = $1 AND v.member_id = $2 AND v.mentions @> ARRAY[$2::uuid]
   AND ($3::bool OR EXISTS (
       SELECT 1 FROM inbox_viewers iv
-      WHERE iv.workspace_id = c.workspace_id AND iv.inbox_id = c.inbox_id AND iv.viewer_id = $1))
+      WHERE iv.workspace_id = v.workspace_id AND iv.inbox_id = v.inbox_id AND iv.viewer_id = $2))
   AND ($4::timestamptz IS NULL
-       OR (m.created_at, m.id) < ($4::timestamptz, $5::uuid))
-ORDER BY m.created_at DESC, m.id DESC
+       OR (v.created_at, v.message_id) < ($4::timestamptz, $5::uuid))
+ORDER BY v.created_at DESC, v.message_id DESC
 LIMIT $6
 `
 
 type ListMentionsParams struct {
-	MemberID    uuid.UUID
 	WorkspaceID uuid.UUID
+	MemberID    interface{}
 	AllInboxes  bool
 	CursorAt    *time.Time
 	CursorID    *uuid.UUID
@@ -876,8 +891,8 @@ type ListMentionsRow struct {
 
 func (q *Queries) ListMentions(ctx context.Context, arg ListMentionsParams) ([]ListMentionsRow, error) {
 	rows, err := q.db.Query(ctx, listMentions,
-		arg.MemberID,
 		arg.WorkspaceID,
+		arg.MemberID,
 		arg.AllInboxes,
 		arg.CursorAt,
 		arg.CursorID,
@@ -1157,6 +1172,66 @@ func (q *Queries) LockMessage(ctx context.Context, arg LockMessageParams) (LockM
 	var i LockMessageRow
 	err := row.Scan(&i.ID, &i.ConversationID, &i.Draft)
 	return i, err
+}
+
+const markMentionSeen = `-- name: MarkMentionSeen :execrows
+INSERT INTO mention_seen (workspace_id, member_id, message_id, seen_at)
+SELECT v.workspace_id, v.member_id, v.message_id, $1
+FROM member_mentions v
+WHERE v.workspace_id = $2 AND v.member_id = $3 AND v.message_id = $4 AND NOT v.seen
+ON CONFLICT DO NOTHING
+`
+
+type MarkMentionSeenParams struct {
+	Now         time.Time
+	WorkspaceID uuid.UUID
+	MemberID    interface{}
+	ID          uuid.UUID
+}
+
+func (q *Queries) MarkMentionSeen(ctx context.Context, arg MarkMentionSeenParams) (int64, error) {
+	result, err := q.db.Exec(ctx, markMentionSeen,
+		arg.Now,
+		arg.WorkspaceID,
+		arg.MemberID,
+		arg.ID,
+	)
+	if err != nil {
+		return 0, err
+	}
+	return result.RowsAffected(), nil
+}
+
+const markMentionsSeen = `-- name: MarkMentionsSeen :execrows
+INSERT INTO mention_seen (workspace_id, member_id, message_id, seen_at)
+SELECT v.workspace_id, v.member_id, v.message_id, $1
+FROM member_mentions v
+WHERE v.workspace_id = $2 AND v.member_id = $3 AND v.mentions @> ARRAY[$3::uuid]
+  AND NOT v.seen
+  AND ($4::bool OR EXISTS (
+      SELECT 1 FROM inbox_viewers iv
+      WHERE iv.workspace_id = v.workspace_id AND iv.inbox_id = v.inbox_id AND iv.viewer_id = $3))
+ON CONFLICT DO NOTHING
+`
+
+type MarkMentionsSeenParams struct {
+	Now         time.Time
+	WorkspaceID uuid.UUID
+	MemberID    interface{}
+	AllInboxes  bool
+}
+
+func (q *Queries) MarkMentionsSeen(ctx context.Context, arg MarkMentionsSeenParams) (int64, error) {
+	result, err := q.db.Exec(ctx, markMentionsSeen,
+		arg.Now,
+		arg.WorkspaceID,
+		arg.MemberID,
+		arg.AllInboxes,
+	)
+	if err != nil {
+		return 0, err
+	}
+	return result.RowsAffected(), nil
 }
 
 const sendDraft = `-- name: SendDraft :one

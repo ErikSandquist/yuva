@@ -203,35 +203,49 @@ WHERE m.workspace_id = @workspace_id AND m.draft
 SELECT m.id, m.conversation_id, m.author_type, m.author_member_id, m.author_api_key_id, m.via,
        left(m.body, 1000)::text AS body, m.created_at,
        coalesce(ak.bot_name, ak.name, '')::text AS bot_name, coalesce(ak.bot_avatar_url, '')::text AS bot_avatar_url,
-       (r.last_read_at IS NOT NULL AND (r.last_read_at, r.last_read_message_id) >= (m.created_at, m.id))::bool AS seen
-FROM messages m
-JOIN conversations c ON c.workspace_id = m.workspace_id AND c.id = m.conversation_id
-LEFT JOIN conversation_reads r
-       ON r.workspace_id = m.workspace_id AND r.conversation_id = m.conversation_id AND r.member_id = @member_id
+       v.seen::bool AS seen
+FROM member_mentions v
+JOIN messages m ON m.workspace_id = v.workspace_id AND m.id = v.message_id
 LEFT JOIN api_keys ak ON ak.workspace_id = m.workspace_id AND ak.id = m.author_api_key_id
-WHERE m.workspace_id = @workspace_id AND m.kind = 'note' AND NOT m.draft
-  AND m.mentions @> ARRAY[@member_id::uuid]
-  AND m.author_member_id IS DISTINCT FROM @member_id::uuid
+WHERE v.workspace_id = @workspace_id AND v.member_id = @member_id AND v.mentions @> ARRAY[@member_id::uuid]
   AND (@all_inboxes::bool OR EXISTS (
       SELECT 1 FROM inbox_viewers iv
-      WHERE iv.workspace_id = c.workspace_id AND iv.inbox_id = c.inbox_id AND iv.viewer_id = @member_id))
+      WHERE iv.workspace_id = v.workspace_id AND iv.inbox_id = v.inbox_id AND iv.viewer_id = @member_id))
   AND (sqlc.narg(cursor_at)::timestamptz IS NULL
-       OR (m.created_at, m.id) < (sqlc.narg(cursor_at)::timestamptz, sqlc.narg(cursor_id)::uuid))
-ORDER BY m.created_at DESC, m.id DESC
+       OR (v.created_at, v.message_id) < (sqlc.narg(cursor_at)::timestamptz, sqlc.narg(cursor_id)::uuid))
+ORDER BY v.created_at DESC, v.message_id DESC
 LIMIT @lim;
 
 -- name: CountUnseenMentions :one
-SELECT count(*) FROM messages m
-JOIN conversations c ON c.workspace_id = m.workspace_id AND c.id = m.conversation_id
-LEFT JOIN conversation_reads r
-       ON r.workspace_id = m.workspace_id AND r.conversation_id = m.conversation_id AND r.member_id = @member_id
-WHERE m.workspace_id = @workspace_id AND m.kind = 'note' AND NOT m.draft
-  AND m.mentions @> ARRAY[@member_id::uuid]
-  AND m.author_member_id IS DISTINCT FROM @member_id::uuid
+SELECT count(*) FROM member_mentions v
+WHERE v.workspace_id = @workspace_id AND v.member_id = @member_id AND v.mentions @> ARRAY[@member_id::uuid]
+  AND NOT v.seen
   AND (@all_inboxes::bool OR EXISTS (
       SELECT 1 FROM inbox_viewers iv
-      WHERE iv.workspace_id = c.workspace_id AND iv.inbox_id = c.inbox_id AND iv.viewer_id = @member_id))
-  AND (r.last_read_at IS NULL OR (r.last_read_at, r.last_read_message_id) < (m.created_at, m.id));
+      WHERE iv.workspace_id = v.workspace_id AND iv.inbox_id = v.inbox_id AND iv.viewer_id = @member_id));
+
+-- name: GetMentionNote :one
+SELECT v.message_id, v.conversation_id FROM member_mentions v
+WHERE v.workspace_id = @workspace_id AND v.member_id = @member_id AND v.mentions @> ARRAY[@member_id::uuid]
+  AND v.message_id = @id;
+
+-- name: MarkMentionSeen :execrows
+INSERT INTO mention_seen (workspace_id, member_id, message_id, seen_at)
+SELECT v.workspace_id, v.member_id, v.message_id, @now
+FROM member_mentions v
+WHERE v.workspace_id = @workspace_id AND v.member_id = @member_id AND v.message_id = @id AND NOT v.seen
+ON CONFLICT DO NOTHING;
+
+-- name: MarkMentionsSeen :execrows
+INSERT INTO mention_seen (workspace_id, member_id, message_id, seen_at)
+SELECT v.workspace_id, v.member_id, v.message_id, @now
+FROM member_mentions v
+WHERE v.workspace_id = @workspace_id AND v.member_id = @member_id AND v.mentions @> ARRAY[@member_id::uuid]
+  AND NOT v.seen
+  AND (@all_inboxes::bool OR EXISTS (
+      SELECT 1 FROM inbox_viewers iv
+      WHERE iv.workspace_id = v.workspace_id AND iv.inbox_id = v.inbox_id AND iv.viewer_id = @member_id))
+ON CONFLICT DO NOTHING;
 
 -- name: ListConversationSummaries :many
 SELECT id, inbox_id, subject, status, contact_id FROM conversations

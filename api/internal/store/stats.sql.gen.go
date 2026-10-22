@@ -189,3 +189,74 @@ func (q *Queries) StatsReplies(ctx context.Context, arg StatsRepliesParams) ([]S
 	}
 	return items, nil
 }
+
+const statsResolutions = `-- name: StatsResolutions :many
+SELECT f.started_at::timestamptz AS started_at, x.closed_at::timestamptz AS closed_at
+FROM (
+    SELECT m.conversation_id, max(m.created_at) AS closed_at
+    FROM messages m
+    JOIN conversations c ON c.workspace_id = m.workspace_id AND c.id = m.conversation_id
+    WHERE m.workspace_id = $1 AND m.created_at >= $2 AND m.created_at <= $3
+      AND m.kind = 'event' AND m.event->>'type' = 'status_changed' AND m.event->>'status' = 'closed' AND m.imported_at IS NULL
+      AND ($4::uuid IS NULL OR c.inbox_id = $4::uuid)
+      AND ($5::bool OR EXISTS (
+          SELECT 1 FROM inbox_viewers iv
+          WHERE iv.workspace_id = c.workspace_id AND iv.inbox_id = c.inbox_id AND iv.viewer_id = $6::uuid))
+    GROUP BY m.conversation_id
+) x
+JOIN LATERAL (
+    SELECT max(p.created_at) AS closed_at
+    FROM messages p
+    WHERE p.workspace_id = $1 AND p.conversation_id = x.conversation_id
+      AND p.kind = 'event' AND p.event->>'type' = 'status_changed' AND p.event->>'status' = 'closed'
+      AND p.imported_at IS NULL AND p.created_at < x.closed_at
+) pc ON true
+JOIN LATERAL (
+    SELECT min(i.created_at) AS started_at
+    FROM messages i
+    WHERE i.workspace_id = $1 AND i.conversation_id = x.conversation_id
+      AND i.kind = 'message' AND i.direction = 'in' AND NOT i.draft AND i.imported_at IS NULL
+      AND (pc.closed_at IS NULL OR i.created_at > pc.closed_at) AND i.created_at <= x.closed_at
+) f ON f.started_at IS NOT NULL
+`
+
+type StatsResolutionsParams struct {
+	WorkspaceID uuid.UUID
+	Since       time.Time
+	Until       time.Time
+	InboxID     *uuid.UUID
+	AllInboxes  bool
+	ViewerID    uuid.UUID
+}
+
+type StatsResolutionsRow struct {
+	StartedAt time.Time
+	ClosedAt  time.Time
+}
+
+func (q *Queries) StatsResolutions(ctx context.Context, arg StatsResolutionsParams) ([]StatsResolutionsRow, error) {
+	rows, err := q.db.Query(ctx, statsResolutions,
+		arg.WorkspaceID,
+		arg.Since,
+		arg.Until,
+		arg.InboxID,
+		arg.AllInboxes,
+		arg.ViewerID,
+	)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []StatsResolutionsRow
+	for rows.Next() {
+		var i StatsResolutionsRow
+		if err := rows.Scan(&i.StartedAt, &i.ClosedAt); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}

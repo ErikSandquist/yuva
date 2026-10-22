@@ -14590,6 +14590,15 @@ type MentionPage struct {
 	Unseen int64 `json:"unseen"`
 }
 
+// MentionsSeen defines model for MentionsSeen.
+type MentionsSeen struct {
+	// Marked Mentions that were unseen and are marked now.
+	Marked int64 `json:"marked"`
+
+	// Unseen Unseen mentions left over all pages.
+	Unseen int64 `json:"unseen"`
+}
+
 // Message defines model for Message.
 type Message struct {
 	Attachments []Attachment  `json:"attachments"`
@@ -17109,6 +17118,12 @@ type Stats struct {
 
 	// MedianFirstReplySeconds Median seconds from the contact's first message to that reply; absent when `first_replies` is 0.
 	MedianFirstReplySeconds *int64 `json:"median_first_reply_seconds,omitempty"`
+
+	// MedianResolutionSeconds Median seconds, over conversations closed in the window, from the first message the
+	// contact sent after the conversation's previous close (the first one ever when it was
+	// never closed before) to the last close in the window. Conversations without such a
+	// message are left out. Follows `inbox_id`; absent when none was closed.
+	MedianResolutionSeconds *int64 `json:"median_resolution_seconds,omitempty"`
 
 	// Members Per member, by member id.
 	Members []MemberStats `json:"members"`
@@ -21572,6 +21587,24 @@ type ListMentionsParams struct {
 
 	// Limit Page size, 1 to 100; 25 by default.
 	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// MarkMentionsSeenParams defines parameters for MarkMentionsSeen.
+type MarkMentionsSeenParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// MarkMentionSeenParams defines parameters for MarkMentionSeen.
+type MarkMentionSeenParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
 
 	// YuvaWorkspace The workspace to act on; see "Workspace selection".
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
@@ -27904,6 +27937,12 @@ type ServerInterface interface {
 	// ListMentions Notes that mention you
 	// (GET /v1/me/mentions)
 	ListMentions(w http.ResponseWriter, r *http.Request, params ListMentionsParams)
+	// MarkMentionsSeen Mark all your mentions seen
+	// (POST /v1/me/mentions/seen)
+	MarkMentionsSeen(w http.ResponseWriter, r *http.Request, params MarkMentionsSeenParams)
+	// MarkMentionSeen Mark one mention seen
+	// (POST /v1/me/mentions/{noteId}/seen)
+	MarkMentionSeen(w http.ResponseWriter, r *http.Request, noteId uuid.UUID, params MarkMentionSeenParams)
 	// GetNotificationSettings Your notification settings
 	// (GET /v1/me/notifications)
 	GetNotificationSettings(w http.ResponseWriter, r *http.Request, params GetNotificationSettingsParams)
@@ -45566,6 +45605,135 @@ func (siw *ServerInterfaceWrapper) ListMentions(w http.ResponseWriter, r *http.R
 	handler.ServeHTTP(w, r)
 }
 
+// MarkMentionsSeen operation middleware
+func (siw *ServerInterfaceWrapper) MarkMentionsSeen(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params MarkMentionsSeenParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.MarkMentionsSeen(w, r, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// MarkMentionSeen operation middleware
+func (siw *ServerInterfaceWrapper) MarkMentionSeen(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "noteId" -------------
+	var noteId uuid.UUID
+
+	err = runtime.BindStyledParameterWithOptions("simple", "noteId", r.PathValue("noteId"), &noteId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "noteId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params MarkMentionSeenParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.MarkMentionSeen(w, r, noteId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
 // GetNotificationSettings operation middleware
 func (siw *ServerInterfaceWrapper) GetNotificationSettings(w http.ResponseWriter, r *http.Request) {
 
@@ -52166,6 +52334,8 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/me/notifications/inboxes/{inboxId}", wrapper.DeleteInboxNotifications)
 	m.HandleFunc(http.MethodPut+" "+options.BaseURL+"/v1/me/notifications/inboxes/{inboxId}", wrapper.SetInboxNotifications)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/me/mentions", wrapper.ListMentions)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/me/mentions/seen", wrapper.MarkMentionsSeen)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/me/mentions/{noteId}/seen", wrapper.MarkMentionSeen)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/account", wrapper.GetReaderAccount)
 	m.HandleFunc(http.MethodPatch+" "+options.BaseURL+"/v1/account", wrapper.UpdateReaderAccount)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/account/reader-tokens", wrapper.CreateReaderToken)
@@ -79648,6 +79818,125 @@ func (response ListMentions403ApplicationProblemPlusJSONResponse) VisitListMenti
 	return err
 }
 
+type MarkMentionsSeenRequestObject struct {
+	Params MarkMentionsSeenParams
+}
+
+type MarkMentionsSeenResponseObject interface {
+	VisitMarkMentionsSeenResponse(w http.ResponseWriter) error
+}
+
+type MarkMentionsSeen200JSONResponse MentionsSeen
+
+func (response MarkMentionsSeen200JSONResponse) VisitMarkMentionsSeenResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type MarkMentionsSeen401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response MarkMentionsSeen401ApplicationProblemPlusJSONResponse) VisitMarkMentionsSeenResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type MarkMentionsSeen403ApplicationProblemPlusJSONResponse Problem
+
+func (response MarkMentionsSeen403ApplicationProblemPlusJSONResponse) VisitMarkMentionsSeenResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type MarkMentionSeenRequestObject struct {
+	NoteId uuid.UUID `json:"noteId"`
+	Params MarkMentionSeenParams
+}
+
+type MarkMentionSeenResponseObject interface {
+	VisitMarkMentionSeenResponse(w http.ResponseWriter) error
+}
+
+type MarkMentionSeen200JSONResponse MentionsSeen
+
+func (response MarkMentionSeen200JSONResponse) VisitMarkMentionSeenResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type MarkMentionSeen401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response MarkMentionSeen401ApplicationProblemPlusJSONResponse) VisitMarkMentionSeenResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type MarkMentionSeen403ApplicationProblemPlusJSONResponse Problem
+
+func (response MarkMentionSeen403ApplicationProblemPlusJSONResponse) VisitMarkMentionSeenResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type MarkMentionSeen404ApplicationProblemPlusJSONResponse Problem
+
+func (response MarkMentionSeen404ApplicationProblemPlusJSONResponse) VisitMarkMentionSeenResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
 type GetNotificationSettingsRequestObject struct {
 	Params GetNotificationSettingsParams
 }
@@ -89317,6 +89606,12 @@ type StrictServerInterface interface {
 	// ListMentions Notes that mention you
 	// (GET /v1/me/mentions)
 	ListMentions(ctx context.Context, request ListMentionsRequestObject) (ListMentionsResponseObject, error)
+	// MarkMentionsSeen Mark all your mentions seen
+	// (POST /v1/me/mentions/seen)
+	MarkMentionsSeen(ctx context.Context, request MarkMentionsSeenRequestObject) (MarkMentionsSeenResponseObject, error)
+	// MarkMentionSeen Mark one mention seen
+	// (POST /v1/me/mentions/{noteId}/seen)
+	MarkMentionSeen(ctx context.Context, request MarkMentionSeenRequestObject) (MarkMentionSeenResponseObject, error)
 	// GetNotificationSettings Your notification settings
 	// (GET /v1/me/notifications)
 	GetNotificationSettings(ctx context.Context, request GetNotificationSettingsRequestObject) (GetNotificationSettingsResponseObject, error)
@@ -98674,6 +98969,59 @@ func (sh *strictHandler) ListMentions(w http.ResponseWriter, r *http.Request, pa
 		sh.options.ResponseErrorHandlerFunc(w, r, err)
 	} else if validResponse, ok := response.(ListMentionsResponseObject); ok {
 		if err := validResponse.VisitListMentionsResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// MarkMentionsSeen operation middleware
+func (sh *strictHandler) MarkMentionsSeen(w http.ResponseWriter, r *http.Request, params MarkMentionsSeenParams) {
+	var request MarkMentionsSeenRequestObject
+
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.MarkMentionsSeen(ctx, request.(MarkMentionsSeenRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "MarkMentionsSeen")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(MarkMentionsSeenResponseObject); ok {
+		if err := validResponse.VisitMarkMentionsSeenResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// MarkMentionSeen operation middleware
+func (sh *strictHandler) MarkMentionSeen(w http.ResponseWriter, r *http.Request, noteId uuid.UUID, params MarkMentionSeenParams) {
+	var request MarkMentionSeenRequestObject
+
+	request.NoteId = noteId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.MarkMentionSeen(ctx, request.(MarkMentionSeenRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "MarkMentionSeen")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(MarkMentionSeenResponseObject); ok {
+		if err := validResponse.VisitMarkMentionSeenResponse(w); err != nil {
 			sh.options.ResponseErrorHandlerFunc(w, r, err)
 		}
 	} else if response != nil {

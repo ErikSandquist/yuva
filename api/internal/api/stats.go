@@ -41,6 +41,10 @@ func (s *Server) GetStats(ctx context.Context, req oas.GetStatsRequestObject) (o
 	if err != nil {
 		return nil, err
 	}
+	resolutions, err := s.st.StatsResolutions(ctx, store.StatsResolutionsParams(arg))
+	if err != nil {
+		return nil, err
+	}
 	ratings, err := s.st.StatsRatings(ctx, store.StatsRatingsParams(arg))
 	if err != nil {
 		return nil, err
@@ -88,6 +92,17 @@ func (s *Server) GetStats(ctx context.Context, req oas.GetStatsRequestObject) (o
 	if len(firsts) > 0 {
 		out.MedianFirstReplySeconds = new(medianSeconds(firsts))
 	}
+	if len(resolutions) > 0 {
+		d := make([]time.Duration, 0, len(resolutions))
+		for _, r := range resolutions {
+			if v := r.ClosedAt.Sub(r.StartedAt); v >= 0 {
+				d = append(d, v)
+			}
+		}
+		if len(d) > 0 {
+			out.MedianResolutionSeconds = new(medianDuration(d))
+		}
+	}
 	return out, nil
 }
 
@@ -119,6 +134,10 @@ func medianSeconds(rows []store.StatsFirstRepliesRow) int64 {
 	for i, r := range rows {
 		d[i] = r.RepliedAt.Sub(r.AskedAt)
 	}
+	return medianDuration(d)
+}
+
+func medianDuration(d []time.Duration) int64 {
 	slices.Sort(d)
 	mid := len(d) / 2
 	if len(d)%2 == 1 {

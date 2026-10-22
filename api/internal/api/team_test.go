@@ -234,6 +234,7 @@ func TestStats(t *testing.T) {
 
 	type stats struct {
 		MedianFirstReplySeconds *int64 `json:"median_first_reply_seconds"`
+		MedianResolutionSeconds *int64 `json:"median_resolution_seconds"`
 		Members                 []struct {
 			MemberID        string `json:"member_id"`
 			Replies, Closed int64
@@ -257,11 +258,20 @@ func TestStats(t *testing.T) {
 			t.Fatalf("per member %+v", o.Members)
 		}
 	}
+	if o.MedianResolutionSeconds == nil || *o.MedianResolutionSeconds != 602 {
+		t.Fatalf("owner resolution %s", mustMarshal(raw))
+	}
 	ag, raw := get(tm.agent, "")
 	if raw["replies"] != float64(2) || raw["first_replies"] != float64(1) || *ag.MedianFirstReplySeconds != 600 {
 		t.Fatalf("agent stats %s", mustMarshal(raw))
 	}
+	if raw["median_resolution_seconds"] != float64(602) {
+		t.Fatalf("agent resolution %s", mustMarshal(raw))
+	}
 	_, raw = get(tm.owner, "&inbox_id="+hidden)
+	if _, ok := raw["median_resolution_seconds"]; ok {
+		t.Fatalf("nothing closed in the inbox %s", mustMarshal(raw))
+	}
 	if raw["replies"] != float64(2) || raw["closed"] != float64(0) || raw["median_first_reply_seconds"] != float64(1200) {
 		t.Fatalf("one inbox %s", mustMarshal(raw))
 	}
@@ -270,7 +280,7 @@ func TestStats(t *testing.T) {
 	}
 	tm.agent.expectProblem(http.StatusNotFound, "not_found", "GET", "/v1/stats?inbox_id="+hidden, nil)
 	other.owner.expectProblem(http.StatusNotFound, "not_found", "GET", "/v1/stats?inbox_id="+tm.inbox, nil)
-	if _, raw = get(other.owner, ""); raw["replies"] != float64(0) || raw["median_first_reply_seconds"] != nil {
+	if _, raw = get(other.owner, ""); raw["replies"] != float64(0) || raw["median_first_reply_seconds"] != nil || raw["median_resolution_seconds"] != nil {
 		t.Fatalf("another workspace %s", mustMarshal(raw))
 	}
 	tm.owner.expectProblem(http.StatusBadRequest, "validation_failed", "GET", "/v1/stats?timezone=Mars/Base", nil)
@@ -362,5 +372,30 @@ func TestContactPresenceEvents(t *testing.T) {
 				break drain
 			}
 		}
+	}
+}
+
+func TestStatsResolutionIgnoresImported(t *testing.T) {
+	h := newHarness(t)
+	tm := newTeam(t, h)
+	key := tm.apiKey(h)
+	since := h.clock.Now().Add(-time.Minute).UTC().Format(time.RFC3339Nano)
+	conv := tm.conversation(tm.owner)
+	post(key, conv, map[string]any{"kind": "message", "direction": "in", "body": "old question"})
+	h.clock.Advance(3 * time.Hour)
+	tm.owner.expect(http.StatusOK, "PATCH", "/v1/conversations/"+conv, map[string]any{"status": "closed"})
+	if _, err := h.st.Pool.Exec(context.Background(), "UPDATE messages SET imported_at = created_at WHERE workspace_id = $1", tm.ws); err != nil {
+		t.Fatal(err)
+	}
+	h.clock.Advance(time.Hour)
+	tm.owner.expect(http.StatusOK, "PATCH", "/v1/conversations/"+conv, map[string]any{"status": "open"})
+	post(key, conv, map[string]any{"kind": "message", "direction": "in", "body": "again"})
+	h.clock.Advance(100 * time.Second)
+	tm.owner.expect(http.StatusOK, "PATCH", "/v1/conversations/"+conv, map[string]any{"status": "closed"})
+
+	r := tm.owner.expect(http.StatusOK, "GET", "/v1/stats?since="+url.QueryEscape(since), nil)
+	got, ok := r.body["median_resolution_seconds"].(float64)
+	if !ok || got < 100 || got > 110 {
+		t.Fatalf("median_resolution_seconds %v, want only the live segment: %s", r.body["median_resolution_seconds"], r.raw)
 	}
 }

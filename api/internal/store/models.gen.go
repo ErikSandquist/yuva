@@ -1376,6 +1376,24 @@ type Member struct {
 	NotificationEmailDelay *int32
 }
 
+type MemberMention struct {
+	WorkspaceID    uuid.UUID
+	MemberID       interface{}
+	MessageID      uuid.UUID
+	ConversationID uuid.UUID
+	InboxID        uuid.UUID
+	CreatedAt      time.Time
+	Mentions       []uuid.UUID
+	Seen           bool
+}
+
+type MentionSeen struct {
+	WorkspaceID uuid.UUID
+	MemberID    uuid.UUID
+	MessageID   uuid.UUID
+	SeenAt      time.Time
+}
+
 type Message struct {
 	ID                uuid.UUID
 	WorkspaceID       uuid.UUID

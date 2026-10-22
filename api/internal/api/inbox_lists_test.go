@@ -95,6 +95,95 @@ func TestListMentions(t *testing.T) {
 	}
 }
 
+func TestMarkMentionsSeen(t *testing.T) {
+	h := newHarness(t)
+	tm := newTeam(t, h)
+	other := newTeam(t, h)
+	key := tm.apiKey(h)
+	tm.owner.expect(http.StatusNoContent, "PUT", "/v1/inboxes/"+tm.inbox+"/members/"+tm.agentID, nil)
+	c1 := tm.conversation(tm.owner)
+	c2 := tm.conversation(tm.owner)
+	c3 := tm.conversation(tm.owner)
+	unread := func(id string) bool { return itemByID(listItems(tm.agent, ""), id)["unread"].(bool) }
+	seen := func(note string) bool {
+		for _, it := range pageItems(page(tm.agent, "/v1/me/mentions")) {
+			if it["note"].(map[string]any)["id"] == note {
+				return it["seen"].(bool)
+			}
+		}
+		t.Fatalf("mention %s not listed", note)
+		return false
+	}
+
+	post(key, c1, map[string]any{"kind": "message", "direction": "in", "body": "one"})
+	tm.agent.expect(http.StatusOK, "POST", "/v1/conversations/"+c1+"/read", nil)
+	post(key, c1, map[string]any{"kind": "message", "direction": "in", "body": "two"})
+	post(key, c1, map[string]any{"kind": "message", "direction": "in", "body": "three"})
+	n1 := post(tm.owner, c1, map[string]any{"kind": "note", "body": "one", "mentions": []string{tm.agentID}})
+	n2 := post(tm.owner, c1, map[string]any{"kind": "note", "body": "two", "mentions": []string{tm.agentID}})
+	post(key, c2, map[string]any{"kind": "message", "direction": "in", "body": "hello"})
+	n3 := post(tm.owner, c2, map[string]any{"kind": "note", "body": "three", "mentions": []string{tm.agentID}})
+	plain := post(tm.owner, c1, map[string]any{"kind": "note", "body": "no mention"})
+	post(key, c3, map[string]any{"kind": "message", "direction": "in", "body": "hi"})
+	n4 := post(tm.owner, c3, map[string]any{"kind": "note", "body": "four", "mentions": []string{tm.agentID}})
+	tm.agent.expect(http.StatusOK, "POST", "/v1/conversations/"+c3+"/read", nil)
+	tm.agent.expect(http.StatusOK, "POST", "/v1/conversations/"+c3+"/unread", nil)
+	if r := page(tm.agent, "/v1/me/mentions"); r.body["unseen"] != float64(3) || !seen(n4) {
+		t.Fatalf("before: %s", r.raw)
+	}
+
+	r := tm.agent.expect(http.StatusOK, "POST", "/v1/me/mentions/"+n1+"/seen", nil)
+	if r.body["marked"] != float64(1) || r.body["unseen"] != float64(2) {
+		t.Fatalf("mark one: %s", r.raw)
+	}
+	if !seen(n1) || seen(n2) || !unread(c1) {
+		t.Fatalf("mark one: n1 %v n2 %v unread %v", seen(n1), seen(n2), unread(c1))
+	}
+	r = tm.agent.expect(http.StatusOK, "POST", "/v1/me/mentions/"+n1+"/seen", nil)
+	if r.body["marked"] != float64(0) || r.body["unseen"] != float64(2) {
+		t.Fatalf("mark again: %s", r.raw)
+	}
+	tm.agent.expectProblem(http.StatusNotFound, "not_found", "POST", "/v1/me/mentions/"+plain+"/seen", nil)
+	tm.agent.expectProblem(http.StatusNotFound, "not_found", "POST", "/v1/me/mentions/00000000-0000-4000-8000-000000000001/seen", nil)
+	tm.owner.expectProblem(http.StatusNotFound, "not_found", "POST", "/v1/me/mentions/"+n2+"/seen", nil)
+	other.owner.expectProblem(http.StatusNotFound, "not_found", "POST", "/v1/me/mentions/"+n2+"/seen", nil)
+	key.expectProblem(http.StatusForbidden, "member_session_required", "POST", "/v1/me/mentions/seen", nil)
+	key.expectProblem(http.StatusForbidden, "member_session_required", "POST", "/v1/me/mentions/"+n2+"/seen", nil)
+
+	r = tm.agent.expect(http.StatusOK, "POST", "/v1/me/mentions/seen", nil)
+	if r.body["marked"] != float64(2) || r.body["unseen"] != float64(0) || !seen(n2) || !seen(n3) {
+		t.Fatalf("mark all: %s", r.raw)
+	}
+	if !unread(c1) || !unread(c2) || !unread(c3) {
+		t.Fatalf("mark all left unread: %v %v %v", unread(c1), unread(c2), unread(c3))
+	}
+	if r = tm.agent.expect(http.StatusOK, "POST", "/v1/me/mentions/seen", nil); r.body["marked"] != float64(0) {
+		t.Fatalf("mark all twice: %s", r.raw)
+	}
+	if r = other.owner.expect(http.StatusOK, "POST", "/v1/me/mentions/seen", nil); r.body["marked"] != float64(0) {
+		t.Fatalf("another workspace: %s", r.raw)
+	}
+
+	tm.agent.expect(http.StatusOK, "POST", "/v1/conversations/"+c3+"/read", nil)
+	tm.agent.expect(http.StatusOK, "POST", "/v1/conversations/"+c3+"/unread", nil)
+	tm.agent.expect(http.StatusOK, "POST", "/v1/me/mentions/"+n4+"/seen", nil)
+	if !unread(c3) {
+		t.Fatal("mark seen cleared the marked-unread flag")
+	}
+
+	later := post(tm.owner, c2, map[string]any{"kind": "note", "body": "later", "mentions": []string{tm.agentID}})
+	tm.agent.expect(http.StatusOK, "POST", "/v1/conversations/"+c2+"/read", nil)
+	if !seen(later) {
+		t.Fatal("opening the conversation still marks its mentions seen")
+	}
+
+	tm.owner.expect(http.StatusNoContent, "DELETE", "/v1/inboxes/"+tm.inbox+"/members/"+tm.agentID, nil)
+	tm.agent.expectProblem(http.StatusNotFound, "not_found", "POST", "/v1/me/mentions/"+later+"/seen", nil)
+	if r = tm.agent.expect(http.StatusOK, "POST", "/v1/me/mentions/seen", nil); r.body["marked"] != float64(0) {
+		t.Fatalf("mark all in a hidden inbox: %s", r.raw)
+	}
+}
+
 func TestListDrafts(t *testing.T) {
 	h := newHarness(t)
 	tm := newTeam(t, h)

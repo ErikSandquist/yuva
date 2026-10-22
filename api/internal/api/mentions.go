@@ -89,3 +89,41 @@ func (s *Server) ListMentions(ctx context.Context, req oas.ListMentionsRequestOb
 	}
 	return oas.ListMentions200JSONResponse{Items: items, NextCursor: next, Unseen: unseen}, nil
 }
+
+func (s *Server) MarkMentionSeen(ctx context.Context, req oas.MarkMentionSeenRequestObject) (oas.MarkMentionSeenResponseObject, error) {
+	p := principalFrom(ctx)
+	n, err := s.st.GetMentionNote(ctx, store.GetMentionNoteParams{WorkspaceID: p.workspaceID, ID: req.NoteId, MemberID: p.memberID})
+	if store.IsNotFound(err) {
+		return nil, errNotFound
+	}
+	if err != nil {
+		return nil, err
+	}
+	if _, err := visibleConversation(ctx, s.st.Queries, p, n.ConversationID, false); err != nil {
+		return nil, err
+	}
+	marked, err := s.st.MarkMentionSeen(ctx, store.MarkMentionSeenParams{WorkspaceID: p.workspaceID, MemberID: p.memberID, ID: n.MessageID, Now: s.now()})
+	if err != nil {
+		return nil, err
+	}
+	unseen, err := s.st.CountUnseenMentions(ctx, store.CountUnseenMentionsParams{MemberID: p.memberID, WorkspaceID: p.workspaceID, AllInboxes: p.seesAllInboxes()})
+	if err != nil {
+		return nil, err
+	}
+	return oas.MarkMentionSeen200JSONResponse{Marked: marked, Unseen: unseen}, nil
+}
+
+func (s *Server) MarkMentionsSeen(ctx context.Context, _ oas.MarkMentionsSeenRequestObject) (oas.MarkMentionsSeenResponseObject, error) {
+	p := principalFrom(ctx)
+	marked, err := s.st.MarkMentionsSeen(ctx, store.MarkMentionsSeenParams{
+		WorkspaceID: p.workspaceID, MemberID: p.memberID, AllInboxes: p.seesAllInboxes(), Now: s.now(),
+	})
+	if err != nil {
+		return nil, err
+	}
+	unseen, err := s.st.CountUnseenMentions(ctx, store.CountUnseenMentionsParams{MemberID: p.memberID, WorkspaceID: p.workspaceID, AllInboxes: p.seesAllInboxes()})
+	if err != nil {
+		return nil, err
+	}
+	return oas.MarkMentionsSeen200JSONResponse{Marked: marked, Unseen: unseen}, nil
+}
