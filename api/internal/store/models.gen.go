@@ -867,6 +867,7 @@ type DiscussionPost struct {
 	CreatedAt       time.Time
 	EditedAt        *time.Time
 	DeletedAt       *time.Time
+	Via             *string
 }
 
 type DiscussionPostView struct {
@@ -886,6 +887,7 @@ type DiscussionPostView struct {
 	Votes           int32
 	AuthorName      string
 	AuthorPersonID  *uuid.UUID
+	Via             *string
 }
 
 type DiscussionVote struct {

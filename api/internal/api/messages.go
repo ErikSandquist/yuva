@@ -36,6 +36,7 @@ var (
 	errAttachmentMismatch = problem(http.StatusUnsupportedMediaType, "attachment_type_mismatch", "an attachment's content does not match its declared content type")
 	errTooManyAttachments = errValidation("at most 10 files per message")
 	errBotSendingDisabled = problem(http.StatusForbidden, "bot_sending_disabled", "this workspace does not let API keys and MCP clients deliver messages; post a draft for a member to send")
+	errBotPostingDisabled = problem(http.StatusForbidden, "bot_sending_disabled", "this workspace does not let MCP clients post where readers see it; a member replies in Yuva")
 	errDraftKind          = errValidation("only an outgoing message can be a draft")
 )
 

@@ -8047,7 +8047,8 @@ type ApiKeyList struct {
 //		message e-mail and raw source; list labels and canned replies.
 //	  - `conversations:write`: create, update (status, assignee, snooze, priority, labels), move
 //	    and bulk-update conversations.
-//	  - `messages:write`: outgoing and incoming messages, drafts: create, edit, discard.
+//	  - `messages:write`: outgoing and incoming messages, drafts: create, edit, discard; for
+//	    OAuth tokens also replies to reader threads and their accepted answer.
 //	  - `drafts:send`: send a draft (`POST /v1/messages/{id}/send`), together with
 //	    `messages:write`.
 //	  - `notes:write`: notes.
@@ -8059,7 +8060,8 @@ type ApiKeyList struct {
 //	  - `labels:write`: create, update and delete labels.
 //	  - `canned_replies:write`: create, update and delete canned replies.
 //	  - `webhooks:manage`: webhooks, their deliveries and attempts.
-//	  - `workspace:manage`: update the workspace, usage.
+//	  - `workspace:manage`: update the workspace, usage; for an owner's OAuth token also asking
+//	    the operator to allow broadcasts.
 //	  - `feedback:write`: feedback.
 //	  - `lists:read`: mailing lists, subscriptions, growth, consent exports.
 //	  - `lists:write`: create, change and delete lists; add, unsubscribe and delete
@@ -11397,6 +11399,10 @@ type DiscussionAuthor struct {
 
 	// Name Absent when the author has no name (show "Reader") or is deleted.
 	Name *string `json:"name,omitempty"`
+
+	// Via The OAuth client a member wrote this with (its name at the time), as in
+	// "Ayşe via Claude Code"; absent for the panel and on `/client/v1`.
+	Via *string `json:"via,omitempty"`
 }
 
 // DiscussionAuthorKind `member`: someone of the team. `reader`: a signed-in reader or a user of the host app.

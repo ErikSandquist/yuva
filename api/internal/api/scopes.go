@@ -51,8 +51,9 @@ var operationScopes = map[string][]oas.ApiKeyScope{
 	"CreateDkimKey":             {oas.InboxesManage},
 	"DeleteDkimKey":             {oas.InboxesManage},
 
-	"UpdateWorkspace": {oas.WorkspaceManage},
-	"GetUsage":        {oas.WorkspaceManage},
+	"UpdateWorkspace":          {oas.WorkspaceManage},
+	"GetUsage":                 {oas.WorkspaceManage},
+	"RequestBroadcastApproval": {oas.WorkspaceManage},
 
 	"ListContacts":       {oas.ContactsRead},
 	"LookupContact":      {oas.ContactsRead},
@@ -90,6 +91,10 @@ var operationScopes = map[string][]oas.ApiKeyScope{
 	"GetDocsPage":           {oas.ConversationsRead},
 	"GetDocsSummary":        {oas.ConversationsRead},
 	"ListDocsSites":         {oas.ConversationsRead},
+
+	"CreateDiscussionPost":   {oas.MessagesWrite},
+	"AcceptDiscussionAnswer": {oas.MessagesWrite},
+	"ClearDiscussionAnswer":  {oas.MessagesWrite},
 
 	"CreateConversation":      {oas.ConversationsWrite},
 	"UpdateConversation":      {oas.ConversationsWrite},

@@ -25,11 +25,31 @@ var (
 	errImageSource      = errValidation("give the image as url or as data_base64, one of them")
 	errImageURL         = errValidation("url must be an https URL of the image")
 	errImageURLRefused  = problem(http.StatusUnprocessableEntity, "url_refused", "the URL's host is a private, local or reserved address; give a public https URL")
+	errOwnerGrantOnly   = problem(http.StatusForbidden, "forbidden", "only the workspace's owner asks for broadcasts to be allowed, through their own connection; an API key has no person behind it")
 	errConfirmName      = problem(http.StatusConflict, "confirm_name_mismatch", "confirm_name is not the broadcast's name; show the person the name from get_broadcast and cancel only after they confirm it")
 	errImageFetchFailed = func(detail string) *apiError {
 		return problem(http.StatusUnprocessableEntity, "url_fetch_failed", "the image could not be fetched: "+detail)
 	}
 )
+
+type requestApprovalIn struct {
+	Website            string `json:"website" jsonschema:"the workspace's website, an http(s) URL, as the person gave it"`
+	SenderDescription  string `json:"sender_description" jsonschema:"who sends and what the broadcasts are about, in the person's own words"`
+	ConsentDescription string `json:"consent_description" jsonschema:"how the subscribers agreed to get them, in the person's own words"`
+}
+
+type requestApprovalOut struct {
+	Status   string     `json:"status" jsonschema:"approval_requested once the operator has the request"`
+	StatusAt *time.Time `json:"status_at,omitempty"`
+}
+
+// mayRequestApproval lists request_broadcast_approval to an owner's OAuth connection only.
+func mayRequestApproval(p principal) error {
+	if !p.isGrant() || p.role != roleOwner {
+		return errOwnerGrantOnly
+	}
+	return nil
+}
 
 type mcpEmailImage struct {
 	ID          uuid.UUID  `json:"id" jsonschema:"pass as image_id in an image block of update_design"`
@@ -313,5 +333,18 @@ var mcpDesignTools = []mcpTool{
 				return mcpBroadcast{}, err
 			}
 			return c.broadcastOut(oas.Broadcast(cres.(oas.CancelBroadcast200JSONResponse))), nil
+		}),
+	defineTool("request_broadcast_approval", "Ask to allow broadcasts",
+		"Asks the server's operator to allow this workspace to send broadcasts, when the workspace's broadcasts status is approval_required (409 invalid_state otherwise); it becomes approval_requested until the operator answers. website, sender_description and consent_description come from the person you work for, word for word: ask them, never write or guess any of them. Listed only to the workspace's owner. Maps to POST /v1/workspace/broadcast-approval.",
+		delivering, nil, mcpTool{ops: []string{"RequestBroadcastApproval"}, gate: mayRequestApproval},
+		func(ctx context.Context, c *mcpCall, in requestApprovalIn) (requestApprovalOut, error) {
+			res, err := c.s.RequestBroadcastApproval(ctx, oas.RequestBroadcastApprovalRequestObject{Body: &oas.BroadcastApprovalRequest{
+				Website: in.Website, SenderDescription: in.SenderDescription, ConsentDescription: in.ConsentDescription,
+			}})
+			if err != nil {
+				return requestApprovalOut{}, err
+			}
+			b := oas.Workspace(res.(oas.RequestBroadcastApproval202JSONResponse)).Broadcasts
+			return requestApprovalOut{Status: string(b.Status), StatusAt: b.StatusAt}, nil
 		}),
 }

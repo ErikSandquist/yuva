@@ -42,7 +42,19 @@ func teamPost(ctx context.Context, q *store.Queries, p principal, id uuid.UUID) 
 
 func memberActor(p principal) actor {
 	id := p.memberID
-	return actor{memberID: &id}
+	return actor{memberID: &id, via: p.via}
+}
+
+// requireDiscussionWriter lets members and OAuth tokens post and mark answers as their member; a
+// key has no person to show as the author, and a /mcp token follows bots_may_send.
+func requireDiscussionWriter(p principal) error {
+	if p.isKey() {
+		return errMemberSessionRequired
+	}
+	if !mayDeliver(p) {
+		return errBotPostingDisabled
+	}
+	return nil
 }
 
 func (s *Server) teamDetail(ctx context.Context, p principal, id uuid.UUID) (oas.DiscussionDetail, error) {
@@ -318,6 +330,9 @@ func (s *Server) UpdateDiscussion(ctx context.Context, req oas.UpdateDiscussionR
 
 func (s *Server) CreateDiscussionPost(ctx context.Context, req oas.CreateDiscussionPostRequestObject) (oas.CreateDiscussionPostResponseObject, error) {
 	p := principalFrom(ctx)
+	if err := requireDiscussionWriter(p); err != nil {
+		return nil, err
+	}
 	body, err := discussionBodyText(req.Body.Body)
 	if err != nil {
 		return nil, err
@@ -343,6 +358,9 @@ func (s *Server) CreateDiscussionPost(ctx context.Context, req oas.CreateDiscuss
 
 func (s *Server) teamAnswer(ctx context.Context, id uuid.UUID, postID *uuid.UUID) (oas.Discussion, error) {
 	p := principalFrom(ctx)
+	if err := requireDiscussionWriter(p); err != nil {
+		return oas.Discussion{}, err
+	}
 	err := s.inTx(ctx, p.workspaceID, func(q *store.Queries, events *eventBatch) error {
 		t, err := teamThread(ctx, q, p, id, true)
 		if err != nil {

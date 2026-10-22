@@ -194,11 +194,15 @@ with the role and scope each tool names in the [table below](#tools). Tools you 
   the set. See [E-mail designs](designs.md#4-images) for the image rules.
 - **Running broadcasts.** `pause_broadcast`, `resume_broadcast`, `unschedule_broadcast` and `cancel_broadcast` are
   listed under the same rule as `schedule_broadcast`. `cancel_broadcast` needs `confirm_name`, the broadcast's name as
-  you confirmed it.
+  you confirmed it. `request_broadcast_approval` asks the operator to allow broadcasts; it is offered only to an owner
+  signed in through OAuth, and the website and the descriptions of the sender and of how people agreed are yours, never
+  the assistant's.
 - **People and conversations.** `list_members` gives `assign` its ids; contacts, their notes and subscriptions can be
   searched, created and updated; `start_conversation` writes the first message as a draft unless the workspace lets
   assistants deliver; `list_drafts` shows drafts waiting for review; labels and canned replies can be created.
-  `list_discussions` and `get_discussion` read discussions; replying stays with members.
+  `list_discussions` and `get_discussion` read discussions; `reply_to_discussion` and `mark_discussion_answer` reply and
+  mark the answer as you, through OAuth only and only while the workspace lets assistants deliver, since a reply is public
+  at once.
 - **Other products.** `create_status_page`, `create_status_component`, `create_status_monitor`, `update_incident`,
   `create_help_center`, `create_help_collection`, `create_changelog`, `create_roadmap_board`, `create_funnel` and
   `analytics_retention`. Nothing created is published: a member does that in Yuva. `create_status_monitor` shows the push
@@ -255,6 +259,8 @@ answers `insufficient_scope` with the scope to grant.
 | `create_contact`, `update_contact`, `add_contact_note` | `contacts:write` |
 | `start_conversation` (the first message is a draft unless the caller may deliver and passes `send: true`) | `conversations:write` and `messages:write` |
 | `list_drafts`, `list_discussions`, `get_discussion` | `conversations:read` |
+| `reply_to_discussion`, `mark_discussion_answer` (OAuth only; only when bots may send) | `messages:write` |
+| `request_broadcast_approval` (owners through OAuth only) | `workspace:manage` |
 | `create_label` (owners, admins, keys) | `labels:write` |
 | `create_canned_reply`, `update_canned_reply` (owners, admins, keys) | `canned_replies:write` |
 | `update_inbox_sender`, `create_email_channel`, `create_dkim_key` (owners, admins, keys) | `inboxes:manage` |

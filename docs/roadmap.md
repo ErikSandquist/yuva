@@ -502,7 +502,7 @@ Status: planned for `v0.0.32`; issues #107, #108, #109, decisions in `architectu
 - E-mail images from a public URL or bytes, so a design gets the sender's logo.
 - Designs and broadcast control (pause, resume, unschedule, cancel), members for assigning,
   contacts and their notes, starting a conversation, drafts waiting for review, labels and canned
-  replies, reading discussions, and creating status pages, help centers, changelogs, roadmap boards and
+  replies, discussion replies and answers, asking the operator to allow broadcasts, and creating status pages, help centers, changelogs, roadmap boards and
   funnels.
 - Left out on purpose: credentials, access, webhooks, workspace settings, deletes, exports, passwords
   and every publish a milestone keeps for members.

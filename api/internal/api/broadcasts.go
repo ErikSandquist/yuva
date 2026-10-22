@@ -1009,9 +1009,6 @@ func (s *Server) CountBroadcastAudience(ctx context.Context, req oas.CountBroadc
 
 func (s *Server) RequestBroadcastApproval(ctx context.Context, req oas.RequestBroadcastApprovalRequestObject) (oas.RequestBroadcastApprovalResponseObject, error) {
 	p := principalFrom(ctx)
-	if p.isGrant() {
-		return nil, errMemberSessionRequired
-	}
 	if err := requireOwner(p); err != nil {
 		return nil, err
 	}
@@ -1046,11 +1043,11 @@ func (s *Server) RequestBroadcastApproval(ctx context.Context, req oas.RequestBr
 		if w, err = q.SetWorkspaceBroadcastsStatus(ctx, store.SetWorkspaceBroadcastsStatusParams{ID: p.workspaceID, Status: wsApprovalRequested, Now: s.now()}); err != nil {
 			return err
 		}
-		person, err := q.GetPerson(ctx, p.personID)
+		owner, err := q.GetMember(ctx, store.GetMemberParams{WorkspaceID: p.workspaceID, ID: p.memberID})
 		if err != nil {
 			return err
 		}
-		return s.noteBroadcastOperator(ctx, q, noticeBroadcastApproval, person.Email, w.Name,
+		return s.noteBroadcastOperator(ctx, q, noticeBroadcastApproval, owner.Email, w.Name,
 			"website "+oneLine(website)+"; sends: "+oneLine(sender)+"; consent: "+oneLine(consent))
 	})
 	if err != nil {

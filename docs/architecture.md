@@ -584,8 +584,12 @@ writes that only owners and admins may make through `/v1` are listed only to the
   `broadcasts:read`), `duplicate_design` (`broadcasts:write`); `pause_broadcast`, `resume_broadcast`,
   `unschedule_broadcast` and `cancel_broadcast` (`destructiveHint`, needs `confirm_name` equal to the
   broadcast's name) with `broadcasts:send`, listed under the same rule as `schedule_broadcast`.
-  Asking the operator to allow broadcasts stays in the panel: `RequestBroadcastApproval` takes the
-  owner's session only.
+  `request_broadcast_approval` (`RequestBroadcastApproval`) is listed only to an owner's OAuth
+  connection with `workspace:manage`, the scope of the workspace row whose broadcast status it
+  changes; `/v1` takes the owner's session or OAuth token, and refuses API keys, which have no
+  person behind them. Its description says `website`, `sender_description` and
+  `consent_description` come from the person and are never invented; the operator's notice names
+  the owner's address.
 - **Team, contacts, conversations.** `list_members` (`ListMembers`: id, name, role; addresses only to
   owners and admins), so `assign` has ids. `search_contacts` (`ListContacts`), `create_contact`,
   `update_contact` (names and attributes; `contacts:write`), `list_contact_notes`,
@@ -593,8 +597,13 @@ writes that only owners and admins may make through `/v1` are listed only to the
   first outgoing message is a draft unless the caller may deliver and `send: true` is given.
   `list_drafts` (`ListDrafts`) lists drafts waiting for review. `create_label`, `create_canned_reply`,
   `update_canned_reply`.
-- **Discussions.** `list_discussions`, `get_discussion` (posts in `customer_content`). Replying stays
-  with members: `CreateDiscussionPost` needs a member and takes no key or token.
+- **Discussions.** `list_discussions`, `get_discussion` (posts in `customer_content`).
+  `reply_to_discussion` (`CreateDiscussionPost`) and `mark_discussion_answer` (`AcceptDiscussionAnswer`,
+  `ClearDiscussionAnswer`, idempotent) take `messages:write` and an OAuth token, which acts as its
+  member; API keys are refused, since a post has no bot author. A post written with a token keeps
+  `via` (`discussion_posts.via`) and shows it on `author.via` on `/v1` only. Both are public at once
+  and notify followers, so they are listed only when the caller may deliver (`bots_may_send` for a
+  `/mcp` token, which the operations also check: `403 bot_sending_disabled`).
 - **Setting up the other products.** `create_status_page`, `create_status_component`,
   `create_status_monitor`, `update_incident` (a draft's or a published incident's title and impact;
   text goes through `post_incident_update`); `create_help_center`, `create_help_collection`;

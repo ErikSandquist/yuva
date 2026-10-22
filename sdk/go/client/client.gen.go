@@ -8093,7 +8093,8 @@ type ApiKeyList struct {
 //		message e-mail and raw source; list labels and canned replies.
 //	  - `conversations:write`: create, update (status, assignee, snooze, priority, labels), move
 //	    and bulk-update conversations.
-//	  - `messages:write`: outgoing and incoming messages, drafts: create, edit, discard.
+//	  - `messages:write`: outgoing and incoming messages, drafts: create, edit, discard; for
+//	    OAuth tokens also replies to reader threads and their accepted answer.
 //	  - `drafts:send`: send a draft (`POST /v1/messages/{id}/send`), together with
 //	    `messages:write`.
 //	  - `notes:write`: notes.
@@ -8105,7 +8106,8 @@ type ApiKeyList struct {
 //	  - `labels:write`: create, update and delete labels.
 //	  - `canned_replies:write`: create, update and delete canned replies.
 //	  - `webhooks:manage`: webhooks, their deliveries and attempts.
-//	  - `workspace:manage`: update the workspace, usage.
+//	  - `workspace:manage`: update the workspace, usage; for an owner's OAuth token also asking
+//	    the operator to allow broadcasts.
 //	  - `feedback:write`: feedback.
 //	  - `lists:read`: mailing lists, subscriptions, growth, consent exports.
 //	  - `lists:write`: create, change and delete lists; add, unsubscribe and delete
@@ -11443,6 +11445,10 @@ type DiscussionAuthor struct {
 
 	// Name Absent when the author has no name (show "Reader") or is deleted.
 	Name *string `json:"name,omitempty"`
+
+	// Via The OAuth client a member wrote this with (its name at the time), as in
+	// "Ayşe via Claude Code"; absent for the panel and on `/client/v1`.
+	Via *string `json:"via,omitempty"`
 }
 
 // DiscussionAuthorKind `member`: someone of the team. `reader`: a signed-in reader or a user of the host app.
@@ -14638,10 +14644,10 @@ type MentionPage struct {
 
 // MentionsSeen defines model for MentionsSeen.
 type MentionsSeen struct {
-	// Marked Mentions that were unseen and are seen now.
+	// Marked Mentions that were unseen and are marked now.
 	Marked int64 `json:"marked"`
 
-	// Unseen Unseen mentions left (0 unless one arrived meanwhile).
+	// Unseen Unseen mentions left over all pages.
 	Unseen int64 `json:"unseen"`
 }
 
@@ -17165,8 +17171,10 @@ type Stats struct {
 	// MedianFirstReplySeconds Median seconds from the contact's first message to that reply; absent when `first_replies` is 0.
 	MedianFirstReplySeconds *int64 `json:"median_first_reply_seconds,omitempty"`
 
-	// MedianResolutionSeconds Median seconds from a conversation's first message to its last close in the window,
-	// over conversations closed in the window; absent when none was. Follows `inbox_id`.
+	// MedianResolutionSeconds Median seconds, over conversations closed in the window, from the first message the
+	// contact sent after the conversation's previous close (the first one ever when it was
+	// never closed before) to the last close in the window. Conversations without such a
+	// message are left out. Follows `inbox_id`; absent when none was closed.
 	MedianResolutionSeconds *int64 `json:"median_resolution_seconds,omitempty"`
 
 	// Members Per member, by member id.
@@ -31333,7 +31341,9 @@ type ClientInterface interface {
 
 	// ClearDiscussionAnswer Clear the accepted answer
 	//
-	// Member sessions only.
+	// Clearing a thread without an answer changes nothing. Members and OAuth tokens with
+	// `messages:write`, as for `createDiscussionPost`; API keys are refused
+	// (`403 member_session_required`).
 	//
 	// Corresponds with DELETE /v1/discussions/{discussionId}/answer (the `ClearDiscussionAnswer` operationId).
 	ClearDiscussionAnswer(ctx context.Context, discussionId DiscussionId, params *ClearDiscussionAnswerParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -31343,7 +31353,9 @@ type ClientInterface interface {
 	// Marks a published reply to the thread itself (not a reply to a reply, not the opening post)
 	// as its answer, replacing an earlier one (`400 validation_failed` otherwise), also in locked
 	// threads. Followers are told once (`discussion.answered`). Ideas have no accepted answer
-	// (`409 not_supported`). Member sessions only.
+	// (`409 not_supported`). Marking the reply that is already the answer changes nothing.
+	// Members and OAuth tokens with `messages:write`, as for `createDiscussionPost`; API keys are
+	// refused (`403 member_session_required`).
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -31355,7 +31367,9 @@ type ClientInterface interface {
 	// Marks a published reply to the thread itself (not a reply to a reply, not the opening post)
 	// as its answer, replacing an earlier one (`400 validation_failed` otherwise), also in locked
 	// threads. Followers are told once (`discussion.answered`). Ideas have no accepted answer
-	// (`409 not_supported`). Member sessions only.
+	// (`409 not_supported`). Marking the reply that is already the answer changes nothing.
+	// Members and OAuth tokens with `messages:write`, as for `createDiscussionPost`; API keys are
+	// refused (`403 member_session_required`).
 	//
 	// Takes a body of the `application/json` content type.
 	//
@@ -31444,7 +31458,12 @@ type ClientInterface interface {
 	//
 	// A reply to the thread (`parent_post_id` absent) or to one of its replies, published at once,
 	// also in locked threads. Replies are one level deep: a reply to a reply answers
-	// `400 validation_failed`. Followers are notified. Member sessions only.
+	// `400 validation_failed`. Followers are notified.
+	//
+	// Members, and OAuth tokens with `messages:write`, which reply as their member; the post's
+	// `author.via` names the client. A token issued for `/mcp` replies only while the
+	// workspace's `bots_may_send` is on (`403 bot_sending_disabled`). API keys are refused
+	// (`403 member_session_required`): a post has no bot author.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -31455,7 +31474,12 @@ type ClientInterface interface {
 	//
 	// A reply to the thread (`parent_post_id` absent) or to one of its replies, published at once,
 	// also in locked threads. Replies are one level deep: a reply to a reply answers
-	// `400 validation_failed`. Followers are notified. Member sessions only.
+	// `400 validation_failed`. Followers are notified.
+	//
+	// Members, and OAuth tokens with `messages:write`, which reply as their member; the post's
+	// `author.via` names the client. A token issued for `/mcp` replies only while the
+	// workspace's `bots_may_send` is on (`403 bot_sending_disabled`). API keys are refused
+	// (`403 member_session_required`): a post has no bot author.
 	//
 	// Takes a body of the `application/json` content type.
 	//
@@ -33173,21 +33197,21 @@ type ClientInterface interface {
 	// MarkMentionsSeen Mark all your mentions seen
 	//
 	// Marks every mention `GET /v1/me/mentions` would list as unseen for the calling member as
-	// seen, without opening the conversations: in each conversation the read cursor moves
-	// forward to the latest unseen mention (never backward), so messages after it stay unread.
-	// Conversations the member cannot see are left alone. Each moved cursor sends a
-	// `conversation.read` event. Member sessions only.
+	// seen, without opening the conversations. It records the mentions only: the read cursors
+	// and "marked unread" flags of the conversations stay as they are, so messages around a
+	// mention stay unread. Nothing is sent over realtime. Member sessions only.
 	//
 	// Corresponds with POST /v1/me/mentions/seen (the `MarkMentionsSeen` operationId).
 	MarkMentionsSeen(ctx context.Context, params *MarkMentionsSeenParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// MarkMentionSeen Mark one mention seen
 	//
-	// Moves the calling member's read cursor in the note's conversation forward to the note
-	// without opening it (the cursor never moves backward, so an already seen mention changes
-	// nothing). Answers `404 not_found` when the note does not mention the member, was written
-	// by the member, or is in a conversation the member cannot see. Sends `conversation.read`
-	// when the cursor moves. Member sessions only.
+	// Marks one mention seen without opening its conversation; the read cursor and "marked
+	// unread" flag stay as they are. Idempotent: an already seen mention gives `marked: 0`.
+	// Answers `404 not_found` when the note does not mention the member, was written by the
+	// member, or is in a conversation the member cannot see or in another workspace.
+	// Opening the conversation still marks its mentions seen through the read cursor. Member
+	// sessions only.
 	//
 	// Corresponds with POST /v1/me/mentions/{noteId}/seen (the `MarkMentionSeen` operationId).
 	MarkMentionSeen(ctx context.Context, noteId uuid.UUID, params *MarkMentionSeenParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -35257,7 +35281,9 @@ type ClientInterface interface {
 	// `approval_requested` until the operator answers. `409 invalid_state` unless the status is
 	// `approval_required`.
 	//
-	// Owners only, with a member session.
+	// Owners only, with a member session or an OAuth token with `workspace:manage` (a person stands
+	// behind both); API keys are refused (`403 member_session_required`). The answers come from
+	// the owner, never from an assistant.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -35272,7 +35298,9 @@ type ClientInterface interface {
 	// `approval_requested` until the operator answers. `409 invalid_state` unless the status is
 	// `approval_required`.
 	//
-	// Owners only, with a member session.
+	// Owners only, with a member session or an OAuth token with `workspace:manage` (a person stands
+	// behind both); API keys are refused (`403 member_session_required`). The answers come from
+	// the owner, never from an assistant.
 	//
 	// Takes a body of the `application/json` content type.
 	//
@@ -42253,7 +42281,9 @@ func (c *Client) UpdateDiscussion(ctx context.Context, discussionId DiscussionId
 
 // ClearDiscussionAnswer Clear the accepted answer
 //
-// Member sessions only.
+// Clearing a thread without an answer changes nothing. Members and OAuth tokens with
+// `messages:write`, as for `createDiscussionPost`; API keys are refused
+// (`403 member_session_required`).
 //
 // Corresponds with DELETE /v1/discussions/{discussionId}/answer (the `ClearDiscussionAnswer` operationId).
 func (c *Client) ClearDiscussionAnswer(ctx context.Context, discussionId DiscussionId, params *ClearDiscussionAnswerParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -42273,7 +42303,9 @@ func (c *Client) ClearDiscussionAnswer(ctx context.Context, discussionId Discuss
 // Marks a published reply to the thread itself (not a reply to a reply, not the opening post)
 // as its answer, replacing an earlier one (`400 validation_failed` otherwise), also in locked
 // threads. Followers are told once (`discussion.answered`). Ideas have no accepted answer
-// (`409 not_supported`). Member sessions only.
+// (`409 not_supported`). Marking the reply that is already the answer changes nothing.
+// Members and OAuth tokens with `messages:write`, as for `createDiscussionPost`; API keys are
+// refused (`403 member_session_required`).
 //
 // Takes any type of body and a specified content type.
 //
@@ -42295,7 +42327,9 @@ func (c *Client) AcceptDiscussionAnswerWithBody(ctx context.Context, discussionI
 // Marks a published reply to the thread itself (not a reply to a reply, not the opening post)
 // as its answer, replacing an earlier one (`400 validation_failed` otherwise), also in locked
 // threads. Followers are told once (`discussion.answered`). Ideas have no accepted answer
-// (`409 not_supported`). Member sessions only.
+// (`409 not_supported`). Marking the reply that is already the answer changes nothing.
+// Members and OAuth tokens with `messages:write`, as for `createDiscussionPost`; API keys are
+// refused (`403 member_session_required`).
 //
 // Takes a body of the `application/json` content type.
 //
@@ -42444,7 +42478,12 @@ func (c *Client) GetIdeaLinkedReply(ctx context.Context, discussionId Discussion
 //
 // A reply to the thread (`parent_post_id` absent) or to one of its replies, published at once,
 // also in locked threads. Replies are one level deep: a reply to a reply answers
-// `400 validation_failed`. Followers are notified. Member sessions only.
+// `400 validation_failed`. Followers are notified.
+//
+// Members, and OAuth tokens with `messages:write`, which reply as their member; the post's
+// `author.via` names the client. A token issued for `/mcp` replies only while the
+// workspace's `bots_may_send` is on (`403 bot_sending_disabled`). API keys are refused
+// (`403 member_session_required`): a post has no bot author.
 //
 // Takes any type of body and a specified content type.
 //
@@ -42465,7 +42504,12 @@ func (c *Client) CreateDiscussionPostWithBody(ctx context.Context, discussionId 
 //
 // A reply to the thread (`parent_post_id` absent) or to one of its replies, published at once,
 // also in locked threads. Replies are one level deep: a reply to a reply answers
-// `400 validation_failed`. Followers are notified. Member sessions only.
+// `400 validation_failed`. Followers are notified.
+//
+// Members, and OAuth tokens with `messages:write`, which reply as their member; the post's
+// `author.via` names the client. A token issued for `/mcp` replies only while the
+// workspace's `bots_may_send` is on (`403 bot_sending_disabled`). API keys are refused
+// (`403 member_session_required`): a post has no bot author.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -45443,10 +45487,9 @@ func (c *Client) ListMentions(ctx context.Context, params *ListMentionsParams, r
 // MarkMentionsSeen Mark all your mentions seen
 //
 // Marks every mention `GET /v1/me/mentions` would list as unseen for the calling member as
-// seen, without opening the conversations: in each conversation the read cursor moves
-// forward to the latest unseen mention (never backward), so messages after it stay unread.
-// Conversations the member cannot see are left alone. Each moved cursor sends a
-// `conversation.read` event. Member sessions only.
+// seen, without opening the conversations. It records the mentions only: the read cursors
+// and "marked unread" flags of the conversations stay as they are, so messages around a
+// mention stay unread. Nothing is sent over realtime. Member sessions only.
 //
 // Corresponds with POST /v1/me/mentions/seen (the `MarkMentionsSeen` operationId).
 func (c *Client) MarkMentionsSeen(ctx context.Context, params *MarkMentionsSeenParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -45463,11 +45506,12 @@ func (c *Client) MarkMentionsSeen(ctx context.Context, params *MarkMentionsSeenP
 
 // MarkMentionSeen Mark one mention seen
 //
-// Moves the calling member's read cursor in the note's conversation forward to the note
-// without opening it (the cursor never moves backward, so an already seen mention changes
-// nothing). Answers `404 not_found` when the note does not mention the member, was written
-// by the member, or is in a conversation the member cannot see. Sends `conversation.read`
-// when the cursor moves. Member sessions only.
+// Marks one mention seen without opening its conversation; the read cursor and "marked
+// unread" flag stay as they are. Idempotent: an already seen mention gives `marked: 0`.
+// Answers `404 not_found` when the note does not mention the member, was written by the
+// member, or is in a conversation the member cannot see or in another workspace.
+// Opening the conversation still marks its mentions seen through the read cursor. Member
+// sessions only.
 //
 // Corresponds with POST /v1/me/mentions/{noteId}/seen (the `MarkMentionSeen` operationId).
 func (c *Client) MarkMentionSeen(ctx context.Context, noteId uuid.UUID, params *MarkMentionSeenParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -49047,7 +49091,9 @@ func (c *Client) UpdateWorkspace(ctx context.Context, params *UpdateWorkspacePar
 // `approval_requested` until the operator answers. `409 invalid_state` unless the status is
 // `approval_required`.
 //
-// Owners only, with a member session.
+// Owners only, with a member session or an OAuth token with `workspace:manage` (a person stands
+// behind both); API keys are refused (`403 member_session_required`). The answers come from
+// the owner, never from an assistant.
 //
 // Takes any type of body and a specified content type.
 //
@@ -49072,7 +49118,9 @@ func (c *Client) RequestBroadcastApprovalWithBody(ctx context.Context, params *R
 // `approval_requested` until the operator answers. `409 invalid_state` unless the status is
 // `approval_required`.
 //
-// Owners only, with a member session.
+// Owners only, with a member session or an OAuth token with `workspace:manage` (a person stands
+// behind both); API keys are refused (`403 member_session_required`). The answers come from
+// the owner, never from an assistant.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -80084,7 +80132,9 @@ type ClientWithResponsesInterface interface {
 
 	// ClearDiscussionAnswerWithResponse Clear the accepted answer
 	//
-	// Member sessions only.
+	// Clearing a thread without an answer changes nothing. Members and OAuth tokens with
+	// `messages:write`, as for `createDiscussionPost`; API keys are refused
+	// (`403 member_session_required`).
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -80096,7 +80146,9 @@ type ClientWithResponsesInterface interface {
 	// Marks a published reply to the thread itself (not a reply to a reply, not the opening post)
 	// as its answer, replacing an earlier one (`400 validation_failed` otherwise), also in locked
 	// threads. Followers are told once (`discussion.answered`). Ideas have no accepted answer
-	// (`409 not_supported`). Member sessions only.
+	// (`409 not_supported`). Marking the reply that is already the answer changes nothing.
+	// Members and OAuth tokens with `messages:write`, as for `createDiscussionPost`; API keys are
+	// refused (`403 member_session_required`).
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -80108,7 +80160,9 @@ type ClientWithResponsesInterface interface {
 	// Marks a published reply to the thread itself (not a reply to a reply, not the opening post)
 	// as its answer, replacing an earlier one (`400 validation_failed` otherwise), also in locked
 	// threads. Followers are told once (`discussion.answered`). Ideas have no accepted answer
-	// (`409 not_supported`). Member sessions only.
+	// (`409 not_supported`). Marking the reply that is already the answer changes nothing.
+	// Members and OAuth tokens with `messages:write`, as for `createDiscussionPost`; API keys are
+	// refused (`403 member_session_required`).
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -80203,7 +80257,12 @@ type ClientWithResponsesInterface interface {
 	//
 	// A reply to the thread (`parent_post_id` absent) or to one of its replies, published at once,
 	// also in locked threads. Replies are one level deep: a reply to a reply answers
-	// `400 validation_failed`. Followers are notified. Member sessions only.
+	// `400 validation_failed`. Followers are notified.
+	//
+	// Members, and OAuth tokens with `messages:write`, which reply as their member; the post's
+	// `author.via` names the client. A token issued for `/mcp` replies only while the
+	// workspace's `bots_may_send` is on (`403 bot_sending_disabled`). API keys are refused
+	// (`403 member_session_required`): a post has no bot author.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -80214,7 +80273,12 @@ type ClientWithResponsesInterface interface {
 	//
 	// A reply to the thread (`parent_post_id` absent) or to one of its replies, published at once,
 	// also in locked threads. Replies are one level deep: a reply to a reply answers
-	// `400 validation_failed`. Followers are notified. Member sessions only.
+	// `400 validation_failed`. Followers are notified.
+	//
+	// Members, and OAuth tokens with `messages:write`, which reply as their member; the post's
+	// `author.via` names the client. A token issued for `/mcp` replies only while the
+	// workspace's `bots_may_send` is on (`403 bot_sending_disabled`). API keys are refused
+	// (`403 member_session_required`): a post has no bot author.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -82052,10 +82116,9 @@ type ClientWithResponsesInterface interface {
 	// MarkMentionsSeenWithResponse Mark all your mentions seen
 	//
 	// Marks every mention `GET /v1/me/mentions` would list as unseen for the calling member as
-	// seen, without opening the conversations: in each conversation the read cursor moves
-	// forward to the latest unseen mention (never backward), so messages after it stay unread.
-	// Conversations the member cannot see are left alone. Each moved cursor sends a
-	// `conversation.read` event. Member sessions only.
+	// seen, without opening the conversations. It records the mentions only: the read cursors
+	// and "marked unread" flags of the conversations stay as they are, so messages around a
+	// mention stay unread. Nothing is sent over realtime. Member sessions only.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -82064,11 +82127,12 @@ type ClientWithResponsesInterface interface {
 
 	// MarkMentionSeenWithResponse Mark one mention seen
 	//
-	// Moves the calling member's read cursor in the note's conversation forward to the note
-	// without opening it (the cursor never moves backward, so an already seen mention changes
-	// nothing). Answers `404 not_found` when the note does not mention the member, was written
-	// by the member, or is in a conversation the member cannot see. Sends `conversation.read`
-	// when the cursor moves. Member sessions only.
+	// Marks one mention seen without opening its conversation; the read cursor and "marked
+	// unread" flag stay as they are. Idempotent: an already seen mention gives `marked: 0`.
+	// Answers `404 not_found` when the note does not mention the member, was written by the
+	// member, or is in a conversation the member cannot see or in another workspace.
+	// Opening the conversation still marks its mentions seen through the read cursor. Member
+	// sessions only.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -84294,7 +84358,9 @@ type ClientWithResponsesInterface interface {
 	// `approval_requested` until the operator answers. `409 invalid_state` unless the status is
 	// `approval_required`.
 	//
-	// Owners only, with a member session.
+	// Owners only, with a member session or an OAuth token with `workspace:manage` (a person stands
+	// behind both); API keys are refused (`403 member_session_required`). The answers come from
+	// the owner, never from an assistant.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -84309,7 +84375,9 @@ type ClientWithResponsesInterface interface {
 	// `approval_requested` until the operator answers. `409 invalid_state` unless the status is
 	// `approval_required`.
 	//
-	// Owners only, with a member session.
+	// Owners only, with a member session or an OAuth token with `workspace:manage` (a person stands
+	// behind both); API keys are refused (`403 member_session_required`). The answers come from
+	// the owner, never from an assistant.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -105159,7 +105227,7 @@ type MarkMentionSeenResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
-	JSON200 *ConversationRead
+	JSON200 *MentionsSeen
 	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
 	ApplicationproblemJSON401 *Problem
 	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
@@ -105169,7 +105237,7 @@ type MarkMentionSeenResponse struct {
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r MarkMentionSeenResponse) GetJSON200() *ConversationRead {
+func (r MarkMentionSeenResponse) GetJSON200() *MentionsSeen {
 	return r.JSON200
 }
 
@@ -118837,7 +118905,9 @@ func (c *ClientWithResponses) UpdateDiscussionWithResponse(ctx context.Context, 
 
 // ClearDiscussionAnswerWithResponse Clear the accepted answer
 //
-// Member sessions only.
+// Clearing a thread without an answer changes nothing. Members and OAuth tokens with
+// `messages:write`, as for `createDiscussionPost`; API keys are refused
+// (`403 member_session_required`).
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -118855,7 +118925,9 @@ func (c *ClientWithResponses) ClearDiscussionAnswerWithResponse(ctx context.Cont
 // Marks a published reply to the thread itself (not a reply to a reply, not the opening post)
 // as its answer, replacing an earlier one (`400 validation_failed` otherwise), also in locked
 // threads. Followers are told once (`discussion.answered`). Ideas have no accepted answer
-// (`409 not_supported`). Member sessions only.
+// (`409 not_supported`). Marking the reply that is already the answer changes nothing.
+// Members and OAuth tokens with `messages:write`, as for `createDiscussionPost`; API keys are
+// refused (`403 member_session_required`).
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -118873,7 +118945,9 @@ func (c *ClientWithResponses) AcceptDiscussionAnswerWithBodyWithResponse(ctx con
 // Marks a published reply to the thread itself (not a reply to a reply, not the opening post)
 // as its answer, replacing an earlier one (`400 validation_failed` otherwise), also in locked
 // threads. Followers are told once (`discussion.answered`). Ideas have no accepted answer
-// (`409 not_supported`). Member sessions only.
+// (`409 not_supported`). Marking the reply that is already the answer changes nothing.
+// Members and OAuth tokens with `messages:write`, as for `createDiscussionPost`; API keys are
+// refused (`403 member_session_required`).
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -119004,7 +119078,12 @@ func (c *ClientWithResponses) GetIdeaLinkedReplyWithResponse(ctx context.Context
 //
 // A reply to the thread (`parent_post_id` absent) or to one of its replies, published at once,
 // also in locked threads. Replies are one level deep: a reply to a reply answers
-// `400 validation_failed`. Followers are notified. Member sessions only.
+// `400 validation_failed`. Followers are notified.
+//
+// Members, and OAuth tokens with `messages:write`, which reply as their member; the post's
+// `author.via` names the client. A token issued for `/mcp` replies only while the
+// workspace's `bots_may_send` is on (`403 bot_sending_disabled`). API keys are refused
+// (`403 member_session_required`): a post has no bot author.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -119021,7 +119100,12 @@ func (c *ClientWithResponses) CreateDiscussionPostWithBodyWithResponse(ctx conte
 //
 // A reply to the thread (`parent_post_id` absent) or to one of its replies, published at once,
 // also in locked threads. Replies are one level deep: a reply to a reply answers
-// `400 validation_failed`. Followers are notified. Member sessions only.
+// `400 validation_failed`. Followers are notified.
+//
+// Members, and OAuth tokens with `messages:write`, which reply as their member; the post's
+// `author.via` names the client. A token issued for `/mcp` replies only while the
+// workspace's `bots_may_send` is on (`403 bot_sending_disabled`). API keys are refused
+// (`403 member_session_required`): a post has no bot author.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -121615,10 +121699,9 @@ func (c *ClientWithResponses) ListMentionsWithResponse(ctx context.Context, para
 // MarkMentionsSeenWithResponse Mark all your mentions seen
 //
 // Marks every mention `GET /v1/me/mentions` would list as unseen for the calling member as
-// seen, without opening the conversations: in each conversation the read cursor moves
-// forward to the latest unseen mention (never backward), so messages after it stay unread.
-// Conversations the member cannot see are left alone. Each moved cursor sends a
-// `conversation.read` event. Member sessions only.
+// seen, without opening the conversations. It records the mentions only: the read cursors
+// and "marked unread" flags of the conversations stay as they are, so messages around a
+// mention stay unread. Nothing is sent over realtime. Member sessions only.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -121633,11 +121716,12 @@ func (c *ClientWithResponses) MarkMentionsSeenWithResponse(ctx context.Context, 
 
 // MarkMentionSeenWithResponse Mark one mention seen
 //
-// Moves the calling member's read cursor in the note's conversation forward to the note
-// without opening it (the cursor never moves backward, so an already seen mention changes
-// nothing). Answers `404 not_found` when the note does not mention the member, was written
-// by the member, or is in a conversation the member cannot see. Sends `conversation.read`
-// when the cursor moves. Member sessions only.
+// Marks one mention seen without opening its conversation; the read cursor and "marked
+// unread" flag stay as they are. Idempotent: an already seen mention gives `marked: 0`.
+// Answers `404 not_found` when the note does not mention the member, was written by the
+// member, or is in a conversation the member cannot see or in another workspace.
+// Opening the conversation still marks its mentions seen through the read cursor. Member
+// sessions only.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -124769,7 +124853,9 @@ func (c *ClientWithResponses) UpdateWorkspaceWithResponse(ctx context.Context, p
 // `approval_requested` until the operator answers. `409 invalid_state` unless the status is
 // `approval_required`.
 //
-// Owners only, with a member session.
+// Owners only, with a member session or an OAuth token with `workspace:manage` (a person stands
+// behind both); API keys are refused (`403 member_session_required`). The answers come from
+// the owner, never from an assistant.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -124790,7 +124876,9 @@ func (c *ClientWithResponses) RequestBroadcastApprovalWithBodyWithResponse(ctx c
 // `approval_requested` until the operator answers. `409 invalid_state` unless the status is
 // `approval_required`.
 //
-// Owners only, with a member session.
+// Owners only, with a member session or an OAuth token with `workspace:manage` (a person stands
+// behind both); API keys are refused (`403 member_session_required`). The answers come from
+// the owner, never from an assistant.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -141306,7 +141394,7 @@ func ParseMarkMentionSeenResponse(rsp *http.Response) (*MarkMentionSeenResponse,
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ConversationRead
+		var dest MentionsSeen
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}

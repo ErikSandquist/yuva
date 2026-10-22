@@ -250,12 +250,33 @@ type mcpPost struct {
 	AuthorKind      string         `json:"author_kind" jsonschema:"member, reader or anonymous"`
 	MemberID        *uuid.UUID     `json:"member_id,omitempty"`
 	ContactID       *uuid.UUID     `json:"contact_id,omitempty"`
+	Via             string         `json:"via,omitempty" jsonschema:"the assistant or app a member wrote it with"`
 	State           string         `json:"state"`
 	Accepted        bool           `json:"accepted" jsonschema:"it is the thread's accepted answer"`
 	Deleted         bool           `json:"deleted"`
 	Votes           int32          `json:"votes"`
 	CreatedAt       time.Time      `json:"created_at"`
 	CustomerContent mcpPostContent `json:"customer_content"`
+}
+
+func postOut(p oas.DiscussionPost) mcpPost {
+	return mcpPost{
+		ID: p.Id, ParentPostID: p.ParentPostId, AuthorKind: string(p.Author.Kind), MemberID: p.Author.MemberId, ContactID: p.Author.ContactId,
+		Via: deref(p.Author.Via), State: string(p.State), Accepted: p.Accepted, Deleted: p.Deleted, Votes: p.Votes, CreatedAt: p.CreatedAt,
+		CustomerContent: mcpPostContent{Body: p.Body, AuthorName: deref(p.Author.Name)},
+	}
+}
+
+type replyToDiscussionIn struct {
+	DiscussionID uuid.UUID  `json:"discussion_id" jsonschema:"a thread from list_discussions"`
+	Body         string     `json:"body" jsonschema:"Markdown, up to 20000 characters"`
+	ParentPostID *uuid.UUID `json:"parent_post_id,omitempty" jsonschema:"a reply to the thread itself from get_discussion, to answer it; absent replies to the thread"`
+}
+
+type markDiscussionAnswerIn struct {
+	DiscussionID uuid.UUID  `json:"discussion_id" jsonschema:"a thread from list_discussions"`
+	PostID       *uuid.UUID `json:"post_id,omitempty" jsonschema:"the reply to mark, a published reply to the thread itself from get_discussion"`
+	Clear        bool       `json:"clear,omitempty" jsonschema:"true clears the accepted answer instead; leave post_id out"`
 }
 
 type mcpDiscussionDetail struct {
@@ -530,12 +551,40 @@ var mcpContactTools = []mcpTool{
 			d := oas.DiscussionDetail(res.(oas.GetDiscussion200JSONResponse))
 			out := mcpDiscussionDetail{Discussion: discussionOut(d.Discussion, true), Posts: []mcpPost{}}
 			for _, p := range d.Posts {
-				out.Posts = append(out.Posts, mcpPost{
-					ID: p.Id, ParentPostID: p.ParentPostId, AuthorKind: string(p.Author.Kind), MemberID: p.Author.MemberId, ContactID: p.Author.ContactId,
-					State: string(p.State), Accepted: p.Accepted, Deleted: p.Deleted, Votes: p.Votes, CreatedAt: p.CreatedAt,
-					CustomerContent: mcpPostContent{Body: p.Body, AuthorName: deref(p.Author.Name)},
-				})
+				out.Posts = append(out.Posts, postOut(p))
 			}
 			return out, nil
+		}),
+	defineTool("reply_to_discussion", "Reply to a discussion",
+		"Posts a reply to a reader thread as you, published at once where readers see it, also in locked threads; followers are notified. Write only what the person you work for asked to post. parent_post_id answers one reply; replies are one level deep. The post shows that it was written through your client. Listed only while the workspace lets assistants deliver. Maps to POST /v1/discussions/{id}/posts.",
+		delivering, nil, mcpTool{ops: []string{"CreateDiscussionPost"}, gate: requireDiscussionWriter},
+		func(ctx context.Context, c *mcpCall, in replyToDiscussionIn) (mcpPost, error) {
+			res, err := c.s.CreateDiscussionPost(ctx, oas.CreateDiscussionPostRequestObject{DiscussionId: in.DiscussionID, Body: &oas.DiscussionPostCreate{
+				Body: in.Body, ParentPostId: in.ParentPostID,
+			}})
+			if err != nil {
+				return mcpPost{}, err
+			}
+			return postOut(oas.DiscussionPost(res.(oas.CreateDiscussionPost201JSONResponse))), nil
+		}),
+	defineTool("mark_discussion_answer", "Mark a discussion's answer",
+		"Marks a published reply to a reader thread as its accepted answer, replacing an earlier one, or clears it with clear: true. Marking the answer that is already marked, or clearing a thread without one, changes nothing. Followers are told when an answer is marked. Roadmap ideas have no answer. Listed only while the workspace lets assistants deliver. Maps to PUT and DELETE /v1/discussions/{id}/answer.",
+		idempotentPublic, nil, mcpTool{ops: []string{"AcceptDiscussionAnswer", "ClearDiscussionAnswer"}, gate: requireDiscussionWriter},
+		func(ctx context.Context, c *mcpCall, in markDiscussionAnswerIn) (mcpDiscussion, error) {
+			if in.Clear == (in.PostID != nil) {
+				return mcpDiscussion{}, errValidation("give post_id to mark an answer, or clear: true to clear it")
+			}
+			if in.Clear {
+				res, err := c.s.ClearDiscussionAnswer(ctx, oas.ClearDiscussionAnswerRequestObject{DiscussionId: in.DiscussionID})
+				if err != nil {
+					return mcpDiscussion{}, err
+				}
+				return discussionOut(oas.Discussion(res.(oas.ClearDiscussionAnswer200JSONResponse)), false), nil
+			}
+			res, err := c.s.AcceptDiscussionAnswer(ctx, oas.AcceptDiscussionAnswerRequestObject{DiscussionId: in.DiscussionID, Body: &oas.DiscussionAnswer{PostId: *in.PostID}})
+			if err != nil {
+				return mcpDiscussion{}, err
+			}
+			return discussionOut(oas.Discussion(res.(oas.AcceptDiscussionAnswer200JSONResponse)), false), nil
 		}),
 }

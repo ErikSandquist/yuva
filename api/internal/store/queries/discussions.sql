@@ -7,9 +7,9 @@ RETURNING *;
 
 -- name: CreateDiscussionPost :one
 INSERT INTO discussion_posts (id, workspace_id, discussion_id, parent_post_id, opening, author_type, author_member_id,
-                              author_contact_id, body, state, created_at)
+                              author_contact_id, body, state, created_at, via)
 VALUES (@id, @workspace_id, @discussion_id, sqlc.narg(parent_post_id), @opening, @author_type, sqlc.narg(author_member_id),
-        sqlc.narg(author_contact_id), @body, @state, @now)
+        sqlc.narg(author_contact_id), @body, @state, @now, sqlc.narg(via))
 RETURNING id;
 
 -- name: GetDiscussion :one

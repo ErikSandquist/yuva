@@ -167,6 +167,7 @@ func discussionBodyText(v string) (string, error) {
 type actor struct {
 	memberID  *uuid.UUID
 	contactID *uuid.UUID
+	via       string
 }
 
 func (a actor) owns(p store.DiscussionPostView) bool {
@@ -211,7 +212,7 @@ func discussionAuthor(p store.DiscussionPostView, team bool) oas.DiscussionAutho
 	case authorMember:
 		out.Kind, out.Deleted = oas.DiscussionAuthorKindMember, p.AuthorMemberID == nil
 		if team {
-			out.MemberId = p.AuthorMemberID
+			out.MemberId, out.Via = p.AuthorMemberID, p.Via
 		}
 	case authorContact:
 		out.Kind, out.Deleted = oas.DiscussionAuthorKindReader, p.AuthorContactID == nil
@@ -560,7 +561,7 @@ func (s *Server) addReply(ctx context.Context, q *store.Queries, events *eventBa
 	}
 	id, err := q.CreateDiscussionPost(ctx, store.CreateDiscussionPostParams{
 		ID: newID(), WorkspaceID: ws, DiscussionID: t.d.ID, ParentPostID: parent, AuthorType: a.authorType(),
-		AuthorMemberID: a.memberID, AuthorContactID: a.contactID, Body: body, State: state, Now: now,
+		AuthorMemberID: a.memberID, AuthorContactID: a.contactID, Body: body, State: state, Now: now, Via: nonEmpty(a.via),
 	})
 	if err != nil {
 		return id, err

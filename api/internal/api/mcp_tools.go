@@ -87,6 +87,8 @@ var (
 	idempotent  = mcp.ToolAnnotations{DestructiveHint: boolPtr(false), IdempotentHint: true, OpenWorldHint: boolPtr(false)}
 	delivering  = mcp.ToolAnnotations{DestructiveHint: boolPtr(false), OpenWorldHint: boolPtr(true)}
 	destructive = mcp.ToolAnnotations{DestructiveHint: boolPtr(true), OpenWorldHint: boolPtr(false)}
+	// idempotentPublic changes what readers see and may notify them, so it is open-world.
+	idempotentPublic = mcp.ToolAnnotations{DestructiveHint: boolPtr(false), IdempotentHint: true, OpenWorldHint: boolPtr(true)}
 )
 
 func defineTool[In, Out any](name, title, description string, ann mcp.ToolAnnotations, enums map[string][]any,

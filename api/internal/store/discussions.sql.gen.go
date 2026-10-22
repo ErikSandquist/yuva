@@ -175,9 +175,9 @@ func (q *Queries) CreateDiscussion(ctx context.Context, arg CreateDiscussionPara
 
 const createDiscussionPost = `-- name: CreateDiscussionPost :one
 INSERT INTO discussion_posts (id, workspace_id, discussion_id, parent_post_id, opening, author_type, author_member_id,
-                              author_contact_id, body, state, created_at)
+                              author_contact_id, body, state, created_at, via)
 VALUES ($1, $2, $3, $4, $5, $6, $7,
-        $8, $9, $10, $11)
+        $8, $9, $10, $11, $12)
 RETURNING id
 `
 
@@ -193,6 +193,7 @@ type CreateDiscussionPostParams struct {
 	Body            string
 	State           string
 	Now             time.Time
+	Via             *string
 }
 
 func (q *Queries) CreateDiscussionPost(ctx context.Context, arg CreateDiscussionPostParams) (uuid.UUID, error) {
@@ -208,6 +209,7 @@ func (q *Queries) CreateDiscussionPost(ctx context.Context, arg CreateDiscussion
 		arg.Body,
 		arg.State,
 		arg.Now,
+		arg.Via,
 	)
 	var id uuid.UUID
 	err := row.Scan(&id)
@@ -617,7 +619,7 @@ func (q *Queries) GetDiscussionByConversation(ctx context.Context, arg GetDiscus
 }
 
 const getDiscussionPost = `-- name: GetDiscussionPost :one
-SELECT id, workspace_id, discussion_id, parent_post_id, opening, author_type, author_member_id, author_contact_id, body, state, created_at, edited_at, deleted_at, votes, author_name, author_person_id FROM discussion_post_view WHERE workspace_id = $1 AND id = $2
+SELECT id, workspace_id, discussion_id, parent_post_id, opening, author_type, author_member_id, author_contact_id, body, state, created_at, edited_at, deleted_at, votes, author_name, author_person_id, via FROM discussion_post_view WHERE workspace_id = $1 AND id = $2
 `
 
 type GetDiscussionPostParams struct {
@@ -645,6 +647,7 @@ func (q *Queries) GetDiscussionPost(ctx context.Context, arg GetDiscussionPostPa
 		&i.Votes,
 		&i.AuthorName,
 		&i.AuthorPersonID,
+		&i.Via,
 	)
 	return i, err
 }
@@ -760,7 +763,7 @@ func (q *Queries) LinkContactByEmail(ctx context.Context, arg LinkContactByEmail
 }
 
 const listDigestPosts = `-- name: ListDigestPosts :many
-SELECT id, workspace_id, discussion_id, parent_post_id, opening, author_type, author_member_id, author_contact_id, body, state, created_at, edited_at, deleted_at, votes, author_name, author_person_id FROM discussion_post_view
+SELECT id, workspace_id, discussion_id, parent_post_id, opening, author_type, author_member_id, author_contact_id, body, state, created_at, edited_at, deleted_at, votes, author_name, author_person_id, via FROM discussion_post_view
 WHERE workspace_id = $1 AND discussion_id = $2 AND NOT opening
   AND state = 'published' AND deleted_at IS NULL AND created_at > $3
   AND author_contact_id IS DISTINCT FROM $4::uuid
@@ -806,6 +809,7 @@ func (q *Queries) ListDigestPosts(ctx context.Context, arg ListDigestPostsParams
 			&i.Votes,
 			&i.AuthorName,
 			&i.AuthorPersonID,
+			&i.Via,
 		); err != nil {
 			return nil, err
 		}
@@ -854,7 +858,7 @@ func (q *Queries) ListDiscussionFollowers(ctx context.Context, arg ListDiscussio
 }
 
 const listDiscussionPosts = `-- name: ListDiscussionPosts :many
-SELECT id, workspace_id, discussion_id, parent_post_id, opening, author_type, author_member_id, author_contact_id, body, state, created_at, edited_at, deleted_at, votes, author_name, author_person_id FROM discussion_post_view
+SELECT id, workspace_id, discussion_id, parent_post_id, opening, author_type, author_member_id, author_contact_id, body, state, created_at, edited_at, deleted_at, votes, author_name, author_person_id, via FROM discussion_post_view
 WHERE workspace_id = $1 AND discussion_id = $2
 ORDER BY created_at, id
 LIMIT 1000
@@ -891,6 +895,7 @@ func (q *Queries) ListDiscussionPosts(ctx context.Context, arg ListDiscussionPos
 			&i.Votes,
 			&i.AuthorName,
 			&i.AuthorPersonID,
+			&i.Via,
 		); err != nil {
 			return nil, err
 		}
@@ -988,7 +993,7 @@ func (q *Queries) ListFollowedDiscussions(ctx context.Context, arg ListFollowedD
 }
 
 const listOpeningPosts = `-- name: ListOpeningPosts :many
-SELECT id, workspace_id, discussion_id, parent_post_id, opening, author_type, author_member_id, author_contact_id, body, state, created_at, edited_at, deleted_at, votes, author_name, author_person_id FROM discussion_post_view
+SELECT id, workspace_id, discussion_id, parent_post_id, opening, author_type, author_member_id, author_contact_id, body, state, created_at, edited_at, deleted_at, votes, author_name, author_person_id, via FROM discussion_post_view
 WHERE workspace_id = $1 AND id = ANY($2::uuid[])
 `
 
@@ -1023,6 +1028,7 @@ func (q *Queries) ListOpeningPosts(ctx context.Context, arg ListOpeningPostsPara
 			&i.Votes,
 			&i.AuthorName,
 			&i.AuthorPersonID,
+			&i.Via,
 		); err != nil {
 			return nil, err
 		}
@@ -1311,7 +1317,7 @@ func (q *Queries) ListReaderNotifications(ctx context.Context, arg ListReaderNot
 }
 
 const listTeamDiscussionPosts = `-- name: ListTeamDiscussionPosts :many
-SELECT p.id, p.workspace_id, p.discussion_id, p.parent_post_id, p.opening, p.author_type, p.author_member_id, p.author_contact_id, p.body, p.state, p.created_at, p.edited_at, p.deleted_at, p.votes, p.author_name, p.author_person_id FROM discussion_post_view p
+SELECT p.id, p.workspace_id, p.discussion_id, p.parent_post_id, p.opening, p.author_type, p.author_member_id, p.author_contact_id, p.body, p.state, p.created_at, p.edited_at, p.deleted_at, p.votes, p.author_name, p.author_person_id, p.via FROM discussion_post_view p
 JOIN discussions d ON d.workspace_id = p.workspace_id AND d.id = p.discussion_id
 WHERE p.workspace_id = $1 AND p.state = $2 AND p.deleted_at IS NULL
   AND ($3::bool OR EXISTS (
@@ -1376,6 +1382,7 @@ func (q *Queries) ListTeamDiscussionPosts(ctx context.Context, arg ListTeamDiscu
 			&i.Votes,
 			&i.AuthorName,
 			&i.AuthorPersonID,
+			&i.Via,
 		); err != nil {
 			return nil, err
 		}
