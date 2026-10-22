@@ -10,11 +10,22 @@ oder `broadcasts:write`. Assistenten (Agents) können Designs nicht verwenden.
 
 ## 1. Mit einer Vorlage starten
 
-Im Panel: Broadcasts, dann der Tab Designs. Die Galerie bietet sechs Startvorlagen: Newsletter,
-Product update, Announcement, Welcome, Event und Digest, jeweils auf Englisch, Türkisch und Deutsch.
-Wählen Sie eine, wählen Sie die Sprache der Vorlage und übernehmen Sie sie. Ihre Bilder werden in die
-Bilder Ihres Workspace kopiert, danach können Sie alles ändern. New blank design beginnt mit einer
-leeren Mail in schlichten Farben.
+Im Panel: Broadcasts, dann Designs in der Seitenleiste. Designs hat zwei Tabs: Meine, Ihre eigenen
+Designs, und Galerie, die Vorlagen. Die Galerie bietet sechs Startvorlagen: Newsletter, Product
+update, Announcement, Welcome, Event und Digest, jeweils auf Englisch, Türkisch und Deutsch. Die
+Chips darüber (Alle, Newsletter, Produkt, Ankündigung, Onboarding, Ereignis, Zusammenfassung) zeigen
+jeweils eine Art, der Schalter Vorlagensprache wählt die Sprache; eine Vorlage ohne Text in Ihrer
+Sprache zeigt „Text auf Englisch“.
+
+Wählen Sie eine Vorlagenkarte oder Neues Design (Kürzel `C`), um den Dialog Neues Design zu öffnen.
+Er zeigt Leere Seite und die Vorlagen als Kacheln. Wählen Sie eine, geben Sie dem Design einen Namen,
+wählen Sie das Postfach (oder Gesamter Workspace) und wählen Sie Erstellen und bearbeiten. Die Bilder
+einer Vorlage werden in die Bilder Ihres Workspace kopiert, danach können Sie alles ändern. Leere
+Seite beginnt mit einer leeren Mail in schlichten Farben.
+
+Unter Meine suchen Sie Designs mit `/`. Archivierte Designs anzeigen (`A`) nimmt archivierte Designs
+in die Liste auf, markiert als Archiviert; Wiederherstellen bei einem holt es zurück. Meine und
+Galerie sind `1` und `2`.
 
 Ein Design gehört zu einem Posteingang oder zum ganzen Workspace. Die
 [Absenderangaben](lists.md#1-absenderangaben-eintragen) des Posteingangs füllen die Fußzeile.
@@ -26,7 +37,7 @@ Per API: `POST /v1/email-designs` mit `name` und `template: { "slug": "newslette
 
 Der Designer öffnet sich im Vollbild. Ziehen Sie Blöcke aus der Palette (oder der Ebenenübersicht)
 oder drücken Sie Enter darauf, um sie nach dem gewählten Block einzufügen. Klicken Sie auf einen
-Block, um seine Einstellungen rechts zu ändern.
+Block, um ihn rechts unter Blockeinstellungen zu ändern.
 
 | Block | Verwendung |
 |---|---|
@@ -76,7 +87,7 @@ nie zu Markup. Ohne Ersatzwert kann das Feld eine Lücke wie „Hallo ," lassen;
 
 ## 3. Theme und Dark Mode
 
-Unter Theme (Kürzel `T`) stellen Sie Farben, Schriften, Inhaltsbreite (480 bis 720 Pixel),
+Unter Design-Einstellungen (Kürzel `T`) stellen Sie Postfach, Vorschautext, Farben, Schriften, Inhaltsbreite (480 bis 720 Pixel),
 Eckenradius und Richtung ein (links nach rechts, rechts nach links oder automatisch je Text). Die
 Schriften sind Systemstapel: system, humanist, geometric, serif und monospace; Mails laden keine
 Webfonts.
@@ -109,8 +120,14 @@ versendet hat, werden 7 Tage nach dem Upload gelöscht.
 
 ## 5. Vorschauen und Prüfungen
 
-Die Vorschau kommt vom Server, zeigt also, was Empfänger erhalten. Mit `1` bis `4` wechseln Sie
-zwischen Edit, Desktop, Phone und Dark. Checks zeigt, was zu beheben ist:
+Die Vorschau kommt vom Server, zeigt also, was Empfänger erhalten. Oben wechseln Sie zwischen
+Bearbeiten und Vorschau; in der Vorschau wählen Sie Desktop oder Smartphone und schalten Dunkel an
+oder aus. Die Tasten: `1` Bearbeiten, `2` Desktop, `3` Smartphone, `4` Dunkel.
+
+Die Schaltfläche Prüfungen zeigt in Grün, Gelb oder Rot, wie viele Probleme es gibt. Sie öffnet über
+dem Design den Streifen Prüfungen (Kürzel `C`): eine Anzeige der Mailgröße gegen 102 KB und je Problem
+eine Zeile, markiert als Beheben oder Prüfen, mit einer Schaltfläche Anzeigen, die den Block auswählt.
+„Keine Probleme gefunden.“ heißt, dass die Liste leer ist. Das wird markiert:
 
 | Warnung | Bedeutung |
 |---|---|
@@ -129,7 +146,7 @@ und behält eine Version. Rückgängig und Wiederholen (`Strg`/`Cmd` + `Z`, mit 
 Wiederholen) gehen 100 Schritte zurück. Offline bleiben Änderungen auf Ihrem Gerät und werden
 gespeichert, sobald Sie wieder online sind.
 
-Versions (Kürzel `V`) behält die neuesten 50: eine höchstens alle 10 Minuten beim Bearbeiten, eine je
+Der Tab Versionen rechts (Kürzel `V`) behält die neuesten 50: eine höchstens alle 10 Minuten beim Bearbeiten, eine je
 manuellem Speichern und eine je Wiederherstellung. Eine Wiederherstellung speichert diese Version als
 neueste.
 
@@ -138,11 +155,12 @@ meine behalten, meine als Kopie speichern oder ihre laden. Ihre Änderung geht n
 andere Version bleibt in den Versionen. Was Sie auch wählen, die Version der Gegenseite wird dort als
 „Aus einem Konflikt behalten“ aufbewahrt; keine Änderung geht verloren.
 
-Download JSON speichert das Dokument des Designs als Datei. Archive blendet ein Design aus der Liste
-aus; erneutes Speichern holt es zurück. Ein Dokument, das ein neueres Yuva erstellt hat, lässt sich
+JSON herunterladen, Kopie erstellen und Archivieren stehen im Menü Weitere Aktionen. Archivieren
+blendet ein Design aus der Liste aus und behält seine Versionen; Wiederherstellen beim archivierten
+Design holt es zurück. Ein Dokument, das ein neueres Yuva erstellt hat, lässt sich
 ansehen, aber nicht ändern.
 
-Kürzel: `A` Block hinzufügen, `T` Theme, `I` Bild, `V` Versionen, `Strg`/`Cmd` + `D` Block
+Kürzel: `A` Block hinzufügen, `T` Design-Einstellungen, `I` Bild, `V` Versionen, `C` Prüfungen, `Strg`/`Cmd` + `D` Block
 duplizieren, `Backspace` löschen, `Alt` + `↑`/`↓` verschieben, `Esc` verlässt erst den Text, dann den
 Block.
 

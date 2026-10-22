@@ -10,10 +10,20 @@ Owners and admins make designs. API keys and OAuth tokens need the `broadcasts:r
 
 ## 1. Start from a template
 
-In the panel: Broadcasts, then the Designs tab. The gallery offers six starters: Newsletter, Product
-update, Announcement, Welcome, Event and Digest, each in English, Turkish and German. Pick one, pick
-the template language, and choose Use. Its images are copied into your workspace's images, and you can
-change everything afterwards. New blank design starts from an empty mail with simple colours.
+In the panel: Broadcasts, then Designs in the sidebar. Designs has two tabs: Mine, your own designs,
+and Gallery, the templates. The gallery offers six starters: Newsletter, Product update, Announcement,
+Welcome, Event and Digest, each in English, Turkish and German. The chips above it (All, Newsletter,
+Product, Announcement, Onboarding, Event, Digest) show one kind at a time, and the Template language
+switch picks the language; a template without text in your language shows "Text in English".
+
+Pick a template card, or choose New design (shortcut `C`), to open the New design dialog. It shows
+Empty page and the templates as tiles. Pick one, give the design a Name, pick the Inbox (or Whole
+workspace) and choose Create and edit. The images of a template are copied into your workspace's
+images, and you can change everything afterwards. Empty page starts from an empty mail with simple
+colours.
+
+On Mine, search designs with `/`. Show archived designs (`A`) adds archived designs to the list, marked
+Archived; Restore on one brings it back. Mine and Gallery are `1` and `2`.
 
 A design belongs to an inbox or to the whole workspace. The inbox's [sender identity](lists.md#1-set-the-sender-identity)
 fills the footer.
@@ -24,7 +34,7 @@ Over the API: `POST /v1/email-designs` with `name` and `template: { "slug": "new
 ## 2. Edit the design
 
 The designer opens full screen. Drag blocks from the palette (or the Layers outline), or press
-Enter on one to add it after the selected block. Click a block to change its settings on the right.
+Enter on one to add it after the selected block. Click a block to change it under Block settings on the right.
 
 | Block | Use |
 |---|---|
@@ -72,8 +82,8 @@ markup. Without a fallback the field can leave a gap such as "Hi ,", so the desi
 
 ## 3. Theme and dark mode
 
-Open Theme (shortcut `T`) for colours, fonts, content width (480 to 720 pixels), corner radius and
-direction (left to right, right to left, or automatic per text). Fonts are system stacks: system,
+Open Design settings (shortcut `T`) for the inbox, preview text, colours, fonts, content width (480 to
+720 pixels), corner radius and direction (left to right, right to left, or automatic per text). Fonts are system stacks: system,
 humanist, geometric, serif and monospace; mails load no web fonts.
 
 Readers whose mail app is in dark mode get darker colours made from yours, with text kept at
@@ -102,8 +112,14 @@ a broken image. Images that no design uses and no broadcast sent are deleted 7 d
 
 ## 5. Previews and checks
 
-The preview comes from the server, so it is what recipients get. Switch between Edit and Desktop,
-Phone and Dark with `1` to `4`. Checks shows what to fix:
+The preview comes from the server, so it is what recipients get. Switch between Edit and Preview at the
+top; in Preview choose Desktop or Phone, and turn Dark on or off. The keys are `1` Edit, `2` Desktop,
+`3` Phone and `4` Dark.
+
+The Checks button shows how many problems there are, in green, amber or red. It opens the Checks strip
+(shortcut `C`) above the design: a meter of the mail's size against 102 KB, and one line for each
+problem, marked Fix or Check, with a Show button that selects the block. "No problems found." means
+the list is empty. This is what it flags:
 
 | Warning | Meaning |
 |---|---|
@@ -121,7 +137,7 @@ The designer saves 1.5 seconds after your last change; `Ctrl`/`Cmd` + `S` saves 
 version. Undo and redo (`Ctrl`/`Cmd` + `Z`, with `Shift` for redo) go back 100 steps. Changes stay on
 your device while you are offline and are saved when you are back.
 
-Versions (shortcut `V`) keeps the newest 50: one at most every 10 minutes while you edit, one for each
+The Versions tab on the right (shortcut `V`) keeps the newest 50: one at most every 10 minutes while you edit, one for each
 manual save and one for each restore. Restoring saves that version as the newest one.
 
 If someone else (or another tab of yours) saved first, a dialog offers three ways out: keep mine,
@@ -129,10 +145,10 @@ save mine as a copy, or load theirs. Your edit is never dropped, and the other v
 versions. Whatever you pick, the other side's version is kept there as "Kept from a conflict", so no
 edit is lost.
 
-Download JSON saves the design's document as a file. Archive hides a design from the list; saving it
-again brings it back. A document made by a newer Yuva can be viewed but not changed.
+Download JSON, Make a copy and Archive are in the More actions menu. Archive hides a design from the
+list and keeps its versions; Restore on the archived design brings it back. A document made by a newer Yuva can be viewed but not changed.
 
-Shortcuts: `A` add a block, `T` theme, `I` image, `V` versions, `Ctrl`/`Cmd` + `D` duplicate the
+Shortcuts: `A` add a block, `T` design settings, `I` image, `V` versions, `C` checks, `Ctrl`/`Cmd` + `D` duplicate the
 block, `Backspace` delete it, `Alt` + `↑`/`↓` move it, `Esc` leaves the text and then the block.
 
 ## 7. The API

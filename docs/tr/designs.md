@@ -11,10 +11,22 @@ kullanamaz.
 
 ## 1. Şablonla başlayın
 
-Panelde: Bültenler, sonra Tasarımlar sekmesi. Galeri altı başlangıç şablonu sunar: Bülten, Ürün
-güncellemesi, Duyuru, Hoş geldiniz, Etkinlik ve Özet; her biri İngilizce, Türkçe ve Almanca. Birini
-seçin, şablon dilini seçin ve kullanın. Görselleri çalışma alanınızın görsellerine kopyalanır, sonra
-her şeyi değiştirebilirsiniz. Yeni boş tasarım, sade renklerle boş bir e-postayla başlar.
+Panelde: Bültenler, sonra kenar çubuğunda Tasarımlar. Tasarımlar iki sekmeden oluşur: kendi
+tasarımlarınız olan Benimkiler ve şablonların bulunduğu Galeri. Galeri altı başlangıç şablonu sunar:
+Bülten, Ürün güncellemesi, Duyuru, Hoş geldiniz, Etkinlik ve Özet; her biri İngilizce, Türkçe ve
+Almanca. Üstündeki çipler (Tümü, Bülten, Ürün, Duyuru, Başlangıç, Etkinlik, Özet) her seferinde tek
+bir türü gösterir, Şablon dili anahtarı dili seçer; seçtiğiniz dilde metni olmayan şablonda "Metni
+İngilizce" yazar.
+
+Bir şablon kartını seçin ya da Yeni tasarım'ı (kısayol `C`) seçerek Yeni tasarım penceresini açın.
+Pencerede Boş sayfa ve şablonlar kutucuk olarak görünür. Birini seçin, tasarıma bir Ad verin,
+Gelen kutusunu (ya da Tüm çalışma alanı) seçin ve Oluştur ve düzenle'yi seçin. Şablonun görselleri
+çalışma alanınızın görsellerine kopyalanır, sonra her şeyi değiştirebilirsiniz. Boş sayfa, sade
+renklerle boş bir e-postayla başlar.
+
+Benimkiler'de tasarımlarda `/` ile arayın. Arşivlenmiş tasarımları göster (`A`), arşivlenmiş
+tasarımları Arşivlendi etiketiyle listeye ekler; birindeki Geri al düğmesi onu geri getirir.
+Benimkiler ve Galeri `1` ve `2` tuşlarıdır.
 
 Bir tasarım bir gelen kutusuna ya da tüm çalışma alanına aittir. Gelen kutusunun
 [gönderen bilgileri](lists.md#1-gönderen-bilgilerini-girin) alt bilgiyi doldurur.
@@ -25,7 +37,7 @@ API ile: `name` ve `template: { "slug": "newsletter", "locale": "tr" }` ile `POS
 ## 2. Tasarımı düzenleyin
 
 Tasarımcı tam ekran açılır. Blokları paletten (ya da Katmanlar özetinden) sürükleyin ya da seçili
-bloktan sonra eklemek için üzerinde Enter'a basın. Ayarlarını sağda değiştirmek için bir bloğa
+bloktan sonra eklemek için üzerinde Enter'a basın. Sağda Blok ayarları altında değiştirmek için bir bloğa
 tıklayın.
 
 | Blok | Kullanım |
@@ -75,7 +87,7 @@ dönüşmez. Yedek değeri olmayan alan "Merhaba ," gibi bir boşluk bırakabili
 ## 3. Tema ve koyu mod
 
 Renkler, yazı tipleri, içerik genişliği (480 ile 720 piksel), köşe yuvarlaklığı ve yön (soldan
-sağa, sağdan sola ya da metne göre otomatik) için Temayı açın (kısayol `T`). Yazı tipleri sistem
+sağa, sağdan sola ya da metne göre otomatik) için Tasarım ayarlarını açın (kısayol `T`). Yazı tipleri sistem
 yığınlarıdır: system, humanist, geometric, serif ve monospace; e-postalar web yazı tipi yüklemez.
 
 E-posta uygulaması koyu modda olan okurlar, sizin renklerinizden türetilmiş daha koyu renkleri alır;
@@ -105,8 +117,14 @@ kullanmadığı ve hiçbir bültende gönderilmemiş görseller yüklemeden 7 g�
 
 ## 5. Önizlemeler ve denetimler
 
-Önizleme sunucudan gelir, yani alıcıların göreceği şeydir. Düzenle, Masaüstü, Telefon ve Koyu
-arasında `1` ile `4` tuşlarıyla geçin. Denetimler neyin düzeltileceğini gösterir:
+Önizleme sunucudan gelir, yani alıcıların göreceği şeydir. Üstte Düzenle ile Önizleme arasında
+geçin; Önizleme'de Masaüstü ya da Telefon'u seçin, Koyu'yu açıp kapatın. Tuşlar: `1` Düzenle,
+`2` Masaüstü, `3` Telefon, `4` Koyu.
+
+Denetimler düğmesi kaç sorun olduğunu yeşil, sarı ya da kırmızı gösterir. Tasarımın üstünde Denetimler
+şeridini açar (kısayol `C`): e-postanın boyutunu 102 KB'a göre gösteren bir ölçer ve her sorun için,
+Düzelt ya da Kontrol et olarak işaretlenmiş, bloğu seçen bir Göster düğmesi olan bir satır. "Sorun
+bulunmadı." listenin boş olduğunu söyler. İşaretlenenler şunlardır:
 
 | Uyarı | Anlamı |
 |---|---|
@@ -124,7 +142,7 @@ Tasarımcı son değişikliğinizden 1,5 saniye sonra kaydeder; `Ctrl`/`Cmd` + `
 sürüm saklar. Geri al ve yinele (`Ctrl`/`Cmd` + `Z`, yinelemek için `Shift` ile) 100 adım geri
 gider. Çevrimdışıyken değişiklikler cihazınızda kalır ve geri geldiğinizde kaydedilir.
 
-Sürümler (kısayol `V`) en yeni 50'yi tutar: düzenlerken en çok 10 dakikada bir, her elle kayıtta ve
+Sağdaki Sürümler sekmesi (kısayol `V`) en yeni 50'yi tutar: düzenlerken en çok 10 dakikada bir, her elle kayıtta ve
 her geri yüklemede bir. Geri yükleme, o sürümü en yeni sürüm olarak kaydeder.
 
 Başka biri (ya da sizin başka bir sekmeniz) önce kaydettiyse bir pencere üç yol sunar: benimkini
@@ -132,11 +150,11 @@ koru, benimkini kopya olarak kaydet ya da onlarınkini yükle. Düzenlemeniz hi�
 sürümlerde kalır. Hangisini seçerseniz seçin, karşı tarafın sürümü orada "Çakışmada saklandı" adıyla
 tutulur; hiçbir düzenleme kaybolmaz.
 
-JSON indir, tasarımın belgesini dosya olarak kaydeder. Arşivle, tasarımı listeden gizler; yeniden
-kaydetmek geri getirir. Yuva'nın daha yeni bir sürümünün yaptığı belge görüntülenebilir ama
+JSON indir, Kopyasını oluştur ve Arşivle Diğer işlemler menüsündedir. Arşivle, tasarımı listeden
+gizler ve sürümlerini tutar; arşivlenmiş tasarımdaki Geri al onu geri getirir. Yuva'nın daha yeni bir sürümünün yaptığı belge görüntülenebilir ama
 değiştirilemez.
 
-Kısayollar: `A` blok ekle, `T` tema, `I` görsel, `V` sürümler, `Ctrl`/`Cmd` + `D` bloğu çoğalt,
+Kısayollar: `A` blok ekle, `T` tasarım ayarları, `I` görsel, `V` sürümler, `C` denetimler, `Ctrl`/`Cmd` + `D` bloğu çoğalt,
 `Backspace` sil, `Alt` + `↑`/`↓` taşı, `Esc` önce metinden sonra bloktan çıkar.
 
 ## 7. API
