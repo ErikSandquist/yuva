@@ -143,8 +143,9 @@ code{display:block;max-width:100%;font-family:"Geist Mono",ui-monospace,monospac
 .seg a.on{background:var(--ink);color:var(--paper)}
 .foot{padding:24px 28px 64px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;font-size:13px;color:var(--soft)}
 .foot .links{font-size:13px}
-.powered{display:inline-flex;align-items:center;gap:6px}
+.powered{white-space:nowrap}
 .mark{display:block;flex:none}
+.powered .mark{display:inline-block;vertical-align:-.2em;vertical-align:calc(.5cap - 8px);margin-inline-end:6px}
 @media (max-width:1053px){.x{display:none}}
 @media (max-width:700px){.wide,.rt-chart .plot,.upd .body,.month .items{grid-column:auto}.comp{grid-template-columns:1fr}
 .hero{padding:48px 20px 40px}.hero h1,.sub .hero h1{font-size:36px;letter-spacing:-1.2px}.bar,.head,.pad,.card,.comp>div,.follow,.rt-chart>div,.upd>div,.item,.quiet,.foot,.cell,.group{padding-inline:16px}
