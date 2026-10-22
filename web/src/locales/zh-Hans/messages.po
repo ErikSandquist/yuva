@@ -12780,7 +12780,7 @@ msgstr "显示在面板中。"
 
 #: src/features/status/SettingsTab.tsx
 msgid "Shown instead of the logo in dark mode."
-msgstr "深色模式下替代 Logo 显示。"
+msgstr "深色模式下显示此 Logo，以替代普通 Logo。"
 
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
 #: src/features/settings/api-keys/ApiKeyWizard.tsx
