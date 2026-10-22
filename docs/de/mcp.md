@@ -179,6 +179,20 @@ moderiert sie oder sendet eine Antwort an verknüpftes Feedback.
 
 Mit `changelog:read` und `changelog:write` kann ein Assistent einen [Neuigkeiten](whats-new.md)-Changelog lesen und Einträge als Entwürfe schreiben. Geben Sie dem Prompt `draft_release_notes` Ihre Commit-Titel oder Release Notes (Yuva ruft selbst nichts ab); er entwirft für jede Änderung, die ein Kunde bemerkt, einen Eintrag mit dem Label new, improved oder fixed. Ein Assistent veröffentlicht, plant, zieht zurück oder versendet einen Eintrag nie per E-Mail und kann einen geplanten nicht ändern: Die Entwürfe liest ein Mitglied und veröffentlicht sie in Yuva.
 
+## Listen, Designs und Einrichtung über einen Assistenten
+
+Über Entwürfe hinaus kann ein Assistent die gewöhnlichen Schritte erledigen, die vor einem Newsletter oder einer neuen Produktseite kommen; Rolle und Scope jedes Tools stehen in der [Tabelle unten](#tools). Tools, die Sie nicht nutzen können, werden nicht aufgelistet.
+
+- **Absender und Kanal.** `update_inbox_sender` setzt den Firmennamen, die Postanschrift, die Registrierung und den Kontakt, die die Fußzeile jedes Broadcasts zeigt. `create_email_channel` fügt eine Adresse ohne SMTP-Konto hinzu: Die Antwort nennt die Adresse, an die das Postfach weiterleitet, und einen Link, unter dem Sie SMTP selbst eintragen. `create_dkim_key` und `get_deliverability` liefern den DNS-Eintrag und das, was die Prüfungen gefunden haben.
+- **Listen und Abonnenten.** `create_mailing_list`, `update_mailing_list`, `list_subscriptions`, `add_subscription` und `unsubscribe`. `add_subscription` schickt eine Bestätigungsmail und lässt die Person ausstehend. Als angemeldet gilt sie nur, wenn Sie angeben, dass sie bereits zugestimmt hat, mit Ort und Zeitpunkt in Ihren eigenen Worten; der Assistent gibt Ihre Worte weiter und schreibt sie nie selbst. Gesperrte und ausgetragene Adressen werden abgelehnt.
+- **CSV-Import.** `create_list_import` nimmt den Text der Datei (über einen Assistenten bis etwa 5 MB; größere Dateien lädt man in Yuva hoch, siehe [Abonnenten importieren](importing.md)) mit `attestation` und `consent_source`, die als Einwilligungsnachweis gespeichert werden und Ihre Worte sein müssen. Es validiert nur. Nachdem `get_list_import` die Zahlen gezeigt hat, braucht `start_list_import` `confirm_count`, die Zahl gültiger Zeilen, die Ihnen gezeigt wurde; jede andere Zahl antwortet `409 count_mismatch`, und nichts wird hinzugefügt.
+- **Bilder und Designs.** `upload_email_image` nimmt eine öffentliche `https`-URL (innerhalb von 10 Sekunden abgerufen; private und lokale Adressen werden abgelehnt) oder `data_base64`, über einen Assistenten höchstens etwa 5 MB Bild, und gibt die ID zurück, die ein Bildblock von `update_design` nimmt. `list_designs`, `get_design`, `list_email_images` und `duplicate_design` vervollständigen das Set. Die Bildregeln stehen unter [E-Mail-Designs](designs.md).
+- **Laufende Broadcasts.** `pause_broadcast`, `resume_broadcast`, `unschedule_broadcast` und `cancel_broadcast` werden nach derselben Regel aufgelistet wie `schedule_broadcast`. `cancel_broadcast` braucht `confirm_name`, den Namen des Broadcasts, wie Sie ihn bestätigt haben.
+- **Personen und Unterhaltungen.** `list_members` liefert `assign` die IDs; Kontakte, ihre Notizen und Abonnements lassen sich suchen, anlegen und ändern; `start_conversation` schreibt die erste Nachricht als Entwurf, solange der Workspace Assistenten nicht zustellen lässt; `list_drafts` zeigt Entwürfe, die auf Prüfung warten; Labels und Textbausteine lassen sich anlegen. `list_discussions` und `get_discussion` lesen Diskussionen; Antworten bleibt Mitgliedern vorbehalten.
+- **Weitere Produkte.** `create_status_page`, `create_status_component`, `create_status_monitor`, `update_incident`, `create_help_center`, `create_help_collection`, `create_changelog`, `create_roadmap_board`, `create_funnel` und `analytics_retention`. Nichts davon wird veröffentlicht: Das tut ein Mitglied in Yuva. `create_status_monitor` zeigt das Push-Token nur einmal, damit Sie es in Ihren Monitoring-Job eintragen.
+
+Was ein Assistent absichtlich nicht kann: Zugangsdaten und Zugriff verwalten (API-Schlüssel, OAuth-Freigaben, Rollen, Einladungen, Passkeys, Push-Abos, Webhooks, ein Secret rotieren), Workspace-Einstellungen ändern oder den Workspace löschen, etwas löschen (außer `remove_migration_history`), Einwilligungsnachweise oder Analytics exportieren oder Analytics-Daten löschen, Migrationsdateien hochladen, Rohnachrichten und Anhänge lesen, SMTP- oder andere Passwörter entgegennehmen, Hilfeartikel, Neuigkeiten-Einträge und Störungen veröffentlichen. Austragen ist eine Zustandsänderung, kein Löschen.
+
 ## Referenz
 
 ### Tools
@@ -218,6 +232,28 @@ aufgelistet; ein Aufruf dennoch antwortet mit `insufficient_scope` und dem zu er
 | `list_email_templates`, `preview_design` (Inhaber und Admins) | `broadcasts:read` |
 | `create_design`, `update_design`, `create_broadcast_draft`, `update_broadcast`, `send_test_broadcast` (Inhaber und Admins) | `broadcasts:write` |
 | `schedule_broadcast` (nur wenn der Workspace Keys und Assistenten das Senden von Broadcasts erlaubt) | `broadcasts:send` |
+| `list_members` | `inboxes:read` |
+| `search_contacts`, `list_contact_notes` | `contacts:read` |
+| `list_contact_subscriptions` | `contacts:read` und `lists:read` |
+| `create_contact`, `update_contact`, `add_contact_note` | `contacts:write` |
+| `start_conversation` (die erste Nachricht ist ein Entwurf, außer der Aufrufer darf zustellen und übergibt `send: true`) | `conversations:write` und `messages:write` |
+| `list_drafts`, `list_discussions`, `get_discussion` | `conversations:read` |
+| `create_label` (Inhaber, Admins, Schlüssel) | `labels:write` |
+| `create_canned_reply`, `update_canned_reply` (Inhaber, Admins, Schlüssel) | `canned_replies:write` |
+| `update_inbox_sender`, `create_email_channel`, `create_dkim_key` (Inhaber, Admins, Schlüssel) | `inboxes:manage` |
+| `get_deliverability` (mit `check: true` sendet es eine Testnachricht und braucht `inboxes:manage`) | `inboxes:read` |
+| `list_subscriptions`, `get_list_import`, `list_list_imports`, `get_list_import_errors` | `lists:read` |
+| `create_mailing_list`, `update_mailing_list`, `add_subscription`, `unsubscribe`, `create_list_import`, `update_list_import_mapping`, `cancel_list_import`, `start_list_import` (Inhaber, Admins, Schlüssel) | `lists:write` |
+| `list_designs`, `get_design`, `list_email_images` (Inhaber, Admins, Schlüssel) | `broadcasts:read` |
+| `duplicate_design`, `upload_email_image` (Inhaber, Admins, Schlüssel) | `broadcasts:write` |
+| `pause_broadcast`, `resume_broadcast`, `unschedule_broadcast`, `cancel_broadcast` (nur wenn der Workspace Keys und Assistenten das Senden von Broadcasts erlaubt) | `broadcasts:send` |
+| `create_status_page`, `create_status_component`, `create_status_monitor`, `update_incident` (Inhaber, Admins, Schlüssel) | `status:manage` |
+| `create_help_collection` | `help:write` |
+| `create_help_center` (Inhaber, Admins, Schlüssel; kein OAuth) | `help:publish` |
+| `create_changelog` (Inhaber, Admins, Schlüssel; kein OAuth) | `changelog:publish` |
+| `create_roadmap_board` (Inhaber, Admins, Schlüssel; kein OAuth) | `roadmap:write` |
+| `create_funnel` (Inhaber, Admins, Schlüssel) | `analytics:manage` |
+| `analytics_retention` | `analytics:read` |
 | `detect_mail_source`, `list_migrations`, `get_migration`, `create_migration`, `update_migration`, `test_migration_connection`, `scan_migration`, `preview_migration`, `start_migration`, `pause_migration`, `resume_migration`, `cancel_migration`, `finish_migration`, `retry_migration_items`, `list_migration_errors`, `send_migration_probe`, `remove_migration_history` (Owner und Admins) | `migrations:manage` |
 
 Ist in einer Unterhaltung Ihr Entwurf offen, antwortet `send_reply` dort mit `draft_pending`.

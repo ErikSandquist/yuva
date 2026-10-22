@@ -115,6 +115,8 @@ Arşivlenmemiş bir tasarımın kullandığı görsel silinemez; panel tasarıml
 gönderilmiş görsel onay ister, çünkü teslim edilmiş e-postalarda kırık görsel görünür. Hiçbir tasarımın
 kullanmadığı ve hiçbir bültende gönderilmemiş görseller yüklemeden 7 gün sonra silinir.
 
+Bir [yapay zekâ asistanı](mcp.md#listeleri-tasarımları-ve-kurulumu-bir-asistanla-yapın) `upload_email_image` ile herkese açık bir `https` URL'sinden ya da base64 olarak (MCP üzerinden yaklaşık 5 MB) görsel ekleyebilir ve tasarımları `list_designs` ve `get_design` ile okuyabilir.
+
 ## 5. Önizlemeler ve denetimler
 
 Önizleme sunucudan gelir, yani alıcıların göreceği şeydir. Üstte Düzenle ile Önizleme arasında

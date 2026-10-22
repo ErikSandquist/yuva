@@ -110,6 +110,8 @@ An image used by a design that is not archived cannot be deleted; the panel name
 image that went out in a broadcast asks for confirmation, because mail already delivered then shows
 a broken image. Images that no design uses and no broadcast sent are deleted 7 days after upload.
 
+An [AI assistant](mcp.md#lists-designs-and-setup-from-an-assistant) can add an image with `upload_email_image`, from a public `https` URL or as base64 (about 5 MB through MCP), and read the designs with `list_designs` and `get_design`.
+
 ## 5. Previews and checks
 
 The preview comes from the server, so it is what recipients get. Switch between Edit and Preview at the

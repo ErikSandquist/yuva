@@ -170,6 +170,46 @@ creates, edits or moderates ideas or sends a reply to linked feedback.
 
 With the `changelog:read` and `changelog:write` scopes an assistant can read a [What's new](whats-new.md) changelog and write entries as drafts. Give the `draft_release_notes` prompt your commit subjects or release notes (Yuva fetches nothing itself) and it drafts one entry per change a customer would notice, labelled new, improved or fixed. An assistant never publishes, schedules, unpublishes or mails an entry, and cannot change a scheduled one: a member reads the drafts and publishes them in Yuva.
 
+## Lists, designs and setup from an assistant
+
+Beyond drafting, an assistant can do the ordinary steps that come before a newsletter or a new product page,
+with the role and scope each tool names in the [table below](#tools). Tools you cannot use are not listed.
+
+- **Sender and channel.** `update_inbox_sender` sets the legal name, postal address, registration and contact that
+  every broadcast footer shows. `create_email_channel` adds an address without an SMTP account: the answer gives the
+  address to forward mail to and a link where you set SMTP yourself. `create_dkim_key` and `get_deliverability` give the
+  DNS record to add and what the checks found.
+- **Lists and subscribers.** `create_mailing_list`, `update_mailing_list`, `list_subscriptions`, `add_subscription` and
+  `unsubscribe`. `add_subscription` mails a confirmation and leaves the person pending. It marks them subscribed only
+  when you state that they already agreed, with where and when in your own words; the assistant passes your words and
+  never writes them. Suppressed and opted-out addresses are refused.
+- **CSV import.** `create_list_import` takes the file's text (up to about 5 MB through an assistant; larger files are
+  uploaded in Yuva, see [Importing subscribers](importing.md)) with `attestation` and `consent_source`, which are
+  stored as your proof of consent and must be your words. It only validates. After `get_list_import` shows the counts,
+  `start_list_import` needs `confirm_count`, the number of valid rows you were shown; any other number answers
+  `409 count_mismatch` and nothing is added.
+- **Images and designs.** `upload_email_image` takes a public `https` URL (fetched within 10 seconds; private and local
+  addresses are refused) or `data_base64`, about 5 MB of image at most through an assistant, and returns the id that an
+  image block of `update_design` takes. `list_designs`, `get_design`, `list_email_images` and `duplicate_design` complete
+  the set. See [E-mail designs](designs.md#4-images) for the image rules.
+- **Running broadcasts.** `pause_broadcast`, `resume_broadcast`, `unschedule_broadcast` and `cancel_broadcast` are
+  listed under the same rule as `schedule_broadcast`. `cancel_broadcast` needs `confirm_name`, the broadcast's name as
+  you confirmed it.
+- **People and conversations.** `list_members` gives `assign` its ids; contacts, their notes and subscriptions can be
+  searched, created and updated; `start_conversation` writes the first message as a draft unless the workspace lets
+  assistants deliver; `list_drafts` shows drafts waiting for review; labels and canned replies can be created.
+  `list_discussions` and `get_discussion` read discussions; replying stays with members.
+- **Other products.** `create_status_page`, `create_status_component`, `create_status_monitor`, `update_incident`,
+  `create_help_center`, `create_help_collection`, `create_changelog`, `create_roadmap_board`, `create_funnel` and
+  `analytics_retention`. Nothing created is published: a member does that in Yuva. `create_status_monitor` shows the push
+  token once, for you to put in your monitoring job.
+
+What an assistant cannot do on purpose: manage credentials and access (API keys, OAuth grants, roles, invites, passkeys,
+push subscriptions, webhooks, rotating a secret), change workspace settings or delete the workspace, delete things
+(except `remove_migration_history`), export consent records or analytics or delete analytics data, upload migration
+files, read raw messages and attachments, take SMTP or any other password, or publish help articles, What's new entries
+and incidents. Unsubscribing is a state change, not a deletion.
+
 ## Reference
 
 ### Tools
@@ -209,6 +249,28 @@ answers `insufficient_scope` with the scope to grant.
 | `list_email_templates`, `preview_design` (owners and admins) | `broadcasts:read` |
 | `create_design`, `update_design`, `create_broadcast_draft`, `update_broadcast`, `send_test_broadcast` (owners and admins) | `broadcasts:write` |
 | `schedule_broadcast` (only while the workspace allows keys and assistants to send broadcasts) | `broadcasts:send` |
+| `list_members` | `inboxes:read` |
+| `search_contacts`, `list_contact_notes` | `contacts:read` |
+| `list_contact_subscriptions` | `contacts:read` and `lists:read` |
+| `create_contact`, `update_contact`, `add_contact_note` | `contacts:write` |
+| `start_conversation` (the first message is a draft unless the caller may deliver and passes `send: true`) | `conversations:write` and `messages:write` |
+| `list_drafts`, `list_discussions`, `get_discussion` | `conversations:read` |
+| `create_label` (owners, admins, keys) | `labels:write` |
+| `create_canned_reply`, `update_canned_reply` (owners, admins, keys) | `canned_replies:write` |
+| `update_inbox_sender`, `create_email_channel`, `create_dkim_key` (owners, admins, keys) | `inboxes:manage` |
+| `get_deliverability` (with `check: true` it sends a test message and needs `inboxes:manage`) | `inboxes:read` |
+| `list_subscriptions`, `get_list_import`, `list_list_imports`, `get_list_import_errors` | `lists:read` |
+| `create_mailing_list`, `update_mailing_list`, `add_subscription`, `unsubscribe`, `create_list_import`, `update_list_import_mapping`, `cancel_list_import`, `start_list_import` (owners, admins, keys) | `lists:write` |
+| `list_designs`, `get_design`, `list_email_images` (owners, admins, keys) | `broadcasts:read` |
+| `duplicate_design`, `upload_email_image` (owners, admins, keys) | `broadcasts:write` |
+| `pause_broadcast`, `resume_broadcast`, `unschedule_broadcast`, `cancel_broadcast` (only while the workspace allows keys and assistants to send broadcasts) | `broadcasts:send` |
+| `create_status_page`, `create_status_component`, `create_status_monitor`, `update_incident` (owners, admins, keys) | `status:manage` |
+| `create_help_collection` | `help:write` |
+| `create_help_center` (owners, admins, keys; no OAuth) | `help:publish` |
+| `create_changelog` (owners, admins, keys; no OAuth) | `changelog:publish` |
+| `create_roadmap_board` (owners, admins, keys; no OAuth) | `roadmap:write` |
+| `create_funnel` (owners, admins, keys) | `analytics:manage` |
+| `analytics_retention` | `analytics:read` |
 | `detect_mail_source`, `list_migrations`, `get_migration`, `create_migration`, `update_migration`, `test_migration_connection`, `scan_migration`, `preview_migration`, `start_migration`, `pause_migration`, `resume_migration`, `cancel_migration`, `finish_migration`, `retry_migration_items`, `list_migration_errors`, `send_migration_probe`, `remove_migration_history` (owners and admins) | `migrations:manage` |
 
 With your draft open in a conversation, `send_reply` there answers `draft_pending`.

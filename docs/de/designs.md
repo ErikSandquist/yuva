@@ -118,6 +118,8 @@ Designs. Bei einem Bild, das in einem Broadcast verschickt wurde, fragt es nach,
 zugestellte Mails dann ein defektes Bild zeigen. Bilder, die kein Design verwendet und kein Broadcast
 versendet hat, werden 7 Tage nach dem Upload gelöscht.
 
+Ein [KI-Assistent](mcp.md#listen-designs-und-einrichtung-über-einen-assistenten) kann mit `upload_email_image` ein Bild aus einer öffentlichen `https`-URL oder als Base64 (über MCP etwa 5 MB) hinzufügen und die Designs mit `list_designs` und `get_design` lesen.
+
 ## 5. Vorschauen und Prüfungen
 
 Die Vorschau kommt vom Server, zeigt also, was Empfänger erhalten. Oben wechseln Sie zwischen

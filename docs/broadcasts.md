@@ -270,6 +270,7 @@ Sending is the one thing API keys and OAuth tokens do not get by default:
   `403 broadcasts_by_keys_disabled`.
 - Creating, changing and testing drafts needs `broadcasts:write`, reading needs `broadcasts:read`.
   Pausing and cancelling need `broadcasts:send` and are not held back by the switch.
+- Through an [assistant](mcp.md#lists-designs-and-setup-from-an-assistant), `pause_broadcast`, `resume_broadcast`, `unschedule_broadcast` and `cancel_broadcast` are listed only while the switch is on, like `schedule_broadcast`.
 
 ## Approval on hosted servers
 

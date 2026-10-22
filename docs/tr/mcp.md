@@ -175,6 +175,20 @@ Hiçbir araç fikir oluşturmaz, düzenlemez, denetlemez ya da bağlı geri bild
 
 `changelog:read` ve `changelog:write` yetkileriyle bir asistan bir [Yenilikler](whats-new.md) değişiklik günlüğünü okuyabilir ve kayıtları taslak olarak yazabilir. `draft_release_notes` prompt'una commit başlıklarınızı veya sürüm notlarınızı verin (Yuva kendisi hiçbir şey getirmez); müşterinin fark edeceği her değişiklik için yeni, iyileştirildi ya da düzeltildi etiketli bir kayıt taslağı hazırlar. Bir asistan bir kaydı asla yayınlamaz, zamanlamaz, yayından kaldırmaz ya da e-postayla göndermez ve zamanlanmış bir kaydı değiştiremez: taslakları bir üye okur ve Yuva'da yayınlar.
 
+## Listeleri, tasarımları ve kurulumu bir asistanla yapın
+
+Taslak yazmanın ötesinde, bir asistan bülten ya da yeni bir ürün sayfasından önce gelen olağan adımları yapabilir; her aracın rolü ve yetkisi [aşağıdaki tabloda](#araçlar) yazılıdır. Kullanamayacağınız araçlar listelenmez.
+
+- **Gönderen ve kanal.** `update_inbox_sender`, her bültenin alt bilgisinde görünen yasal adı, posta adresini, sicil bilgisini ve iletişimi ayarlar. `create_email_channel` SMTP hesabı olmadan bir adres ekler: yanıt, postanın yönlendirileceği adresi ve SMTP'yi kendinizin gireceği bir bağlantıyı verir. `create_dkim_key` ve `get_deliverability`, eklenecek DNS kaydını ve kontrollerin ne bulduğunu verir.
+- **Listeler ve aboneler.** `create_mailing_list`, `update_mailing_list`, `list_subscriptions`, `add_subscription` ve `unsubscribe`. `add_subscription` bir onay e-postası gönderir ve kişiyi beklemede bırakır. Kişiyi yalnızca, onun zaten kabul ettiğini, nerede ve ne zaman kabul ettiğini kendi sözlerinizle belirtirseniz abone yapar; asistan sizin sözlerinizi iletir, kendisi yazmaz. Bastırılmış ve çıkmış adresler reddedilir.
+- **CSV içe aktarma.** `create_list_import` dosyanın metnini alır (bir asistan üzerinden yaklaşık 5 MB'a kadar; daha büyük dosyalar Yuva'da yüklenir, bkz. [Abone içe aktarma](importing.md)); `attestation` ve `consent_source` rıza kanıtı olarak saklanır ve sizin sözleriniz olmalıdır. Yalnızca doğrular. `get_list_import` sayıları gösterdikten sonra `start_list_import`, size gösterilen geçerli satır sayısı olan `confirm_count` ister; başka bir sayı `409 count_mismatch` döner ve hiçbir şey eklenmez.
+- **Görseller ve tasarımlar.** `upload_email_image` herkese açık bir `https` URL'si (10 saniye içinde getirilir; özel ve yerel adresler reddedilir) ya da `data_base64` alır, bir asistan üzerinden en fazla yaklaşık 5 MB görsel, ve `update_design`'ın görsel bloğunun aldığı kimliği döndürür. `list_designs`, `get_design`, `list_email_images` ve `duplicate_design` takımı tamamlar. Görsel kuralları için bkz. [E-posta tasarımları](designs.md).
+- **Bülten yönetimi.** `pause_broadcast`, `resume_broadcast`, `unschedule_broadcast` ve `cancel_broadcast`, `schedule_broadcast` ile aynı kuralla listelenir. `cancel_broadcast`, onayladığınız bülten adı olan `confirm_name` ister.
+- **Kişiler ve konuşmalar.** `list_members`, `assign` için kimlikleri verir; kişiler, notları ve abonelikleri aranabilir, oluşturulabilir ve güncellenebilir; `start_conversation` çalışma alanı asistanların teslim etmesine izin vermedikçe ilk mesajı taslak yazar; `list_drafts` incelemeyi bekleyen taslakları gösterir; etiketler ve hazır yanıtlar oluşturulabilir. `list_discussions` ve `get_discussion` tartışmaları okur; yanıt vermek üyelere kalır.
+- **Diğer ürünler.** `create_status_page`, `create_status_component`, `create_status_monitor`, `update_incident`, `create_help_center`, `create_help_collection`, `create_changelog`, `create_roadmap_board`, `create_funnel` ve `analytics_retention`. Oluşturulan hiçbir şey yayınlanmaz: bunu bir üye Yuva'da yapar. `create_status_monitor` push belirtecini yalnızca bir kez gösterir; izleme işinize koymanız içindir.
+
+Bir asistanın bilerek yapamadıkları: kimlik bilgilerini ve erişimi yönetmek (API anahtarları, OAuth izinleri, roller, davetler, geçiş anahtarları, push abonelikleri, webhook'lar, bir sırrı döndürmek), çalışma alanı ayarlarını değiştirmek ya da çalışma alanını silmek, bir şeyi silmek (`remove_migration_history` hariç), rıza kayıtlarını ya da analitiği dışa aktarmak veya analitik verisini silmek, taşıma dosyaları yüklemek, ham mesajları ve ekleri okumak, SMTP ya da başka bir şifre almak, yardım makalelerini, Yenilikler kayıtlarını ve olayları yayınlamak. Abonelikten çıkarmak bir durum değişikliğidir, silme değildir.
+
 ## Başvuru
 
 ### Araçlar
@@ -214,6 +228,28 @@ Araçlar `/v1` ile aynı kontrollerden geçer. Kullanamayacağınız araçlar li
 | `list_email_templates`, `preview_design` (sahipler ve yöneticiler) | `broadcasts:read` |
 | `create_design`, `update_design`, `create_broadcast_draft`, `update_broadcast`, `send_test_broadcast` (sahipler ve yöneticiler) | `broadcasts:write` |
 | `schedule_broadcast` (yalnızca çalışma alanı anahtarların ve asistanların bülten göndermesine izin veriyorsa) | `broadcasts:send` |
+| `list_members` | `inboxes:read` |
+| `search_contacts`, `list_contact_notes` | `contacts:read` |
+| `list_contact_subscriptions` | `contacts:read` ve `lists:read` |
+| `create_contact`, `update_contact`, `add_contact_note` | `contacts:write` |
+| `start_conversation` (çağıran teslim edebiliyor ve `send: true` veriyorsa ilk mesaj gönderilir, yoksa taslak olur) | `conversations:write` ve `messages:write` |
+| `list_drafts`, `list_discussions`, `get_discussion` | `conversations:read` |
+| `create_label` (sahipler, yöneticiler, anahtarlar) | `labels:write` |
+| `create_canned_reply`, `update_canned_reply` (sahipler, yöneticiler, anahtarlar) | `canned_replies:write` |
+| `update_inbox_sender`, `create_email_channel`, `create_dkim_key` (sahipler, yöneticiler, anahtarlar) | `inboxes:manage` |
+| `get_deliverability` (`check: true` ile bir test iletisi gönderir ve `inboxes:manage` ister) | `inboxes:read` |
+| `list_subscriptions`, `get_list_import`, `list_list_imports`, `get_list_import_errors` | `lists:read` |
+| `create_mailing_list`, `update_mailing_list`, `add_subscription`, `unsubscribe`, `create_list_import`, `update_list_import_mapping`, `cancel_list_import`, `start_list_import` (sahipler, yöneticiler, anahtarlar) | `lists:write` |
+| `list_designs`, `get_design`, `list_email_images` (sahipler, yöneticiler, anahtarlar) | `broadcasts:read` |
+| `duplicate_design`, `upload_email_image` (sahipler, yöneticiler, anahtarlar) | `broadcasts:write` |
+| `pause_broadcast`, `resume_broadcast`, `unschedule_broadcast`, `cancel_broadcast` (yalnızca çalışma alanı anahtarların ve asistanların bülten göndermesine izin veriyorsa) | `broadcasts:send` |
+| `create_status_page`, `create_status_component`, `create_status_monitor`, `update_incident` (sahipler, yöneticiler, anahtarlar) | `status:manage` |
+| `create_help_collection` | `help:write` |
+| `create_help_center` (sahipler, yöneticiler, anahtarlar; OAuth yok) | `help:publish` |
+| `create_changelog` (sahipler, yöneticiler, anahtarlar; OAuth yok) | `changelog:publish` |
+| `create_roadmap_board` (sahipler, yöneticiler, anahtarlar; OAuth yok) | `roadmap:write` |
+| `create_funnel` (sahipler, yöneticiler, anahtarlar) | `analytics:manage` |
+| `analytics_retention` | `analytics:read` |
 | `detect_mail_source`, `list_migrations`, `get_migration`, `create_migration`, `update_migration`, `test_migration_connection`, `scan_migration`, `preview_migration`, `start_migration`, `pause_migration`, `resume_migration`, `cancel_migration`, `finish_migration`, `retry_migration_items`, `list_migration_errors`, `send_migration_probe`, `remove_migration_history` (sahipler ve yöneticiler) | `migrations:manage` |
 
 Bir konuşmada açık taslağınız varken oradaki `send_reply` `draft_pending` döner.

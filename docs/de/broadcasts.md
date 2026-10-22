@@ -285,6 +285,7 @@ Versenden ist das Einzige, das API-Keys und OAuth-Tokens standardmäßig nicht b
   antwortet das Planen mit `403 broadcasts_by_keys_disabled`.
 - Entwürfe anlegen, ändern und testen braucht `broadcasts:write`, Lesen `broadcasts:read`. Pausieren und
   Abbrechen brauchen `broadcasts:send` und werden vom Schalter nicht zurückgehalten.
+- Über einen [Assistenten](mcp.md#listen-designs-und-einrichtung-über-einen-assistenten) werden `pause_broadcast`, `resume_broadcast`, `unschedule_broadcast` und `cancel_broadcast` wie `schedule_broadcast` nur aufgelistet, solange der Schalter an ist.
 
 ## Freigabe auf gehosteten Servern
 

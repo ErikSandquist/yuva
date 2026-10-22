@@ -272,6 +272,7 @@ Göndermek, API anahtarlarının ve OAuth belirteçlerinin varsayılan olarak al
   zamanlama `403 broadcasts_by_keys_disabled` yanıtı verir.
 - Taslak oluşturmak, değiştirmek ve denemek `broadcasts:write`, okumak `broadcasts:read` ister.
   Duraklatmak ve iptal etmek `broadcasts:send` ister ve bu anahtar tarafından engellenmez.
+- Bir [asistan](mcp.md#listeleri-tasarımları-ve-kurulumu-bir-asistanla-yapın) üzerinden `pause_broadcast`, `resume_broadcast`, `unschedule_broadcast` ve `cancel_broadcast`, `schedule_broadcast` gibi yalnızca anahtar açıkken listelenir.
 
 ## Barındırılan sunucularda onay
 
